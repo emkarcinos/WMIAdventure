@@ -15,6 +15,7 @@ Hasło | Definicja
 | Skill | Jednostka reprezentowania osiągnięcia studenta w aplikacji i wiedzę w zakresie Informatyki i życia na wydziale WMI
 | Minigra | Krótka humorystyczna gierka
 | Quiz | Krótki zestaw pytań
+| Karty | Wirtualne przedmioty kolekcjonowane przez użytkowników używane do pojedynków. 
 
 # Cel i Grupa Docelowa
 
@@ -81,9 +82,49 @@ Panel dostępny w sieci z tablicami rankingowymi i dodatkowymi narzędziami.
 
 # Rynek
 
-Na rynku jest pełno aplikacji motywujących do rozwoju osobistego typu "Level Up Life", lecz brakuje aplikacji motywujących do nauki wyprofilowanych pod kierunek Informatyka na WMI.
+## Habitica
+*Aplikacja motywująca do osiągania wskazanych przez siebie celów połączona z aspektem gry przygodowej.*
 
-Planem jest wstrzelić się w tę lukę.
+Wykonywanie celów w Habitice jest uzależnione od uczciwego zaznaczania zrealizowanych celów przez użytkowników, a w WMI Adventure USOS i wyniki quizów zapewniają realną ocenę pracy użytkownika.
+
+Habitica wykorzystuje walutę premium dostępną za prawdziwe pieniądze, która odblokowuje dostęp do części zawartości, a WMI Adventure cała zawartość będzie dostępna za darmo. 
+
+Tak samo jak Habitica, WMI Adventure będzie oparte na licencji *Open Source*. 
+
+Tak samo jak Habitica, aplikacja WMI Adventure będzie dostępna na wielu platformach.
+
+W Habitice gracze nie pojedynkują się ze sobą, a w WMI Adventure, tak.
+
+## Doki-Doki Literature Club
+*Gra komputerowa typu visual-novel w stylu japońskiej mangi.*
+
+Doki-Doki realizuję aspekt wizualny w stylistyce japońskiej mangi, a w WMI Adventure stylistyka będzie uniwersalna. 
+
+Doki-Doki jest zamkniętą i ukończoną historią bez dalszych ścieżek rozwoju, a WMI Adventure jest otwarte na rozbudowywanie i dodawanie nowych historii.
+
+W WMI Adventure postacie i historie są wzięte z życia rzeczywistego, a Doki-Doki jest całkowicie fikcyjne.
+
+W Doki-Doki i w WMI Adventure występują dialogi akompaniowane przez postacie na tle.
+
+W Doki-Doki i WMI Adventure historia opowiadana jest w charakterze *Visual Novel*
+
+Doki-Doki i WMI Adventure jest darmowe.
+
+Kod źródłowy Doki-Doki nie jest publicznie dostępny, a WMI Adventure jest *Open Source*
+
+## Hero Zero
+*Bezpłatna gra przeglądarkowa polegająca na rozwijaniu swojego bohatera, wykonywaniu zadań i pojedynków z innymi graczami.*
+
+W Hero Zero nie ma taktycznego aspektu w walkach. Walki oparte są wyłącznie na losowości i statystykach postaci. W WMI Adventure wprowadzamy aspekt taktyczny - użytkownicy będą dobierali karty w specyficzne kombinacje i kolejności.
+
+W WMI Adventure przy pojedynku występują karty, a w Hero Zero tylko bohater.
+
+W Hero Zero i w WMI Adventure pojedynki odbywają się automatycznie.
+
+Hero Zero i WMI Adventure są darmowe.
+
+Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *Open Source*
+
 
 # Opis produktu
 
