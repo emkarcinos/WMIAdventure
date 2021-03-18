@@ -153,31 +153,6 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
     - Student jako użytkownik aplikacji mający pełen dostęp do wszystkich jej funkcjonalności.
 
 # Zakres i ograniczenia
-## In / Out
-
-Topic | In | Out | Opt
-| :--- | :---: | :---: | :---:
-Konta administratora | In | - | -
-Studenci innych kierunków jak Informatyka | - | Out | -
-Aplikacja webowa | In | - | -
-Wieloplatformowość | In | - | -
-Przechowywanie studenckich danych na serwerze | - | Out | -
-Limit walk na dzień | - | - | Opt
-Wpływ ocen na karty | - | - | Opt
-Zależność od obecności na wydziale | - | - | Opt
-Rozbudowane animacje postaci | - | Out | -
-Elementy 3D | - | Out | -
-Aktywny udział podczas walki | - | Out | -
-Odrzucanie / akceptowanie pojedynków | - | Out | -
-Powiadomienia systemowych o ataku | - | Out | -
-Wizualizacja przebiegu walki podczas ataku | In | - | -
-Historia walk | In | - | -
-Czat | - | Out | -
-System znajomości | - | Out | -
-Integracja z USOS | - | - | Opt
-
-
-
 
 ## Skład zespołu
 
@@ -191,20 +166,38 @@ Integracja z USOS | - | - | Opt
     Android, Django, Java, C#
 
 ## Wstępne kamienie milowe
-- Prototyp interfejsu
-- Uwierzytelnianie
-- Tryb battle
-- Battle z serwerem
-- System kart
-- Adventure
-- Rankingi
-- Karty
+- Konsultacja prototypu z grupą docelową
+- Panel Administratora
+- Panel Twórcy
+- Strefa publiczna
 - Historia
-- Grafika
 
 ## Szkic harmonogramu projektu
 
-...
+### Semestr I
+- Prototyp Interfejsu
+- Strefa Publiczna
+    * Interfejs trybu Adventure
+    * Tryb Battle
+    * Rankingi
+    * Minigry
+    * Quizy
 
----
+### Semestr II
+- Panel Administratora
+    * Integracja z USOS
+    * Zarządzanie kontami użytkowników
+    * Zarządzanie treściami zgłoszonymi przez użytkowników
+
+- Panel Twórcy
+    * Tworzenie historii
+    * Tworzenie quizów
+    * Tworzenie kart
+    
+- Historia
+
+## Potencjalne ryzyka
+- Trudość oszacowania złożoności panelu do tworzenia zawartości
+- Integracja z systemem USOS
+- Balans w systemie walki kartami
 
