@@ -11,6 +11,8 @@ Rozwiązaniem będzie aplikacja typu *Open Source* przeznaczona dla studentów I
 
 Taki projekt ma potencjał, aby bardziej zintegrować społeczność na wydziale WMI, urozmaicić studiowanie Informatyki i poprzez otwartość kodu na zmiany zachęcić do pracy nad wspólnymi projektami w charakterze *Open Source*.
 
+Potencjalnym ryzykiem projektowym będzie sposób dotarcia do grupy odbiorców i utrzymanie ich uwagi przez dłuższy czas.
+
 ## Słownik
 Hasło | Definicja
 | :--- | :---:
@@ -232,3 +234,4 @@ Czy rozbijać Panel Administratora na dwie części **(?????)**:
 - Trudość oszacowania złożoności panelu do tworzenia zawartości
 - Integracja z systemem USOS
 - Balans w systemie walki kartami
+- Utrzymanie uwagi odbiorców
