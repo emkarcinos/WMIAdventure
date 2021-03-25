@@ -39,17 +39,19 @@ Aplikacja open-source typu "Level Up Life" wyprofilowana pod kierunek Informatyk
 Przechowywanie kodu w postaci open-source ma zachęcić wszystkich studentów do włożenia własnego udziału w rozwój projektu. Ma to stanowić przykład dla przyszłych projektów, które mogą być dalej utrzymywane przez innych studentów.
 
 ### **Grupa odbiorców**
+Studenci kierunku Informatyka na WMI, którzy otrzymując oceny za przedmioty nie czują z nich wystarczającej satysfakcji, brakuje im motywacji do nauki. Wielu studentów nie widzi sensu wkładania większego wysiłku w naukę, nie dałoby im to niczego poza lepszymi ocenami, które nie są dla nich stymulujące. Studentom brakuje satysfakcji po zaliczeniu ciężkiego przedmiotu, szczególnie z wysokim wynikiem.
 
-Studenci Informatyki na WMI, którzy nie widzą pasji w studiowaniu, nasza aplikacja ma pokazać, że nauka na wydziale jest ciekawa i pełna przygód
+Studenci, którzy chcą lepiej poznać charakter kierunku ze strony starszych studentów, brakuje im motywacji do chodzenia na zajęcia, brania w nich aktywnego udziału.
 
-WMI Adventure kierowane jest do studentów, którzy nie mają możliwości pokazania swojej wartości naukowo/rozrywkowej, brakuje im pola do rywalizacji. Quizy, oceny i umiejętności gry wewnątrz aplikacji wyróżnią tych najlepszych i zachęcą do rywalizacji
+Osoby studiujące Informatykę na WMI, którym brakuje dobrego miejsca do przekazania swoich doznań na kierunku innym studentom.
 
-Unikalne karty zapewnią rozrywkę dla studentów lubiących kolekcjonowanie.
+Ambitni, konkurencyjni studenci, którym brakuje możliwości pochwalenia się swoimi osiągnięciami na studiach, brakuje możliwości rywalizacji ze studentami spoza swojego kręgu znajomych.
 
-Studenci spragnieni odkrywania nowych historii będą mieli do dyspozycji tryb Adventure, w którym będą odkrywać fabułę przedstawioną przez innych studentów
-Studentom często brakuje rozrywki, która wypełni czas np. podczas przerw między zajęciami. Dzięki WMI Adventure będą mogli spędzić wolny czas na częsci rozrywkowej aplikacji.
+Osoby studiujące Informatykę na WMI, którym brakuje rozrywki, związanej z WMI.
 
-Na WMI brakuje zainteresowania projektami typu open-source. WMI Adventure mogłoby pokazać studentom jak wygląda utrzymywanie tego typu aplikacji i zachęcić do wspólnych prac.
+Osoby studiujące Informatykę na WMI, którym brakuje studenckiego projektu o charakterze Open Source, który mogą rozwinąć. Brakuje im wydziałowych kół naukowych, na których studenci mogliby się poznawać, pracować razem nad projektami.
+
+Studenci kolekcjonerzy, którzy uwielbiają zdobywać wszystkie możliwe osiągnięcia, lubią się nimi chwalić.
 
 ### **Sposób dotarcia do grupy odbiorców**
 
