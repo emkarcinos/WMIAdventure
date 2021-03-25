@@ -28,53 +28,53 @@ Wielu osobom studiującym Informatykę na WMI brakuje motywacji do lepszej nauki
 ### **Rozwiązanie**
 Aplikacja open-source typu "Level Up Life" wyprofilowana pod kierunek Informatyka na WMI
 
-- Użytkownik aplikacji będzie nagradzany za aktywność studencką.
-- Nagrody będą w postaci kart - umiejętności studenta wpływają na karty.
-- Dodatkowe wydarzenia występujące tylko podczas przebywania na terenie wydziału
-- System rankingów indukujący rywalizację pomiędzy użytkownikami, a tym samym motywujący do nauki.
-- Do korzystania z aplikacji zachęcały będą dodatkowo dwa oddzielne moduły projektu:
-    - **tryb battle** - proste karciane pojedynki
-    - **tryb adventure** - co semestr odblokowanie nowej historyjki związanej z życiem studenckim na WMI
-- Historie w trybie adventure mają stanowić natchnienie dla studentów, będą obrazowały inny punkt widzenia na studiowanie.
-- Charakter open-sourcowy daje możliwość aktywnym studentom *przelania* swoich historii do aplikacji
+- Wizualizacja wyników i wiedzy studenta
+- Nagradzanie studentów za oceny z przedmiotów i wiedzę poprzez możliwość lepszego rozwoju postaci w naszej aplikacji
+- Grywalizacja, oparta o oceny, oraz wiedzę o studiowaniu informatyki na WMI
+- Przedstawienie studenckich przeżyć, które pomagają wczuć się w życie na wydziale oraz inspirować do aktywnego studiowania
+- Możliwość zapisania swoich studenckich przeżyć, aby upamiętnić swoje wspomnienia i udostępnić je pozostałym użytkownikom
+- Dostarczanie rozgrywki w postaci gier, które są związane bezpośrednio z realnym życiem na WMI
+- Aplikacja o charakterze Open Source, otwarta na rozwój dla pasjonatów programowania na WMI
 
 Przechowywanie kodu w postaci open-source ma zachęcić wszystkich studentów do włożenia własnego udziału w rozwój projektu. Ma to stanowić przykład dla przyszłych projektów, które mogą być dalej utrzymywane przez innych studentów.
 
 ### **Grupa odbiorców**
 
-### **TODO: Do zmiany w oparciu o value proposition canvas**
+Studenci Informatyki na WMI, którzy nie widzą pasji w studiowaniu, nasza aplikacja ma pokazać, że nauka na wydziale jest ciekawa i pełna przygód
 
-Osoby studiujące Informatykę na WMI, którzy czuli by satysfakcję z pewnego sposobu nagradzania ich efektów nauki, innego niż oceny.
+WMI Adventure kierowane jest do studentów, którzy nie mają możliwości pokazania swojej wartości naukowo/rozrywkowej, brakuje im pola do rywalizacji. Quizy, oceny i umiejętności gry wewnątrz aplikacji wyróżnią tych najlepszych i zachęcą do rywalizacji
 
-Osoby chętne do rywalizacji.
+Unikalne karty zapewnią rozrywkę dla studentów lubiących kolekcjonowanie.
 
-Osoby chętne do kolekcjonowania kart związanych z Informatyką ogólnie oraz z kierunkiem Informatyka na WMI.
+Studenci spragnieni odkrywania nowych historii będą mieli do dyspozycji tryb Adventure, w którym będą odkrywać fabułę przedstawioną przez innych studentów
+Studentom często brakuje rozrywki, która wypełni czas np. podczas przerw między zajęciami. Dzięki WMI Adventure będą mogli spędzić wolny czas na częsci rozrywkowej aplikacji.
 
-Osoby zainteresowane stopniowym odkrywaniem pewnej komiksowej historii wydziałowej.
-
-Osoby zaintereresowane rozwojem studenckiej aplikacji open-source.
+Na WMI brakuje zainteresowania projektami typu open-source. WMI Adventure mogłoby pokazać studentom jak wygląda utrzymywanie tego typu aplikacji i zachęcić do wspólnych prac.
 
 ### **Sposób dotarcia do grupy odbiorców**
 
-### **TODO: opisać lepiej**
-
-Każdy student powinien otrzymać informacje o wdrożeniu aplikacji i możliwości zaangażowania w rozwój projektu.
+Wywieszenie przyciągających plakatów/ogłoszeń o aplikacji na wydziale
+Założenie grupy na odpowiednich mediach społecznościowych
+Żeby rozgłosić powstanie tego typu aplikacji zostanie użyta poczta studencka służąca do rozsyłania informacji o nowym projekcie.
+W późniejszych fazach wdrażania systemu utworzone zostanie mini koło naukowe pokazujące studentom pracę nad projektami open-source na przykładzie WMI Adventure.
+Zachęcanie studentów poprzez kontakt ze starostami.
 
 ### **Główny produkt projektu**
-### **TODO: lepiej opisać w oparciu o value proposition canvas**
 
-Aplikacja mobilna i webowa.
+Aplikacja kliencka dostępna na każdej platformie poprzez przeglądarkę, którą można pobrać jako aplikację mobilną (PWA).
+Dane użytkowników i obliczenia będą działały na scentralizowanym serwerze.
 
-Ma to być "lekka" aplikacja, która dostarczy łatwo dostępną rozgrywkę, do której zawsze można wrócić, bez poświęcania zbyt dużej ilości czasu na dokonywanie postępów.  Urządzenia mobilne idealnie się do tego nadają, każdy nosi przy sobie telefon.
+W aplikacji będą wyróżnione trzy strefy:
+- Strefa publiczna, czyli część projektu przeznaczona dla wszystkich studentów (konsumentów)
+- Strefa autorska, czyli zestaw narzędzi umożliwiające rozwój treści w strefie publicznej, z których każdy może skorzystać i zaproponować nowe historie, karty, quizy, itp.
+- Strefa administracyjna umożliwiająca zarządzanie kontami użytkowników i parametrami pracy aplikacji, dostępna tylko dla osób zarządzających aplikacją.
 
-Strona internetowa.
-Panel dostępny w sieci z tablicami rankingowymi i dodatkowymi narzędziami.
+Aplikacja ma być lekka i szybka. Rozgrywka nie będzie wymagała poświęcenia wielu godzin na raz, studenci będą mogli spędzić kilka minut dziennie dokonując zadowalające postępy.
 
 
 
 ### **Wartości dodane wnoszone przez projekt**
-- **Edukacja** - poprzez rozwiązywanie quizów z bazy pytań utworzonej przez studentów. **(?????)**
-
+- **Zdobywanie wiedzy** - poprzez rozwiązywanie quizów z bazy pytań utworzonej przez studentów.
 - **Większa satysfakcja z nauki** - Dobre wyniki w nauce mają korzystne odzwieciedlenia w naszej aplikacji.
 - **Aspekt proedukacyjny - Motywacja do nauki** - Chęci osiągnięcia największych miejsc rankingowych wiążą się z nauką. Wartości przekazane w opowieściach.
 - **Rozrywka** wynikająca z:
@@ -141,31 +141,38 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 
 # Opis produktu
 
-## **TODO: Poprawić (ładniej opisać, zgodność z kamieniami milowymi)**
+1. Strefa publiczna, aplikacja kliencka
+    - Przejrzysty interfejs webowy, w którym jest dostęp do wszystkich funkcji aplikacji
+    - Tryb battle, w którym gracze rywalizują ze sobą w oparciu o zdobyte wcześniej karty, spośród nich wyłania się talię kart, które układa się w odpowiedniej kolejności. Drugi gracz nie bierze bezpośredniego udziału w walce, jedynie jego karty *bronią się*. Pojedynki będą odbywać się automatycznie, z prostą wizualizacją.
+    - Tryb adventure - interaktywne opowiadania studentów w formie *visual novel*
+        * Opowieści wzorowane na realnych przeżyciach na wydziale WMI, przedstawiane w formie pojawiających się grafik oraz kwestii dialogowych jak w grach rodzaju Visual Novel.
+        * Postacie w naszej Visual Novel będą przedstawiać realnych pracowników wydziałowych, lub będą na nich wzorowane
+        * W tym trybie mogą pojawić się również minigry lub pojedynki z wirtualnymi przeciwnikami w takiej samej formie co w Trybie Battle
+        * Podczas przechodzenia historii w trybie adventure użytkownik może zdobyć Karty związane z jego postępem w rozgrywce
+    - Rankingi - Dwie tablice rankingowe : rankingi w battle wyłaniające studenta posiadającego największe umiejętności w tym trybie, rankingi kolekcjonerskie oparte o ilość zdobytych kart i uniknalnych kart-osiągnieć.
+    - Kolekcje kart - Unikalne karty za osiągnięcia, karty za ukończenie przedmiotów. Karty można w przyszłości ulepszać za Punkty umiejętności. Służą do pojedynków w trybie Battle.
+    - Mini gry, które są dostępne do przejścia w odpowiednich warunkach
+    - Quizy dostępne do rozwiązania skomponowane z pytań utworzonych przez studentów
 
-1. Kolekcje kart. Unikalne karty za osiągnięcia, karty za ukończenie przedmiotów. Karty można w przyszłości ulepszać za Punkty umiejętności.
-2. Moduł battle.
-    Gracze rywalizują ze sobą w oparciu o zdobyte wcześniej karty, spośród nich wyłania się talię. Drugi gracz nie bierze udziału w walce, jedynie jego karty *bronią się*.
+2. Strefa autorska
+    - Kreator historii z możliwością importowania własnych zdjęć, grafik postaci, dodawaniem dialogów i tworzeniem prostych animacji
+    - Kreator Kart, importowanie grafik, proponowane statystyki, efekty.
+    - Moduł udostępniania nowych pytań do Quizów z podziałem na kategorie
 
-3. Tryb adventure - przeżycie opowiadanej przez nas historii w formie *visual novel* i zdobywanie kart.
-4. Quiz - Studenci mogą w dowolnej chwili pojdąć się wypełnienia quizu związanego z WMI i Informatyką aby zdobywać Punkty umiejętności.
-5. Moduł rankingowy.
-    Dwie tablice rankingowe - rankingi w battle wyłaniające studenta posiadającego największe umiejętności w trybie battle, rankingi kolekcjonerskie oparte o ilość zdobytych kart i uniknalnych kart-osiągnieć.
+3. Strefa administracyjna
+    - Integracja z systemem USOS, aby odpowiednio wspierać i zarządzać funkcjami w naszej aplikacji (np. dostęp do ocen)
+    - Zarządzanie kontami użytkowników
+    - Zarządzanie treściami udostępnionymi przez użytkowników
+    - Modyfikacja parametrów aplikacji
 
-6. Zdarzenia losowe - szansa na pojawienie się minigry
-
-7. Możliwość dodawania własnych pytań do systemu - użytkownicy będą mogli stworzyć swoje pytania i dodać je do puli.
-
-8. integracja z systemami zewnętrznymi - USOS API
-    - Rejestracja: Związanie użytkownika aplikacji z użytkownikiem USOS
-    - Brak zależności od dostępu do systemu w dalszych krokach - Brak dostępu do serwera USOS nie wpłynie na działanie aplikacji.
-
-9. zarządzanie danymi, przetwarzanie danych itp.
+4. Zarządzanie danymi, przetwarzanie danych itp.
     - Przechowywanie danych o kontach z aplikacji.
     - Nie przechowujemy danych personalnych w sposób jawny; ocen czy innych danych osobowych (PESEL)
 
-10. rodzaj użytkownika końcowego
-    - Student jako użytkownik aplikacji mający pełen dostęp do wszystkich jej funkcjonalności.
+5. Rodzaj użytkownika końcowego
+    - Użytkownik, czyli gracz korzystający ze strefy publicznej
+    - Twórca, czyli użytkownik dodający nowe treści w strefie autorskiej
+    - Administrator systemu z uprawnieniami potrzebnymi do zarządzania strefą administracyjną i całą aplikacją. Weryfikuje nowe treści zgłaszane przez twórców.
 
 # Zakres i ograniczenia
 
