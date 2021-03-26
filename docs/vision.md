@@ -3,15 +3,16 @@
 ## Autorzy: Dawid Korybalski, Mateusz Tylka, Michał Czekański, Marcin Kostrzewski
 
 ## Data: 04/03/2021
+Ostatnia modyfikacja: 26/03/2021 11:40
 
 # Executive summary
 Często studentom brakuje inspiracji do studiowania. Wielu osobom jedynie chodzi o zdobycie "papierka".
 
 Rozwiązaniem będzie aplikacja typu *Open Source* przeznaczona dla studentów Informatyki na WMI z elementami grywalizacji w klimacie wydziału, przekazująca inspirujące historie w postaci *visual-novel*.
 
-Taki projekt ma potencjał, aby bardziej zintegrować społeczność na wydziale WMI, urozmaicić studiowanie Informatyki i poprzez otwartość kodu na zmiany zachęcić do pracy nad wspólnymi projektami w charakterze *Open Source*.
+Taki projekt ma potencjał, aby bardziej zintegrować społeczność na wydziale WMI, urozmaicić studiowanie Informatyki i poprzez otwartość kodu na zmiany, dostępność otwartych narzędzi do rozwoju treści zachęcić do pracy nad wspólnymi projektami w charakterze *Open Source*.
 
-Potencjalnym ryzykiem projektowym będzie sposób dotarcia do grupy odbiorców i utrzymanie ich uwagi przez dłuższy czas.
+Potencjalnym ryzykiem projektowym będą problemy z dotarciem do grupy odbiorców i trudności w utrzymaniu ich uwagi przez dłuższy czas.
 
 ## Słownik
 Hasło | Definicja
@@ -38,7 +39,7 @@ Aplikacja open-source typu "Level Up Life" wyprofilowana pod kierunek Informatyk
 - Dostarczanie rozgrywki w postaci gier, które są związane bezpośrednio z realnym życiem na WMI
 - Aplikacja o charakterze Open Source, otwarta na rozwój dla pasjonatów programowania na WMI
 
-Przechowywanie kodu w postaci open-source ma zachęcić wszystkich studentów do włożenia własnego udziału w rozwój projektu. Ma to stanowić przykład dla przyszłych projektów, które mogą być dalej utrzymywane przez innych studentów.
+Przechowywanie kodu w postaci open-source i otwarty charakter platformy na nowe treści ma zachęcić wszystkich studentów do włożenia własnego udziału w rozwój projektu. Ma to stanowić przykład dla przyszłych projektów, które mogą być dalej utrzymywane przez innych studentów.
 
 ### **Grupa odbiorców**
 Studenci kierunku Informatyka na WMI, którzy otrzymując oceny za przedmioty nie czują z nich wystarczającej satysfakcji, brakuje im motywacji do nauki. Wielu studentów nie widzi sensu wkładania większego wysiłku w naukę, nie dałoby im to niczego poza lepszymi ocenami, które nie są dla nich stymulujące. Studentom brakuje satysfakcji po zaliczeniu ciężkiego przedmiotu, szczególnie z wysokim wynikiem.
@@ -57,8 +58,8 @@ Studenci kolekcjonerzy, którzy uwielbiają zdobywać wszystkie możliwe osiągn
 
 ### **Sposób dotarcia do grupy odbiorców**
 
-Wywieszenie przyciągających plakatów/ogłoszeń o aplikacji na wydziale
-Założenie grupy na odpowiednich mediach społecznościowych
+Wywieszenie przyciągających plakatów/ogłoszeń o aplikacji na wydziale.
+Założenie grupy na odpowiednich mediach społecznościowych.
 Żeby rozgłosić powstanie tego typu aplikacji zostanie użyta poczta studencka służąca do rozsyłania informacji o nowym projekcie.
 W późniejszych fazach wdrażania systemu utworzone zostanie mini koło naukowe pokazujące studentom pracę nad projektami open-source na przykładzie WMI Adventure.
 Zachęcanie studentów poprzez kontakt ze starostami.
@@ -81,12 +82,12 @@ Aplikacja ma być lekka i szybka. Rozgrywka nie będzie wymagała poświęcenia 
 - **Zdobywanie wiedzy** - poprzez rozwiązywanie quizów z bazy pytań utworzonej przez studentów.
 - **Większa satysfakcja z nauki** - Dobre wyniki w nauce mają korzystne odzwieciedlenia w naszej aplikacji.
 - **Aspekt proedukacyjny - Motywacja do nauki** - Chęci osiągnięcia największych miejsc rankingowych wiążą się z nauką. Wartości przekazane w opowieściach.
-- **Rozrywka** wynikająca z:
+- **Rozrywka**:
     - pojedynki z innymi studentami w trybie battle
     - opowieści w trybie adventure przygotowane przez studentów
     - rozwój swojej kolekcji kart za pomocą Punktów umiejętności
     - zbieranie Punktów umiejętności poprzez rozwiązywanie codziennych Quizów
-- **Kolecjonowanie** - zdobywanie unikalnych kart z osiągnięciami, dodatkowa wartość za dobre oceny.
+- **Kolekcjonowanie** - zdobywanie unikalnych kart z osiągnięciami, dodatkowa wartość za dobre oceny.
 - **Rywalizacja** - rankingi oraz tryb battle.
 - **Przekaz historii, które wprowadzają klimat WMI** - tryb adventure; Historie o charakterze uniwersalnym.
 - Łączenie społeczności poprzez wspólny rozwój aplikacji.
@@ -182,48 +183,43 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 
 ## Skład zespołu
 
-- Marcin:
-    SCRUM, Java/Kotlin, Android, Spring, Networking, Sysadmin
-- Wirus:
-    Frontend, Android, Kotlin, React, Java, Spring, Project Owner
-- Dawid:
+- Mateusz Tylka - Product Owner:
+    Frontend, Android, Kotlin, React, Java, Spring
+- Marcin Kostrzewski - Scrum Master:
+    Java/Kotlin, Android, Spring, Networking, Sysadmin, Python
+- Dawid Korybalski:
     Frontend, JS, React, Django, Docker, Negocjacja / społeczność, marketing, SEO, Security
-- Michał:
+- Michał Czekański:
     Android, Django, Java, C#
 
 ## Wstępne kamienie milowe
-- Konsultacja prototypu z grupą docelową - 01.05.2021
-- Strefa publiczna - 01.06.2021
-
-Czy rozbijać Panel Administratora na dwie części **(?????)**:
-    - Osobno USOS
-    - Reszta
-
-- Panel Administratora - 30.06.2021
+- Konsultacja prototypu z grupą docelową - 16.04.2021
+- Strefa publiczna - 20.11.2021
 - Panel Twórcy - 20.11.2021
+- Panel Administratora - 25.12.2021
 - Tworzenie Contentu - 30.01.2022
 
 ## Szkic harmonogramu projektu
 
 ### Semestr I
 - Prototyp Interfejsu
-- Strefa Publiczna
-    * Interfejs trybu Adventure
+- Strefa Publiczna, Panel Twórcy
     * Tryb Battle
-    * Rankingi
-    * Minigry
+    * Narzędzie tworzenia Kart
     * Interfejs Quizów
+    * Narzędzie tworzenia Quizów
+    * Rankingi
+
+### Semestr II
+- Strefa Publiczna, Panel Twórcy
+    * Narzędzie do tworzenia historii
+    * Interfejs trybu Adventure
+    * Minigry
 
 - Panel Administratora
     * Integracja z USOS
     * Zarządzanie kontami użytkowników
     * Zarządzanie treściami zgłoszonymi przez użytkowników
-
-### Semestr II
-- Panel Twórcy
-    * Narzędzie do tworzenia historii
-    * Narzędzie tworzenia Quizów
-    * Narzędzie tworzenia Kart
 
 - Tworzenie Contentu
     * Historie
