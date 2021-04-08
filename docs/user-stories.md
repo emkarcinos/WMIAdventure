@@ -6,6 +6,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 ### Tryb Battle
 
+- Chcę w głównym widoku wejść w Tryb Battle i zobaczyć listę graczy, których mogę wyzwać na pojedynek oraz tych których nie mogę i chce wiedzieć dlaczego nie mogę.
 - Chcę mieć możliwość wyboru przeciwnika, aby mieć kontrolę nad tym, z kim będę walczył.
 - Po przejściu w Tryb Battle chcę móc wyszukać użytkowników po nazwie, aby stoczyć pojedynek z konkretnym studentem.
 - Oprócz wyszukiwania przeciwników, chcę aby aplikacja pokazała mi kilku sugerowanych użytkowników do walki, abym nie musiał za każdym razem wyszukiwać konkretnych graczy.
@@ -21,6 +22,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 ### Tryb Adventure
 
+- Chcę w głównym widoku wejść w Tryb Adventure i zobaczyć wszystkie historie wyróżnione na te dostępne do przejścia, te które przeszedłem i te które nie są jeszcze dostępne.
 - Chcę móc "przyśpieszyć" wyświetlanie napisów dialogowych, bo mogę czytać je szybciej i nie chcę tracić niepotrzebnie czasu.
 - Chcę mieć możliwość powrotu do historii, które już przeszedłem, aby jeszcze raz je sobie przypomnieć.
 - W dowolnym momencie chcę móc wyjść z trybu, żeby móc skupić się na innej rzeczy, którą w danej chwili chcę zrobić.
@@ -88,6 +90,9 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 - Chcę otrzymywać informację o zgłoszeniach nowego contentu, aby nie musieć za każdym razem sprawdzać listy.
 
 ## Ogólne cele
+
+
+Jako użytkownik chce mieć dostęp do swojego konta po wprowadzeniu swojego loginu oraz hasła.
 
 **Jako** student **chcę** czuć satysfakcję z wysiłku włożonego w naukę, **żeby** mieć motywację do studiowania.
 
