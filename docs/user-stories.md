@@ -56,6 +56,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 ### Pozostałe
 
 - Chcę mieć możliwość wyłączenia efektów dźwiękowych w aplikacji, aby nie musieć ich słyszeć gdy tego nie potrzebuję.
+- Chcę mieć możliwość zgłoszenia błędu w treściach aplikacji, żeby dać informację zwrotną twórcom, aby poprawili błąd.
 
 ## Użytkownik: Twórca
 
@@ -78,16 +79,27 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 ### Kreator Quizów
 
+- Chcę mieć możliwość wyboru z listy wszystkich dostępnych przedmiotu, żeby przypisać pytanie Quizowe do danego przedmiotu.
+- Chcę mieć możliwość wyboru trybu pytania spośród prawda/fałsz, abc, itd., żeby dostosować Quiz do swoich potrzeb.
+- Chcę mieć możliwość wyboru poprawnych i złych odpowiedzi, żeby pytania Quizowe były pełne.
+
+## Wszyscy kreatorzy
+
+- Chcę dostać powiadomienie o zaakceptowaniu mojej stworzonej treści, żeby wiedzieć, czy stworzyć dobrą treść.
+- Chcę dostać powiadomienie o odrzuceniu mojej stworzonej treści z uzasadnieniem, żeby móc poprawić moją treść.
+- Chcę dostać jakieś benefity za nadesłanie zaakceptowanych treści, żeby czuć satysfakcję z tworzenia.
+- Chcę móc edytować wszystkie stworzone przez siebie zawartości, w tym te odrzucone, żeby móc je poprawić.
 
 ## Administrator
 
 - Chcę mieć możliwość modyfikowania paramerów aplikacji, żeby łatwo usprawniać jej działanie.
 - Chcę widzieć statystyki aplikacji takie jak ilość aktywnych użytkowników, ilość wszystkich użytkowników, średni czas pracy, aby oceniać jak dobrze aplikacja pracuje.
-- Chcę mieć możliwość akceptowania / odrzucania propozycji nowej zawartości, żeby decydować co trafia do aplikacji.
+- Chcę mieć możliwość akceptowania / odrzucania propozycji nowej zawartości i dodawania komentarzy, żeby decydować co trafia do aplikacji i dawać feedback twórcom.
 - Chce mieć realistyczny podgląd proponowanych treści, żeby ocenić czy je zaakceptować.
 - Chcę móc tworzyć konta testowe, aby swobodnie sprawdzać działanie aplikacji jako użytkownik.
 - Chcę móc usuwać zawartości już dodane, aby pozbyć się ewentualnych błędów lub złego contentu.
 - Chcę otrzymywać informację o zgłoszeniach nowego contentu, aby nie musieć za każdym razem sprawdzać listy.
+- Chcę otrzymywać powiadomienia o zgłoszonych błędach, żeby je poprawiać.
 
 ## Ogólne cele
 
@@ -109,8 +121,6 @@ Jako użytkownik chce mieć dostęp do swojego konta po wprowadzeniu swojego log
 **Jako** student **chcę** posłuchać ciekawych historii związanych ze studiowaniem na WMI z grona szerszego niż moi znajomi, **żeby** móc poznać więcej przeżyć, doświadczeń, które mogą być ciekawe, przydatne, inspirujące itp.
 
 **Jako** student **chcę** , **żeby** ... COŚ O PRZEKAZANIU SWOJEJ historii
-
-COŚ O TWORZENIU GRAFIK KART, QUIZÓW
 
 COŚ O PRZEGLĄDANIU PRZYSŁANYCH CONTENTÓW JAKO ADMIN
 
