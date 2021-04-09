@@ -57,6 +57,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 1. Chcę mieć możliwość wyłączenia efektów dźwiękowych w aplikacji, aby nie musieć ich słyszeć gdy tego nie potrzebuję.
 2. Chcę mieć możliwość zgłoszenia błędu w treściach aplikacji, żeby dać informację zwrotną twórcom, aby poprawili błąd.
+3. Chcę, aby opis do czego służy ta aplikacja i co można w niej robić nie był zbyt długi i znajdował się na jej stronie głównej bez potrzeby rejestracji, ani logowania, żeby łatwo się dowiedzieć, czy będę zainteresowany używaniem tej aplikacji.
 
 ## 2. Użytkownik: Twórca
 
