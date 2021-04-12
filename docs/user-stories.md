@@ -57,6 +57,9 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 1. Chcę mieć możliwość wyłączenia efektów dźwiękowych w aplikacji, aby nie musieć ich słyszeć gdy tego nie potrzebuję.
 2. Chcę mieć możliwość zgłoszenia błędu w treściach aplikacji, żeby dać informację zwrotną twórcom, aby poprawili błąd.
+3. Po wejściu do aplikacji chcę dowiedzieć się, czy trwa obecnie event losowy, aby zdobywać nowe karty, punkty PU i utrzymywać codzienną aktywność w grze.
+4. Jeżeli nie mogę dołączyć do eventu losowego, chcę znać powód, aby dostosować się do jego wymagań i wziąć w nim udział.
+5. Chcę dostawać powiadomienia informujące mnie o nowej zawartości w aplikacji, żebym mógł ją sprawdzić.
 
 ## 2. Użytkownik: Twórca
 
