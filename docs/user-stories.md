@@ -19,6 +19,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 11. Chcę, aby przebieg walki, czyli między innymi karty moje i przecwnika, został zapisany. Chcę móc mieć dostęp do kilku ostatnich historycznych pojedynków, żeby ocenić dobór swoich kart i przygotować się lepiej do przyszłych walk.
 12. Nie chcę, żeby jeden przeciwnik atakował mnie cały czas znając moją talię, aby uniknąć masowych strat punktów.
 13. Przed każdą walką chcę mieć dodatkowo możliwość łatwego przejścia do mojej talii kart, aby dostosować ją do konkretnej walki bez koniecnzości powrotów do poprzednich menu.
+14. Po przejściu w Tryb Battle w pierwszym widoku chcę zobaczyć moje statystyki z tego trybu, takie jak punkty, stoczone walki, wygrane walki razem z procentem wygranych.
 
 ### 2. Tryb Adventure
 
