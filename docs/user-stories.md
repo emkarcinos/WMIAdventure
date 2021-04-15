@@ -21,6 +21,8 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 13. Przed każdą walką chcę mieć dodatkowo możliwość łatwego przejścia do mojej talii kart, aby dostosować ją do konkretnej walki bez konieczności powrotów do poprzednich menu.
 14. Po przejściu w Tryb Battle w pierwszym widoku chcę zobaczyć moje statystyki z tego trybu, takie jak punkty, stoczone walki, wygrane walki razem z procentem wygranych, aby po każdej walce widzieć, jak zmienia się moja pozycja w rankingu bez potrzeby przechodzenia do innych widoków.
 15. Po przejściu w Tryb Battle w pierwszym widoku chcę zobaczyć moją talię oraz mieć możliwość przejścia do zmiany talii, by móc zweryfikować jej skład i ewentualnie zmienić ją przed pojedynkami.
+16. Po skończonej walce chcę mieć możliwość powrotu do Trybu Battle, żeby nie musieć przeklikiwać przez całą aplikację.
+
 
 ### 2. Tryb Adventure
 
@@ -32,6 +34,10 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 6. Jeżeli zdobędę nową kartę, chcę być o tym wyraźnie powiadomionym, zobaczyć czym ta karta jest, żeby dowiedzieć się, że w mojej talii pojawiła się nowa bez konieczności wychodzenia z trybu.
 7. Chcę wyraźnie widzieć, która postać mówi aktualny dialog, żeby nie gubić się w treści.
 8. Chcę cały czas widzieć pasek postępu w historii, którą przechodzę, żeby móc ocenić ilość czasu jaką muszę poświęcić na ukończenie jej.
+9. Chcę mieć możliwość pokonywania kluczowych postaci w Trybie Adventure, żeby czerpać satysfakcję z progresowania w aplikacji.
+10. Przed walką z bossem chcę mieć możliwość zmiany mojej talii, żeby nie musieć wychodzić z Trybu Adventure w celu dostosowania mojej talii pod bossa.
+11. Po skończonej walce z bossem nie chcę być wyrzucany z Trybu Adventure, żeby móc dalej kontynuować historię.
+12. Jeżeli pokonanie bossa wiążę się ze zdobyciem nowej karty, to przed walką chcę się o tym dowiedzieć, żeby mieć większą chęć do walki.
 
 ### 3. Rankingi
 
@@ -76,6 +82,9 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 5. Chcę dodawać wiele emocji dla postaci i móc je wywoływać w konkretnych dialogach, aby tworzyć bardziej dynamiczne historie.
 6. Chcę ustawić kiedy i jaką kartę użytkownik zdobędzie, żeby tworzyć historię, po których użytkownik zdobywa nowe karty.
 7. Chcę móc wywoływać proste animacje, żeby historie lepiej wyglądały.
+8. Chcę móc usuwać swoje dodane obrazy jeśli jednak zdecyduje się na inny wygląd sceny, aby historia była zaprezentowana według mojej wizji.
+9. Chcę dostać powiadomienie czy wysłana przeze mnie historia została wysłana pomyślnie, aby wysłać ją jeszcze raz w razie potrzeby.
+10. Chcę móc wybierać i usuwać grafiki już znajdujące się w bazie danych aplikacji aby je wykorzystywać do swojej historii.
 
 ### 2. Kreator Kart
 
@@ -89,6 +98,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 1. Chcę mieć możliwość wyboru z listy wszystkich dostępnych przedmiotu, żeby przypisać pytanie Quizowe do danego przedmiotu.
 2. Chcę mieć możliwość wyboru trybu pytania spośród prawda/fałsz, abc, itd., żeby dostosować Quiz do swoich potrzeb.
 3. Chcę mieć możliwość wyboru poprawnych i złych odpowiedzi, żeby pytania Quizowe były pełne.
+4. Chcę dostać powiadomienie czy wysłane przeze mnie pytanie zostało wysłane pomyślnie, aby wysłać je jeszcze raz w razie potrzeby.
 
 ### 4. Wszyscy kreatorzy
 
