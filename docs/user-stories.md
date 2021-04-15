@@ -13,12 +13,12 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 5. Po wyborze przeciwnika chciałbym zobaczyć jego profil, żeby móc przygotować się do walki.
 6. W widoku profilu przeciwnika chciałbym dowiedzieć się o jego procencie wygranych, punktach zdobytych w aplikacji, pozycji w rankingach, aktualnym semestrze, żeby móc ocenić swoje szanse na wygraną.
 7. Po wyborze przeciwnika chcę mieć możliwość powrotu i wyboru innego przeciwnika, aby uniknąć nieprzemyślanych decyzji i ewentualnych missclicków.
-8. Chcę widzieć przebieg walki, żeby czerpać z niej satysfację i zobaczyć jak działają moje karty.
+8. Chcę widzieć przebieg walki, żeby czerpać z niej satysfakcję i zobaczyć jak działają moje karty.
 9. Przed rozpoczęciem i w trakcie walki chcę mieć możliwość fast-forwardu, czyli automatycznego rozegrania pojedynku bez wizualizacji, żeby szybko dowiedzieć się o jej wyniku i nie tracić czasu.
-10. Po wygranej lub przeganej walcę chcę zobaczyć skutki pojedynku, żeby wiedzieć co się stało i ile zdobyłem/straciłem punktów.
-11. Chcę, aby przebieg walki, czyli między innymi karty moje i przecwnika, został zapisany. Chcę móc mieć dostęp do kilku ostatnich historycznych pojedynków, żeby ocenić dobór swoich kart i przygotować się lepiej do przyszłych walk.
+10. Po wygranej lub przegranej walce chcę zobaczyć skutki pojedynku, żeby wiedzieć co się stało i ile zdobyłem/straciłem punktów.
+11. Chcę, aby przebieg walki, czyli między innymi karty moje i przeciwnika, został zapisany. Chcę móc mieć dostęp do kilku ostatnich historycznych pojedynków, żeby ocenić dobór swoich kart i przygotować się lepiej do przyszłych walk.
 12. Nie chcę, żeby jeden przeciwnik atakował mnie cały czas znając moją talię, aby uniknąć masowych strat punktów.
-13. Przed każdą walką chcę mieć dodatkowo możliwość łatwego przejścia do mojej talii kart, aby dostosować ją do konkretnej walki bez koniecnzości powrotów do poprzednich menu.
+13. Przed każdą walką chcę mieć dodatkowo możliwość łatwego przejścia do mojej talii kart, aby dostosować ją do konkretnej walki bez konieczności powrotów do poprzednich menu.
 14. Po przejściu w Tryb Battle w pierwszym widoku chcę zobaczyć moje statystyki z tego trybu, takie jak punkty, stoczone walki, wygrane walki razem z procentem wygranych, aby po każdej walce widzieć, jak zmienia się moja pozycja w rankingu bez potrzeby przechodzenia do innych widoków.
 15. Po przejściu w Tryb Battle w pierwszym widoku chcę zobaczyć moją talię oraz mieć możliwość przejścia do zmiany talii, by móc zweryfikować jej skład i ewentualnie zmienić ją przed pojedynkami.
 
@@ -38,21 +38,21 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 1. Chcę mieć możliwość wyboru kategorii rankingowych, żeby w jednym momencie widzieć tylko tą, która mnie interesuje.
 2. Chcę, żeby kilku najlepszych graczy było wyraźnie zaznaczonych, aby czerpać większą satysfakcję jeżeli to ja będę wśród nich.
 3. Przy każdym użytkowniku w rankingu chcę widzieć jego pozycję i wynik, aby łatwo odczytać informację o nich.
-4. Chcę móc kliknąc na dowolnego użytkownika żeby wyświetlić jego profil w celu pozyskania informacji o nim.
+4. Chcę móc kliknąć na dowolnego użytkownika żeby wyświetlić jego profil w celu pozyskania informacji o nim.
 5. Po wyświetleniu wybranego profilu chcę mieć możliwość stoczenia z nim pojedynku, żeby nie musieć zapamiętywać jego nazwy do późniejszego wyszukiwania w Trybie Battle.
-6. Chcę wyszukiwac użytkowników po nazwie, żeby zobaczyć ich pozycję w rankingu, ich profil.
+6. Chcę wyszukiwać użytkowników po nazwie, żeby zobaczyć ich pozycję w rankingu, ich profil.
 7. Chcę zawsze widzieć swoją pozycję i wynik w kategorii, którą aktualnie wyświetlam, żeby mieć do niej łatwy dostęp i nie musieć przechodzi do swojego profilu.
 
 ### 4. Profil użytkownika
 
 1. Chcę widzieć swoją nazwę i statystyki, żeby analizować swoje postępy w aplikacji.
-2. Chcę móc łatwo edytować swoją talię kart, żeby próbować różne kombinację bez koniecnzości wchodzenia w tryb Battle.
+2. Chcę móc łatwo edytować swoją talię kart, żeby próbować różne kombinację bez konieczności wchodzenia w tryb Battle.
 3. Przy dostosowaniu talii chcę widzieć wszystkie dostępne karty, aby mieć możliwość łatwej zmiany talii.
 4. Chcę zobaczyć informację o karcie którą wybiorę, żeby dowiedzieć się co ona robi i zdecydować czy chcę coś z nią zrobić.
-5. Chcę mieć wgląd na wszystkie karty jakie posiadam, żeby cieszyć się swoją kolecją.
+5. Chcę mieć wgląd na wszystkie karty jakie posiadam, żeby cieszyć się swoją kolekcją.
 6. W edytorze talii chcę, aby nowo zdobyte karty były jakoś oznaczone, aby nie musieć ich wyszukiwać wśród wszystkich innych.
 7. Chcę widzieć poziomy swoich kart, żeby łatwiej dostosowywać talię.
-8. Chcę zawsze widzieć ilośc punktów Skilli, żeby łatwiej podejmować decyzję ulepszania kart.
+8. Chcę zawsze widzieć ilość punktów Skilli, żeby łatwiej podejmować decyzję ulepszania kart.
 9. W każdej chwili chcę mieć możliwość podjęcia się rozwiązania quizu, żeby otrzymać nowe punkty Skilli.
 
 ### 5. Pozostałe
@@ -99,7 +99,7 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 
 ## 3. Administrator
 
-1. Chcę mieć możliwość modyfikowania paramerów aplikacji, żeby łatwo usprawniać jej działanie.
+1. Chcę mieć możliwość modyfikowania parametrów aplikacji, żeby łatwo usprawniać jej działanie.
 2. Chcę widzieć statystyki aplikacji takie jak ilość aktywnych użytkowników, ilość wszystkich użytkowników, średni czas pracy, aby oceniać jak dobrze aplikacja pracuje.
 3. Chcę mieć możliwość akceptowania / odrzucania propozycji nowej zawartości i dodawania komentarzy, żeby decydować co trafia do aplikacji i dawać feedback twórcom.
 4. Chce mieć realistyczny podgląd proponowanych treści, żeby ocenić czy je zaakceptować.
