@@ -153,3 +153,12 @@ COŚ O GRZE, APLIKACJI ZWIĄZANEJ Z WYDZIAŁEM
 COŚ O CHĘCI WIĘKSZEJ LICZBY OSIĄGNIĘĆ DO ZDOBYCIA W TRAKCIE STUDIOWANIA, KTÓRYMI MOŻNA SIĘ POCHWALIĆ
 
 COŚ O ZDOBYWANIU ITEMÓW DO KOLEKCJI ZWIĄZANYCH Z PRZEDMIOTAMI KTÓRE SIĘ ZALICZYŁO I INNYMI OSIĄGNIĘCIAMI NA WYDZIALE
+
+### 1. Dotyczące trybu battle
+
+1. **Jako** student **chcę**, aby system walki kartami był zbalansowany i atraktyjny, **abym** się cieszył z gry i nie czuł że wygrywanie jest zbyt łatwe, lub zbyt trudne posiadając daną ilość kart i bedąc na X semestrze.
+2. **Jako** student **chcę**, aby interfejs trybu Battle był estetyczny i instynktowny, **abym** się cieszył z gry i miał łatwy dostęp do innych widoków w aplikacji, które chciałbym odwiedzić po pojedynku.
+3. **Jako** student **chcę**, żeby mogły mnie wyzywać na pojedynki osoby o podobnym poziomie bitewnym co mój, **abym** nie mógł łatwo wygrywać ciągle z tą samą osobą, lub jakaś mocniejsza osoba nie mogła w kółko nabijać sobie na mnie punktów.
+4. **Jako** student **chcę**, żeby istniała historia moich walk, **abym** mógł zobaczyć z kim walczyłem, czy wygrałem i zobaczyć z jaką przewagą wygrałem lub przegrałem.
+5. **Jako** student **chcę**, aby konkretne karty były atrakcyjne, miały informatyczny przekaz i sensowne działanie, **żeby** cieszyć się z pojedynkowania, układania talii oraz kolekcjonowania kart.
+6. **Jako** student **chcę**, aby było jaśnie określone, czy karty mogą mi się przydać do czegoś więcej niż tylko do Trybu Battle i mieć jasny przekaz do czego jeszcze mogę ich użyć lub jakie dają korzyści, **żeby** cieszyć się z aplikacji.
