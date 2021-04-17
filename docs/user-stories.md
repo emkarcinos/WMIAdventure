@@ -61,11 +61,14 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 8. Chcę zawsze widzieć ilość punktów Skilli, żeby łatwiej podejmować decyzję ulepszania kart.
 9. W każdej chwili chcę mieć możliwość podjęcia się rozwiązania quizu, żeby otrzymać nowe punkty Skilli.
 
-### 5. Pozostałe
+### 6. Quizy
+
+1. Chcę mieć dostęp do widoku ze wszystkimi pytaniami podzielone na kategorie, na które do tej pory udzieliłem poprawnej odpowiedzi w quizach, aby móc je sobie przypomnieć.
+
+### 7. Pozostałe
 
 1. Chcę mieć możliwość wyłączenia efektów dźwiękowych w aplikacji, aby nie musieć ich słyszeć gdy tego nie potrzebuję.
 2. Chcę mieć możliwość zgłoszenia błędu w treściach aplikacji, żeby dać informację zwrotną twórcom, aby poprawili błąd.
-
 3. Po wejściu do aplikacji chcę dowiedzieć się, czy trwa obecnie event losowy, aby zdobywać nowe karty, punkty PU i utrzymywać codzienną aktywność w grze.
 4. Jeżeli nie mogę dołączyć do eventu losowego, chcę znać powód, aby dostosować się do jego wymagań i wziąć w nim udział.
 5. Chcę dostawać powiadomienia informujące mnie o nowej zawartości w aplikacji, żebym mógł ją sprawdzić.
