@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,10 +28,9 @@ jobs:
     - name: Run Tests
       run: |
         python ./WMIAdventure/backend/WMIAdventure_backend/manage.py test
-    - name: Docker Compose Action
     - uses: actions/checkout@v2
     - uses: isbang/compose-action@v0.1
       with:
-        compose-file: './docker/docker-compose.yml'
+        compose-file: './WMIAdventure/docker-compose.yml'
       
       
