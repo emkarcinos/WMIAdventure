@@ -2,6 +2,8 @@ version: '3'
 
 services: 
     wmiadventure-backend:
+    
+        image: wmiadvtest.azurecr.io/wmiadvtest
         build: ./backend
         command: python manage.py runserver 0.0.0.0:8000
         ports: 
