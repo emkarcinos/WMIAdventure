@@ -1,0 +1,9 @@
+@import 'src/main-styles/variables';
+
+.MainMenuContainer {
+  display: grid;
+  width: 80%;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto;
+  grid-row-gap: 16px;
+}

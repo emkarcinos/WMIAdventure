@@ -11,14 +11,17 @@ import MainMenuModule from '../../components/elements/MainMenuModule';
 import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';
 import rankingImg from '../../../assets/images/ranking-image.png';
+import MainMenuContainer from '../../components/containers/MainMenuContainer';
 
 function MainMenu() {
     return (
         <div className="MainMenu">
             <NavBar logo={<Logo />} notification={<NotificationButton />} profile={<ProfileButton />} showMore={<ShowMoreButton />}/>
-            <MainMenuModule img={adventureImg} alt={'Zdjęcie wejścia do wydziału WMI.'} header={'ADVENTURE'} describe={'Przeżyj wydziałową historię w postaci Visual Novel.'}/>
-            <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} describe={'Walcz z innymi graczami.'}/>
-            <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} describe={'Sprawdź jakim prosem jesteś.'}/>
+            <MainMenuContainer>
+                <MainMenuModule img={adventureImg} alt={'Zdjęcie wejścia do wydziału WMI.'} header={'ADVENTURE'} describe={'Przeżyj wydziałową historię w postaci Visual Novel.'}/>
+                <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} describe={'Walcz z innymi graczami.'}/>
+                <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} describe={'Sprawdź jakim prosem jesteś.'}/>
+            </MainMenuContainer>
         </div>
     );
 }
