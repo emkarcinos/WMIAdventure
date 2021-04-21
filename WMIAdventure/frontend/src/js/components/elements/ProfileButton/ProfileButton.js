@@ -7,7 +7,7 @@ import profile from '../../../../assets/icons/profile.svg';
 
 function ProfileButton() {
     return (
-        <Link className='ProfileButton' to={'/Profile'} onClick={() => {console.log('profile button clicked');}}>
+        <Link className='ProfileButton' to={'/profile'} onClick={() => {console.log('profile button clicked');}}>
             <img className='ProfileButton__icon' src={profile} alt='Ikona oznaczająca profil użytkownika, taki tors ludzika.'/>
         </Link>
     );

@@ -1,10 +1,13 @@
 @import "src/main-styles/variables";
 
-.MainMenu {
+.AdventureMode {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
-  background-color: $ui-01;
+
+  &__paragraph {
+    font-size: 36px;
+  }
 }

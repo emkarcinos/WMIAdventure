@@ -1,20 +1,21 @@
 import React from 'react';
-import './Profile.scss';
+import './AdventureMode.scss';
+
 import NavBar from '../../components/containers/NavBar';
 import Logo from '../../components/elements/Logo';
 import NotificationButton from '../../components/elements/NotificationButton';
 import ProfileButton from '../../components/elements/ProfileButton';
 import ShowMoreButton from '../../components/elements/ShowMoreButton';
 
-function Profile() {
+function AdventureMode() {
     return (
-        <div className='Profile'>
+        <div className='AdventureMode'>
             <NavBar logo={<Logo />} notification={<NotificationButton />} profile={<ProfileButton />} showMore={<ShowMoreButton />}/>
-            <p className='Profile__paragraph'>
-                Profile view - Have not implemented yet.
+            <p className='AdventureMode__paragraph'>
+                Adventure Mode View - have not implemented yet.
             </p>
         </div>
     );
 }
 
-export default Profile;
+export default AdventureMode;
