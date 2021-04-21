@@ -27,8 +27,8 @@ function MainMenu() {
                 <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} link={'/ranking'} describe={'Sprawdź jakim prosem jesteś.'}/>
             </MainMenuContainer>
             <FlexCenterContainer>
-                <MainMenuSmallerModule label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} time={'Pozostało: 2d 15h'} decorate={local}/>
-                <MainMenuSmallerModule label={'QUIZ'} describe={'ROZWIĄŻ QUIZ'} time={false} decorate={false}/>
+                <MainMenuSmallerModule link={'/event'} label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} alt={'Ikonka lokalizacji.'} time={'Pozostało: 2d 15h'} decorate={local}/>
+                <MainMenuSmallerModule link={'/quiz'} label={'QUIZ'} describe={'ROZWIĄŻ QUIZ'} time={false} decorate={false}/>
             </FlexCenterContainer>
         </div>
     );

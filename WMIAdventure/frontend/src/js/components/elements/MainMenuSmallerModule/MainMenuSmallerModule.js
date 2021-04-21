@@ -20,9 +20,9 @@ function timeLabelHandler(time) {
     }
 }
 
-function MainMenuSmallerModule({label, decorate, alt, describe, time}) {
+function MainMenuSmallerModule({link, label, decorate, alt, describe, time}) {
     return (
-        <Link className='MainMenuSmallerModule'>
+        <Link to={link} className='MainMenuSmallerModule'>
             <p className='MainMenuSmallerModule__label'>
                 {label}
             </p>
@@ -31,7 +31,6 @@ function MainMenuSmallerModule({label, decorate, alt, describe, time}) {
             <p className='MainMenuSmallerModule__describe'>
                 {describe}
             </p>
-
         </Link>
     );
 }
