@@ -1,9 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import "./MainMenuModule.scss";
 
-function MainMenuModule({header, describe, link}) {
+function MainMenuModule({img, alt, header, describe, link}) {
     return (
         <Link className="MainMenuModule" to={link}>
+            <img className="MainMenuModule__image" src={img} alt={alt}/>
             <p className="MainMenuModule__header">
                 {header}
             </p>
@@ -13,3 +15,5 @@ function MainMenuModule({header, describe, link}) {
         </Link>
     );
 }
+
+export default MainMenuModule;

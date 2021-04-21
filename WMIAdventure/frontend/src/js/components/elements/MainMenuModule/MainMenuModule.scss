@@ -1,0 +1,40 @@
+@import "src/main-styles/variables";
+
+.MainMenuModule {
+  background-color: $ui-05;
+  color: $ui-06;
+  width: 80%;
+  height: 152px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 414px;
+    height: 152px;
+  }
+
+  &__header {
+    font-size: 40px;
+    font-weight: 600;
+  }
+
+  &__describe {
+    position: absolute;
+    top: 25%;
+    right: 16px;
+    font-size: 18px;
+    font-weight: 400;
+    color: $ui-07;
+    text-align: center;
+    width: 300px;
+  }
+}
