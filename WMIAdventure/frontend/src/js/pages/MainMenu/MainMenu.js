@@ -14,6 +14,7 @@ import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';
 import rankingImg from '../../../assets/images/ranking-image.png';
 import local from '../../../assets/icons/local.svg';
+import FlexCenterContainer from '../../components/containers/FlexCenterContainer';
 
 
 function MainMenu() {
@@ -25,7 +26,10 @@ function MainMenu() {
                 <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} describe={'Walcz z innymi graczami.'}/>
                 <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} describe={'Sprawdź jakim prosem jesteś.'}/>
             </MainMenuContainer>
-            <MainMenuSmallerModule label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} time={'Pozostało: 2d 15h'} decorate={local}/>
+            <FlexCenterContainer>
+                <MainMenuSmallerModule label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} time={'Pozostało: 2d 15h'} decorate={local}/>
+                <MainMenuSmallerModule label={'QUIZ'} describe={'ROZWIĄŻ QUIZ'} time={false} decorate={false}/>
+            </FlexCenterContainer>
         </div>
     );
 }
