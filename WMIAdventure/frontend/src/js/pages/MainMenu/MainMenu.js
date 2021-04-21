@@ -23,7 +23,7 @@ function MainMenu() {
             <NavBar logo={<Logo />} notification={<NotificationButton />} profile={<ProfileButton />} showMore={<ShowMoreButton />}/>
             <MainMenuContainer>
                 <MainMenuModule img={adventureImg} alt={'Zdjęcie wejścia do wydziału WMI.'} link={'/adventure'} header={'ADVENTURE'} describe={'Przeżyj wydziałową historię w postaci Visual Novel.'}/>
-                <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} link={'/'} describe={'Walcz z innymi graczami.'}/>
+                <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} link={'/battle'} describe={'Walcz z innymi graczami.'}/>
                 <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} describe={'Sprawdź jakim prosem jesteś.'}/>
             </MainMenuContainer>
             <FlexCenterContainer>
