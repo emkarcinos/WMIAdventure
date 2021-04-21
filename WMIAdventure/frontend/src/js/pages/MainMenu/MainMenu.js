@@ -7,11 +7,14 @@ import ShowMoreButton from '../../components/elements/ShowMoreButton';
 import ProfileButton from '../../components/elements/ProfileButton';
 import Logo from '../../components/elements/Logo';
 import MainMenuModule from '../../components/elements/MainMenuModule';
+import MainMenuContainer from '../../components/containers/MainMenuContainer';
+import MainMenuSmallerModule from '../../components/elements/MainMenuSmallerModule/MainMenuSmallerModule';
 
 import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';
 import rankingImg from '../../../assets/images/ranking-image.png';
-import MainMenuContainer from '../../components/containers/MainMenuContainer';
+import local from '../../../assets/icons/local.svg';
+
 
 function MainMenu() {
     return (
@@ -22,6 +25,7 @@ function MainMenu() {
                 <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} describe={'Walcz z innymi graczami.'}/>
                 <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} describe={'Sprawdź jakim prosem jesteś.'}/>
             </MainMenuContainer>
+            <MainMenuSmallerModule label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} time={'Pozostało: 2d 15h'} decorate={local}/>
         </div>
     );
 }
