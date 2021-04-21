@@ -1,0 +1,10 @@
+@import "src/main-styles/variables";
+
+.MainMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $ui-02;
+}

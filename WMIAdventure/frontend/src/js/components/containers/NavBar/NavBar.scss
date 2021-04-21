@@ -1,0 +1,24 @@
+@import "src/main-styles/variables";
+
+.NavBar {
+  background-color: $ui-04;
+  width: 100%;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &__navigation {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

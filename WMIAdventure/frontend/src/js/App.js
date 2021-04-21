@@ -1,11 +1,13 @@
-import "../main-styles/App.scss";
-import Logo from "./components/elements/Logo";
+import {Route, Switch} from "react-router-dom";
+import MainMenu from "./pages/MainMenu";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
-    <div className="App">
-        <Logo />
-    </div>
+    <Switch>
+        <Route exact path="/" component={MainMenu} />
+        <Route path="/profile" component={Profile} />
+    </Switch>
   );
 }
 

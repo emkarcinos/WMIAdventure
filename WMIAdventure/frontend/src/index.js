@@ -6,11 +6,13 @@ import "./main-styles/normalize.css";
 
 import App from "./js/App";
 import reportWebVitals from "./js/reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
