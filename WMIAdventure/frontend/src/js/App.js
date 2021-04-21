@@ -5,6 +5,7 @@ import AdventureMode from './pages/AdventureMode';
 import BattleMode from './pages/BattleMode/BattleMode';
 import Ranking from './pages/Ranking/Ranking';
 import Event from './pages/Event';
+import Quiz from './pages/Quiz';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/battle' component={BattleMode} />
         <Route path='/ranking' component={Ranking} />
         <Route path='/event' component={Event} />
+        <Route path='/quiz' component={Quiz} />
     </Switch>
   );
 }
