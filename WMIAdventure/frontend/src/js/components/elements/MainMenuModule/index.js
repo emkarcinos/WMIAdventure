@@ -1,2 +1,2 @@
-import MainMenuModule from "./MainMenuModule";
+import MainMenuModule from './MainMenuModule';
 export default MainMenuModule;

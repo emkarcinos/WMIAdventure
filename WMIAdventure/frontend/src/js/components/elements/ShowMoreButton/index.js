@@ -1,2 +1,2 @@
-import ShowMoreButton from "./ShowMoreButton";
+import ShowMoreButton from './ShowMoreButton';
 export default ShowMoreButton;

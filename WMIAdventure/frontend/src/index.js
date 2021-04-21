@@ -1,19 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import "./main-styles/index.css";
-import "./main-styles/normalize.css";
+import './main-styles/index.css';
+import './main-styles/normalize.css';
 
-import App from "./js/App";
-import reportWebVitals from "./js/reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import App from './js/App';
+import reportWebVitals from './js/reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

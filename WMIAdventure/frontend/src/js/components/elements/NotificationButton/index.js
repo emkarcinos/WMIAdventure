@@ -1,2 +1,2 @@
-import NotificationButton from "./NotificationButton";
+import NotificationButton from './NotificationButton';
 export default NotificationButton;

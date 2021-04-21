@@ -1,5 +1,5 @@
-import React from "react";
-import "./NavBar.scss";
+import React from 'react';
+import './NavBar.scss';
 
 function NavBar({logo, notification, profile, showMore}) {
     return (

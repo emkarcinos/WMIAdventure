@@ -4,6 +4,6 @@
     "semi": ["error", "always"],
     "no-extra-semi": ["error"],
     "eqeqeq": ["error", "always"],
-    "quotes": ["error", "double"]
+    "quotes": ["error", "single"]
   }
 }
