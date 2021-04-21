@@ -3,6 +3,7 @@ import MainMenu from './pages/MainMenu';
 import Profile from './pages/Profile';
 import AdventureMode from './pages/AdventureMode';
 import BattleMode from './pages/BattleMode/BattleMode';
+import Ranking from './pages/Ranking/Ranking';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path='/profile' component={Profile} />
         <Route path='/adventure' component={AdventureMode} />
         <Route path='/battle' component={BattleMode} />
+        <Route path='/ranking' component={Ranking} />
     </Switch>
   );
 }
