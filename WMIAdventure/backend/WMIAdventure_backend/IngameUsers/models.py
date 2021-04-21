@@ -21,7 +21,7 @@ class BasicUserInfo(models.Model):
     """
 
     username = models.CharField(max_length=50, primary_key=True)
-    semester = models.OneToOneField(Semester, on_delete=models.SET_NULL)
+    semester = models.OneToOneField(Semester, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.username
