@@ -19,9 +19,9 @@ class BasicUserInfo(models.Model):
     Handy information about a given in-app user.
     Stores non-vital data just to make a user appear pretty.
     """
-
-    username = models.CharField(max_length=50, primary_key=True)
-    semester = models.OneToOneField(Semester, on_delete=models.SET_NULL, null=True)
+    userId = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=50)
+    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.username
