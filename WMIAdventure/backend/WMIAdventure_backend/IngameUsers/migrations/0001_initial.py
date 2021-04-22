@@ -26,5 +26,5 @@ class Migration(migrations.Migration):
                 ('semester', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='IngameUsers.semester')),
             ],
         ),
-        migrations.RunSQL(r"INSERT INTO IngameUsers_semester (semesterNumber) VALUES (1),(2),(3),(4),5),(6),(7);")
+        migrations.RunSQL(r"INSERT INTO IngameUsers_semester (semesterNumber) VALUES (1),(2),(3),(4),(5),(6),(7);")
     ]
