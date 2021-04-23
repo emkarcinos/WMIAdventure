@@ -95,6 +95,8 @@ W każdym story pomijam aktora, napisałem w nagłówku kto nim jest. Dodatkowo 
 2. Chcę wybierać efekty z listy, żeby tworzyć dynamiczne karty.
 3. Chce móc dostosować parametry karty, żeby miały konkretne efekty w trybie Battle.
 4. Chcę zdecydować w jaki sposób karta będzie ulepszana przez punkty Skilli.
+5. Chcę móc tworzyć karty wszelkiego rodzaju, aby przyczynić się do rozwoju treści w aplikacji.
+6. Chcę, aby karta zawierała tytuł, przedmiot i krótki opis, aby móc charakteryzować karty i dzielić je na kategorie.
 
 ### 3. Kreator Quizów
 
