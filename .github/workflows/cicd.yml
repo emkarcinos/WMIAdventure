@@ -40,10 +40,6 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: ACR Login
-      run: |
-        docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
-
     - name: Docker compose build and push to ACR
       run: |
         docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
