@@ -8,12 +8,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.9]
+
+    env:
+      SERVER_IP: 40.114.238.18
+      SERVER_USER: azureuser
+      ACR_SERVER: wmiadventure.azurecr.io
 
     steps:
     - uses: actions/checkout@v2
@@ -33,24 +37,24 @@ jobs:
       with:
         compose-file: './WMIAdventure/docker-compose.yml'
 
-            
+
     - uses: actions/checkout@v2
-    - uses: azure/docker-login@v1
-      with:
-        login-server: wmiadvtest.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-        
-    - run: |
+
+    - name: ACR Login
+      run: |
+        docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
+
+    - name: Docker compose build and push to ACR
+      run: |
+        docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
         cd ./WMIAdventure/
         docker-compose build
-        docker-compose push
-        
-    - uses: azure/webapps-deploy@v2
+        docker push ${{ env.ACR_SERVER }}/wmiadventure:v1
+
+    - name: Pull docker image from ACR on server and run using ssh
+      uses: garygrossgarten/github-action-ssh@release
       with:
-        app-name: 'wmiadvtest'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: 'wmiadvtest.azurecr.io/wmiadvtest'
-      
-      
-      
+        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:v1; docker container stop wmi-adventure; docker container rm wmi-adventure; docker run -d --name=wmi-adventure -p 8000:8000 -d ${{ env.ACR_SERVER }}/wmiadventure:v1
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USER }}
+        privateKey: ${{ secrets.SERVER_KEY}}
