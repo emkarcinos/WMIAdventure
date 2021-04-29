@@ -203,6 +203,112 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 # Organizacja pracy zespołu
 
+## Zakres prac członków zespołu
+
+### Michał Czekański
+- Tworzenie kodu w backend, mocna znajomość wykorzystywanego frameworka Django
+- Zarządzanie Continuous Deployment
+- Design API
+- Skarbnica wiedzy wszelakiej
+
+### Dawid Korybalski
+Dawid dysponuje ograniczoną ilością czasu ze względów prywatnych.
+- Tworzenie kodu w frontend, mocna znajomość wykorzystywanego frameworka React
+- Utrzymywanie kontenera w Dockerze dla frontendu
+- Kontakt z klientem, organizacja spotkań
+- Marketing / SEO
+- Design UI/UX
+
+### Marcin Kostrzewski
+- Tworzenie kodu w backend
+- Utrzymywanie kontenera w Dockerze dla frontentu i całego obrazu Dockera
+- Zarządzanie Continuous Integration
+- Design API
+- DevOps / Scrum Master
+
+### Mateusz Tylka
+- Tworzenie kodu w frontend
+- Pomysłodawca / Product Owner
+- Główny twórca treści w systemie
+
+## Role programistyczne
+
+### Backend (Python, Django, DjangoRestFramework)
+- Michał Czekański
+- Marcin Kostrzewski
+### Frontend (HTML, CSS, React)
+- Dawid Korybalski
+- Mateusz Tylka
+
+## Repozytorium kodu
+
+Kod i historia zmian organizowana jest przez Git. Repozytorium online znajduje się na [GitHubie](https://github.com/emkarcinos/WMIAdventure) i na tą chwilę jego widoczność jest niepubliczna. 
+## Metodyka pracy
+Zespół implementuje nieco zmienioną wersję metodyki **Scrum**. Dostosowaliśmy go do mniej codziennej pracy.
+
+
+### Role
+
+Product Owner: Mateusz Tylka
+Scrum Master: Marcin Kostrzewski
+
+### Sprinty
+
+Każdy sprint będzie trwał dwa tygodnie, zakończony retrospektywą na ostatnim Daily. Nowy sprint rozpoczyna pierwszy Daily zaraz po retrospektywie.
+
+### Daily
+
+Podczas Daily omawiamy pracę wykonaną podczas realizacji zadań zabranych po poprzednim Daily; omówienie naszych sukcesów, problemów, przedstawieniem naszych planów na następne dni.
+
+Wyróżniamy trzy spotkania Daily o określonych godzinach:
+- Poniedziałek godz. 19:00
+- Czwartek godz. 20:00
+- Sobota godz. 12:00
+
+Poza daily dodatkowo będziemy spotykać się online całością lub częścią zespołu na wspólną pracę.
+
+### Retrospektywa
+
+Retrospektywa odbywa się na ostatnim Daily trwającego Sprintu. Polegać będzie na:
+- Przedstawieniu kamieni milowych, które udało nam się zrealizować podczas poprzedniego sprintu
+- Przedyskutowaniu metodyki pracy
+
+### Tworzenie i aktualizacja Backloga
+
+Podczas przerwy między retrospektywą a Daily rozpoczynającym kolejny Sprint tworzymy Backlog; Wybieramy cele na nowy Sprint, rozdzielamy User Stories na podzadania i implementujemy zmiany w organizacji zaproponowane podczas Retrospektywy
+
+## Narzędzia wspomagające
+
+### Organizacja pracy
+Do organizacji i koordynowania pracy korzystamy z GitHub Projects hostowanego razem z repozytorium kodu (https://github.com/emkarcinos/WMIAdventure/projects)
+
+### Issues
+Dostępne w GitHubie *Issues* wykorzystujemy jako User Stories. Dodatkowo posłużą do zgłaszania błędów i identyfikowania zadań spoza User Stories lub będące ich częścią. W każdym Issue tworzona jest lista podzadań, przy których zaznaczamy, kto je realizuje.
+
+### Milestones
+Milestone tłumaczymy jako Epic i podpinamy pod niego wszystkie Issues dotyczące tego Epica.
+
+### Projects
+Jeden Project będzie stanowił jeden Sprint.
+
+### Pull Requests
+Pull Requesty będą służyły nam jako narzędzie do Code Review, który będziemy przeprowadzać sobie nawzajem. Po upublicznieniu repozytorium będziemy też oceniać zmiany w kodzie realizowane przez Contributorów, czyli ludzi chcących rozwijać ten projekt.
+
+### Commity
+Każdy commit jest oznaczony numerem Issue, który mu odpowiada.
+
+### Branche
+Przy realizowaniu danego zadania tworzymy na niego osobny branch, który zostanie zmergowany dopiero po zaakceptowaniu Pull Requesta stworzonego na ten branch.
+
+### Continuous Integration
+Continous Integration zapewnia nam GitHub Actions. Dla każdego commita realizowane są testy i taki commit oznaczany jest odpowiednio, w zależności od tego, czy pomyślnie przeszedł te testy.
+
+Packaging zapewniony jest przez Dockera; korzystamy z *docker-compose* do tworzenia obrazu wielokontenerowego, gdzie w naszym przypadku są to kontenery osobno z backendem i frontendem. Taki obraz jest przekazywany do narzędzia odpowiadającego za Continuous Deployment. Kontener z frontendem nie jest jeszcze przygotowany.
+
+### Continous Deployment
+Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure Virtual Mashine*. Obecnie gałąź główna repozytorium hostowana jest pod adresem (http://wmiadventure.westeurope.cloudapp.azure.com:8000). Na razie znajdziemy tutaj tylko backend.
+
+
 # Ryzyka projektowe
 
 # Kamienie milowe
