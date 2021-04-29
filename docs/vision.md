@@ -215,7 +215,7 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 - Tryb adventure
     * Narzędzie do tworzenia historii
     * Interfejs trybu Adventure
-    * Content na 80 historii
+    * Content na 50 historii
     * Administracja dotycząca historii
 
 - Integracja z USOS
