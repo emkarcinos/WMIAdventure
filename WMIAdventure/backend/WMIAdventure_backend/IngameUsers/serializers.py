@@ -5,21 +5,21 @@ from rest_framework import serializers
 from . import models
 
 
-class BasicUserInfoSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
 
     class Meta:
-        model = models.BasicUserInfo
-        fields = ('userId', 'username', 'semester')
+        model = models.UserProfile
+        fields = ('user', 'displayedUsername', 'semester')
 
     def create(self, validated_data):
-        buinfo = models.BasicUserInfo(
+        newProfile = models.UserProfile(
             userId=validated_data['userId'],
-            username=validated_data['username'],
+            displayedUsername=validated_data['displayedUsername'],
             semester=validated_data['semester']
         )
 
-        buinfo.save()
-        return buinfo
+        newProfile.save()
+        return newProfile

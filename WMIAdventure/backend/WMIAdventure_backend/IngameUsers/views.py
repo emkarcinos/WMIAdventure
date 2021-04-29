@@ -7,12 +7,12 @@ from . import models
 # Create your views here.
 
 
-class BasicUserInfoViewSet(ModelViewSet):
+class UserProfileViewSet(ModelViewSet):
     """
     BasicUserInfo class view.
     """
-    serializer_class = serializers.BasicUserInfoSerializer
-    queryset = models.BasicUserInfo.objects.all()
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
 
 
 
