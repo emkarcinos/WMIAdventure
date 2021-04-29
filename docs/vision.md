@@ -72,11 +72,9 @@ Dane użytkowników i obliczenia będą działały na scentralizowanym serwerze.
 W aplikacji będą wyróżnione trzy strefy:
 - Strefa publiczna, czyli część projektu przeznaczona dla wszystkich studentów (konsumentów)
 - Strefa autorska, czyli zestaw narzędzi umożliwiające rozwój treści w strefie publicznej, z których każdy może skorzystać i zaproponować nowe historie, karty, quizy, itp.
-- Strefa administracyjna umożliwiająca zarządzanie kontami użytkowników i parametrami pracy aplikacji, dostępna tylko dla osób zarządzających aplikacją.
+- Strefa administracyjna umożliwiająca zarządzanie kontami użytkowników i parametrami pracy aplikacji, dostępna tylko dla osób zarządzających aplikacją. Administratorzy będą **zatwierdzać** lub **odrzucać** treści, które będą chcieli dodać użytkownicy. Tą rolę może w przyszłości pełnić samorząd uczniowski, autorzy projektu lub inna zaufana grupa.
 
 Aplikacja ma być lekka i szybka. Rozgrywka nie będzie wymagała poświęcenia wielu godzin na raz, studenci będą mogli spędzić kilka minut dziennie dokonując zadowalające postępy.
-
-
 
 ### **Wartości dodane wnoszone przez projekt**
 - **Zdobywanie wiedzy** - poprzez rozwiązywanie quizów z bazy pytań utworzonej przez studentów.
@@ -148,14 +146,14 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 
 1. Strefa publiczna, aplikacja kliencka
     - Przejrzysty interfejs webowy, w którym jest dostęp do wszystkich funkcji aplikacji
-    - Tryb battle, w którym gracze rywalizują ze sobą w oparciu o zdobyte wcześniej karty, spośród nich wyłania się talię kart, które układa się w odpowiedniej kolejności. Drugi gracz nie bierze bezpośredniego udziału w walce, jedynie jego karty *bronią się*. Pojedynki będą odbywać się automatycznie, z prostą wizualizacją.
+    - Tryb battle, w którym gracze rywalizują ze sobą w oparciu o karty bitewne, zdobyte w Trybie Adventure lub innych obszarach aplikacji, spośród nich wyłania się talię kart, które układa się w odpowiedniej kolejności. Drugi gracz nie bierze bezpośredniego udziału w walce, jedynie jego karty "bronią się". Pojedynki będą odbywać się automatycznie, z prostą wizualizacją. Sama walka karciana będzie polegać na efektach kart, które będą się uaktywniać po kolei. Załóżmy że gracz_1 i gracz_2 posiadają po 5 kart w talii, najpierw zadziała karta_1 gracza_1, potem karta_1 gracza_2, następnie karta_2 gracza_1 i tak dalej... gdy po aktywacji ostatnich kart, aktywują się po nich ponownie te pierwsze i pętla tak trwa dopóki jeden z graczy nie straci wszystkich punktów życia.
     - Tryb adventure - interaktywne opowiadania studentów w formie *visual novel*
         * Opowieści wzorowane na realnych przeżyciach na wydziale WMI, przedstawiane w formie pojawiających się grafik oraz kwestii dialogowych jak w grach rodzaju Visual Novel.
         * Postacie w naszej Visual Novel będą przedstawiać realnych pracowników wydziałowych, lub będą na nich wzorowane
         * W tym trybie mogą pojawić się również minigry lub pojedynki z wirtualnymi przeciwnikami w takiej samej formie co w Trybie Battle
         * Podczas przechodzenia historii w trybie adventure użytkownik może zdobyć Karty związane z jego postępem w rozgrywce
     - Rankingi - Dwie tablice rankingowe : rankingi w battle wyłaniające studenta posiadającego największe umiejętności w tym trybie, rankingi kolekcjonerskie oparte o ilość zdobytych kart i uniknalnych kart-osiągnieć.
-    - Kolekcje kart - Unikalne karty za osiągnięcia, karty za ukończenie przedmiotów. Karty można w przyszłości ulepszać za Punkty umiejętności. Służą do pojedynków w trybie Battle.
+    - Kolekcje kart, czyli unikalne karty za osiągnięcia w aplikacji, zdobywane głównie w Trybie Adventure po lub w trakcie przechodzenia jakiejś historii, karty mogą być bitewne, czyli posiadające odpowiednie efekty, które można wykorzystać w trybie battle, lub mieć znaczenie wyłącznie kolekcjonerskie. Karty bitewne można w przyszłości ulepszać za Punkty umiejętności.
     - Mini gry, które są dostępne do przejścia w odpowiednich warunkach
     - Quizy dostępne do rozwiązania skomponowane z pytań utworzonych przez studentów
 
@@ -167,7 +165,10 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 3. Strefa administracyjna
     - Integracja z systemem USOS, aby odpowiednio wspierać i zarządzać funkcjami w naszej aplikacji (np. dostęp do ocen)
     - Zarządzanie kontami użytkowników
-    - Zarządzanie treściami udostępnionymi przez użytkowników
+    - **Zarządzanie treściami udostępnionymi przez użytkowników**
+        - Akceptowanie lub odrzucanie pytań do codziennych quizów
+    	- Akceptowanie lub odrzucanie historii do Trybu Adventure
+    	- Akceptowanie lub odrzucanie kart do Trybu Battle
     - Modyfikacja parametrów aplikacji
 
 4. Zarządzanie danymi, przetwarzanie danych itp.
@@ -194,37 +195,39 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
 
 ## Wstępne kamienie milowe
 - Konsultacja prototypu z grupą docelową - 16.04.2021
-- Strefa publiczna - 20.11.2021
-- Panel Twórcy - 20.11.2021
-- Panel Administratora - 25.12.2021
-- Tworzenie Contentu - 30.01.2022
+- Tryb battle - 20.06.2021
+- Tryb adventure - 20.10.2021
+- Integracja z USOS - 20.11.2021
+- Quizy i minigry - 20.01.2022
 
 ## Szkic harmonogramu projektu
 
 ### Semestr I
 - Prototyp Interfejsu
-- Strefa Publiczna, Panel Twórcy
-    * Tryb Battle
-    * Narzędzie tworzenia Kart
-    * Interfejs Quizów
-    * Narzędzie tworzenia Quizów
+- Tryb Battle
+    * Narzędzie do tworzenia kart
+    * Wizualizacja walki
+    * Administracja dotycząca kart
+    * Content na 60 kart
     * Rankingi
 
 ### Semestr II
-- Strefa Publiczna, Panel Twórcy
+- Tryb adventure
     * Narzędzie do tworzenia historii
     * Interfejs trybu Adventure
-    * Minigry
+    * Content na 80 historii
+    * Administracja dotycząca historii
 
-- Panel Administratora
-    * Integracja z USOS
+- Integracja z USOS
+    * Założenie konta za pośrednictwem USOS
     * Zarządzanie kontami użytkowników
-    * Zarządzanie treściami zgłoszonymi przez użytkowników
+    * Pobieranie informacji o ocenach i przedmiotach danego użytkownika
 
-- Tworzenie Contentu
-    * Historie
-    * Quizy
-    * Karty
+- Quizy i minigry
+    * Narzędzie do tworzenia pytań
+    * Administracja dotycząca pytań
+    * Interfejs i rozwiązywanie quizów
+    * Implementacja 3 powtarzających się mini gier
 
 ## Potencjalne ryzyka
 - Trudość oszacowania złożoności panelu do tworzenia zawartości
