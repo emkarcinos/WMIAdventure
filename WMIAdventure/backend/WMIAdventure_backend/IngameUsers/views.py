@@ -9,7 +9,7 @@ from . import models
 
 class UserProfileViewSet(ModelViewSet):
     """
-    BasicUserInfo class view.
+    UserProfile class view.
     """
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
