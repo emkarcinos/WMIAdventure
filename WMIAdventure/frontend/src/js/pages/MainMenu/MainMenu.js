@@ -1,15 +1,15 @@
 import React from 'react';
 import './MainMenu.scss';
 
-import NavBar from '../../components/containers/NavBar';
-import NotificationButton from '../../components/elements/NotificationButton';
-import ShowMoreButton from '../../components/elements/ShowMoreButton';
-import ProfileButton from '../../components/elements/ProfileButton';
-import Logo from '../../components/elements/Logo';
-import MainMenuModule from '../../components/elements/MainMenuModule';
-import MainMenuContainer from '../../components/containers/MainMenuContainer';
-import MainMenuSmallerModule from '../../components/elements/MainMenuSmallerModule/MainMenuSmallerModule';
-import FlexCenterContainer from '../../components/containers/FlexCenterContainer';
+import NavBar from '../../components/organisms/NavBar';
+import NotificationButton from '../../components/atoms/NotificationButton';
+import ShowMoreButton from '../../components/atoms/ShowMoreButton';
+import ProfileButton from '../../components/atoms/ProfileButton';
+import Logo from '../../components/atoms/Logo';
+import MainMenuModule from '../../components/atoms/MainMenuModule';
+import MainMenuContainer from '../../components/organisms/MainMenuContainer';
+import MainMenuSmallerModule from '../../components/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
+import FlexCenterContainer from '../../components/molecules/FlexCenterContainer';
 
 import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';

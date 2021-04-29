@@ -1,17 +1,17 @@
 import React from 'react';
 import './Event.scss';
-import NavBar from '../../components/containers/NavBar';
-import Logo from '../../components/elements/Logo';
-import NotificationButton from '../../components/elements/NotificationButton';
-import ProfileButton from '../../components/elements/ProfileButton';
-import ShowMoreButton from '../../components/elements/ShowMoreButton';
+import NavBar from '../../components/organisms/NavBar';
+import Logo from '../../components/atoms/Logo';
+import NotificationButton from '../../components/atoms/NotificationButton';
+import ProfileButton from '../../components/atoms/ProfileButton';
+import ShowMoreButton from '../../components/atoms/ShowMoreButton';
 
 function Event() {
     return (
         <div className="Event">
             <NavBar logo={<Logo />} notification={<NotificationButton />} profile={<ProfileButton />} showMore={<ShowMoreButton />}/>
             <p className='Event__paragraph'>
-                Event View - have not implemented yet.
+                Event View - not implemented yet.
             </p>
         </div>
     );
