@@ -1,4 +1,7 @@
 # WMIAdventure
 
 ## Currently hosted on: (main branch)
-[http://wmiadventure.westeurope.cloudapp.azure.com:8000]
+
+- frontend: [http://wmiadventure.westeurope.cloudapp.azure.com:80]
+
+- backend rest api: [http://wmiadventure.westeurope.cloudapp.azure.com:8000]
