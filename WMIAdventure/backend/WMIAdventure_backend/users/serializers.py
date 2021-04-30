@@ -33,3 +33,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class BasicUserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
