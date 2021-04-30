@@ -3,7 +3,7 @@
 ## Autorzy: Dawid Korybalski, Mateusz Tylka, Michał Czekański, Marcin Kostrzewski
 
 ## Data: 04/03/2021
-Ostatnia modyfikacja: 26/03/2021 11:40
+Ostatnia modyfikacja: 30/04/2021 11:40
 
 # Executive summary
 Często studentom brakuje inspiracji do studiowania. Wielu osobom jedynie chodzi o zdobycie "papierka".
