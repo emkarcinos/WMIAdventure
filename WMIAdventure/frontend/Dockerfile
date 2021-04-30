@@ -1,7 +1,7 @@
 FROM node:15
 
 WORKDIR /frontend
-ADD ./* /frontend
+ADD ./ /frontend
 
 COPY . /frontend
 
