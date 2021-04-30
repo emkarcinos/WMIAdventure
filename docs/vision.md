@@ -219,9 +219,10 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
     * Administracja dotycząca historii
 
 - Integracja z USOS
-    * Założenie konta za pośrednictwem USOS
+    * Połączenie konta USOS z kontem w aplikacji
     * Zarządzanie kontami użytkowników
-    * Pobieranie informacji o ocenach i przedmiotach danego użytkownika
+    * Karty zmieniające wygląd w zależności od ocen studenta
+    * Dostępność historii w zależności od przedmiotów studenta
 
 - Quizy i minigry
     * Narzędzie do tworzenia pytań
