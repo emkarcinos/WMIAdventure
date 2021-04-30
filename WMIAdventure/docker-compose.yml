@@ -11,6 +11,8 @@ services:
             - 8000:8000
     
     wmiadventure-frontend:
+    
+        image: wmiadventure.azurecr.io/frontend:v1
         build: ./frontend
         command: npm run start PORT=80
 
