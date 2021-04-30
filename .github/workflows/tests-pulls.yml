@@ -1,0 +1,26 @@
+name: Test Pull Requests
+
+on: [pull_request]
+
+jobs:
+  test-django:
+    runs-on: ubuntu-latest
+    name: Tests for Django backend app
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./WMIAdventure/backend/requirements.txt
+    - name: Run Django tests
+      run: |
+        python ./WMIAdventure/backend/WMIAdventure_backend/manage.py test
