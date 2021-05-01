@@ -1,11 +1,6 @@
 @import "src/main-styles/variables";
 
 .BattleMode {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
 
   &__paragraph {
     font-size: 36px;

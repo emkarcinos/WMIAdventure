@@ -2,10 +2,6 @@ import React from 'react';
 import './MainMenu.scss';
 
 import NavBar from '../../components/organisms/NavBar';
-import NotificationButton from '../../components/atoms/NotificationButton';
-import ShowMoreButton from '../../components/atoms/ShowMoreButton';
-import ProfileButton from '../../components/atoms/ProfileButton';
-import Logo from '../../components/atoms/Logo';
 import MainMenuModule from '../../components/atoms/MainMenuModule';
 import MainMenuContainer from '../../components/organisms/MainMenuContainer';
 import MainMenuSmallerModule from '../../components/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
@@ -20,7 +16,7 @@ import local from '../../../assets/icons/local.svg';
 function MainMenu() {
     return (
         <div className="MainMenu">
-            <NavBar logo={<Logo />} notification={<NotificationButton />} profile={<ProfileButton />} showMore={<ShowMoreButton />}/>
+            <NavBar />
             <MainMenuContainer>
                 <MainMenuModule img={adventureImg} alt={'Zdjęcie wejścia do wydziału WMI.'} link={'/adventure'} header={'ADVENTURE'} describe={'Przeżyj wydziałową historię w postaci Visual Novel.'}/>
                 <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} link={'/battle'} describe={'Walcz z innymi graczami.'}/>

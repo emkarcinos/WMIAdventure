@@ -1,15 +1,19 @@
 import React from 'react';
 import './NavBar.scss';
+import Logo from '../../atoms/Logo';
+import NotificationButton from '../../atoms/NotificationButton';
+import ProfileButton from '../../atoms/ProfileButton';
+import ShowMoreButton from '../../atoms/ShowMoreButton';
 
-function NavBar({logo, notification, profile, showMore}) {
+function NavBar() {
     return (
         <header className="NavBar">
             <nav className="NavBar__navigation">
-                {logo}
+                <Logo />
                 <div className="NavBar__icons">
-                    {notification}
-                    {profile}
-                    {showMore}
+                    <NotificationButton />
+                    <ProfileButton />
+                    <ShowMoreButton />
                 </div>
             </nav>
         </header>
