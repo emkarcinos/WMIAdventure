@@ -1,9 +1,9 @@
 import React from 'react';
 import './NavBar.scss';
 import Logo from '../../atoms/Logo';
-import NotificationButton from '../../atoms/NotificationButton';
+import NotificationButton from '../../molecules/NotificationButton';
 import ProfileButton from '../../atoms/ProfileButton';
-import ShowMoreButton from '../../atoms/ShowMoreButton';
+import ShowMoreButton from '../../molecules/ShowMoreButton';
 
 function NavBar() {
     return (

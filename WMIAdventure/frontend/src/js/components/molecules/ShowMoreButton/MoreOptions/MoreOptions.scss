@@ -1,0 +1,40 @@
+@import '../../../../../main-styles/variables';
+
+.MoreOptions {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background-color: rgba($ui-07, 0.4);
+
+  &__list {
+    width: 160px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: $ui-04;
+    border-radius: 10px;
+    z-index: 3;
+    margin: 0;
+    padding: 10px;
+  }
+
+  &__paragraph {
+    text-decoration: none;
+    color: $ui-07;
+    margin: 0 0 10px 0;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+
+    &--last {
+      margin: 0;
+    }
+
+    &--border {
+      border-bottom: 1px solid $ui-07;
+      padding: 0 0 10px 0;
+    }
+  }
+}

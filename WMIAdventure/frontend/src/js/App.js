@@ -6,6 +6,9 @@ import BattleMode from './pages/BattleMode/BattleMode';
 import Ranking from './pages/Ranking/Ranking';
 import Event from './pages/Event';
 import Quiz from './pages/Quiz';
+import HistoryCreator from './pages/HistoryCreator';
+import AnswerCreator from './pages/AnswerCreator';
+import CardsCreator from './pages/CardsCreator';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path='/ranking' component={Ranking} />
         <Route path='/event' component={Event} />
         <Route path='/quiz' component={Quiz} />
+        <Route path='/history-creator' component={HistoryCreator} />
+        <Route path='/cards-creator' component={CardsCreator} />
+        <Route path='/answer-creator' component={AnswerCreator} />
     </Switch>
   );
 }
