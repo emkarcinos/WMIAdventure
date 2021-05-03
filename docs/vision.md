@@ -3,7 +3,7 @@
 ## Autorzy: Dawid Korybalski, Mateusz Tylka, Michał Czekański, Marcin Kostrzewski
 
 ## Data: 04/03/2021
-Ostatnia modyfikacja: 26/03/2021 11:40
+Ostatnia modyfikacja: 30/04/2021 11:40
 
 # Executive summary
 Często studentom brakuje inspiracji do studiowania. Wielu osobom jedynie chodzi o zdobycie "papierka".
@@ -219,9 +219,10 @@ Kod źródłowy Hero Zero nie jest publicznie dostępny, a WMI Adventure jest *O
     * Administracja dotycząca historii
 
 - Integracja z USOS
-    * Założenie konta za pośrednictwem USOS
+    * Połączenie konta USOS z kontem w aplikacji
     * Zarządzanie kontami użytkowników
-    * Pobieranie informacji o ocenach i przedmiotach danego użytkownika
+    * Karty zmieniające wygląd w zależności od ocen studenta
+    * Dostępność historii w zależności od przedmiotów studenta
 
 - Quizy i minigry
     * Narzędzie do tworzenia pytań
