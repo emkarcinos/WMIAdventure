@@ -158,6 +158,7 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 7. Chcę móc nadać karcie więcej niż jeden efekt, aby karty były bardziej różnorodne.
 8. Chcę mieć możliwość tworzenia kart dających mocne benefity, ale też pewne kary dla posiadacza, żeby karty były urozmaicone.
 9. Chcę tworzyć karty, które na różnych poziomach będą miały różne efekty, żeby same karty i ich ulepszanie na wyższe poziomy było ciekawsze.
+10. Chcę mieć możliwość dołączenia dodatkowych uwag w formie tekstowej do mojego zgłoszenia nowej karty, żeby przekazać administratorom informacje inne niż te udostępnione przez Kreator Kart.
 
 #### 3. Kreator Quizów
 
