@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,12 +77,46 @@ WSGI_APPLICATION = 'WMIAdventure_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+'''
+Sets DATABASES variable
+We're running an external database in Azure, so if we set an environment variable DB_SOURCE to 'AZURE'.
+Then we also need to set DB_PASSWD variable with a password to this database.
+'''
+external_db = 'AZURE'
+internal_db = 'localhost'
+DATABASES = {}
+db_source = environ.get('DB_SOURCE')
+if db_source is None:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+elif db_source == internal_db:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+elif db_source == external_db:
+    db_password = environ.get('DB_PASSWD')
+    if db_password is None:
+        raise RuntimeError("No DB password specified!")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django',
+            'USER': 'postgres',
+            'PASSWORD': db_password,
+            'HOST': '40.114.238.18',
+            'PORT': '5432',
+        }
+    }
+
 
 
 # Password validation
