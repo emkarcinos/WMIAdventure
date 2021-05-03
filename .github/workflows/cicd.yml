@@ -10,15 +10,13 @@ jobs:
     name: Tests for Django backend app
     strategy:
       max-parallel: 4
-      matrix:
-        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.9
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -27,6 +25,28 @@ jobs:
       run: |
         python ./WMIAdventure/backend/WMIAdventure_backend/manage.py test
 
+  test-frontend:
+  
+    runs-on: ubuntu-latest
+    name: Tests for React frontend app
+    strategy:
+      max-parallel: 4
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Install JS dependencies
+      run: |
+        cd ./WMIAdventure/frontend
+        npm install
+    - name: Test
+      run: |
+        cd ./WMIAdventure/frontend
+        npm run test -- --passWithNoTests
 
   deploy:
     runs-on: ubuntu-latest
