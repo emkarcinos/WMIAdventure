@@ -50,7 +50,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test-django
+    needs: [test-django, test-frontend]
     name: Deploy Docker containers to Azure Virtual Mashine
     env:
       SERVER_IP: 40.114.238.18
