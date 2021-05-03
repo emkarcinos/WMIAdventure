@@ -37,7 +37,7 @@ Aplikacja webowa | In | - | - | -
 Aplikacja natywna na systemy iOS/Android | - | Out | - | Aplikacja webowa zapewnia łatwy dostęp dla każdej platformy, a natywne aplikacje nie dają żadnych realistycznych korzyści, są bardzo czasowo kosztowne.
 Przechowywanie studenckich danych na serwerze | - | Out | - | Niebezpieczeństwo związane z poufnością danych - systemowi wystarczą dane z zewnętrznych serwisów
 Limit walk na dzień | In | - | - | -
-Wpływ ocen na karty | In | - | - | - 
+Wpływ ocen na karty | In | - | - | -
 Zależność od obecności na wydziale | - | - | Opt | Duże ryzyko związane z ograniczeniami technologicznymi, niepewne dalsze studia stacjonarne
 Rozbudowane animacje postaci | - | Out | - | Zbyt kosztowne czasowo, trudne technologicznie w stosunku do realnych korzyści
 Elementy 3D | - | Out | - | Zbyt kosztowne czasowo, trudne technologicznie w stosunku do realnych korzyści. Nie pasują do stylistyki i prostoty aplikacji.
@@ -155,6 +155,9 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 4. Chcę zdecydować w jaki sposób karta będzie ulepszana przez punkty Skilli.
 5. Chcę móc tworzyć karty wszelkiego rodzaju, aby przyczynić się do rozwoju treści w aplikacji.
 6. Chcę, aby karta zawierała tytuł, przedmiot i krótki opis, aby móc charakteryzować karty i dzielić je na kategorie.
+7. Chcę móc nadać karcie więcej niż jeden efekt, aby karty były bardziej różnorodne.
+8. Chcę mieć możliwość tworzenia kart dających mocne benefity, ale też pewne kary dla posiadacza, żeby karty były urozmaicone.
+9. Chcę tworzyć karty, które na różnych poziomach będą miały różne efekty, żeby same karty i ich ulepszanie na wyższe poziomy było ciekawsze.
 
 #### 3. Kreator Quizów
 
@@ -242,7 +245,7 @@ Dawid dysponuje ograniczoną ilością czasu ze względów prywatnych.
 
 ## Repozytorium kodu
 
-Kod i historia zmian organizowana jest przez Git. Repozytorium online znajduje się na [GitHubie](https://github.com/emkarcinos/WMIAdventure) i na tą chwilę jego widoczność jest niepubliczna. 
+Kod i historia zmian organizowana jest przez Git. Repozytorium online znajduje się na [GitHubie](https://github.com/emkarcinos/WMIAdventure) i na tą chwilę jego widoczność jest niepubliczna.
 ## Metodyka pracy
 Zespół implementuje nieco zmienioną wersję metodyki **Scrum**. Dostosowaliśmy go do mniej codziennej pracy.
 
@@ -312,4 +315,3 @@ Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure 
 # Ryzyka projektowe
 
 # Kamienie milowe
-
