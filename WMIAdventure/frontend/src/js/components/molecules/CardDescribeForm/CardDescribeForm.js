@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledWrapper from  './StyledWrapper';
+import StyledWrapper from './StyledWrapper';
 import StyledTextareaLabel from './StyledTextareaLabel';
 
 function CardDescribeForm() {

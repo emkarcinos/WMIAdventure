@@ -5,7 +5,7 @@ const StyledWrapper = styled.fieldset`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 0;
+    margin: 0 16px;
     padding: 16px;
     font-size: 16px;
   

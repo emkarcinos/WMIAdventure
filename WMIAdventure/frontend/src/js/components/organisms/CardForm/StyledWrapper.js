@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 const StyledWrapper = styled.form`
-    width: 100%;
-    padding: 0 20vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  padding: 72px 128px 32px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 48px;
 `;
 
 export default StyledWrapper;

@@ -1,7 +1,7 @@
 import React from 'react';
 import StyledWrapper from './StyledWrapper';
-import CardDescribeForm from './CardDescribeForm';
-import CardEffectForm from './CardEffectForm/CardEffectForm';
+import CardDescribeForm from '../../molecules/CardDescribeForm';
+import CardEffectForm from '../../molecules/CardEffectForm/CardEffectForm';
 
 function CardForm() {
     return (
