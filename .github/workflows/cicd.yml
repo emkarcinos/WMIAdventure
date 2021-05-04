@@ -23,7 +23,7 @@ jobs:
         pip install -r ./WMIAdventure/backend/requirements.txt
     - name: Run Django tests
       run: |
-        python ./WMIAdventure/backend/WMIAdventure_backend/manage.py test
+        python ./WMIAdventure/backend/WMIAdventure_backend/manage.py test ./WMIAdventure/backend/WMIAdventure_backend/
 
   test-frontend:
   
