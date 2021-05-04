@@ -1,9 +1,9 @@
 import React from 'react';
 import StyledWrapper from './StyledWrapper';
-import CardEffectCheckbox from '../../atoms/CardEffectCheckbox';
+import CardEffectCheckbox from '../../molecules/CardEffectCheckbox';
 import effectsData from './effectsData';
 
-function CardEffectForm() {
+function CardEffectInputs() {
     return (
         <StyledWrapper>
             <legend>
@@ -12,7 +12,7 @@ function CardEffectForm() {
             {
                 effectsData.map((elem) => {
                     return (
-                        <CardEffectCheckbox key={`card-effect-${elem.id}`} name={elem.name} label={elem.label} />
+                        <CardEffectCheckbox key={`card-effect-${elem.id}`} name={elem.name} label={elem.label} power={elem.power} />
                     );
                 })
             }
@@ -20,4 +20,4 @@ function CardEffectForm() {
     );
 }
 
-export default CardEffectForm;
+export default CardEffectInputs;

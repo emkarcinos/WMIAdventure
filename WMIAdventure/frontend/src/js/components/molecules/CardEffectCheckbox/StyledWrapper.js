@@ -2,12 +2,18 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   padding: 16px;
+  flex-direction: column;
     
   label {
     padding-left: 8px;
+  }
+  
+  div {
+    display: flex;
+    align-items: center;
+    padding: 8px;
   }
   
   input {

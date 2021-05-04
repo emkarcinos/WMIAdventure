@@ -1,13 +1,13 @@
 import React from 'react';
 import StyledWrapper from './StyledWrapper';
-import CardDescribeForm from '../../molecules/CardDescribeForm';
-import CardEffectForm from '../../molecules/CardEffectForm/CardEffectForm';
+import CardDescribeInputs from '../../molecules/CardDescribeInputs';
+import CardEffectInputs from '../CardEffectInputs/CardEffectInputs';
 
 function CardForm() {
     return (
         <StyledWrapper>
-            <CardDescribeForm />
-            <CardEffectForm />
+            <CardDescribeInputs />
+            <CardEffectInputs />
         </StyledWrapper>
     );
 }

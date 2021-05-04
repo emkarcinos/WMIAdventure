@@ -2,7 +2,7 @@ import React from 'react';
 import StyledWrapper from './StyledWrapper';
 import StyledTextareaLabel from './StyledTextareaLabel';
 
-function CardDescribeForm() {
+function CardDescribeInputs() {
     return (
         <StyledWrapper>
             <legend>
@@ -36,4 +36,4 @@ function CardDescribeForm() {
     );
 }
 
-export default CardDescribeForm;
+export default CardDescribeInputs;

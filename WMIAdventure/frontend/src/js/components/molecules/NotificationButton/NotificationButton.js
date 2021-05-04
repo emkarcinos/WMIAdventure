@@ -2,7 +2,6 @@ import React from 'react';
 import './NotificationButton.scss';
 
 import notification from '../../../../assets/icons/notification.svg';
-import MoreOptions from '../ShowMoreButton/MoreOptions/MoreOptions';
 import Notifications from '../Notifications';
 
 function NotificationButton() {

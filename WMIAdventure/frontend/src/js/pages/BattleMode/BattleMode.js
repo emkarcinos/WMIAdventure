@@ -3,9 +3,6 @@ import './BattleMode.scss';
 import styled from 'styled-components';
 
 import NavBar from '../../components/organisms/NavBar';
-import Avatar from '../../components/atoms/Avatar';
-
-import avatar from '../../../assets/icons/avatar.svg';
 import Statistic from '../../components/atoms/Statistic';
 
 const StyledWrapper = styled.div`
