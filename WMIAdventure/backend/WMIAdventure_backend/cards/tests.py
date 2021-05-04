@@ -8,19 +8,19 @@ class CardLevelTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_name_after_creation(self):
+    def testNameAfterCreation(self):
         CardLevel.objects.create(level=CardLevel.Level(1))
-        c_lvl = CardLevel.objects.get(level=1)
+        cLvl = CardLevel.objects.get(level=1)
 
-        self.assertEqual(c_lvl.name, CardLevel.Level(1).label)
+        self.assertEqual(cLvl.name, CardLevel.Level(1).label)
 
-    def test_creation_with_int(self):
-        c_lvl = CardLevel.objects.create(level=1)
+    def testCreationWithInt(self):
+        cLvl = CardLevel.objects.create(level=1)
 
-        self.assertIsInstance(c_lvl.level, CardLevel.Level)
-        self.assertEqual(c_lvl.name, CardLevel.Level(1).label)
+        self.assertIsInstance(cLvl.level, CardLevel.Level)
+        self.assertEqual(cLvl.name, CardLevel.Level(1).label)
 
-    def test_creation_duplicates(self):
+    def testCreationDuplicates(self):
         CardLevel.objects.create(level=1)
 
         self.assertRaises(IntegrityError, CardLevel.objects.create, level=1)
