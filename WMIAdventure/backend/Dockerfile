@@ -2,6 +2,13 @@ FROM python:3
 
 ENV PYTHONUNBUFFERED 1
 
+# From build arg
+ARG DB_SOURCE="localhost"
+ARG DB_PASSWD="null"
+
+ENV DB_SOURCE ${DB_SOURCE}
+ENV DB_PASSWD ${DB_PASSWD}
+
 WORKDIR /backend
 ADD ./WMIAdventure_backend /backend
 

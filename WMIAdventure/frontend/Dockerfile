@@ -1,5 +1,9 @@
 FROM node:15
 
+# From build arg
+ARG API_URL="localhost:8000"
+ENV API_URL=${API_URL}
+
 WORKDIR /frontend
 ADD ./ /frontend
 
