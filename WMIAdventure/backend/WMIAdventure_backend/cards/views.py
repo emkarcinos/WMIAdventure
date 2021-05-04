@@ -5,6 +5,7 @@ from .serializers import CardLevelSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework import status
 
 
 class CardLevelList(APIView):
@@ -42,7 +43,10 @@ class CardEffectObjectView(APIView):
     Get a single effect.
     """
     def get(self, request, pk=None):
-        item = CardEffect.objects.get(id=pk)
+        try:
+            item = CardEffect.objects.get(id=pk)
+        except CardEffect.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         serializer = CardEffectSerializer(item)
         return Response(serializer.data)
-
