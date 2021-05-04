@@ -32,7 +32,7 @@ class CardEffectTestCase(TestCase):
         """
         Checks whether you cannot make two models with the same ID
         """
-        test_id = 90
+        test_id = 1
         CardEffect.objects.create(id=test_id)
         self.assertRaises(IntegrityError,
                           CardEffect.objects.create, id=test_id)
