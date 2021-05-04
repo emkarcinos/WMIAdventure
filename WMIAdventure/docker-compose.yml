@@ -13,10 +13,10 @@ services:
             - 8000:8000
     
     wmiadventure-frontend:
-    
+        environment: 
+            - API_URL=${API_URL}
         image: wmiadventure.azurecr.io/frontend:v1
         build: ./frontend
         command: npm run start PORT=80
-
         ports:
             - 80:80
