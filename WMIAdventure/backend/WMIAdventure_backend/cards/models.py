@@ -29,3 +29,10 @@ class CardEffect(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, *args, **kwargs):
+        if not isinstance(self.id, CardEffect.EffectId):
+            self.effect = CardEffect.EffectId(self.id)
+        self.name = self.effect.label
+
+        super(CardEffect, self).save(*args, **kwargs)

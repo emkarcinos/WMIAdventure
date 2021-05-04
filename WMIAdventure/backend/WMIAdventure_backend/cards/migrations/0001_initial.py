@@ -2,6 +2,15 @@
 
 from django.db import migrations, models
 
+from ..models import CardEffect
+
+
+def insert_all_values_to_db(apps, schema_editor):
+    CardEffect.objects.all().delete()
+    for value in CardEffect.EffectId.values:
+        item = CardEffect.objects.create(id=value)
+        item.save()
+
 
 class Migration(migrations.Migration):
 
@@ -19,6 +28,5 @@ class Migration(migrations.Migration):
                 ('tooltip', models.TextField(max_length=150, null=True)),
             ],
         ),
-        migrations.RunSQL(
-            r"INSERT INTO cards_cardeffect (id, name) VALUES (1, 'Zadawanie obrażeń'), (2, 'Tarcza'), (3, 'Losowa zamiana kolejności kart'), (4, 'Zatrzymanie na jedną turę'), (5, 'Dwukrotne wykonanie się karty'), (6, 'Leczenie'), (7, 'Blokowanie następnej karty'), (8, 'Zwiększenie mocy następnej karty'), (9, 'Pomijanie następnej karty');")
+        migrations.RunPython(insert_all_values_to_db)
     ]
