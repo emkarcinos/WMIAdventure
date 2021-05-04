@@ -9,20 +9,22 @@ class CardLevelTestCase(TestCase):
         pass
 
     def testNameAfterCreation(self):
+        CardLevel.objects.get(level=1).delete()
+
         CardLevel.objects.create(level=CardLevel.Level(1))
         cLvl = CardLevel.objects.get(level=1)
 
         self.assertEqual(cLvl.name, CardLevel.Level(1).label)
 
     def testCreationWithInt(self):
+        CardLevel.objects.get(level=1).delete()
+
         cLvl = CardLevel.objects.create(level=1)
 
         self.assertIsInstance(cLvl.level, CardLevel.Level)
         self.assertEqual(cLvl.name, CardLevel.Level(1).label)
 
     def testCreationDuplicates(self):
-        CardLevel.objects.create(level=1)
-
         self.assertRaises(IntegrityError, CardLevel.objects.create, level=1)
 
 
@@ -33,7 +35,6 @@ class CardLevelSerializerTestCase(TestCase):
         self.cLvlLabel = str(self.cLvlEnum.label)
 
     def testSerialization(self):
-        CardLevel.objects.create(level=self.cLvlEnum)
         cLvl = CardLevel.objects.get(level=self.cLvlVal)
 
         serializer = CardLevelSerializer(instance=cLvl)
@@ -45,6 +46,8 @@ class CardLevelSerializerTestCase(TestCase):
         self.assertEquals(actualName, cLvl.name)
 
     def testDeserialization(self):
+        CardLevel.objects.get(level=self.cLvlVal).delete()
+
         data = {"level": self.cLvlVal, "name": self.cLvlLabel}
 
         serializer = CardLevelSerializer(data=data)
