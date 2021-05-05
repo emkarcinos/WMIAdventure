@@ -89,3 +89,25 @@ class Card(models.Model):
             models.UniqueConstraint(fields=['info', 'level'],
                                     name='unique_info_level')
         ]
+
+
+class CardLevelEffects(models.Model):
+    """
+    This is like an extended many-to-many relation in databases.
+    Couples Card objects with its effects.
+    """
+
+    class Target(models.IntegerChoices):
+        """
+        Possible targets.
+        """
+        PLAYER = 1
+        OPPONENT = 2
+
+    card = models.ForeignKey(Card, unique=False, on_delete=models.CASCADE)
+    card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
+    # This isn't unique even as a pair with card, as a single card on a given level '
+    # may have multiple of the same effect.
+    target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
+    power = models.IntegerField()
+    range = models.FloatField()
