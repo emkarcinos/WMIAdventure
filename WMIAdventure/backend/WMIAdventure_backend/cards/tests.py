@@ -141,7 +141,7 @@ class CardEffectSerializerTestCase(TestCase):
 class CardSerializerTestCase(TestCase):
 
     def setUp(self):
-        self.test_id = 50
+        self.test_id = 1
         self.info_id = 1
         self.test_level = 1
         self.test_cost = 20
