@@ -1,9 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
-from .models import CardLevel
-from .serializers import CardLevelSerializer
-from .models import CardEffect
-from .serializers import CardEffectSerializer
+from .models import CardEffect, CardLevel, CardInfo
+from .serializers import CardEffectSerializer, CardLevelSerializer, CardInfoSerializer
 
 
 class CardLevelTestCase(TestCase):
@@ -138,3 +136,46 @@ class CardEffectSerializerTestCase(TestCase):
         self.assertEqual(sample.id, self.test_id)
         self.assertEqual(sample.name, self.test_name)
         self.assertEqual(sample.tooltip, self.test_tooltip)
+
+
+class CardInfoTestCase(TestCase):
+    def test_create_without_image(self):
+        object = CardInfo.objects.create(name="Name", tooltip="Tooltip")
+        object.save()
+
+        self.assertFalse(self.object.image)  # Assert image is None
+
+
+class CardInfoSerializerTestCase(TestCase):
+    def setUp(self) -> None:
+        self.name = "Name"
+        self.tooltip = "Tooltip tooltip tooltip tooltip tooltip tooltip."
+        self.instance = CardInfo.objects.create(name=self.name, tooltip=self.tooltip)
+        self.instance.save()
+
+    def test_serialization(self):
+        serializer = CardInfoSerializer(instance=self.instance)
+
+        actualName = serializer.data.get("name")
+        actualTooltip = serializer.data.get("tooltip")
+        actualImage = serializer.data.get("image")
+
+        self.assertEquals(actualName, self.instance.name)
+        self.assertEquals(actualTooltip, self.instance.tooltip)
+        self.assertEquals(bool(actualImage), bool(self.instance.image))
+
+    def test_deserialization(self):
+        data = {"name": self.name, "tooltip": self.tooltip}
+        serializer = CardInfoSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        card_info = serializer.save()
+
+        self.assertEquals(card_info.name, self.name)
+        self.assertEquals(card_info.tooltip, self.tooltip)
+        self.assertEquals(card_info.image, self.instance.image)
