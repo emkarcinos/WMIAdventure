@@ -215,6 +215,17 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 # Mierzalne wskaźniki wdrożeniowe
 
+- System zostanie zasilony treściami stworzonymi przez studentów i członków projektu:
+    * 60 Kart
+    * 100 Pytań do Quizów
+    * 50 Historii Adventure
+- Gałąź testowa systemu zostanie udostępniona pod domeną (http://wmiadventure.westeurope.cloudapp.azure.com) i będzie reagowała na wszystkie zmiany na tej gałęzi.
+- Gałąź produkcyjna systemu zostanie udostępniona pod domeną (wmi-adventure.pl).
+- W systemie zostanie utworzonych 70 kont użytkowników.
+- W testach użyteczności całej aplikacji przez studentów system uzyska ocenę ogólną 7.5/10
+- Studenci przeprowadzą 25 walk w trybie Battle.
+- 50% historii Adventure zostanie stworzonych przez studentów.
+
 # Kryteria akceptacji projektu dla I semestru prac
 
 # Kryteria akceptacji projektu dla II semestru prac
