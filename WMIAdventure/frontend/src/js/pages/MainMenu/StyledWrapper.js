@@ -1,10 +1,11 @@
-@import "src/main-styles/variables";
+import styled from 'styled-components';
 
-.MainMenu {
+const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
-  background-color: $ui-01;
-}
+`;
+
+export default StyledWrapper;

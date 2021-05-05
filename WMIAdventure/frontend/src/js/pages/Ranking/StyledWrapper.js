@@ -1,13 +1,11 @@
-@import "src/main-styles/variables";
+import styled from 'styled-components';
 
-.Profile {
+const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
+`;
 
-  &__paragraph {
-    font-size: 36px;
-  }
-}
+export default StyledWrapper;
