@@ -8,23 +8,37 @@ Ostatnia modyfikacja: 01/04/2021 18:19 - Stworzenie dokumentu na bazie szablonu
 # Elementy składowe projektu
 
 ## Semestr I
+- Testowy serwer z aktualnym stanem aplikacji (04.05.2021)
+- Testowa baza danych (04.05.2021)
+- Domena z aplikacją w stanie testowym (20.06.2021)
 
 ### Elementy nieprogramistyczne
 - Prototyp w narzędziu Figma (16.04.2021)
-
+- Pełen prototyp designu interfejsu w Figmie (30.06.2021)
+- Informacje o strukturze programistycznej projektu na GitHub Wiki (30.05.2021)
+- Zawartość stworzona w Edytorze Kart (20.06.2021)
+- Otwarta dokumentacja do Trybu Battle i Edytora Historii na Github Wiki (30.06.2021)
+- Raporty z testów użyteczności modułów (30.06.2021):
+    * Edytor Kart (30.06.2021)
+    * Tryb Battle (30.06.2021)
 ## Semestr II
 
 ### Elementy programistyczne
-- Aplikacja webowa (PWA) w frameworku React (20.11.2021)
-- Serwer Django (25.12.2021)
-- Baza danych MSSQL (25.12.2021)
+- Aplikacja webowa (PWA) we frameworku React (20.11.2021)
+- Serwer backendowy Django (25.12.2021)
+- Baza danych PostgreSQL (25.12.2021)
 
 ### Elementy nieprogramistyczne
 - Otwarta dokumentacja do całości systemu dostępna w Github Wiki (30.01.2022)
-- Zawartość stworzona w systemowych narzędziach (30.01.2022)
-- Raporty z testów (30.01.2022)
-- Szkice fabuły i reszty zawartości w formie PDF (30.01.2022)
+- Zawartość stworzona w Edytorze Historii i Pytań (30.01.2022)
+- Raporty z testów użyteczności modułów (30.01.2022):
+    * Edytor Historii (30.10.2021)
+    * Tryb Adventure (30.10.2021)
+    * Edytor Pytań (20.01.2022)
+    * Minigry (20.01.2022)
+    * Całość Aplikacji (30.01.2022)
 - Samouczek dla użytkownika aplikacji (20.12.2021)
+- Landing page projektu (20.01.2022)
 
 # Granice projektu
 
@@ -356,7 +370,7 @@ Skład:
 - Administracja treściami zgłaszanymi przez Twórców
 
 ## Quizy
-Planowana data zrealizowania: 20.01.2021
+Planowana data zrealizowania: 20.01.2022
 
 Skład:
 - Edytor Pytań
@@ -365,7 +379,7 @@ Skład:
 - Punkty PU
 
 ## Minigry
-Planowana data zrealizowania: 20.01.2021
+Planowana data zrealizowania: 20.01.2022
 
 Skład:
 - Implementacja 3 powtarzających się minigier
