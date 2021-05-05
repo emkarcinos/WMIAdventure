@@ -1,9 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
-from .models import CardLevel
-from .serializers import CardLevelSerializer
-from .models import CardEffect
-from .serializers import CardEffectSerializer
+from .models import *
+from .serializers import *
 
 
 class CardLevelTestCase(TestCase):
@@ -138,3 +136,59 @@ class CardEffectSerializerTestCase(TestCase):
         self.assertEqual(sample.id, self.test_id)
         self.assertEqual(sample.name, self.test_name)
         self.assertEqual(sample.tooltip, self.test_tooltip)
+
+
+class CardSerializerTestCase(TestCase):
+
+    def setUp(self):
+        self.test_id = 50
+        self.info_id = 1
+        self.test_level = 1
+        self.test_cost = 20
+        # Check whether any CardInfos exist prior to running the tests
+        # Create one if there's none
+        try:
+            self.cardInfo = CardInfo.objects.get(pk=self.info_id)
+        except CardInfo.DoesNotExist:
+            self.cardInfo = CardInfo.objects.create(id=self.info_id)
+
+    def test_deserialization(self):
+        data = {'id': self.test_id,
+                'info': self.info_id,
+                'level': self.test_level,
+                'next_level_cost': self.test_cost}
+
+        serializer = CardSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        sample = serializer.save()
+
+        self.assertEqual(sample.id, self.test_id)
+        self.assertEqual(sample.info.id, self.info_id)
+        self.assertEqual(sample.level.level, self.test_level)
+        self.assertEqual(sample.next_level_cost, self.test_cost)
+
+    def test_serialization(self):
+        info = CardInfo.objects.get(pk=self.info_id)
+        level = CardLevel.objects.get(pk=self.test_level)
+        sample = Card.objects.create(id=self.test_id,
+                                     info=info,
+                                     level=level,
+                                     next_level_cost=self.test_cost)
+
+        serializer = CardSerializer(instance=sample)
+
+        actual_id = serializer.data.get('id')
+        actual_level = serializer.data.get('level')
+        actual_info = serializer.data.get('info')
+        actual_cost = serializer.data.get('next_level_cost')
+
+        self.assertEqual(actual_id, self.test_id)
+        self.assertEqual(actual_level, self.test_level)
+        self.assertEqual(actual_info, self.info_id)
+        self.assertEqual(actual_cost, self.test_cost)

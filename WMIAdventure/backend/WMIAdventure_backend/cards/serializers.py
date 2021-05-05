@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import CardEffect
-from .models import CardLevel
+from .models import CardEffect, CardLevel, Card
 
 
 class CardEffectSerializer(serializers.ModelSerializer):
@@ -13,3 +12,9 @@ class CardLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardLevel
         fields = ['level', 'name']
+
+
+class CardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Card
+        fields = ['id', 'info', 'level', 'next_level_cost']
