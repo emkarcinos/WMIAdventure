@@ -139,19 +139,11 @@ class CardEffectSerializerTestCase(TestCase):
 
 
 class CardInfoTestCase(TestCase):
-    def setUp(self) -> None:
-        self.name = "Name"
-        self.tooltip = "Tooltip tooltip tooltip tooltip tooltip tooltip."
-        self.object = CardInfo.objects.create(name=self.name, tooltip=self.tooltip)
-        self.object.save()
+    def test_create_without_image(self):
+        object = CardInfo.objects.create(name="Name", tooltip="Tooltip")
+        object.save()
 
-    def test_creation(self):
-        expected_name = self.name
-        expected_tooltip = self.tooltip
-
-        self.assertEquals(self.object.name, expected_name)
-        self.assertEquals(self.object.tooltip, expected_tooltip)
-        self.assertFalse(self.object.image)
+        self.assertFalse(self.object.image)  # Assert image is None
 
 
 class CardInfoSerializerTestCase(TestCase):
