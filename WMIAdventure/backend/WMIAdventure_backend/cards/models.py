@@ -63,7 +63,13 @@ class CardEffect(models.Model):
 
 
 class CardInfo(models.Model):
-    id = models.IntegerField(primary_key=True)
+    """
+    Stores generic information about Card.
+    """
+
+    name = models.CharField(max_length=50)
+    tooltip = models.TextField()
+    image = models.ImageField(upload_to='cards/images/', blank=True)
 
 
 class Card(models.Model):
