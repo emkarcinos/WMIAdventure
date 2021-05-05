@@ -1,8 +1,7 @@
 import React from 'react';
-import './ShowMoreButton.scss';
-
 import showMore from '../../../../assets/icons/more.svg';
-import MoreOptions from './MoreOptions/MoreOptions';
+import MoreOptions from '../../atoms/MoreOptions/MoreOptions';
+import StyledButton from './StyledButton';
 
 function ShowMoreButton() {
 
@@ -23,9 +22,9 @@ function ShowMoreButton() {
 
     return (
         <>
-            <button className='ShowMoreButton' type='button' onClick={() => {toggleMoreOptions();}}>
-                <img className='ShowMoreButton__icon' src={showMore} alt='Ikona więcej opcji - trzy kropki.'/>
-            </button>
+            <StyledButton type='button' onClick={() => {toggleMoreOptions();}}>
+                <StyledButton.Icon src={showMore} alt='Ikona więcej opcji - trzy kropki.'/>
+            </StyledButton>
             {showMoreOptions()}
         </>
     );

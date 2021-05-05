@@ -1,38 +1,37 @@
 import React from 'react';
-import StyledWrapper from './StyledWrapper';
-import StyledTextareaLabel from './StyledTextareaLabel';
+import StyledFieldset from './StyledFieldset';
 
 function CardDescribeInputs() {
     return (
-        <StyledWrapper>
-            <legend>
+        <StyledFieldset>
+            <StyledFieldset.Legend>
                 Karta
-            </legend>
-            <p>
-                <label htmlFor='name'>
+            </StyledFieldset.Legend>
+            <StyledFieldset.Paragraph>
+                <StyledFieldset.Label htmlFor='name'>
                     Nazwa:
-                </label>
+                </StyledFieldset.Label>
                 <input id='name' type='text' name='name'/>
-            </p>
-            <p>
-                <label htmlFor='category'>
+            </StyledFieldset.Paragraph>
+            <StyledFieldset.Paragraph>
+                <StyledFieldset.Label htmlFor='category'>
                     Kategoria:
-                </label>
+                </StyledFieldset.Label>
                 <input id='category' type='text' name='category'/>
-            </p>
-            <p>
-                <label htmlFor='rarity'>
+            </StyledFieldset.Paragraph>
+            <StyledFieldset.Paragraph>
+                <StyledFieldset.Label htmlFor='rarity'>
                     Rzadkość:
-                </label>
+                </StyledFieldset.Label>
                 <input id='rarity' type='text' name='rarity'/>
-            </p>
-            <StyledTextareaLabel htmlFor='describe'>
+            </StyledFieldset.Paragraph>
+            <StyledFieldset.Label textarea htmlFor='describe'>
                 Opis Karty:
-            </StyledTextareaLabel>
-            <textarea id='describe' name='describe'>
-
-            </textarea>
-        </StyledWrapper>
+            </StyledFieldset.Label>
+            <StyledFieldset.Textarea id='describe' name='describe'>
+                {/*textarea*/}
+            </StyledFieldset.Textarea>
+        </StyledFieldset>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledWrapper from './StyledWrapper';
+import StyledWrapper from './StyledWrapper/StyledWrapper';
 import CardTargetInput from '../../atoms/CardTargetInput';
 import CardPowerInput from '../../atoms/CardPowerInput';
 
@@ -29,12 +29,12 @@ function CardEffectCheckbox({name, label, power}) {
 
     return (
         <StyledWrapper>
-            <div>
-                <label htmlFor={name}>
+            <StyledWrapper.Container>
+                <StyledWrapper.Label htmlFor={name}>
                     {label}
-                </label>
-                <input id={name} type='checkbox' name={name} onChange={handleChange}/>
-            </div>
+                </StyledWrapper.Label>
+                <StyledWrapper.Input id={name} type='checkbox' name={name} onChange={handleChange}/>
+            </StyledWrapper.Container>
             {cardTargetInputRender()}
             {cardPowerInputRender()}
         </StyledWrapper>

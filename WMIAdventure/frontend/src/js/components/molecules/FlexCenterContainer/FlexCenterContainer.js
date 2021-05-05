@@ -1,11 +1,11 @@
 import React from 'react';
-import './FlexCenterContainer.scss';
+import StyledWrapper from './StyledWrapper';
 
 function FlexCenterContainer({children}) {
     return (
-        <div className='FlexCenterContainer'>
+        <StyledWrapper>
             {children}
-        </div>
+        </StyledWrapper>
     );
 }
 

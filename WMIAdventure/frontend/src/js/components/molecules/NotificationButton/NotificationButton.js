@@ -1,8 +1,8 @@
 import React from 'react';
-import './NotificationButton.scss';
 
-import notification from '../../../../assets/icons/notification.svg';
+import notificationIcon from '../../../../assets/icons/notification.svg';
 import Notifications from '../Notifications';
+import StyledButton from './StyledButton';
 
 function NotificationButton() {
 
@@ -23,9 +23,9 @@ function NotificationButton() {
 
     return (
         <>
-            <button className='NotificationButton' onClick={() => {toggleNotifications();}}>
-                <img className='NotificationButton__icon' src={notification} alt='Ikona powiadomień - dzwoneczek.'/>
-            </button>
+            <StyledButton onClick={() => {toggleNotifications();}}>
+                <StyledButton.Image src={notificationIcon} alt='Ikona powiadomień - dzwoneczek.'/>
+            </StyledButton>
             {showNotificatios()}
         </>
     );

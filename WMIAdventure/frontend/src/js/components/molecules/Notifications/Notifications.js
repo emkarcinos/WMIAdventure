@@ -1,5 +1,5 @@
 import React from 'react';
-import './Notifications.scss';
+import StyledNotifications from './StyledNotifications';
 
 const notifications = [
     {
@@ -22,22 +22,22 @@ const notifications = [
 
 function Notifications() {
     return (
-        <div className='Notifications'>
-            <ul className='Notifications__list'>
+        <StyledNotifications>
+            <StyledNotifications.List>
                 {notifications.map((elem, index) => {
                     return (
-                        <li className='Notifications__item' key={`notifaction-${index}`}>
-                            <p className='Notifications__header'>
+                        <StyledNotifications.Item key={`notifaction-${index}`}>
+                            <StyledNotifications.Header>
                                 {elem.header}
-                            </p>
-                            <p className='Notifications__paragraph'>
+                            </StyledNotifications.Header>
+                            <StyledNotifications.Paragraph>
                                 {elem.paragraph}
-                            </p>
-                        </li>
+                            </StyledNotifications.Paragraph>
+                        </StyledNotifications.Item>
                     );
                 })}
-            </ul>
-        </div>
+            </StyledNotifications.List>
+        </StyledNotifications>
     );
 }
 
