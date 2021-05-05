@@ -1,9 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
-from .models import CardLevel
-from .serializers import CardLevelSerializer
-from .models import CardEffect
-from .serializers import CardEffectSerializer
+from .models import CardEffect, CardLevel, CardInfo
+from .serializers import CardEffectSerializer, CardLevelSerializer
 
 
 class CardLevelTestCase(TestCase):
@@ -138,3 +136,19 @@ class CardEffectSerializerTestCase(TestCase):
         self.assertEqual(sample.id, self.test_id)
         self.assertEqual(sample.name, self.test_name)
         self.assertEqual(sample.tooltip, self.test_tooltip)
+
+
+class CardInfoTestCase(TestCase):
+    def setUp(self) -> None:
+        self.name = "Name"
+        self.tooltip = "Tooltip tooltip tooltip tooltip tooltip tooltip."
+        self.object = CardInfo.objects.create(name=self.name, tooltip=self.tooltip)
+        self.object.save()
+
+    def test_creation(self):
+        expected_name = self.name
+        expected_tooltip = self.tooltip
+
+        self.assertEquals(self.object.name, expected_name)
+        self.assertEquals(self.object.tooltip, expected_tooltip)
+        self.assertFalse(self.object.image)
