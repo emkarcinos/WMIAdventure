@@ -74,3 +74,12 @@ class Card(models.Model):
     info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
     level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
     next_level_cost = models.IntegerField()
+
+    class Meta:
+        """
+        This makes (info, level) unique
+        """
+        constraints = [
+            models.UniqueConstraint(fields=['info', 'level'],
+                                    name='unique_info_level')
+        ]
