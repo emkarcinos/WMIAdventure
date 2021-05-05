@@ -60,3 +60,13 @@ class CardEffect(models.Model):
         self.name = self.effect.label
 
         super(CardEffect, self).save(*args, **kwargs)
+
+
+class CardInfo(models.Model):
+    """
+    Stores generic information about Card.
+    """
+
+    name = models.CharField(max_length=50)
+    tooltip = models.TextField()
+    image = models.ImageField(upload_to='cards/images/', blank=True)
