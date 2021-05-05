@@ -28,3 +28,9 @@ class CardInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardInfo
         fields = ['id', 'name', 'tooltip', 'image']
+
+
+class CardLevelEffectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CardLevelEffects
+        fields = ['id', 'card', 'card_effect', 'target', 'power', 'range']

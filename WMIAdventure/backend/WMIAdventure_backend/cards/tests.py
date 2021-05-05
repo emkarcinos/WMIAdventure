@@ -235,3 +235,63 @@ class CardSerializerTestCase(TestCase):
         self.assertEqual(actual_level, self.test_level)
         self.assertEqual(actual_info, self.info_id)
         self.assertEqual(actual_cost, self.test_cost)
+
+
+class CardLevelEffectsSerializerTestCase(TestCase):
+    def setUp(self):
+        # set up necessary database entries
+        self.card_info = CardInfo.objects.create(name="test", tooltip="jechane")
+        self.card = Card.objects.create(info=self.card_info,
+                                        level=CardLevel(CardLevel.Level.COMMON),
+                                        next_level_cost=50)
+
+    def test_serialization(self):
+        effect = CardEffect.objects.get(pk=2)
+        target = CardLevelEffects.Target.OPPONENT
+        power = 100
+        range = 10.125125
+        sample = CardLevelEffects.objects.create(card=self.card,
+                                                 card_effect=effect,
+                                                 power=power,
+                                                 range=range,
+                                                 target=target)
+        serializer = CardLevelEffectsSerializer(instance=sample)
+
+        actual_card = serializer.data.get('card')
+        actual_effect = serializer.data.get('card_effect')
+        actual_target = serializer.data.get('target')
+        actual_power = serializer.data.get('power')
+        actual_range = serializer.data.get('range')
+
+        self.assertEqual(actual_card, self.card.id)
+        self.assertEqual(actual_power, power)
+        self.assertEqual(actual_target, target.value)
+        self.assertEqual(actual_range, range)
+        self.assertEqual(actual_effect, effect.id)
+
+    def test_deserialization(self):
+        effect = CardEffect.EffectId.DMG
+        target = CardLevelEffects.Target.OPPONENT
+        power = 5
+        range = 12.2
+        data = {'card': self.card.id,
+                'card_effect': effect,
+                'target': target.value,
+                'power': power,
+                'range': range}
+
+        serializer = CardLevelEffectsSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        sample = serializer.save()
+
+        self.assertEqual(effect, sample.card_effect.id)
+        self.assertEqual(target, sample.target)
+        self.assertEqual(power, sample.power)
+        self.assertEqual(range, sample.range)
+        self.assertEqual(self.card, sample.card)
