@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledWrapper = styled.fieldset`
+const StyledFieldset = styled.fieldset`
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -8,4 +8,4 @@ const StyledWrapper = styled.fieldset`
   margin: 0 16px;
 `;
 
-export default StyledWrapper;
+export default StyledFieldset;

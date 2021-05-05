@@ -3,7 +3,7 @@ import './MainMenu.scss';
 
 import NavBar from '../../components/organisms/NavBar';
 import MainMenuModule from '../../components/atoms/MainMenuModule';
-import MainMenuContainer from '../../components/organisms/MainMenuContainer';
+import GridOneColumn from '../../components/organisms/GridOneColumn';
 import MainMenuSmallerModule from '../../components/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
 import FlexCenterContainer from '../../components/molecules/FlexCenterContainer';
 
@@ -17,11 +17,11 @@ function MainMenu() {
     return (
         <div className="MainMenu">
             <NavBar />
-            <MainMenuContainer>
+            <GridOneColumn>
                 <MainMenuModule img={adventureImg} alt={'Zdjęcie wejścia do wydziału WMI.'} link={'/adventure'} header={'ADVENTURE'} describe={'Przeżyj wydziałową historię w postaci Visual Novel.'}/>
                 <MainMenuModule img={battleImg} alt={'Orkowie.'} header={'BATTLE'} link={'/battle'} describe={'Walcz z innymi graczami.'}/>
                 <MainMenuModule img={rankingImg} alt={'Magowie.'} header={'RANKINGI'} link={'/ranking'} describe={'Sprawdź jakim prosem jesteś.'}/>
-            </MainMenuContainer>
+            </GridOneColumn>
             <FlexCenterContainer>
                 <MainMenuSmallerModule link={'/event'} label={'EVENT'} describe={'ZEPSUTY AUTOMAT'} alt={'Ikonka lokalizacji.'} time={'Pozostało: 2d 15h'} decorate={local}/>
                 <MainMenuSmallerModule link={'/quiz'} label={'QUIZ'} describe={'ROZWIĄŻ QUIZ'} time={false} decorate={false}/>

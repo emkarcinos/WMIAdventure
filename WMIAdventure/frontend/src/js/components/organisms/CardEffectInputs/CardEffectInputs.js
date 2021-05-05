@@ -1,11 +1,11 @@
 import React from 'react';
-import StyledWrapper from './StyledWrapper';
+import StyledFieldset from './StyledFieldset';
 import CardEffectCheckbox from '../../molecules/CardEffectCheckbox';
 import effectsData from './effectsData';
 
 function CardEffectInputs() {
     return (
-        <StyledWrapper>
+        <StyledFieldset>
             <legend>
                 Efekty karty
             </legend>
@@ -16,7 +16,7 @@ function CardEffectInputs() {
                     );
                 })
             }
-        </StyledWrapper>
+        </StyledFieldset>
     );
 }
 
