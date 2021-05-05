@@ -1,11 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import './MainMenuSmallerModule.scss';
+import StyledLink from './StyledLink';
 
 function decorateHandler(decorate, alt) {
     if (decorate !== false) {
         return (
-            <img className='MainMenuSmallerModule__decorate' src={decorate} alt={alt} />
+            <StyledLink.Decorate src={decorate} alt={alt} />
         );
     }
 }
@@ -13,25 +12,25 @@ function decorateHandler(decorate, alt) {
 function timeLabelHandler(time) {
     if (time !== false) {
         return (
-            <p className='MainMenuSmallerModule__time'>
+            <StyledLink.Time>
                 {time}
-            </p>
+            </StyledLink.Time>
         );
     }
 }
 
 function MainMenuSmallerModule({link, label, decorate, alt, describe, time}) {
     return (
-        <Link to={link} className='MainMenuSmallerModule'>
-            <p className='MainMenuSmallerModule__label'>
+        <StyledLink to={link}>
+            <StyledLink.Label>
                 {label}
-            </p>
+            </StyledLink.Label>
             {decorateHandler(decorate, alt)}
             {timeLabelHandler(time)}
-            <p className='MainMenuSmallerModule__describe'>
+            <StyledLink.Paragraph>
                 {describe}
-            </p>
-        </Link>
+            </StyledLink.Paragraph>
+        </StyledLink>
     );
 }
 

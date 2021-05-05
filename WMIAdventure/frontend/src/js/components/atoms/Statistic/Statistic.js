@@ -1,48 +1,47 @@
 import React from 'react';
-import StyledWrapper from './StyledWrapper';
-import StyledStatRow from './StyledStatRow';
+import StyledStatistic from './StyledStatistic';
 
 function Statistic() {
     return (
-        <StyledWrapper>
-            <h2>
+        <StyledStatistic>
+            <StyledStatistic.Header>
                 Statystyki
-            </h2>
-            <table>
-                <StyledStatRow>
-                    <tr>
+            </StyledStatistic.Header>
+            <StyledStatistic.Table>
+                <StyledStatistic.Column>
+                    <StyledStatistic.Row>
                         <b>
                             Pozycja
                         </b>
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row>
                         Punkty
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row>
                         Stoczone pojedynki
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row>
                         Wygrane pojedynki
-                    </tr>
-                </StyledStatRow>
-                <StyledStatRow textEnd>
-                    <tr>
+                    </StyledStatistic.Row>
+                </StyledStatistic.Column>
+                <StyledStatistic.Column>
+                    <StyledStatistic.Row textEnd>
                         <b>
                             #1
                         </b>
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row textEnd>
                         999
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row textEnd>
                         151
-                    </tr>
-                    <tr>
+                    </StyledStatistic.Row>
+                    <StyledStatistic.Row textEnd>
                         28 (76%)
-                    </tr>
-                </StyledStatRow>
-            </table>
-        </StyledWrapper>
+                    </StyledStatistic.Row>
+                </StyledStatistic.Column>
+            </StyledStatistic.Table>
+        </StyledStatistic>
     );
 }
 

@@ -1,19 +1,17 @@
 import React from 'react';
-import './Logo.scss';
-import {Link} from 'react-router-dom';
-
+import StyledLogo from './StyledLogo/StyledLogo';
 import logo from '../../../../assets/icons/logo.svg';
 
 function Logo() {
     return (
-        <div className='Logo'>
-            <Link className='Logo__link' to={'/'}>
-                <img className='Logo__icon' src={logo} alt='Logo Wmi Adventure.'/>
-                <h1 className='Logo__header'>
+        <StyledLogo className='Logo'>
+            <StyledLogo.Link to={'/'}>
+                <StyledLogo.Image src={logo} alt='Logo Wmi Adventure.'/>
+                <StyledLogo.Header>
                     WMI Adventure
-                </h1>
-            </Link>
-        </div>
+                </StyledLogo.Header>
+            </StyledLogo.Link>
+        </StyledLogo>
     );
 }
 

@@ -1,17 +1,17 @@
 import React from 'react';
-import StyledWrapper from './StyledWrapper';
+import StyledAvatar from './StyledAvatar';
 
 function Avatar({image}) {
     return (
-        <StyledWrapper>
-            <img src={image} alt='Avatar profilowy.' />
-            <h2>
+        <StyledAvatar>
+            <StyledAvatar.Image src={image} alt='Avatar profilowy.' />
+            <StyledAvatar.Header>
                 Nazwa użytkownika
-            </h2>
-            <p>
+            </StyledAvatar.Header>
+            <StyledAvatar.Paragraph>
                 5 semestr
-            </p>
-        </StyledWrapper>
+            </StyledAvatar.Paragraph>
+        </StyledAvatar>
     );
 }
 

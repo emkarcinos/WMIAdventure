@@ -1,18 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import './MainMenuModule.scss';
+import StyledLink from './StyledLink';
 
 function MainMenuModule({img, alt, header, describe, link}) {
     return (
-        <Link className='MainMenuModule' to={link}>
-            <img className='MainMenuModule__image' src={img} alt={alt}/>
-            <p className='MainMenuModule__header'>
+        <StyledLink to={link}>
+            <StyledLink.Image src={img} alt={alt}/>
+            <StyledLink.Header>
                 {header}
-            </p>
-            <p className='MainMenuModule__describe'>
+            </StyledLink.Header>
+            <StyledLink.Describe>
                 {describe}
-            </p>
-        </Link>
+            </StyledLink.Describe>
+        </StyledLink>
     );
 }
 
