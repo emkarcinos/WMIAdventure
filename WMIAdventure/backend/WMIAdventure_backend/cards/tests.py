@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from .models import CardEffect, CardLevel, CardInfo
-from .serializers import CardEffectSerializer, CardLevelSerializer
+from .serializers import CardEffectSerializer, CardLevelSerializer, CardInfoSerializer
 
 
 class CardLevelTestCase(TestCase):
@@ -152,3 +152,38 @@ class CardInfoTestCase(TestCase):
         self.assertEquals(self.object.name, expected_name)
         self.assertEquals(self.object.tooltip, expected_tooltip)
         self.assertFalse(self.object.image)
+
+
+class CardInfoSerializerTestCase(TestCase):
+    def setUp(self) -> None:
+        self.name = "Name"
+        self.tooltip = "Tooltip tooltip tooltip tooltip tooltip tooltip."
+        self.instance = CardInfo.objects.create(name=self.name, tooltip=self.tooltip)
+        self.instance.save()
+
+    def test_serialization(self):
+        serializer = CardInfoSerializer(instance=self.instance)
+
+        actualName = serializer.data.get("name")
+        actualTooltip = serializer.data.get("tooltip")
+        actualImage = serializer.data.get("image")
+
+        self.assertEquals(actualName, self.instance.name)
+        self.assertEquals(actualTooltip, self.instance.tooltip)
+        self.assertEquals(bool(actualImage), bool(self.instance.image))
+
+    def test_deserialization(self):
+        data = {"name": self.name, "tooltip": self.tooltip}
+        serializer = CardInfoSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        card_info = serializer.save()
+
+        self.assertEquals(card_info.name, self.name)
+        self.assertEquals(card_info.tooltip, self.tooltip)
+        self.assertEquals(card_info.image, self.instance.image)
