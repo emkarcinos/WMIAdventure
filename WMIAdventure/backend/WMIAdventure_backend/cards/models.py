@@ -70,3 +70,22 @@ class CardInfo(models.Model):
     name = models.CharField(max_length=50)
     tooltip = models.TextField()
     image = models.ImageField(upload_to='cards/images/', blank=True)
+
+
+class Card(models.Model):
+    """
+    This may be understood as coupling CardInfo with appropriate levels,
+    that is, if we create a CardInfo model, we create multiple Cards depending on how many levels the Card may have.
+    """
+    info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
+    level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
+    next_level_cost = models.IntegerField()
+
+    class Meta:
+        """
+        This makes (info, level) unique
+        """
+        constraints = [
+            models.UniqueConstraint(fields=['info', 'level'],
+                                    name='unique_info_level')
+        ]
