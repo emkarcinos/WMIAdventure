@@ -1,24 +1,26 @@
 import React from 'react';
+import StyledFieldset from './StyledFieldset';
+import Label from './StyledFieldset/Label';
 
 function CardPowerInput({parentName}) {
     return (
-        <fieldset>
+        <StyledFieldset>
             <legend>
                 Moc:
             </legend>
-            <div>
-                <label htmlFor={`${parentName}-power`}>
+            <StyledFieldset.Container>
+                <Label htmlFor={`${parentName}-power`}>
                     Wartość efektu
-                </label>
+                </Label>
                 <input id={`${parentName}-power`} name={`${parentName}-power`} type='number'/>
-            </div>
-            <div>
-                <label htmlFor={`${parentName}-range`}>
+            </StyledFieldset.Container>
+            <StyledFieldset.Container last>
+                <Label last htmlFor={`${parentName}-range`}>
                     Zasięg efektu
-                </label>
+                </Label>
                 <input id={`${parentName}-range`} name={`${parentName}-range`} type='number'/>
-            </div>
-        </fieldset>
+            </StyledFieldset.Container>
+        </StyledFieldset>
     );
 }
 

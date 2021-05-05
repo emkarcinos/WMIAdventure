@@ -1,24 +1,25 @@
 import React from 'react';
+import StyledFieldset from './StyledFieldset';
 
 function CardTargetInput({parentName}) {
     return (
-        <fieldset>
+        <StyledFieldset>
             <legend>
                 Cel:
             </legend>
-            <div>
-                <label htmlFor={`${parentName}-enemy`}>
+            <StyledFieldset.Container>
+                <StyledFieldset.Label htmlFor={`${parentName}-enemy`}>
                     przeciwnik
-                </label>
+                </StyledFieldset.Label>
                 <input id={`${parentName}-enemy`} name='target' value={`${parentName}-enemy`} type='radio'/>
-            </div>
-            <div>
-                <label htmlFor={`${parentName}-owner`}>
+            </StyledFieldset.Container>
+            <StyledFieldset.Container last>
+                <StyledFieldset.Label htmlFor={`${parentName}-owner`}>
                     właściciel
-                </label>
+                </StyledFieldset.Label>
                 <input id={`${parentName}-owner`} name='target' value={`${parentName}-owner`} type='radio'/>
-            </div>
-        </fieldset>
+            </StyledFieldset.Container>
+        </StyledFieldset>
     );
 }
 
