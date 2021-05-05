@@ -7,16 +7,16 @@ function CardPowerInput({parentName}) {
                 Moc:
             </legend>
             <div>
-                <label htmlFor={`${parentName}-min-power`}>
-                    Minimalna wartość efektu
+                <label htmlFor={`${parentName}-power`}>
+                    Wartość efektu
                 </label>
-                <input id={`${parentName}-min-power`} name={`${parentName}-min-power`} type='number'/>
+                <input id={`${parentName}-power`} name={`${parentName}-power`} type='number'/>
             </div>
             <div>
-                <label htmlFor={`${parentName}-max-power`}>
-                    Maksymalna wartość efektu
+                <label htmlFor={`${parentName}-range`}>
+                    Zasięg efektu
                 </label>
-                <input id={`${parentName}-max-power`} name={`${parentName}-max-power`} type='number'/>
+                <input id={`${parentName}-range`} name={`${parentName}-range`} type='number'/>
             </div>
         </fieldset>
     );
