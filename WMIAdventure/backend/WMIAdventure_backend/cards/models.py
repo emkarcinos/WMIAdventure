@@ -73,5 +73,5 @@ class Card(models.Model):
     """
     id = models.IntegerField(primary_key=True)
     info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
-    level = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
+    level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
     next_level_cost = models.IntegerField()
