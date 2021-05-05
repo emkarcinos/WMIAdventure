@@ -60,3 +60,18 @@ class CardEffect(models.Model):
         self.name = self.effect.label
 
         super(CardEffect, self).save(*args, **kwargs)
+
+
+class CardInfo(models.Model):
+    id = models.IntegerField(primary_key=True)
+
+
+class Card(models.Model):
+    """
+    This may be understood as coupling CardInfo with appropriate levels,
+    that is, if we create a CardInfo model, we create multiple Cards depending on how many levels the Card may have.
+    """
+    id = models.IntegerField(primary_key=True)
+    info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
+    level = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
+    next_level_cost = models.IntegerField()
