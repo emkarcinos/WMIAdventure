@@ -110,4 +110,6 @@ class CardLevelEffects(models.Model):
     # may have multiple of the same effect.
     target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
     power = models.IntegerField()
+    # Range defines how the power attribute will vary in card logic.
+    # So an actual power will be randomized from range (power - range, power + range)
     range = models.FloatField()
