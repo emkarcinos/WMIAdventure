@@ -1,16 +1,15 @@
 import React from 'react';
-import './AnswerCreator.scss';
-
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function AnswerCreator() {
     return (
-        <div className='AnswerCreator'>
+        <StyledWrapper>
             <NavBar />
-            <p className='AnswerCreator__paragraph'>
+            <p>
                 Answer Creator View - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 

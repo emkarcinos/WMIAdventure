@@ -1,23 +1,19 @@
 import React from 'react';
-import './BattleMode.scss';
-import styled from 'styled-components';
-
 import NavBar from '../../components/organisms/NavBar';
 import Statistic from '../../components/atoms/Statistic';
-
-const StyledWrapper = styled.div`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-`;
+import StyledWrapper from './StyledWrapper';
+import Avatar from '../../components/atoms/Avatar';
+import avatar from '../../../assets/icons/avatar.svg';
+import GridOneColumn from '../../components/organisms/GridOneColumn';
 
 function BattleMode() {
     return (
-        <StyledWrapper className="BattleMode">
+        <StyledWrapper>
             <NavBar />
-            <Statistic />
+            <GridOneColumn rowGaps='32px'>
+                <Avatar image={avatar} />
+                <Statistic />
+            </GridOneColumn>
         </StyledWrapper>
     );
 }

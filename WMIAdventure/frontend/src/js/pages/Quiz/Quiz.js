@@ -1,15 +1,15 @@
 import React from 'react';
-import './Quiz.scss';
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function Quiz() {
     return (
-        <div className='Quiz'>
+        <StyledWrapper>
             <NavBar />
-            <p className='Quiz__paragraph'>
+            <p>
                 Quiz View - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 

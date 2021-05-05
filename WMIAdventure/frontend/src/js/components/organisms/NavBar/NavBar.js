@@ -7,10 +7,10 @@ import StyledNavBar from './StyledNavBar';
 
 function NavBar() {
     return (
-        <StyledNavBar className="NavBar">
-            <StyledNavBar.Navigation className="NavBar__navigation">
+        <StyledNavBar>
+            <StyledNavBar.Navigation>
                 <Logo />
-                <StyledNavBar.IconsWrapper className="NavBar__icons">
+                <StyledNavBar.IconsWrapper>
                     <NotificationButton />
                     <ProfileButton />
                     <ShowMoreButton />

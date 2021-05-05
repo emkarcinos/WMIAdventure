@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-import colors from '../../../../utils/colors';
 
 import Image from './Image';
 import Header from './Header';
 import Describe from './Describe';
 
 const StyledLink = styled(Link)`
-  background-color: ${colors.ui05};
-  color: ${colors.ui06};
+  background-color: ${({theme}) => theme.colors.ui05};
+  color: ${({theme}) => theme.colors.ui06};
   width: 100%;
   height: 152px;
   display: flex;

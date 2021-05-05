@@ -8,7 +8,7 @@ const List = styled.ul`
   margin: 0;
   padding: 8px;
   list-style: none;
-  background-color: $ui-04;
+  background-color: ${({theme}) => theme.colors.ui04};
   display: grid;
   grid-template-columns: auto;
   grid-row-gap: 8px;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import colors from '../../../../utils/colors';
 
 const Describe = styled.p`
   z-index: 2;
@@ -9,7 +8,7 @@ const Describe = styled.p`
   justify-content: center;
   font-size: 18px;
   font-weight: 400;
-  color: ${colors.ui07};
+  color: ${({theme}) => theme.colors.ui07};
   text-align: center;
   width: 300px;
   margin: 0;

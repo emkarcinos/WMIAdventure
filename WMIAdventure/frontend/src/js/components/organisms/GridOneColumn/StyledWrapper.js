@@ -5,7 +5,7 @@ const StyledWrapper = styled.div`
   width: 80%;
   grid-template-rows: auto auto auto;
   grid-template-columns: auto;
-  grid-row-gap: 16px;
+  grid-row-gap: ${({rowGaps}) => rowGaps};
   margin-bottom: 16px;
 `;
 

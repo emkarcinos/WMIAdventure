@@ -1,9 +1,9 @@
 import React from 'react';
 import StyledWrapper from './StyledWrapper';
 
-function GridOneColumn({children}) {
+function GridOneColumn({children, rowGaps}) {
     return (
-        <StyledWrapper className='MainMenuContainer'>
+        <StyledWrapper rowGaps={rowGaps} className='MainMenuContainer'>
             {children}
         </StyledWrapper>
     );

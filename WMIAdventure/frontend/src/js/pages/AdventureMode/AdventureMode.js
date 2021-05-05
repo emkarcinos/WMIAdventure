@@ -1,16 +1,16 @@
 import React from 'react';
-import './AdventureMode.scss';
 
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function AdventureMode() {
     return (
-        <div className='AdventureMode'>
+        <StyledWrapper>
             <NavBar />
-            <p className='AdventureMode__paragraph'>
+            <p>
                 Adventure Mode View - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 

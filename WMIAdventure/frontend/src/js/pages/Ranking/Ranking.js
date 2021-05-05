@@ -1,15 +1,15 @@
 import React from 'react';
-import './Ranking.scss';
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function Ranking() {
     return (
-        <div className='Ranking'>
+        <StyledWrapper>
             <NavBar />
-            <p className='Ranking__paragraph'>
+            <p>
                 Ranking View - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 

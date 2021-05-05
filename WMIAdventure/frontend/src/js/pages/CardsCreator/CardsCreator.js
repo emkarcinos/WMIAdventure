@@ -1,15 +1,14 @@
 import React from 'react';
-import './CardsCreator.scss';
-
 import NavBar from '../../components/organisms/NavBar';
 import CardForm from '../../components/organisms/CardForm';
+import StyledWrapper from './StyledWrapper';
 
 function CardsCreator() {
     return (
-        <div className='CardsCreator'>
+        <StyledWrapper>
             <NavBar />
             <CardForm />
-        </div>
+        </StyledWrapper>
     );
 }
 

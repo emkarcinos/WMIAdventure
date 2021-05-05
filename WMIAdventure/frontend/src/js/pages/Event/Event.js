@@ -1,15 +1,15 @@
 import React from 'react';
-import './Event.scss';
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function Event() {
     return (
-        <div className="Event">
+        <StyledWrapper>
             <NavBar />
-            <p className='Event__paragraph'>
+            <p>
                 Event View - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 

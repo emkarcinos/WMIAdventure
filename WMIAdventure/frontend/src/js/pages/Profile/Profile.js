@@ -1,15 +1,15 @@
 import React from 'react';
-import './Profile.scss';
 import NavBar from '../../components/organisms/NavBar';
+import StyledWrapper from './StyledWrapper';
 
 function Profile() {
     return (
-        <div className='Profile'>
+        <StyledWrapper>
             <NavBar />
-            <p className='Profile__paragraph'>
+            <p>
                 Profile view - not implemented yet.
             </p>
-        </div>
+        </StyledWrapper>
     );
 }
 
