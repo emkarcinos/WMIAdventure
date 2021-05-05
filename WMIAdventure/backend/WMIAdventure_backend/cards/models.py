@@ -71,6 +71,6 @@ class Card(models.Model):
     This may be understood as coupling CardInfo with appropriate levels,
     that is, if we create a CardInfo model, we create multiple Cards depending on how many levels the Card may have.
     """
-    info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
-    level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
+    info = models.ForeignKey(CardInfo, unique=True, on_delete=models.CASCADE)
+    level = models.ForeignKey(CardLevel, unique=True, on_delete=models.CASCADE)
     next_level_cost = models.IntegerField()
