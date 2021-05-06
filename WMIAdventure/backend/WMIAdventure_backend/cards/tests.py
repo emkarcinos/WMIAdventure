@@ -1,9 +1,11 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from rest_framework.parsers import JSONParser
+from rest_framework.test import APIRequestFactory
 
 from .models import *
 from .serializers import *
+from .views import CardsView
 
 
 class CardLevelTestCase(TestCase):
@@ -356,3 +358,27 @@ class WholeCardSerializerTestCase(TestCase):
         self.assertEqual(sample.data.get('levels')[0]['effects'][0]['target'], card_level_effects.target)
         self.assertEqual(sample.data.get('levels')[0]['effects'][0]['power'], card_level_effects.power)
         self.assertEqual(sample.data.get('levels')[0]['effects'][0]['range'], card_level_effects.range)
+
+
+class GetAllCardsApiTestCase(TestCase):
+    def setUp(self) -> None:
+        # Create model instances
+        self.card_info = CardInfo.objects.create(name="testname",
+                                            tooltip="testtooltip")
+        self.card = Card.objects.create(info=self.card_info,
+                                   level=CardLevel.objects.get(pk=CardLevel.Level.COMMON),
+                                   next_level_cost=2)
+        self.card_level_effects = CardLevelEffects.objects.create(card=self.card,
+                                                             card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.DMG),
+                                                             target=CardLevelEffects.Target.OPPONENT,
+                                                             power=50,
+                                                             range=2.5)
+
+    def test_api_get(self):
+        factory = APIRequestFactory()
+        view = CardsView.as_view()
+        testRequest = factory.get('api/cards/all')
+        response = view(testRequest)
+        self.assertEqual(self.card_info.name, response.data[0]['name'])
+        self.assertEqual(self.card.next_level_cost, response.data[0]['levels'][0]['upgradeCost'])
+

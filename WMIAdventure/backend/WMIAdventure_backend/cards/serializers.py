@@ -185,4 +185,43 @@ class WholeCardSerializer(serializers.Serializer):
 
         return created_objects
 
+    def update(self, instance, validated_data):
+        # Create new Info model instance
+        instance.name = validated_data.get('name', instance.name)
+        instance.image = validated_data.get('image', instance.image)
+        instance.tooltip = validated_data.get('tooltip', instance.tooltip)
+
+        instance.save()
+
+        # Storing return value here
+        created_objects = {'info': instance,
+                           'cards': [],
+                           'cardLevelEffects': []}
+
+        for level in validated_data.get('levels'):
+            # We have multiple levels in JSON, so we have to parse it to our models.
+            card = Card.objects.get(info=instance, level=level['level'])
+            # For each level we have to create a new Card model instance.
+            # Levels are already inside the database, so we get one before assigning.
+            card.level = CardLevel.objects.get(pk=level['level'])
+            card.next_level_cost = level.get('upgradeCost')
+
+            card.save()
+            created_objects['cards'].append(card)
+            for effect in level.get('effects'):
+                # One may have multiple effects on a single card level.
+
+                new_card_level_effects = CardLevelEffects.objects.get(card=card, card_effect=effect['id'])
+                # Card effects are already in the database, so we get one before assigning.
+                new_card_level_effects.card_effect = CardEffect.objects.get(pk=effect['id'])
+                new_card_level_effects.target = effect.get('target')
+                new_card_level_effects.power = effect.get('power')
+                new_card_level_effects.range = effect.get('range')
+
+                new_card_level_effects.save()
+                created_objects['cardLevelEffects'].append(new_card_level_effects)
+
+        return created_objects
+
+
 

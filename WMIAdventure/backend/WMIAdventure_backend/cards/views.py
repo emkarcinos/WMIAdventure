@@ -82,3 +82,26 @@ class CardSingleView(APIView):
     """
     Single card views.
     """
+    def get(self, request, pk):
+        """
+        Get a single card
+        """
+        try:
+            info = CardInfo.objects.get(pk=pk)
+            serializable = WholeCardSerializer.translate_models(info)
+            serializer = WholeCardSerializer(serializable)
+            return Response(serializer.data)
+        except CardInfo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk):
+        card = request.data
+        serializer = WholeCardSerializer(data=card)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        info = CardInfo.objects.get(pk=pk)
+        serializer.update(info, card)
+
+        return Response(serializer.data)
+
