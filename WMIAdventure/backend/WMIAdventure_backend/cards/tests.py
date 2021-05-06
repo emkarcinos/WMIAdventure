@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
+from rest_framework.parsers import JSONParser
+
 from .models import *
 from .serializers import *
 
@@ -295,3 +297,63 @@ class CardLevelEffectsSerializerTestCase(TestCase):
         self.assertEqual(power, sample.power)
         self.assertEqual(range, sample.range)
         self.assertEqual(self.card, sample.card)
+
+
+class WholeCardSerializerTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_deserialization(self):
+        data = {"name": "Quicksort","subject": None,"image": None,"tooltip": "tekst","levels": [{"level": 1,"upgradeCost": 2,"effects": [{"id": 2,"target": 1,"power": 5,"range": 2.5},{"id": 5,"target": 2,"power": 1,"range": None}]},{"level": 2,"upgradeCost": 4,"effects": [{"id": 2,"target": 1,"power": 5,"range": 2.5},{"id": 5,"target": 2,"power": 1,"range": None},{"id": 7,"target": 2,"power": 2,"range": None}]},{"level": 3,"upgradeCost": None,"effects": [{"id": 2,"target": 1,"power": 10,"range": 2.5},{"id": 7,"target": 2,"power": 2,"range": None}]}]}
+
+        serializer = WholeCardSerializer(data=data)
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        sample = serializer.save()
+
+        self.assertEqual(sample.get('info').name, data.get('name'))
+        self.assertEqual(sample.get('info').image, data.get('image'))
+        self.assertEqual(sample.get('info').tooltip, data.get('tooltip'))
+        # I wont test every single possible value, no no no
+
+        # Testing if CardLevelEffects instances were created properly
+        self.assertEqual(sample.get('cardLevelEffects')[0].power, data['levels'][0]['effects'][0]['power'])
+        self.assertEqual(sample.get('cardLevelEffects')[0].range, data['levels'][0]['effects'][0]['range'])
+
+        # Testing if Card instances were created properly
+        self.assertEqual(sample.get('cards')[0].next_level_cost, data['levels'][0]['upgradeCost'])
+        self.assertEqual(sample.get('cards')[0].level.level, data['levels'][0]['level'])
+
+    def test_serialization(self):
+        # Create model instances
+        card_info = CardInfo.objects.create(name="testname",
+                                            tooltip="testtooltip")
+        card = Card.objects.create(info=card_info,
+                                   level=CardLevel.objects.get(pk=CardLevel.Level.COMMON),
+                                   next_level_cost=2)
+        card_level_effects = CardLevelEffects.objects.create(card=card,
+                                                             card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.DMG),
+                                                             target=CardLevelEffects.Target.OPPONENT,
+                                                             power=50,
+                                                             range=2.5)
+        cards = [card]
+        card_level_effects_array = [card_level_effects]
+        # Interpret model instances as class instances understood by serializer
+        meta = WholeCardSerializer.translate_models(card_info, cards, card_level_effects_array)
+
+        sample = WholeCardSerializer(meta)
+
+        self.assertEqual(sample.data.get('name'), card_info.name)
+        self.assertEqual(sample.data.get('tooltip'), card_info.tooltip)
+
+        self.assertEqual(sample.data.get('levels')[0]['level'], card.level.level)
+        self.assertEqual(sample.data.get('levels')[0]['upgradeCost'], card.next_level_cost)
+
+        self.assertEqual(sample.data.get('levels')[0]['effects'][0]['id'], card_level_effects.card_effect.id)
+        self.assertEqual(sample.data.get('levels')[0]['effects'][0]['target'], card_level_effects.target)
+        self.assertEqual(sample.data.get('levels')[0]['effects'][0]['power'], card_level_effects.power)
+        self.assertEqual(sample.data.get('levels')[0]['effects'][0]['range'], card_level_effects.range)

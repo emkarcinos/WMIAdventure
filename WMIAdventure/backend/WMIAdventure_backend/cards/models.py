@@ -11,7 +11,9 @@ class CardLevel(models.Model):
         """
         Enum of possible card levels.
         """
-        COMMON = 1, _("Common")
+        COMMON = 1, _("Typowa")
+        RARE = 2, _("Złota")
+        EPIC = 3, _("Epicka")
 
     level = models.IntegerField(primary_key=True, choices=Level.choices, default=Level.COMMON)
 
@@ -79,7 +81,7 @@ class Card(models.Model):
     """
     info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
     level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
-    next_level_cost = models.IntegerField()
+    next_level_cost = models.IntegerField(null=True)
 
     class Meta:
         """
@@ -109,7 +111,7 @@ class CardLevelEffects(models.Model):
     # This isn't unique even as a pair with card, as a single card on a given level '
     # may have multiple of the same effect.
     target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
-    power = models.IntegerField()
+    power = models.IntegerField(null=True)
     # Range defines how the power attribute will vary in card logic.
     # So an actual power will be randomized from range (power - range, power + range)
-    range = models.FloatField()
+    range = models.FloatField(null=True)
