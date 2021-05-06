@@ -105,13 +105,12 @@ class CardLevelEffects(models.Model):
         """
         PLAYER = 1
         OPPONENT = 2
-
-    card = models.ForeignKey(Card, unique=False, on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, related_name='effects', unique=False, on_delete=models.CASCADE)
     card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
     # This isn't unique even as a pair with card, as a single card on a given level '
     # may have multiple of the same effect.
     target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
-    power = models.IntegerField()
+    power = models.IntegerField(null=True)
     # Range defines how the power attribute will vary in card logic.
     # So an actual power will be randomized from range (power - range, power + range)
-    range = models.FloatField()
+    range = models.FloatField(null=True)
