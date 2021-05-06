@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CardLevel',
             fields=[
-                ('level', models.IntegerField(choices=[(1, 'Common')], default=1, primary_key=True, serialize=False)),
+                ('level', models.IntegerField(choices=[(1, 'Typowa'), (2, 'Rzadka'), (3, 'Epicka')], default=1, primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
             ],
         ),

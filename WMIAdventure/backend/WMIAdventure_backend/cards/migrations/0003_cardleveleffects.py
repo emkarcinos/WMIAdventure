@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('target', models.IntegerField(choices=[(1, 'Player'), (2, 'Opponent')], default=2)),
                 ('power', models.IntegerField(null=True)),
                 ('range', models.FloatField(null=True)),
-                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.card')),
+                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='effects', to='cards.card')),
                 ('card_effect', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.cardeffect')),
             ],
         ),

@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('next_level_cost', models.IntegerField(null=True)),
-                ('info', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.cardinfo')),
+                ('info', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='levels', to='cards.cardinfo')),
                 ('level', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.cardlevel')),
             ],
         ),
