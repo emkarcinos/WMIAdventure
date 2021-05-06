@@ -69,7 +69,7 @@ class CardInfo(models.Model):
     Stores generic information about Card.
     """
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     tooltip = models.TextField()
     image = models.ImageField(upload_to='cards/images/', blank=True)
 

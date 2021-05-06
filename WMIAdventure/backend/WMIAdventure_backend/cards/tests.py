@@ -167,7 +167,7 @@ class CardInfoSerializerTestCase(TestCase):
         self.assertEquals(bool(actualImage), bool(self.instance.image))
 
     def test_deserialization(self):
-        data = {"name": self.name, "tooltip": self.tooltip}
+        data = {"name": "asdasd", "tooltip": self.tooltip}
         serializer = CardInfoSerializer(data=data)
 
         try:
@@ -178,7 +178,7 @@ class CardInfoSerializerTestCase(TestCase):
 
         card_info = serializer.save()
 
-        self.assertEquals(card_info.name, self.name)
+        self.assertEquals(card_info.name, data.get('name'))
         self.assertEquals(card_info.tooltip, self.tooltip)
         self.assertEquals(card_info.image, self.instance.image)
 
