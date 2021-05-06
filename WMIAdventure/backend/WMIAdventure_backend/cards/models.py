@@ -11,7 +11,9 @@ class CardLevel(models.Model):
         """
         Enum of possible card levels.
         """
-        COMMON = 1, _("Common")
+        COMMON = 1, _("Typowa"),
+        RARE = 2, _("Rzadka"),
+        EPIC = 3, _("Epicka")
 
     level = models.IntegerField(primary_key=True, choices=Level.choices, default=Level.COMMON)
 
@@ -69,7 +71,8 @@ class CardInfo(models.Model):
 
     name = models.CharField(max_length=50)
     tooltip = models.TextField()
-    image = models.ImageField(upload_to='cards/images/', blank=True)
+    image = models.ImageField(upload_to='cards/images/', null=True, blank=True)
+    subject = models.CharField(max_length=50, null=True)  # In the future this field will be ForeignKey to some model.
 
 
 class Card(models.Model):
@@ -77,9 +80,9 @@ class Card(models.Model):
     This may be understood as coupling CardInfo with appropriate levels,
     that is, if we create a CardInfo model, we create multiple Cards depending on how many levels the Card may have.
     """
-    info = models.ForeignKey(CardInfo, unique=False, on_delete=models.CASCADE)
+    info = models.ForeignKey(CardInfo, related_name='levels', unique=False, on_delete=models.CASCADE)
     level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
-    next_level_cost = models.IntegerField()
+    next_level_cost = models.IntegerField(null=True)
 
     class Meta:
         """
@@ -96,20 +99,18 @@ class CardLevelEffects(models.Model):
     This is like an extended many-to-many relation in databases.
     Couples Card objects with its effects.
     """
-
     class Target(models.IntegerChoices):
         """
         Possible targets.
         """
         PLAYER = 1
         OPPONENT = 2
-
-    card = models.ForeignKey(Card, unique=False, on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, related_name='effects', unique=False, on_delete=models.CASCADE)
     card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
     # This isn't unique even as a pair with card, as a single card on a given level '
     # may have multiple of the same effect.
     target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
-    power = models.IntegerField()
+    power = models.IntegerField(null=True)
     # Range defines how the power attribute will vary in card logic.
     # So an actual power will be randomized from range (power - range, power + range)
-    range = models.FloatField()
+    range = models.FloatField(null=True)

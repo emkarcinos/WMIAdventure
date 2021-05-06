@@ -17,15 +17,16 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
                 ('tooltip', models.TextField()),
-                ('image', models.ImageField(blank=True, upload_to='cards/images/')),
+                ('image', models.ImageField(null=True, blank=True, upload_to='cards/images/')),
+                ('subject', models.CharField(max_length=50, null=True))
             ],
         ),
         migrations.CreateModel(
             name='Card',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('next_level_cost', models.IntegerField()),
-                ('info', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.cardinfo')),
+                ('next_level_cost', models.IntegerField(null=True)),
+                ('info', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='levels', to='cards.cardinfo')),
                 ('level', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cards.cardlevel')),
             ],
         ),

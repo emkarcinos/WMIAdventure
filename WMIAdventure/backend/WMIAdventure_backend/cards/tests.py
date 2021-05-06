@@ -295,3 +295,144 @@ class CardLevelEffectsSerializerTestCase(TestCase):
         self.assertEqual(power, sample.power)
         self.assertEqual(range, sample.range)
         self.assertEqual(self.card, sample.card)
+
+
+class WholeCardSerializerTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_serialization(self):
+        card_info = CardInfo.objects.create(name="Name", tooltip="Tooltip", subject=None)
+        card_info.save()
+
+        card1 = card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5)
+        card1.effects.create(
+            card_effect=CardEffect.objects.get(pk=1),
+            power=5,
+            range=1
+        )
+
+        card2 = card_info.levels.create(level=CardLevel.objects.get(pk=2), next_level_cost=6)
+        card2.effects.create(
+            card_effect=CardEffect.objects.get(pk=1),
+            power=8,
+            range=3
+        )
+        card2.effects.create(
+            card_effect=CardEffect.objects.get(pk=2),
+            power=5,
+            range=2
+        )
+
+        serializer = WholeCardSerializer(instance=card_info)
+
+        for i, expected_card in enumerate(card_info.levels.all()):
+            actual_card_data = serializer.data["levels"][i]
+            self.assertEqual(actual_card_data['level'], expected_card.level.level)
+            self.assertEqual(actual_card_data['next_level_cost'], expected_card.next_level_cost)
+
+            for j, expected_effect in enumerate(expected_card.effects.all()):
+                actual_effect_data = actual_card_data['effects'][j]
+                self.assertEqual(actual_effect_data['card_effect'], expected_effect.card_effect_id)
+                self.assertEqual(actual_effect_data['target'], expected_effect.target)
+                self.assertEqual(actual_effect_data['power'], expected_effect.power)
+                self.assertEqual(actual_effect_data['range'], expected_effect.range)
+
+    def test_deserialization(self):
+        data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 2,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 5,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 5,
+                                "target": 2,
+                                "power": 1,
+                                "range": None
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "next_level_cost": 4,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 5,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 5,
+                                "target": 2,
+                                "power": 1,
+                                "range": None
+                            },
+                            {
+                                "card_effect": 7,
+                                "target": 2,
+                                "power": 2,
+                                "range": None
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "next_level_cost": None,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 10,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 7,
+                                "target": 2,
+                                "power": 2,
+                                "range": None
+                            }
+                        ]
+                    }
+
+                ]
+            }
+
+        serializer = WholeCardSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        card_info = serializer.save()
+
+        self.assertEqual(card_info.name, data["name"])
+        self.assertEqual(card_info.tooltip, data["tooltip"])
+        self.assertEqual(card_info.image, data["image"])
+        self.assertEqual(card_info.subject, data["subject"])
+
+        for i, card in enumerate(card_info.levels.all()):
+            expected_card_data = data["levels"][i]
+            self.assertEqual(card.level.level, expected_card_data["level"])
+            self.assertEqual(card.next_level_cost, expected_card_data["next_level_cost"])
+
+            for j, effect in enumerate(card.effects.all()):
+                expected_effect_data = expected_card_data["effects"][j]
+                self.assertEqual(effect.card_effect.id, expected_effect_data["card_effect"])
+                self.assertEqual(effect.target, expected_effect_data["target"])
+                self.assertEqual(effect.power, expected_effect_data["power"])
+                self.assertEqual(effect.range, expected_effect_data["range"])
