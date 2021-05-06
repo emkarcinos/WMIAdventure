@@ -340,10 +340,9 @@ class WholeCardSerializerTestCase(TestCase):
                                                              target=CardLevelEffects.Target.OPPONENT,
                                                              power=50,
                                                              range=2.5)
-        cards = [card]
-        card_level_effects_array = [card_level_effects]
+
         # Interpret model instances as class instances understood by serializer
-        meta = WholeCardSerializer.translate_models(card_info, cards, card_level_effects_array)
+        meta = WholeCardSerializer.translate_models(card_info)
 
         sample = WholeCardSerializer(meta)
 

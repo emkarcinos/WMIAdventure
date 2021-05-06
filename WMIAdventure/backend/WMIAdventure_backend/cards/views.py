@@ -56,24 +56,17 @@ class CardsView(APIView):
     """
 
     def get(self, request, pk=None):
-        objects = []
         try:
             # Get all card info's
             all_infos = list(CardInfo.objects.all())
-
+            # We need to parse models into serializer-friendly objects
+            serializable_objects = []
+            
             for info in all_infos:
-                # Get cards with a given info
-                cards = list(Card.objects.filter(info=info))
-                cards_effects = []
-                for card in cards:
-                    # Get all effects for a given card
-                    for e in list(CardLevelEffects.objects.filter(card=card)):
-                        cards_effects.append(e)
-                objects.append(WholeCardSerializer.translate_models(info, cards, cards_effects))
-
-            serializer = WholeCardSerializer(objects, many=True)
+                serializable_objects.append(WholeCardSerializer.translate_models(info))
+            serializer = WholeCardSerializer(serializable_objects, many=True)
             return Response(serializer.data)
-        except CardInfo.DoesNotExist or CardLevelEffects.DoesNotExist or Card.DoesNotExist:
+        except CardInfo.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):

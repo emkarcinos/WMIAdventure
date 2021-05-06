@@ -97,7 +97,7 @@ class WholeCardSerializer(serializers.Serializer):
     levels = MetaLevelSerializer(many=True)
 
     @staticmethod
-    def translate_models(card_info, cards, card_level_effects):
+    def translate_models(card_info):
         """
         Translates models into classes understood by the serializer.
 
@@ -107,6 +107,13 @@ class WholeCardSerializer(serializers.Serializer):
 
         @return: WholeCardSerializer.Meta object instance.
         """
+        cards = list(Card.objects.filter(info=card_info))
+        card_level_effects = []
+        for card in cards:
+            # Get all effects for a given card
+            for e in list(CardLevelEffects.objects.filter(card=card)):
+                card_level_effects.append(e)
+
         whole = WholeCardSerializer.Meta(name=card_info.name,
                                          tooltip=card_info.tooltip,
                                          subject=None,
