@@ -16,6 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('target', models.IntegerField(choices=[(1, 'Player'), (2, 'Opponent')], default=2)),
+
                 ('power', models.IntegerField(null=True)),
                 ('range', models.FloatField(null=True)),
                 ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='effects', to='cards.card')),
