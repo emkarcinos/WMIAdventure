@@ -11,7 +11,9 @@ class CardLevel(models.Model):
         """
         Enum of possible card levels.
         """
-        COMMON = 1, _("Common")
+        COMMON = 1, _("Typowa"),
+        RARE = 2, _("Rzadka"),
+        EPIC = 3, _("Epicka")
 
     level = models.IntegerField(primary_key=True, choices=Level.choices, default=Level.COMMON)
 
