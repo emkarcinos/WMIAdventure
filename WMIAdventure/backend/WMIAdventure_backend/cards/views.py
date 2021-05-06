@@ -1,7 +1,7 @@
 from .models import CardEffect
 from .serializers import CardEffectSerializer
-from .models import CardLevel
-from .serializers import CardLevelSerializer
+from .models import CardLevel, CardInfo
+from .serializers import CardLevelSerializer, WholeCardSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
@@ -50,3 +50,13 @@ class CardEffectObjectView(APIView):
 
         serializer = CardEffectSerializer(item)
         return Response(serializer.data)
+
+
+class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CardInfo.objects.all()
+    serializer_class = WholeCardSerializer
+
+
+class WholeCardList(generics.ListCreateAPIView):
+    queryset = CardInfo.objects.all()
+    serializer_class = WholeCardSerializer
