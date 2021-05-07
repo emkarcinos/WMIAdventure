@@ -167,6 +167,7 @@ class CardInfoSerializerTestCase(TestCase):
         self.assertEquals(bool(actualImage), bool(self.instance.image))
 
     def test_deserialization(self):
+        self.instance.delete()
         data = {"name": self.name, "tooltip": self.tooltip}
         serializer = CardInfoSerializer(data=data)
 
@@ -537,6 +538,36 @@ class WholeCardSerializerTestCase(TestCase):
 
         # Large Range
         data['levels'][0]['effects'][0]['range'] = 101
+        serializer = WholeCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+
+    def test_duplicates(self):
+        data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 10,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": None,
+                                "range": None
+                            }
+                        ]
+                    }
+                ]
+            }
+        serializer = WholeCardSerializer(data=data)
+
+        serializer.is_valid()
+        serializer.save()
+
         serializer = WholeCardSerializer(data=data)
         self.assertFalse(serializer.is_valid())
 
