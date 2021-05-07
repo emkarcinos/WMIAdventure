@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -82,7 +83,8 @@ class Card(models.Model):
     """
     info = models.ForeignKey(CardInfo, related_name='levels', unique=False, on_delete=models.CASCADE)
     level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
-    next_level_cost = models.IntegerField(null=True)
+    next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
+                                                                 MaxValueValidator(100)])
 
     class Meta:
         """
@@ -110,7 +112,9 @@ class CardLevelEffects(models.Model):
     # This isn't unique even as a pair with card, as a single card on a given level '
     # may have multiple of the same effect.
     target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
-    power = models.IntegerField(null=True)
+    power = models.IntegerField(null=True, validators=[MinValueValidator(0),
+                                                       MaxValueValidator(100)])
     # Range defines how the power attribute will vary in card logic.
     # So an actual power will be randomized from range (power - range, power + range)
-    range = models.FloatField(null=True)
+    range = models.FloatField(null=True, validators=[MinValueValidator(0),
+                                                     MaxValueValidator(100)])

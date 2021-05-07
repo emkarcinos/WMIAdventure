@@ -464,13 +464,81 @@ class WholeCardSerializerTestCase(TestCase):
 
         serializer = WholeCardSerializer(data=data)
 
-        try:
-            self.assertTrue(serializer.is_valid())
-        except AssertionError as e:
-            print(serializer.errors)
-            raise e
+        self.assertFalse(serializer.is_valid())
 
-        self.assertRaises(serializer.save(), OverflowError)
+    def test_validators_level_cost(self):
+        data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 101,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": None,
+                                "range": None
+                            }
+                        ]
+                    }
+                ]
+            }
+        serializer = WholeCardSerializer(data=data)
+
+        self.assertFalse(serializer.is_valid())
+
+        data['levels'][0]['next_level_cost'] = -5
+        serializer = WholeCardSerializer(data=data)
+
+        self.assertFalse(serializer.is_valid())
+
+    def test_validators_card_level_effects(self):
+        data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 5,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 101,
+                                "range": None
+                            }
+                        ]
+                    }
+                ]
+            }
+
+        # Large power
+        serializer = WholeCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+
+        # Negative power
+        data['levels'][0]['effects'][0]['power'] = -5
+        serializer = WholeCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+
+        # Negative Range
+        data['levels'][0]['effects'][0]['power'] = 10
+        data['levels'][0]['effects'][0]['range'] = -5
+        serializer = WholeCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+
+        # Large Range
+        data['levels'][0]['effects'][0]['range'] = 101
+        serializer = WholeCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
 
 
 class WholeCardDetailsTestCase(TestCase):
