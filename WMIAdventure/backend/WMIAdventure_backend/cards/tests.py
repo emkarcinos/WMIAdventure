@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
+from rest_framework.test import APIRequestFactory
 from .models import *
 from .serializers import *
+from .views import *
 
 
 class CardLevelTestCase(TestCase):
@@ -436,3 +438,98 @@ class WholeCardSerializerTestCase(TestCase):
                 self.assertEqual(effect.target, expected_effect_data["target"])
                 self.assertEqual(effect.power, expected_effect_data["power"])
                 self.assertEqual(effect.range, expected_effect_data["range"])
+
+
+class WholeCardDetailsTestCase(TestCase):
+    def setUp(self):
+        # Creating test object
+        self.data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 2,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 5,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 5,
+                                "target": 2,
+                                "power": 1,
+                                "range": None
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "next_level_cost": 4,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 5,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 5,
+                                "target": 2,
+                                "power": 1,
+                                "range": None
+                            },
+                            {
+                                "card_effect": 7,
+                                "target": 2,
+                                "power": 2,
+                                "range": None
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "next_level_cost": None,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 10,
+                                "range": 2.5
+                            },
+                            {
+                                "card_effect": 7,
+                                "target": 2,
+                                "power": 2,
+                                "range": None
+                            }
+                        ]
+                    }
+
+                ]
+            }
+
+        serializer = WholeCardSerializer(data=self.data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        self.card_info = serializer.save()
+
+    def test_delete_not_allowed(self):
+        factory = APIRequestFactory()
+        view = WholeCardDetails.as_view()
+        testRequest = factory.delete('api/cards/all/' + str(self.card_info.id))
+        response = view(testRequest)
+
+        self.assertEqual(response.status_code, 405)
+
+

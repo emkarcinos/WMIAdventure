@@ -56,6 +56,9 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = CardInfo.objects.all()
     serializer_class = WholeCardSerializer
 
+    def delete(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 class WholeCardList(generics.ListCreateAPIView):
     queryset = CardInfo.objects.all()
