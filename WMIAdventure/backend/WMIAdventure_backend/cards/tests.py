@@ -439,6 +439,39 @@ class WholeCardSerializerTestCase(TestCase):
                 self.assertEqual(effect.power, expected_effect_data["power"])
                 self.assertEqual(effect.range, expected_effect_data["range"])
 
+    def test_big_numbers(self):
+        data = \
+            {
+                "name": "Quicksort",
+                "subject": None,
+                "image": None,
+                "tooltip": "tekst",
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 23985082739857291759127469576192,
+                        "effects": [
+                            {
+                                "card_effect": 2,
+                                "target": 1,
+                                "power": 5351241231241236123461245435346,
+                                "range": 212512312312412412.5347326598723645862834658
+                            }
+                        ]
+                    }
+                ]
+            }
+
+        serializer = WholeCardSerializer(data=data)
+
+        try:
+            self.assertTrue(serializer.is_valid())
+        except AssertionError as e:
+            print(serializer.errors)
+            raise e
+
+        self.assertRaises(serializer.save(), OverflowError)
+
 
 class WholeCardDetailsTestCase(TestCase):
     def setUp(self):
