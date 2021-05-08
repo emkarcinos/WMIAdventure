@@ -238,7 +238,6 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 - Tworzenie kodu w backend, mocna znajomość wykorzystywanego frameworka Django
 - Zarządzanie Continuous Deployment
 - Design API
-- Skarbnica wiedzy wszelakiej
 
 ### Dawid Korybalski
 Dawid dysponuje ograniczoną ilością czasu ze względów prywatnych.
@@ -312,7 +311,7 @@ Podczas przerwy między retrospektywą a Daily rozpoczynającym kolejny Sprint t
 Do organizacji i koordynowania pracy korzystamy z GitHub Projects hostowanego razem z repozytorium kodu (https://github.com/emkarcinos/WMIAdventure/projects)
 
 ### Issues
-Dostępne w GitHubie *Issues* wykorzystujemy jako User Stories. Dodatkowo posłużą do zgłaszania błędów i identyfikowania zadań spoza User Stories lub będące ich częścią. W każdym Issue tworzona jest lista podzadań, przy których zaznaczamy, kto je realizuje.
+Dostępne w GitHubie *Issues* wykorzystujemy jako User Stories. Dodatkowo posłużą do zgłaszania błędów i identyfikowania zadań spoza User Stories lub zadań będących ich częścią. W każdym Issue tworzona jest lista podzadań, przy których zaznaczamy, kto je realizuje.
 
 ### Milestones
 Milestone tłumaczymy jako Epic i podpinamy pod niego wszystkie Issues dotyczące tego Epica.
@@ -335,7 +334,7 @@ Continous Integration zapewnia nam GitHub Actions. Dla każdego commita realizow
 Packaging zapewniony jest przez Dockera; korzystamy z *docker-compose* do tworzenia obrazu wielokontenerowego, gdzie w naszym przypadku są to kontenery osobno z backendem i frontendem. Taki obraz jest przekazywany do narzędzia odpowiadającego za Continuous Deployment. Kontener z frontendem nie jest jeszcze przygotowany.
 
 ### Continous Deployment
-Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure Virtual Mashine*. Obecnie gałąź główna repozytorium hostowana jest pod adresem (http://wmiadventure.westeurope.cloudapp.azure.com:8000). Na razie znajdziemy tutaj tylko backend.
+Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure Virtual Machine*. Obecnie gałąź główna repozytorium hostowana jest pod adresem (http://wmiadventure.westeurope.cloudapp.azure.com:8000). Na razie znajdziemy tutaj tylko backend.
 
 
 # Ryzyka projektowe
