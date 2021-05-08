@@ -115,5 +115,6 @@ class WholeCardSerializer(serializers.ModelSerializer):
                         power=effect_data.get("power"),
                         range=effect_data.get("range")
                     )
+        instance.save()
 
         return instance
