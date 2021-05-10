@@ -206,9 +206,11 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 2. Integracja z systemem USOS.
 3. Aplikacja powinna być na tyle wydajna, że 100 osób może użytkować z niej na raz.
 4. 60% kodu pokryta testami jednostkowymi.
-5. System ma umożliwiać administracji weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
-6. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
-7. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
+5. Każdy przyrost powinien być poddawany testom użytecznościowym przez grupę odbiorców.
+6. Po każdym przyroście powinna być przeprowadzana ankieta na grupie odbiorców testującej system.
+7. System ma umożliwiać administracji weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
+8. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
+9. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
 
 # Mierzalne wskaźniki wdrożeniowe
 
@@ -335,6 +337,16 @@ Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure 
 
 
 # Ryzyka projektowe
+
+* Balans kart
+* Utrzymanie zainteresowania grupy odbiorców
+* Brak profesjonalnych umiejętności UI/UX
+* Integracja z systemem USOS
+* Ilość i jakość zawartości treści w ostatecznym terminie prezentacji projektu
+* Wydajność uczelnianego serwera produkcyjnego
+* Złożoność obliczeniowa narzędzia do testowania kart
+* System rankingowy
+* Przejrzystość rozwiązań na backendzie w kontekście Open Source
 
 # Kamienie milowe
 
