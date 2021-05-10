@@ -202,16 +202,13 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 # Lista wymagań niefunkcjonalnych
 
-
-
-1. Jako użytkownik chce mieć dostęp do swojego konta po wprowadzeniu swojego loginu oraz hasła.
-2. Jako student chcę czuć satysfakcję z wysiłku włożonego w naukę, żeby mieć motywację do studiowania.
-3. Jako student chcę, aby moje oceny i zaliczenia dawały mi jakieś benefity inne niż wpis w USOS, żeby czuć satysfakcję z moich sukcesów na studiach.
-4. Jako student chcę, aby moja wiedza była nagradzana w ciekawszy sposób niż oceny, żeby czuć większą chęć do jej zdobywania.
-5. Jako student chcę, aby istniały aplikacje open-source tworzone przez społeczność studencką na WMI, żeby móc współpracować nad rozwojem takich aplikacji wspólnie z innymi studentami, a tym samym poznać sposób działania projektów open-source, nauczyć się developowania z ludźmi i poznać innych aktywnych studentów.
-6. Jako student chcę, aby istniały ciekawsze sposoby rywalizacji z innymi studentami niż rankingi w USOS, żeby czuć większą satysfakcję z sukcesów na studiach.
-7. Jako student chcę móc się pochwalić swoimi osiągnięciami na studiach z szerszym gronem niż moi znajomi, żeby czuć większą dumę z moich osiągnięć.
-8. Jako student chcę posłuchać ciekawych historii związanych ze studiowaniem na WMI z grona szerszego niż moi znajomi, żeby móc poznać więcej przeżyć, doświadczeń, które mogą być ciekawe, przydatne, inspirujące itp.
+1. Aplikacja powinna w pełni działać na urządzeniach mobilnych.
+2. Logowanie do systemu z wykorzystaniem CAS'a uniwersyteckiego.
+3. Aplikacja powinna być na tyle wydajna, że 500 osób może użytkować z niej na raz.
+4. Testowalność - system powinien być testowany w sposób jednostkowy bądź automatyczny.
+5. System ma umożliwiać weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
+6. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
+7. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
 
 # Mierzalne wskaźniki wdrożeniowe
 
