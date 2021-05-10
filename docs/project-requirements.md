@@ -203,10 +203,10 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 # Lista wymagań niefunkcjonalnych
 
 1. Aplikacja powinna w pełni działać na urządzeniach mobilnych.
-2. Logowanie do systemu z wykorzystaniem CAS'a uniwersyteckiego.
-3. Aplikacja powinna być na tyle wydajna, że 500 osób może użytkować z niej na raz.
-4. Testowalność - system powinien być testowany w sposób jednostkowy bądź automatyczny.
-5. System ma umożliwiać weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
+2. Integracja z systemem USOS.
+3. Aplikacja powinna być na tyle wydajna, że 100 osób może użytkować z niej na raz.
+4. 60% kodu pokryta testami jednostkowymi.
+5. System ma umożliwiać administracji weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
 6. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
 7. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
 
