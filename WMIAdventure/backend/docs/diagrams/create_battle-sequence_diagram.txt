@@ -1,0 +1,45 @@
+title Create Battle
+
+activate Empty
+
+activate Battle
+
+Empty->Battle: create(attackerModel: UserProfile, defenderModel: UserProfile)
+
+activate BattlePlayer
+
+Battle->BattlePlayer: create(attackerModel)
+
+Battle<--BattlePlayer: attacker: BattlePlayer
+
+deactivate BattlePlayer
+
+activate BattlePlayer
+
+Battle->BattlePlayer: create(defenderModel)
+
+Battle<--BattlePlayer: defender: BattlePlayer
+
+deactivate BattlePlayer
+
+activate BattleCoordinator
+
+Battle->BattleCoordinator: create(attacker, defender)
+
+activate turnsQueue  - Queue[BattlePlayer]
+
+BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:create()
+
+deactivate turnsQueue  - Queue[BattlePlayer]
+
+activate turnsQueue  - Queue[BattlePlayer]
+
+BattleCoordinator->BattleCoordinator:initTurnsQueue(attacker, defender)
+
+deactivate turnsQueue  - Queue[BattlePlayer]
+
+deactivate BattleCoordinator
+
+deactivate Battle
+
+deactivate Empty

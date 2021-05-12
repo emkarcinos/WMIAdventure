@@ -1,0 +1,53 @@
+title StartBattle
+
+activate Empty
+
+Empty->Battle: start()
+activate Battle
+
+# Get current player from turns queue
+note over Battle,coordinator - BattleCoordinator:while keepFighting()
+
+activate coordinator - BattleCoordinator
+
+Battle->coordinator - BattleCoordinator: nextTurn()
+
+activate turnsQueue  - Queue[BattlePlayer]
+
+coordinator - BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:dequeue()
+
+coordinator - BattleCoordinator<--turnsQueue  - Queue[BattlePlayer]:currentPlayer: BattlePlayer
+
+coordinator - BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:enqueue(currentPlayer)
+
+deactivate turnsQueue  - Queue[BattlePlayer]
+
+activate currentPlayer - BattlePlayer
+
+coordinator - BattleCoordinator->currentPlayer - BattlePlayer: useCard()
+
+activate Deck - Queue[BattleCard]
+
+currentPlayer - BattlePlayer->Deck - Queue[BattleCard]:dequeue()
+
+currentPlayer - BattlePlayer<--Deck - Queue[BattleCard]:card: BattleCard
+
+currentPlayer - BattlePlayer->Deck - Queue[BattleCard]:enqueue(card)
+
+deactivate Deck - Queue[BattleCard]
+
+ref over currentPlayer - BattlePlayer,card - BattleCard:UseCard
+
+currentPlayer - BattlePlayer -->coordinator - BattleCoordinator: effects: List[Effect]
+
+deactivate currentPlayer - BattlePlayer
+
+activate Effect
+
+coordinator - BattleCoordinator -> Effect: activate(currentPlayer, otherPlayer, turnsQueue)
+
+deactivate Effect
+
+deactivate coordinator - BattleCoordinator
+
+deactivate Battle
