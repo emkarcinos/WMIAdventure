@@ -49,7 +49,7 @@ Topic | In | Out | Opt | Komentarz
 Konta administratora | In | - | - | -
 Aplikacja webowa | In | - | - | -
 Aplikacja natywna na systemy iOS/Android | - | Out | - | Aplikacja webowa zapewnia łatwy dostęp dla każdej platformy, a natywne aplikacje nie dają żadnych realistycznych korzyści, są bardzo czasowo kosztowne.
-Przechowywanie studenckich danych na serwerze | - | Out | - | Niebezpieczeństwo związane z poufnością danych - systemowi wystarczą dane z zewnętrznych serwisów
+Przechowywanie studenckich danych na serwerze | - | - | Opt | Niebezpieczeństwo związane z poufnością danych - systemowi wystarczą dane z zewnętrznych serwisów, ale nie wiemy na ile będziemy w stanie osiągnąc tą niezależnośc.
 Limit walk na dzień | In | - | - | -
 Wpływ ocen na karty | In | - | - | -
 Zależność od obecności na wydziale | - | - | Opt | Duże ryzyko związane z ograniczeniami technologicznymi, niepewne dalsze studia stacjonarne
@@ -62,6 +62,14 @@ Wizualizacja przebiegu walki podczas ataku | In | - | -
 Historia walk | In | - | -
 Czat | - | Out | - | Docelowa grupa odbiorców preferuje korzystanie z wybranych przez siebie komunikatorów. Aplikacja byłaby przeładowana zbyt szerokimi funkcjami.
 System znajomości | - | Out | - | Przeładowanie aplikacji i duży koszt czasowy.
+Serwer produkcyjny | In | - | - |
+Serwer testowy | In | - | - |
+Automatyczna weryfikcja treści | - | Out | - | Zbyt duża złożoność rozwiązania - łatwiej będzie moderować treści przez osoby fizyczne
+"Patroni" kart / kasty / grupy | - | - | Opt | Rozwiązanie może powodować duże utrudnienia w balansowaniu kart i bardzo komplikuje implementację efektów kart. Jest to jednak ciekawy pomysł i być może będzie wprowadzony.
+Interaktywność z kodami QR | - | - | Opt | Ciekawy pomysł na zaangażowanie studentów w aktywność na wydziale, może przyciągać nowych użytkowników, ale łatwo jest je "exploitować" poprzez np. wysłanie komuś zdjęcia, co może całkowicie zepsuć tą funkcjonalność.
+System drzew dialogowych w Adventure | - | Out | - | Zbyt duża złożoność czasowa rozwiązania, duże utrudnienia w kreatorze historii
+Wymiana / trading / marketplace kart | - | Out | - | Zbyt duży koszt. Karty powinny być nagrodami za aktywność w aplikacji i oznaczać pewne postępy, a wymiana kart odebrałaby ten czynnik.
+Wyróżnienie kont dla prowadzących | - | - | Opt |
 
 
 # Lista wymagań funkcjonalnych
