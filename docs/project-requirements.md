@@ -363,15 +363,32 @@ Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure 
 
 # Ryzyka projektowe
 
-* Balans kart
-* Utrzymanie zainteresowania grupy odbiorców
-* Brak profesjonalnych umiejętności UI/UX
-* Integracja z systemem USOS
-* Ilość i jakość zawartości treści w ostatecznym terminie prezentacji projektu
-* Wydajność uczelnianego serwera produkcyjnego
-* Złożoność obliczeniowa narzędzia do testowania kart
-* System rankingowy
-* Przejrzystość rozwiązań na backendzie w kontekście Open Source
+# Balans kart
+Treści w projekcie będą dynamicznie rozwijane. Karty mogą być tworzone i modyfikowane przez użytkowników, co sprawia, że efekty tych kart mogą być niezbalansowane, tj. jedna karta może być bardzo słaba i nie wnosić wiele do wyniku pojedynku, a inna zbyt mocna i drastycznie zwiększać szansę na wygraną. Optymalny balans oznaczałby, że dla każdej karty stosunek wygranych do przegranych pojedynków z jej użyciem wynosi 1:1. Osiągnięcie, a nawet zbliżenie się do takiego wyniku jest bardzo trudne, a nieprawidłowy balans przyczyni się do gorszej jakości rozgrywek. Szansa zaistnienia tego ryzyka jest **absolutnie pewna** - od razu powinniśmy myśleć o stworzeniu narzędzi, które mogą pomóc w balansowaniu kart.
+
+# Utrzymanie zainteresowania grupy odbiorców
+Aplikacja ma przeznaczenie rozrywkowe, jej sukces zależy od tego jaką przyjemność będzie sprawiać codzienna aktywność. Grupa odbiorców jest dość szeroka i ciągłe utrzymanie jej zainteresowania jest wymagające, w projekcie musi znaleźć się dużo treści, które powinny być dynamicznie rozwijane, oraz treści te powinny być dla nich interesujące. Próbujemy zachęcić studentów możliwością dodawania własnych treści do aplikacji, oraz jej open-source'owym charakterze, ale nie możemy liczyć na 100% powodzenia tej taktyki. Całkowity brak zainteresowania jest raczej mało prawdopodobny ze względu na plany zaangażowania odbiorców w rozwój aplikacji jeszcze przed jej wdrożeniem, ale jest duża szansa, że aplikacja straci zainteresowanie kilka miesięcy po wdrożeniu.
+
+# Brak profesjonalnych umiejętności UI/UX
+W składzie zespołu brakuje osoby posiadającej doświadczenie i wiedzę w zakresie designu interfejsu i user experience. Polegamy tutaj w większości na pracy z zewnątrz, która sama w sobie wnosi ryzyko. Dodatkowo prace frontendowe mogą się opóźniać przez brak projektów z designem. Te opóźnienia pojawiły się już przy implementacji pierwszych funkcjonalności.
+
+# Integracja z systemem USOS
+Co prawda aplikacja nie zakłada pełnej zależności od tego systemu, tj. awaria USOS'a nie wpłynie na działanie systemu, to jednak mimo wszystko jest to całkiem ryzykowne ze względu na dane jakich będziemy potrzebować od tego systemu. Nie wiemy jeszcze dokładnie czego będziemy potrzebować. Jeżeli okaże się, że USOS nie udostępni nam oczekiwanych danych, to realizacja niektórych funkcji może być utrudniona i jest to całkiem możliwe, dlatego ilość takich funkcji jest minimalna i nie kluczowa dla działania systemu.
+
+# Ilość i jakość zawartości treści w ostatecznym terminie prezentacji projektu
+Jakość aplikacji jest w dużej mierze uzależniona od treści, jakie będą w niej występować. Są to historie, karty, quizy. Stworzenie dużej ilości takich treści jest bardzo wymagająca czasowo i wymaga kreatywnych umiejętności. Dodatkowo treści te muszą być atrakcyjne i zrozumiałe dla grupy odbiorców. Historie mogą okazać się nudne, karty, które nie wyróżniają się z tłumu i quizy powodujące atmosferę 'egzaminu' czy 'kolokwium'. Wystąpienie takich treści w aplikacji może skutkować szybkim spadkiem zainteresowania u grupy odbiorców. Szansa wystąpienia tego ryzyka jest **umiarkowanie wysoka** - już na etapie analizy staramy się zminimalizować to ryzyko zachęcając samą grupę odbiorców do tworzenia tych treści.
+
+# Wydajność uczelnianego serwera produkcyjnego
+Do wdrożenia części produkcyjnej systemu planujemy wykorzystać uczelniany serwer z maszynami wirtualnymi. Mimo tego, że aplikacja nie wykonuje zbyt dużych ilości obliczeń, to jednak nie jesteśmy w stanie przewidzieć jak system będzie zachowywał się przy nagłych skokach w ilości aktywnych użytkowników na przykład podczas przerw między zajęciami. Będą zatem wymagane kompleksowe testy obciążeniowe żeby zbadać to ryzyko. Jeżeli to rozwiązanie okaże się być zbyt mało wydajne do potrzeb projektu, będziemy musieli pomyśleć nad płatną alternatywą. Szansa wystąpienia tego ryzyka jest **średnia**, bo mimo wszystko aplikacja nie będzie wykonywała zbyt dużych obliczeń.
+
+# Złożoność obliczeniowa narzędzia do testowania kart
+Badając ryzyko związane z balansem kart planujemy stworzenie prostego narzędzia weryfikujące ten balans. Takie narzędzie może być bardzo wymagające jeżeli chodzi o obliczenia. Może okazać się, że obliczenia będą musiały być wykonywane na płatnej maszynie o dużej wydajności. Ryzyko wystąpienia tego scenariusza jest **wysokie** i przy wystąpieniu może wymagać innego podejścia do weryfikacji balansu.
+
+# System rankingowy
+Podczas pierwszego spotkania z grupy odbiorców padało wiele pytań i sugestii co do systemu rankingowego w trybie Battle. Z kim użytkownik będzie mógł walczyć? W jaki sposób będzie wynagradzany za wygrany pojedynek? Odpowiedzi na te pytania będą zmieniały się wraz z rozwojem systemu. W przypadku stworzenia kiepskiego systemu rankingowego pojedynki mogą okazać się mało satysfakcjonujące, co zmniejszy zainteresowanie grupy odbiorców. Szansa wystąpienia tego ryzyka jest **wysoka** - wiele współczesnych gier opartych na rywalizacji ma z tym wiele problemów.
+
+# Przejrzystość rozwiązań na backendzie w kontekście Open Source
+Niektóre elementy systemu mogą mieć skomplikowną strukturę i szeroką logikę biznesową. Żeby utrzymać projekt w charakterze Open-source, musimy udostępnić otwartą dokumentację deweloperską. Żaden z członków zespołu nie ma zbyt dużego doświadczenia w pisaniu tego typu dokumentacji. W przypadku wystąpienia tego ryzyka potencjalni deweloperzy chcący rozwijać tą aplikację mogą się łatwo zniechęcić, gdyż repozytorium i kod okażą się przytłaczające. Szansa wystąpienia tego ryzka jest **niska**.
 
 # Kamienie milowe
 
