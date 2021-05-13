@@ -1,0 +1,2 @@
+class BattleCardEffect:
+    pass
