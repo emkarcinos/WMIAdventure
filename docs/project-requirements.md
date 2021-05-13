@@ -227,6 +227,31 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 # Kryteria akceptacji projektu dla I semestru prac
 
+## Wymagane
+- Wybór gracza do pojedynku (US. 1.2.2)
+- Pojedynek między dwoma graczami (US. 1.1.8, 1.1.9)
+- Talia Kart (US. 1.1.13, 1.4.2 - 1.4.7, 1.1.15)
+- Profil Użytkownika (US. 1.4.1, 1.4.2, 1.1.5, 1.1.6, 1.1.14)
+- Edytor Kart (US. 2.2.1 - 2.2.9, 2.4.4)
+- 20 Kart stworzonych w edytorze (US. 1.1.19)
+- Testy użyteczności trybu Battle i Edytora Kart
+- Serwer produkcyjny dla grupy odbiorców testującej produkt
+
+## Oczekiwane
+- System rankingowy Battle (US. 1.1.10, 1.1.12, 1.1.18)
+- Balans kart (US. 1.1.12, 1.1.17)
+- Tabele rankingowe (US. 1.3.1 - 1.3.7)
+- Zgłaszanie błędów / feedback (US. 1.7.2)
+
+## Planowane
+- Pokrycie kodu testami jednostkowymi (Niefunkc. 4)
+- Dokumentacja deweloperska na GitHub Wiki obejmująca dotychczasowe prace (Niefunkc. 8, 9)
+- Administracja treściami zgłaszanych przez użytkowników (US. 2.2.10, 3.3, 3.4, 2.4.1, 2.4.2, 1.7.5)
+- Narzędzie weryfikujące balans kart wspomagające administrację treściami
+- Automatycnza sugestia przeciwników do walki (US. 1.1.4)
+- Pełne widoki interfejsu głównego prowadzącego do trybu Battle (US 1.1.1, 1.1.3, 1.1.7, 1.1.16, 1.1.20, 1.7.6)
+- Historia Pojedynków (US. 1.1.11)
+
 # Kryteria akceptacji projektu dla II semestru prac
 
 # Organizacja pracy zespołu
