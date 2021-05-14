@@ -1,6 +1,6 @@
 from typing import List
 
-from WMIAdventure_backend.cards.models import Card
+from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
 
 

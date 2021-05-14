@@ -1,4 +1,4 @@
-from WMIAdventure_backend.cards.models import CardLevelEffects
+from cards.models import CardLevelEffects
 from .BattlePlayer import BattlePlayer
 
 
