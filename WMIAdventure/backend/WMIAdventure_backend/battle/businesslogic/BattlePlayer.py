@@ -32,3 +32,14 @@ class BattlePlayer:
         self.deck.put(BattleCard(deck_model.card3))
         self.deck.put(BattleCard(deck_model.card4))
         self.deck.put(BattleCard(deck_model.card5))
+
+    def use_card(self):
+        """
+        Uses card which is first in deck to use and then places that card at the end of the deck.
+        @return: List of effects of proper card to execute by battle simulation.
+        """
+
+        card: BattleCard = self.deck.get()
+        self.deck.put(card)
+
+        return card.use()
