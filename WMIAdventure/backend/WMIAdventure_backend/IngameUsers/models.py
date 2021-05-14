@@ -42,6 +42,11 @@ class UserCard(models.Model):
     user_profile = models.ForeignKey(UserProfile, related_name='cards', on_delete=models.CASCADE)
     card = models.ForeignKey(Card, related_name='user_profile', on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user_profile', 'card'])
+        ]
+
 
 class Deck(models.Model):
     """
