@@ -1,5 +1,7 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+
+from cards.models import Card
 
 
 # Create your models here.
@@ -30,3 +32,12 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.displayedUsername
+
+
+class UserCard(models.Model):
+    """
+    Model storing information about ownership of concrete card.
+    """
+
+    user_profile = models.ForeignKey(UserProfile, related_name='cards', on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, related_name='user_profile', on_delete=models.CASCADE)
