@@ -1,4 +1,4 @@
-from WMIAdventure.backend.WMIAdventure_backend.IngameUsers.models import UserProfile
+from IngameUsers.models import UserProfile
 from BattlePlayer import BattlePlayer
 from Coordinator import Coordinator
 from BattleOutcome import BattleOutcome
@@ -14,8 +14,8 @@ class Battle:
                                      defender=self.defender)
 
     def start(self):
-        while self.is_finished():
+        while not self.is_finished():
             self.coordinator.next_turn()
 
     def is_finished(self):
-        return self.outcome.is_completed()
+        return self.outcome.is_done()
