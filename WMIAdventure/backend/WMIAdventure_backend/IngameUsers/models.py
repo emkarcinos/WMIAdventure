@@ -54,11 +54,11 @@ class Deck(models.Model):
     Ordered deck of cards.
     """
 
-    card1 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
-    card2 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
-    card3 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
-    card4 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
-    card5 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+    card1 = models.ForeignKey(UserCard, related_name='deck_card1', on_delete=models.CASCADE)
+    card2 = models.ForeignKey(UserCard, related_name='deck_card2', on_delete=models.CASCADE)
+    card3 = models.ForeignKey(UserCard, related_name='deck_card3', on_delete=models.CASCADE)
+    card4 = models.ForeignKey(UserCard, related_name='deck_card4', on_delete=models.CASCADE)
+    card5 = models.ForeignKey(UserCard, related_name='deck_card5', on_delete=models.CASCADE)
 
 
 class UserDeck(models.Model):
