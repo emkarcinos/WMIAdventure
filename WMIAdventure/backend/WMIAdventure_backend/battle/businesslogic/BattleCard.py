@@ -1,8 +1,8 @@
 from typing import List
 
-from BattleCardEffectFactory import BattleCardEffectsFactory
 from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
+from .BattleCardEffectFactory import BattleCardEffectsFactory
 from .CardBuff import CardBuff
 
 
