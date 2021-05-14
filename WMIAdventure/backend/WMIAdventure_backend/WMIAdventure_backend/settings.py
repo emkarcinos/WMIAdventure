@@ -42,8 +42,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'users.apps.UsersConfig',
     'IngameUsers',
-    'cards'
+    'cards',
+    'corsheaders'
 ]
+
+MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
