@@ -41,3 +41,15 @@ class UserCard(models.Model):
 
     user_profile = models.ForeignKey(UserProfile, related_name='cards', on_delete=models.CASCADE)
     card = models.ForeignKey(Card, related_name='user_profile', on_delete=models.CASCADE)
+
+
+class Deck(models.Model):
+    """
+    Ordered deck of cards.
+    """
+
+    card1 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+    card2 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+    card3 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+    card4 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+    card5 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
