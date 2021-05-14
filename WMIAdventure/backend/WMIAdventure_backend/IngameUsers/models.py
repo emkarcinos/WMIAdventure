@@ -1,5 +1,7 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+
+from cards.models import Card
 
 
 # Create your models here.
@@ -30,3 +32,42 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.displayedUsername
+
+
+class UserCard(models.Model):
+    """
+    Model storing information about ownership of concrete card.
+    """
+
+    user_profile = models.ForeignKey(UserProfile, related_name='cards', on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, related_name='user_profile', on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user_profile', 'card'],
+                                    name='user_card_composite_pk')
+        ]
+
+
+class Deck(models.Model):
+    """
+    Ordered deck of cards.
+    """
+
+    card1 = models.ForeignKey(UserCard, related_name='deck_card1', on_delete=models.CASCADE)
+    card2 = models.ForeignKey(UserCard, related_name='deck_card2', on_delete=models.CASCADE)
+    card3 = models.ForeignKey(UserCard, related_name='deck_card3', on_delete=models.CASCADE)
+    card4 = models.ForeignKey(UserCard, related_name='deck_card4', on_delete=models.CASCADE)
+    card5 = models.ForeignKey(UserCard, related_name='deck_card5', on_delete=models.CASCADE)
+
+
+class UserDeck(models.Model):
+    deck_number = models.PositiveIntegerField()
+    deck = models.OneToOneField(Deck, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, related_name='deck', on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['deck_number', 'deck', 'user_profile'],
+                                    name='user_deck_composite_pk')
+        ]
