@@ -18,6 +18,8 @@ class BattleCard:
         @param card_model: Database model.
         """
 
+        self.card_model = card_model
+
         self.effects = []
         for effect_model in card_model.effects.all():
             self.effects.append(BattleCardEffect(effect_model))
