@@ -1,5 +1,4 @@
-import queue
-
+from BattleDeck import BattleDeck
 from IngameUsers.models import Deck
 from IngameUsers.models import UserProfile
 from .BattleCard import BattleCard
@@ -20,26 +19,15 @@ class BattlePlayer:
         """
 
         deck_model: Deck = user_model.deck.deck
-        self._create_deck(deck_model)
+        self.deck = BattleDeck(deck_model)
 
         self.statistics = Statistics()
-
-    def _create_deck(self, deck_model: Deck):
-        self.deck = queue.Queue()
-
-        self.deck.put(BattleCard(deck_model.card1))
-        self.deck.put(BattleCard(deck_model.card2))
-        self.deck.put(BattleCard(deck_model.card3))
-        self.deck.put(BattleCard(deck_model.card4))
-        self.deck.put(BattleCard(deck_model.card5))
 
     def use_card(self):
         """
         Uses card which is first in deck to use and then places that card at the end of the deck.
-        @return: List of effects of proper card to execute by battle simulation.
+        @return: List of effects of proper card to be executed by battle simulation.
         """
 
-        card: BattleCard = self.deck.get()
-        self.deck.put(card)
-
+        card: BattleCard = self.deck.get_card()
         return card.use()
