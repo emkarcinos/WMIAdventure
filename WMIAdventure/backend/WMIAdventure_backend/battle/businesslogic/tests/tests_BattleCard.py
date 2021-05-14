@@ -44,6 +44,13 @@ class BattleCardTestCase(TestCase):
     def test_create_from_model(self):
         battle_card = BattleCard(self.card_model)
 
+        self.assertEqual(battle_card.card_model.id, self.card_model.id)
+        self.assertEqual(len(battle_card.effects), 1)
+
+        self.assertEqual(battle_card.effects[0].target, self.effect_model.target)
+        self.assertEqual(battle_card.effects[0].power, self.effect_model.power)
+        self.assertEqual(battle_card.effects[0].range, self.effect_model.range)
+
     def test_use(self):
         battle_card = BattleCard(self.card_model)
 
