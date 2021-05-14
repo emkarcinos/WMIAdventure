@@ -1,7 +1,6 @@
 from typing import List
 
 from cards.models import Card
-from .BattleCardEffect import BattleCardEffect
 from .BattleCardEffectFactory import BattleCardEffectsFactory
 from .CardBuff import CardBuff
 
@@ -11,7 +10,6 @@ class BattleCard:
 
     """
     buffs: List[CardBuff]
-    effects: List[BattleCardEffect]
 
     def __init__(self, card_model: Card):
         """

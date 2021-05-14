@@ -1,7 +1,6 @@
-from .BattleDeck import BattleDeck
 from IngameUsers.models import Deck
 from IngameUsers.models import UserProfile
-from .BattleCard import BattleCard
+from .BattleDeck import BattleDeck
 from .Statistics import Statistics
 
 
@@ -32,5 +31,5 @@ class BattlePlayer:
         @return: List of effects of proper card to be executed by battle simulation.
         """
 
-        card: BattleCard = self.deck.get_card()
+        card = self.deck.get_card()
         return card.use()
