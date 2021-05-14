@@ -44,7 +44,8 @@ class UserCard(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user_profile', 'card'])
+            models.UniqueConstraint(fields=['user_profile', 'card'],
+                                    name='user_card_composite_pk')
         ]
 
 
