@@ -1,7 +1,7 @@
 from collections import deque
 
-from BattleCard import BattleCard
 from IngameUsers.models import Deck
+from .BattleCard import BattleCard
 
 
 class BattleDeck:
