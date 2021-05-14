@@ -58,3 +58,15 @@ class Deck(models.Model):
     card3 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
     card4 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
     card5 = models.ForeignKey(UserCard, on_delete=models.CASCADE)
+
+
+class UserDeck(models.Model):
+    deck_number = models.PositiveIntegerField()
+    deck = models.OneToOneField(Deck, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, related_name='deck', on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['deck_number', 'deck', 'user_profile'],
+                                    name='user_deck_composite_pk')
+        ]
