@@ -26,6 +26,7 @@ class BattleCard:
 
     def use(self):
         """
+        Updates card's buffs and returns list of card's effects to be executed in battle simulation.
         @return: List of effects to be executed by battle simulator.
         """
 
