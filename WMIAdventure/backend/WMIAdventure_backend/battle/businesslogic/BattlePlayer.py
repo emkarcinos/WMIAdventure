@@ -1,4 +1,4 @@
-from BattleDeck import BattleDeck
+from .BattleDeck import BattleDeck
 from IngameUsers.models import Deck
 from IngameUsers.models import UserProfile
 from .BattleCard import BattleCard
