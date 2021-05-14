@@ -1,5 +1,6 @@
 from typing import List
 
+from BattleCardEffectFactory import BattleCardEffectsFactory
 from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
 from .CardBuff import CardBuff
@@ -20,9 +21,10 @@ class BattleCard:
 
         self.card_model = card_model
 
+        effects_factory = BattleCardEffectsFactory.get_instance()
         self.effects = []
         for effect_model in card_model.effects.all():
-            self.effects.append(BattleCardEffect(effect_model))
+            self.effects.append(effects_factory.create(effect_model))
 
         self.buffs = []
 
