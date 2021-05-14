@@ -6,9 +6,9 @@ class TurnsQueue:
     """
     Manages players turns.
     """
-    queue = deque()
 
     def __init__(self, attacker: BattlePlayer, defender: BattlePlayer):
+        self.queue = deque()
         self.queue.append(attacker)
         self.queue.append(defender)
 
