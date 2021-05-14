@@ -5,7 +5,7 @@ class BattleCardEffectsFactory:
     instance = None
 
     @staticmethod
-    def get_instance(self):
+    def get_instance():
         if BattleCardEffectsFactory.instance is None:
             BattleCardEffectsFactory.instance = BattleCardEffectsFactory()
         return BattleCardEffectsFactory.instance
