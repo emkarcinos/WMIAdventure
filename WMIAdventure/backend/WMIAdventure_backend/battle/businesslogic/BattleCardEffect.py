@@ -13,6 +13,8 @@ class BattleCardEffect:
         @param effect_model: Database model.
         """
 
+        self.effect_model = effect_model
+
         self.target = effect_model.target
         self.power = effect_model.power
         self.range = effect_model.range
