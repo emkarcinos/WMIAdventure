@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from IngameUsers.models import UserProfile, Semester, UserCard, Deck, UserDeck
-from cards.models import CardInfo, Card, CardLevel
+from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 from ..BattlePlayerFactory import BattlePlayerFactory
 
 
@@ -42,6 +42,13 @@ class BattlePlayerFactoryTestCase(TestCase):
                 level=CardLevel.objects.get(pk=1),
                 next_level_cost=None
             )
+
+            effect = CardLevelEffects.objects.create(card=card,
+                                                     card_effect=CardEffect(CardEffect.EffectId.DMG),
+                                                     target=CardLevelEffects.Target.OPPONENT,
+                                                     power=1.0,
+                                                     range=1.0)
+            effect.save()
             card.save()
             cls.cards.append(card)
 
