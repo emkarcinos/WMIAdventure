@@ -1,7 +1,7 @@
-from BattleOutcome import BattleOutcome
-from BattlePlayerFactory import BattlePlayerFactory
-from Coordinator import Coordinator
 from IngameUsers.models import UserProfile
+from .BattleOutcome import BattleOutcome
+from .BattlePlayerFactory import BattlePlayerFactory
+from .Coordinator import Coordinator
 
 
 class Battle:
