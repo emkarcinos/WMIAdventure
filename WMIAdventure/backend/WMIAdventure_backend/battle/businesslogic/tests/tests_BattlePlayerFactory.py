@@ -73,4 +73,4 @@ class BattlePlayerFactoryTestCase(TestCase):
         player = self.instance.create(user_profile_model=self.user_profile, is_attacker=False)
 
         self.assertEqual(player.id, self.user_profile.user.id)
-        self.assertEqual(player.deck.get_card(), self.cards[0])
+        self.assertEqual(player.deck.get_card().card_model, self.cards[0])
