@@ -1,13 +1,14 @@
-from IngameUsers.models import UserProfile
-from BattlePlayer import BattlePlayer
-from Coordinator import Coordinator
 from BattleOutcome import BattleOutcome
+from BattlePlayerFactory import BattlePlayerFactory
+from Coordinator import Coordinator
+from IngameUsers.models import UserProfile
 
 
 class Battle:
     def __init__(self, attacker_model: UserProfile, defender_model: UserProfile):
-        self.attacker = BattlePlayer(attacker_model)
-        self.defender = BattlePlayer(defender_model)
+        player_factory = BattlePlayerFactory.get_instance()
+        self.attacker = player_factory.create(attacker_model, is_attacker=True)
+        self.defender = player_factory.create(defender_model, is_attacker=False)
         self.coordinator = Coordinator(attacker=self.attacker,
                                        defender=self.defender)
         self.outcome = BattleOutcome(attacker=self.attacker,
