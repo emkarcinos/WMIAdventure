@@ -14,11 +14,11 @@ class BattleDeck:
 
         self.cards_queue = deque()
 
-        self.cards_queue.append(BattleCard(deck_model.card1))
-        self.cards_queue.append(BattleCard(deck_model.card2))
-        self.cards_queue.append(BattleCard(deck_model.card3))
-        self.cards_queue.append(BattleCard(deck_model.card4))
-        self.cards_queue.append(BattleCard(deck_model.card5))
+        self.cards_queue.append(BattleCard(deck_model.card1.card))
+        self.cards_queue.append(BattleCard(deck_model.card2.card))
+        self.cards_queue.append(BattleCard(deck_model.card3.card))
+        self.cards_queue.append(BattleCard(deck_model.card4.card))
+        self.cards_queue.append(BattleCard(deck_model.card5.card))
 
     def get_card(self):
         """
