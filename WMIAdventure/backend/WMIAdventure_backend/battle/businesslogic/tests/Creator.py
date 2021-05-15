@@ -24,11 +24,9 @@ class Creator:
         for c in self.cards:
             c.delete()
 
-        self.p1_defender_deck.delete()
-        self.p1_attacker_deck.delete()
+        for i in self.infos:
+            i.delete()
 
-        self.p2_defender_deck.delete()
-        self.p2_attacker_deck.delete()
 
     def get_user_models(self):
         """
@@ -76,6 +74,7 @@ class Creator:
         self.user_profile_model2.save()
         # Creating 5 test cards
         self.cards = []
+        self.infos = []
         for i in range(5):
             card_info = CardInfo.objects.create(
                 name=str(i),
@@ -83,6 +82,7 @@ class Creator:
                 image=None,
                 subject=None
             )
+            self.infos.append(card_info)
             card_info.save()
 
             card = Card.objects.create(
