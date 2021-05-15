@@ -1,4 +1,4 @@
-from IngameUsers.models import Deck
+from .BattleDeck import BattleDeck
 from .Statistics import Statistics
 
 
@@ -9,7 +9,7 @@ class BattlePlayer:
     Has statistics that represent its current state and its card deck.
     """
 
-    def __init__(self, id: int, deck: Deck):
+    def __init__(self, id: int, deck: BattleDeck):
         """
         Creates BattlePlayer instance.
         @param id: ID Related to user in database
