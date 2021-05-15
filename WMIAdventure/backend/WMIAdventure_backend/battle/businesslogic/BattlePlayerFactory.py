@@ -25,7 +25,7 @@ class BattlePlayerFactory:
         users_decks = UserDeck.objects.filter(user_profile=user_profile_model)
         # TODO: Getting the decks is this way is kind of stupid. Enum would be better.
         deck = None
-        if is_attacker:
+        if is_attacker and len(users_decks) == 2:
             deck = users_decks[1].deck
         else:
             deck = users_decks[0].deck
