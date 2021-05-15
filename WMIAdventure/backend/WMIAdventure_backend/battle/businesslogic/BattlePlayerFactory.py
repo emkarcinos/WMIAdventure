@@ -1,5 +1,6 @@
 from IngameUsers.models import UserProfile
 from IngameUsers.models import UserDeck
+from .BattleDeck import BattleDeck
 from .BattlePlayer import BattlePlayer
 
 
@@ -25,9 +26,9 @@ class BattlePlayerFactory:
         # TODO: Getting the decks is this way is kind of stupid. Enum would be better.
         deck = None
         if is_attacker:
-            deck = users_decks[1]
+            deck = users_decks[1].deck
         else:
-            deck = users_decks[0]
-        return BattlePlayer(id=id, deck=deck)
+            deck = users_decks[0].deck
+        return BattlePlayer(id=id, deck=BattleDeck(deck_model=deck))
 
 
