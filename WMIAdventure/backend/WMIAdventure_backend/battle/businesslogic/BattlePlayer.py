@@ -1,7 +1,4 @@
-from BattleDeck import BattleDeck
-from IngameUsers.models import Deck
-from IngameUsers.models import UserProfile
-from .BattleCard import BattleCard
+from .BattleDeck import BattleDeck
 from .Statistics import Statistics
 
 
@@ -12,22 +9,26 @@ class BattlePlayer:
     Has statistics that represent its current state and its card deck.
     """
 
-    def __init__(self, user_model: UserProfile):
+    def __init__(self, id: int, deck: BattleDeck):
         """
-        Creates BattlePlayer instance by extracting user's info from database model.
-        @param user_model: Database user model.
+        Creates BattlePlayer instance.
+        @param id: ID Related to user in database
+        @param deck: Card deck of its user.
         """
 
-        deck_model: Deck = user_model.deck.deck
-        self.deck = BattleDeck(deck_model)
+        self.id = id
+        self.deck = deck
 
         self.statistics = Statistics()
 
+    def get_hp(self):
+        return self.statistics.hp
+        
     def use_card(self):
         """
         Uses card which is first in deck to use and then places that card at the end of the deck.
         @return: List of effects of proper card to be executed by battle simulation.
         """
 
-        card: BattleCard = self.deck.get_card()
+        card = self.deck.get_card()
         return card.use()
