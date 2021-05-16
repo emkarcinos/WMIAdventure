@@ -1,6 +1,6 @@
 from typing import List
 
-from cards.models import Card, CardLevelEffects
+from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
 from .BattleCardEffectFactory import BattleCardEffectFactory
 from .CardBuff import CardBuff
@@ -22,7 +22,7 @@ class BattleCard:
 
         effects_factory = BattleCardEffectFactory.get_instance()
         self.effects = []
-        for effect_model in CardLevelEffects.objects.filter(card=self.card_model):
+        for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
         self.buffs = []
