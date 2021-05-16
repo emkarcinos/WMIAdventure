@@ -13,7 +13,13 @@ class Coordinator:
         self.defender = defender
         self.turnsQueue = TurnsQueue(self.attacker, self.defender)
 
-    def next_turn(self):
+    def get_players_opponent(self, player) -> BattlePlayer:
+        # Effect activation requires a target player as an argument, so we calculate this here.
+        return self.defender if player is self.attacker else self.attacker
+
+    def next_turn(self) -> None:
         current_player = self.turnsQueue.turn()
 
-        # TODO: Implement logic after merging pull requests
+        used_effects = current_player.use_card()
+        for effect in used_effects:
+            effect.activate(current_player, self.get_players_opponent(current_player), self.turnsQueue)
