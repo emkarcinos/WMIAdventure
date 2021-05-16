@@ -2,14 +2,14 @@ from cards.models import CardLevelEffects
 from .BattleCardEffect import BattleCardEffect
 
 
-class BattleCardEffectsFactory:
+class BattleCardEffectFactory:
     instance = None
 
     @staticmethod
     def get_instance():
-        if BattleCardEffectsFactory.instance is None:
-            BattleCardEffectsFactory.instance = BattleCardEffectsFactory()
-        return BattleCardEffectsFactory.instance
+        if BattleCardEffectFactory.instance is None:
+            BattleCardEffectFactory.instance = BattleCardEffectFactory()
+        return BattleCardEffectFactory.instance
 
     def create(self, effect_model: CardLevelEffects):
         """
