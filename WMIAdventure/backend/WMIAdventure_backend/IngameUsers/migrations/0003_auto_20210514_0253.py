@@ -32,10 +32,12 @@ class Migration(migrations.Migration):
             name='UserCard',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_profile',
-                                           to='cards.card')),
-                ('user_profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='cards',
-                                                   to='IngameUsers.userprofile')),
+                (
+                'card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_card_records',
+                                          to='cards.card')),
+                ('user_profile',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_cards',
+                                   to='IngameUsers.userprofile')),
             ],
         ),
         migrations.AddField(

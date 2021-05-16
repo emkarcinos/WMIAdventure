@@ -39,8 +39,8 @@ class UserCard(models.Model):
     Model storing information about ownership of concrete card.
     """
 
-    user_profile = models.ForeignKey(UserProfile, related_name='cards', on_delete=models.CASCADE)
-    card = models.ForeignKey(Card, related_name='user_profile', on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, related_name='user_cards', on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, related_name='user_card_records', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
