@@ -27,7 +27,6 @@ class Creator:
         for i in self.infos:
             i.delete()
 
-
     def get_user_models(self):
         """
         Returns a tuple of user_model1, user_model2.
@@ -53,6 +52,17 @@ class Creator:
         if user == 1:
             return self.p1_attacker_deck, self.p1_defender_deck
         return self.p2_attacker_deck, self.p2_defender_deck
+
+    def get_attacker_deck(self, user=1):
+        """
+        @param user: First or second user.
+        @return: Given user's attacker deck.
+        """
+
+        if user == 1:
+            return self.p1_attacker_deck
+        elif user == 2:
+            return self.p2_attacker_deck
 
     def __init__(self):
 
