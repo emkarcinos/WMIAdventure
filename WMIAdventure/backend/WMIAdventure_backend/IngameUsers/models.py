@@ -64,7 +64,7 @@ class Deck(models.Model):
 class UserDeck(models.Model):
     deck_number = models.PositiveIntegerField()
     deck = models.OneToOneField(Deck, on_delete=models.CASCADE)
-    user_profile = models.ForeignKey(UserProfile, related_name='deck', on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, related_name='user_decks', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
