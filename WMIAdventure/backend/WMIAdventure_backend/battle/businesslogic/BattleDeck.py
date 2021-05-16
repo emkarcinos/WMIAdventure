@@ -20,7 +20,7 @@ class BattleDeck:
         self.cards_queue.append(BattleCard(deck_model.card4.card))
         self.cards_queue.append(BattleCard(deck_model.card5.card))
 
-    def get_card(self):
+    def get_card(self) -> BattleCard:
         """
         Retrieves first card from queue and appends it at the end.
         @return: Card which should be used in battle in current turn.

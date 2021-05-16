@@ -1,3 +1,6 @@
+from typing import List
+
+from .BattleCardEffect import BattleCardEffect
 from .BattleDeck import BattleDeck
 from .Statistics import Statistics
 
@@ -21,10 +24,10 @@ class BattlePlayer:
 
         self.statistics = Statistics()
 
-    def get_hp(self):
+    def get_hp(self) -> int:
         return self.statistics.hp
         
-    def use_card(self):
+    def use_card(self) -> List[BattleCardEffect]:
         """
         Uses card which is first in deck to use and then places that card at the end of the deck.
         @return: List of effects of proper card to be executed by battle simulation.

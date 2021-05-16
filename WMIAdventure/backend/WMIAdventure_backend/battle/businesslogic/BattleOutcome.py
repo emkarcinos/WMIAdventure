@@ -20,7 +20,7 @@ class BattleOutcome:
 
         return self.is_completed
 
-    def get_outcome(self):
+    def get_outcome(self) -> BattlePlayer or None:
         """
         Get the winner.
         If the is_done method wasn't called and the battle hasn't ended before calling this function, it will return None.

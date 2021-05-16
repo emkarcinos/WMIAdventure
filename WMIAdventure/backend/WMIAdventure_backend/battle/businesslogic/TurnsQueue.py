@@ -12,7 +12,7 @@ class TurnsQueue:
         self.queue.append(attacker)
         self.queue.append(defender)
 
-    def turn(self):
+    def turn(self) -> BattlePlayer:
         """
         Gets a player which is at the front of the queue, dequeues it, and puts it to the end of it.
         """
@@ -22,7 +22,7 @@ class TurnsQueue:
 
         return player
 
-    def enqueue(self, player: BattlePlayer):
+    def enqueue(self, player: BattlePlayer) -> None:
         """
         Add a player to the end of the queue.
         """
