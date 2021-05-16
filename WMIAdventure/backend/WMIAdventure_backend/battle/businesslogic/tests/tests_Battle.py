@@ -17,7 +17,7 @@ class BattleTestCase(TestCase):
 
         self.assertIsNotNone(battle.coordinator)
         self.assertIsNotNone(battle.outcome)
-        self.assertFalse(battle.outcome.get_outcome())
+        self.assertIsNone(battle.outcome.get_winner())
 
     @classmethod
     def tearDownClass(cls) -> None:
