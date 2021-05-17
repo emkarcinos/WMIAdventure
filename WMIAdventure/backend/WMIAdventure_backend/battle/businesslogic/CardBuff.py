@@ -28,13 +28,13 @@ class CardBuff:
         self.sleep_remaining = max(0, self.sleep_remaining - 1)
 
     def is_expired(self):
-        return self.turns_remaining > 0
+        return self.turns_remaining == 0
 
     def can_trigger(self):
         """
         Checks whether this buff can trigger.
         """
-        if self.sleep_remaining == 0 and self.is_expired():
+        if self.sleep_remaining == 0 and not self.is_expired():
             return True
         return False
 
