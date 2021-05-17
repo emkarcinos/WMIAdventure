@@ -6,6 +6,7 @@ from cards.models import CardInfo
 from cards.models import CardLevel
 from cards.models import CardLevelEffects
 from ..BattleCard import BattleCard
+from ..CardBuff import CardBuff
 
 
 class BattleCardTestCase(TestCase):
@@ -60,3 +61,9 @@ class BattleCardTestCase(TestCase):
         self.assertEqual(battle_card.effects[0].target, self.effect_model.target)
         self.assertEqual(battle_card.effects[0].power, self.effect_model.power)
         self.assertEqual(battle_card.effects[0].range, self.effect_model.range)
+
+    def test_add_buff(self):
+
+        # TODO: Implement after creating specific BattleCardEffects
+        pass
+

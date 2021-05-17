@@ -42,6 +42,14 @@ class BattleOutcomeTestCase(TestCase):
 
         self.assertEqual(self.outcome.get_winner(), expected_outcome)
 
+    def test_get_winner(self):
+        self.outcome.defender.statistics.hp = 0.0
+        self.outcome.is_done()
+        self.assertIs(self.outcome.get_winner(), self.attacker)
+
+        # Restoring to
+        self.outcome.defender.statistics.hp = self.outcome.defender.statistics.MAX_HP
+
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()

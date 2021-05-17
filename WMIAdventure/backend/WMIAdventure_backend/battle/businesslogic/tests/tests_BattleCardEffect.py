@@ -6,6 +6,7 @@ from cards.models import CardInfo
 from cards.models import CardLevel
 from cards.models import CardLevelEffects
 from ..BattleCardEffect import BattleCardEffect
+from ..CardBuff import CardBuff
 
 
 class BattleCardEffectTestCase(TestCase):
@@ -41,3 +42,14 @@ class BattleCardEffectTestCase(TestCase):
 
     def test_create_from_model(self):
         battle_effect = BattleCardEffect(self.effect_model)
+
+    def test_buff_add(self):
+        battle_effect = BattleCardEffect(self.effect_model)
+        battle_effect.add_buff(CardBuff(active_turns=0))
+        self.assertEqual(1, len(battle_effect.buffs))
+
+    def test_remove_expired_buffs(self):
+        battle_effect = BattleCardEffect(self.effect_model)
+        battle_effect.add_buff(CardBuff(active_turns=0))
+        battle_effect.update_buffs()
+        self.assertEqual(0, len(battle_effect.buffs))

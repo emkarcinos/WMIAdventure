@@ -15,7 +15,7 @@ class BattleOutcome:
         """
         Checks whether the battle has completed.
         """
-        if self.attacker.get_hp() < 0.0 or self.defender.get_hp() < 0.0:
+        if self.attacker.get_hp() <= 0.0 or self.defender.get_hp() <= 0.0:
             self.is_completed = True
 
         return self.is_completed
