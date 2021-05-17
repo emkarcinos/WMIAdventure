@@ -64,6 +64,17 @@ class Creator:
         elif user == 2:
             return self.p2_attacker_deck
 
+    def get_defender_deck(self, user=1):
+        """
+        @param user: First or second user.
+        @return: Given user's defender deck.
+        """
+
+        if user == 1:
+            return self.p1_defender_deck
+        elif user == 2:
+            return self.p2_defender_deck
+
     def __init__(self):
 
         self.user_model1 = User.objects.create(
