@@ -15,8 +15,8 @@ class CardBuff:
         """
         self.multiplier = multiplier
         self.modifier = modifier
-        self.turns_remaining = active_turns
-        self.sleep_remaining = activation_delay_turns
+        self.turns_remaining = active_turns + 1
+        self.sleep_remaining = activation_delay_turns + 1
 
     def tick(self):
         """
