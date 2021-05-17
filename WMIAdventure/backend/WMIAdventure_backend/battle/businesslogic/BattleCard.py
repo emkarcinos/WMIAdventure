@@ -3,14 +3,12 @@ from typing import List
 from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
 from .BattleCardEffectFactory import BattleCardEffectFactory
-from .CardBuff import CardBuff
 
 
 class BattleCard:
     """
 
     """
-    buffs: List[CardBuff]
 
     def __init__(self, card_model: Card):
         """
@@ -25,8 +23,6 @@ class BattleCard:
         for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
-        self.buffs = []
-
     def use(self) -> List[BattleCardEffect]:
         """
         Updates card's buffs and returns list of card's effects to be executed in battle simulation.
@@ -37,5 +33,5 @@ class BattleCard:
         return self.effects
 
     def _update_buffs(self) -> None:
-        for buff in self.buffs:
-            buff.update()
+        for effect in self.effects:
+            effect.update()
