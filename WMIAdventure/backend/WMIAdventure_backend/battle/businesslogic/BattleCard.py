@@ -30,10 +30,10 @@ class BattleCard:
         @return: List of effects to be executed by battle simulator.
         """
 
-        self._update_buffs()
+        self._update_effects()
         return self.effects
 
-    def _update_buffs(self) -> None:
+    def _update_effects(self) -> None:
         for effect in self.effects:
             effect.update()
 
