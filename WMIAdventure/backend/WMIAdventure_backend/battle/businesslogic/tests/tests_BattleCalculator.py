@@ -32,6 +32,19 @@ class BattleCalculatorTestCase(TestCase):
         actual_hp = self.battle_player.statistics.hp
         self.assertEqual(actual_hp, expected_hp)
 
+    def test_calculate_effect_power(self):
+        base_power = 5
+        power_range = 2
+
+        expected_min_power = base_power - power_range
+        expected_max_power = base_power + power_range
+
+        for i in range(100):
+            actual_power = self.instance.calculate_effect_power(base_power, power_range, None)
+
+            self.assertTrue(actual_power >= expected_min_power)
+            self.assertTrue(actual_power <= expected_max_power)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
