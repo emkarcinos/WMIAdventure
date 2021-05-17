@@ -1,7 +1,9 @@
 from unittest import TestCase
 
+from battle.businesslogic.BattlePlayer import BattlePlayer
 from battle.businesslogic.CardBuff import CardBuff
 from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
+from battle.businesslogic.tests.Creator import Creator
 from cards.models import Card
 from cards.models import CardEffect
 from cards.models import CardInfo
@@ -38,6 +40,13 @@ class BattleCardEffectTestCase(TestCase):
 
         cls.effect_model = card_effect
 
+        cls.creator = Creator()
+        u1, u2 = cls.creator.get_user_models()
+        d1, d2 = cls.creator.get_decks()
+
+        cls.card_owner = BattlePlayer(u1.id, d1)
+        cls.other_player = BattlePlayer(u1.id, d2)
+
     def setUp(self) -> None:
         self.battle_effect = BattleCardEffect(self.effect_model)
 
@@ -50,6 +59,18 @@ class BattleCardEffectTestCase(TestCase):
         self.battle_effect.update_buffs()
         self.assertEqual(0, len(self.battle_effect.buffs))
 
+    def test_choose_target(self):
+        chosen_target = self.battle_effect.choose_target(self.card_owner, self.other_player)
+
+        expected_target = None
+        if self.battle_effect.target == CardLevelEffects.Target.OPPONENT:
+            expected_target = self.other_player
+        elif self.battle_effect.target == CardLevelEffects.Target.PLAYER:
+            expected_target = self.card_owner
+
+        self.assertIs(chosen_target, expected_target)
+
     @classmethod
     def tearDownClass(cls) -> None:
+        cls.creator.perform_deletion()
         CardInfo.objects.all().delete()
