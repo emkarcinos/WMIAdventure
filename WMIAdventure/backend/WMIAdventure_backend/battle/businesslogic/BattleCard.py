@@ -3,14 +3,12 @@ from typing import List
 from cards.models import Card
 from .BattleCardEffect import BattleCardEffect
 from .BattleCardEffectFactory import BattleCardEffectFactory
-from .CardBuff import CardBuff
 
 
 class BattleCard:
     """
 
     """
-    buffs: List[CardBuff]
 
     def __init__(self, card_model: Card):
         """
