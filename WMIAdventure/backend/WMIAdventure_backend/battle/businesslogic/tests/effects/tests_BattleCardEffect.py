@@ -1,12 +1,12 @@
 from unittest import TestCase
 
+from battle.businesslogic.CardBuff import CardBuff
+from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
 from cards.models import Card
 from cards.models import CardEffect
 from cards.models import CardInfo
 from cards.models import CardLevel
 from cards.models import CardLevelEffects
-from ..BattleCardEffect import BattleCardEffect
-from ..CardBuff import CardBuff
 
 
 class BattleCardEffectTestCase(TestCase):

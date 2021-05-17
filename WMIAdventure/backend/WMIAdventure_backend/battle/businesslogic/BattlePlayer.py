@@ -1,6 +1,6 @@
 from typing import List
 
-from .BattleCardEffect import BattleCardEffect
+from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
 from .BattleDeck import BattleDeck
 from .Statistics import Statistics
 
