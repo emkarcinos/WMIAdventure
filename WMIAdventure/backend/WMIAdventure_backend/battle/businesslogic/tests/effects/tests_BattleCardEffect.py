@@ -10,7 +10,8 @@ from cards.models import CardLevelEffects
 
 
 class BattleCardEffectTestCase(TestCase):
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         card_info = CardInfo.objects.create(
             name="Name",
             tooltip="Tooltip",
@@ -35,21 +36,20 @@ class BattleCardEffectTestCase(TestCase):
         )
         card_effect.save()
 
-        self.effect_model = card_effect
+        cls.effect_model = card_effect
 
-    def tearDown(self) -> None:
-        CardInfo.objects.all().delete()
-
-    def test_create_from_model(self):
-        battle_effect = BattleCardEffect(self.effect_model)
+    def setUp(self) -> None:
+        self.battle_effect = BattleCardEffect(self.effect_model)
 
     def test_buff_add(self):
-        battle_effect = BattleCardEffect(self.effect_model)
-        battle_effect.add_buff(CardBuff(active_turns=0))
-        self.assertEqual(1, len(battle_effect.buffs))
+        self.battle_effect.add_buff(CardBuff(active_turns=0))
+        self.assertEqual(1, len(self.battle_effect.buffs))
 
     def test_remove_expired_buffs(self):
-        battle_effect = BattleCardEffect(self.effect_model)
-        battle_effect.add_buff(CardBuff(active_turns=0))
-        battle_effect.update_buffs()
-        self.assertEqual(0, len(battle_effect.buffs))
+        self.battle_effect.add_buff(CardBuff(active_turns=0))
+        self.battle_effect.update_buffs()
+        self.assertEqual(0, len(self.battle_effect.buffs))
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        CardInfo.objects.all().delete()
