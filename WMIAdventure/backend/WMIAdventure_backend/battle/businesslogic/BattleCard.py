@@ -1,8 +1,9 @@
 from typing import List
 
-from cards.models import Card
+from cards.models import Card, CardEffect
 from .BattleCardEffect import BattleCardEffect
 from .BattleCardEffectFactory import BattleCardEffectFactory
+from .CardBuff import CardBuff
 
 
 class BattleCard:
@@ -35,3 +36,14 @@ class BattleCard:
     def _update_buffs(self) -> None:
         for effect in self.effects:
             effect.update()
+
+    def assign_buff(self, buff: CardBuff, effect_type: CardEffect.EffectId):
+        """
+        This method assigns a buff to this card's appropriate effects.
+        @param: buff - Buff instance
+        @param: effect_type - Enum that will determine which effect will be boosted
+        """
+        for effect in self.effects:
+            # We check if any of the effects if of the type specified in the parameter
+            if effect.effect_model.card_effect.EffectId is effect_type:
+                effect.add_buff(buff)
