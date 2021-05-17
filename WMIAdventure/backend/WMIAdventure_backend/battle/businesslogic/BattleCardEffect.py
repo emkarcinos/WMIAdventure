@@ -1,3 +1,6 @@
+from typing import List
+
+from battle.businesslogic.CardBuff import CardBuff
 from cards.models import CardLevelEffects
 
 
@@ -18,6 +21,9 @@ class BattleCardEffect:
         self.power = effect_model.power
         self.range = effect_model.range
 
+        self.buffs: List[CardBuff]
+        self.buffs = []
+
     def activate(self,
                  card_owner,
                  other_player,
@@ -32,3 +38,28 @@ class BattleCardEffect:
         """
 
         pass
+
+    def add_buff(self, buff: CardBuff):
+        """
+        Add a new buff to the Effect.
+        """
+        self.buffs.append(buff)
+
+    def update_buffs(self):
+        """
+        Updates the buffs and destroys expired ones.
+        """
+        for buff in self.buffs:
+            buff.update()
+
+        # Maybe there is a better way of doing this?
+        for buff in self.buffs:
+            if buff.is_expired():
+                self.buffs.remove(buff)
+
+    def update(self):
+        """
+        Update this effect's state.
+        Should be called every turn before activation.
+        """
+        self.update_buffs()
