@@ -2,12 +2,24 @@ import React from 'react';
 import StyledForm from './StyledForm';
 import Label from '../../atoms/CardPowerInput/StyledFieldset/Label';
 
+const newLevels = [];
+
 function useInput(initialValue) {
     const [value, setValue] = React.useState(initialValue);
 
     const handleChange = (event) => {
-        event.preventDefault();
-        setValue(event.target.value);
+        if(event.target.type === 'checkbox') {
+            console.log(event.target.checked);
+            if(event.target.checked) {
+                let newLevelsList = value;
+                newLevelsList[event.target.value - 1] = event.target.value;
+                setValue([newLevelsList[0], newLevelsList[1], newLevelsList[2]]);
+            } else {
+                let newLevelsList = value;
+                newLevelsList[event.target.value - 1] = undefined;
+                setValue([newLevelsList[0], newLevelsList[1], newLevelsList[2]]);
+            }
+        } else setValue(event.target.value);
     };
 
     return [value, handleChange];
@@ -40,12 +52,25 @@ function CardForm() {
     const [cardSubject, handleCardSubjectChange] = useInput('');
     const [cardTooltip, handleCardTooltipChange] = useInput('');
     const [cardImage, handleCardImageChange] = useInput(null);
-    const [newLevels, handleNewLevelsChange] = useInput([]);
+    const [levelsArray, handleLevelsArrayChange] = useInput([undefined, undefined, undefined]);
     const [costs, handleCostsChange] = useInput([]);
     const [newEffects, handleNewEffectsChange] = useInput([]);
 
     async function sendCard(event) {
         event.preventDefault();
+
+        let i = 0;
+        while (levelsArray[i]) {
+            newLevels.push(
+                {
+                    level: levelsArray[i],
+                    next_level_cost: costs[i],
+                    effects: []
+                }
+            );
+            i++;
+        }
+
         try {
             let result = await fetch(`http://${API}/api/cards/`, {
                 method: 'post',
@@ -58,29 +83,7 @@ function CardForm() {
                     subject: cardSubject,
                     image: cardImage,
                     tooltip: cardTooltip,
-                    levels: [
-                        {
-                            level: 1,
-                            next_level_cost: 1,
-                            effects: [
-
-                            ]
-                        },
-                        {
-                            level: 2,
-                            next_level_cost: 1,
-                            effects: [
-
-                            ]
-                        },
-                        {
-                            level: 3,
-                            next_level_cost: 1,
-                            effects: [
-
-                            ]
-                        }
-                    ]
+                    levels: newLevels
                 })
             });
 
@@ -136,7 +139,7 @@ function CardForm() {
                                         <label htmlFor={level.level}>
                                             {level.name}
                                         </label>
-                                        <input id={level.level} name='level' type='checkbox' />
+                                        <input id={level.level} name='level' type='checkbox' value={level.level} onChange={handleLevelsArrayChange}/>
                                     </p>
                                     <p>
                                         <label htmlFor='next_level_cost'>
