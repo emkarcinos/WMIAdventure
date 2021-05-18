@@ -4,6 +4,7 @@ from .Creator import Creator
 from ..BattleCalculator import BattleCalculator
 from ..BattleDeck import BattleDeck
 from ..BattlePlayer import BattlePlayer
+from ..CardBuff import CardBuff
 
 
 class BattleCalculatorTestCase(TestCase):
@@ -21,6 +22,8 @@ class BattleCalculatorTestCase(TestCase):
 
         self.instance = BattleCalculator.get_instance()
 
+        self.buffs = self.create_buffs()
+
     def test_singleton(self):
         self.assertIsNotNone(self.instance)
 
@@ -37,6 +40,57 @@ class BattleCalculatorTestCase(TestCase):
             self.assertTrue(actual_power >= expected_min_power)
             self.assertTrue(actual_power <= expected_max_power)
 
+    def test_calculate_modifiers_influence(self):
+        expected_modifiers_influence = 0
+        for i in range(len(self.buffs)):
+            expected_modifiers_influence += self.modifier
+
+        actual_modifiers_influence = self.instance.__calculate_modifiers_influence__(self.buffs)
+
+        self.assertEqual(actual_modifiers_influence, expected_modifiers_influence)
+
+    def test_calculate_multipliers_influence(self):
+        negative_inf = 1
+        for negative_mult in self.negative_multipliers:
+            negative_inf *= negative_mult
+
+        positive_inf = 1
+        for positive_mult in self.positive_multipliers:
+            positive_inf += positive_mult - 1
+
+        expected_multipliers_influence = positive_inf * negative_inf
+
+        actual_multipliers_influence = self.instance.__calculate_multipliers_influence__(self.buffs)
+
+        self.assertEqual(actual_multipliers_influence, expected_multipliers_influence)
+
+    def test_calculate_buffs_influence(self):
+        effect_power = 5
+
+        expected_power = \
+            effect_power * \
+            self.instance.__calculate_multipliers_influence__(self.buffs) + \
+            self.instance.__calculate_modifiers_influence__(self.buffs)
+
+        actual_power = self.instance.__calculate_buffs_influence__(effect_power, self.buffs)
+
+        self.assertEqual(actual_power, expected_power)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
+
+    def create_buffs(self):
+        buffs = []
+
+        self.positive_multipliers = [2.0, 3.0, 5.0]
+        self.modifier = 5
+
+        self.negative_multipliers = [0.25, 0.25, 0.5, 0.75]
+
+        for multiplier in self.positive_multipliers + self.negative_multipliers:
+            buffs.append(
+                CardBuff(multiplier=multiplier, modifier=self.modifier)
+            )
+
+        return buffs
