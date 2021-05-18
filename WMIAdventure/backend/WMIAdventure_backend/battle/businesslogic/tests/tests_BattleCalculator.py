@@ -38,8 +38,8 @@ class BattleCalculatorTestCase(TestCase):
             actual_power = self.instance.__power_without_buffs__(self.base_power,
                                                                  self.power_range)
 
-            self.assertTrue(actual_power >= self.min_power_without_buffs)
-            self.assertTrue(actual_power <= self.max_power_without_buffs)
+            self.assertGreaterEqual(actual_power, self.min_power_without_buffs)
+            self.assertLessEqual(actual_power, self.max_power_without_buffs)
 
     def test_calculate_modifiers_influence(self):
         expected_modifiers_influence = 0

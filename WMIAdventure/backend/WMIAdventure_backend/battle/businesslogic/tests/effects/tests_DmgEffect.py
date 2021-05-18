@@ -51,9 +51,8 @@ class DmgEffectTestCase(TestCase):
 
             self.dmg_effect.activate(self.card_owner, self.other_player, None)
 
-            self.assertTrue(dmg_receiver.statistics.hp < MAX_HP)
-            self.assertTrue(dmg_receiver.statistics.hp >= MAX_HP - max_dmg)
-            self.assertTrue(dmg_receiver.statistics.hp <= MAX_HP - min_dmg)
+            self.assertGreaterEqual(dmg_receiver.statistics.hp, MAX_HP - max_dmg)
+            self.assertLessEqual(dmg_receiver.statistics.hp, MAX_HP - min_dmg)
 
     @classmethod
     def tearDownClass(cls) -> None:
