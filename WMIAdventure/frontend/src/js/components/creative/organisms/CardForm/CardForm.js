@@ -4,12 +4,13 @@ import Label from '../../atoms/CardPowerInput/StyledFieldset/Label';
 
 const newLevels = [];
 
+const newEffects = [];
+
 function useInput(initialValue) {
     const [value, setValue] = React.useState(initialValue);
 
     const handleChange = (event) => {
-        if(event.target.type === 'checkbox') {
-            console.log(event.target.checked);
+        if(event.target.name === 'level') {
             if(event.target.checked) {
                 let newLevelsList = value;
                 newLevelsList[event.target.value - 1] = event.target.value;
@@ -19,6 +20,11 @@ function useInput(initialValue) {
                 newLevelsList[event.target.value - 1] = undefined;
                 setValue([newLevelsList[0], newLevelsList[1], newLevelsList[2]]);
             }
+        } else if(event.target.name === 'next_level_cost') {
+            console.log(event.target.value);
+            let newCostsList = value;
+            newCostsList[Number(event.target.id[0]) - 1] = event.target.value;
+            setValue([newCostsList[0], newCostsList[1], newCostsList[2]]);
         } else setValue(event.target.value);
     };
 
@@ -53,7 +59,7 @@ function CardForm() {
     const [cardTooltip, handleCardTooltipChange] = useInput('');
     const [cardImage, handleCardImageChange] = useInput(null);
     const [levelsArray, handleLevelsArrayChange] = useInput([undefined, undefined, undefined]);
-    const [costs, handleCostsChange] = useInput([]);
+    const [costs, handleCostsChange] = useInput([undefined, undefined, undefined]);
     const [newEffects, handleNewEffectsChange] = useInput([]);
 
     async function sendCard(event) {
@@ -136,16 +142,16 @@ function CardForm() {
                             <React.Fragment key={`level-${level.level}`}>
                                 <fieldset>
                                     <p>
-                                        <label htmlFor={level.level}>
+                                        <label htmlFor={`${level.level}-level`}>
                                             {level.name}
                                         </label>
-                                        <input id={level.level} name='level' type='checkbox' value={level.level} onChange={handleLevelsArrayChange}/>
+                                        <input id={`${level.level}-level`} name='level' type='checkbox' value={level.level} onChange={handleLevelsArrayChange}/>
                                     </p>
                                     <p>
-                                        <label htmlFor='next_level_cost'>
+                                        <label htmlFor={`${level.level}-cost`}>
                                             Koszt ulepszenia na następny poziom:
                                         </label>
-                                        <input id='next_level_cost' name='next_level_cost' type='number' />
+                                        <input id={`${level.level}-cost`} name='next_level_cost' type='number' onChange={handleCostsChange}/>
                                     </p>
                                     <fieldset>
                                         <legend>
