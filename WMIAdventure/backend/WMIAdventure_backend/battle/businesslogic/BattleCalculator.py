@@ -77,9 +77,9 @@ class BattleCalculator:
         buff: CardBuff
         for buff in buffs:
             if buff.multiplier >= 1:
-                positive_multipliers += buff.modifier - 1
+                positive_multipliers += buff.multiplier - 1
             elif buff.multiplier < 1:
-                negative_multipliers *= buff.modifier
+                negative_multipliers *= buff.multiplier
 
         return positive_multipliers * negative_multipliers
 
