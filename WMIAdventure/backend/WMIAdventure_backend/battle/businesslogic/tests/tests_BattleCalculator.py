@@ -24,21 +24,22 @@ class BattleCalculatorTestCase(TestCase):
 
         self.buffs = self.create_buffs()
 
+        self.base_power = 5
+        self.power_range = 2
+
+        self.max_power_without_buffs = self.base_power + self.power_range
+        self.min_power_without_buffs = self.base_power - self.power_range
+
     def test_singleton(self):
         self.assertIsNotNone(self.instance)
 
     def test_power_without_buffs(self):
-        base_power = 5
-        power_range = 2
-
-        expected_min_power = base_power - power_range
-        expected_max_power = base_power + power_range
-
         for i in range(100):
-            actual_power = self.instance.__power_without_buffs__(base_power, power_range)
+            actual_power = self.instance.__power_without_buffs__(self.base_power,
+                                                                 self.power_range)
 
-            self.assertTrue(actual_power >= expected_min_power)
-            self.assertTrue(actual_power <= expected_max_power)
+            self.assertTrue(actual_power >= self.min_power_without_buffs)
+            self.assertTrue(actual_power <= self.max_power_without_buffs)
 
     def test_calculate_modifiers_influence(self):
         expected_modifiers_influence = 0
@@ -65,14 +66,13 @@ class BattleCalculatorTestCase(TestCase):
         self.assertEqual(actual_multipliers_influence, expected_multipliers_influence)
 
     def test_calculate_buffs_influence(self):
-        effect_power = 5
 
         expected_power = \
-            effect_power * \
+            self.base_power * \
             self.instance.__calculate_multipliers_influence__(self.buffs) + \
             self.instance.__calculate_modifiers_influence__(self.buffs)
 
-        actual_power = self.instance.__calculate_buffs_influence__(effect_power, self.buffs)
+        actual_power = self.instance.__calculate_buffs_influence__(self.base_power, self.buffs)
 
         self.assertEqual(actual_power, expected_power)
 
