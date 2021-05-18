@@ -46,9 +46,8 @@ class BattleCalculator:
         multipliers_influence = 1
         modifiers_influence = 0
 
-        if buffs is not None:
-            multipliers_influence = self.__calculate_multipliers_influence__(buffs)
-            modifiers_influence = self.__calculate_modifiers_influence__(buffs)
+        multipliers_influence = self.__calculate_multipliers_influence__(buffs)
+        modifiers_influence = self.__calculate_modifiers_influence__(buffs)
 
         return effect_power * multipliers_influence + modifiers_influence
 
@@ -61,8 +60,7 @@ class BattleCalculator:
 
         modifiers_sum = 0
         for buff in buffs:
-            if buff.modifier is not None:
-                modifiers_sum += buff.modifier
+            modifiers_sum += buff.modifier
         return modifiers_sum
 
     def __calculate_multipliers_influence__(self, buffs):
@@ -78,11 +76,10 @@ class BattleCalculator:
         # Calculations - see examples below for better understanding.
         buff: CardBuff
         for buff in buffs:
-            if buff.multiplier is not None:
-                if buff.multiplier >= 1:
-                    positive_multipliers += buff.modifier - 1
-                elif buff.multiplier < 1:
-                    negative_multipliers *= buff.modifier
+            if buff.multiplier >= 1:
+                positive_multipliers += buff.modifier - 1
+            elif buff.multiplier < 1:
+                negative_multipliers *= buff.modifier
 
         return positive_multipliers * negative_multipliers
 
