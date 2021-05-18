@@ -22,9 +22,18 @@ class BattleCalculator:
         @return: Calculated power.
         """
 
-        effect_power = power + uniform(-1, 1) * power_range
+        effect_power = self.__power_without_buffs__(power, power_range)
         effect_power = self.__calculate_buffs_influence__(effect_power, buffs)
         return effect_power
+
+    def __power_without_buffs__(self, power, power_range):
+        """
+        Adds random value from [-power_range, power_range] to base power value.
+        @param power: Base power value.
+        @param power_range:
+        @return:
+        """
+        return power + uniform(-1, 1) * power_range
 
     def __calculate_buffs_influence__(self, effect_power, buffs):
         """

@@ -24,7 +24,7 @@ class BattleCalculatorTestCase(TestCase):
     def test_singleton(self):
         self.assertIsNotNone(self.instance)
 
-    def test_calculate_effect_power(self):
+    def test_power_without_buffs(self):
         base_power = 5
         power_range = 2
 
@@ -32,7 +32,7 @@ class BattleCalculatorTestCase(TestCase):
         expected_max_power = base_power + power_range
 
         for i in range(100):
-            actual_power = self.instance.calculate_effect_power(base_power, power_range, None)
+            actual_power = self.instance.__power_without_buffs__(base_power, power_range)
 
             self.assertTrue(actual_power >= expected_min_power)
             self.assertTrue(actual_power <= expected_max_power)
