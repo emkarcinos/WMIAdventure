@@ -1,6 +1,6 @@
 import React from 'react';
 import StyledLogo from './StyledLogo/StyledLogo';
-import logo from '../../../../assets/icons/logo.svg';
+import logo from '../../../../../assets/icons/logo.svg';
 
 function Logo() {
     return (

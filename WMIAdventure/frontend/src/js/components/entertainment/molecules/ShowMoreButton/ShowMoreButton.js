@@ -1,5 +1,5 @@
 import React from 'react';
-import showMore from '../../../../assets/icons/more.svg';
+import showMore from '../../../../../assets/icons/more.svg';
 import MoreOptions from '../../atoms/MoreOptions/MoreOptions';
 import StyledButton from './StyledButton';
 

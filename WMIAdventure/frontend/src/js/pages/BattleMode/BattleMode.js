@@ -1,10 +1,10 @@
 import React from 'react';
-import NavBar from '../../components/organisms/NavBar';
-import Statistic from '../../components/atoms/Statistic';
+import NavBar from '../../components/entertainment/organisms/NavBar';
+import Statistic from '../../components/entertainment/atoms/Statistic';
 import StyledWrapper from './StyledWrapper';
-import Avatar from '../../components/atoms/Avatar';
+import Avatar from '../../components/entertainment/atoms/Avatar';
 import avatar from '../../../assets/icons/avatar.svg';
-import GridOneColumn from '../../components/organisms/GridOneColumn';
+import GridOneColumn from '../../components/entertainment/organisms/GridOneColumn';
 
 function BattleMode() {
     return (

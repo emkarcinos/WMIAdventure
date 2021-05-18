@@ -1,6 +1,6 @@
 import React from 'react';
 
-import notificationIcon from '../../../../assets/icons/notification.svg';
+import notificationIcon from '../../../../../assets/icons/notification.svg';
 import Notifications from '../Notifications';
 import StyledButton from './StyledButton';
 

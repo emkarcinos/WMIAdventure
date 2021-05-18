@@ -1,10 +1,10 @@
 import React from 'react';
 
-import NavBar from '../../components/organisms/NavBar';
-import MainMenuModule from '../../components/atoms/MainMenuModule';
-import GridOneColumn from '../../components/organisms/GridOneColumn';
-import MainMenuSmallerModule from '../../components/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
-import FlexCenterContainer from '../../components/molecules/FlexCenterContainer';
+import NavBar from '../../components/entertainment/organisms/NavBar';
+import MainMenuModule from '../../components/entertainment/atoms/MainMenuModule';
+import GridOneColumn from '../../components/entertainment/organisms/GridOneColumn';
+import MainMenuSmallerModule from '../../components/entertainment/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
+import FlexCenterContainer from '../../components/entertainment/molecules/FlexCenterContainer';
 
 import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';

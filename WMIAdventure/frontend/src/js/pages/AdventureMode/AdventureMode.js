@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NavBar from '../../components/organisms/NavBar';
+import NavBar from '../../components/entertainment/organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
 function AdventureMode() {

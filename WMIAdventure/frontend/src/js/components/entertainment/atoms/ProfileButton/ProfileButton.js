@@ -1,5 +1,5 @@
 import React from 'react';
-import profile from '../../../../assets/icons/profile.svg';
+import profile from '../../../../../assets/icons/profile.svg';
 import StyledProfileButton from './StyledProfileButton';
 
 function ProfileButton() {

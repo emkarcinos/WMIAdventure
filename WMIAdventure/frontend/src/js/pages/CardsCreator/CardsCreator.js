@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from '../../components/organisms/NavBar';
-import CardForm from '../../components/organisms/CardForm';
+import NavBar from '../../components/entertainment/organisms/NavBar';
+import CardForm from '../../components/creative/organisms/CardForm';
 import StyledWrapper from './StyledWrapper';
 
 function CardsCreator() {
