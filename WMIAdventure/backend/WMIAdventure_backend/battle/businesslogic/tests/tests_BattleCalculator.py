@@ -76,6 +76,15 @@ class BattleCalculatorTestCase(TestCase):
 
         self.assertEqual(actual_power, expected_power)
 
+    def test_calculate_effect_power(self):
+        expected_min_value = self.instance.__calculate_buffs_influence__(self.min_power_without_buffs, self.buffs)
+        expected_max_value = self.instance.__calculate_buffs_influence__(self.max_power_without_buffs, self.buffs)
+
+        for i in range(100):
+            actual_value = self.instance.calculate_effect_power(self.base_power, self.power_range, self.buffs)
+            self.assertGreaterEqual(actual_value, expected_min_value)
+            self.assertLessEqual(actual_value, expected_max_value)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
