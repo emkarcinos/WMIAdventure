@@ -2,30 +2,35 @@ import React from 'react';
 import StyledForm from './StyledForm';
 import Label from '../../atoms/CardPowerInput/StyledFieldset/Label';
 
-const newLevels = [];
-
-const newEffects = [];
-
 function useInput(initialValue) {
     const [value, setValue] = React.useState(initialValue);
 
     const handleChange = (event) => {
-        if(event.target.name === 'level') {
+        if(event.target.name === 'level' || event.target.name === 'card_effect') {
             if(event.target.checked) {
-                let newLevelsList = value;
-                newLevelsList[event.target.value - 1] = event.target.value;
-                setValue([newLevelsList[0], newLevelsList[1], newLevelsList[2]]);
+                let newList = value.slice();
+                if(event.target.name === 'level')
+                    newList[Number(event.target.id[0]) - 1] = event.target.value;
+                else if(event.target.name)
+                    newList[Number(event.target.id[0]) - 1][Number(event.target.id[2]) - 1] = event.target.value;
+                setValue(newList);
             } else {
-                let newLevelsList = value;
-                newLevelsList[event.target.value - 1] = undefined;
-                setValue([newLevelsList[0], newLevelsList[1], newLevelsList[2]]);
+                let newList = value.slice();
+                if(event.target.name === 'level')
+                    newList[Number(event.target.id[0]) - 1] = undefined;
+                else if(event.target.name)
+                    newList[Number(event.target.id[0]) - 1][Number(event.target.id[2]) - 1] = undefined;
+                setValue(newList);
             }
-        } else if(event.target.name === 'next_level_cost') {
-            console.log(event.target.value);
-            let newCostsList = value;
-            newCostsList[Number(event.target.id[0]) - 1] = event.target.value;
-            setValue([newCostsList[0], newCostsList[1], newCostsList[2]]);
-        } else setValue(event.target.value);
+        } else if(event.target.type === 'text' || event.target.name === 'tooltip') {
+            setValue(event.target.value);
+        } else {
+            let newList = value.slice();
+            if(event.target.name === 'next_level_cost')
+                newList[Number(event.target.id[0]) - 1] = event.target.value;
+            else newList[Number(event.target.id[0]) - 1][Number(event.target.id[2]) - 1] = event.target.value;
+            setValue(newList);
+        }
     };
 
     return [value, handleChange];
@@ -58,12 +63,32 @@ function CardForm() {
     const [cardSubject, handleCardSubjectChange] = useInput('');
     const [cardTooltip, handleCardTooltipChange] = useInput('');
     const [cardImage, handleCardImageChange] = useInput(null);
-    const [levelsArray, handleLevelsArrayChange] = useInput([undefined, undefined, undefined]);
-    const [costs, handleCostsChange] = useInput([undefined, undefined, undefined]);
-    const [newEffects, handleNewEffectsChange] = useInput([]);
+    const [levelsArray, handleLevelsArrayChange] = useInput([]);
+    const [costs, handleCostsChange] = useInput([]);
+    const [cardEffects, handleCardEffectsChange] = useInput([[],[],[]]);
+    const [cardTargets, handleCardTargetsChange] = useInput([[],[],[]]);
+    const [cardPowers, handleCardPowersChange] = useInput([[],[],[]]);
+    const [cardRanges, handleCardRangesChange] = useInput([[],[],[]]);
 
     async function sendCard(event) {
         event.preventDefault();
+        const newLevels = [];
+        const mapEffects = [[], [], []];
+
+        for(let i = 0; i < cardEffects.length; i++) {
+            for(let j = 0; j < cardEffects[i].length; j++) {
+                if(cardEffects[i][j]) {
+                    mapEffects[i].push (
+                        {
+                            card_effect: cardEffects[i][j],
+                            target: cardTargets[i][j],
+                            power: cardPowers[i][j],
+                            range: cardRanges[i][j]
+                        }
+                    );
+                }
+            }
+        }
 
         let i = 0;
         while (levelsArray[i]) {
@@ -71,7 +96,7 @@ function CardForm() {
                 {
                     level: levelsArray[i],
                     next_level_cost: costs[i],
-                    effects: []
+                    effects: mapEffects[i]
                 }
             );
             i++;
@@ -139,7 +164,7 @@ function CardForm() {
                 {
                     levels.map((level) => {
                         return (
-                            <React.Fragment key={`level-${level.level}`}>
+                            <React.Fragment key={`levels-${level.level}`}>
                                 <fieldset>
                                     <p>
                                         <label htmlFor={`${level.level}-level`}>
@@ -162,10 +187,10 @@ function CardForm() {
                                                 return (
                                                     <React.Fragment key={`effect-${effect.id}`}>
                                                         <div>
-                                                            <label htmlFor={effect.id}>
+                                                            <label htmlFor={`${level.level}-${effect.id}-effect`}>
                                                                 {effect.name}
                                                             </label>
-                                                            <input id={effect.id} name='card_effect' type='checkbox' />
+                                                            <input id={`${level.level}-${effect.id}-effect`} name='card_effect' type='checkbox' value={effect.id} onChange={handleCardEffectsChange}/>
                                                         </div>
                                                         <fieldset>
                                                             <legend>
@@ -175,13 +200,13 @@ function CardForm() {
                                                                 <label htmlFor='target'>
                                                                     przeciwnik
                                                                 </label>
-                                                                <input id='target' name='target' type='radio' />
+                                                                <input id={`${level.level}-${effect.id}-target`} name='target' value='1' type='radio' onChange={handleCardTargetsChange}/>
                                                             </p>
                                                             <p>
                                                                 <label htmlFor='target'>
                                                                     właściciel
                                                                 </label>
-                                                                <input id='target' name='target' value='' type='radio'/>
+                                                                <input id={`${level.level}-${effect.id}-target`} name='target' value='2' type='radio' onChange={handleCardTargetsChange}/>
                                                             </p>
                                                         </fieldset>
                                                         <fieldset>
@@ -192,13 +217,13 @@ function CardForm() {
                                                                 <Label htmlFor='power'>
                                                                     Wartość efektu
                                                                 </Label>
-                                                                <input id='power' name='power' type='number'/>
+                                                                <input id={`${level.level}-${effect.id}-power`} name='power' type='number' onChange={handleCardPowersChange}/>
                                                             </p>
                                                             <p>
                                                                 <Label last htmlFor='range'>
                                                                     Zasięg efektu
                                                                 </Label>
-                                                                <input id='range' name='range' type='number'/>
+                                                                <input id={`${level.level}-${effect.id}-range`} name='range' type='number' onChange={handleCardRangesChange}/>
                                                             </p>
                                                         </fieldset>
                                                     </React.Fragment>
