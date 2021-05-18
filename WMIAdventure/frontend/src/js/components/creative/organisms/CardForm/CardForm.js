@@ -1,7 +1,10 @@
 import React from 'react';
-import StyledForm from './StyledForm';
-import Label from '../../atoms/CardPowerInput/StyledFieldset/Label';
+import Form from './styled-components/Form';
+import Label from './styled-components/Label';
 import useInput from './useInput';
+import Fieldset from './styled-components/Fieldset';
+import Paragraph from './styled-components/Paragraph';
+import Div from './styled-components/Div';
 
 function CardForm() {
     const API = process.env['REACT_APP_API_URL'];
@@ -92,39 +95,39 @@ function CardForm() {
     }
 
     return (
-        <StyledForm>
-            <fieldset>
+        <Form>
+            <Fieldset>
                 <legend>
                     Karta
                 </legend>
-                <p>
-                    <label htmlFor='name'>
+                <Paragraph>
+                    <Label htmlFor='name'>
                         Nazwa:
-                    </label>
+                    </Label>
                     <input id='name' type='text' name='name' onChange={handleCardNameChange}/>
-                </p>
-                <p>
-                    <label htmlFor='subject'>
+                </Paragraph>
+                <Paragraph>
+                    <Label htmlFor='subject'>
                         Przedmiot:
-                    </label>
+                    </Label>
                     <input id='subject' type='text' name='subject' onChange={handleCardSubjectChange}/>
-                </p>
-                <p>
-                    <label htmlFor='image'>
+                </Paragraph>
+                <Paragraph>
+                    <Label htmlFor='image'>
                         Ikona karty:
-                    </label>
+                    </Label>
                     <input id='image' type='file' name='image' onChange={handleCardImageChange}/>
-                </p>
-                <p>
-                    <label>
+                </Paragraph>
+                <Paragraph>
+                    <Label>
                         Opis Karty:
-                    </label>
+                    </Label>
                     <textarea name='tooltip' onChange={handleCardTooltipChange}>
                         {/*textarea*/}
                     </textarea>
-                </p>
-            </fieldset>
-            <fieldset>
+                </Paragraph>
+            </Fieldset>
+            <Fieldset>
                 <legend>
                     Poziom karty
                 </legend>
@@ -132,20 +135,20 @@ function CardForm() {
                     levels.map((level) => {
                         return (
                             <React.Fragment key={`levels-${level.level}`}>
-                                <fieldset>
-                                    <p>
-                                        <label htmlFor={`${level.level}-level`}>
+                                <div>
+                                    <Paragraph>
+                                        <Label htmlFor={`${level.level}-level`}>
                                             {level.name}
-                                        </label>
+                                        </Label>
                                         <input id={`${level.level}-level`} name='level' type='checkbox' value={level.level} onChange={handleLevelsArrayChange}/>
-                                    </p>
-                                    <p>
-                                        <label htmlFor={`${level.level}-cost`}>
+                                    </Paragraph>
+                                    <Paragraph>
+                                        <Label htmlFor={`${level.level}-cost`}>
                                             Koszt ulepszenia na następny poziom:
-                                        </label>
+                                        </Label>
                                         <input id={`${level.level}-cost`} name='next_level_cost' type='number' onChange={handleCostsChange}/>
-                                    </p>
-                                    <fieldset>
+                                    </Paragraph>
+                                    <Fieldset>
                                         <legend>
                                             Efekty karty
                                         </legend>
@@ -153,61 +156,61 @@ function CardForm() {
                                             effects.map((effect) => {
                                                 return (
                                                     <React.Fragment key={`effect-${effect.id}`}>
-                                                        <div>
-                                                            <label htmlFor={`${level.level}-${effect.id}-effect`}>
+                                                        <Div>
+                                                            <Label htmlFor={`${level.level}-${effect.id}-effect`}>
                                                                 {effect.name}
-                                                            </label>
+                                                            </Label>
                                                             <input id={`${level.level}-${effect.id}-effect`} name='card_effect' type='checkbox' value={effect.id} onChange={handleCardEffectsChange}/>
-                                                        </div>
-                                                        <fieldset>
+                                                        </Div>
+                                                        <Fieldset>
                                                             <legend>
                                                                 Cel:
                                                             </legend>
-                                                            <p>
-                                                                <label htmlFor='target'>
+                                                            <Paragraph>
+                                                                <Label htmlFor='target'>
                                                                     przeciwnik
-                                                                </label>
+                                                                </Label>
                                                                 <input id={`${level.level}-${effect.id}-target`} name='target' value='1' type='radio' onChange={handleCardTargetsChange}/>
-                                                            </p>
-                                                            <p>
-                                                                <label htmlFor='target'>
+                                                            </Paragraph>
+                                                            <Paragraph>
+                                                                <Label htmlFor='target'>
                                                                     właściciel
-                                                                </label>
+                                                                </Label>
                                                                 <input id={`${level.level}-${effect.id}-target`} name='target' value='2' type='radio' onChange={handleCardTargetsChange}/>
-                                                            </p>
-                                                        </fieldset>
-                                                        <fieldset>
+                                                            </Paragraph>
+                                                        </Fieldset>
+                                                        <Fieldset>
                                                             <legend>
                                                                 Moc:
                                                             </legend>
-                                                            <p>
+                                                            <Paragraph>
                                                                 <Label htmlFor='power'>
                                                                     Wartość efektu
                                                                 </Label>
                                                                 <input id={`${level.level}-${effect.id}-power`} name='power' type='number' onChange={handleCardPowersChange}/>
-                                                            </p>
-                                                            <p>
+                                                            </Paragraph>
+                                                            <Paragraph>
                                                                 <Label last htmlFor='range'>
                                                                     Zasięg efektu
                                                                 </Label>
                                                                 <input id={`${level.level}-${effect.id}-range`} name='range' type='number' onChange={handleCardRangesChange}/>
-                                                            </p>
-                                                        </fieldset>
+                                                            </Paragraph>
+                                                        </Fieldset>
                                                     </React.Fragment>
                                                 );
                                             })
                                         }
-                                    </fieldset>
-                                </fieldset>
+                                    </Fieldset>
+                                </div>
                             </React.Fragment>
                         );
                     })
                 }
-            </fieldset>
+            </Fieldset>
             <button type='submit' onClick={sendCard}>
                 Wyślij do administracji.
             </button>
-        </StyledForm>
+        </Form>
     );
 }
 
