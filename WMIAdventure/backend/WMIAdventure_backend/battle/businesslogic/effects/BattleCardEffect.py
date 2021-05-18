@@ -39,6 +39,21 @@ class BattleCardEffect:
 
         pass
 
+    def choose_target(self, card_owner, other_player):
+        """
+        Chooses effect target with usage of target enum field.
+        @param card_owner: BattlePlayer instance.
+        @param other_player: BattlePlayer instance.
+        @return: Chosen effect target.
+        """
+
+        effect_target = None
+        if self.target == CardLevelEffects.Target.OPPONENT:
+            effect_target = other_player
+        elif self.target == CardLevelEffects.Target.PLAYER:
+            effect_target = card_owner
+        return effect_target
+
     def add_buff(self, buff: CardBuff):
         """
         Add a new buff to the Effect.

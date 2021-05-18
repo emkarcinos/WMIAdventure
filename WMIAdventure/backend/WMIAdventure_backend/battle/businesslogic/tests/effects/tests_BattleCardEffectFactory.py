@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from .Creator import Creator
-from ..BattleCardEffectFactory import BattleCardEffectFactory
+from battle.businesslogic.effects.BattleCardEffectFactory import BattleCardEffectFactory
+from battle.businesslogic.tests.Creator import Creator
 
 
 class BattleCardEffectFactoryTestCase(TestCase):

@@ -1,5 +1,5 @@
+from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
 from cards.models import CardLevelEffects
-from .BattleCardEffect import BattleCardEffect
 
 
 class BattleCardEffectFactory:
