@@ -1,7 +1,7 @@
 class CardBuff:
 
     def __init__(self,
-                 multiplier=0.0,
+                 multiplier=1.0,
                  modifier=0.0,
                  active_turns=1,
                  activation_delay_turns=0):
