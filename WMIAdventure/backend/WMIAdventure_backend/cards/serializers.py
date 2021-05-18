@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import *
 
 
@@ -78,7 +79,10 @@ class WholeCardSerializer(serializers.ModelSerializer):
         )
         info.save()
 
-        for card_data in validated_data.get("levels", []):
+        if validated_data.get("levels") is None or len(validated_data.get("levels")) == 0:
+            raise serializers.ValidationError("levels are required during card creation.")
+
+        for card_data in validated_data.get("levels"):
             card = info.levels.create(
                 level=card_data.get("level"),
                 next_level_cost=card_data.get("next_level_cost"),
