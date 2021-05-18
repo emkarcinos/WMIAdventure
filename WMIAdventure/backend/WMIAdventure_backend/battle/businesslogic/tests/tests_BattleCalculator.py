@@ -24,14 +24,6 @@ class BattleCalculatorTestCase(TestCase):
     def test_singleton(self):
         self.assertIsNotNone(self.instance)
 
-    def test_deal_dmg_to(self):
-        dmg = 5
-        self.instance.deal_dmg_to(self.battle_player, dmg)
-
-        expected_hp = self.battle_player.statistics.MAX_HP - dmg
-        actual_hp = self.battle_player.statistics.hp
-        self.assertEqual(actual_hp, expected_hp)
-
     def test_calculate_effect_power(self):
         base_power = 5
         power_range = 2

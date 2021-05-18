@@ -21,4 +21,4 @@ class DmgEffect(BattleCardEffect):
 
         dmg_receiver = self.choose_target(card_owner, other_player)
 
-        calculator.deal_dmg_to(dmg_receiver, dmg)
+        dmg_receiver.statistics.deal_damage(dmg)

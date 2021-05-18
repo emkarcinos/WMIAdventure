@@ -21,12 +21,3 @@ class BattleCalculator:
 
         return power + uniform(-1, 1) * power_range
 
-    def deal_dmg_to(self, player_to, dmg):
-        """
-        Deals dmg to player
-        @param player_to:
-        @param dmg:
-        @return:
-        """
-
-        player_to.statistics.deal_damage(dmg)
