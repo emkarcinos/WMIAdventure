@@ -15,9 +15,7 @@ class DmgEffect(BattleCardEffect):
                  card_owner,
                  other_player,
                  turns_queue):
-        calculator = BattleCalculator.get_instance()
-
-        dmg = calculator.calculate_effect_power(self.power, self.range, self.buffs)
+        dmg = self.calculate_effect_value()
 
         dmg_receiver = self.choose_target(card_owner, other_player)
 

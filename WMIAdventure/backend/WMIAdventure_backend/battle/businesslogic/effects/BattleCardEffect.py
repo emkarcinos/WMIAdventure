@@ -1,5 +1,6 @@
 from typing import List
 
+from battle.businesslogic.BattleCalculator import BattleCalculator
 from battle.businesslogic.CardBuff import CardBuff
 from cards.models import CardLevelEffects
 
@@ -8,6 +9,14 @@ class BattleCardEffect:
     """
     Abstract class for card effects logic to derive from when creating concrete effect class.
     """
+
+    def calculate_effect_value(self):
+        """
+        Calculates the actual value that this effect does.
+        @return: Value
+        """
+
+        return BattleCalculator.get_instance().calculate_effect_power(self.power, self.range, self.buffs)
 
     def __init__(self, effect_model: CardLevelEffects):
         """
