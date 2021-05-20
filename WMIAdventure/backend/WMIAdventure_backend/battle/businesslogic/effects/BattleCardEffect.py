@@ -24,20 +24,30 @@ class BattleCardEffect:
         self.buffs: List[CardBuff]
         self.buffs = []
 
+    def on_activation(self, target, turns_queue):
+        """
+        Effect logic abstract method.
+        One should override it and write the logic here.
+        @param target: Target affected by this effect - BattlePlayer instance
+        @param turns_queue: TurnsQueue instance.
+        """
+        pass
+
     def activate(self,
                  card_owner,
                  other_player,
                  turns_queue):
         """
-        This method should be overridden.
-        By calling this method this effect will perform its logic.
+        Triggers the effect.
+        It essentially calls on_activation method that should be overridden to one's liking.
         @param card_owner: BattlePlayer instance.
         @param other_player: BattlePlayer instance.
         @param turns_queue: Queue of players' turns, can be changed by some effects.
         @return:
         """
 
-        pass
+        selected_target = self.choose_target(card_owner, other_player)
+        self.on_activation(selected_target, turns_queue)
 
     def choose_target(self, card_owner, other_player):
         """
