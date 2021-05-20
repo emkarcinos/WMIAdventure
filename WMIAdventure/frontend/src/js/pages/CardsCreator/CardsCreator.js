@@ -1,14 +1,13 @@
 import React from 'react';
 import NavBar from '../../components/entertainment/organisms/NavBar';
-import CardForm from '../../components/creative/organisms/CardFormRaw';
-import CardFormDesign from '../../components/creative/organisms/CardFormDesign';
+import CreateCard from '../../components/creative/organisms/CreateCard';
 import StyledWrapper from './StyledWrapper';
 
 function CardsCreator() {
     return (
         <StyledWrapper>
             <NavBar />
-            <CardFormDesign />
+            <CreateCard />
         </StyledWrapper>
     );
 }

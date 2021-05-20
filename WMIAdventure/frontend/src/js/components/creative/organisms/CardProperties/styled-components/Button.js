@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import pensil from '../../../../../../assets/icons/pencil.svg';
+import plus from '../../../../../../assets/icons/plus.svg';
 
 const Button = styled.button`
-  position: absolute;
-  top: 36px;
-  left: -56px;
+  padding: 0;
   display: block;
   width: 32px;
   height: 32px;
-  background-image: url(${pensil});
+  background-image: url(${plus});
   background-position: center;
   background-repeat: no-repeat;
   background-color: transparent;

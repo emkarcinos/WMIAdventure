@@ -2,8 +2,9 @@ import React from 'react';
 import CardDescribePreview from '../../molecules/CardDescribePreview';
 import Form from './styled-components/Form';
 import Div from './styled-components/Div';
+import CardProperties from '../CardProperties';
 
-class CardFormDesign extends React.Component {
+class CreateCard extends React.Component {
     state = {
         cardName: '',
         cardSubject: '',
@@ -23,7 +24,7 @@ class CardFormDesign extends React.Component {
                 <main>
                     <Form>
                         <CardDescribePreview handleChange={this.handleChange}/>
-
+                        <CardProperties />
                     </Form>
                 </main>
             </Div>
@@ -31,4 +32,4 @@ class CardFormDesign extends React.Component {
     }
 }
 
-export default CardFormDesign;
+export default CreateCard;

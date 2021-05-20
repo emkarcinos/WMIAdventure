@@ -37,7 +37,7 @@ class CardDescribeInputs extends React.Component {
                             Nazwa
                         </Label>
                         <DivInput>
-                            <Input id='cardName' name='cardName' type='text'/>
+                            <Input id='cardName' name='cardName' type='text' onChange={this.props.updateDescribePreview}/>
                         </DivInput>
                     </Div>
                     <Div>
@@ -45,7 +45,7 @@ class CardDescribeInputs extends React.Component {
                             Przedmiot
                         </Label>
                         <DivInput>
-                            <Input id='cardSubject' name='cardSubject' type='text'/>
+                            <Input id='cardSubject' name='cardSubject' type='text' onChange={this.props.updateDescribePreview}/>
                         </DivInput>
                     </Div>
                     <Div last>
@@ -53,7 +53,7 @@ class CardDescribeInputs extends React.Component {
                             Opis
                         </Label>
                         <DivInput>
-                            <Input id='cardTooltip' name='cardTooltip' type='text'/>
+                            <Input id='cardTooltip' name='cardTooltip' type='text' onChange={this.props.updateDescribePreview}/>
                         </DivInput>
                     </Div>
                 </Fieldset>

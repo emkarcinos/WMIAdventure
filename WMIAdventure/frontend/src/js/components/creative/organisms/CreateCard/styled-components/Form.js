@@ -6,6 +6,9 @@ const Form = styled.form`
   background-color: ${({theme}) => theme.colors.uiBlue};
   width: 100%;
   padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default Form;
