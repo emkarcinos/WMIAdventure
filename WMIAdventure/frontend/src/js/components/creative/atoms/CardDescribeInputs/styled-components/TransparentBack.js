@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 const TransparentBack = styled.div`
-  display: ${({show}) => show ? 'block' : 'none'};
+  display: ${({show}) => show ? 'flex' : 'none'};
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   top: -76px;
-  left: -18px;
-  max-width: 411px;
+  left: -17px;
+  max-width: 420px;
   max-height: 824px;
   width: 100vw;
   height: 100vh;
