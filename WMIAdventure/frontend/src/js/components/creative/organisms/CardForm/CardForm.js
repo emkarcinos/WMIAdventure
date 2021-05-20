@@ -40,7 +40,7 @@ function CardForm() {
     const [cardPowers, handleCardPowersChange] = useInput([[],[],[]]);
     const [cardRanges, handleCardRangesChange] = useInput([[],[],[]]);
 
-    async function sendCard(event) {
+    function sendCard(event) {
         event.preventDefault();
         const newLevels = [];
         const mapEffects = [[], [], []];
@@ -60,20 +60,21 @@ function CardForm() {
             }
         }
 
-        let i = 0;
-        while (levelsArray[i]) {
-            newLevels.push(
-                {
-                    level: levelsArray[i],
-                    next_level_cost: costs[i],
-                    effects: mapEffects[i]
-                }
-            );
-            i++;
+
+        for (let i = 0; i < levelsArray.length; i++) {
+            if (levelsArray[i]) {
+                newLevels.push(
+                    {
+                        level: levelsArray[i],
+                        next_level_cost: costs[i],
+                        effects: mapEffects[i]
+                    }
+                );
+            }
         }
 
         try {
-            let result = await fetch(`http://${API}/api/cards/`, {
+            let result = fetch(`http://${API}/api/cards/`, {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
