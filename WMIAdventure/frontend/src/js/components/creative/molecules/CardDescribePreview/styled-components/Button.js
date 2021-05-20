@@ -3,7 +3,7 @@ import pensil from '../../../../../../assets/icons/pencil.svg';
 
 const Button = styled.button`
   position: absolute;
-  top: 40%;
+  top: 40px;
   left: 16px;
   display: block;
   width: 32px;

@@ -6,20 +6,26 @@ import Button from './styled-components/Button';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 
 class CardDescribePreview extends React.Component {
-    constructor(props) {
-        super(props);
-        this.updateDescribePreview = this.updateDescribePreview.bind(this);
-    }
-
     state = {
         cardName: 'Nazwa Karty',
         cardSubject: 'Przedmiot',
         cardTooltip: 'Opis Karty',
+        showInputs: false
     }
 
-    updateDescribePreview(event) {
+    updateDescribePreview = (event) => {
         const keyName = event.target.name;
         this.setState({[keyName]: event.target.value});
+    }
+
+    showInputs = (event) => {
+        event.preventDefault();
+        this.setState({showInputs: true});
+    }
+
+    hideInputs = (event) => {
+        event.preventDefault();
+        this.setState({showInputs: false});
     }
 
     render() {
@@ -34,10 +40,14 @@ class CardDescribePreview extends React.Component {
                 <P tooltip>
                     {this.state.cardTooltip}
                 </P>
-                <Button>
+                <Button onClick={this.showInputs}>
                     {/*pensil icon*/}
                 </Button>
-                <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}/>
+                <CardDescribeInputs
+                    updateDescribePreview={this.updateDescribePreview}
+                    show={this.state.showInputs}
+                    hideInputs={this.hideInputs}
+                />
             </Section>
         );
     }

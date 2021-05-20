@@ -4,18 +4,13 @@ import Form from './styled-components/Form';
 import Div from './styled-components/Div';
 
 class CardFormDesign extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
     state = {
         cardName: '',
         cardSubject: '',
         cardTooltip: '',
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const keyName = event.target.name;
         console.log(keyName);
         this.setState({[keyName] : event.target.value});

@@ -10,7 +10,7 @@ const Animation = keyframes`
 `;
 
 const Fieldset = styled.fieldset`
-  display: ${({show}) => show ? 'flex' : 'none'};
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

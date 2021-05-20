@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const Div = styled.div`
-  width: 411px;
-  height: 824px;
+  max-width: 411px;
+  max-height: 824px;
+  width: 100%;
+  height: 100vh;
   margin-top: 64px;
   border-radius: 20px;
 
