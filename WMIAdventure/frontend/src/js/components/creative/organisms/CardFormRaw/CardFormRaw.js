@@ -6,7 +6,7 @@ import Fieldset from './styled-components/Fieldset';
 import Paragraph from './styled-components/Paragraph';
 import Div from './styled-components/Div';
 
-function CardForm() {
+function CardFormRaw() {
     const API = process.env['REACT_APP_API_URL'];
     const [levels, setLevels] = React.useState([]);
     const [effects, setEffects] = React.useState([]);
@@ -215,4 +215,4 @@ function CardForm() {
     );
 }
 
-export default CardForm;
+export default CardFormRaw;
