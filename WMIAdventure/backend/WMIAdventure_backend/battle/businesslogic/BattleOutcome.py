@@ -29,9 +29,12 @@ class BattleOutcome:
             return None
 
         winner = None
-        if self.attacker.get_hp() < 0.0:
+        if self.attacker.get_hp() <= 0.0 and self.defender.get_hp() <= 0.0:
+            # Both players died, no one won
+            return None
+        elif self.attacker.get_hp() <= 0.0:
             winner = self.defender
-        else:
+        elif self.defender.get_hp() <= 0.0:
             winner = self.attacker
 
         return winner

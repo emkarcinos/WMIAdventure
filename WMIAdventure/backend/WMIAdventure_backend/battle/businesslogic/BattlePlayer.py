@@ -11,6 +11,7 @@ class BattlePlayer:
     It gets populated with model data.
     Has statistics that represent its current state and its card deck.
     """
+    id: int
 
     def __init__(self, id: int, deck: BattleDeck):
         """
