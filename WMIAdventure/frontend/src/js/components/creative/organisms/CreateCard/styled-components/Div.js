@@ -7,6 +7,7 @@ const Div = styled.div`
   height: 100vh;
   margin-top: 64px;
   border-radius: 20px;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;

@@ -5,8 +5,8 @@ const TransparentBack = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: -76px;
-  left: -107px;
+  top: -206px;
+  left: -17px;
   max-width: 420px;
   max-height: 824px;
   width: 100vw;

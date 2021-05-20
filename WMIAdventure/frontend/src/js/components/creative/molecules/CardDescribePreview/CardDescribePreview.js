@@ -18,12 +18,12 @@ class CardDescribePreview extends React.Component {
         this.setState({[keyName]: event.target.value});
     }
 
-    showInputs = (event) => {
+    showInputsHandler = (event) => {
         event.preventDefault();
         this.setState({showInputs: true});
     }
 
-    hideInputs = (event) => {
+    hideInputsHandler = (event) => {
         event.preventDefault();
         this.setState({showInputs: false});
     }
@@ -40,13 +40,13 @@ class CardDescribePreview extends React.Component {
                 <P tooltip>
                     {this.state.cardTooltip}
                 </P>
-                <Button onClick={this.showInputs}>
+                <Button onClick={this.showInputsHandler}>
                     {/*pensil icon*/}
                 </Button>
                 <CardDescribeInputs
                     updateDescribePreview={this.updateDescribePreview}
                     show={this.state.showInputs}
-                    hideInputs={this.hideInputs}
+                    hideInputsHandler={this.hideInputsHandler}
                 />
             </Section>
         );
