@@ -1,12 +1,12 @@
-from .BattlePlayer import BattlePlayer
+from .Player import Player
 
 
-class BattleOutcome:
+class Outcome:
     """
     Validates the outcome of the battle.
     """
 
-    def __init__(self, attacker: BattlePlayer, defender: BattlePlayer):
+    def __init__(self, attacker: Player, defender: Player):
         self.is_completed = False
         self.attacker = attacker
         self.defender = defender
@@ -20,7 +20,7 @@ class BattleOutcome:
 
         return self.is_completed
 
-    def get_winner(self) -> BattlePlayer or None:
+    def get_winner(self) -> Player or None:
         """
         Get the winner.
         If the is_done method wasn't called and the battle hasn't ended before calling this function, it will return None.

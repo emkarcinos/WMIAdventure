@@ -1,4 +1,4 @@
-class CardBuff:
+class Buff:
 
     def __init__(self,
                  multiplier=1.0,

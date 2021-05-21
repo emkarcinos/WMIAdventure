@@ -1,12 +1,12 @@
 from django.test import TestCase
 
 from .Creator import Creator
-from ..BattleDeck import BattleDeck
-from ..BattleOutcome import BattleOutcome
-from ..BattlePlayer import BattlePlayer
+from ..Deck import Deck
+from ..Outcome import Outcome
+from ..Player import Player
 
 
-class BattleOutcomeTestCase(TestCase):
+class OutcomeTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -17,14 +17,14 @@ class BattleOutcomeTestCase(TestCase):
 
         cls.attacker_deck_model, cls.defender_deck_model = cls.creator.get_decks(1)
 
-        cls.attacker = BattlePlayer(cls.user_profile_model1.user.id,
-                                    BattleDeck(cls.attacker_deck_model))
+        cls.attacker = Player(cls.user_profile_model1.user.id,
+                              Deck(cls.attacker_deck_model))
 
-        cls.defender = BattlePlayer(cls.user_profile_model2.user.id,
-                                    BattleDeck(cls.defender_deck_model))
+        cls.defender = Player(cls.user_profile_model2.user.id,
+                              Deck(cls.defender_deck_model))
 
     def setUp(self) -> None:
-        self.outcome = BattleOutcome(self.attacker, self.defender)
+        self.outcome = Outcome(self.attacker, self.defender)
 
     def test_creation(self):
         expected_attacker = self.attacker

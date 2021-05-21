@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from battle.businesslogic.BattlePlayer import BattlePlayer
-from battle.businesslogic.CardBuff import CardBuff
-from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
+from battle.businesslogic.Buff import Buff
+from battle.businesslogic.Player import Player
+from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.tests.Creator import Creator
 from cards.models import Card
 from cards.models import CardEffect
@@ -44,18 +44,18 @@ class BattleCardEffectTestCase(TestCase):
         u1, u2 = cls.creator.get_user_models()
         d1, d2 = cls.creator.get_decks()
 
-        cls.card_owner = BattlePlayer(u1.id, d1)
-        cls.other_player = BattlePlayer(u1.id, d2)
+        cls.card_owner = Player(u1.id, d1)
+        cls.other_player = Player(u1.id, d2)
 
     def setUp(self) -> None:
-        self.battle_effect = BattleCardEffect(self.effect_model)
+        self.battle_effect = Effect(self.effect_model)
 
     def test_buff_add(self):
-        self.battle_effect.add_buff(CardBuff(active_turns=0))
+        self.battle_effect.add_buff(Buff(active_turns=0))
         self.assertEqual(1, len(self.battle_effect.buffs))
 
     def test_remove_expired_buffs(self):
-        self.battle_effect.add_buff(CardBuff(active_turns=0))
+        self.battle_effect.add_buff(Buff(active_turns=0))
         self.battle_effect.update_buffs()
         self.assertEqual(0, len(self.battle_effect.buffs))
 

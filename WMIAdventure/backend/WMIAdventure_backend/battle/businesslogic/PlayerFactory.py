@@ -1,16 +1,16 @@
 from IngameUsers.models import UserProfile
-from .BattleDeck import BattleDeck
-from .BattlePlayer import BattlePlayer
+from .Deck import Deck
+from .Player import Player
 
 
-class BattlePlayerFactory:
+class PlayerFactory:
     instance = None
 
     @staticmethod
     def get_instance():
-        if BattlePlayerFactory.instance is None:
-            BattlePlayerFactory.instance = BattlePlayerFactory()
-        return BattlePlayerFactory.instance
+        if PlayerFactory.instance is None:
+            PlayerFactory.instance = PlayerFactory()
+        return PlayerFactory.instance
 
     def create(self, user_profile_model: UserProfile, is_attacker=False):
         """
@@ -28,4 +28,4 @@ class BattlePlayerFactory:
             deck = user_decks[1].deck
         else:
             deck = user_decks[0].deck
-        return BattlePlayer(id=id, deck=BattleDeck(deck_model=deck))
+        return Player(id=id, deck=Deck(deck_model=deck))
