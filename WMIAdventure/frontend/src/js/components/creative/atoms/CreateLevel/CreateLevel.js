@@ -4,7 +4,7 @@ import Ul from './styled-components/Ul';
 import Li from './styled-components/Li';
 import Button from './styled-components/Button';
 
-class LevelChoose extends React.Component {
+class CreateLevel extends React.Component {
     state = {
         listHover: false,
     }
@@ -27,17 +27,17 @@ class LevelChoose extends React.Component {
             <TransparentBack show={this.props.show} onClick={this.handleHiding}>
                 <Ul onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
                     <Li>
-                        <Button rank={1}>
+                        <Button rank={1} onClick={this.props.createCommonLevelHandler}>
                             Typowy
                         </Button>
                     </Li>
                     <Li>
-                        <Button rank={2}>
+                        <Button rank={2} onClick={this.props.createGoldLevelHandler}>
                             Złoty
                         </Button>
                     </Li>
                     <Li last>
-                        <Button rank={3}>
+                        <Button rank={3} onClick={this.props.createEpicLevelHandler}>
                             Epicki
                         </Button>
                     </Li>
@@ -47,4 +47,4 @@ class LevelChoose extends React.Component {
     }
 }
 
-export default LevelChoose;
+export default CreateLevel;
