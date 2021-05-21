@@ -1,16 +1,13 @@
-from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
+from battle.businesslogic.Calculator import Calculator
+from battle.businesslogic.effects.Effect import Effect
 
 
-class ShieldEffect(BattleCardEffect):
+class ShieldEffect(Effect):
     """
     Shields the player.
     """
 
-    def activate(self,
-                 card_owner,
-                 other_player,
-                 turns_queue):
-
-        shield_amount = self.calculate_effect_value()
-        shield_receiver = self.choose_target(card_owner, other_player)
-        shield_receiver.statistics.add_armour(shield_amount)
+    def on_activation(self, target, turns_queue):
+        calculator = Calculator.get_instance()
+        shield_amount = calculator.calculate_effect_power(self.power, self.range, self.buffs)
+        target.statistics.add_armour(shield_amount)
