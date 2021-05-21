@@ -15,8 +15,16 @@ class Battle:
                                defender=self.defender)
 
     def start(self):
+        # We record initial battle state (0th turn)
+        self.recorder.record_turn(self.attacker, self.defender)
         while not self.is_finished():
-            self.coordinator.next_turn()
+            self.turn()
+
+    def turn(self):
+        """
+        Tasks executed within a single turn.
+        """
+        self.coordinator.next_turn()
 
     def is_finished(self):
         return self.outcome.is_done()
