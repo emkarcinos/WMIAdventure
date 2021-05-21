@@ -1,4 +1,5 @@
 from battle.businesslogic.Player import Player
+from battle.businesslogic.recorder.SimplifiedPlayer import SimplifiedPlayer
 
 
 class State:
@@ -7,16 +8,16 @@ class State:
     """
 
     def __init__(self, attacker: Player, defender: Player):
-        self.attacker = attacker
-        self.defender = defender
+        self.attacker = SimplifiedPlayer(attacker)
+        self.defender = SimplifiedPlayer(defender)
 
-    def get_attacker(self) -> Player:
+    def get_attacker(self) -> SimplifiedPlayer:
         """
         Returns attacker Player object.
         """
         return self.attacker
 
-    def get_defender(self) -> Player:
+    def get_defender(self) -> SimplifiedPlayer:
         """
         Returns defender Player object.
         """

@@ -16,8 +16,8 @@ class StateTestCase(TestCase):
     def test_creation(self):
         state = State(attacker=self.attacker,
                       defender=self.defender)
-        self.assertIs(state.get_attacker(), self.attacker)
-        self.assertIs(state.get_defender(), self.defender)
+        self.assertEquals(state.get_attacker().player_id, self.attacker.id)
+        self.assertEquals(state.get_defender().player_id, self.defender.id)
 
     @classmethod
     def tearDownClass(cls) -> None:
