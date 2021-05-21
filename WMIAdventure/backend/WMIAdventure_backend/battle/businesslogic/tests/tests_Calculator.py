@@ -1,13 +1,13 @@
 from unittest import TestCase
 
 from .Creator import Creator
-from ..BattleCalculator import BattleCalculator
-from ..BattleDeck import BattleDeck
-from ..BattlePlayer import BattlePlayer
-from ..CardBuff import CardBuff
+from ..Buff import Buff
+from ..Calculator import Calculator
+from ..Deck import Deck
+from ..Player import Player
 
 
-class BattleCalculatorTestCase(TestCase):
+class CalculatorTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.creator = Creator()
@@ -15,12 +15,12 @@ class BattleCalculatorTestCase(TestCase):
         cls.deck_model = cls.creator.get_attacker_deck(1)
 
     def setUp(self) -> None:
-        self.battle_player = BattlePlayer(
+        self.battle_player = Player(
             self.user_profile_model.user.id,
-            BattleDeck(self.deck_model)
+            Deck(self.deck_model)
         )
 
-        self.instance = BattleCalculator.get_instance()
+        self.instance = Calculator.get_instance()
 
         self.buffs = self.create_buffs()
 
@@ -99,7 +99,7 @@ class BattleCalculatorTestCase(TestCase):
 
         for multiplier in self.positive_multipliers + self.negative_multipliers:
             buffs.append(
-                CardBuff(multiplier=multiplier, modifier=self.modifier)
+                Buff(multiplier=multiplier, modifier=self.modifier)
             )
 
         return buffs

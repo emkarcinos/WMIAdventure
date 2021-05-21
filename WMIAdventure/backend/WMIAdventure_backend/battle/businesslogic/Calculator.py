@@ -1,19 +1,19 @@
 from random import uniform
 from typing import List
 
-from .CardBuff import CardBuff
+from .Buff import Buff
 
 
-class BattleCalculator:
+class Calculator:
     instance = None
 
     @staticmethod
     def get_instance():
-        if BattleCalculator.instance is None:
-            BattleCalculator.instance = BattleCalculator()
-        return BattleCalculator.instance
+        if Calculator.instance is None:
+            Calculator.instance = Calculator()
+        return Calculator.instance
 
-    def calculate_effect_power(self, power, power_range, buffs: List[CardBuff]):
+    def calculate_effect_power(self, power, power_range, buffs: List[Buff]):
         """
         Calculates effect's power.
         @param power: Effect's base power.
@@ -74,7 +74,7 @@ class BattleCalculator:
         negative_multipliers = 1
 
         # Calculations - see examples below for better understanding.
-        buff: CardBuff
+        buff: Buff
         for buff in buffs:
             if buff.multiplier >= 1:
                 positive_multipliers += buff.multiplier - 1

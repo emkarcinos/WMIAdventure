@@ -1,9 +1,9 @@
-from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
+from battle.businesslogic.effects.Effect import Effect
 from cards.models import CardLevelEffects
-from ..BattleCalculator import BattleCalculator
+from ..Calculator import Calculator
 
 
-class DmgEffect(BattleCardEffect):
+class DmgEffect(Effect):
     """
     Deals damage to player.
     """
@@ -11,12 +11,9 @@ class DmgEffect(BattleCardEffect):
     def __init__(self, effect_model: CardLevelEffects):
         super(DmgEffect, self).__init__(effect_model)
 
-    def activate(self,
-                 card_owner,
-                 other_player,
-                 turns_queue):
-        dmg = self.calculate_effect_value()
+    def on_activation(self, target, turns_queue):
+        calculator = Calculator.get_instance()
 
-        dmg_receiver = self.choose_target(card_owner, other_player)
+        dmg = calculator.calculate_effect_power(self.power, self.range, self.buffs)
 
-        dmg_receiver.statistics.deal_damage(dmg)
+        target.statistics.deal_damage(dmg)

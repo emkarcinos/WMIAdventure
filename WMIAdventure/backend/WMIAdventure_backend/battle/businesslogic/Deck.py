@@ -1,12 +1,12 @@
 from collections import deque
 
-from IngameUsers.models import Deck
+from IngameUsers.models import Deck as DeckModel
 from .BattleCard import BattleCard
 
 
-class BattleDeck:
+class Deck:
 
-    def __init__(self, deck_model: Deck):
+    def __init__(self, deck_model: DeckModel):
         """
         Creates BattleDeck instance.
         @param deck_model: Deck database model.

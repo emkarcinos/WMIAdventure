@@ -1,22 +1,13 @@
 from typing import List
 
-from battle.businesslogic.BattleCalculator import BattleCalculator
-from battle.businesslogic.CardBuff import CardBuff
+from battle.businesslogic.Buff import Buff
 from cards.models import CardLevelEffects
 
 
-class BattleCardEffect:
+class Effect:
     """
     Abstract class for card effects logic to derive from when creating concrete effect class.
     """
-
-    def calculate_effect_value(self):
-        """
-        Calculates the actual value that this effect does.
-        @return: Value
-        """
-
-        return BattleCalculator.get_instance().calculate_effect_power(self.power, self.range, self.buffs)
 
     def __init__(self, effect_model: CardLevelEffects):
         """
@@ -30,23 +21,33 @@ class BattleCardEffect:
         self.power = effect_model.power
         self.range = effect_model.range
 
-        self.buffs: List[CardBuff]
+        self.buffs: List[Buff]
         self.buffs = []
+
+    def on_activation(self, target, turns_queue):
+        """
+        Effect logic abstract method.
+        One should override it and write the logic here.
+        @param target: Target affected by this effect - BattlePlayer instance
+        @param turns_queue: TurnsQueue instance.
+        """
+        pass
 
     def activate(self,
                  card_owner,
                  other_player,
                  turns_queue):
         """
-        This method should be overridden.
-        By calling this method this effect will perform its logic.
+        Triggers the effect.
+        It essentially calls on_activation method that should be overridden to one's liking.
         @param card_owner: BattlePlayer instance.
         @param other_player: BattlePlayer instance.
         @param turns_queue: Queue of players' turns, can be changed by some effects.
         @return:
         """
 
-        pass
+        selected_target = self.choose_target(card_owner, other_player)
+        self.on_activation(selected_target, turns_queue)
 
     def choose_target(self, card_owner, other_player):
         """
@@ -63,7 +64,7 @@ class BattleCardEffect:
             effect_target = card_owner
         return effect_target
 
-    def add_buff(self, buff: CardBuff):
+    def add_buff(self, buff: Buff):
         """
         Add a new buff to the Effect.
         """
