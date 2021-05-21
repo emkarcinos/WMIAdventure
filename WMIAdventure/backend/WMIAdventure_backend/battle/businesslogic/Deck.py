@@ -4,7 +4,7 @@ from IngameUsers.models import Deck
 from .BattleCard import BattleCard
 
 
-class BattleDeck:
+class Deck:
 
     def __init__(self, deck_model: Deck):
         """

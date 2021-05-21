@@ -1,15 +1,15 @@
-from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
+from battle.businesslogic.effects.Effect import Effect
 from cards.models import CardLevelEffects
 
 
-class BattleCardEffectFactory:
+class EffectFactory:
     instance = None
 
     @staticmethod
     def get_instance():
-        if BattleCardEffectFactory.instance is None:
-            BattleCardEffectFactory.instance = BattleCardEffectFactory()
-        return BattleCardEffectFactory.instance
+        if EffectFactory.instance is None:
+            EffectFactory.instance = EffectFactory()
+        return EffectFactory.instance
 
     def create(self, effect_model: CardLevelEffects):
         """
@@ -19,4 +19,4 @@ class BattleCardEffectFactory:
         """
 
         # TODO: Implement creation of classes deriving from BattleCardEffect abstract class.
-        return BattleCardEffect(effect_model)
+        return Effect(effect_model)

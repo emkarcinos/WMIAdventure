@@ -3,8 +3,8 @@ from unittest import TestCase
 from battle.businesslogic.effects.DmgEffect import DmgEffect
 from cards.models import CardLevelEffects, CardEffect
 from ..Creator import Creator
-from ...BattleDeck import BattleDeck
-from ...BattlePlayer import BattlePlayer
+from ...Deck import Deck
+from ...Player import Player
 
 
 class DmgEffectTestCase(TestCase):
@@ -28,8 +28,8 @@ class DmgEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = BattlePlayer(self.u1.id, BattleDeck(self.d1))
-        self.other_player = BattlePlayer(self.u2.id, BattleDeck(self.d2))
+        self.card_owner = Player(self.u1.id, Deck(self.d1))
+        self.other_player = Player(self.u2.id, Deck(self.d2))
 
         self.other_player.statistics.armour = 0
 

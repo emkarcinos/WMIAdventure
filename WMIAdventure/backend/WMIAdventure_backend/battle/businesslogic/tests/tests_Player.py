@@ -2,11 +2,11 @@ from unittest import TestCase
 
 from .Creator import Creator
 from ..BattleCard import BattleCard
-from ..BattleDeck import BattleDeck
-from ..BattlePlayer import BattlePlayer
+from ..Deck import Deck
+from ..Player import Player
 
 
-class BattlePlayerTestCase(TestCase):
+class PlayerTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.creator = Creator()
@@ -14,9 +14,9 @@ class BattlePlayerTestCase(TestCase):
         cls.deck_model = cls.creator.get_attacker_deck(1)
 
     def setUp(self) -> None:
-        self.battle_player = BattlePlayer(
+        self.battle_player = Player(
             self.user_profile_model.user.id,
-            BattleDeck(self.deck_model)
+            Deck(self.deck_model)
         )
 
     def test_use_card(self):

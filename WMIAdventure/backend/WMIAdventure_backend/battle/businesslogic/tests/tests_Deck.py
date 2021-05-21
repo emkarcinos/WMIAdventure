@@ -3,10 +3,10 @@ from unittest import TestCase
 
 from .Creator import Creator
 from ..BattleCard import BattleCard
-from ..BattleDeck import BattleDeck
+from ..Deck import Deck
 
 
-class BattleDeckTestCase(TestCase):
+class DeckTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.creator = Creator()
@@ -14,7 +14,7 @@ class BattleDeckTestCase(TestCase):
         cls.attacker_deck, cls.defender_deck = cls.creator.get_decks(user=1)
 
     def setUp(self) -> None:
-        self.attacker_battle_deck = BattleDeck(self.attacker_deck)
+        self.attacker_battle_deck = Deck(self.attacker_deck)
 
     def test_card_order_during_creation(self):
         cards_list: List[BattleCard] = list(self.attacker_battle_deck.cards_queue)

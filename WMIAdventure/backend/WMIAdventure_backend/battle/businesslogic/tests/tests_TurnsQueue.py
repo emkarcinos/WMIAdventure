@@ -1,11 +1,8 @@
 from django.test import TestCase
 
-from IngameUsers.models import UserProfile, Deck, UserCard, UserDeck
-from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
-from users.models import User
+from IngameUsers.models import UserProfile
 from .Creator import Creator
-from ..BattlePlayer import BattlePlayer
-from ..BattlePlayerFactory import BattlePlayerFactory
+from ..PlayerFactory import PlayerFactory
 from ..TurnsQueue import TurnsQueue
 
 
@@ -20,7 +17,7 @@ class TurnsQueueTestCase(TestCase):
         cls.user_profile_model1, cls.user_profile_model2 = cls.creator.get_user_profile_models()
 
     def setUp(self) -> None:
-        factory = BattlePlayerFactory.get_instance()
+        factory = PlayerFactory.get_instance()
         self.player1 = factory.create(user_profile_model=self.user_profile_model1,
                                       is_attacker=True)
         self.player2 = factory.create(user_profile_model=self.user_profile_model2,

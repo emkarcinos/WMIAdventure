@@ -1,15 +1,12 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 
-from IngameUsers.models import UserProfile, Semester, UserCard, Deck, UserDeck
-from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 from .Creator import Creator
-from ..BattlePlayerFactory import BattlePlayerFactory
+from ..PlayerFactory import PlayerFactory
 
 
-class BattlePlayerFactoryTestCase(TestCase):
+class PlayerFactoryTestCase(TestCase):
     def setUp(self) -> None:
-        self.instance = BattlePlayerFactory.get_instance()
+        self.instance = PlayerFactory.get_instance()
 
     @classmethod
     def setUpClass(cls):
@@ -19,7 +16,7 @@ class BattlePlayerFactoryTestCase(TestCase):
         cls.cards = cls.creator.get_cards()
 
     def test_singleton(self):
-        self.assertEqual(self.instance, BattlePlayerFactory.get_instance())
+        self.assertEqual(self.instance, PlayerFactory.get_instance())
 
     def test_creation(self):
         player = self.instance.create(user_profile_model=self.user_profile, is_attacker=False)

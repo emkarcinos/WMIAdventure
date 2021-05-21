@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from battle.businesslogic.BattlePlayerFactory import BattlePlayerFactory
 from battle.businesslogic.Coordinator import Coordinator
+from battle.businesslogic.PlayerFactory import PlayerFactory
 from battle.businesslogic.tests.Creator import Creator
 
 
@@ -10,8 +10,8 @@ class CoordinatorTestCase(TestCase):
     def setUpClass(cls) -> None:
         cls.creator = Creator()
         cls.profiles = cls.creator.get_user_profile_models()
-        cls.attacker = BattlePlayerFactory.get_instance().create(cls.profiles[0])
-        cls.defender = BattlePlayerFactory.get_instance().create(cls.profiles[1])
+        cls.attacker = PlayerFactory.get_instance().create(cls.profiles[0])
+        cls.defender = PlayerFactory.get_instance().create(cls.profiles[1])
         cls.coordinator = Coordinator(cls.attacker, cls.defender)
 
     def test_next_turn(self):
@@ -22,6 +22,7 @@ class CoordinatorTestCase(TestCase):
         defender = self.coordinator.defender
 
         self.assertEqual(attacker, self.coordinator.get_players_opponent(defender))
+
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()

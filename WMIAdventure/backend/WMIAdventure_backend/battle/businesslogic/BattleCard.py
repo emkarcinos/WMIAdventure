@@ -1,9 +1,9 @@
 from typing import List
 
-from battle.businesslogic.effects.BattleCardEffect import BattleCardEffect
-from battle.businesslogic.effects.BattleCardEffectFactory import BattleCardEffectFactory
+from battle.businesslogic.effects.Effect import Effect
+from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card, CardEffect
-from .CardBuff import CardBuff
+from .Buff import Buff
 
 
 class BattleCard:
@@ -19,12 +19,12 @@ class BattleCard:
 
         self.card_model = card_model
 
-        effects_factory = BattleCardEffectFactory.get_instance()
+        effects_factory = EffectFactory.get_instance()
         self.effects = []
         for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
-    def use(self) -> List[BattleCardEffect]:
+    def use(self) -> List[Effect]:
         """
         Updates card's buffs and returns list of card's effects to be executed in battle simulation.
         @return: List of effects to be executed by battle simulator.
@@ -37,7 +37,7 @@ class BattleCard:
         for effect in self.effects:
             effect.update()
 
-    def assign_buff(self, buff: CardBuff, effect_type: CardEffect.EffectId):
+    def assign_buff(self, buff: Buff, effect_type: CardEffect.EffectId):
         """
         This method assigns a buff to this card's appropriate effects.
         @param: buff - Buff instance

@@ -1,10 +1,10 @@
 from typing import List
 
-from battle.businesslogic.CardBuff import CardBuff
+from battle.businesslogic.Buff import Buff
 from cards.models import CardLevelEffects
 
 
-class BattleCardEffect:
+class Effect:
     """
     Abstract class for card effects logic to derive from when creating concrete effect class.
     """
@@ -21,7 +21,7 @@ class BattleCardEffect:
         self.power = effect_model.power
         self.range = effect_model.range
 
-        self.buffs: List[CardBuff]
+        self.buffs: List[Buff]
         self.buffs = []
 
     def on_activation(self, target, turns_queue):
@@ -64,7 +64,7 @@ class BattleCardEffect:
             effect_target = card_owner
         return effect_target
 
-    def add_buff(self, buff: CardBuff):
+    def add_buff(self, buff: Buff):
         """
         Add a new buff to the Effect.
         """
