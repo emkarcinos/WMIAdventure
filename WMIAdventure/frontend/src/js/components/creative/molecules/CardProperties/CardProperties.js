@@ -44,18 +44,20 @@ class CardProperties extends React.Component {
 
     render() {
         return (
-            <Fieldset>
-                <Div>
-                    <P>
-                        Poziomy:
-                    </P>
-                    <Level createCommonLevel={this.state.createCommonLevel}/>
-                    <Level createGoldLevel={this.state.createGoldLevel}/>
-                    <Level createEpicLevel={this.state.createEpicLevel}/>
-                    <Button onClick={this.showLevelChooseHandler}>
-                        {/*ikona plusa*/}
-                    </Button>
-                </Div>
+            <>
+                <Fieldset>
+                    <Div>
+                        <P>
+                            Poziomy:
+                        </P>
+                        <Level createCommonLevel={this.state.createCommonLevel}/>
+                        <Level createGoldLevel={this.state.createGoldLevel}/>
+                        <Level createEpicLevel={this.state.createEpicLevel}/>
+                        <Button onClick={this.showLevelChooseHandler}>
+                            {/*ikona plusa*/}
+                        </Button>
+                    </Div>
+                </Fieldset>
                 <CreateLevel
                     show={this.state.showLevelChoose}
                     hideLevelChooseHandler={this.hideLevelChooseHandler}
@@ -63,7 +65,7 @@ class CardProperties extends React.Component {
                     createGoldLevelHandler = {this.createGoldLevelHandler}
                     createEpicLevelHandler = {this.createEpicLevelHandler}
                 />
-            </Fieldset>
+            </>
         );
     }
 }

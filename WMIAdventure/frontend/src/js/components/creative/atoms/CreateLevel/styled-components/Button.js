@@ -27,7 +27,7 @@ const Button = styled.button`
     height: 12px;
     position: absolute;
     top: 4px;
-    left: 112px;
+    left: 30%;
     border-radius: 50%;
     background-color: ${({rank}) => dotColor(rank)};
   }
