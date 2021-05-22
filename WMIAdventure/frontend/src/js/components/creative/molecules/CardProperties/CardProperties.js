@@ -5,6 +5,7 @@ import P from './styled-components/P';
 import Button from './styled-components/Button';
 import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
+import CostInput from '../../atoms/CostInput';
 
 class CardProperties extends React.Component {
     state = {
@@ -67,7 +68,7 @@ class CardProperties extends React.Component {
         return (
             <>
                 <Fieldset activeCardRank={this.state.activeCardRank}>
-                    {/*upgradeCostInput*/}
+                    <CostInput activeCardRank={this.state.activeCardRank} />
                     {/*effectsList*/}
                     <Div>
                         <P>
