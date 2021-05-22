@@ -42,6 +42,21 @@ class CardProperties extends React.Component {
         this.setState({createEpicLevel: true});
     }
 
+    removeCommonLevelHandler = (event) => {
+        event.preventDefault();
+        this.setState({createCommonLevel: false});
+    }
+
+    removeGoldLevelHandler = (event) => {
+        event.preventDefault();
+        this.setState({createGoldLevel: false});
+    }
+
+    removeEpicLevelHandler = (event) => {
+        event.preventDefault();
+        this.setState({createEpicLevel: false});
+    }
+
     render() {
         return (
             <>
@@ -56,6 +71,9 @@ class CardProperties extends React.Component {
                             createCommonLevel={this.state.createCommonLevel}
                             createGoldLevel={this.state.createGoldLevel}
                             createEpicLevel={this.state.createEpicLevel}
+                            removeCommonLevelHandler={this.removeCommonLevelHandler}
+                            removeGoldLevelHandler={this.removeGoldLevelHandler}
+                            removeEpicLevelHandler={this.removeEpicLevelHandler}
                         />
                         <Button onClick={this.showLevelChooseHandler}>
                             {/*ikona plusa*/}
