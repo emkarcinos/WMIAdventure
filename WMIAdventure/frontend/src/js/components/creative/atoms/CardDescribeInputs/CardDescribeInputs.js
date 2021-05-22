@@ -22,7 +22,7 @@ class CardDescribeInputs extends React.Component {
 
     handleHiding = (event) => {
         if(!this.state.fieldsetHover)
-            this.props.hideInputsHandler(event);
+            this.props.hideDescribeInputsHandler(event);
     }
 
     render() {

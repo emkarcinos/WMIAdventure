@@ -1,17 +1,16 @@
 import React from 'react';
-
-import NavBar from '../../components/entertainment/organisms/NavBar';
+import NavBar from '../../../entertainment/organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
-function AdventureMode() {
+function AnswerCreator() {
     return (
         <StyledWrapper>
             <NavBar />
             <p>
-                Adventure Mode View - not implemented yet.
+                Answer Creator View - not implemented yet.
             </p>
         </StyledWrapper>
     );
 }
 
-export default AdventureMode;
+export default AnswerCreator;

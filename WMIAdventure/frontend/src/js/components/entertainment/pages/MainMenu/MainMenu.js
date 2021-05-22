@@ -1,15 +1,15 @@
 import React from 'react';
 
-import NavBar from '../../components/entertainment/organisms/NavBar';
-import MainMenuModule from '../../components/entertainment/atoms/MainMenuModule';
-import GridOneColumn from '../../components/entertainment/organisms/GridOneColumn';
-import MainMenuSmallerModule from '../../components/entertainment/atoms/MainMenuSmallerModule/MainMenuSmallerModule';
-import FlexCenterContainer from '../../components/entertainment/molecules/FlexCenterContainer';
+import NavBar from '../../organisms/NavBar';
+import MainMenuModule from '../../atoms/MainMenuModule';
+import GridOneColumn from '../../organisms/GridOneColumn';
+import MainMenuSmallerModule from '../../atoms/MainMenuSmallerModule/MainMenuSmallerModule';
+import FlexCenterContainer from '../../molecules/FlexCenterContainer';
 
-import adventureImg from '../../../assets/images/adventure-image.png';
-import battleImg from '../../../assets/images/battle-image.png';
-import rankingImg from '../../../assets/images/ranking-image.png';
-import local from '../../../assets/icons/local.svg';
+import adventureImg from '../../../../../assets/images/adventure-image.png';
+import battleImg from '../../../../../assets/images/battle-image.png';
+import rankingImg from '../../../../../assets/images/ranking-image.png';
+import local from '../../../../../assets/icons/local.svg';
 import StyledWrapper from './StyledWrapper';
 
 

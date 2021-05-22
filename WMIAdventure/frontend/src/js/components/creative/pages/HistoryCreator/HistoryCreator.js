@@ -1,16 +1,16 @@
 import React from 'react';
-import NavBar from '../../components/entertainment/organisms/NavBar';
+import NavBar from '../../../entertainment/organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
-function Ranking() {
+function HistoryCreator() {
     return (
         <StyledWrapper>
             <NavBar />
             <p>
-                Ranking View - not implemented yet.
+                History Creator View - not implemented yet.
             </p>
         </StyledWrapper>
     );
 }
 
-export default Ranking;
+export default HistoryCreator;

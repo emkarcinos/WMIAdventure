@@ -1,16 +1,16 @@
 import React from 'react';
-import NavBar from '../../components/entertainment/organisms/NavBar';
+import NavBar from '../../organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
-function AnswerCreator() {
+function Profile() {
     return (
         <StyledWrapper>
             <NavBar />
             <p>
-                Answer Creator View - not implemented yet.
+                Profile view - not implemented yet.
             </p>
         </StyledWrapper>
     );
 }
 
-export default AnswerCreator;
+export default Profile;

@@ -11,8 +11,6 @@ const Main = styled.main`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background-color: ${({theme}) => theme.colors.uiBlue};
-  
-  
 `;
 
 export default Main;

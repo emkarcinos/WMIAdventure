@@ -5,9 +5,9 @@ import Wrapper from './styled-components/Wrapper';
 import Header from './styled-components/Header';
 import Form from './styled-components/Form';
 
-import CardDescribePreview from '../../components/creative/atoms/CardDescribePreview';
-import CardDescribeInputs from '../../components/creative/atoms/CardDescribeInputs';
-import CardProperties from '../../components/creative/molecules/CardProperties';
+import CardDescribePreview from '../../atoms/CardDescribePreview';
+import CardDescribeInputs from '../../atoms/CardDescribeInputs';
+import CardProperties from '../../molecules/CardProperties';
 
 class CardsCreator extends React.Component {
     state = {
@@ -19,7 +19,6 @@ class CardsCreator extends React.Component {
 
     handleChange = (event) => {
         const keyName = event.target.name;
-        console.log(keyName);
         this.setState({[keyName] : event.target.value});
     }
 
@@ -28,7 +27,7 @@ class CardsCreator extends React.Component {
         this.setState({showDescribeInputs: true});
     }
 
-    hideInputsHandler = (event) => {
+    hideDescribeInputsHandler = (event) => {
         event.preventDefault();
         this.setState({showDescribeInputs: false});
     }
@@ -57,7 +56,7 @@ class CardsCreator extends React.Component {
                         <CardDescribeInputs
                             updateDescribePreview={this.updateDescribePreview}
                             show={this.state.showDescribeInputs}
-                            hideInputsHandler={this.hideInputsHandler}
+                            hideDescribeInputsHandler={this.hideDescribeInputsHandler}
                         />
                         <CardProperties />
                     </Form>

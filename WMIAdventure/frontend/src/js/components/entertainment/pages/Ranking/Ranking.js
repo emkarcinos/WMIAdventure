@@ -1,16 +1,16 @@
 import React from 'react';
-import NavBar from '../../components/entertainment/organisms/NavBar';
+import NavBar from '../../organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
-function Profile() {
+function Ranking() {
     return (
         <StyledWrapper>
             <NavBar />
             <p>
-                Profile view - not implemented yet.
+                Ranking View - not implemented yet.
             </p>
         </StyledWrapper>
     );
 }
 
-export default Profile;
+export default Ranking;

@@ -1,16 +1,16 @@
 import React from 'react';
-import NavBar from '../../components/entertainment/organisms/NavBar';
+import NavBar from '../../organisms/NavBar';
 import StyledWrapper from './StyledWrapper';
 
-function Event() {
+function Quiz() {
     return (
         <StyledWrapper>
             <NavBar />
             <p>
-                Event View - not implemented yet.
+                Quiz View - not implemented yet.
             </p>
         </StyledWrapper>
     );
 }
 
-export default Event;
+export default Quiz;
