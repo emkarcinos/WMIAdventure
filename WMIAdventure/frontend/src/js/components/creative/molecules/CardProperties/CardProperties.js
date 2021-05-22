@@ -11,7 +11,8 @@ class CardProperties extends React.Component {
         showLevelChoose: false,
         createCommonLevel: false,
         createGoldLevel: false,
-        createEpicLevel: false
+        createEpicLevel: false,
+        activeCardRank: 0,
     }
 
     showLevelChooseHandler = (event) => {
@@ -57,10 +58,15 @@ class CardProperties extends React.Component {
         this.setState({createEpicLevel: false});
     }
 
+    activeLevelRecognize = (event, activeCardRank) => {
+        event.preventDefault();
+        this.setState({activeCardRank: activeCardRank});
+    }
+
     render() {
         return (
             <>
-                <Fieldset>
+                <Fieldset activeCardRank={this.state.activeCardRank}>
                     {/*upgradeCostInput*/}
                     {/*effectsInputs*/}
                     <Div>
@@ -74,6 +80,7 @@ class CardProperties extends React.Component {
                             removeCommonLevelHandler={this.removeCommonLevelHandler}
                             removeGoldLevelHandler={this.removeGoldLevelHandler}
                             removeEpicLevelHandler={this.removeEpicLevelHandler}
+                            activeLevelRecognize={this.activeLevelRecognize}
                         />
                         <Button onClick={this.showLevelChooseHandler}>
                             {/*ikona plusa*/}

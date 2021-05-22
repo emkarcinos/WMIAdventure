@@ -19,6 +19,7 @@ class Levels extends React.Component {
         if(this.state.activeEpic)
             this.setState({activeEpic: false});
         this.setState({activeCommon: true});
+        this.props.activeLevelRecognize(event, 1);
     }
 
     activeGoldStyleHandler = (event) => {
@@ -28,6 +29,7 @@ class Levels extends React.Component {
         if(this.state.activeEpic)
             this.setState({activeEpic: false});
         this.setState({activeGold: true});
+        this.props.activeLevelRecognize(event, 2);
     }
 
     activeEpicStyleHandler = (event) => {
@@ -37,24 +39,28 @@ class Levels extends React.Component {
         if(this.state.activeGold)
             this.setState({activeGold: false});
         this.setState({activeEpic: true});
+        this.props.activeLevelRecognize(event, 3);
     }
 
     removeCommonLevelHandler = (event) => {
         event.preventDefault();
         this.setState({activeCommon: false});
         this.props.removeCommonLevelHandler(event);
+        this.props.activeLevelRecognize(event, 0);
     }
 
     removeGoldLevelHandler = (event) => {
         event.preventDefault();
         this.setState({activeGold: false});
         this.props.removeGoldLevelHandler(event);
+        this.props.activeLevelRecognize(event, 0);
     }
 
     removeEpicLevelHandler = (event) => {
         event.preventDefault();
         this.setState({activeEpic: false});
         this.props.removeEpicLevelHandler(event);
+        this.props.activeLevelRecognize(event, 0);
     }
 
     render() {

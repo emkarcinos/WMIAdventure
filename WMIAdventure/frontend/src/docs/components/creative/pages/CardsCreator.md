@@ -6,11 +6,11 @@ Komponent w swoich stanach będzie zawierał wszystkie potrzebne dane, aby wysł
 Póki co, znajduje się tutaj nazwa karty, przedmiot z którego pochodzi oraz jej opis.
 ```js
  state = {
-        cardName: 'Nazwa Karty',
-        cardSubject: 'Przedmiot',
-        cardTooltip: 'Opis Karty',
-        showDescribeInputs: false
-    }
+    cardName: 'Nazwa Karty',
+    cardSubject: 'Przedmiot',
+    cardTooltip: 'Opis Karty',
+    showDescribeInputs: false
+}
 ```
 Stan `showDescribeInputs` odpowiada za pokazanie pól formularza do określenia tych opisowych atrybutów karty. 
 Gdy `showDescribeInputs` będzie `true` to obszar z tymi polami pojawi się, wysunie się z góry.
@@ -24,9 +24,9 @@ który przechowuje atrybut **name** z elementu *html* `<input name="" />`, dzię
 tak samo jak dany stan, co daje nam to że nie musimy pisać dwudziestu handlerów dla każdego poszczególnego stanu.
 ```js
 handleChange = (event) => {
-        const keyName = event.target.name;
-        this.setState({[keyName] : event.target.value});
-    }
+    const keyName = event.target.name;
+    this.setState({[keyName] : event.target.value});
+}
 ```
 Na przykład mamy stany `{cardName: 'nazwa karty', cardSubject: 'Przedmiot'}` i mamy w strukturze *html*:
 ```html
@@ -217,18 +217,6 @@ jak efekty itp.
 ```js
 <CardProperties />
 ```
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
