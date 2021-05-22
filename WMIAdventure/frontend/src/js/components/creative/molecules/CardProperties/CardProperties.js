@@ -68,7 +68,7 @@ class CardProperties extends React.Component {
             <>
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     {/*upgradeCostInput*/}
-                    {/*effectsInputs*/}
+                    {/*effectsList*/}
                     <Div>
                         <P>
                             Poziomy:
