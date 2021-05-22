@@ -6,7 +6,7 @@ const Div = styled.div`
   left: 0;
   display: flex;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 16px;
   width: 100%;
   height: 38px;
   border-bottom-left-radius: 20px;
