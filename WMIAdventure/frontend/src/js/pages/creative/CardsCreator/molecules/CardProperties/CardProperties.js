@@ -5,7 +5,7 @@ import P from './styled-components/P';
 import Button from './styled-components/Button';
 import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
-import CostInput from '../../atoms/CostInput';
+import CostInputs from '../../atoms/CostInputs';
 import EffectsInputsList from '../EffectsInputsList';
 
 class CardProperties extends React.Component {
@@ -75,9 +75,9 @@ class CardProperties extends React.Component {
                              createEpicLevelHandler = {this.createEpicLevelHandler}
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
-                    <CostInput activeCardRank={this.state.activeCardRank}
-                               levelCostValues={this.props.levelCostValues}
-                               levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                    <CostInputs activeCardRank={this.state.activeCardRank}
+                                levelCostValues={this.props.levelCostValues}
+                                levelCostValuesHandler={this.props.levelCostValuesHandler} />
                     <EffectsInputsList activeCardRank={this.state.activeCardRank}/>
                     <Div>
                         <P>

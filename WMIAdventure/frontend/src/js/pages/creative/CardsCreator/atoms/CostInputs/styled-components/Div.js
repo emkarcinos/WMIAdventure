@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 
-function showHandler(activeCardRank) {
-    if(activeCardRank !== 0)
-        return 'flex';
-    return 'none';
-}
-
 const Div = styled.div`
-  display: ${({activeCardRank}) => showHandler(activeCardRank)};
   align-items: center;
   justify-content: space-around;
   border-radius: 10px;
