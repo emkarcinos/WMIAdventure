@@ -6,7 +6,7 @@ import Button from './styled-components/Button';
 import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
 import CostInput from '../../atoms/CostInput';
-import EffectsList from '../EffectsList';
+import EffectsInputsList from '../EffectsInputsList';
 
 class CardProperties extends React.Component {
     state = {
@@ -78,7 +78,7 @@ class CardProperties extends React.Component {
                     <CostInput activeCardRank={this.state.activeCardRank}
                                levelCostValues={this.props.levelCostValues}
                                levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                    <EffectsList activeCardRank={this.state.activeCardRank}/>
+                    <EffectsInputsList activeCardRank={this.state.activeCardRank}/>
                     <Div>
                         <P>
                             Poziomy:
