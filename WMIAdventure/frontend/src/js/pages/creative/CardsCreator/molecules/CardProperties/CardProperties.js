@@ -6,6 +6,7 @@ import Button from './styled-components/Button';
 import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
 import CostInput from '../../atoms/CostInput';
+import EffectsList from '../EffectsList';
 
 class CardProperties extends React.Component {
     state = {
@@ -67,11 +68,17 @@ class CardProperties extends React.Component {
     render() {
         return (
             <>
+                <CreateLevel show={this.state.showLevelChoose}
+                             hideLevelChooseHandler={this.hideLevelChooseHandler}
+                             createCommonLevelHandler = {this.createCommonLevelHandler}
+                             createGoldLevelHandler = {this.createGoldLevelHandler}
+                             createEpicLevelHandler = {this.createEpicLevelHandler}
+                />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <CostInput activeCardRank={this.state.activeCardRank}
                                levelCostValues={this.props.levelCostValues}
                                levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                    {/*effectsList*/}
+                    <EffectsList activeCardRank={this.state.activeCardRank}/>
                     <Div>
                         <P>
                             Poziomy:
@@ -90,12 +97,6 @@ class CardProperties extends React.Component {
                         </Button>
                     </Div>
                 </Fieldset>
-                <CreateLevel show={this.state.showLevelChoose}
-                    hideLevelChooseHandler={this.hideLevelChooseHandler}
-                    createCommonLevelHandler = {this.createCommonLevelHandler}
-                    createGoldLevelHandler = {this.createGoldLevelHandler}
-                    createEpicLevelHandler = {this.createEpicLevelHandler}
-                />
             </>
         );
     }
