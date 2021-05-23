@@ -47,6 +47,7 @@ class Levels extends React.Component {
         this.setState({activeCommon: false});
         this.props.removeCommonLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
+        this.props.levelCostClearHandler(event, 1);
     }
 
     removeGoldLevelHandler = (event) => {
@@ -54,6 +55,7 @@ class Levels extends React.Component {
         this.setState({activeGold: false});
         this.props.removeGoldLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
+        this.props.levelCostClearHandler(event, 2);
     }
 
     removeEpicLevelHandler = (event) => {
@@ -61,42 +63,40 @@ class Levels extends React.Component {
         this.setState({activeEpic: false});
         this.props.removeEpicLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
+        this.props.levelCostClearHandler(event, 3);
     }
 
     render() {
         return (
             <>
                 <CommonDiv exist={this.props.createCommonLevel} active={this.state.activeCommon}>
-                    <Button
-                        show={this.props.createCommonLevel}
+                    <Button show={this.props.createCommonLevel}
                         onClick={this.activeCommonStyleHandler}>
                         TYPOWY
                     </Button>
                     <Close show={this.state.activeCommon}
-                           onClick={this.removeCommonLevelHandler}>
-                        {/*close icon*/}
+                       onClick={this.removeCommonLevelHandler}>
+                       {/*close icon*/}
                     </Close>
                 </CommonDiv>
                 <GoldDiv exist={this.props.createGoldLevel} active={this.state.activeGold}>
-                    <Button
-                        show={this.props.createGoldLevel}
+                    <Button show={this.props.createGoldLevel}
                         onClick={this.activeGoldStyleHandler}>
                         ZŁOTY
                     </Button>
                     <Close show={this.state.activeGold}
-                           onClick={this.removeGoldLevelHandler}>
-                        {/*close icon*/}
+                       onClick={this.removeGoldLevelHandler}>
+                       {/*close icon*/}
                     </Close>
                 </GoldDiv>
                 <EpicDiv exist={this.props.createEpicLevel} active={this.state.activeEpic}>
-                    <Button
-                        show={this.props.createEpicLevel}
+                    <Button show={this.props.createEpicLevel}
                         onClick={this.activeEpicStyleHandler}>
                         EPICKI
                     </Button>
                     <Close show={this.state.activeEpic}
-                           onClick={this.removeEpicLevelHandler}>
-                        {/*close icon*/}
+                       onClick={this.removeEpicLevelHandler}>
+                       {/*close icon*/}
                     </Close>
                 </EpicDiv>
             </>

@@ -14,7 +14,8 @@ class CardsCreator extends React.Component {
         cardName: 'Nazwa Karty',
         cardSubject: 'Przedmiot',
         cardTooltip: 'Opis Karty',
-        showDescribeInputs: false
+        showDescribeInputs: false,
+        levelCostValues: [],
     }
 
     handleChange = (event) => {
@@ -41,6 +42,21 @@ class CardsCreator extends React.Component {
         this.setState({[keyName]: keyValue});
     }
 
+    levelCostValuesHandler = (event) => {
+        let newList = this.state.levelCostValues.slice();
+        if(event.target.value > 0)
+            newList[Number(event.target.id[0]) - 1] = event.target.value;
+        else newList[Number(event.target.id[0]) - 1] = undefined;
+        this.setState({levelCostValues: newList});
+    }
+
+    levelCostClearHandler = (event, rank) => {
+        event.preventDefault();
+        let newList = this.state.levelCostValues.slice();
+        newList[rank - 1] = undefined;
+        this.setState({levelCostValues: newList});
+    }
+
     render() {
         return (
             <Wrapper>
@@ -58,7 +74,11 @@ class CardsCreator extends React.Component {
                             show={this.state.showDescribeInputs}
                             hideDescribeInputsHandler={this.hideDescribeInputsHandler}
                         />
-                        <CardProperties />
+                        <CardProperties
+                            levelCostValues={this.state.levelCostValues}
+                            levelCostValuesHandler={this.levelCostValuesHandler}
+                            levelCostClearHandler={this.levelCostClearHandler}
+                        />
                     </Form>
                 </Main>
             </Wrapper>

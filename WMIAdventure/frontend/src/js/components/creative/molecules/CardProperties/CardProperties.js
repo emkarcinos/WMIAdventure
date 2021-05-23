@@ -68,28 +68,29 @@ class CardProperties extends React.Component {
         return (
             <>
                 <Fieldset activeCardRank={this.state.activeCardRank}>
-                    <CostInput activeCardRank={this.state.activeCardRank} />
+                    <CostInput activeCardRank={this.state.activeCardRank}
+                               levelCostValues={this.props.levelCostValues}
+                               levelCostValuesHandler={this.props.levelCostValuesHandler} />
                     {/*effectsList*/}
                     <Div>
                         <P>
                             Poziomy:
                         </P>
-                        <Levels
-                            createCommonLevel={this.state.createCommonLevel}
+                        <Levels createCommonLevel={this.state.createCommonLevel}
                             createGoldLevel={this.state.createGoldLevel}
                             createEpicLevel={this.state.createEpicLevel}
                             removeCommonLevelHandler={this.removeCommonLevelHandler}
                             removeGoldLevelHandler={this.removeGoldLevelHandler}
                             removeEpicLevelHandler={this.removeEpicLevelHandler}
                             activeLevelRecognize={this.activeLevelRecognize}
+                            levelCostClearHandler={this.props.levelCostClearHandler}
                         />
                         <Button onClick={this.showLevelChooseHandler}>
                             {/*ikona plusa*/}
                         </Button>
                     </Div>
                 </Fieldset>
-                <CreateLevel
-                    show={this.state.showLevelChoose}
+                <CreateLevel show={this.state.showLevelChoose}
                     hideLevelChooseHandler={this.hideLevelChooseHandler}
                     createCommonLevelHandler = {this.createCommonLevelHandler}
                     createGoldLevelHandler = {this.createGoldLevelHandler}
