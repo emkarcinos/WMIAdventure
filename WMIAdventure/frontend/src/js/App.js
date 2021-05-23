@@ -1,14 +1,14 @@
 import {Route, Switch} from 'react-router-dom';
-import MainMenu from './components/entertainment/pages/MainMenu';
-import Profile from './components/entertainment/pages/Profile';
-import AdventureMode from './components/entertainment/pages/AdventureMode';
-import BattleMode from './components/entertainment/pages/BattleMode/BattleMode';
-import Ranking from './components/entertainment/pages/Ranking/Ranking';
-import Event from './components/entertainment/pages/Event';
-import Quiz from './components/entertainment/pages/Quiz';
-import HistoryCreator from './components/creative/pages/HistoryCreator';
-import AnswerCreator from './components/creative/pages/AnswerCreator';
-import CardsCreator from './components/creative/pages/CardsCreator';
+import MainMenu from './pages/entertainment/MainMenu';
+import Profile from './pages/entertainment/Profile';
+import AdventureMode from './pages/entertainment/AdventureMode';
+import BattleMode from './pages/entertainment/BattleMode/BattleMode';
+import Ranking from './pages/entertainment/Ranking/Ranking';
+import Event from './pages/entertainment/Event';
+import Quiz from './pages/entertainment/Quiz';
+import HistoryCreator from './pages/creative/HistoryCreator';
+import AnswerCreator from './pages/creative/AnswerCreator';
+import CardsCreator from './pages/creative/CardsCreator';
 import {ThemeProvider} from 'styled-components';
 import theme from './utils/theme';
 
