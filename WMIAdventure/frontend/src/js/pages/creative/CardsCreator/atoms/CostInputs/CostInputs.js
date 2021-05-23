@@ -18,6 +18,7 @@ class CostInputs extends React.Component {
                         <Input id={`${this.props.activeCardRank}-next_level_cost`}
                                name='next_level_cost'
                                type='number'
+                               value={this.props.levelCostValues[this.props.activeCardRank - 1]}
                                onChange={this.props.levelCostValuesHandler}/>
                     </Span>
                 </CommonDiv>
@@ -29,6 +30,7 @@ class CostInputs extends React.Component {
                         <Input id={`${this.props.activeCardRank}-next_level_cost`}
                                name='next_level_cost'
                                type='number'
+                               value={this.props.levelCostValues[this.props.activeCardRank - 1]}
                                onChange={this.props.levelCostValuesHandler}/>
                     </Span>
                 </GoldDiv>
@@ -40,6 +42,7 @@ class CostInputs extends React.Component {
                         <Input id={`${this.props.activeCardRank}-next_level_cost`}
                                name='next_level_cost'
                                type='number'
+                               value={this.props.levelCostValues[this.props.activeCardRank - 1]}
                                onChange={this.props.levelCostValuesHandler}/>
                     </Span>
                 </EpicDiv>

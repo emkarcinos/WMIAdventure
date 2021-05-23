@@ -52,6 +52,13 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
+    levelCostResetHandler = (event, rank) => {
+        event.preventDefault();
+        let newList = this.state.levelCostValues.slice();
+        newList[rank - 1] = 1;
+        this.setState({levelCostValues: newList});
+    }
+
     render() {
         return (
             <Wrapper>
@@ -73,6 +80,7 @@ class CardsCreator extends React.Component {
                             levelCostValues={this.state.levelCostValues}
                             levelCostValuesHandler={this.levelCostValuesHandler}
                             levelCostClearHandler={this.levelCostClearHandler}
+                            levelCostResetHandler={this.levelCostResetHandler}
                         />
                     </Form>
                 </Main>

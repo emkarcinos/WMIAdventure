@@ -31,18 +31,21 @@ class CardProperties extends React.Component {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createCommonLevel: true});
+        this.props.levelCostResetHandler(event, 1);
     }
 
     createGoldLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createGoldLevel: true});
+        this.props.levelCostResetHandler(event, 2);
     }
 
     createEpicLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createEpicLevel: true});
+        this.props.levelCostResetHandler(event, 3);
     }
 
     removeCommonLevelHandler = (event) => {
