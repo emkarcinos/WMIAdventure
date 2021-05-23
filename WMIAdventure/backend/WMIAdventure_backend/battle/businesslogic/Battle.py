@@ -18,7 +18,6 @@ class Battle:
         self.recorder = ProcessRecorder()
 
     def start(self):
-        # We record initial battle state (0th turn)
         self.set_up_battle()
         while not self.is_finished():
             self.turn()
@@ -27,6 +26,8 @@ class Battle:
         """
         Tasks executed before starting the battle.
         """
+        
+        # We record initial battle state (0th turn)
         self.recorder.record_turn(self.attacker, self.defender)
         
     def turn(self):
