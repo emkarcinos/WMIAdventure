@@ -6,7 +6,7 @@ from .models import *
 class CardEffectSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardEffect
-        fields = ['id', 'name', 'tooltip']
+        fields = ['id', 'name', 'tooltip', 'has_modifier']
 
 
 class CardLevelSerializer(serializers.ModelSerializer):
