@@ -4,7 +4,7 @@ import Ul from './styled-components/Ul';
 import Li from './styled-components/Li';
 import Button from './styled-components/Button';
 
-class CreateLevel extends React.Component {
+class LevelChoose extends React.Component {
     state = {
         listHover: false,
     }
@@ -47,4 +47,4 @@ class CreateLevel extends React.Component {
     }
 }
 
-export default CreateLevel;
+export default LevelChoose;

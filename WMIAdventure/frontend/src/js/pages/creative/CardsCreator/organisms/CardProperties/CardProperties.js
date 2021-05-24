@@ -3,7 +3,7 @@ import Fieldset from './styled-components/Fieldset';
 import Div from './styled-components/Div';
 import P from './styled-components/P';
 import Button from './styled-components/Button';
-import CreateLevel from '../../atoms/CreateLevel';
+import LevelChoose from '../../atoms/LevelChoose';
 import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
 import EffectsInputsList from '../../molecules/EffectsInputsList';
@@ -84,7 +84,7 @@ class CardProperties extends React.Component {
     render() {
         return (
             <>
-                <CreateLevel show={this.state.showLevelChoose}
+                <LevelChoose show={this.state.showLevelChoose}
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
                              createCommonLevelHandler = {this.createCommonLevelHandler}
                              createGoldLevelHandler = {this.createGoldLevelHandler}

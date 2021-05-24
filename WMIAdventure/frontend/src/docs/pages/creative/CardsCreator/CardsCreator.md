@@ -5,15 +5,17 @@
 Komponent w swoich stanach będzie zawierał wszystkie potrzebne dane, aby wysłać odpowiednią strukturę *json* do Backendu.  
 Póki co, znajduje się tutaj nazwa karty, przedmiot z którego pochodzi oraz jej opis.
 ```js
- state = {
-    cardName: 'Nazwa Karty',
-    cardSubject: 'Przedmiot',
-    cardTooltip: 'Opis Karty',
-    showDescribeInputs: false
+state = {
+  cardName: 'Nazwa Karty',
+  cardSubject: 'Przedmiot',
+  cardTooltip: 'Opis Karty',
+  showDescribeInputs: false,
+  levelCostValues: [],
 }
 ```
 Stan `showDescribeInputs` odpowiada za pokazanie pól formularza do określenia tych opisowych atrybutów karty. 
-Gdy `showDescribeInputs` będzie `true` to obszar z tymi polami pojawi się, wysunie się z góry.
+Gdy `showDescribeInputs` będzie `true` to obszar z tymi polami pojawi się, wysunie się z góry. 
+`levelCostValues` przechowuje wartości do ulepszania kart.
 
 ## Metody komponentu, handlery
 
@@ -65,31 +67,76 @@ Na przykład mamy stany `{cardName: 'nazwa karty', cardSubject: 'Przedmiot'}` i 
 ```
 To dzięki odpowiedniemu atrybutowi **name**, `handleChange` rozpozna który stan komponentu zaaktualizować.
 
+### levelCostValuesHandler
+
+Obsługuje przypisywanie do stanu `levelCostValues` odpowiednich wartości.
+
+```js
+levelCostValuesHandler = (event) => {
+      let newList = this.state.levelCostValues.slice();
+      if(event.target.value > 0)
+          newList[Number(event.target.id[0]) - 1] = event.target.value;
+      else newList[Number(event.target.id[0]) - 1] = undefined;
+      this.setState({levelCostValues: newList});
+  }
+```
+### levelCostClearHandler
+Wstawia pod odpowiedni indeks wartość `undefined`, aby formularz myślał że nigdy taka wartość nie istniała.
+```js
+levelCostClearHandler = (event, rank) => {
+      event.preventDefault();
+      let newList = this.state.levelCostValues.slice();
+      newList[rank - 1] = undefined;
+      this.setState({levelCostValues: newList});
+  }
+```
+Potrzebne przy usuwaniu jakiegoś levelu karty.
+
+### levelCostResetHandler
+Wstawia pod odpowiedni indeks jedynkę dla stanu `levelCostValues`. 
+Dlatego zawsze na początku wartość ulepszenia następnego levelu jest 1.
+```js
+levelCostResetHandler = (event, rank) => {
+      event.preventDefault();
+      let newList = this.state.levelCostValues.slice();
+      newList[rank - 1] = 1;
+      this.setState({levelCostValues: newList});
+  }
+```
+Potrzebne, bo inaczej po usunięciu levela, wartość w stanie byłaby `undefined` a w *inpucie* wciąż ta poprzednia.  
+**UWAGA:** W konsoli wywala jakiś warning, bo aby to uzyskać, to musiałem uzależnić atrybut `value` w `<input />`  
+od stanu `levelCostValues`, działa wszystko, ale nie wiem jak to zrobić bez tego *warninga*.
+
 
 ## Warstwa prezentacyjna komponentu
 
 ```js
 render() {
     return (
-        <Wrapper>
-            <Header></Header>
-            <Main>
-                <CardDescribePreview
-                    cardName={this.state.cardName}
-                    cardSubject={this.state.cardSubject}
-                    cardTooltip={this.state.cardTooltip}
-                    showDescribeInputsHandler={this.showDescribeInputsHandler}
-                />
-                <Form>
-                    <CardDescribeInputs
-                        updateDescribePreview={this.updateDescribePreview}
-                        show={this.state.showDescribeInputs}
-                        hideDescribeInputsHandler={this.hideDescribeInputsHandler}
-                    />
-                    <CardProperties />
-                </Form>
-            </Main>
-        </Wrapper>
+      <Wrapper>
+        <Header></Header>
+        <Main>
+          <CardDescribePreview
+                  cardName={this.state.cardName}
+                  cardSubject={this.state.cardSubject}
+                  cardTooltip={this.state.cardTooltip}
+                  showDescribeInputsHandler={this.showDescribeInputsHandler}
+          />
+          <Form>
+            <CardDescribeInputs
+                    updateDescribePreview={this.updateDescribePreview}
+                    show={this.state.showDescribeInputs}
+                    hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+            />
+            <CardProperties
+                    levelCostValues={this.state.levelCostValues}
+                    levelCostValuesHandler={this.levelCostValuesHandler}
+                    levelCostClearHandler={this.levelCostClearHandler}
+                    levelCostResetHandler={this.levelCostResetHandler}
+            />
+          </Form>
+        </Main>
+      </Wrapper>
     );
 }
 ```
@@ -205,9 +252,16 @@ A tutaj już w formularzu zawarty jest komponent **CardDescribeInputs**, przekaz
 Dalej mamy komponent **CardProperties**, który reprezentuje cały obszar z pozostałymi atrybutami kart takimi 
 jak efekty itp.
 ```js
-<CardProperties />
+<CardProperties
+    levelCostValues={this.state.levelCostValues}
+    levelCostValuesHandler={this.levelCostValuesHandler}
+    levelCostClearHandler={this.levelCostClearHandler}
+    levelCostResetHandler={this.levelCostResetHandler}
+/>
 ```
-
+Przekazujemy mu stan z wartościami ulepszeń kart `levelCostValues`, aby później jakiś kolejny komponent mógł je wyświetlać
+i nimi zarządzać. Pomoże w tym `levelCostValuesHandler`, `levelCostClearHandler`, `levelCostResetHandler`, które
+również przekazujemy w *propsach*.
 
 
 
