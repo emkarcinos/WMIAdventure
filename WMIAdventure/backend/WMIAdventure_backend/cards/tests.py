@@ -96,6 +96,10 @@ class CardEffectTestCase(TestCase):
         self.assertRaises(IntegrityError,
                           CardEffect.objects.create, id=test_id)
 
+    def test_has_modifier_default(self):
+        effect = CardEffect.objects.get(pk=1)
+        self.assertFalse(effect.has_modifier)
+
 
 class CardEffectSerializerTestCase(TestCase):
 
@@ -103,27 +107,32 @@ class CardEffectSerializerTestCase(TestCase):
         self.test_id = CardEffect.EffectId.DMG.value
         self.test_name = str(CardEffect.EffectId.DMG.label)
         self.test_tooltip = "sdas d12 e1 wad1"
+        self.test_modifiers = True
         CardEffect.objects.get(pk=self.test_id).delete()
 
     def test_serialization(self):
         test_model = CardEffect.objects.create(id=self.test_id,
                                                name=self.test_name,
-                                               tooltip=self.test_tooltip)
+                                               tooltip=self.test_tooltip,
+                                               has_modifier=True)
 
         serializer = CardEffectSerializer(instance=test_model)
 
         actual_id = serializer.data.get('id')
         actual_name = serializer.data.get('name')
         actual_tooltip = serializer.data.get('tooltip')
+        actual_modifier = serializer.data.get('has_modifier')
 
         self.assertEqual(actual_id, self.test_id)
         self.assertEqual(actual_name, self.test_name)
         self.assertEqual(actual_tooltip, self.test_tooltip)
+        self.assertEqual(actual_modifier, self.test_modifiers)
 
     def test_deserialization(self):
         data = {'id': self.test_id,
                 'name': self.test_name,
-                'tooltip': self.test_tooltip}
+                'tooltip': self.test_tooltip,
+                'has_modifiers': True}
 
         serializer = CardEffectSerializer(data=data)
 
