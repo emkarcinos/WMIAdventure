@@ -7,7 +7,7 @@ import Form from './styled-components/Form';
 
 import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
-import CardProperties from './organisms/CardProperties';
+import CardProperties from './molecules/CardProperties';
 
 class CardsCreator extends React.Component {
     state = {
