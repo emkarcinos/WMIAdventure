@@ -6,8 +6,8 @@ import Button from './styled-components/Button';
 import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
-import EffectsInputsList from '../EffectsInputsList';
-import EffectChoose from '../EffectChoose';
+import EffectsInputsList from '../../molecules/EffectsInputsList';
+import EffectChoose from '../../molecules/EffectChoose';
 
 class CardProperties extends React.Component {
     state = {
