@@ -7,6 +7,7 @@ import CreateLevel from '../../atoms/CreateLevel';
 import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
 import EffectsInputsList from '../EffectsInputsList';
+import EffectChoose from '../EffectChoose';
 
 class CardProperties extends React.Component {
     state = {
@@ -15,6 +16,8 @@ class CardProperties extends React.Component {
         createGoldLevel: false,
         createEpicLevel: false,
         activeCardRank: 0,
+
+        showEffectChoose: false,
     }
 
     showLevelChooseHandler = (event) => {
@@ -68,6 +71,16 @@ class CardProperties extends React.Component {
         this.setState({activeCardRank: activeCardRank});
     }
 
+    showEffectChooseHandler = (event) => {
+        event.preventDefault();
+        this.setState({showEffectChoose: true});
+    }
+
+    hideEffectChooseHandler = (event) => {
+        event.preventDefault();
+        this.setState({showEffectChoose: false});
+    }
+
     render() {
         return (
             <>
@@ -77,13 +90,20 @@ class CardProperties extends React.Component {
                              createGoldLevelHandler = {this.createGoldLevelHandler}
                              createEpicLevelHandler = {this.createEpicLevelHandler}
                 />
+                <EffectChoose
+                    showEffectChoose={this.state.showEffectChoose}
+                    hideEffectChooseHandler={this.hideEffectChooseHandler}
+                    activeCardRank={this.state.activeCardRank}
+                />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <CostInputs activeCardRank={this.state.activeCardRank}
                                 createGoldLevel={this.state.createGoldLevel}
                                 createEpicLevel={this.state.createEpicLevel}
                                 levelCostValues={this.props.levelCostValues}
                                 levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                    <EffectsInputsList activeCardRank={this.state.activeCardRank}/>
+                    <EffectsInputsList
+                        activeCardRank={this.state.activeCardRank}
+                        showEffectChooseHandler={this.showEffectChooseHandler} />
                     <Div>
                         <P>
                             Poziomy:
