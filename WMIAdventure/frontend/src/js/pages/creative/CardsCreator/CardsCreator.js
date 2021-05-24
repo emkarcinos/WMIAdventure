@@ -30,7 +30,7 @@ class CardsCreator extends React.Component {
 
     updateDescribePreview = (event) => {
         const keyName = event.target.name;
-        let keyValue = '';
+        let keyValue;
         if(event.target.value !== '')
             keyValue = event.target.value;
         else keyValue = '-';
@@ -62,7 +62,9 @@ class CardsCreator extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Header></Header>
+                <Header>
+                    {/*nagłówek nawigacyjny*/}
+                </Header>
                 <Main>
                     <CardDescribePreview
                         cardName={this.state.cardName}
