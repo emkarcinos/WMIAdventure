@@ -6,8 +6,8 @@ import Button from './styled-components/Button';
 import LevelChoose from '../../atoms/LevelChoose';
 import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
-import EffectsInputsList from '../EffectsInputsList';
-import EffectChoose from '../EffectChoose';
+import EffectsInputsList from '../../molecules/EffectsInputsList';
+import EffectChoose from '../../molecules/EffectChoose';
 
 class CardProperties extends React.Component {
     state = {
@@ -34,21 +34,20 @@ class CardProperties extends React.Component {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createCommonLevel: true});
-        this.props.levelCostResetHandler(event, 1);
     }
 
     createGoldLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createGoldLevel: true});
-        this.props.levelCostResetHandler(event, 2);
+        this.props.levelCostResetHandler(event, 1);
     }
 
     createEpicLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
         this.setState({createEpicLevel: true});
-        this.props.levelCostResetHandler(event, 3);
+        this.props.levelCostResetHandler(event, 2);
     }
 
     removeCommonLevelHandler = (event) => {

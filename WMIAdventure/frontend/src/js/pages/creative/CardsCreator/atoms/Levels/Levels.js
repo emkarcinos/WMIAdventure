@@ -47,7 +47,6 @@ class Levels extends React.Component {
         this.setState({activeCommon: false});
         this.props.removeCommonLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
-        this.props.levelCostClearHandler(event, 1);
     }
 
     removeGoldLevelHandler = (event) => {
@@ -55,7 +54,7 @@ class Levels extends React.Component {
         this.setState({activeGold: false});
         this.props.removeGoldLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
-        this.props.levelCostClearHandler(event, 2);
+        this.props.levelCostClearHandler(event, 1);
     }
 
     removeEpicLevelHandler = (event) => {
@@ -63,7 +62,7 @@ class Levels extends React.Component {
         this.setState({activeEpic: false});
         this.props.removeEpicLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
-        this.props.levelCostClearHandler(event, 3);
+        this.props.levelCostClearHandler(event, 2);
     }
 
     render() {
