@@ -1,7 +1,7 @@
-from django.test import TestCase
 from django.db.utils import IntegrityError
+from django.test import TestCase
 from rest_framework.test import APIRequestFactory
-from .models import *
+
 from .serializers import *
 from .views import *
 
@@ -665,3 +665,16 @@ class WholeCardDetailsTestCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
+class WholeCardListTestCase(TestCase):
+    def test_create_card_without_levels(self):
+        data = {
+            "name": "Quicksort",
+            "tooltip": "tekst"
+        }
+
+        factory = APIRequestFactory()
+        view = WholeCardList.as_view()
+        request = factory.post('/api/cards/', data)
+        response = view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
