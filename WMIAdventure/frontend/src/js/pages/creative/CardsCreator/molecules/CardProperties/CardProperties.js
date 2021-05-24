@@ -79,6 +79,8 @@ class CardProperties extends React.Component {
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <CostInputs activeCardRank={this.state.activeCardRank}
+                                createGoldLevel={this.state.createGoldLevel}
+                                createEpicLevel={this.state.createEpicLevel}
                                 levelCostValues={this.props.levelCostValues}
                                 levelCostValuesHandler={this.props.levelCostValuesHandler} />
                     <EffectsInputsList activeCardRank={this.state.activeCardRank}/>

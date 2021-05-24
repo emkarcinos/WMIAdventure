@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import Div from './Div';
 
-function showHandler(activeCardRank) {
-    if(activeCardRank === 1)
+function showHandler(existNextCardRank, activateCardRank) {
+    if(existNextCardRank && activateCardRank === 1)
         return 'flex';
     return 'none';
 }
 
 const CommonDiv = styled(Div)`
-  display: ${({activeCardRank}) => showHandler(activeCardRank)};
+  display: ${({existNextCardRank, activateCardRank}) => showHandler(existNextCardRank, activateCardRank)};
 `;
 
 export default CommonDiv;
