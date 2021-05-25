@@ -9,6 +9,7 @@ import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
 
+
 class CardsCreator extends React.Component {
     state = {
         cardName: 'Nazwa Karty',
@@ -16,6 +17,18 @@ class CardsCreator extends React.Component {
         cardTooltip: 'Opis Karty',
         showDescribeInputs: false,
         levelCostValues: [],
+        effectsFromApi: [],
+    }
+
+
+    componentDidMount() {
+        const API = process.env['REACT_APP_API_URL'];
+        fetch(`http://${API}/api/cards/card-effect/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({effectsFromApi: data}))
+            .catch(error => console.log(error));
     }
 
     showDescribeInputsHandler = (event) => {
