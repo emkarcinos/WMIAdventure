@@ -96,9 +96,6 @@ class CardEffectTestCase(TestCase):
         self.assertRaises(IntegrityError,
                           CardEffect.objects.create, id=test_id)
 
-    def test_has_modifier_default(self):
-        effect = CardEffect.objects.get(pk=1)
-        self.assertFalse(effect.has_modifier)
 
 
 class CardEffectSerializerTestCase(TestCase):
