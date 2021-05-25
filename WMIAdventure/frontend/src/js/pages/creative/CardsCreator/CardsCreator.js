@@ -20,7 +20,6 @@ class CardsCreator extends React.Component {
         effectsFromApi: [],
     }
 
-
     componentDidMount() {
         const API = process.env['REACT_APP_API_URL'];
         fetch(`http://${API}/api/cards/card-effect/`)
@@ -96,6 +95,7 @@ class CardsCreator extends React.Component {
                             levelCostValuesHandler={this.levelCostValuesHandler}
                             levelCostClearHandler={this.levelCostClearHandler}
                             levelCostResetHandler={this.levelCostResetHandler}
+                            effectsFromApi={this.state.effectsFromApi}
                         />
                     </Form>
                 </Main>

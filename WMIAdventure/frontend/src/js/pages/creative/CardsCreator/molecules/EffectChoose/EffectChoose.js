@@ -3,6 +3,7 @@ import UlCommon from './styled-components/UlCommon';
 import UlGold from './styled-components/UlGold';
 import UlEpic from './styled-components/UlEpic';
 import TransparentBack from './styled-components/TransparentBack';
+import Effect from '../../atoms/Effect';
 
 class EffectChoose extends React.Component {
 
@@ -30,17 +31,41 @@ class EffectChoose extends React.Component {
                     <UlCommon onMouseEnter={this.hoverTrue}
                               onMouseLeave={this.hoverFalse}
                               activeCardRank={this.props.activeCardRank}>
-                        effect choose
+                        {
+                            this.props.effectsFromApi.map((effect) => {
+                                return (
+                                  <React.Fragment key={`effect-${effect.id}`}>
+                                      <Effect name={effect.name} tooltip={effect.tooltip} />
+                                  </React.Fragment>
+                                );
+                            })
+                        }
                     </UlCommon>
                     <UlGold onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}
                             activeCardRank={this.props.activeCardRank}>
-                        effect choose
+                        {
+                            this.props.effectsFromApi.map((effect) => {
+                                return (
+                                    <React.Fragment key={`effect-${effect.id}`}>
+                                        <Effect name={effect.name} tooltip={effect.tooltip} />
+                                    </React.Fragment>
+                                );
+                            })
+                        }
                     </UlGold>
                     <UlEpic onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}
                             activeCardRank={this.props.activeCardRank}>
-                        effect choose
+                        {
+                            this.props.effectsFromApi.map((effect) => {
+                                return (
+                                    <React.Fragment key={`effect-${effect.id}`}>
+                                        <Effect name={effect.name} tooltip={effect.tooltip} />
+                                    </React.Fragment>
+                                );
+                            })
+                        }
                     </UlEpic>
                 </TransparentBack>
             </>

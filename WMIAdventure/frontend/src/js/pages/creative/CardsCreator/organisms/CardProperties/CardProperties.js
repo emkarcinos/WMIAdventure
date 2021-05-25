@@ -93,6 +93,7 @@ class CardProperties extends React.Component {
                     showEffectChoose={this.state.showEffectChoose}
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
                     activeCardRank={this.state.activeCardRank}
+                    effectsFromApi={this.props.effectsFromApi}
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <CostInputs activeCardRank={this.state.activeCardRank}
