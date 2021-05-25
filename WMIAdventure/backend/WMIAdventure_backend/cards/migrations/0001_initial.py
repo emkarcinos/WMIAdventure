@@ -5,24 +5,6 @@ from ..models import CardLevel
 from ..models import CardEffect
 
 
-def insert_card_effects_values_to_db(apps, schema_editor):
-    CardEffect.objects.all().delete()
-    for value in CardEffect.EffectId.values:
-        item = CardEffect.objects.create(id=value)
-        item.save()
-
-
-def insert_card_levels_values_to_db(apps, schema_editor):
-    """
-    Inserts all possible CardLevel records to database.
-    """
-
-    CardLevel.objects.all().delete()
-    for value in CardLevel.Level.values:
-        cLvl = CardLevel.objects.create(level=value)
-        cLvl.save()
-
-
 class Migration(migrations.Migration):
 
     initial = True
@@ -45,7 +27,5 @@ class Migration(migrations.Migration):
                 ('level', models.IntegerField(choices=[(1, 'Typowa'), (2, 'Rzadka'), (3, 'Epicka')], default=1, primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
             ],
-        ),
-        migrations.RunPython(insert_card_levels_values_to_db),
-        migrations.RunPython(insert_card_effects_values_to_db)
+        )
     ]
