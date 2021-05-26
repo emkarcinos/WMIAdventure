@@ -25,6 +25,21 @@ class DeckTestCase(TestCase):
         self.assertIs(cards_list[3].card_model, self.attacker_deck.card4.card)
         self.assertIs(cards_list[4].card_model, self.attacker_deck.card5.card)
 
+    def test_lookup(self):
+        card0 = self.attacker_battle_deck.cards_queue[0]
+        card1 = self.attacker_battle_deck.cards_queue[1]
+
+        self.assertIs(card0, self.attacker_battle_deck.lookup())
+        self.assertIs(card1, self.attacker_battle_deck.lookup(index=1))
+
+        # We poop a card from the deck and see if lookup returns the next element
+        self.attacker_battle_deck.get_card()
+        self.assertIs(card1, self.attacker_battle_deck.lookup())
+
+    def test_lookup_throws(self):
+        self.assertRaises(IndexError, self.attacker_battle_deck.lookup, index=-1)
+        self.assertRaises(IndexError, self.attacker_battle_deck.lookup, index=5)
+
     def test_get_card(self):
         card = self.attacker_battle_deck.get_card()
 
