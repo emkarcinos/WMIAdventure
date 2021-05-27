@@ -1,0 +1,43 @@
+title on_activation DmgEffect
+
+# on_activation call
+
+activate DmgEffect
+
+DmgEffect->DmgEffect: on_activation(target: Player, turns_queue: TurnsQueue)
+
+	# Get Calculator instance
+
+    activate Calculator
+
+    DmgEffect->Calculator: get_instance()
+
+    DmgEffect<--Calculator: calculator: Calculator
+
+    # Calculate dmg
+
+    DmgEffect->Calculator: calculate_effect_power(power, range, buffs)
+
+    DmgEffect<--Calculator: dmg: float
+
+    deactivate Calculator
+
+    # Get target's statistics
+
+    activate Player
+
+    DmgEffect->Player: .statistics
+
+    DmgEffect<--Player: statistics: Statistics
+
+    deactivate Player
+
+    # Deal damage to target
+
+    activate Statistics
+
+    DmgEffect->Statistics: deal_dmg(dmg)
+
+    deactivate Statistics
+
+deactivate DmgEffect
