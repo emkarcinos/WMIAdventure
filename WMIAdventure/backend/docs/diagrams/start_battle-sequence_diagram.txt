@@ -78,7 +78,7 @@ activate Effect
 
 Coordinator->Effect: activate(current_player, opponent, turnsQueue)
 
-ref over Effect: Effect Activate
+ref over Effect: Activate Effect
 
 deactivate Effect
 
