@@ -1,45 +1,82 @@
 title Create Battle
 
+participant Empty
+participant Battle
+participant PlayerFactory
+participant Coordinator
+participant TurnsQueue
+participant Outcome
+participant ProcessRecorder
+
+# Create Battle call
+
 activate Empty
 
 activate Battle
 
 Empty->Battle: create(attackerModel: UserProfile, defenderModel: UserProfile)
 
-activate BattlePlayer
+# Get PlayerFactory singleton instance
 
-Battle->BattlePlayer: create(attackerModel)
+activate PlayerFactory
 
-Battle<--BattlePlayer: attacker: BattlePlayer
+Battle->PlayerFactory:get_instance()
 
-deactivate BattlePlayer
+deactivate PlayerFactory
 
-activate BattlePlayer
+# Create Players
 
-Battle->BattlePlayer: create(defenderModel)
+activate PlayerFactory
 
-Battle<--BattlePlayer: defender: BattlePlayer
+## Create attacker
 
-deactivate BattlePlayer
+Battle->PlayerFactory:create(attacker_model, True)
 
-activate BattleCoordinator
+ref over PlayerFactory:CreatePlayer
 
-Battle->BattleCoordinator: create(attacker, defender)
+Battle<--PlayerFactory: attacker: Player
 
-activate turnsQueue  - Queue[BattlePlayer]
+## Create defender
 
-BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:create()
+Battle->PlayerFactory:create(defender_model, False)
 
-deactivate turnsQueue  - Queue[BattlePlayer]
+ref over PlayerFactory:CreatePlayer
 
-activate turnsQueue  - Queue[BattlePlayer]
+Battle<--PlayerFactory: defender: Player
 
-BattleCoordinator->BattleCoordinator:initTurnsQueue(attacker, defender)
+deactivate PlayerFactory
 
-deactivate turnsQueue  - Queue[BattlePlayer]
+# Create Coordinator
 
-deactivate BattleCoordinator
+activate Coordinator
+
+Battle->Coordinator: create(attacker, defender)
+
+## Create TurnsQueue
+
+activate TurnsQueue
+
+Coordinator->TurnsQueue: create(attacker, defender)
+
+deactivate TurnsQueue
+
+deactivate Coordinator
+
+# Create Outcome
+
+activate Outcome
+
+Battle->Outcome:create(attacker, defender)
+
+deactivate Outcome
+
+# Create ProcessRecorder
+
+activate ProcessRecorder
+
+Battle->ProcessRecorder:create()
+
+deactivate ProcessRecorder
+
 
 deactivate Battle
-
-deactivate Empty
