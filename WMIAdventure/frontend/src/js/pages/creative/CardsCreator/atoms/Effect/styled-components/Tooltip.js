@@ -6,6 +6,8 @@ const Tooltip = styled.p`
   color: #828282;
   padding: 0;
   margin: 0;
+  max-width: 260px;
+  line-height: 16px;
 `;
 
 export default Tooltip;

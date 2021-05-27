@@ -31,6 +31,7 @@ class EffectChoose extends React.Component {
                     <UlCommon onMouseEnter={this.hoverTrue}
                               onMouseLeave={this.hoverFalse}
                               activeCardRank={this.props.activeCardRank}>
+
                         {
                             this.props.effectsFromApi.map((effect) => {
                                 return (
