@@ -46,6 +46,7 @@ class EffectChoose extends React.Component {
                     <UlGold onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}
                             activeCardRank={this.props.activeCardRank}>
+                        <Search />
                         {
                             this.props.effectsFromApi.map((effect) => {
                                 return (
@@ -59,6 +60,7 @@ class EffectChoose extends React.Component {
                     <UlEpic onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}
                             activeCardRank={this.props.activeCardRank}>
+                        <Search />
                         {
                             this.props.effectsFromApi.map((effect) => {
                                 return (
