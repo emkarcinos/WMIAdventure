@@ -1,53 +1,100 @@
-title StartBattle
+title Start Battle
 
 activate Empty
 
+# Battle start call
+
 Empty->Battle: start()
+
 activate Battle
 
-# Get current player from turns queue
-note over Battle,coordinator - BattleCoordinator:while keepFighting()
+# Setup battle
 
-activate coordinator - BattleCoordinator
+activate Battle
 
-Battle->coordinator - BattleCoordinator: nextTurn()
+Battle->Battle: set_up_battle()
 
-activate turnsQueue  - Queue[BattlePlayer]
+## Record initial battle state
 
-coordinator - BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:dequeue()
+activate ProcessRecorder
 
-coordinator - BattleCoordinator<--turnsQueue  - Queue[BattlePlayer]:currentPlayer: BattlePlayer
+Battle->ProcessRecorder: record_turn(attacker: Player, defender: Player)
 
-coordinator - BattleCoordinator->turnsQueue  - Queue[BattlePlayer]:enqueue(currentPlayer)
+deactivate ProcessRecorder
 
-deactivate turnsQueue  - Queue[BattlePlayer]
+deactivate Battle
 
-activate currentPlayer - BattlePlayer
+# Perform battle simulation
 
-coordinator - BattleCoordinator->currentPlayer - BattlePlayer: useCard()
+loop while not is_finished()
 
-activate Deck - Queue[BattleCard]
+activate Battle
 
-currentPlayer - BattlePlayer->Deck - Queue[BattleCard]:dequeue()
+Battle->Battle: turn()
 
-currentPlayer - BattlePlayer<--Deck - Queue[BattleCard]:card: BattleCard
+## Call coordinator to coordinate next turn
 
-currentPlayer - BattlePlayer->Deck - Queue[BattleCard]:enqueue(card)
+activate Coordinator
 
-deactivate Deck - Queue[BattleCard]
+Battle->Coordinator: next_turn()
 
-ref over currentPlayer - BattlePlayer,card - BattleCard:UseCard
+### Get next Player from TurnsQueue
 
-currentPlayer - BattlePlayer -->coordinator - BattleCoordinator: effects: List[Effect]
+activate TurnsQueue
 
-deactivate currentPlayer - BattlePlayer
+Coordinator->TurnsQueue: turn()
+
+Coordinator<--TurnsQueue: current_player: Player
+
+deactivate TurnsQueue
+
+### Get opponent
+
+activate Coordinator
+
+Coordinator->Coordinator: get_players_opponent(current_player)
+
+Coordinator<--Coordinator: opponent: Player
+
+deactivate Coordinator
+
+### Call Player to use card
+
+activate current_player - Player
+
+Coordinator->current_player - Player: use_card()
+
+ref over current_player - Player: UseCard
+
+Coordinator<--current_player - Player: used_effects: Effect[*]
+
+deactivate current_player - Player
+
+### Activate used card's effects
+
+loop for effect in used_effects
 
 activate Effect
 
-coordinator - BattleCoordinator -> Effect: activate(currentPlayer, otherPlayer, turnsQueue)
+Coordinator->Effect: activate(current_player, opponent, turnsQueue)
+
+ref over Effect: Effect Activate
 
 deactivate Effect
 
-deactivate coordinator - BattleCoordinator
+deactivate Coordinator
+
+end
+
+## Call ProcessRecorder to record this turn
+
+activate ProcessRecorder
+
+Battle->ProcessRecorder: record_turn(attacker, defender)
+
+deactivate ProcessRecorder
+
+end
+
 
 deactivate Battle
