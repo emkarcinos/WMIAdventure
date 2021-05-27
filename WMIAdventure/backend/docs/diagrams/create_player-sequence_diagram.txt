@@ -1,0 +1,45 @@
+title Create Player
+
+participant Empty
+participant PlayerFactory
+participant Deck
+participant Player
+
+#
+
+activate Empty
+
+activate PlayerFactory
+
+Empty->PlayerFactory: create(user_profile_model: UserProfile, is_attacker: bool)
+
+# Choose deck model
+
+PlayerFactory->PlayerFactory: __choose_deck_model__(user_profile_model, is_attacker)
+
+
+# Create Deck
+
+activate Deck
+
+PlayerFactory->Deck:create(deck_model)
+
+PlayerFactory<--Deck: deck
+
+deactivate Deck
+
+# Create Player
+
+activate Player
+
+PlayerFactory->Player:create(user_profile_model_id, deck)
+
+PlayerFactory<--Player: player
+
+deactivate Player
+
+# Return Player to caller
+
+Empty<--PlayerFactory: player
+
+deactivate PlayerFactory
