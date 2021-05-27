@@ -21,11 +21,25 @@ class PlayerFactory:
         """
 
         id = user_profile_model.user.id
-        user_decks = user_profile_model.user_decks.all()
+        deck_model = self.__choose_deck_model__(user_profile_model, is_attacker)
+        return Player(id=id, deck=Deck(deck_model=deck_model))
+
+    def __choose_deck_model__(self, user_profile_model: UserProfile, is_attacker: bool):
+        """
+        Chooses deck for player, depending if he's attacker or defender.
+        Possible decks: deck for attacking and defending.
+        :param user_profile_model: Player profile.
+        :param is_attacker:
+        :return: Chosen deck.
+        """
+
         # TODO: Getting the decks is this way is kind of stupid. Enum would be better.
-        deck = None
+        user_decks = user_profile_model.user_decks.all()
+
+        deck_model = None
         if is_attacker and len(user_decks) == 2:
-            deck = user_decks[1].deck
+            deck_model = user_decks[1].deck
         else:
-            deck = user_decks[0].deck
-        return Player(id=id, deck=Deck(deck_model=deck))
+            deck_model = user_decks[0].deck
+
+        return deck_model
