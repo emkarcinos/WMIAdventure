@@ -1,22 +1,79 @@
 title Use Card
 
-activate currentPlayer - BattlePlayer
+activate Empty
 
-currentPlayer - BattlePlayer->card - BattleCard: use()
+# Use card call
 
+activate Player
 
-activate card - BattleCard
+Empty->Player: use_card()
 
-activate card - BattleCard
+# Get next card to use
 
-card - BattleCard->card - BattleCard: updateBuffs()
+activate Deck
 
-activate CardBuff
+Player->Deck: get_card()
 
-card - BattleCard->CardBuff: update()
+Player<--Deck: card: BattleCard
 
-deactivate CardBuff
+deactivate Deck
 
-deactivate card - BattleCard
+# Use card
 
-card - BattleCard -->currentPlayer - BattlePlayer: effects: List[Effect]
+activate BattleCard
+
+Player->BattleCard: use()
+
+## Update effects
+
+activate BattleCard
+
+BattleCard->BattleCard: update_effects()
+
+loop for effect in effects
+
+### Call update on effect
+
+activate Effect
+
+BattleCard->Effect: update()
+
+	#### Update buffs
+
+    activate Effect
+
+    Effect->Effect: update_buffs()
+
+    loop for buf in buffs
+
+      activate Buff
+
+      Effect->Buff:update()
+
+      Buff->Buff: tick()
+
+      deactivate Buff
+    
+    end
+
+    Effect->Effect: __remove_expired__buffs__()
+
+    deactivate Effect
+
+deactivate Effect
+
+end
+
+deactivate BattleCard
+
+## Update effects - end
+
+Player<--BattleCard: effects: Effect[*]
+
+deactivate BattleCard
+
+# Return
+
+Empty<--Player: effects: Effect[*]
+
+deactivate Player
