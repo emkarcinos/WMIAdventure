@@ -4,6 +4,7 @@ import UlGold from './styled-components/UlGold';
 import UlEpic from './styled-components/UlEpic';
 import TransparentBack from './styled-components/TransparentBack';
 import Effect from '../../atoms/Effect';
+import Search from '../../atoms/Search';
 
 class EffectChoose extends React.Component {
 
@@ -31,7 +32,7 @@ class EffectChoose extends React.Component {
                     <UlCommon onMouseEnter={this.hoverTrue}
                               onMouseLeave={this.hoverFalse}
                               activeCardRank={this.props.activeCardRank}>
-
+                        <Search />
                         {
                             this.props.effectsFromApi.map((effect) => {
                                 return (
