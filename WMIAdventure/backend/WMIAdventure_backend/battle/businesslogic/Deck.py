@@ -14,11 +14,20 @@ class Deck:
 
         self.cards_queue = deque()
 
-        self.cards_queue.append(BattleCard(deck_model.card1.card))
-        self.cards_queue.append(BattleCard(deck_model.card2.card))
-        self.cards_queue.append(BattleCard(deck_model.card3.card))
-        self.cards_queue.append(BattleCard(deck_model.card4.card))
-        self.cards_queue.append(BattleCard(deck_model.card5.card))
+        self.create_cards_queue((BattleCard(deck_model.card1.card), BattleCard(deck_model.card2.card),
+                                 BattleCard(deck_model.card3.card), BattleCard(deck_model.card4.card),
+                                 BattleCard(deck_model.card5.card)))
+
+    def create_cards_queue(self, ordered_cards: tuple[BattleCard, BattleCard, BattleCard, BattleCard, BattleCard]):
+        """
+        Creates cards queue.
+        @param ordered_cards: Cards in order in which queue will be created.
+        @return: None
+        """
+        self.cards_queue.clear()
+
+        for card in ordered_cards:
+            self.cards_queue.append(card)
 
     def get_card(self) -> BattleCard:
         """
