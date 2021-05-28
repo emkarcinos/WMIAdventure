@@ -9,20 +9,25 @@ participant Player
 
 activate Empty
 
-activate PlayerFactory
-
 Empty->PlayerFactory: create(user_profile_model: UserProfile, is_attacker: bool)
+
+activate PlayerFactory
 
 # Choose deck model
 
 PlayerFactory->PlayerFactory: __choose_deck_model__(user_profile_model, is_attacker)
 
+activate PlayerFactory
+
+PlayerFactory<--PlayerFactory: deck_model: DeckModel
+
+deactivate PlayerFactory
 
 # Create Deck
 
-activate Deck
-
 PlayerFactory->Deck:create(deck_model)
+
+activate Deck
 
 PlayerFactory<--Deck: deck
 
@@ -30,9 +35,9 @@ deactivate Deck
 
 # Create Player
 
-activate Player
-
 PlayerFactory->Player:create(user_profile_model_id, deck)
+
+activate Player
 
 PlayerFactory<--Player: player
 

@@ -12,33 +12,38 @@ participant ProcessRecorder
 
 activate Empty
 
-activate Battle
-
 Empty->Battle: create(attackerModel: UserProfile, defenderModel: UserProfile)
+
+activate Battle
 
 # Get PlayerFactory singleton instance
 
-activate PlayerFactory
-
 Battle->PlayerFactory:get_instance()
 
-deactivate PlayerFactory
+activate PlayerFactory
+
+deactivateafter PlayerFactory
 
 # Create Players
-
-activate PlayerFactory
 
 ## Create attacker
 
 Battle->PlayerFactory:create(attacker_model, True)
 
+activate PlayerFactory
+
 ref over PlayerFactory:CreatePlayer
 
 Battle<--PlayerFactory: attacker: Player
 
+
+deactivate PlayerFactory
+
 ## Create defender
 
 Battle->PlayerFactory:create(defender_model, False)
+
+activate PlayerFactory
 
 ref over PlayerFactory:CreatePlayer
 
@@ -48,35 +53,34 @@ deactivate PlayerFactory
 
 # Create Coordinator
 
-activate Coordinator
-
 Battle->Coordinator: create(attacker, defender)
+
+activate Coordinator
 
 ## Create TurnsQueue
 
-activate TurnsQueue
-
 Coordinator->TurnsQueue: create(attacker, defender)
 
-deactivate TurnsQueue
+activate TurnsQueue
+
+deactivateafter TurnsQueue
 
 deactivate Coordinator
 
 # Create Outcome
 
-activate Outcome
-
 Battle->Outcome:create(attacker, defender)
 
-deactivate Outcome
+activate Outcome
+
+deactivateafter Outcome
 
 # Create ProcessRecorder
 
-activate ProcessRecorder
-
 Battle->ProcessRecorder:create()
 
-deactivate ProcessRecorder
+activate ProcessRecorder
 
+deactivateafter ProcessRecorder
 
 deactivate Battle

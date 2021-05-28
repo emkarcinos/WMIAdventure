@@ -4,15 +4,15 @@ activate Empty
 
 # Use card call
 
-activate Player
-
 Empty->Player: use_card()
+
+activate Player
 
 # Get next card to use
 
-activate Deck
-
 Player->Deck: get_card()
+
+activate Deck
 
 Player<--Deck: card: BattleCard
 
@@ -20,47 +20,47 @@ deactivate Deck
 
 # Use card
 
-activate BattleCard
-
 Player->BattleCard: use()
+
+activate BattleCard
 
 ## Update effects
 
-activate BattleCard
-
 BattleCard->BattleCard: update_effects()
+
+activate BattleCard
 
 loop for effect in effects
 
 ### Call update on effect
 
-activate Effect
-
 BattleCard->Effect: update()
+
+activate Effect
 
 	#### Update buffs
 
-    activate Effect
-
     Effect->Effect: update_buffs()
+
+	activate Effect
 
     loop for buf in buffs
 
-      activate Buff
-
       Effect->Buff:update()
+
+	  activate Buff
 
       Buff->Buff: tick()
 
       deactivate Buff
-    
+
     end
 
     Effect->Effect: __remove_expired__buffs__()
 
     deactivate Effect
 
-deactivate Effect
+deactivateafter Effect
 
 end
 
