@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
@@ -37,7 +37,7 @@ class BattleCard:
         for effect in self.effects:
             effect.update()
 
-    def assign_buff(self, buff: Buff, effect_type: CardEffect.EffectId):
+    def assign_buff(self, buff: Buff, effect_type: Union[CardEffect.EffectId, None] = None):
         """
         This method assigns a buff to this card's appropriate effects.
         @param: buff - Buff instance
@@ -45,5 +45,7 @@ class BattleCard:
         """
         for effect in self.effects:
             # We check if any of the effects if of the type specified in the parameter
-            if effect.effect_model.card_effect.EffectId is effect_type:
+            # If we specified none, it applies to all effect types.
+            card_type = effect.effect_model.card_effect.id
+            if effect_type is None or card_type == effect_type:
                 effect.add_buff(buff)
