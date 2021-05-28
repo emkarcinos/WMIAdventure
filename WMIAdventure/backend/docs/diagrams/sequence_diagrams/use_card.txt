@@ -1,0 +1,79 @@
+title Use Card
+
+activate Empty
+
+# Use card call
+
+Empty->Player: use_card()
+
+activate Player
+
+# Get next card to use
+
+Player->Deck: get_card()
+
+activate Deck
+
+Player<--Deck: card: BattleCard
+
+deactivate Deck
+
+# Use card
+
+Player->BattleCard: use()
+
+activate BattleCard
+
+## Update effects
+
+BattleCard->BattleCard: update_effects()
+
+activate BattleCard
+
+loop for effect in effects
+
+### Call update on effect
+
+BattleCard->Effect: update()
+
+activate Effect
+
+	#### Update buffs
+
+    Effect->Effect: update_buffs()
+
+	activate Effect
+
+    loop for buf in buffs
+
+      Effect->Buff:update()
+
+	  activate Buff
+
+      Buff->Buff: tick()
+
+      deactivate Buff
+
+    end
+
+    Effect->Effect: __remove_expired__buffs__()
+
+    deactivate Effect
+
+deactivateafter Effect
+
+end
+
+deactivate BattleCard
+
+## Update effects - end
+
+Player<--BattleCard: effects: Effect[*]
+
+deactivate BattleCard
+
+# Return
+
+Empty<--Player: effects: Effect[*]
+
+deactivate Player
