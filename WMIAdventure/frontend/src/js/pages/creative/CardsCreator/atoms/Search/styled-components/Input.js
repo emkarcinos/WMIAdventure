@@ -6,7 +6,7 @@ const Input = styled.input`
   width: 100%;
   margin: 2px 0 0 32px;
   ::placeholder {
-    color: #BDBDBD;
+    color: ${({theme}) => theme.colors.grey2};
     font-size: 14px;
   }
 `;

@@ -22,7 +22,6 @@ const colors = {
     ui06: '#232735',
     ui07: '#000000',
 
-    uiBlue: '#2D9CDB',
 
     ui07trans: '#00000066',
 
@@ -32,8 +31,9 @@ const colors = {
 
 
     // Card Editor
-    green: '#27AE60',
-    blue: '#2D9CDB',
+    uiGreen: '#27AE60',
+    uiBlue: '#2D9CDB',
+    transBack: '#00000044',
 
     common: '#6FCF97',
     gold: '#F2C94C',
@@ -43,6 +43,7 @@ const colors = {
 
     grey1: '#F2F2F2',
     grey2: '#E0E0E0',
+    borderLine: '#333333',
 };
 
 export default colors;

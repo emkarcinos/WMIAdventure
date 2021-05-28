@@ -11,7 +11,7 @@ const Div = styled.div`
   height: 38px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #E0E0E0;
+  background-color: ${({theme}) => theme.colors.grey2};
 `;
 
 export default Div;
