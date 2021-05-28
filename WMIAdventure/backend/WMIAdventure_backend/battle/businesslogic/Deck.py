@@ -45,7 +45,7 @@ class Deck:
         @param index - card position in deck
         """
         if index < 0 or index > (self.size() - 1):
-            raise IndexError(f"Card index out of bounds. Deck ranges from 0 to {len(self.cards_queue) - 1}."
+            raise IndexError(f"Card index out of bounds. Deck ranges from 0 to {self.size() - 1}."
                              f"You specified {index}")
         return self.cards_queue[index]
 
