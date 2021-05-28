@@ -1,3 +1,4 @@
+from copy import copy
 from typing import List
 from unittest import TestCase
 
@@ -46,9 +47,34 @@ class DeckTestCase(TestCase):
         # Assert card is inserted at the back of the cards queue when you retrieve it.
         self.assertIs(card, list(self.attacker_battle_deck.cards_queue)[-1])
 
+    def test_temp_deck_lookup(self):
+        deck = self.attacker_battle_deck
+        # We get a card from the middle of the deck
+        card4 = self.attacker_battle_deck.lookup(4)
+        # And we add it to temp_cards_queue
+        deck.temp_cards_queue.append(card4)
+
+        # If all went OK, we should get the previously appended card from the deck at front of the deck..
+
+        returned_card = deck.lookup()
+        self.assertIs(returned_card, card4)
+
+    def test_temp_deck_get(self):
+        deck = copy(self.attacker_battle_deck)
+        card4 = deck.lookup(4)
+        deck.temp_cards_queue.append(card4)
+
+        returned_card = deck.get_card()
+        self.assertIs(returned_card, card4)
+
     def test_size(self):
+        deck = self.attacker_battle_deck
         expected_size = 5
-        self.assertEqual(self.attacker_battle_deck.size(), expected_size)
+        self.assertEqual(deck.size(), expected_size)
+
+        expected_size_after_alteration = expected_size + 1
+        deck.temp_cards_queue.append(deck.lookup())
+        self.assertEqual(deck.size(), expected_size_after_alteration)
 
     @classmethod
     def tearDownClass(cls) -> None:
