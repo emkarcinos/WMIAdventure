@@ -1,0 +1,135 @@
+title Create Deck
+
+activate Empty
+
+# Create Deck call
+
+Empty->Deck: create(deck_model: DeckModel)
+
+activate Deck
+
+# Create cards queue
+
+Deck->deque: create()
+
+activate deque
+
+Deck<--deque: cards_queue: deque
+
+deactivate deque
+
+# Get UserCard model
+
+note over Deck: Tworzenie BattleCard
+
+Deck->DeckModel: .card1
+
+activate DeckModel
+
+Deck<--DeckModel: card1: UserCard
+
+deactivate DeckModel
+
+# Get Card model
+
+Deck->UserCard: .card
+
+activate UserCard
+
+Deck<--UserCard: card_model: Card
+
+deactivate UserCard
+
+# Create BattleCard
+
+Deck->BattleCard: create(card_model)
+
+activate BattleCard
+
+	# Get EffectFactory instance
+
+    BattleCard->EffectFactory: get_instance()
+
+    activate EffectFactory
+
+    BattleCard<--EffectFactory: effects_factory: EffectFactory
+
+    deactivate EffectFactory
+
+    # Loop over all Effect Models
+
+    loop for effect_model in card_model.effects.all()
+
+    	# Call EffectFactory to create Effect
+
+        BattleCard->EffectFactory: create(effect_model: CardLevelEffects)
+
+        activate EffectFactory
+
+        	# Create Effect
+
+            EffectFactory->Effect: create(effect_model)
+
+            activate Effect
+
+            	# Get all values from effect model
+
+                Effect->CardLevelEffects: .target
+
+                activate CardLevelEffects
+
+                Effect<--CardLevelEffects: .target: CardLevelEffects.Target
+
+                Effect->CardLevelEffects: .power
+
+                Effect<--CardLevelEffects: .power: int
+
+                Effect->CardLevelEffects: .range
+
+                Effect<--CardLevelEffects: .range: float
+
+                deactivate CardLevelEffects
+
+            EffectFactory<--Effect: effect: Effect
+
+            deactivate Effect
+
+        BattleCard<--EffectFactory: effect: Effect
+
+        deactivate EffectFactory
+
+    end
+
+Deck<--BattleCard: battle_card1: BattleCard
+
+deactivate BattleCard
+
+note over Deck: Powtórzyć powyższe czynności, by stworzyć łącznie 5 obiektów BattleCard.
+
+# Fill cards queue
+
+Deck->Deck:create_cards_queue(ordered_cards: \ntuple[BattleCard, BattleCard, BattleCard, BattleCard, BattleCard])
+
+activate Deck
+
+  Deck->deque: clear()
+
+  activate deque
+
+  deactivateafter deque
+
+  loop for card in ordered_cards
+
+  Deck->deque:append(card)
+
+  activate deque
+
+  deactivateafter deque
+
+  end
+
+deactivate Deck
+
+Empty<--Deck: deck: Deck
+
+deactivate Deck

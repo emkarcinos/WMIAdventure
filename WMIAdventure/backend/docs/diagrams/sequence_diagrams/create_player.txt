@@ -29,6 +29,8 @@ PlayerFactory->Deck:create(deck_model)
 
 activate Deck
 
+ref over Deck: Create Deck
+
 PlayerFactory<--Deck: deck
 
 deactivate Deck
