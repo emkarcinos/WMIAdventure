@@ -46,6 +46,10 @@ class DeckTestCase(TestCase):
         # Assert card is inserted at the back of the cards queue when you retrieve it.
         self.assertIs(card, list(self.attacker_battle_deck.cards_queue)[-1])
 
+    def test_size(self):
+        expected_size = 5
+        self.assertEqual(self.attacker_battle_deck.size(), expected_size)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
