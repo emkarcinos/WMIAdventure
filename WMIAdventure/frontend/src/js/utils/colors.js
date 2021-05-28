@@ -22,6 +22,8 @@ const colors = {
     ui06: '#232735',
     ui07: '#000000',
 
+    uiBlue: '#2D9CDB',
+
     ui07trans: '#00000066',
 
     // Hover
