@@ -8,7 +8,7 @@ const P = styled.p`
   justify-content: center;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid ${({theme}) => theme.colors.borderLine};
   position: relative;
   
   ::before {

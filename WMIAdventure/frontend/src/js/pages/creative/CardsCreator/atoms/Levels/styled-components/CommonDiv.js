@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import Div from './Div';
 
 const CommonDiv = styled(Div)`
-  background-color: ${({active}) => active ? '#6FCF97' : '#E0E0E0'};
-  color: ${({active}) => active ? '#FFF' : '#000'};
+  background-color: ${({active, theme}) => active ? theme.colors.common : theme.colors.grey2};
+  color: ${({active, theme}) => active ? theme.colors.ui01 : theme.colors.ui07};
 `;
 
 export default CommonDiv;

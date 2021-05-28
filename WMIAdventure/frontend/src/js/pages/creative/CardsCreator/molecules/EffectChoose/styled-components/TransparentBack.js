@@ -9,7 +9,7 @@ const TransparentBack = styled.div`
   justify-content: center;
   align-items: center;
   
-  background-color: ${({theme}) => theme.colors.ui07}44;
+  background-color: ${({theme}) => theme.colors.transBack};
   width: 100%;
   height: 100%;
   z-index: 3;

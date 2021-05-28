@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-function dotColor(rank) {
+function dotColor(rank, theme) {
     if(rank === 1)
-        return '#56CCF2';
+        return theme.colors.common;
     if(rank === 2)
-        return '#F2C94C';
+        return theme.colors.gold;
     if(rank === 3)
-        return '#BB6BD9';
+        return theme.colors.epic;
 }
 
 const Button = styled.button`
@@ -29,7 +29,7 @@ const Button = styled.button`
     top: 4px;
     left: 30%;
     border-radius: 50%;
-    background-color: ${({rank}) => dotColor(rank)};
+    background-color: ${({rank, theme}) => dotColor(rank, theme)};
   }
 `;
 
