@@ -18,6 +18,7 @@ const Button = styled.button`
   background: transparent;
   position: relative;
   width: 100%;
+  height: 100%;
   text-align: center;
   
   :before {
@@ -26,7 +27,7 @@ const Button = styled.button`
     width: 12px;
     height: 12px;
     position: absolute;
-    top: 4px;
+    top: 14px;
     left: 30%;
     border-radius: 50%;
     background-color: ${({rank, theme}) => dotColor(rank, theme)};

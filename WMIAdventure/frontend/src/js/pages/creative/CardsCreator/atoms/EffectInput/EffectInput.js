@@ -24,39 +24,47 @@ class EffectInput extends React.Component {
         }
     }
 
+    powerRenderHandler = () => {
+        if(this.props.hasModifier) {
+            return (
+                <Div marginBottom>
+                    <P>
+                        <Label marginRight htmlFor={`${this.props.id}-power`}>
+                            Moc
+                        </Label>
+                        <InputNumber id={`${this.props.id}-power`} name='power' type='number' />
+                    </P>
+                    <P>
+                        <Label marginRight htmlFor={`${this.props.id}-randomize`}>
+                            Losowość
+                        </Label>
+                        <InputNumber id={`${this.props.id}-randomize`} name='randomize' type='number' />
+                    </P>
+                </Div>
+            );
+        }
+    }
+
     render() {
         return (
             <Fieldset>
                 <Header>
-                    Damage
+                    {this.props.name}
                 </Header>
-                <Div marginBottom>
-                    <P>
-                        <Label marginRight>
-                            Moc
-                        </Label>
-                        <InputNumber type='number' />
-                    </P>
-                    <P>
-                        <Label marginRight>
-                            Losowość
-                        </Label>
-                        <InputNumber type='number' />
-                    </P>
-                </Div>
+                {this.powerRenderHandler}
                 <Div>
                     <Label>
                         Cel
                     </Label>
                     <P radioLine>
-                        <Label marginRight checked={this.state.checkedPlayer} htmlFor='target1'>
+                        <Label marginRight checked={this.state.checkedPlayer} htmlFor={`${this.props.id}-target1`}>
                             Gracz
                         </Label>
-                        <InputRadio id='target1' name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
-                        <Label checked={this.state.checkedEnemy} htmlFor='target2'>
+                        <InputRadio id={`${this.props.id}-target1`} name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
+                        <Label checked={this.state.checkedEnemy} htmlFor={`${this.props.id}-target2`}>
                             Przeciwnik
                         </Label>
-                        <InputRadio id='target2' name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
+                        <InputRadio id={`${this.props.id}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
                     </P>
                 </Div>
             </Fieldset>

@@ -37,7 +37,7 @@ class EffectChoose extends React.Component {
                             this.props.effectsFromApi.map((effect) => {
                                 return (
                                   <React.Fragment key={`effect-${effect.id}`}>
-                                      <Effect name={effect.name} tooltip={effect.tooltip} />
+                                      <Effect name={effect.name} tooltip={effect.tooltip} chosenEffectsHandler={this.props.chosenEffectsHandler} />
                                   </React.Fragment>
                                 );
                             })

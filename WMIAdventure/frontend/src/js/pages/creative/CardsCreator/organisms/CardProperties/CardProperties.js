@@ -16,8 +16,8 @@ class CardProperties extends React.Component {
         createGoldLevel: false,
         createEpicLevel: false,
         activeCardRank: 0,
-
         showEffectChoose: false,
+        chosenEffects: [[], [], []],
     }
 
     showLevelChooseHandler = (event) => {
@@ -80,6 +80,11 @@ class CardProperties extends React.Component {
         this.setState({showEffectChoose: false});
     }
 
+    chosenEffectsHandler = (event) => {
+        event.preventDefault();
+        console.log(event);
+    }
+
     render() {
         return (
             <>
@@ -94,6 +99,7 @@ class CardProperties extends React.Component {
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
                     activeCardRank={this.state.activeCardRank}
                     effectsFromApi={this.props.effectsFromApi}
+                    chosenEffectsHandler={this.chosenEffectsHandler}
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <CostInputs activeCardRank={this.state.activeCardRank}
