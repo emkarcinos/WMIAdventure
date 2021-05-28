@@ -10,17 +10,17 @@ activate Battle
 
 # Setup battle
 
-activate Battle
-
 Battle->Battle: set_up_battle()
+
+activate Battle
 
 ## Record initial battle state
 
-activate ProcessRecorder
-
 Battle->ProcessRecorder: record_turn(attacker: Player, defender: Player)
 
-deactivate ProcessRecorder
+activate ProcessRecorder
+
+deactivateafter ProcessRecorder
 
 deactivate Battle
 
@@ -28,21 +28,21 @@ deactivate Battle
 
 loop while not is_finished()
 
-activate Battle
-
 Battle->Battle: turn()
+
+activate Battle
 
 ## Call coordinator to coordinate next turn
 
-activate Coordinator
-
 Battle->Coordinator: next_turn()
+
+activate Coordinator
 
 ### Get next Player from TurnsQueue
 
-activate TurnsQueue
-
 Coordinator->TurnsQueue: turn()
+
+activate TurnsQueue
 
 Coordinator<--TurnsQueue: current_player: Player
 
@@ -50,9 +50,9 @@ deactivate TurnsQueue
 
 ### Get opponent
 
-activate Coordinator
-
 Coordinator->Coordinator: get_players_opponent(current_player)
+
+activate Coordinator
 
 Coordinator<--Coordinator: opponent: Player
 
@@ -60,9 +60,9 @@ deactivate Coordinator
 
 ### Call Player to use card
 
-activate current_player - Player
-
 Coordinator->current_player - Player: use_card()
+
+activate current_player - Player
 
 ref over current_player - Player: UseCard
 
@@ -74,9 +74,9 @@ deactivate current_player - Player
 
 loop for effect in used_effects
 
-activate Effect
-
 Coordinator->Effect: activate(current_player, opponent, turnsQueue)
+
+activate Effect
 
 ref over Effect: Activate Effect
 
@@ -88,13 +88,12 @@ end
 
 ## Call ProcessRecorder to record this turn
 
-activate ProcessRecorder
-
 Battle->ProcessRecorder: record_turn(attacker, defender)
 
-deactivate ProcessRecorder
+activate ProcessRecorder
+
+deactivateafter ProcessRecorder
 
 end
-
 
 deactivate Battle
