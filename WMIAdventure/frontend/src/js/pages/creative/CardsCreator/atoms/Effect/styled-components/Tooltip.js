@@ -8,6 +8,7 @@ const Tooltip = styled.p`
   margin: 0;
   max-width: 260px;
   line-height: 16px;
+  text-align: start;
 `;
 
 export default Tooltip;

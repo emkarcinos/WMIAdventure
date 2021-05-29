@@ -7,6 +7,7 @@ const Name = styled.p`
   padding: 0;
   margin: 0 0 6px 0;
   max-width: 280px;
+  text-align: start;
 `;
 
 export default Name;

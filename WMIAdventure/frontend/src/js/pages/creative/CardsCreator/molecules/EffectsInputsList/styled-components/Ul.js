@@ -5,9 +5,8 @@ const Ul = styled.ul`
   margin: 0;
   list-style: none;
 
-  display: grid;
   grid-template-columns: auto;
-  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 `;
 
 export default Ul;

@@ -8,6 +8,7 @@ import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
 import EffectsInputsList from '../../molecules/EffectsInputsList';
 import EffectChoose from '../../molecules/EffectChoose';
+import Scroll from './styled-components/Scroll';
 
 class CardProperties extends React.Component {
     state = {
@@ -16,8 +17,8 @@ class CardProperties extends React.Component {
         createGoldLevel: false,
         createEpicLevel: false,
         activeCardRank: 0,
-
         showEffectChoose: false,
+        chosenEffects: [[], [], []],
     }
 
     showLevelChooseHandler = (event) => {
@@ -80,6 +81,24 @@ class CardProperties extends React.Component {
         this.setState({showEffectChoose: false});
     }
 
+    chosenEffectsHandler = (event, rank, effect) => {
+        event.preventDefault();
+        let newList = this.state.chosenEffects.slice();
+        if(!newList[rank - 1].includes(effect))
+            newList[rank - 1].push(effect);
+        this.setState({chosenEffects: newList});
+        this.hideEffectChooseHandler(event);
+    }
+
+    removeChosenEffectHandler = (event, rank, effect) => {
+        event.preventDefault();
+        let newList = this.state.chosenEffects.slice();
+        newList[rank - 1] = newList[rank - 1].filter(function (elem) {
+            return elem !== effect;
+        });
+        this.setState({chosenEffects: newList});
+    }
+
     render() {
         return (
             <>
@@ -94,17 +113,22 @@ class CardProperties extends React.Component {
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
                     activeCardRank={this.state.activeCardRank}
                     effectsFromApi={this.props.effectsFromApi}
+                    chosenEffectsHandler={this.chosenEffectsHandler}
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
-                    <CostInputs activeCardRank={this.state.activeCardRank}
-                                createGoldLevel={this.state.createGoldLevel}
-                                createEpicLevel={this.state.createEpicLevel}
-                                levelCostValues={this.props.levelCostValues}
-                                levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                    <EffectsInputsList
-                        activeCardRank={this.state.activeCardRank}
-                        showEffectChooseHandler={this.showEffectChooseHandler} />
-                    <Div>
+                    <Scroll>
+                        <CostInputs activeCardRank={this.state.activeCardRank}
+                                    createGoldLevel={this.state.createGoldLevel}
+                                    createEpicLevel={this.state.createEpicLevel}
+                                    levelCostValues={this.props.levelCostValues}
+                                    levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                        <EffectsInputsList
+                            activeCardRank={this.state.activeCardRank}
+                            showEffectChooseHandler={this.showEffectChooseHandler}
+                            chosenEffects={this.state.chosenEffects}
+                            removeChosenEffectHandler={this.removeChosenEffectHandler} />
+                    </Scroll>
+                    <Div activeCardRank={this.state.activeCardRank}>
                         <P>
                             Poziomy:
                         </P>

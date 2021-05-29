@@ -1,19 +1,19 @@
 import React from 'react';
-import Li from './styled-components/Li';
 import Name from './styled-components/Name';
 import Tooltip from './styled-components/Tooltip';
+import Button from './styled-components/Button';
 
 class Effect extends React.Component {
     render() {
         return (
-            <Li>
+            <Button onClick={(event) => this.props.chosenEffectsHandler(event, this.props.rank, this.props.effect)}>
                 <Name>
                     {this.props.name}
                 </Name>
                 <Tooltip>
                     {this.props.tooltip}
                 </Tooltip>
-            </Li>
+            </Button>
         );
     }
 }
