@@ -32,19 +32,19 @@ class TwoTimesExecuteEffectTestCase(TestCase):
 
     def test_integration_with_deck(self):
         # This card executes the effect
-        top_card = self.card_owner.deck.get_card()
+        card_with_effect = self.card_owner.deck.get_card()
         self.effect.on_activation(self.card_owner, None)
 
-        # Next two cards should be identical, and the first one should not be the same as the first.
-        top_card_after = self.card_owner.deck.get_card()
-        self.assertIsNot(top_card, top_card_after)
-
+        # Next card can't be the same one as the one that held the effect
+        first_card = self.card_owner.deck.get_card()
+        self.assertIsNot(card_with_effect, first_card)
+        # Next card has to be the same as the previous one
         second_card = self.card_owner.deck.get_card()
-        self.assertIs(top_card_after, second_card)
+        self.assertIs(first_card, second_card)
 
         # This one should be different
         third_card = self.card_owner.deck.get_card()
-        self.assertIsNot(top_card, third_card)
+        self.assertIsNot(first_card, third_card)
 
     @classmethod
     def tearDownClass(cls) -> None:
