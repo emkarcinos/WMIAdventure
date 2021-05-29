@@ -1,5 +1,7 @@
+from copy import copy
 from typing import List, Union
 
+from battle.businesslogic.card_states.CardState import CardState
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card, CardEffect
@@ -10,6 +12,7 @@ class BattleCard:
     """
 
     """
+    states: List[CardState]
 
     def __init__(self, card_model: Card):
         """
@@ -24,16 +27,38 @@ class BattleCard:
         for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
+        self.states = []
+
     def use(self) -> List[Effect]:
         """
-        Updates card's buffs and returns list of card's effects to be executed in battle simulation.
+        Updates card's effects and states.
         @return: List of effects to be executed by battle simulator.
         """
 
-        self.__update_effects__()
-        return self.effects
+        self.__update__()
+
+        effects_to_use = copy(self.effects)
+
+        for state in self.states:
+            state.card_used(effects_to_use)
+
+        return effects_to_use
+
+    def add_state(self, state: CardState):
+        """
+        Adds state to card
+        :param state: State to add.
+        :return: None.
+        """
+
+        self.states.append(state)
 
     def __update_effects__(self) -> None:
+        """
+        Updates card's effects.
+        :return: None.
+        """
+
         for effect in self.effects:
             effect.update()
 
@@ -49,3 +74,34 @@ class BattleCard:
             card_type = effect.effect_model.card_effect.id
             if effect_type is None or card_type == effect_type:
                 effect.add_buff(buff)
+
+    def __update_states__(self):
+        """
+        Updates card's states and removes not active ones.
+        :return: None.
+        """
+
+        for state in self.states:
+            state.update()
+
+        self.__remove_inactive_states__()
+
+    def __update__(self):
+        """
+        Updates card by updating effects and states.
+        :return: None.
+        """
+
+        self.__update_effects__()
+        self.__update_states__()
+
+    def __remove_inactive_states__(self):
+        """
+        Removes states that are not active.
+        :return: None.
+        """
+
+        state: CardState
+        for state in self.states:
+            if not state.active:
+                self.states.remove(state)
