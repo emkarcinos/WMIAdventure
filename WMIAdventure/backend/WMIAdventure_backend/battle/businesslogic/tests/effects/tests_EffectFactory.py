@@ -4,7 +4,7 @@ from battle.businesslogic.effects.EffectFactory import EffectFactory
 from battle.businesslogic.tests.Creator import Creator
 
 
-class BattleCardEffectFactoryTestCase(TestCase):
+class EffectFactoryTestCase(TestCase):
     def setUp(self) -> None:
         self.instance = EffectFactory.get_instance()
 

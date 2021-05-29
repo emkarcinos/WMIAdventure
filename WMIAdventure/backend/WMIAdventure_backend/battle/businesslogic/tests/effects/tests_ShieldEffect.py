@@ -7,7 +7,7 @@ from ...Deck import Deck
 from ...Player import Player
 
 
-class DmgEffectTestCase(TestCase):
+class ShieldEffectTestCase(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.creator = Creator()

@@ -7,7 +7,7 @@ from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
 
 
-class DmgEffectTestCase(TestCase):
+class HealEffectTestCase(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.creator = Creator()
@@ -15,7 +15,7 @@ class DmgEffectTestCase(TestCase):
         u1 = cls.creator.get_user_models()[0]
         d1 = cls.creator.get_decks()[0]
         cls.card_owner = Player(u1.id, Deck(d1))
-        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.SHIELD)
+        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.HEAL)
 
         target = CardLevelEffects.Target.PLAYER
 
