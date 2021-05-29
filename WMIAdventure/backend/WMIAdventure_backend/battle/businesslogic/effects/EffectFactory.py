@@ -7,6 +7,8 @@ from battle.businesslogic.effects.HealEffect import HealEffect
 from battle.businesslogic.effects.RandomizeDeckEffect import RandomizeDeckEffect
 from battle.businesslogic.effects.ShieldEffect import ShieldEffect
 from battle.businesslogic.effects.SkipCardEffect import SkipCardEffect
+from battle.businesslogic.effects.TrueDamageEffect import TrueDamageEffect
+from battle.businesslogic.effects.TwoTimesExecuteEffect import TwoTimesExecuteEffect
 from cards.models import CardLevelEffects, CardEffect
 
 
@@ -35,7 +37,9 @@ class EffectFactory:
                 CardEffect.EffectId.EMPOWER_HEAL: EmpowerHeal(effect_model),
                 CardEffect.EffectId.EMPOWER_SHIELD: EmpowerShield(effect_model),
                 CardEffect.EffectId.SKIP: SkipCardEffect(effect_model),
-                CardEffect.EffectId.SWAP_RND: RandomizeDeckEffect(effect_model)
+                CardEffect.EffectId.SWAP_RND: RandomizeDeckEffect(effect_model),
+                CardEffect.EffectId.DOUBLEACTION: TwoTimesExecuteEffect(effect_model),
+                CardEffect.EffectId.TRUE_DMG: TrueDamageEffect(effect_model)
 
             }
 
