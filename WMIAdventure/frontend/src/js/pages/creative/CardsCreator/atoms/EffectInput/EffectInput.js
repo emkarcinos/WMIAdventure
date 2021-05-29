@@ -6,6 +6,7 @@ import P from './styled-components/P';
 import Label from './styled-components/Label';
 import InputNumber from './styled-components/InputNumber';
 import InputRadio from './styled-components/InputRadio';
+import Close from './styled-components/Close';
 
 class EffectInput extends React.Component {
 
@@ -59,6 +60,7 @@ class EffectInput extends React.Component {
                         <InputRadio id={`${this.props.id}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
                     </P>
                 </Div>
+                <Close />
             </Fieldset>
         );
     }

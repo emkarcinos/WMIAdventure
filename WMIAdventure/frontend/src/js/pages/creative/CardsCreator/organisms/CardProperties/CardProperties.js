@@ -90,6 +90,10 @@ class CardProperties extends React.Component {
         this.hideEffectChooseHandler(event);
     }
 
+    removeChosenEffectHandler = () => {
+
+    }
+
     render() {
         return (
             <>
