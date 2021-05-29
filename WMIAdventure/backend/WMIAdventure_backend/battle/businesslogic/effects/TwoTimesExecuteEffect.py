@@ -1,4 +1,3 @@
-from battle.businesslogic.Player import Player
 from battle.businesslogic.effects.Effect import Effect
 
 
@@ -9,7 +8,7 @@ class TwoTimesExecuteEffect(Effect):
     two instances of the card in the deck. Actual behavior is just that it gets executed twice, hence the name.
     """
 
-    def on_activation(self, target: Player, turns_queue):
+    def on_activation(self, target, turns_queue):
         deck = target.deck
         next_card = deck.lookup()
 
