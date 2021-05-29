@@ -3,7 +3,7 @@ import Ul from './Ul';
 
 function rankHandlerEpic(rank) {
     if(rank === 3)
-        return 'flex';
+        return 'grid';
     return 'none'
 }
 

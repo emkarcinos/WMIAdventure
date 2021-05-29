@@ -8,6 +8,7 @@ import Levels from '../../atoms/Levels';
 import CostInputs from '../../atoms/CostInputs';
 import EffectsInputsList from '../../molecules/EffectsInputsList';
 import EffectChoose from '../../molecules/EffectChoose';
+import Scroll from './styled-components/Scroll';
 
 class CardProperties extends React.Component {
     state = {
@@ -106,16 +107,18 @@ class CardProperties extends React.Component {
                     chosenEffectsHandler={this.chosenEffectsHandler}
                 />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
-                    <CostInputs activeCardRank={this.state.activeCardRank}
-                                createGoldLevel={this.state.createGoldLevel}
-                                createEpicLevel={this.state.createEpicLevel}
-                                levelCostValues={this.props.levelCostValues}
-                                levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                    <EffectsInputsList
-                        activeCardRank={this.state.activeCardRank}
-                        showEffectChooseHandler={this.showEffectChooseHandler}
-                        chosenEffects={this.state.chosenEffects} />
-                    <Div>
+                    <Scroll>
+                        <CostInputs activeCardRank={this.state.activeCardRank}
+                                    createGoldLevel={this.state.createGoldLevel}
+                                    createEpicLevel={this.state.createEpicLevel}
+                                    levelCostValues={this.props.levelCostValues}
+                                    levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                        <EffectsInputsList
+                            activeCardRank={this.state.activeCardRank}
+                            showEffectChooseHandler={this.showEffectChooseHandler}
+                            chosenEffects={this.state.chosenEffects} />
+                    </Scroll>
+                    <Div activeCardRank={this.state.activeCardRank}>
                         <P>
                             Poziomy:
                         </P>

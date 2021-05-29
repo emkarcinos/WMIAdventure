@@ -3,7 +3,7 @@ import Ul from './Ul';
 
 function rankHandlerGold(rank) {
     if(rank === 2)
-        return 'flex';
+        return 'grid';
     return 'none'
 }
 

@@ -5,9 +5,8 @@ const Ul = styled.ul`
   margin: 0;
   list-style: none;
 
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  grid-template-columns: auto;
+  grid-row-gap: 10px;
 `;
 
 export default Ul;

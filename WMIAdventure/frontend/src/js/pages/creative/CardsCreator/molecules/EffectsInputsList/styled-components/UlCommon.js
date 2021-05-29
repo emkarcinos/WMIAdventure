@@ -3,7 +3,7 @@ import Ul from './Ul';
 
 function rankHandlerCommon(rank) {
     if(rank === 1)
-        return 'flex';
+        return 'grid';
     return 'none'
 }
 
