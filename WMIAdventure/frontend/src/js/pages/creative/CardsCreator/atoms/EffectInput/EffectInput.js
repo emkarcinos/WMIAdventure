@@ -60,7 +60,7 @@ class EffectInput extends React.Component {
                         <InputRadio id={`${this.props.id}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
                     </P>
                 </Div>
-                <Close />
+                <Close onClick={(event) => this.props.removeChosenEffectHandler(event, this.props.rank, this.props.effect)}/>
             </Fieldset>
         );
     }

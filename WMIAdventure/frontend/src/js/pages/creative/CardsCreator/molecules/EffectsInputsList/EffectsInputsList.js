@@ -22,7 +22,10 @@ class EffectsInputsList extends React.Component {
                                     <EffectInput key={`effect-${effect.id}`}
                                         id={effect.id} name={effect.name}
                                         tooltip={effect.tooltip}
-                                        has_modifier={effect.has_modifier} />
+                                        has_modifier={effect.has_modifier}
+                                        rank={1}
+                                         effect={effect}
+                                        removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
                                 );
                             })
                         }
@@ -32,9 +35,12 @@ class EffectsInputsList extends React.Component {
                             this.props.chosenEffects[1].map((effect) => {
                                 return (
                                     <EffectInput key={`effect-${effect.id}`}
-                                                 id={effect.id} name={effect.name}
-                                                 tooltip={effect.tooltip}
-                                                 has_modifier={effect.has_modifier} />
+                                         id={effect.id} name={effect.name}
+                                         tooltip={effect.tooltip}
+                                         has_modifier={effect.has_modifier}
+                                         rank={2}
+                                         effect={effect}
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
                                 );
                             })
                         }
@@ -44,9 +50,12 @@ class EffectsInputsList extends React.Component {
                             this.props.chosenEffects[2].map((effect) => {
                                 return (
                                     <EffectInput key={`effect-${effect.id}`}
-                                                 id={effect.id} name={effect.name}
-                                                 tooltip={effect.tooltip}
-                                                 has_modifier={effect.has_modifier} />
+                                         id={effect.id} name={effect.name}
+                                         tooltip={effect.tooltip}
+                                         has_modifier={effect.has_modifier}
+                                         rank={3}
+                                         effect={effect}
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
                                 );
                             })
                         }

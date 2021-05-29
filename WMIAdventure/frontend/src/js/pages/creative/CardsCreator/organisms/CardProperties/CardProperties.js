@@ -90,8 +90,13 @@ class CardProperties extends React.Component {
         this.hideEffectChooseHandler(event);
     }
 
-    removeChosenEffectHandler = () => {
-
+    removeChosenEffectHandler = (event, rank, effect) => {
+        event.preventDefault();
+        let newList = this.state.chosenEffects.slice();
+        newList[rank - 1] = newList[rank - 1].filter(function (elem) {
+            return elem !== effect;
+        });
+        this.setState({chosenEffects: newList});
     }
 
     render() {
@@ -120,7 +125,8 @@ class CardProperties extends React.Component {
                         <EffectsInputsList
                             activeCardRank={this.state.activeCardRank}
                             showEffectChooseHandler={this.showEffectChooseHandler}
-                            chosenEffects={this.state.chosenEffects} />
+                            chosenEffects={this.state.chosenEffects}
+                            removeChosenEffectHandler={this.removeChosenEffectHandler} />
                     </Scroll>
                     <Div activeCardRank={this.state.activeCardRank}>
                         <P>
