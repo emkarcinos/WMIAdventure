@@ -16,8 +16,11 @@ class BattleCardEffectFactoryTestCase(TestCase):
         self.assertEqual(self.instance, EffectFactory.get_instance())
 
     def test_creation(self):
-        # TODO: Implement this test after BattleCardEffectFactory.create() method is implemented
-        pass
+        deck = self.creator.get_attacker_deck()
+        card_model = deck.card1.card
+        effect = card_model.effects.all()[0]
+        returned_effect = self.instance.create(effect)
+        self.assertIs(returned_effect.effect_model, effect)
 
     @classmethod
     def tearDownClass(cls):
