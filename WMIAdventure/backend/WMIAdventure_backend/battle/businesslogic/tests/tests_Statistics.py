@@ -49,6 +49,19 @@ class StatisticsTestCase(TestCase):
 
         self.assertEqual(self.statistics.armour, self.statistics.MAX_ARMOUR)
 
+    def test_true_damage(self):
+        initial_hp = 50
+        self.statistics.hp = initial_hp
+        damage_1 = 20
+
+        self.statistics.deal_true_damage(damage_1)
+        self.assertEqual(initial_hp - damage_1, self.statistics.hp)
+
+        # Check if HP won't go negative
+        damage_2 = 1000
+        self.statistics.deal_true_damage(damage_2)
+        self.assertEqual(0, self.statistics.hp)
+
     def test_armour_add(self):
         armour_buff = 10.0
         self.statistics.add_armour(armour_buff)

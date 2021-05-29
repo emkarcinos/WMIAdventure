@@ -24,7 +24,8 @@ class Statistics:
         # Some of the damage was blocked by the armour, so we subtract it from the damage
         # If the armour blocked more that the amount, we don't alter hp.
         penetrated_damage = max(0.0, amount - armour_damage)
-        self.hp -= penetrated_damage
+
+        self.deal_true_damage(penetrated_damage)
 
     def heal(self, amount: float) -> None:
         """
@@ -41,3 +42,12 @@ class Statistics:
         """
 
         self.armour = min(self.MAX_ARMOUR, self.armour + amount)
+
+    def deal_true_damage(self, amount: float):
+        """
+        Deals damage that ignores the armour
+        """
+
+        # We can't do more damage than the player has health
+        actual_damage = min(self.hp, amount)
+        self.hp -= actual_damage
