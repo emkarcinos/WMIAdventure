@@ -80,9 +80,13 @@ class CardProperties extends React.Component {
         this.setState({showEffectChoose: false});
     }
 
-    chosenEffectsHandler = (event) => {
+    chosenEffectsHandler = (event, rank, effect) => {
         event.preventDefault();
-        console.log(event);
+        let newList = this.state.chosenEffects.slice();
+        if(!newList[rank - 1].includes(effect))
+            newList[rank - 1].push(effect);
+        this.setState({chosenEffects: newList});
+        this.hideEffectChooseHandler(event);
     }
 
     render() {
@@ -109,7 +113,8 @@ class CardProperties extends React.Component {
                                 levelCostValuesHandler={this.props.levelCostValuesHandler} />
                     <EffectsInputsList
                         activeCardRank={this.state.activeCardRank}
-                        showEffectChooseHandler={this.showEffectChooseHandler} />
+                        showEffectChooseHandler={this.showEffectChooseHandler}
+                        chosenEffects={this.state.chosenEffects} />
                     <Div>
                         <P>
                             Poziomy:

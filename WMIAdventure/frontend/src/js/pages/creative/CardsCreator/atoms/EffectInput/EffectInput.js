@@ -24,10 +24,13 @@ class EffectInput extends React.Component {
         }
     }
 
-    powerRenderHandler = () => {
-        if(this.props.hasModifier) {
-            return (
-                <Div marginBottom>
+    render() {
+        return (
+            <Fieldset>
+                <Header>
+                    {this.props.name}
+                </Header>
+                <Div marginBottom show={this.props.has_modifier}>
                     <P>
                         <Label marginRight htmlFor={`${this.props.id}-power`}>
                             Moc
@@ -41,18 +44,7 @@ class EffectInput extends React.Component {
                         <InputNumber id={`${this.props.id}-randomize`} name='randomize' type='number' />
                     </P>
                 </Div>
-            );
-        }
-    }
-
-    render() {
-        return (
-            <Fieldset>
-                <Header>
-                    {this.props.name}
-                </Header>
-                {this.powerRenderHandler}
-                <Div>
+                <Div show>
                     <Label>
                         Cel
                     </Label>

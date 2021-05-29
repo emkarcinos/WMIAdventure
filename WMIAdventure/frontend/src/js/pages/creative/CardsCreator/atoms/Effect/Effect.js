@@ -6,7 +6,7 @@ import Button from './styled-components/Button';
 class Effect extends React.Component {
     render() {
         return (
-            <Button onClick={this.props.chosenEffectsHandler}>
+            <Button onClick={(event) => this.props.chosenEffectsHandler(event, this.props.rank, this.props.effect)}>
                 <Name>
                     {this.props.name}
                 </Name>
