@@ -39,15 +39,6 @@ class EmpowerCardEffectTestCase(TestCase):
         affected_effect = affected_card.effects[0]
         self.assertEqual(len(affected_effect.buffs), 1)
 
-    def test_empower_specific(self):
-        next_card_effect_id = self.card_owner.deck.lookup(0).effects[0].effect_model.card_effect.id
-        effect_specific_to_next_card = EmpowerCardEffect(self.effect_model, CardEffect.EffectId(next_card_effect_id))
-        effect_specific_to_next_card.on_activation(self.card_owner, None)
-
-        affected_card = self.card_owner.deck.lookup()
-
-        affected_effect = affected_card.effects[0]
-        self.assertEqual(len(affected_effect.buffs), 1)
 
 
     @classmethod
