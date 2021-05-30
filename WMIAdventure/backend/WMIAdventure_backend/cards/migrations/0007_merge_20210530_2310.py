@@ -2,37 +2,6 @@
 
 from django.db import migrations
 
-from cards.models import CardEffect, CardLevel
-
-
-def insert_card_effects_values_to_db(apps, schema_editor):
-    CardEffect.objects.all().delete()
-    for value in CardEffect.EffectId.values:
-        item = CardEffect.objects.create(id=value)
-        item.save()
-
-    # Modifying has_modifier values for some effects
-    # One may also use views to modify them, we just set them here initially.
-    def change_modifier_true(effect: CardEffect.EffectId):
-        effect = CardEffect.objects.get(pk=effect.value)
-        effect.has_modifier = True
-        effect.save()
-
-    change_modifier_true(CardEffect.EffectId.DMG)
-    change_modifier_true(CardEffect.EffectId.SHIELD)
-    change_modifier_true(CardEffect.EffectId.HEAL)
-
-
-def insert_card_levels_values_to_db(apps, schema_editor):
-    """
-    Inserts all possible CardLevel records to database.
-    """
-
-    CardLevel.objects.all().delete()
-    for value in CardLevel.Level.values:
-        cLvl = CardLevel.objects.create(level=value)
-        cLvl.save()
-
 
 class Migration(migrations.Migration):
 
@@ -42,6 +11,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(insert_card_levels_values_to_db),
-        migrations.RunPython(insert_card_effects_values_to_db)
     ]
