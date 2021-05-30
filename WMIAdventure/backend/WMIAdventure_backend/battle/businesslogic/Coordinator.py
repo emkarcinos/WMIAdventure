@@ -23,3 +23,4 @@ class Coordinator:
         used_effects = current_player.use_card()
         for effect in used_effects:
             effect.activate(current_player, self.get_players_opponent(current_player), self.turnsQueue)
+

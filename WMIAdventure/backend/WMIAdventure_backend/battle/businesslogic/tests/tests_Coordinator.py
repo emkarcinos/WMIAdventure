@@ -10,9 +10,12 @@ class CoordinatorTestCase(TestCase):
     def setUpClass(cls) -> None:
         cls.creator = Creator()
         cls.profiles = cls.creator.get_user_profile_models()
-        cls.attacker = PlayerFactory.get_instance().create(cls.profiles[0])
-        cls.defender = PlayerFactory.get_instance().create(cls.profiles[1])
-        cls.coordinator = Coordinator(cls.attacker, cls.defender)
+
+    def setUp(self) -> None:
+        self.attacker = PlayerFactory.get_instance().create(self.profiles[0])
+        self.defender = PlayerFactory.get_instance().create(self.profiles[1])
+
+        self.coordinator = Coordinator(self.attacker, self.defender)
 
     def test_next_turn(self):
         self.coordinator.next_turn()
