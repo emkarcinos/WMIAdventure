@@ -23,6 +23,7 @@ class Player:
         self.deck = deck
 
         self.statistics = Statistics()
+        self.turns_stopped = 0
 
     def get_hp(self) -> int:
         return self.statistics.hp
