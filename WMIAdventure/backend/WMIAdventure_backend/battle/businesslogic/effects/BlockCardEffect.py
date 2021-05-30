@@ -8,7 +8,7 @@ class BlockCardEffect(Effect):
     Blocks card for given amount of turns.
     """
 
-    def __init__(self, effect_model: CardLevelEffects, turns_blocked: int=1):
+    def __init__(self, effect_model: CardLevelEffects, turns_blocked: int = 1):
         super().__init__(effect_model)
         self.turns_blocked = turns_blocked
 

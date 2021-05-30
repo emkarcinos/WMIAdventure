@@ -9,7 +9,7 @@ class CardState:
     turns_active: int
     active: bool
 
-    def __init__(self, turns_active: int):
+    def __init__(self, turns_active: int = 1):
         """
         Creates CardState instance.
         :param turns_active: How many turns will this state last..
