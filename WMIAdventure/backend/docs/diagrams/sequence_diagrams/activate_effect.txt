@@ -1,0 +1,34 @@
+title Activate Effect
+
+activate Coordinator
+
+# Activate call
+
+Coordinator->Effect:activate(\n  card_owner: Player, \n  other_player: Player, \n  turns_queue: TurnsQueue\n)
+
+activate Effect
+
+	# Choose target
+
+    Effect->Effect: choose_target(card_owner, other_player)
+
+    activate Effect
+
+    Effect<--Effect: selected_target: Player
+
+    deactivate Effect
+
+    # on_activation call
+
+    Effect->Effect: on_activation(selected_target, turns_queue)
+
+    activate Effect
+
+	note over Effect:on_activation() is method that should be overridden in Effect subclasses.\n\nThere should be concrete effect logic.
+
+
+    deactivate Effect
+
+deactivate Effect
+
+deactivate Coordinator

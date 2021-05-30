@@ -193,7 +193,6 @@ class CardInfoSerializerTestCase(TestCase):
 class CardSerializerTestCase(TestCase):
 
     def setUp(self):
-        self.test_id = 1
         self.info_id = 1
         self.test_level = 1
         self.test_cost = 20
@@ -205,7 +204,7 @@ class CardSerializerTestCase(TestCase):
             self.cardInfo = CardInfo.objects.create(id=self.info_id)
 
     def test_deserialization(self):
-        data = {'id': self.test_id,
+        data = {
                 'info': self.info_id,
                 'level': self.test_level,
                 'next_level_cost': self.test_cost}
@@ -220,7 +219,6 @@ class CardSerializerTestCase(TestCase):
 
         sample = serializer.save()
 
-        self.assertEqual(sample.id, self.test_id)
         self.assertEqual(sample.info.id, self.info_id)
         self.assertEqual(sample.level.level, self.test_level)
         self.assertEqual(sample.next_level_cost, self.test_cost)
@@ -228,7 +226,7 @@ class CardSerializerTestCase(TestCase):
     def test_serialization(self):
         info = CardInfo.objects.get(pk=self.info_id)
         level = CardLevel.objects.get(pk=self.test_level)
-        sample = Card.objects.create(id=self.test_id,
+        sample = Card.objects.create(
                                      info=info,
                                      level=level,
                                      next_level_cost=self.test_cost)
@@ -240,7 +238,6 @@ class CardSerializerTestCase(TestCase):
         actual_info = serializer.data.get('info')
         actual_cost = serializer.data.get('next_level_cost')
 
-        self.assertEqual(actual_id, self.test_id)
         self.assertEqual(actual_level, self.test_level)
         self.assertEqual(actual_info, self.info_id)
         self.assertEqual(actual_cost, self.test_cost)

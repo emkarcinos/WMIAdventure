@@ -49,6 +49,10 @@ class CardEffect(models.Model):
         BLOCK = 7, _("Blokowanie następnej karty")
         EMPOWER = 8, _("Zwiększenie mocy następnej karty")
         SKIP = 9, _("Pomijanie następnej karty")
+        EMPOWER_DMG = 10, _("Zwiększenie obrażeń następnej karty")
+        EMPOWER_SHIELD = 11, _("Zwiększenie mocy tarczy następnej karty")
+        EMPOWER_HEAL = 12, _("Zwiększenie mocy leczenia następnej karty")
+        TRUE_DMG = 13, _("Obrażenia nieuchronne")
 
     id = models.IntegerField(primary_key=True, choices=EffectId.choices, default=EffectId.DMG)
     name = models.CharField(max_length=50)

@@ -1,0 +1,86 @@
+title Create Battle
+
+participant Empty
+participant Battle
+participant PlayerFactory
+participant Coordinator
+participant TurnsQueue
+participant Outcome
+participant ProcessRecorder
+
+# Create Battle call
+
+activate Empty
+
+Empty->Battle: create(attackerModel: UserProfile, defenderModel: UserProfile)
+
+activate Battle
+
+# Get PlayerFactory singleton instance
+
+Battle->PlayerFactory:get_instance()
+
+activate PlayerFactory
+
+deactivateafter PlayerFactory
+
+# Create Players
+
+## Create attacker
+
+Battle->PlayerFactory:create(attacker_model, True)
+
+activate PlayerFactory
+
+ref over PlayerFactory:CreatePlayer
+
+Battle<--PlayerFactory: attacker: Player
+
+
+deactivate PlayerFactory
+
+## Create defender
+
+Battle->PlayerFactory:create(defender_model, False)
+
+activate PlayerFactory
+
+ref over PlayerFactory:CreatePlayer
+
+Battle<--PlayerFactory: defender: Player
+
+deactivate PlayerFactory
+
+# Create Coordinator
+
+Battle->Coordinator: create(attacker, defender)
+
+activate Coordinator
+
+## Create TurnsQueue
+
+Coordinator->TurnsQueue: create(attacker, defender)
+
+activate TurnsQueue
+
+deactivateafter TurnsQueue
+
+deactivate Coordinator
+
+# Create Outcome
+
+Battle->Outcome:create(attacker, defender)
+
+activate Outcome
+
+deactivateafter Outcome
+
+# Create ProcessRecorder
+
+Battle->ProcessRecorder:create()
+
+activate ProcessRecorder
+
+deactivateafter ProcessRecorder
+
+deactivate Battle

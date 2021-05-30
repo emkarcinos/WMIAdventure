@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'IngameUsers',
     'cards',
+    'battle',
     'corsheaders'
 ]
 
