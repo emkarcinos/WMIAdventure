@@ -26,19 +26,6 @@ class CoordinatorTestCase(TestCase):
 
         self.assertEqual(attacker, self.coordinator.get_players_opponent(defender))
 
-    def test_get_not_stopped_player(self):
-        """
-        In this test we test whether current turn belongs to defender.
-        Normally it should be attacker's turn, but we stop him.
-        """
-
-        self.attacker.turns_stopped = 3  # Stop attacker
-
-        expected_player = self.defender
-        actual_player = self.coordinator._get_not_stopped_player()  # Get player that is not stopped.
-
-        self.assertIs(actual_player, expected_player)
-
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()
