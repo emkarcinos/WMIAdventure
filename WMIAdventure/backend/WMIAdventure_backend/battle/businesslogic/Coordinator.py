@@ -18,8 +18,22 @@ class Coordinator:
         return self.defender if player is self.attacker else self.attacker
 
     def next_turn(self) -> None:
-        current_player = self.turnsQueue.turn()
+        current_player = self._get_not_stopped_player()
 
         used_effects = current_player.use_card()
         for effect in used_effects:
             effect.activate(current_player, self.get_players_opponent(current_player), self.turnsQueue)
+
+    def _get_not_stopped_player(self):
+        """
+        Performs "empty" turns of stopped players until gets player who is not stopped.
+        :return: Player who is not stopped and should do turn now.
+        """
+
+        current_player = self.turnsQueue.turn()
+
+        while current_player.turns_stopped > 0:
+            current_player.turns_stopped -= 1
+            current_player = self.turnsQueue.turn()
+
+        return current_player
