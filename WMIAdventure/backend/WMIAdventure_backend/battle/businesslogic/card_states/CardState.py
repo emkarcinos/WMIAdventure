@@ -16,7 +16,7 @@ class CardState:
         """
 
         self.turns_active = turns_active
-        self.active = False
+        self.active = True
 
     def card_used(self, effects_to_use: list[Any]):
         """
@@ -33,6 +33,6 @@ class CardState:
         :return: None
         """
 
-        self.turns_active -= min(0, self.turns_active - 1)
+        self.turns_active -= max(0, self.turns_active - 1)
         if self.turns_active <= 0:
             self.active = False
