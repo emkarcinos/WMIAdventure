@@ -61,12 +61,17 @@ class TurnsQueueTestCase(TestCase):
         """
 
         self.player1.turns_stopped = 3  # Stop player1
+        """
+        Assert that player1 is at the front of queue before calling _perform_turns_of_stopped_players
+        """
+        self.assertIs(self.player1, self.queue.queue[0])
+
         self.queue._perform_turns_of_stopped_players()
 
         expected_player = self.player2
         actual_player = self.queue.queue[0]
 
-        self.assertIs(actual_player, expected_player)
+        self.assertIs(actual_player, expected_player)  # Assert that now player2 is at the front of queue
 
     @classmethod
     def tearDownClass(cls):
