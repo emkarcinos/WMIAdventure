@@ -24,11 +24,17 @@ class BattleCard:
         for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
+        self.turns_blocked = 0
+
     def use(self) -> List[Effect]:
         """
         Updates card's buffs and returns list of card's effects to be executed in battle simulation.
         @return: List of effects to be executed by battle simulator.
         """
+
+        if self.turns_blocked > 0:
+            self.turns_blocked -= 1
+            return []  # If card is blocked it should be executed without effects.
 
         self._update_effects()
         return self.effects
