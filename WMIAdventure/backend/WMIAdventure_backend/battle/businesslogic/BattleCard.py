@@ -6,13 +6,14 @@ from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card, CardEffect
 from .Buff import Buff
+from .card_states.StatesManager import StatesManager
 
 
 class BattleCard:
     """
 
     """
-    states: List[CardState]
+    states_manager: StatesManager
 
     def __init__(self, card_model: Card):
         """
@@ -27,20 +28,23 @@ class BattleCard:
         for effect_model in card_model.effects.all():
             self.effects.append(effects_factory.create(effect_model))
 
-        self.states = []
+        self.states_manager = StatesManager()
 
     def use(self) -> List[Effect]:
         """
-        Updates card's effects and states.
+        Updates card and returns list of effects to use.
         @return: List of effects to be executed by battle simulator.
         """
 
         self.__update__()
 
+        """
+        We copy card's effects list so we can perform various operations on it without loosing effects for all turns. 
+        For example clear effects list only for X turns.
+        """
         effects_to_use = copy(self.effects)
 
-        for state in self.states:
-            state.card_used(effects_to_use)
+        self.states_manager.on_card_use(effects_to_use)
 
         return effects_to_use
 
@@ -51,7 +55,7 @@ class BattleCard:
         :return: None.
         """
 
-        self.states.append(state)
+        self.states_manager.add_state(state)
 
     def __update_effects__(self) -> None:
         """
@@ -75,33 +79,10 @@ class BattleCard:
             if effect_type is None or card_type == effect_type:
                 effect.add_buff(buff)
 
-    def __update_states__(self):
-        """
-        Updates card's states and removes not active ones.
-        :return: None.
-        """
-
-        for state in self.states:
-            state.update()
-
-        self.__remove_inactive_states__()
-
     def __update__(self):
         """
-        Updates card by updating effects and states.
+        Updates card by updating effects.
         :return: None.
         """
 
         self.__update_effects__()
-        self.__update_states__()
-
-    def __remove_inactive_states__(self):
-        """
-        Removes states that are not active.
-        :return: None.
-        """
-
-        state: CardState
-        for state in self.states:
-            if not state.active:
-                self.states.remove(state)
