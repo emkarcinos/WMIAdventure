@@ -11,7 +11,7 @@ from cards.models import CardLevel
 from cards.models import CardLevelEffects
 
 
-class BattleCardEffectTestCase(TestCase):
+class EffectTestCase(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         card_info = CardInfo.objects.create(
@@ -48,24 +48,24 @@ class BattleCardEffectTestCase(TestCase):
         cls.other_player = Player(u1.id, d2)
 
     def setUp(self) -> None:
-        self.battle_effect = Effect(self.effect_model)
+        self.effect = Effect(self.effect_model)
 
     def test_buff_add(self):
-        self.battle_effect.add_buff(Buff(active_turns=0))
-        self.assertEqual(1, len(self.battle_effect.buffs))
+        self.effect.add_buff(Buff(active_turns=0))
+        self.assertEqual(1, len(self.effect.buffs))
 
     def test_remove_expired_buffs(self):
-        self.battle_effect.add_buff(Buff(active_turns=0))
-        self.battle_effect.update_buffs()
-        self.assertEqual(0, len(self.battle_effect.buffs))
+        self.effect.add_buff(Buff(active_turns=0))
+        self.effect.update_buffs()
+        self.assertEqual(0, len(self.effect.buffs))
 
     def test_choose_target(self):
-        chosen_target = self.battle_effect.choose_target(self.card_owner, self.other_player)
+        chosen_target = self.effect.choose_target(self.card_owner, self.other_player)
 
         expected_target = None
-        if self.battle_effect.target == CardLevelEffects.Target.OPPONENT:
+        if self.effect.target == CardLevelEffects.Target.OPPONENT:
             expected_target = self.other_player
-        elif self.battle_effect.target == CardLevelEffects.Target.PLAYER:
+        elif self.effect.target == CardLevelEffects.Target.PLAYER:
             expected_target = self.card_owner
 
         self.assertIs(chosen_target, expected_target)

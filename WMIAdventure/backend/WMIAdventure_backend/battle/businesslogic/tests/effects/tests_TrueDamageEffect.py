@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-from battle.businesslogic.effects.DmgEffect import DmgEffect
 from cards.models import CardLevelEffects, CardEffect
 from ..Creator import Creator
 from ...Deck import Deck
@@ -8,7 +7,7 @@ from ...Player import Player
 from ...effects.TrueDamageEffect import TrueDamageEffect
 
 
-class DmgEffectTestCase(TestCase):
+class TrueDmgEffectTestCase(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.creator = Creator()
@@ -16,7 +15,7 @@ class DmgEffectTestCase(TestCase):
         cls.u1 = cls.creator.get_user_models()[0]
         cls.d1 = cls.creator.get_decks()[0]
 
-        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.DMG)
+        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.TRUE_DMG)
 
         target = CardLevelEffects.Target.PLAYER
 
@@ -41,7 +40,6 @@ class DmgEffectTestCase(TestCase):
         range = self.effect.range
         self.assertGreaterEqual(initial_hp - (pow - range), self.card_owner.get_hp())
         self.assertLessEqual(initial_hp - (pow + range), self.card_owner.get_hp())
-
 
     @classmethod
     def tearDownClass(cls) -> None:

@@ -15,7 +15,7 @@ class EmpowerCardEffectTestCase(TestCase):
         cls.u1 = cls.creator.get_user_models()[0]
         cls.d1 = cls.creator.get_decks()[0]
         cls.card_owner = Player(cls.u1.id, Deck(cls.d1))
-        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.SKIP)
+        card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.EMPOWER)
 
         target = CardLevelEffects.Target.PLAYER
 
@@ -38,8 +38,6 @@ class EmpowerCardEffectTestCase(TestCase):
         # We check whether the effect got assigned properly
         affected_effect = affected_card.effects[0]
         self.assertEqual(len(affected_effect.buffs), 1)
-
-
 
     @classmethod
     def tearDownClass(cls) -> None:
