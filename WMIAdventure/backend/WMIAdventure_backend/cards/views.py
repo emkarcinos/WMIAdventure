@@ -38,18 +38,12 @@ class CardEffectList(APIView):
         return Response(serializer.data)
 
 
-class CardEffectObjectView(APIView):
+class CardEffectObjectView(generics.RetrieveUpdateAPIView):
     """
     Get a single effect.
     """
-    def get(self, request, pk=None):
-        try:
-            item = CardEffect.objects.get(id=pk)
-        except CardEffect.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = CardEffectSerializer(item)
-        return Response(serializer.data)
+    queryset = CardEffect.objects.all()
+    serializer_class = CardEffectSerializer
 
 
 class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
