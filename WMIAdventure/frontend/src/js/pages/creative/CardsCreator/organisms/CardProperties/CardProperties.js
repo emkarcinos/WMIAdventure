@@ -19,6 +19,7 @@ class CardProperties extends React.Component {
         activeCardRank: 0,
         showEffectChoose: false,
         chosenEffects: [[], [], []],
+        effectsToSend: [[], [], []],
     }
 
     showLevelChooseHandler = (event) => {
@@ -97,6 +98,23 @@ class CardProperties extends React.Component {
             return elem !== effect;
         });
         this.setState({chosenEffects: newList});
+
+        newList = this.state.effectsToSend.slice();
+        newList[rank - 1] = newList[rank - 1].filter(function (elem) {
+            return Number(elem.card_effect) !== Number(String(effect.id) + String(rank));
+        })
+        this.setState({effectsToSend: newList});
+        this.props.setEffectsToSendHandler(newList);
+    }
+
+    effectsToSendHandler = (rank, effects) => {
+        let newList = this.state.effectsToSend.slice();
+        newList[rank - 1] = newList[rank - 1].filter(function (elem) {
+            return elem.card_effect !== effects.card_effect;
+        })
+        newList[rank - 1].push(effects);
+        this.setState({effectsToSend: newList});
+        this.props.setEffectsToSendHandler(newList);
     }
 
     render() {
@@ -125,7 +143,7 @@ class CardProperties extends React.Component {
                             showEffectChooseHandler={this.showEffectChooseHandler}
                             chosenEffects={this.state.chosenEffects}
                             removeChosenEffectHandler={this.removeChosenEffectHandler}
-                            setEffectsToSendHandler={this.props.setEffectsToSendHandler} />
+                            effectsToSendHandler = {this.effectsToSendHandler} />
                     </Scroll>
                     <Div activeCardRank={this.state.activeCardRank}>
                         <P>

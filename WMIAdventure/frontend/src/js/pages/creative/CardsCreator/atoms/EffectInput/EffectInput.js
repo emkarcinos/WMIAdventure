@@ -34,7 +34,7 @@ class EffectInput extends React.Component {
         let keyName = event.target.name;
         let keyValue = event.target.value;
         this.setState({[keyName]: keyValue});
-        this.setState({card_effect: event.target.id[0]});
+        this.setState({card_effect: event.target.id[0] + event.target.id[1]});
         setTimeout(() => {
             let newEffect = {
                 card_effect: this.state.card_effect,
@@ -54,16 +54,16 @@ class EffectInput extends React.Component {
                 </Header>
                 <Div marginBottom show={this.props.has_modifier}>
                     <P>
-                        <Label marginRight htmlFor={`${this.props.id}-power`}>
+                        <Label marginRight htmlFor={`${this.props.id}${this.props.rank}-power`}>
                             Moc
                         </Label>
-                        <InputNumber id={`${this.props.id}-power`} name='power' type='number' onChange={this.cardAttributesHandler}/>
+                        <InputNumber id={`${this.props.id}${this.props.rank}-power`} name='power' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
-                        <Label marginRight htmlFor={`${this.props.id}-range`}>
+                        <Label marginRight htmlFor={`${this.props.id}${this.props.rank}-range`}>
                             Losowość
                         </Label>
-                        <InputNumber id={`${this.props.id}-range`} name='range' type='number' onChange={this.cardAttributesHandler}/>
+                        <InputNumber id={`${this.props.id}${this.props.rank}-range`} name='range' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>
@@ -71,14 +71,14 @@ class EffectInput extends React.Component {
                         Cel
                     </Label>
                     <P radioLine>
-                        <Label marginRight checked={this.state.checkedPlayer} htmlFor={`${this.props.id}-target1`}>
+                        <Label marginRight checked={this.state.checkedPlayer} htmlFor={`${this.props.id}${this.props.rank}-target1`}>
                             Gracz
                         </Label>
-                        <InputRadio id={`${this.props.id}-target1`} name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
-                        <Label checked={this.state.checkedEnemy} htmlFor={`${this.props.id}-target2`}>
+                        <InputRadio id={`${this.props.id}${this.props.rank}-target1`} name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
+                        <Label checked={this.state.checkedEnemy} htmlFor={`${this.props.id}${this.props.rank}-target2`}>
                             Przeciwnik
                         </Label>
-                        <InputRadio id={`${this.props.id}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
+                        <InputRadio id={`${this.props.id}${this.props.rank}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
                     </P>
                 </Div>
                 <Close onClick={(event) => this.props.removeChosenEffectHandler(event, this.props.rank, this.props.effect)}/>
