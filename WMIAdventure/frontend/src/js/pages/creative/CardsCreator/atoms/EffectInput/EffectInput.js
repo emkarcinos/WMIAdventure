@@ -14,6 +14,7 @@ class EffectInput extends React.Component {
         checkedPlayer: false,
         checkedEnemy: false,
 
+        card_extra_id: undefined,
         card_effect: undefined,
         target: undefined,
         power: undefined,
@@ -34,9 +35,11 @@ class EffectInput extends React.Component {
         let keyName = event.target.name;
         let keyValue = event.target.value;
         this.setState({[keyName]: keyValue});
-        this.setState({card_effect: event.target.id[0] + event.target.id[1]});
+        this.setState({card_extra_id: event.target.id[0] + event.target.id[1]});
+        this.setState({card_effect: event.target.id[0]});
         setTimeout(() => {
             let newEffect = {
+                card_extra_id: this.state.card_extra_id,
                 card_effect: this.state.card_effect,
                 target: this.state.target,
                 power: this.state.power,

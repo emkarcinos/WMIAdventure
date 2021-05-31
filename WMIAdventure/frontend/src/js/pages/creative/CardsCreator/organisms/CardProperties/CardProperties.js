@@ -55,16 +55,37 @@ class CardProperties extends React.Component {
     removeCommonLevelHandler = (event) => {
         event.preventDefault();
         this.setState({createCommonLevel: false});
+        let newListChosenEffects = this.state.chosenEffects.slice();
+        let newListEffectsToSend = this.state.effectsToSend.slice();
+        newListChosenEffects[0] = [];
+        newListEffectsToSend[0] = [];
+        this.setState({chosenEffects: newListChosenEffects});
+        this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
     }
 
     removeGoldLevelHandler = (event) => {
         event.preventDefault();
         this.setState({createGoldLevel: false});
+        let newListChosenEffects = this.state.chosenEffects.slice();
+        let newListEffectsToSend = this.state.effectsToSend.slice();
+        newListChosenEffects[1] = [];
+        newListEffectsToSend[1] = [];
+        this.setState({chosenEffects: newListChosenEffects});
+        this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
     }
 
     removeEpicLevelHandler = (event) => {
         event.preventDefault();
         this.setState({createEpicLevel: false});
+        let newListChosenEffects = this.state.chosenEffects.slice();
+        let newListEffectsToSend = this.state.effectsToSend.slice();
+        newListChosenEffects[2] = [];
+        newListEffectsToSend[2] = [];
+        this.setState({chosenEffects: newListChosenEffects});
+        this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
     }
 
     activeLevelRecognize = (event, activeCardRank) => {
@@ -101,7 +122,7 @@ class CardProperties extends React.Component {
 
         newList = this.state.effectsToSend.slice();
         newList[rank - 1] = newList[rank - 1].filter(function (elem) {
-            return Number(elem.card_effect) !== Number(String(effect.id) + String(rank));
+            return Number(elem.card_extra_id) !== Number(String(effect.id) + String(rank));
         })
         this.setState({effectsToSend: newList});
         this.props.setEffectsToSendHandler(newList);
@@ -110,7 +131,7 @@ class CardProperties extends React.Component {
     effectsToSendHandler = (rank, effects) => {
         let newList = this.state.effectsToSend.slice();
         newList[rank - 1] = newList[rank - 1].filter(function (elem) {
-            return elem.card_effect !== effects.card_effect;
+            return elem.card_extra_id !== effects.card_extra_id;
         })
         newList[rank - 1].push(effects);
         this.setState({effectsToSend: newList});

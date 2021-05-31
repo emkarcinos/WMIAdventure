@@ -9,7 +9,6 @@ import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
 
-
 class CardsCreator extends React.Component {
     state = {
         cardName: 'Nazwa Karty',
@@ -19,6 +18,45 @@ class CardsCreator extends React.Component {
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
+    }
+
+    sendCardToApi = (event) => {
+        event.preventDefault();
+
+        const levelsToSend = [];
+        for(let i=0; i < this.state.effectsToSend.length; i++) {
+            if(this.state.effectsToSend[i].length !== 0) {
+                levelsToSend.push(
+                    {
+                        level: String(i + 1),
+                        next_level_cost: this.state.levelCostValues[i],
+                        effects: this.state.effectsToSend[i]
+                    }
+                );
+            }
+        }
+
+        const API = process.env['REACT_APP_API_URL'];
+        try {
+            let result = fetch(`http://${API}/api/cards/`, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.state.cardName,
+                    subject: this.state.cardSubject,
+                    image: null,
+                    tooltip: this.state.cardTooltip,
+                    levels: levelsToSend
+                })
+            });
+
+            console.log('Result: ' + result);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     componentDidMount() {
@@ -103,6 +141,9 @@ class CardsCreator extends React.Component {
                             effectsFromApi={this.state.effectsFromApi}
                             setEffectsToSendHandler={this.setEffectsToSendHandler}
                         />
+                        <button type='submit' onClick={this.sendCardToApi}>
+                            Wyślij
+                        </button>
                     </Form>
                 </Main>
             </Wrapper>
