@@ -60,6 +60,34 @@ class EffectsIntegrationsTestCase(TestCase):
         expected_hp_remaining = self.player2.statistics.MAX_HP - (dmg_pow + buff_pow)
         self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
 
+    def test_buff_wrong_type(self):
+        # Restoring player2 hp to max
+        self.player2.statistics.hp = self.player2.statistics.MAX_HP
+
+        dmg_pow = 10
+        buff_pow = 5
+        dmg_card = BattleCard(Card())
+        dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                      power=dmg_pow))
+        buff_card = BattleCard(Card())
+        buff_card.effects.insert(1, self.create_effect(CardEffect.EffectId.EMPOWER_HEAL,
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=buff_pow))
+        self.player1.deck.temp_cards_queue.append(buff_card)
+        self.player1.deck.temp_cards_queue.append(dmg_card)
+
+        # Buffing next card
+        effects = self.player1.use_card()
+        for e in effects:
+            e.activate(self.player1, self.player2, None)
+
+        # Activating damage effect
+        effects = self.player1.use_card()
+        for e in effects:
+            e.activate(self.player1, self.player2, None)
+
+        expected_hp_remaining = self.player2.statistics.MAX_HP - dmg_pow
+        self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
 
     @classmethod
     def tearDownClass(cls) -> None:
