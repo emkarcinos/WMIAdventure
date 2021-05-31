@@ -18,6 +18,7 @@ class CardsCreator extends React.Component {
         showDescribeInputs: false,
         levelCostValues: [],
         effectsFromApi: [],
+        effectsToSend: [[], [], []],
     }
 
     componentDidMount() {
@@ -71,6 +72,10 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
+    setEffectsToSendHandler = (effects) => {
+        this.setState({effectsToSend: effects});
+    }
+
     render() {
         return (
             <Wrapper>
@@ -96,6 +101,7 @@ class CardsCreator extends React.Component {
                             levelCostClearHandler={this.levelCostClearHandler}
                             levelCostResetHandler={this.levelCostResetHandler}
                             effectsFromApi={this.state.effectsFromApi}
+                            setEffectsToSendHandler={this.setEffectsToSendHandler}
                         />
                     </Form>
                 </Main>

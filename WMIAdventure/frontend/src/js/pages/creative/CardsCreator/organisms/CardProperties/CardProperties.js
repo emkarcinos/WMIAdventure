@@ -106,15 +106,13 @@ class CardProperties extends React.Component {
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
                              createCommonLevelHandler = {this.createCommonLevelHandler}
                              createGoldLevelHandler = {this.createGoldLevelHandler}
-                             createEpicLevelHandler = {this.createEpicLevelHandler}
-                />
+                             createEpicLevelHandler = {this.createEpicLevelHandler} />
                 <EffectChoose
                     showEffectChoose={this.state.showEffectChoose}
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
                     activeCardRank={this.state.activeCardRank}
                     effectsFromApi={this.props.effectsFromApi}
-                    chosenEffectsHandler={this.chosenEffectsHandler}
-                />
+                    chosenEffectsHandler={this.chosenEffectsHandler} />
                 <Fieldset activeCardRank={this.state.activeCardRank}>
                     <Scroll>
                         <CostInputs activeCardRank={this.state.activeCardRank}
@@ -126,7 +124,8 @@ class CardProperties extends React.Component {
                             activeCardRank={this.state.activeCardRank}
                             showEffectChooseHandler={this.showEffectChooseHandler}
                             chosenEffects={this.state.chosenEffects}
-                            removeChosenEffectHandler={this.removeChosenEffectHandler} />
+                            removeChosenEffectHandler={this.removeChosenEffectHandler}
+                            setEffectsToSendHandler={this.props.setEffectsToSendHandler} />
                     </Scroll>
                     <Div activeCardRank={this.state.activeCardRank}>
                         <P>

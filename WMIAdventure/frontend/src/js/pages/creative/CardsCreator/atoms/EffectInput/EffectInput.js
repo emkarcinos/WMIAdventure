@@ -12,17 +12,38 @@ class EffectInput extends React.Component {
 
     state = {
         checkedPlayer: false,
-        checkedEnemy: false
+        checkedEnemy: false,
+
+        card_effect: undefined,
+        target: undefined,
+        power: undefined,
+        range: undefined,
     }
 
     checkedTargetHandler = (event) => {
         if(event.target.checked && event.target.value === '1') {
-           this.setState({checkedPlayer: true});
-            this.setState({checkedEnemy: false});
+           this.setState({checkedPlayer: true, checkedEnemy: false});
         } else if(event.target.checked && event.target.value === '2') {
-            this.setState({checkedPlayer: false});
-            this.setState({checkedEnemy: true});
+            this.setState({checkedPlayer: false, checkedEnemy: true});
         }
+
+        this.cardAttributesHandler(event);
+    }
+
+    cardAttributesHandler = (event) => {
+        let keyName = event.target.name;
+        let keyValue = event.target.value;
+        this.setState({[keyName]: keyValue});
+        this.setState({card_effect: event.target.id[0]});
+        setTimeout(() => {
+            let newEffect = {
+                card_effect: this.state.card_effect,
+                target: this.state.target,
+                power: this.state.power,
+                range: this.state.range
+            }
+            this.props.effectsToSendHandler(this.props.rank, newEffect);
+        }, 10);
     }
 
     render() {
@@ -36,13 +57,13 @@ class EffectInput extends React.Component {
                         <Label marginRight htmlFor={`${this.props.id}-power`}>
                             Moc
                         </Label>
-                        <InputNumber id={`${this.props.id}-power`} name='power' type='number' />
+                        <InputNumber id={`${this.props.id}-power`} name='power' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
-                        <Label marginRight htmlFor={`${this.props.id}-randomize`}>
+                        <Label marginRight htmlFor={`${this.props.id}-range`}>
                             Losowość
                         </Label>
-                        <InputNumber id={`${this.props.id}-randomize`} name='randomize' type='number' />
+                        <InputNumber id={`${this.props.id}-range`} name='range' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>

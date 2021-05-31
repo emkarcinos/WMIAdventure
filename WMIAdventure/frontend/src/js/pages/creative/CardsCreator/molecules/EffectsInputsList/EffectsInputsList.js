@@ -8,6 +8,21 @@ import UlGold from './styled-components/UlGold';
 import UlEpic from './styled-components/UlEpic';
 
 class EffectsInputsList extends React.Component {
+
+    state = {
+        effectsToSend: [[], [], []]
+    }
+
+    effectsToSendHandler = (rank, effects) => {
+        let newList = this.state.effectsToSend.slice();
+        newList[rank - 1] = newList[rank - 1].filter(function (elem) {
+            return elem.card_effect !== effects.card_effect;
+        })
+        newList[rank - 1].push(effects);
+        this.setState({effectsToSend: newList});
+        this.props.setEffectsToSendHandler(newList);
+    }
+
     render() {
         return (
             <>
@@ -24,8 +39,9 @@ class EffectsInputsList extends React.Component {
                                         tooltip={effect.tooltip}
                                         has_modifier={effect.has_modifier}
                                         rank={1}
-                                         effect={effect}
-                                        removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                        effect={effect}
+                                        removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                        effectsToSendHandler={this.effectsToSendHandler} />
                                 );
                             })
                         }
@@ -40,7 +56,8 @@ class EffectsInputsList extends React.Component {
                                          has_modifier={effect.has_modifier}
                                          rank={2}
                                          effect={effect}
-                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                         effectsToSendHandler={this.props.effectsToSendHandler} />
                                 );
                             })
                         }
@@ -55,7 +72,8 @@ class EffectsInputsList extends React.Component {
                                          has_modifier={effect.has_modifier}
                                          rank={3}
                                          effect={effect}
-                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                         effectsToSendHandler={this.props.effectsToSendHandler} />
                                 );
                             })
                         }
