@@ -24,8 +24,9 @@ class EffectsInputsList extends React.Component {
                                         tooltip={effect.tooltip}
                                         has_modifier={effect.has_modifier}
                                         rank={1}
-                                         effect={effect}
-                                        removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                        effect={effect}
+                                        removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                        effectsToSendHandler={this.props.effectsToSendHandler} />
                                 );
                             })
                         }
@@ -40,7 +41,8 @@ class EffectsInputsList extends React.Component {
                                          has_modifier={effect.has_modifier}
                                          rank={2}
                                          effect={effect}
-                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                         effectsToSendHandler={this.props.effectsToSendHandler} />
                                 );
                             })
                         }
@@ -55,7 +57,8 @@ class EffectsInputsList extends React.Component {
                                          has_modifier={effect.has_modifier}
                                          rank={3}
                                          effect={effect}
-                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler} />
+                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler}
+                                         effectsToSendHandler={this.props.effectsToSendHandler} />
                                 );
                             })
                         }
