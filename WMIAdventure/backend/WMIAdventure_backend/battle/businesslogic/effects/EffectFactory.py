@@ -1,3 +1,4 @@
+from battle.businesslogic.effects.BlockCardEffect import BlockCardEffect
 from battle.businesslogic.effects.DmgEffect import DmgEffect
 from battle.businesslogic.effects.EmpowerCardEffect import EmpowerCardEffect
 from battle.businesslogic.effects.EmpowerDamage import EmpowerDamage
@@ -41,7 +42,8 @@ class EffectFactory:
                 CardEffect.EffectId.SWAP_RND: RandomizeDeckEffect(effect_model),
                 CardEffect.EffectId.DOUBLEACTION: TwoTimesExecuteEffect(effect_model),
                 CardEffect.EffectId.TRUE_DMG: TrueDamageEffect(effect_model),
-                CardEffect.EffectId.STOP: StopPlayerEffect(effect_model)
+                CardEffect.EffectId.STOP: StopPlayerEffect(effect_model),
+                CardEffect.EffectId.BLOCK: BlockCardEffect(effect_model)
             }
 
         requested_effect = CardEffect.EffectId(effect_model.card_effect.id)
