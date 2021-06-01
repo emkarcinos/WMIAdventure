@@ -148,6 +148,42 @@ class EffectsIntegrationsTestCase(TestCase):
         effect = self.player1.use_card()[0]
         self.assertEqual(len(effect.buffs), 0)
 
+    def test_buff_does_not_get_duplicated_on_double_card(self):
+        """
+        Test scenario: Player 1 buffs his next card, Player 2 applies double use effect on P1's card.
+        Player 1 card should execute two times: once with buff, second time without it.
+        """
+        buff_card = BattleCard(Card())
+        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER,
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=20.0))
+        self.player1.deck.temp_cards_queue.append(buff_card)
+
+        double_exec_card = BattleCard(Card())
+        double_exec_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DOUBLEACTION,
+                                                        target=CardLevelEffects.Target.OPPONENT))
+        self.player2.deck.temp_cards_queue.append(double_exec_card)
+
+        # This card will get executed twice
+        buffed_damage_card = BattleCard(Card())
+        buffed_damage_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                                target=CardLevelEffects.Target.OPPONENT,
+                                                                power=10.0))
+
+        self.player1.deck.temp_cards_queue.append(buffed_damage_card)
+
+        # Buff next card
+        self.activate_card(self.player1, self.player2)
+
+        # Make P1's card execute two times
+        self.activate_card(self.player2, self.player1)
+        # This activation should be buffed
+        self.activate_card(self.player1, self.player2)
+        # This one should not
+        effect = self.player1.use_card()[0]
+        self.assertEqual(len(effect.buffs), 0)
+
+
 
 
 
