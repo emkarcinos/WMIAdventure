@@ -18,10 +18,10 @@ class CardDescribePreview extends React.Component {
                     <P tooltip>
                         {this.props.cardTooltip}
                     </P>
+                    <Button onClick={this.props.showDescribeInputsHandler}>
+                        {/*pensil icon*/}
+                    </Button>
                 </Section>
-                <Button onClick={this.props.showDescribeInputsHandler}>
-                    {/*pensil icon*/}
-                </Button>
             </>
         );
     }

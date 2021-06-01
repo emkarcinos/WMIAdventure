@@ -14,7 +14,7 @@ const Span = styled.span`
     background-image: url(${levelCostIcon});
     background-position: center;
     background-repeat: no-repeat;
-    z-index: 2;
+    z-index: 1;
   }
 `;
 

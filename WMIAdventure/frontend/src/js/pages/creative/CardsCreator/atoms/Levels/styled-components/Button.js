@@ -6,6 +6,7 @@ const Button = styled.button`
   align-items: center;
   
   cursor: pointer;
+  height: 100%;
   padding: 0;
   margin: 2px 0 0 0;
   border: none;

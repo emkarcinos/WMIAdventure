@@ -2,12 +2,14 @@ import React from 'react';
 
 import Main from './styled-components/Main';
 import Wrapper from './styled-components/Wrapper';
-import Header from './styled-components/Header';
 import Form from './styled-components/Form';
+import Div from './styled-components/Div';
+import Button from './styled-components/Button';
 
 import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
+import NavHeader from './molecules/NavHeader';
 
 class CardsCreator extends React.Component {
     state = {
@@ -117,9 +119,7 @@ class CardsCreator extends React.Component {
     render() {
         return (
             <Wrapper>
-                <Header>
-                    {/*nagłówek nawigacyjny*/}
-                </Header>
+                <NavHeader />
                 <Main>
                     <CardDescribePreview
                         cardName={this.state.cardName}
@@ -141,9 +141,11 @@ class CardsCreator extends React.Component {
                             effectsFromApi={this.state.effectsFromApi}
                             setEffectsToSendHandler={this.setEffectsToSendHandler}
                         />
-                        <button type='submit' onClick={this.sendCardToApi}>
-                            Wyślij
-                        </button>
+                        <Div>
+                            <Button type='submit' onClick={this.sendCardToApi}>
+                                Wyślij
+                            </Button>
+                        </Div>
                     </Form>
                 </Main>
             </Wrapper>
