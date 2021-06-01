@@ -23,43 +23,43 @@ class EffectsIntegrationsTestCase(TestCase):
         for e in card.effects:
             e.buffs.clear()
 
+    def activate_card(self, card_owner, other_player):
+        effects = card_owner.use_card()
+        for e in effects:
+            e.activate(card_owner, other_player, None)
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.creator = Creator()
 
-        u1, u2 = cls.creator.get_user_models()
-        d1 = cls.creator.get_decks()[0]
-        d2 = cls.creator.get_decks(user=1)[0]
-        cls.player1 = Player(u1.id, Deck(d1))
-        cls.player2 = Player(u2.id, Deck(d2))
+        cls.u1, cls.u2 = cls.creator.get_user_models()
+        cls.d1 = cls.creator.get_decks()[0]
+        cls.d2 = cls.creator.get_decks(user=1)[0]
+
+    def setUp(self) -> None:
+        self.player1 = Player(self.u1.id, Deck(self.d1))
+        self.player2 = Player(self.u2.id, Deck(self.d2))
 
     def test_damage_buff(self):
-        # Restoring player2 hp to max
-        self.player2.statistics.hp = self.player2.statistics.MAX_HP
-
         dmg_pow = 10
         buff_pow = 5
         dmg_card = BattleCard(Card())
         dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
                                                    power=dmg_pow))
         buff_card = BattleCard(Card())
-        buff_card.effects.insert(1, self.create_effect(CardEffect.EffectId.EMPOWER_DMG,
+        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER_DMG,
                                                        target=CardLevelEffects.Target.PLAYER,
                                                        power=buff_pow))
         self.player1.deck.temp_cards_queue.append(buff_card)
         self.player1.deck.temp_cards_queue.append(dmg_card)
 
         # Buffing next card
-        effects = self.player1.use_card()
-        for e in effects:
-            e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
         # Check whether the buff got assigned properly
         self.assertGreater(len(dmg_card.effects[0].buffs), 0)
         # Activating damage effect
-        effects = self.player1.use_card()
-        for e in effects:
-            e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
         expected_hp_remaining = self.player2.statistics.MAX_HP - (dmg_pow + buff_pow)
         self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
@@ -81,14 +81,10 @@ class EffectsIntegrationsTestCase(TestCase):
         self.player1.deck.temp_cards_queue.append(dmg_card)
 
         # Buffing next card
-        effects = self.player1.use_card()
-        for e in effects:
-            e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
         # Activating damage effect
-        effects = self.player1.use_card()
-        for e in effects:
-            e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
         expected_hp_remaining = self.player2.statistics.MAX_HP - dmg_pow
         self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
@@ -111,26 +107,46 @@ class EffectsIntegrationsTestCase(TestCase):
         self.player1.deck.temp_cards_queue.append(buff_card)
         self.player1.deck.temp_cards_queue.append(randomizing_card)
         # Buffing next card
-        effects = self.player1.use_card()
-        for e in effects:
-            e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
-        # Activating randomization effect
-        effects = self.player1.use_card()
         # Lets force the randomization until the first card is different than before
         top_card_before_randomization = self.player2.deck.lookup()
-        while self.player2.deck.lookup() is not top_card_before_randomization:
-            for e in effects:
-                e.activate(self.player1, self.player2, None)
+        self.activate_card(self.player1, self.player2)
 
         # Our previous top card is no longer on top, so it should not have any buffs.
         self.assertEqual(0, len(top_card_before_randomization.effects[0].buffs))
         # Current top card should have the buff.
         self.assertEqual(1, len(self.player2.deck.lookup().effects[0].buffs))
 
-        # clearing buffs before next tests
-        self.clear_buffs(top_card_before_randomization)
-        self.clear_buffs(self.player2.deck.lookup())
+    def test_buff_and_block_card_use(self):
+        """
+        Tests scenario: Player 1 buff their next card - Player 2 blocks the next Player 1 card - Blocked execution
+        - Check what happens with skipped card - The card should no longer have a buff, as one turn has passed.
+        """
+        buff_card = BattleCard(Card())
+        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER,
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=20.0))
+        self.player1.deck.temp_cards_queue.append(buff_card)
+
+        block_card = BattleCard(Card())
+        block_card.effects.insert(0, self.create_effect(CardEffect.EffectId.BLOCK,
+                                                        target=CardLevelEffects.Target.OPPONENT))
+        self.player2.deck.temp_cards_queue.append(block_card)
+
+        buffed_damage_card = BattleCard(Card())
+        buffed_damage_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                                target=CardLevelEffects.Target.OPPONENT,
+                                                                power=10.0))
+        self.player1.deck.temp_cards_queue.append(buffed_damage_card)
+
+        self.activate_card(self.player1, self.player2)
+        self.activate_card(self.player2, self.player1)
+        # This activation activates blocked card
+        self.activate_card(self.player1, self.player2)
+        # Effect in next activation should not be buffed
+        effect = self.player1.use_card()[0]
+        self.assertEqual(len(effect.buffs), 0)
 
 
 
