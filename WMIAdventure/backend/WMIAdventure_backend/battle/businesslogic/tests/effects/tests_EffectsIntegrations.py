@@ -183,8 +183,49 @@ class EffectsIntegrationsTestCase(TestCase):
         effect = self.player1.use_card()[0]
         self.assertEqual(len(effect.buffs), 0)
 
+    def test_block_and_skip(self):
+        """
+        Test scenario: Player 1 blocks next opponent's card, then skips it.
+        Expected result: Skipped card should remain intact, next P2's card should be blocked.
+        """
+        self.skipTest()
+        block_card = BattleCard(Card())
+        block_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                                target=CardLevelEffects.Target.OPPONENT,
+                                                                power=10.0))
 
+        self.player1.deck.temp_cards_queue.append(block_card)
 
+        skip_card = BattleCard(Card())
+        skip_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER,
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=20.0))
+        self.player1.deck.temp_cards_queue.append(skip_card)
+
+        # This one will be skipped
+        heal_card = BattleCard(Card())
+        heal_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                                           target=CardLevelEffects.Target.PLAYER,
+                                                                           power=100.0))
+        self.player2.deck.temp_cards_queue.append(heal_card)
+
+        # This one should get blocked
+        dmg_card = BattleCard(Card())
+        dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
+                                                                           target=CardLevelEffects.Target.OPPONENT,
+                                                                           power=100.0))
+        self.player2.deck.temp_cards_queue.append(dmg_card)
+
+        # Block next P2 card
+        self.activate_card(self.player1, self.player2)
+        # Skip next P2 card
+        self.activate_card(self.player1, self.player2)
+        # P2 executes next card - the top one(heal_card) should be skipped,
+        # so dmg_card should get activated, but it should get blocked by P1 previous move.
+        hp_before_activation = self.player2.get_hp()
+        self.activate_card(self.player2, self.player1)
+        # Player should remain unharmed, because the damage card should get blocked.
+        self.assertEqual(self.player2.get_hp(), hp_before_activation)
 
 
     @classmethod
