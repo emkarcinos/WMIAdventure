@@ -21,10 +21,10 @@ class PlayerFactory:
         """
 
         id = user_profile_model.user.id
-        deck_model = self.__choose_deck_model__(user_profile_model, is_attacker)
+        deck_model = self._choose_deck_model(user_profile_model, is_attacker)
         return Player(id=id, deck=Deck(deck_model=deck_model))
 
-    def __choose_deck_model__(self, user_profile_model: UserProfile, is_attacker: bool):
+    def _choose_deck_model(self, user_profile_model: UserProfile, is_attacker: bool):
         """
         Chooses deck for player, depending if he's attacker or defender.
         Possible decks: deck for attacking and defending.

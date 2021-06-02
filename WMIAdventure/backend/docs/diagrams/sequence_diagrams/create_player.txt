@@ -15,7 +15,7 @@ activate PlayerFactory
 
 # Choose deck model
 
-PlayerFactory->PlayerFactory: __choose_deck_model__(user_profile_model, is_attacker)
+PlayerFactory->PlayerFactory: _choose_deck_model(user_profile_model, is_attacker)
 
 activate PlayerFactory
 
