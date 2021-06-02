@@ -1,5 +1,5 @@
 import React from 'react';
-import H2 from './styled-components/H2';
+import H1 from './styled-components/H1';
 import P from './styled-components/P';
 import Section from './styled-components/Section';
 import Button from './styled-components/Button';
@@ -9,9 +9,9 @@ class CardDescribePreview extends React.Component {
         return (
             <>
                 <Section>
-                    <H2>
+                    <H1>
                         {this.props.cardName}
-                    </H2>
+                    </H1>
                     <P>
                         {this.props.cardSubject}
                     </P>

@@ -10,9 +10,9 @@ class CardDescribePreview extends React.Component {
         return (
             <>
                 <Section>
-                    <H2>
+                    <H1>
                         {this.props.cardName}
-                    </H2>
+                    </H1>
                     <P>
                         {this.props.cardSubject}
                     </P>

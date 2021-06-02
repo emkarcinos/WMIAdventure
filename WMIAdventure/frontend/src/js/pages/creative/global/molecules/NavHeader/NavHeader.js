@@ -4,6 +4,7 @@ import Back from './styled-components/Back';
 import Menu from './styled-components/Menu';
 import {Link} from 'react-router-dom';
 import NavMenu from '../../atoms/NavMenu';
+import Span from './styled-components/Span';
 
 class NavHeader extends React.Component {
     state = {
@@ -23,9 +24,12 @@ class NavHeader extends React.Component {
     render() {
         return (
             <Header>
-                <Back as={Link} to={'/'}>
+                <Back as={Link} to={this.props.backLink}>
                     {/*Ikona strzałki w lewo*/}
                 </Back>
+                <Span>
+                    {this.props.label}
+                </Span>
                 <Menu onClick={this.showNavHandler}>
                     {/*Ikona trzech kropek pionowo*/}
                 </Menu>

@@ -12,6 +12,7 @@ import AnswerCreator from './pages/creative/AnswerCreator';
 import CardsCreator from './pages/creative/CardsCreator';
 import {ThemeProvider} from 'styled-components';
 import theme from './utils/theme';
+import CardsCreatorStart from './pages/creative/CardsCreatorStart';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
             <Route path='/event' component={Event} />
             <Route path='/quiz' component={Quiz} />
             <Route path='/history-creator' component={HistoryCreator} />
-            <Route path='/cards-creator' component={CardsCreator} />
+            <Route path='/cards-creator-start' component={CardsCreatorStart} />
+              <Route path='/cards-creator' component={CardsCreator} />
             <Route path='/answer-creator' component={AnswerCreator} />
           </Switch>
       </ThemeProvider>

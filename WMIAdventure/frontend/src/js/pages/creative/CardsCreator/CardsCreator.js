@@ -9,7 +9,7 @@ import Button from './styled-components/Button';
 import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
-import NavHeader from './molecules/NavHeader';
+import NavHeader from '../global/molecules/NavHeader';
 
 class CardsCreator extends React.Component {
     state = {
@@ -119,7 +119,7 @@ class CardsCreator extends React.Component {
     render() {
         return (
             <Wrapper>
-                <NavHeader />
+                <NavHeader backLink={'/cards-creator-start'} label='Tworzenie karty' />
                 <Main>
                     <CardDescribePreview
                         cardName={this.state.cardName}

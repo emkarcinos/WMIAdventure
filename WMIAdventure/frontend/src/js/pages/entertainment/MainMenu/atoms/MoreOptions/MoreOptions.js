@@ -18,7 +18,7 @@ function MoreOptions() {
                 <StyledMoreOptions.Paragraph as={Link} to={'/history-creator'}>
                     Edytor Historii
                 </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph as={Link} to={'/cards-creator'}>
+                <StyledMoreOptions.Paragraph as={Link} to={'/cards-creator-start'}>
                     Edytor Kart
                 </StyledMoreOptions.Paragraph>
                 <StyledMoreOptions.Paragraph as={Link} border to={'/answer-creator'}>
