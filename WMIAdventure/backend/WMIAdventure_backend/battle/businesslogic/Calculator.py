@@ -83,7 +83,7 @@ class Calculator:
         There are several rules of multipliers calculations:
         1. Positive multipliers are being added, not multiplied:
             - combination of (x2, x2) multipliers gives us x3 multiplier, not x4
-        2. Negative multipliers are being multiplier:
+        2. Negative multipliers are being multiplied:
             - combination of (x0.5, x0.5) multipliers gives us x0.25 multiplier.
         3. Combining positive and negative multipliers is in given order:
             (positive_m1 + positive_m2 + ...) * (negative_m1 * negative_m2 * ...) 
