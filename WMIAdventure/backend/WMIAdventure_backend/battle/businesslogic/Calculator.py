@@ -22,11 +22,11 @@ class Calculator:
         @return: Calculated power.
         """
 
-        effect_power = self.__power_without_buffs__(power, power_range)
-        effect_power = self.__calculate_buffs_influence__(effect_power, buffs)
+        effect_power = self._power_without_buffs(power, power_range)
+        effect_power = self._calculate_buffs_influence(effect_power, buffs)
         return effect_power
 
-    def __power_without_buffs__(self, power, power_range):
+    def _power_without_buffs(self, power, power_range):
         """
         Calculates effect's power by adding random value from [-power_range, power_range]
         to base power value.
@@ -36,7 +36,7 @@ class Calculator:
         """
         return power + uniform(-1, 1) * power_range
 
-    def __calculate_buffs_influence__(self, effect_power, buffs):
+    def _calculate_buffs_influence(self, effect_power, buffs):
         """
         Calculates new effect's power with usage of buffs.
         @param effect_power: Effect's power not affected by buffs (base power + random range).
@@ -47,12 +47,12 @@ class Calculator:
         multipliers_influence = 1
         modifiers_influence = 0
 
-        multipliers_influence = self.__calculate_multipliers_influence__(buffs)
-        modifiers_influence = self.__calculate_modifiers_influence__(buffs)
+        multipliers_influence = self._calculate_multipliers_influence(buffs)
+        modifiers_influence = self._calculate_modifiers_influence(buffs)
 
         return effect_power * multipliers_influence + modifiers_influence
 
-    def __calculate_modifiers_influence__(self, buffs):
+    def _calculate_modifiers_influence(self, buffs):
         """
         Modifier adds constant value to effect power.
         @param buffs: Effect's buffs.
@@ -64,7 +64,7 @@ class Calculator:
             modifiers_sum += buff.modifier
         return modifiers_sum
 
-    def __calculate_multipliers_influence__(self, buffs):
+    def _calculate_multipliers_influence(self, buffs):
         """
         Multiplier changes effect's power by multiplying it.
         @param buffs: Effect's buffs.
