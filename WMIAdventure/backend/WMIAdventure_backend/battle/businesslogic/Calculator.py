@@ -28,19 +28,20 @@ class Calculator:
 
     def __power_without_buffs__(self, power, power_range):
         """
-        Adds random value from [-power_range, power_range] to base power value.
+        Calculates effect's power by adding random value from [-power_range, power_range]
+        to base power value.
         @param power: Base power value.
-        @param power_range:
-        @return:
+        @param power_range: Value which defines range [-power_range, power_range].
+        @return: Calculated effect's power without buffs influence.
         """
         return power + uniform(-1, 1) * power_range
 
     def __calculate_buffs_influence__(self, effect_power, buffs):
         """
-
-        @param effect_power: Power + random range not affected by buffs.
+        Calculates new effect's power with usage of buffs.
+        @param effect_power: Effect's power not affected by buffs (base power + random range).
         @param buffs: Effect's buffs.
-        @return: Effect power changed by buffs.
+        @return: Effect's power changed by buffs.
         """
 
         multipliers_influence = 1
@@ -65,7 +66,7 @@ class Calculator:
 
     def __calculate_multipliers_influence__(self, buffs):
         """
-        Multiplier changes effect power by multiplying it.
+        Multiplier changes effect's power by multiplying it.
         @param buffs: Effect's buffs.
         @return: Value that should be used to change effect power by multiplication.
         """
@@ -73,7 +74,21 @@ class Calculator:
         positive_multipliers = 1
         negative_multipliers = 1
 
-        # Calculations - see examples below for better understanding.
+        """
+        Calculations - see examples below for better understanding.
+        
+        Positive multipliers - multipliers >= x1
+        Negative multipliers - multipliers in range [x0, x1)
+        
+        There are several rules of multipliers calculations:
+        1. Positive multipliers are being added, not multiplied:
+            - combination of (x2, x2) multipliers gives us x3 multiplier, not x4
+        2. Negative multipliers are being multiplier:
+            - combination of (x0.5, x0.5) multipliers gives us x0.25 multiplier.
+        3. Combining positive and negative multipliers is in given order:
+            (positive_m1 + positive_m2 + ...) * (negative_m1 * negative_m2 * ...) 
+        
+        """
         buff: Buff
         for buff in buffs:
             if buff.multiplier >= 1:
