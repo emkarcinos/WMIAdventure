@@ -34,7 +34,7 @@ class Deck:
         for card in ordered_cards:
             self.cards_queue.append(card)
 
-    def __get_card_from_temp_queue__(self, lookup_only=False) -> Union[BattleCard, None]:
+    def _get_card_from_temp_queue(self, lookup_only=False) -> Union[BattleCard, None]:
         """
         Returns a card from temp queue. If there are no cards there, returns none.
         @param lookup_only: If set to true, the method won't pop the element from the queue.
@@ -47,7 +47,7 @@ class Deck:
 
         return self.temp_cards_queue.popleft()
 
-    def __dequeue_card__(self) -> BattleCard:
+    def _dequeue_card(self) -> BattleCard:
         """
         Dequeues the card, enqueues it to the back of the queue and returns it for you.
         """
@@ -60,10 +60,10 @@ class Deck:
         Retrieves first card from queue and appends it at the end.
         @return: Card which should be used in battle in current turn.
         """
-        card = self.__get_card_from_temp_queue__()
+        card = self._get_card_from_temp_queue()
 
         if card is None:
-            card = self.__dequeue_card__()
+            card = self._dequeue_card()
 
         return card
 
@@ -76,7 +76,7 @@ class Deck:
             raise IndexError(f"Card index out of bounds. Deck ranges from 0 to {self.size() - 1}."
                              f"You specified {index}")
 
-        card = self.__get_card_from_temp_queue__(lookup_only=True)
+        card = self._get_card_from_temp_queue(lookup_only=True)
 
         if card is None:
             card = self.cards_queue[index]
