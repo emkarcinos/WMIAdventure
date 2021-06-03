@@ -14,8 +14,8 @@ class CardsCreatorStart extends React.Component {
                 <Main>
                     <TitleSection />
                     <CardsImage />
-                    <CreatorOption text='Nowa Karta' link='/cards-creator'/>
-                    <CreatorOption text='Edycja Karty' link='/cards-creator'/>
+                    <CreatorOption text='Nowa Karta' link='/cards-creator-create'/>
+                    <CreatorOption text='Edycja Karty' link='/cards-creator-edit'/>
                 </Main>
             </Wrapper>
         );

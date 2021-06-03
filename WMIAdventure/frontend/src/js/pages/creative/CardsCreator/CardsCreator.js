@@ -13,13 +13,15 @@ import NavHeader from '../global/molecules/NavHeader';
 
 class CardsCreator extends React.Component {
     state = {
-        cardName: 'Nazwa Karty',
-        cardSubject: 'Przedmiot',
-        cardTooltip: 'Opis Karty',
+        cardName: this.props.cardName,
+        cardSubject: this.props.cardSubject,
+        cardTooltip: this.props.cardTooltip,
+        levelCostValues: this.props.levelCostValues,
+        effectsFromApi: this.props.effectsFromApi,
+        effectsToSend: this.props.effectsToSend,
+
+        creatorType: '',
         showDescribeInputs: false,
-        levelCostValues: [],
-        effectsFromApi: [],
-        effectsToSend: [[], [], []],
     }
 
     sendCardToApi = (event) => {
@@ -119,7 +121,7 @@ class CardsCreator extends React.Component {
     render() {
         return (
             <Wrapper>
-                <NavHeader backLink={'/cards-creator-start'} label='Tworzenie karty' />
+                <NavHeader backLink={'/cards-creator-start'} label={this.props.creatorType} />
                 <Main>
                     <CardDescribePreview
                         cardName={this.state.cardName}
@@ -152,5 +154,14 @@ class CardsCreator extends React.Component {
         );
     }
 }
+
+CardsCreator.defaultProps = {
+    cardName: 'Nazwa Karty',
+    cardSubject: 'Przedmiot',
+    cardTooltip: 'Opis Karty',
+    levelCostValues: [],
+    effectsFromApi: [],
+    effectsToSend: [[], [], []],
+};
 
 export default CardsCreator;
