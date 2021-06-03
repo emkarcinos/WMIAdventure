@@ -21,7 +21,7 @@ const Fieldset = styled.fieldset`
   align-items: center;
   position: relative;
   padding: 16px;
-  margin: 0 0 38px 0;
+  margin: 0 0 64px 0;
   
   background-color: ${({theme}) => theme.colors.ui01};
   border: ${({activeCardRank, theme}) => activeRankHandler(activeCardRank, theme)}
