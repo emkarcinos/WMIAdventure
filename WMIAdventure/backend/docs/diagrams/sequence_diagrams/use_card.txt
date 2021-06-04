@@ -56,7 +56,7 @@ activate Effect
 
     end
 
-    Effect->Effect: __remove_expired__buffs__()
+    Effect->Effect: _remove_expired__buffs()
 
     deactivate Effect
 

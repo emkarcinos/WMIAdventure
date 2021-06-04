@@ -77,9 +77,9 @@ class Effect:
         for buff in self.buffs:
             buff.update()
 
-        self.__remove_expired_buffs__()
+        self._remove_expired_buffs()
 
-    def __remove_expired_buffs__(self):
+    def _remove_expired_buffs(self):
         """
         Removes expired buffs from list of buffs.
         """

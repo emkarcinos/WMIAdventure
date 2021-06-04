@@ -22,36 +22,37 @@ class Calculator:
         @return: Calculated power.
         """
 
-        effect_power = self.__power_without_buffs__(power, power_range)
-        effect_power = self.__calculate_buffs_influence__(effect_power, buffs)
+        effect_power = self._power_without_buffs(power, power_range)
+        effect_power = self._calculate_buffs_influence(effect_power, buffs)
         return effect_power
 
-    def __power_without_buffs__(self, power, power_range):
+    def _power_without_buffs(self, power, power_range):
         """
-        Adds random value from [-power_range, power_range] to base power value.
+        Calculates effect's power by adding random value from [-power_range, power_range]
+        to base power value.
         @param power: Base power value.
-        @param power_range:
-        @return:
+        @param power_range: Value which defines range [-power_range, power_range].
+        @return: Calculated effect's power without buffs influence.
         """
         return power + uniform(-1, 1) * power_range
 
-    def __calculate_buffs_influence__(self, effect_power, buffs):
+    def _calculate_buffs_influence(self, effect_power, buffs):
         """
-
-        @param effect_power: Power + random range not affected by buffs.
+        Calculates new effect's power with usage of buffs.
+        @param effect_power: Effect's power not affected by buffs (base power + random range).
         @param buffs: Effect's buffs.
-        @return: Effect power changed by buffs.
+        @return: Effect's power changed by buffs.
         """
 
         multipliers_influence = 1
         modifiers_influence = 0
 
-        multipliers_influence = self.__calculate_multipliers_influence__(buffs)
-        modifiers_influence = self.__calculate_modifiers_influence__(buffs)
+        multipliers_influence = self._calculate_multipliers_influence(buffs)
+        modifiers_influence = self._calculate_modifiers_influence(buffs)
 
         return effect_power * multipliers_influence + modifiers_influence
 
-    def __calculate_modifiers_influence__(self, buffs):
+    def _calculate_modifiers_influence(self, buffs):
         """
         Modifier adds constant value to effect power.
         @param buffs: Effect's buffs.
@@ -63,9 +64,9 @@ class Calculator:
             modifiers_sum += buff.modifier
         return modifiers_sum
 
-    def __calculate_multipliers_influence__(self, buffs):
+    def _calculate_multipliers_influence(self, buffs):
         """
-        Multiplier changes effect power by multiplying it.
+        Multiplier changes effect's power by multiplying it.
         @param buffs: Effect's buffs.
         @return: Value that should be used to change effect power by multiplication.
         """
@@ -73,7 +74,21 @@ class Calculator:
         positive_multipliers = 1
         negative_multipliers = 1
 
-        # Calculations - see examples below for better understanding.
+        """
+        Calculations - see examples below for better understanding.
+        
+        Positive multipliers - multipliers >= x1
+        Negative multipliers - multipliers in range [x0, x1)
+        
+        There are several rules of multipliers calculations:
+        1. Positive multipliers are being added, not multiplied:
+            - combination of (x2, x2) multipliers gives us x3 multiplier, not x4
+        2. Negative multipliers are being multiplied:
+            - combination of (x0.5, x0.5) multipliers gives us x0.25 multiplier.
+        3. Combining positive and negative multipliers is in given order:
+            (positive_m1 + positive_m2 + ...) * (negative_m1 * negative_m2 * ...) 
+        
+        """
         buff: Buff
         for buff in buffs:
             if buff.multiplier >= 1:
