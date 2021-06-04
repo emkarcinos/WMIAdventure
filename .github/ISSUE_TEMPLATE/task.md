@@ -14,3 +14,5 @@ assignees: ''
 **Commity** powinny zostać oznaczone numerem taska, które realizują.
 
 **Numer realizowanego user story** (opcjonalne)
+
+**Label** - issue powinien mieć przypisane labele identyfikujące część projektu.
