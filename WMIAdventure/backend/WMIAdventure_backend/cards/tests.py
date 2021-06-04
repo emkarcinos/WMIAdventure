@@ -10,47 +10,47 @@ class CardLevelTestCase(TestCase):
     def setUp(self):
         pass
 
-    def testNameAfterCreation(self):
+    def test_name_after_creation(self):
         CardLevel.objects.get(level=1).delete()
 
         CardLevel.objects.create(level=CardLevel.Level(1))
-        cLvl = CardLevel.objects.get(level=1)
+        c_lvl = CardLevel.objects.get(level=1)
 
-        self.assertEqual(cLvl.name, CardLevel.Level(1).label)
+        self.assertEqual(c_lvl.name, CardLevel.Level(1).label)
 
-    def testCreationWithInt(self):
+    def test_creation_with_int(self):
         CardLevel.objects.get(level=1).delete()
 
-        cLvl = CardLevel.objects.create(level=1)
+        c_lvl = CardLevel.objects.create(level=1)
 
-        self.assertIsInstance(cLvl.level, CardLevel.Level)
-        self.assertEqual(cLvl.name, CardLevel.Level(1).label)
+        self.assertIsInstance(c_lvl.level, CardLevel.Level)
+        self.assertEqual(c_lvl.name, CardLevel.Level(1).label)
 
-    def testCreationDuplicates(self):
+    def test_creation_duplicates(self):
         self.assertRaises(IntegrityError, CardLevel.objects.create, level=1)
 
 
 class CardLevelSerializerTestCase(TestCase):
     def setUp(self) -> None:
-        self.cLvlEnum = CardLevel.Level(1)
-        self.cLvlVal = self.cLvlEnum.value
-        self.cLvlLabel = str(self.cLvlEnum.label)
+        self.c_lvl_enum = CardLevel.Level(1)
+        self.c_lvl_val = self.c_lvl_enum.value
+        self.c_lvl_label = str(self.c_lvl_enum.label)
 
-    def testSerialization(self):
-        cLvl = CardLevel.objects.get(level=self.cLvlVal)
+    def test_serialization(self):
+        cLvl = CardLevel.objects.get(level=self.c_lvl_val)
 
         serializer = CardLevelSerializer(instance=cLvl)
 
-        actualLevel = serializer.data.get("level")
-        actualName = serializer.data.get("name")
+        actual_level = serializer.data.get("level")
+        actual_name = serializer.data.get("name")
 
-        self.assertEquals(actualLevel, cLvl.level)
-        self.assertEquals(actualName, cLvl.name)
+        self.assertEquals(actual_level, cLvl.level)
+        self.assertEquals(actual_name, cLvl.name)
 
-    def testDeserialization(self):
-        CardLevel.objects.get(level=self.cLvlVal).delete()
+    def test_deserialization(self):
+        CardLevel.objects.get(level=self.c_lvl_val).delete()
 
-        data = {"level": self.cLvlVal, "name": self.cLvlLabel}
+        data = {"level": self.c_lvl_val, "name": self.c_lvl_label}
 
         serializer = CardLevelSerializer(data=data)
 
@@ -60,10 +60,10 @@ class CardLevelSerializerTestCase(TestCase):
             print(serializer.errors)
             raise e
 
-        cLvl = serializer.save()
+        c_lvl = serializer.save()
 
-        self.assertEquals(cLvl.level, self.cLvlVal)
-        self.assertEquals(cLvl.name, self.cLvlLabel)
+        self.assertEquals(c_lvl.level, self.c_lvl_val)
+        self.assertEquals(c_lvl.name, self.c_lvl_label)
 
 
 class CardEffectTestCase(TestCase):
