@@ -63,8 +63,10 @@ class WholeCardSerializer(serializers.ModelSerializer):
     etc.
     """
 
-    levels = SimpleCardSerializer(many=True, required=False)
-    subject = serializers.CharField(max_length=50, allow_null=True)
+    levels = SimpleCardSerializer(many=True, required=False, help_text="An array of levels objects.")
+    subject = serializers.CharField(max_length=50, allow_null=True, help_text="Subject name. In the future this field"
+                                                                              "will be an id pointing to Subject "
+                                                                              "object.")
 
     class Meta:
         model = CardInfo
