@@ -25,7 +25,8 @@ class CardsCreator extends React.Component {
         headerLabel: '',
         showCardChoose: false,
         cardsFromApi: [],
-        levelsList: [],
+        levelsListFromCard: [],
+        chosenEffectsFromCard: [[], [], []],
     }
 
     sendCardToApi = (event) => {
@@ -150,21 +151,21 @@ class CardsCreator extends React.Component {
             cardTooltip: tooltip
         });
 
-        console.log(levels);
-        this.setLevelsList(levels);
-        this.setLevelCostValues(levels);
+        this.setLevelsListFromCard(levels);
+        this.setLevelCostValuesFromCard(levels);
+        this.setChosenEffectsFromCard(levels);
         this.hideCardChooseHandler(event);
     }
 
-    setLevelsList = (levels) => {
+    setLevelsListFromCard = (levels) => {
         let newLevelsList = [];
         for (let i=0; i<levels.length; i++) {
             newLevelsList.push(levels[i].level);
         }
-        this.setState({levelsList: newLevelsList});
+        this.setState({levelsListFromCard: newLevelsList});
     }
 
-    setLevelCostValues = (levels) => {
+    setLevelCostValuesFromCard = (levels) => {
         let newCostList = this.state.levelCostValues.slice();
         try {
             if(levels[0].next_level_cost)
@@ -175,6 +176,28 @@ class CardsCreator extends React.Component {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    setChosenEffectsFromCard = (levels) => {
+        let newEffectsList = [[], [], []];
+        let newChosenEffectsList = [[], [], []];
+        let chosenEffectElem;
+        for (let i=0; i<levels.length; i++) {
+            for (let j=0; j<levels[i].effects.length; j++) {
+                newEffectsList[i].push({
+                    card_effect: levels[i].effects[j].card_effect,
+                    target: levels[i].effects[j].target,
+                    power: levels[i].effects[j].power,
+                    range: levels[i].effects[j].range
+                });
+                chosenEffectElem = this.state.effectsFromApi.filter(function (elem) {
+                    return elem.id === levels[i].effects[j].card_effect;
+                })
+                newChosenEffectsList[i].push(chosenEffectElem[0]);
+            }
+        }
+        this.setState({effectsToSend: newEffectsList});
+        this.setState({chosenEffectsFromCard: newChosenEffectsList});
     }
 
     render() {
@@ -204,7 +227,9 @@ class CardsCreator extends React.Component {
                                 levelCostResetHandler={this.levelCostResetHandler}
                                 effectsFromApi={this.state.effectsFromApi}
                                 setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                levelsList={this.state.levelsList}
+                                levelsListFromCard={this.state.levelsListFromCard}
+                                chosenEffectsFromCard={this.state.chosenEffectsFromCard}
+                                effectsToSend={this.state.effectsToSend}
                             />
                             <Div>
                                 <Button type='submit' onClick={this.sendCardToApi}>
