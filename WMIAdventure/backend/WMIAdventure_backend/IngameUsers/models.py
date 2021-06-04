@@ -29,10 +29,7 @@ class UserProfile(models.Model):
         help_text="A reference to Django user model"
     )
     displayedUsername = models.CharField(max_length=50, help_text="Pretty username available to anyone")
-    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, help_text="Subject name. In the "
-                                                                                           "future this field will be "
-                                                                                           "an id pointing to Subject "
-                                                                                           "object.") 
+    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, help_text="Semester number.") 
 
     def __str__(self):
         return self.displayedUsername
