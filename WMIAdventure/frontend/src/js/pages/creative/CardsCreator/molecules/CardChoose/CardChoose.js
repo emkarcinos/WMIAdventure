@@ -35,6 +35,7 @@ class CardChoose extends React.Component {
                                     <Card name={card.name}
                                           subject={card.subject}
                                           tooltip={card.tooltip}
+                                          levels={card.levels}
                                           chosenCardHandler={this.props.chosenCardHandler} />
                                 </React.Fragment>
                             );

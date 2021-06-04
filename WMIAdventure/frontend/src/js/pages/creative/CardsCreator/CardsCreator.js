@@ -25,6 +25,7 @@ class CardsCreator extends React.Component {
         headerLabel: '',
         showCardChoose: false,
         cardsFromApi: [],
+        levelsList: [],
     }
 
     sendCardToApi = (event) => {
@@ -74,12 +75,14 @@ class CardsCreator extends React.Component {
 
         const API = process.env['REACT_APP_API_URL'];
 
-        fetch(`http://${API}/api/cards/`)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => this.setState({cardsFromApi: data}))
-            .catch(error => console.log(error));
+        if(this.props.creatorType === 'edit') {
+            fetch(`http://${API}/api/cards/`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => this.setState({cardsFromApi: data}))
+                .catch(error => console.log(error));
+        }
 
         fetch(`http://${API}/api/cards/card-effect/`)
             .then(response => {
@@ -139,14 +142,39 @@ class CardsCreator extends React.Component {
         this.setState({showCardChoose: false});
     }
 
-    chosenCardHandler = (event, name, subject, tooltip) => {
+    chosenCardHandler = (event, name, subject, tooltip, levels) => {
         event.preventDefault();
         this.setState({
             cardName: name,
             cardSubject: subject,
             cardTooltip: tooltip
         });
+
+        console.log(levels);
+        this.setLevelsList(levels);
+        this.setLevelCostValues(levels);
         this.hideCardChooseHandler(event);
+    }
+
+    setLevelsList = (levels) => {
+        let newLevelsList = [];
+        for (let i=0; i<levels.length; i++) {
+            newLevelsList.push(levels[i].level);
+        }
+        this.setState({levelsList: newLevelsList});
+    }
+
+    setLevelCostValues = (levels) => {
+        let newCostList = this.state.levelCostValues.slice();
+        try {
+            if(levels[0].next_level_cost)
+                newCostList[levels[0].level - 1] = levels[0].next_level_cost;
+            if(levels[1].next_level_cost)
+                newCostList[levels[1].level - 1] = levels[1].next_level_cost;
+            this.setState({levelCostValues: newCostList});
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -159,25 +187,24 @@ class CardsCreator extends React.Component {
                 <Wrapper>
                     <NavHeader backLink={'/cards-creator-start'} label={this.state.headerLabel} />
                     <Main>
-                        <CardDescribePreview
-                            cardName={this.state.cardName}
+                        <CardDescribePreview cardName={this.state.cardName}
                             cardSubject={this.state.cardSubject}
                             cardTooltip={this.state.cardTooltip}
                             showDescribeInputsHandler={this.showDescribeInputsHandler}
                         />
                         <Form>
-                            <CardDescribeInputs
-                                updateDescribePreview={this.updateDescribePreview}
+                            <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
                                 show={this.state.showDescribeInputs}
                                 hideDescribeInputsHandler={this.hideDescribeInputsHandler}
                             />
-                            <CardProperties
+                            <CardProperties creatorType={this.props.creatorType}
                                 levelCostValues={this.state.levelCostValues}
                                 levelCostValuesHandler={this.levelCostValuesHandler}
                                 levelCostClearHandler={this.levelCostClearHandler}
                                 levelCostResetHandler={this.levelCostResetHandler}
                                 effectsFromApi={this.state.effectsFromApi}
                                 setEffectsToSendHandler={this.setEffectsToSendHandler}
+                                levelsList={this.state.levelsList}
                             />
                             <Div>
                                 <Button type='submit' onClick={this.sendCardToApi}>

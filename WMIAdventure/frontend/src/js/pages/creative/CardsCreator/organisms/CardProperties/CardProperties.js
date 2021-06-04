@@ -22,6 +22,18 @@ class CardProperties extends React.Component {
         effectsToSend: [[], [], []],
     }
 
+    componentWillReceiveProps(nextProps) {
+        let levelsList = nextProps.levelsList;
+        for(let i=0; i<levelsList.length; i++) {
+            if(levelsList[i] === 1)
+                this.setState({createCommonLevel: true});
+            if(levelsList[i] === 2)
+                this.setState({createGoldLevel: true});
+            if(levelsList[i] === 3)
+                this.setState({createEpicLevel: true});
+        }
+    }
+
     showLevelChooseHandler = (event) => {
         event.preventDefault();
         this.setState({showLevelChoose: true});

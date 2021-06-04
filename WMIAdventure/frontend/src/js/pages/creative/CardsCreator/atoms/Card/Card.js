@@ -8,7 +8,7 @@ class Card extends React.Component {
         return (
             <Button onClick={
                 (event) => this.props.chosenCardHandler (
-                    event, this.props.name, this.props.subject, this.props.tooltip )}>
+                    event, this.props.name, this.props.subject, this.props.tooltip, this.props.levels )}>
                 <Name>
                     {this.props.name}
                 </Name>
