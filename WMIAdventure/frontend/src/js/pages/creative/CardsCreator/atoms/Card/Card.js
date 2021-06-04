@@ -6,7 +6,9 @@ import Name from './styled-components/Name';
 class Card extends React.Component {
     render() {
         return (
-            <Button onClick={() => console.log('click')}>
+            <Button onClick={
+                (event) => this.props.chosenCardHandler (
+                    event, this.props.name, this.props.subject, this.props.tooltip )}>
                 <Name>
                     {this.props.name}
                 </Name>

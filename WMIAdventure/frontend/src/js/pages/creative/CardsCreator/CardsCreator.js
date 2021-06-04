@@ -10,18 +10,21 @@ import CardDescribePreview from './atoms/CardDescribePreview';
 import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
+import CardChoose from './molecules/CardChoose';
 
 class CardsCreator extends React.Component {
     state = {
-        cardName: this.props.cardName,
-        cardSubject: this.props.cardSubject,
-        cardTooltip: this.props.cardTooltip,
-        levelCostValues: this.props.levelCostValues,
-        effectsFromApi: this.props.effectsFromApi,
-        effectsToSend: this.props.effectsToSend,
-
-        creatorType: '',
+        cardName: 'Nazwa Karty',
+        cardSubject: 'Przedmiot',
+        cardTooltip: 'Opis Karty',
+        levelCostValues: [],
+        effectsFromApi: [],
+        effectsToSend: [[], [], []],
         showDescribeInputs: false,
+
+        headerLabel: '',
+        showCardChoose: false,
+        cardsFromApi: [],
     }
 
     sendCardToApi = (event) => {
@@ -30,7 +33,7 @@ class CardsCreator extends React.Component {
         const levelsToSend = [];
         for(let i=0; i < this.state.effectsToSend.length; i++) {
             if(this.state.effectsToSend[i].length !== 0) {
-                levelsToSend.push(
+                levelsToSend.push (
                     {
                         level: String(i + 1),
                         next_level_cost: this.state.levelCostValues[i],
@@ -64,7 +67,20 @@ class CardsCreator extends React.Component {
     }
 
     componentDidMount() {
+        if(this.props.creatorType === 'edit')
+            this.setState({headerLabel: 'Edytowanie karty', showCardChoose: true});
+        else if(this.props.creatorType === 'create')
+            this.setState({headerLabel: 'Nowa karta', showCardChoose: false});
+
         const API = process.env['REACT_APP_API_URL'];
+
+        fetch(`http://${API}/api/cards/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({cardsFromApi: data}))
+            .catch(error => console.log(error));
+
         fetch(`http://${API}/api/cards/card-effect/`)
             .then(response => {
                 return response.json();
@@ -118,50 +134,62 @@ class CardsCreator extends React.Component {
         this.setState({effectsToSend: effects});
     }
 
+    hideCardChooseHandler = (event) => {
+        event.preventDefault();
+        this.setState({showCardChoose: false});
+    }
+
+    chosenCardHandler = (event, name, subject, tooltip) => {
+        event.preventDefault();
+        this.setState({
+            cardName: name,
+            cardSubject: subject,
+            cardTooltip: tooltip
+        });
+        this.hideCardChooseHandler(event);
+    }
+
     render() {
         return (
-            <Wrapper>
-                <NavHeader backLink={'/cards-creator-start'} label={this.props.creatorType} />
-                <Main>
-                    <CardDescribePreview
-                        cardName={this.state.cardName}
-                        cardSubject={this.state.cardSubject}
-                        cardTooltip={this.state.cardTooltip}
-                        showDescribeInputsHandler={this.showDescribeInputsHandler}
-                    />
-                    <Form>
-                        <CardDescribeInputs
-                            updateDescribePreview={this.updateDescribePreview}
-                            show={this.state.showDescribeInputs}
-                            hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+            <>
+                <CardChoose showCardChoose={this.state.showCardChoose}
+                            hideCardChooseHandler={this.hideCardChooseHandler}
+                            cardsFromAPI={this.state.cardsFromApi}
+                            chosenCardHandler={this.chosenCardHandler} />
+                <Wrapper>
+                    <NavHeader backLink={'/cards-creator-start'} label={this.state.headerLabel} />
+                    <Main>
+                        <CardDescribePreview
+                            cardName={this.state.cardName}
+                            cardSubject={this.state.cardSubject}
+                            cardTooltip={this.state.cardTooltip}
+                            showDescribeInputsHandler={this.showDescribeInputsHandler}
                         />
-                        <CardProperties
-                            levelCostValues={this.state.levelCostValues}
-                            levelCostValuesHandler={this.levelCostValuesHandler}
-                            levelCostClearHandler={this.levelCostClearHandler}
-                            levelCostResetHandler={this.levelCostResetHandler}
-                            effectsFromApi={this.state.effectsFromApi}
-                            setEffectsToSendHandler={this.setEffectsToSendHandler}
-                        />
-                        <Div>
-                            <Button type='submit' onClick={this.sendCardToApi}>
-                                Wyślij
-                            </Button>
-                        </Div>
-                    </Form>
-                </Main>
-            </Wrapper>
+                        <Form>
+                            <CardDescribeInputs
+                                updateDescribePreview={this.updateDescribePreview}
+                                show={this.state.showDescribeInputs}
+                                hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                            />
+                            <CardProperties
+                                levelCostValues={this.state.levelCostValues}
+                                levelCostValuesHandler={this.levelCostValuesHandler}
+                                levelCostClearHandler={this.levelCostClearHandler}
+                                levelCostResetHandler={this.levelCostResetHandler}
+                                effectsFromApi={this.state.effectsFromApi}
+                                setEffectsToSendHandler={this.setEffectsToSendHandler}
+                            />
+                            <Div>
+                                <Button type='submit' onClick={this.sendCardToApi}>
+                                    Wyślij
+                                </Button>
+                            </Div>
+                        </Form>
+                    </Main>
+                </Wrapper>
+            </>
         );
     }
 }
-
-CardsCreator.defaultProps = {
-    cardName: 'Nazwa Karty',
-    cardSubject: 'Przedmiot',
-    cardTooltip: 'Opis Karty',
-    levelCostValues: [],
-    effectsFromApi: [],
-    effectsToSend: [[], [], []],
-};
 
 export default CardsCreator;

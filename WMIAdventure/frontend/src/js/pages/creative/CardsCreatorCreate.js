@@ -4,7 +4,7 @@ import CardsCreator from './CardsCreator';
 class CardsCreatorCreate extends React.Component {
     render() {
         return (
-            <CardsCreator creatorType='Nowa karta' />
+            <CardsCreator creatorType='create' />
         );
     }
 }

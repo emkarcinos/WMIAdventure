@@ -33,7 +33,9 @@ class CardChoose extends React.Component {
                             return (
                                 <React.Fragment key={`card-${card.id}`}>
                                     <Card name={card.name}
-                                          subject={card.subject} />
+                                          subject={card.subject}
+                                          tooltip={card.tooltip}
+                                          chosenCardHandler={this.props.chosenCardHandler} />
                                 </React.Fragment>
                             );
                         })
