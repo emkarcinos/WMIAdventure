@@ -26,7 +26,8 @@ class EffectsInputsList extends React.Component {
                                         rank={1}
                                         effect={effect}
                                         removeChosenEffectHandler={this.props.removeChosenEffectHandler}
-                                        effectsToSendHandler={this.props.effectsToSendHandler} />
+                                        effectsToSendHandler={this.props.effectsToSendHandler}
+                                        effectsFromCard={this.props.effectsToSend} />
                                 );
                             })
                         }
@@ -42,7 +43,8 @@ class EffectsInputsList extends React.Component {
                                          rank={2}
                                          effect={effect}
                                          removeChosenEffectHandler={this.props.removeChosenEffectHandler}
-                                         effectsToSendHandler={this.props.effectsToSendHandler} />
+                                         effectsToSendHandler={this.props.effectsToSendHandler}
+                                         effectsFromCard={this.props.effectsToSend} />
                                 );
                             })
                         }
@@ -58,7 +60,8 @@ class EffectsInputsList extends React.Component {
                                          rank={3}
                                          effect={effect}
                                          removeChosenEffectHandler={this.props.removeChosenEffectHandler}
-                                         effectsToSendHandler={this.props.effectsToSendHandler} />
+                                         effectsToSendHandler={this.props.effectsToSendHandler}
+                                         effectsFromCard={this.props.effectsToSend} />
                                 );
                             })
                         }

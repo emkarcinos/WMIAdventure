@@ -20,24 +20,29 @@ class CardProperties extends React.Component {
         showEffectChoose: false,
         chosenEffects: [[], [], []],
         effectsToSend: [[], [], []],
+        startEdit: false,
     }
 
     componentWillReceiveProps(nextProps) {
-        let levelsList = nextProps.levelsListFromCard;
-        for(let i=0; i<levelsList.length; i++) {
-            if(levelsList[i] === 1)
-                this.setState({createCommonLevel: true});
-            if(levelsList[i] === 2)
-                this.setState({createGoldLevel: true});
-            if(levelsList[i] === 3)
-                this.setState({createEpicLevel: true});
-        }
-
         setTimeout(() => {
-            this.setState({
-                chosenEffects: this.props.chosenEffectsFromCard,
-                effectsToSend: this.props.effectsToSend
-            });
+            if(!this.state.startEdit) {
+                let levelsList = nextProps.levelsListFromCard;
+                for(let i=0; i<levelsList.length; i++) {
+                    if(levelsList[i] === 1)
+                        this.setState({createCommonLevel: true});
+                    if(levelsList[i] === 2)
+                        this.setState({createGoldLevel: true});
+                    if(levelsList[i] === 3)
+                        this.setState({createEpicLevel: true});
+                }
+
+                setTimeout(() => {
+                    this.setState({
+                        chosenEffects: this.props.chosenEffectsFromCard,
+                        effectsToSend: this.props.effectsToSend
+                    });
+                }, 10);
+            }
         }, 10);
     }
 
@@ -132,6 +137,7 @@ class CardProperties extends React.Component {
     }
 
     removeChosenEffectHandler = (event, rank, effect) => {
+        this.setState({startEdit: true});
         event.preventDefault();
         let newList = this.state.chosenEffects.slice();
         newList[rank - 1] = newList[rank - 1].filter(function (elem) {
@@ -183,7 +189,8 @@ class CardProperties extends React.Component {
                             showEffectChooseHandler={this.showEffectChooseHandler}
                             chosenEffects={this.state.chosenEffects}
                             removeChosenEffectHandler={this.removeChosenEffectHandler}
-                            effectsToSendHandler = {this.effectsToSendHandler} />
+                            effectsToSendHandler={this.effectsToSendHandler}
+                            effectsToSend={this.state.effectsToSend} />
                     </Scroll>
                     <Div activeCardRank={this.state.activeCardRank}>
                         <P>

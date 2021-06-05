@@ -21,6 +21,28 @@ class EffectInput extends React.Component {
         range: undefined,
     }
 
+    componentDidMount() {
+        let effectsFromCard = this.props.effectsFromCard;
+        let rank = this.props.rank;
+        let id = this.props.id;
+        let effectAttributes;
+
+        for (let i=0; i<effectsFromCard.length; i++) {
+            effectAttributes = effectsFromCard[i].filter(function (elem) {
+                return elem.level === rank && elem.card_effect === id;
+            });
+            if(effectAttributes.length !== 0) break;
+        }
+        try {
+            if(effectAttributes[0].target === 1)
+                this.setState({checkedPlayer: true, checkedEnemy: false});
+            else if(effectAttributes[0].target === 2)
+                this.setState({checkedPlayer: false, checkedEnemy: true});
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     checkedTargetHandler = (event) => {
         if(event.target.checked && event.target.value === '1') {
            this.setState({checkedPlayer: true, checkedEnemy: false});
@@ -60,13 +82,15 @@ class EffectInput extends React.Component {
                         <Label marginRight htmlFor={`${this.props.id}${this.props.rank}-power`}>
                             Moc
                         </Label>
-                        <InputNumber id={`${this.props.id}${this.props.rank}-power`} name='power' type='number' onChange={this.cardAttributesHandler}/>
+                        <InputNumber id={`${this.props.id}${this.props.rank}-power`}
+                                     name='power' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
                         <Label marginRight htmlFor={`${this.props.id}${this.props.rank}-range`}>
                             Losowość
                         </Label>
-                        <InputNumber id={`${this.props.id}${this.props.rank}-range`} name='range' type='number' onChange={this.cardAttributesHandler}/>
+                        <InputNumber id={`${this.props.id}${this.props.rank}-range`}
+                                     name='range' type='number' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>
@@ -74,17 +98,23 @@ class EffectInput extends React.Component {
                         Cel
                     </Label>
                     <P radioLine>
-                        <Label marginRight checked={this.state.checkedPlayer} htmlFor={`${this.props.id}${this.props.rank}-target1`}>
+                        <Label marginRight checked={this.state.checkedPlayer}
+                               htmlFor={`${this.props.id}${this.props.rank}-target1`}>
                             Gracz
                         </Label>
-                        <InputRadio id={`${this.props.id}${this.props.rank}-target1`} name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
-                        <Label checked={this.state.checkedEnemy} htmlFor={`${this.props.id}${this.props.rank}-target2`}>
+                        <InputRadio id={`${this.props.id}${this.props.rank}-target1`}
+                                    name='target' value='1' type='radio' onChange={this.checkedTargetHandler}/>
+                        <Label checked={this.state.checkedEnemy}
+                               htmlFor={`${this.props.id}${this.props.rank}-target2`}>
                             Przeciwnik
                         </Label>
-                        <InputRadio id={`${this.props.id}${this.props.rank}-target2`} name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
+                        <InputRadio id={`${this.props.id}${this.props.rank}-target2`}
+                                    name='target' value='2' type='radio' onChange={this.checkedTargetHandler}/>
                     </P>
                 </Div>
-                <Close onClick={(event) => this.props.removeChosenEffectHandler(event, this.props.rank, this.props.effect)}/>
+                <Close onClick={
+                    (event) => this.props.removeChosenEffectHandler(event, this.props.rank, this.props.effect)
+                }/>
             </Fieldset>
         );
     }

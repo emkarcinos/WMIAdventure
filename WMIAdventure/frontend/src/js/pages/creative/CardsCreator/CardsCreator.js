@@ -184,16 +184,17 @@ class CardsCreator extends React.Component {
         let chosenEffectElem;
         for (let i=0; i<levels.length; i++) {
             for (let j=0; j<levels[i].effects.length; j++) {
-                newEffectsList[i].push({
+                newEffectsList[levels[i].level - 1].push({
                     card_effect: levels[i].effects[j].card_effect,
                     target: levels[i].effects[j].target,
                     power: levels[i].effects[j].power,
-                    range: levels[i].effects[j].range
+                    range: levels[i].effects[j].range,
+                    level: levels[i].level
                 });
                 chosenEffectElem = this.state.effectsFromApi.filter(function (elem) {
                     return elem.id === levels[i].effects[j].card_effect;
                 })
-                newChosenEffectsList[i].push(chosenEffectElem[0]);
+                newChosenEffectsList[levels[i].level - 1].push(chosenEffectElem[0]);
             }
         }
         this.setState({effectsToSend: newEffectsList});
