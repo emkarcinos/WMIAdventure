@@ -35,8 +35,8 @@ class CalculatorTestCase(TestCase):
 
     def test_power_without_buffs(self):
         for i in range(100):
-            actual_power = self.instance.__power_without_buffs__(self.base_power,
-                                                                 self.power_range)
+            actual_power = self.instance._power_without_buffs(self.base_power,
+                                                              self.power_range)
 
             self.assertGreaterEqual(actual_power, self.min_power_without_buffs)
             self.assertLessEqual(actual_power, self.max_power_without_buffs)
@@ -46,7 +46,7 @@ class CalculatorTestCase(TestCase):
         for i in range(len(self.buffs)):
             expected_modifiers_influence += self.modifier
 
-        actual_modifiers_influence = self.instance.__calculate_modifiers_influence__(self.buffs)
+        actual_modifiers_influence = self.instance._calculate_modifiers_influence(self.buffs)
 
         self.assertEqual(actual_modifiers_influence, expected_modifiers_influence)
 
@@ -61,7 +61,7 @@ class CalculatorTestCase(TestCase):
 
         expected_multipliers_influence = positive_inf * negative_inf
 
-        actual_multipliers_influence = self.instance.__calculate_multipliers_influence__(self.buffs)
+        actual_multipliers_influence = self.instance._calculate_multipliers_influence(self.buffs)
 
         self.assertEqual(actual_multipliers_influence, expected_multipliers_influence)
 
@@ -69,16 +69,16 @@ class CalculatorTestCase(TestCase):
 
         expected_power = \
             self.base_power * \
-            self.instance.__calculate_multipliers_influence__(self.buffs) + \
-            self.instance.__calculate_modifiers_influence__(self.buffs)
+            self.instance._calculate_multipliers_influence(self.buffs) + \
+            self.instance._calculate_modifiers_influence(self.buffs)
 
-        actual_power = self.instance.__calculate_buffs_influence__(self.base_power, self.buffs)
+        actual_power = self.instance._calculate_buffs_influence(self.base_power, self.buffs)
 
         self.assertEqual(actual_power, expected_power)
 
     def test_calculate_effect_power(self):
-        expected_min_value = self.instance.__calculate_buffs_influence__(self.min_power_without_buffs, self.buffs)
-        expected_max_value = self.instance.__calculate_buffs_influence__(self.max_power_without_buffs, self.buffs)
+        expected_min_value = self.instance._calculate_buffs_influence(self.min_power_without_buffs, self.buffs)
+        expected_max_value = self.instance._calculate_buffs_influence(self.max_power_without_buffs, self.buffs)
 
         for i in range(100):
             actual_value = self.instance.calculate_effect_power(self.base_power, self.power_range, self.buffs)

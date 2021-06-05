@@ -55,12 +55,13 @@ class CardEffect(models.Model):
         TRUE_DMG = 13, _("Obrażenia nieuchronne")
 
     id = models.IntegerField(primary_key=True, choices=EffectId.choices, default=EffectId.DMG)
-    name = models.CharField(max_length=50)
-    tooltip = models.TextField(max_length=150, null=True)
+    name = models.CharField(max_length=50, help_text="A pretty effect name on-display.")
+    tooltip = models.TextField(max_length=150, null=True, help_text="Effect description")
 
-    # This field tells us whether a specific effect can have modifiers (power, range, etc).
-    # Most of the effect have no such modifiers, so I set the default to be False.
-    has_modifier = models.BooleanField(default=False)
+    has_modifier = models.BooleanField(default=False, help_text="# This field tells us whether a specific effect can "
+                                                                "have modifiers (power, range, etc). Most of the "
+                                                                "effect have no such modifiers, so I set the default "
+                                                                "to be False.")
 
     def __str__(self):
         return f"{self.name}"
@@ -78,10 +79,12 @@ class CardInfo(models.Model):
     Stores generic information about Card.
     """
 
-    name = models.CharField(max_length=50, unique=True)
-    tooltip = models.TextField()
-    image = models.ImageField(upload_to='cards/images/', null=True, blank=True)
-    subject = models.CharField(max_length=50, null=True)  # In the future this field will be ForeignKey to some model.
+    name = models.CharField(max_length=50, unique=True, help_text="Displayed card's name. Must be unique.")
+    tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
+    image = models.ImageField(upload_to='cards/images/', null=True, blank=True, help_text="An image. We don't really"
+                                                                                          "know what should that be.")
+    subject = models.CharField(max_length=50, null=True, help_text="Subject name. In the future this field will be an"
+                                                                   " id pointing to Subject object.")
 
 
 class Card(models.Model):
@@ -109,12 +112,14 @@ class CardLevelEffects(models.Model):
     This is like an extended many-to-many relation in databases.
     Couples Card objects with its effects.
     """
+
     class Target(models.IntegerChoices):
         """
         Possible targets.
         """
         PLAYER = 1
         OPPONENT = 2
+
     card = models.ForeignKey(Card, related_name='effects', unique=False, on_delete=models.CASCADE)
     card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
     # This isn't unique even as a pair with card, as a single card on a given level '

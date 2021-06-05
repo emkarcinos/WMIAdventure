@@ -25,10 +25,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        primary_key=True
+        primary_key=True,
+        help_text="A reference to Django user model"
     )
-    displayedUsername = models.CharField(max_length=50)
-    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True)
+    displayedUsername = models.CharField(max_length=50, help_text="Pretty username available to anyone")
+    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, help_text="Semester number.") 
 
     def __str__(self):
         return self.displayedUsername

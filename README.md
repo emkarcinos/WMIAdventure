@@ -18,6 +18,10 @@ Aplikacja webowa nie wymaga instalacji, aktualnie hostowana na: (main branch)
 
 - backend rest api: [http://wmiadventure.westeurope.cloudapp.azure.com:8000]
 
+### Instalacja i uruchamiania we własnym zakresie
+
+Więcej na [Wiki](https://github.com/emkarcinos/WMIAdventure/wiki/Instalacja)
+
 ## Wkład w rozwój
 
 Osoby zainteresowane rozwojem aplikacji zachęcamy do zajrzenia na [wiki](https://github.com/emkarcinos/WMIAdventure/wiki) projektu.
