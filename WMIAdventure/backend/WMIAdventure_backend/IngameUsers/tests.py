@@ -6,7 +6,7 @@ from cards.models import Card, CardInfo, CardLevel
 from . import views
 from django.contrib.auth import get_user_model
 
-from .models import UserProfile, Semester, UserCard
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck
 
 
 class UserProfileTestCase(TestCase):
@@ -77,3 +77,48 @@ class UserCardTestCase(TestCase):
         # Second user_card with the same card and user should raise
         c2 = UserCard(user_profile=u1, card=card1)
         self.assertRaises(IntegrityError, c2.save)
+
+
+class DeckTestCase(TestCase):
+    def test_assigning(self):
+        card1 = UserCard()
+        card2 = UserCard()
+        card3 = UserCard()
+        card4 = UserCard()
+        card5 = UserCard()
+
+        deck = Deck(card1=card1,
+                    card2=card2,
+                    card3=card3,
+                    card4=card4,
+                    card5=card5)
+
+        self.assertIs(deck.card1, card1)
+        self.assertIs(deck.card2, card2)
+        self.assertIs(deck.card3, card3)
+        self.assertIs(deck.card4, card4)
+        self.assertIs(deck.card5, card5)
+
+    def test_unique_constraint(self):
+        u1 = UserProfile(user=get_user_model().objects.create_user(username="test"),
+                         displayedUsername="test")
+        u1.save()
+
+        info = CardInfo.objects.create()
+        level = CardLevel.objects.get(pk=1)
+        card1 = Card.objects.create(info=info,
+                                    level=level)
+        # Creating first user_card
+        card = UserCard.objects.create(user_profile=u1, card=card1)
+
+        deck = Deck.objects.create(card1=card,
+                                   card2=card,
+                                   card3=card,
+                                   card4=card,
+                                   card5=card)
+
+        UserDeck.objects.create(deck_number=1,
+                                deck=deck,
+                                user_profile=u1)
+        failing_deck = UserDeck(deck_number=1, deck=deck, user_profile=u1)
+        self.assertRaises(IntegrityError, failing_deck.save)
