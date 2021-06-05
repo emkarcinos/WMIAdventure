@@ -14,6 +14,7 @@ import CardChoose from './molecules/CardChoose';
 
 class CardsCreator extends React.Component {
     state = {
+        cardId: undefined,
         cardName: 'Nazwa Karty',
         cardSubject: 'Przedmiot',
         cardTooltip: 'Opis Karty',
@@ -31,6 +32,7 @@ class CardsCreator extends React.Component {
 
     sendCardToApi = (event) => {
         event.preventDefault();
+        const API = process.env['REACT_APP_API_URL'];
 
         const levelsToSend = [];
         for(let i=0; i < this.state.effectsToSend.length; i++) {
@@ -45,27 +47,52 @@ class CardsCreator extends React.Component {
             }
         }
 
-        const API = process.env['REACT_APP_API_URL'];
-        try {
-            let result = fetch(`http://${API}/api/cards/`, {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: this.state.cardName,
-                    subject: this.state.cardSubject,
-                    image: null,
-                    tooltip: this.state.cardTooltip,
-                    levels: levelsToSend
-                })
-            });
+        if(this.props.creatorType === 'create') {
+            try {
+                let result = fetch(`http://${API}/api/cards/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: this.state.cardName,
+                        subject: this.state.cardSubject,
+                        image: null,
+                        tooltip: this.state.cardTooltip,
+                        levels: levelsToSend
+                    })
+                });
 
-            console.log('Result: ' + result);
-        } catch (e) {
-            console.log(e);
+                console.log('Result: ' + result);
+            } catch (e) {
+                console.log(e);
+            }
         }
+
+        if(this.props.creatorType === 'edit') {
+            try {
+                let result = fetch(`http://${API}/api/cards/${this.state.cardId}/`, {
+                    method: 'put',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: this.state.cardName,
+                        subject: this.state.cardSubject,
+                        image: null,
+                        tooltip: this.state.cardTooltip,
+                        levels: levelsToSend
+                    })
+                });
+
+                console.log('Result: ' + result);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
     }
 
     componentDidMount() {
@@ -143,9 +170,10 @@ class CardsCreator extends React.Component {
         this.setState({showCardChoose: false});
     }
 
-    chosenCardHandler = (event, name, subject, tooltip, levels) => {
+    chosenCardHandler = (event, id, name, subject, tooltip, levels) => {
         event.preventDefault();
         this.setState({
+            cardId: id,
             cardName: name,
             cardSubject: subject,
             cardTooltip: tooltip

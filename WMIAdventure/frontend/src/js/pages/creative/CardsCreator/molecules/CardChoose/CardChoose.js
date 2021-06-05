@@ -32,7 +32,7 @@ class CardChoose extends React.Component {
                         this.props.cardsFromAPI.map((card) => {
                             return (
                                 <React.Fragment key={`card-${card.id}`}>
-                                    <Card name={card.name}
+                                    <Card id={card.id} name={card.name}
                                           subject={card.subject}
                                           tooltip={card.tooltip}
                                           levels={card.levels}
