@@ -147,7 +147,10 @@ class CardProperties extends React.Component {
 
         newList = this.state.effectsToSend.slice();
         newList[rank - 1] = newList[rank - 1].filter(function (elem) {
-            return Number(elem.card_extra_id) !== Number(String(effect.id) + String(rank));
+            return (
+                Number(String(elem.card_effect) + String(rank)) !==
+                Number(String(effect.id) + String(rank))
+            );
         })
         this.setState({effectsToSend: newList});
         this.props.setEffectsToSendHandler(newList);
@@ -156,7 +159,10 @@ class CardProperties extends React.Component {
     effectsToSendHandler = (rank, effects) => {
         let newList = this.state.effectsToSend.slice();
         newList[rank - 1] = newList[rank - 1].filter(function (elem) {
-            return elem.card_extra_id !== effects.card_extra_id;
+            return (
+                Number(String(elem.card_effect) + String(rank)) !==
+                Number(String(effects.card_effect) + String(rank))
+            );
         })
         newList[rank - 1].push(effects);
         this.setState({effectsToSend: newList});
