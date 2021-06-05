@@ -11,6 +11,7 @@ import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
+import SendMessage from './atoms/SendMessage';
 
 class CardsCreator extends React.Component {
     state = {
@@ -28,6 +29,8 @@ class CardsCreator extends React.Component {
         cardsFromApi: [],
         levelsListFromCard: [],
         chosenEffectsFromCard: [[], [], []],
+        showSendMessage: false,
+        sendSuccess: false,
     }
 
     sendCardToApi = (event) => {
@@ -62,8 +65,21 @@ class CardsCreator extends React.Component {
                         tooltip: this.state.cardTooltip,
                         levels: levelsToSend
                     })
-                });
-
+                }) .then (
+                    response => {
+                        if(response.ok) {
+                            this.setState({
+                                showSendMessage: true,
+                                sendSuccess: true
+                            });
+                        } else {
+                            this.setState({
+                                showSendMessage: true,
+                                sendSuccess: false
+                            });
+                        }
+                    }
+                );
                 console.log('Result: ' + result);
             } catch (e) {
                 console.log(e);
@@ -85,8 +101,21 @@ class CardsCreator extends React.Component {
                         tooltip: this.state.cardTooltip,
                         levels: levelsToSend
                     })
-                });
-
+                }) .then (
+                    response => {
+                        if(response.ok) {
+                            this.setState({
+                                showSendMessage: true,
+                                sendSuccess: true
+                            });
+                        } else {
+                            this.setState({
+                                showSendMessage: true,
+                                sendSuccess: false
+                            });
+                        }
+                    }
+                );
                 console.log('Result: ' + result);
             } catch (e) {
                 console.log(e);
@@ -229,6 +258,11 @@ class CardsCreator extends React.Component {
         this.setState({chosenEffectsFromCard: newChosenEffectsList});
     }
 
+    hideSendMessageHandler = (event) => {
+        event.preventDefault();
+        this.setState({showSendMessage: false});
+    }
+
     render() {
         return (
             <>
@@ -268,6 +302,9 @@ class CardsCreator extends React.Component {
                         </Form>
                     </Main>
                 </Wrapper>
+                <SendMessage showMessage={this.state.showSendMessage}
+                             sendSuccess={this.state.sendSuccess}
+                             hideSendMessageHandler={this.hideSendMessageHandler} />
             </>
         );
     }
