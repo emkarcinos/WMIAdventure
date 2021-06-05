@@ -1,19 +1,24 @@
-from unittest import TestCase
+from django.test import TestCase
 
-from IngameUsers.models import UserProfile, UserCard
+from IngameUsers.models import UserProfile
 from battle.businesslogic.Battle import Battle
 from battle.businesslogic.tests.Creator import Creator
-from cards.models import CardInfo, CardLevel, Card, CardEffect, CardLevelEffects
+from cards.models import CardEffect, CardLevelEffects
 from users.models import User
-from IngameUsers.models import Deck as DeckModel
 
 
 class BattleIntegrationTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
+        super(BattleIntegrationTestCase, cls).setUpClass()
+
         cls.creator = Creator()
 
-        cls.user_profile_model1, cls.user_profile_model2 = cls.creator.get_user_profile_models()
+        cls.user1 = User.objects.create(username="attacker", email="attacker@company.com")
+        cls.user2 = User.objects.create(username="defender", email="defender@company.com")
+
+        cls.attacker_profile = UserProfile.objects.create(user=cls.user1, displayedUsername="attacker")
+        cls.defender_profile = UserProfile.objects.create(user=cls.user2, displayedUsername="defender")
 
     def _setup_test_battle1(self):
         """
@@ -21,40 +26,18 @@ class BattleIntegrationTestCase(TestCase):
         Creates attacker and defender models with decks containing only cards dealing 10 dmg.
         """
 
-        dmg_power = 10
-        dmg_range = 0
+        attacker_user_card = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
+                                                           CardLevelEffects.Target.OPPONENT, "a1", 10, 0)
+        self.creator.create_user_deck(self.attacker_profile, attacker_user_card, attacker_user_card,
+                                      attacker_user_card, attacker_user_card, attacker_user_card)
 
-        card_info = CardInfo.objects.create(name="asdjlasj", tooltip="asdasg x")
-        card = Card.objects.create(info=card_info, level=CardLevel.objects.get(pk=1))
-        card_effect = CardEffect.objects.get(id=CardEffect.EffectId.DMG)
-        card.effects.create(card_effect=card_effect, target=CardLevelEffects.Target.OPPONENT,
-                            power=dmg_power, range=dmg_range)
+        defender_user_card = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
+                                                           CardLevelEffects.Target.OPPONENT, "d1", 10, 0)
+        self.creator.create_user_deck(self.defender_profile, defender_user_card, defender_user_card,
+                                      defender_user_card, defender_user_card, defender_user_card)
 
-        user1 = User.objects.create(username="attacker", email="attacker@company.com")
-        attacker_profile = UserProfile.objects.create(user=user1, displayedUsername="attacker")
-        attacker_user_card = UserCard.objects.create(user_profile=attacker_profile, card=card)
-        attacker_deck_model = DeckModel.objects.create(
-            card1=attacker_user_card,
-            card2=attacker_user_card,
-            card3=attacker_user_card,
-            card4=attacker_user_card,
-            card5=attacker_user_card,
-        )
-        attacker_profile.user_decks.create(deck_number=1, deck=attacker_deck_model)
-
-        user2 = User.objects.create(username="defender", email="defender@company.com")
-        defender_profile = UserProfile.objects.create(user=user2, displayedUsername="defender")
-        defender_user_card = UserCard.objects.create(user_profile=defender_profile, card=card)
-        defender_deck_model = DeckModel.objects.create(
-            card1=defender_user_card,
-            card2=defender_user_card,
-            card3=defender_user_card,
-            card4=defender_user_card,
-            card5=defender_user_card,
-        )
-        defender_profile.user_decks.create(deck_number=1, deck=defender_deck_model)
-
-        return attacker_profile, defender_profile
+    def tearDown(self) -> None:
+        pass
 
     def test_battle1(self):
         """
@@ -62,9 +45,9 @@ class BattleIntegrationTestCase(TestCase):
         Expected result: attacker wins with 10 hp remaining.
         """
 
-        attacker_model, defender_model = self._setup_test_battle1()
+        self._setup_test_battle1()
 
-        battle = Battle(attacker_model, defender_model)
+        battle = Battle(self.attacker_profile, self.defender_profile)
         battle.start()
 
         expected_winner = battle.attacker
@@ -78,5 +61,5 @@ class BattleIntegrationTestCase(TestCase):
         self.assertEqual(actual_winner_hp, expected_winner_hp)
 
     @classmethod
-    def tearDownClass(cls) -> None:
+    def tearDownClass(cls):
         cls.creator.perform_deletion()
