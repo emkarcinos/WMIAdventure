@@ -1,9 +1,12 @@
+from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
+
+from cards.models import Card, CardInfo, CardLevel
 from . import views
 from django.contrib.auth import get_user_model
 
-from .models import UserProfile, Semester
+from .models import UserProfile, Semester, UserCard
 
 
 class UserProfileTestCase(TestCase):
@@ -17,7 +20,7 @@ class UserProfileTestCase(TestCase):
         self.user_profile = UserProfile(user_id=self.test_user.id,
                                         displayedUsername=self.test_username,
                                         semester=Semester(5))
-        self.user_profile .save()
+        self.user_profile.save()
 
     def testApiGet(self):
         factory = APIRequestFactory()
@@ -48,3 +51,29 @@ class UserProfileTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.test_user.delete()
+
+
+class UserCardTestCase(TestCase):
+    def test_assigning(self):
+        card = Card()
+        user_profile = UserProfile()
+        user_card = UserCard(user_profile=user_profile,
+                             card=card)
+
+        self.assertEqual(user_card.card, card)
+        self.assertEqual(user_card.user_profile, user_profile)
+
+    def test_unique_constraint(self):
+        u1 = UserProfile(user=get_user_model().objects.create_user(username="test"),
+                         displayedUsername="test")
+        u1.save()
+
+        info = CardInfo.objects.create()
+        level = CardLevel.objects.get(pk=1)
+        card1 = Card.objects.create(info=info,
+                                    level=level)
+        # Creating first user_card
+        UserCard.objects.create(user_profile=u1, card=card1)
+        # Second user_card with the same card and user should raise
+        c2 = UserCard(user_profile=u1, card=card1)
+        self.assertRaises(IntegrityError, c2.save)
