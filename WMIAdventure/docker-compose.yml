@@ -5,6 +5,8 @@ services:
         environment:
             - DB_SOURCE=${DB_SOURCE}
             - DB_PASSWD=${DB_PASSWD}
+            - DJANGO_SECRET=${DJANGO_SECRET}
+            - DJANGO_DEBUG=${DJANGO_DEBUG}
         image: wmiadventure.azurecr.io/wmiadventure:v1
         build: ./backend
         command: python manage.py runserver 0.0.0.0:8000
