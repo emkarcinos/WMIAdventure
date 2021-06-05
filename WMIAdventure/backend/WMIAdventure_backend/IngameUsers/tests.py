@@ -1,50 +1,124 @@
+from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
-from . import models
+
+from cards.models import Card, CardInfo, CardLevel
 from . import views
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
-# Create your tests here.
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck
 
 
-# run these tests after user model creation
+class UserProfileTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.test_user = get_user_model().objects.create_user(username='testusername', password='12345')
 
-# class UserProfileTestCase(TestCase):
-#     testObjectId = settings.AUTH_USER_MODEL.objects.create_user(username='testusername', password='12345')
-#     testUsername = "test"
-#     testSemesterId = 1
-#
-#     def setUp(self) -> None:
-#         models.UserProfile.objects.create(user=self.testObjectId,
-#                                           displayedUsername=self.testUsername,
-#                                           semester=models.Semester(self.testSemesterId))
-#
-#     def testDBCreation(self):
-#         user = models.UserProfile.objects.get(user=self.testObjectId)
-#         self.assertEqual(self.testUsername, user.displayedUsername)
-#         self.assertEqual(self.testSemesterId, user.semester.semesterNumber)
-#
-#     def testApiGet(self):
-#         factory = APIRequestFactory()
-#         view = views.UserProfileViewSet.as_view({"get": "list"})
-#         testRequest = factory.get('/api/igusers/basic')
-#         response = view(testRequest)
-#         self.assertEqual(self.testObjectId, response.data[0]['user'])
-#         self.assertEqual(self.testUsername, response.data[0]['displayedUsername'])
-#         self.assertEqual(self.testSemesterId, response.data[0]['semester'])
-#
-#     def testApiPost(self):
-#         factory = APIRequestFactory()
-#         view = views.UserProfileViewSet.as_view({"get": "list", "post": "create"})
-#         newId = 2
-#         newUsername = "test2"
-#         newSemester = 5
-#         result = factory.post('/api/igusers/basic', data={'user': newId,
-#                                                           'displayedUsername': newUsername,
-#                                                           'semester': newSemester}, format='json')
-#         view(result)
-#         testRequest = factory.get('/api/igusers/basic')
-#         response = view(testRequest)
-#         self.assertEqual(newId, response.data[1]['user'])
-#         self.assertEqual(newUsername, response.data[1]['displayedUsername'])
-#         self.assertEqual(newSemester, response.data[1]['semester'])
+    def setUp(self) -> None:
+        self.test_username = "testuser"
+        self.semester = 5
+        self.user_profile = UserProfile(user_id=self.test_user.id,
+                                        displayedUsername=self.test_username,
+                                        semester=Semester(5))
+        self.user_profile.save()
+
+    def testApiGet(self):
+        factory = APIRequestFactory()
+        view = views.UserProfileViewSet.as_view({"get": "list"})
+        testRequest = factory.get('/api/igusers/basic')
+        response = view(testRequest)
+        self.assertEqual(self.test_user.id, response.data[0]['user'])
+        self.assertEqual(self.test_username, response.data[0]['displayedUsername'])
+        self.assertEqual(self.semester, response.data[0]['semester'])
+
+    def testApiPost(self):
+        self.user_profile.delete()
+        factory = APIRequestFactory()
+        view = views.UserProfileViewSet.as_view({"get": "list", "post": "create"})
+        new_user = get_user_model().objects.create_user(username="asdasa", password="129312", email="tse@tst.sd")
+        new_username = "test2"
+        new_semester = 5
+        result = factory.post('/api/igusers/basic', data={'user': new_user.id,
+                                                          'displayedUsername': new_username,
+                                                          'semester': new_semester}, format='json')
+        view(result)
+        testRequest = factory.get('/api/igusers/basic')
+        response = view(testRequest)
+        self.assertEqual(new_user.id, response.data[0]['user'])
+        self.assertEqual(new_username, response.data[0]['displayedUsername'])
+        self.assertEqual(new_semester, response.data[0]['semester'])
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.test_user.delete()
+
+
+class UserCardTestCase(TestCase):
+    def test_assigning(self):
+        card = Card()
+        user_profile = UserProfile()
+        user_card = UserCard(user_profile=user_profile,
+                             card=card)
+
+        self.assertEqual(user_card.card, card)
+        self.assertEqual(user_card.user_profile, user_profile)
+
+    def test_unique_constraint(self):
+        u1 = UserProfile(user=get_user_model().objects.create_user(username="test"),
+                         displayedUsername="test")
+        u1.save()
+
+        info = CardInfo.objects.create()
+        level = CardLevel.objects.get(pk=1)
+        card1 = Card.objects.create(info=info,
+                                    level=level)
+        # Creating first user_card
+        UserCard.objects.create(user_profile=u1, card=card1)
+        # Second user_card with the same card and user should raise
+        c2 = UserCard(user_profile=u1, card=card1)
+        self.assertRaises(IntegrityError, c2.save)
+
+
+class DeckTestCase(TestCase):
+    def test_assigning(self):
+        card1 = UserCard()
+        card2 = UserCard()
+        card3 = UserCard()
+        card4 = UserCard()
+        card5 = UserCard()
+
+        deck = Deck(card1=card1,
+                    card2=card2,
+                    card3=card3,
+                    card4=card4,
+                    card5=card5)
+
+        self.assertIs(deck.card1, card1)
+        self.assertIs(deck.card2, card2)
+        self.assertIs(deck.card3, card3)
+        self.assertIs(deck.card4, card4)
+        self.assertIs(deck.card5, card5)
+
+    def test_unique_constraint(self):
+        u1 = UserProfile(user=get_user_model().objects.create_user(username="test"),
+                         displayedUsername="test")
+        u1.save()
+
+        info = CardInfo.objects.create()
+        level = CardLevel.objects.get(pk=1)
+        card1 = Card.objects.create(info=info,
+                                    level=level)
+        # Creating first user_card
+        card = UserCard.objects.create(user_profile=u1, card=card1)
+
+        deck = Deck.objects.create(card1=card,
+                                   card2=card,
+                                   card3=card,
+                                   card4=card,
+                                   card5=card)
+
+        UserDeck.objects.create(deck_number=1,
+                                deck=deck,
+                                user_profile=u1)
+        failing_deck = UserDeck(deck_number=1, deck=deck, user_profile=u1)
+        self.assertRaises(IntegrityError, failing_deck.save)
