@@ -1,5 +1,3 @@
-from typing import List
-
 from battle.businesslogic.Buff import Buff
 from cards.models import CardLevelEffects
 
@@ -21,7 +19,7 @@ class Effect:
         self.power = effect_model.power
         self.range = effect_model.range
 
-        self.buffs: List[Buff]
+        self.buffs: list[Buff]
         self.buffs = []
 
     def on_activation(self, target, turns_queue):

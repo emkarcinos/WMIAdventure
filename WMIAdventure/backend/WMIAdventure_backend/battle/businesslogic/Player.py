@@ -1,5 +1,3 @@
-from typing import List
-
 from battle.businesslogic.effects.Effect import Effect
 from .Deck import Deck
 from .Statistics import Statistics
@@ -28,7 +26,7 @@ class Player:
     def get_hp(self) -> int:
         return self.statistics.hp
 
-    def use_card(self) -> List[Effect]:
+    def use_card(self) -> list[Effect]:
         """
         Uses card which is first in deck to use and then places that card at the end of the deck.
         @return: List of effects of proper card to be executed by battle simulation.

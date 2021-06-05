@@ -1,5 +1,4 @@
 from random import uniform
-from typing import List
 
 from .Buff import Buff
 
@@ -13,7 +12,7 @@ class Calculator:
             Calculator.instance = Calculator()
         return Calculator.instance
 
-    def calculate_effect_power(self, power, power_range, buffs: List[Buff]):
+    def calculate_effect_power(self, power, power_range, buffs: list[Buff]):
         """
         Calculates effect's power.
         @param power: Effect's base power.
