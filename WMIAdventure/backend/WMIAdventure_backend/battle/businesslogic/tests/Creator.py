@@ -174,7 +174,7 @@ class Creator:
 
     def create_card_model(self, effects_data: list[
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
-                          name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> Card:
+                          name, card_level: CardLevel = None, tooltip="...") -> Card:
         """
         Creates Card model with given effects data.
 
@@ -184,6 +184,9 @@ class Creator:
         :param tooltip: Card tooltip.
         :return: Created Card model.
         """
+
+        if card_level is None:
+            card_level = CardLevel.objects.get(pk=1),
         card_info = CardInfo.objects.create(name=name, tooltip=tooltip)
         card = Card.objects.create(info=card_info, level=card_level)
         for card_effect_id, target, power, range_ in effects_data:
@@ -194,7 +197,7 @@ class Creator:
 
     def create_user_card(self, user_profile: UserProfile, effects_data: list[
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
-                         name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> UserCard:
+                         name, card_level: CardLevel = None, tooltip="...") -> UserCard:
         """
         Creates UserCard object by creating Card model with given effects data and linking created Card
         with given UserProfile.
@@ -206,6 +209,8 @@ class Creator:
         :param tooltip: Card tooltip.
         :return: Created UserCard model.
         """
+        if card_level is None:
+            card_level = CardLevel.objects.get(pk=1)
         card = self.create_card_model(effects_data, name, card_level, tooltip)
         user_card = user_profile.user_cards.create(card=card)
         return user_card
