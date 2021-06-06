@@ -176,7 +176,7 @@ class Creator:
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
                           name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> Card:
         """
-        Creates Card model with one effect.
+        Creates Card model with given effects data.
 
         :param effects_data: List of tuples containing data (effect_id, target, effect_power, effect_power_range) necessary to create card's effects. effect_power and effect_power_range can be None if effect doesn't need these fields (eg. TwoTimesExecuteEffect).
         :param card_level: Level, defaults to first level.
@@ -196,7 +196,7 @@ class Creator:
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
                          name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> UserCard:
         """
-        Creates UserCard object by creating Card model with given effect and linking created Card
+        Creates UserCard object by creating Card model with given effects data and linking created Card
         with given UserProfile.
 
         :param user_profile: Card owner.
@@ -216,6 +216,7 @@ class Creator:
                          user_card5: UserCard, deck_number=1) -> UserDeck:
         """
         Creates UserDeck object which is owned by given UserProfile.
+
         :param user_profile: Owner of the deck.
         :param user_card1:
         :param user_card2:
