@@ -174,7 +174,7 @@ class Creator:
 
     def create_card_model(self, effects_data: list[
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
-                          name, card_level: CardLevel = None, tooltip="...") -> Card:
+                          name, card_level: Optional[CardLevel] = None, tooltip="...") -> Card:
         """
         Creates Card model with given effects data.
 
@@ -197,7 +197,7 @@ class Creator:
 
     def create_user_card(self, user_profile: UserProfile, effects_data: list[
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
-                         name, card_level: CardLevel = None, tooltip="...") -> UserCard:
+                         name, card_level: Optional[CardLevel] = None, tooltip="...") -> UserCard:
         """
         Creates UserCard object by creating Card model with given effects data and linking created Card
         with given UserProfile.
