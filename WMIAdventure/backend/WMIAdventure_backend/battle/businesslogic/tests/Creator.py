@@ -1,5 +1,3 @@
-from typing import Optional
-
 from IngameUsers.models import UserProfile, Deck, UserCard, UserDeck
 from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 from users.models import User
@@ -172,6 +170,8 @@ class Creator:
                                user_profile=self.user_profile_model2)
         user2_deck2.save()
 
+    '''
+
     def create_card_model(self, effects_data: list[
         tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
                           name, card_level: Optional[CardLevel] = None, tooltip="...") -> Card:
@@ -214,6 +214,8 @@ class Creator:
         card = self.create_card_model(effects_data, name, card_level, tooltip)
         user_card = user_profile.user_cards.create(card=card)
         return user_card
+    
+        '''
 
     def create_user_deck(self, user_profile: UserProfile,
                          user_card1: UserCard, user_card2: UserCard,

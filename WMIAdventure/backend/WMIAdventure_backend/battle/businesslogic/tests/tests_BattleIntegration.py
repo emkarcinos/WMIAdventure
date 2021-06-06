@@ -1,10 +1,7 @@
 from django.test import TestCase
 
 from IngameUsers.models import UserProfile
-from battle.businesslogic.Battle import Battle
-from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.tests.Creator import Creator
-from cards.models import CardEffect, CardLevelEffects
 from users.models import User
 
 
@@ -20,6 +17,9 @@ class BattleIntegrationTestCase(TestCase):
 
         cls.attacker_profile = UserProfile.objects.create(user=cls.user1, displayedUsername="attacker")
         cls.defender_profile = UserProfile.objects.create(user=cls.user2, displayedUsername="defender")
+
+    '''
+    
 
     def test_battle1(self):
         """
@@ -515,6 +515,7 @@ class BattleIntegrationTestCase(TestCase):
         self.creator.create_user_deck(self.defender_profile, defender_user_card, defender_user_card,
                                       defender_user_card, defender_user_card, defender_user_card)
 
+    '''
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()
