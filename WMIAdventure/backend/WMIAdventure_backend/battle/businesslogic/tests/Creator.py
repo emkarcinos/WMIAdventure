@@ -1,3 +1,5 @@
+from typing import Optional
+
 from IngameUsers.models import UserProfile, Deck, UserCard, UserDeck
 from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 from users.models import User
@@ -169,6 +171,70 @@ class Creator:
                                deck=self.p2_attacker_deck,
                                user_profile=self.user_profile_model2)
         user2_deck2.save()
+
+    def create_card_model(self, effects_data: list[
+        tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
+                          name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> Card:
+        """
+        Creates Card model with given effects data.
+
+        :param effects_data: List of tuples containing data (effect_id, target, effect_power, effect_power_range) necessary to create card's effects. effect_power and effect_power_range can be None if effect doesn't need these fields (eg. TwoTimesExecuteEffect).
+        :param card_level: Level, defaults to first level.
+        :param name: Card name, must be unique.
+        :param tooltip: Card tooltip.
+        :return: Created Card model.
+        """
+        card_info = CardInfo.objects.create(name=name, tooltip=tooltip)
+        card = Card.objects.create(info=card_info, level=card_level)
+        for card_effect_id, target, power, range_ in effects_data:
+            card_effect = CardEffect.objects.get(id=card_effect_id)
+            card.effects.create(card_effect=card_effect, target=target,
+                                power=power, range=range_)
+        return card
+
+    def create_user_card(self, user_profile: UserProfile, effects_data: list[
+        tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
+                         name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> UserCard:
+        """
+        Creates UserCard object by creating Card model with given effects data and linking created Card
+        with given UserProfile.
+
+        :param user_profile: Card owner.
+        :param effects_data: List of tuples containing data (effect_id, target, effect_power, effect_power_range) necessary to create card's effects. effect_power and effect_power_range can be None if effect doesn't need these fields (eg. TwoTimesExecuteEffect).
+        :param card_level: Level, defaults to first level.
+        :param name: Card name, must be unique.
+        :param tooltip: Card tooltip.
+        :return: Created UserCard model.
+        """
+        card = self.create_card_model(effects_data, name, card_level, tooltip)
+        user_card = user_profile.user_cards.create(card=card)
+        return user_card
+
+    def create_user_deck(self, user_profile: UserProfile,
+                         user_card1: UserCard, user_card2: UserCard,
+                         user_card3: UserCard, user_card4: UserCard,
+                         user_card5: UserCard, deck_number=1) -> UserDeck:
+        """
+        Creates UserDeck object which is owned by given UserProfile.
+
+        :param user_profile: Owner of the deck.
+        :param user_card1:
+        :param user_card2:
+        :param user_card3:
+        :param user_card4:
+        :param user_card5:
+        :param deck_number:
+        :return: Created UserDeck.
+        """
+        deck_model = Deck.objects.create(
+            card1=user_card1,
+            card2=user_card2,
+            card3=user_card3,
+            card4=user_card4,
+            card5=user_card5,
+        )
+        user_deck = user_profile.user_decks.create(deck_number=deck_number, deck=deck_model)
+        return user_deck
 
     def __del__(self):
         self.perform_deletion()

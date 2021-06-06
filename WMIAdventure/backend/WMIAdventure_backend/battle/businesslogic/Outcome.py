@@ -29,9 +29,11 @@ class Outcome:
             return None
 
         winner = None
-        if self.attacker.get_hp() < 0.0:
+        if self.attacker.get_hp() <= 0.0 and self.defender.get_hp() <= 0.0:  # Both players are defeated - draw
+            winner = None
+        elif self.attacker.get_hp() <= 0.0:  # Attacker is defeated - defender wins
             winner = self.defender
-        else:
+        elif self.defender.get_hp() <= 0.0:  # Defender is defeated - attacker wins
             winner = self.attacker
 
         return winner
