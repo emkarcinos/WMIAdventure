@@ -188,7 +188,9 @@ class Creator:
         if card_level is None:
             card_level = CardLevel.objects.get(pk=1),
         card_info = CardInfo.objects.create(name=name, tooltip=tooltip)
+        self.infos.append(card_info)
         card = Card.objects.create(info=card_info, level=card_level)
+        self.cards.append(card)
         for card_effect_id, target, power, range_ in effects_data:
             card_effect = CardEffect.objects.get(id=card_effect_id)
             card.effects.create(card_effect=card_effect, target=target,
