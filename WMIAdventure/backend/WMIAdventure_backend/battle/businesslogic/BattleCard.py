@@ -1,4 +1,3 @@
-from copy import copy
 from typing import List, Union
 
 from battle.businesslogic.effects.Effect import Effect
@@ -55,8 +54,4 @@ class BattleCard:
             # If we specified none, it applies to all effect types.
             card_type = effect.effect_model.card_effect.id
             if effect_type is None or card_type == effect_type:
-                """
-                Copy of buff is assigned. If buff were not to be copied same Buff object
-                would be updated be different Effects objects.
-                """
-                effect.add_buff(copy(buff))
+                effect.add_buff(buff)

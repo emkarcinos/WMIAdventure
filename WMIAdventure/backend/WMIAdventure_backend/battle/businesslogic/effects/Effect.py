@@ -1,3 +1,5 @@
+from copy import copy
+
 from battle.businesslogic.Buff import Buff
 from cards.models import CardLevelEffects
 
@@ -66,7 +68,13 @@ class Effect:
         """
         Add a new buff to the Effect.
         """
-        self.buffs.append(buff)
+
+        """
+        Copy of buff is appended. If buff was not copied then the same Buff object
+        would be updated multiple times by multiple Effect objects in one turn.
+        (Multiple Effect instances would have reference to the same Buff object)
+        """
+        self.buffs.append(copy(buff))
 
     def update_buffs(self):
         """
