@@ -42,46 +42,12 @@ class OutcomeTestCase(TestCase):
 
         self.assertEqual(self.outcome.get_winner(), expected_outcome)
 
-    def test_get_winner1(self):
-        """
-        Scenario: Defender is defeated.
-        Expected result: Attacker is winner.
-        """
-
+    def test_get_winner(self):
         self.outcome.defender.statistics.hp = 0.0
         self.outcome.is_done()
         self.assertIs(self.outcome.get_winner(), self.attacker)
 
-        # Restoring defender hp
-        self.outcome.defender.statistics.hp = self.outcome.defender.statistics.MAX_HP
-
-    def test_get_winner2(self):
-        """
-        Scenario: Attacker is defeated.
-        Expected result: Defender is winner.
-        """
-
-        self.outcome.attacker.statistics.hp = 0.0
-        self.outcome.is_done()
-        self.assertIs(self.outcome.get_winner(), self.defender)
-
-        # Restoring attacker hp
-        self.outcome.attacker.statistics.hp = self.outcome.attacker.statistics.MAX_HP
-
-    def test_get_winner3(self):
-        """
-        Scenario: Attacker and defender are defeated.
-        Expected result: None is winner.
-        """
-
-        self.outcome.attacker.statistics.hp = 0.0
-        self.outcome.defender.statistics.hp = 0.0
-
-        self.outcome.is_done()
-        self.assertIsNone(self.outcome.get_winner())
-
-        # Restoring players hp
-        self.outcome.attacker.statistics.hp = self.outcome.attacker.statistics.MAX_HP
+        # Restoring to
         self.outcome.defender.statistics.hp = self.outcome.defender.statistics.MAX_HP
 
     @classmethod
