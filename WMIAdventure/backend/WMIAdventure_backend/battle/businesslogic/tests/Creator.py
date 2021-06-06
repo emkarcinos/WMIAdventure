@@ -172,17 +172,13 @@ class Creator:
                                user_profile=self.user_profile_model2)
         user2_deck2.save()
 
-    def create_card_model(self, card_effect_id: CardEffect.EffectId,
-                          target: CardLevelEffects.Target,
-                          name, power: Optional[float] = None, range_: Optional[float] = None,
-                          card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> Card:
+    def create_card_model(self, effects_data: list[
+        tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
+                          name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> Card:
         """
         Creates Card model with one effect.
 
-        :param target: Card target.
-        :param card_effect_id: Effect id.
-        :param power: Card power, can be None if effect doesn't have power.
-        :param range_: Card power range, can be None if effect doesn't have power.
+        :param effects_data: List of tuples containing data (effect_id, target, effect_power, effect_power_range) necessary to create card's effects. effect_power and effect_power_range can be None if effect doesn't need these fields (eg. TwoTimesExecuteEffect).
         :param card_level: Level, defaults to first level.
         :param name: Card name, must be unique.
         :param tooltip: Card tooltip.
@@ -190,30 +186,27 @@ class Creator:
         """
         card_info = CardInfo.objects.create(name=name, tooltip=tooltip)
         card = Card.objects.create(info=card_info, level=card_level)
-        card_effect = CardEffect.objects.get(id=card_effect_id)
-        card.effects.create(card_effect=card_effect, target=target,
-                            power=power, range=range_)
+        for card_effect_id, target, power, range_ in effects_data:
+            card_effect = CardEffect.objects.get(id=card_effect_id)
+            card.effects.create(card_effect=card_effect, target=target,
+                                power=power, range=range_)
         return card
 
-    def create_user_card(self, user_profile: UserProfile, card_effect_id: CardEffect.EffectId,
-                         target: CardLevelEffects.Target,
-                         name, power: Optional[float] = None, range_: Optional[float] = None,
-                         card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> UserCard:
+    def create_user_card(self, user_profile: UserProfile, effects_data: list[
+        tuple[CardEffect.EffectId, CardLevelEffects.Target, Optional[int], Optional[float]]],
+                         name, card_level: CardLevel = CardLevel.objects.get(pk=1), tooltip="...") -> UserCard:
         """
         Creates UserCard object by creating Card model with given effect and linking created Card
         with given UserProfile.
 
         :param user_profile: Card owner.
-        :param target: Card target.
-        :param card_effect_id: Effect id.
-        :param power: Card power, can be None if effect doesn't have power.
-        :param range_: Card power range, can be None if effect doesn't have power.
+        :param effects_data: List of tuples containing data (effect_id, target, effect_power, effect_power_range) necessary to create card's effects. effect_power and effect_power_range can be None if effect doesn't need these fields (eg. TwoTimesExecuteEffect).
         :param card_level: Level, defaults to first level.
         :param name: Card name, must be unique.
         :param tooltip: Card tooltip.
-        :return: Created Card model.
+        :return: Created UserCard model.
         """
-        card = self.create_card_model(card_effect_id, target, name, power, range_, card_level, tooltip)
+        card = self.create_card_model(effects_data, name, card_level, tooltip)
         user_card = user_profile.user_cards.create(card=card)
         return user_card
 

@@ -194,34 +194,33 @@ class BattleIntegrationTestCase(TestCase):
         """
 
         # Attacker Card 1: Empower next card: modifier +50
-        attacker_user_card1 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.EMPOWER,
-                                                            CardLevelEffects.Target.PLAYER, "a1", 50, 0)
+        effects_data = [(CardEffect.EffectId.EMPOWER, CardLevelEffects.Target.PLAYER, 50, 0)]
+        attacker_user_card1 = self.creator.create_user_card(self.attacker_profile, effects_data, "a1")
+
         # Attacker Card 2: DMG 50 | SHIELD 10 | HEAL 50
-        attacker_user_card2 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "a2", 50, 0)
-
-        # Add shield effect
-        card_model = attacker_user_card2.card
-        card_model.effects.create(card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.SHIELD),
-                                  target=CardLevelEffects.Target.PLAYER, power=10, range=0.0)
-
-        # Add heal effect
-        card_model.effects.create(card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.HEAL),
-                                  target=CardLevelEffects.Target.PLAYER, power=50, range=0.0)
+        effects_data = [
+            (CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 50, 0),
+            (CardEffect.EffectId.SHIELD, CardLevelEffects.Target.PLAYER, 10, 0),
+            (CardEffect.EffectId.HEAL, CardLevelEffects.Target.PLAYER, 50, 0)
+        ]
+        attacker_user_card2 = self.creator.create_user_card(self.attacker_profile, effects_data, "a2")
 
         # Attacker Card 3, 4, 5: DMG 1
-        attacker_user_card345 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                              CardLevelEffects.Target.OPPONENT, "a345", 1, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 1, 0)]
+        attacker_user_card345 = self.creator.create_user_card(self.attacker_profile, effects_data, "a345")
+
         # Attacker Deck
         self.creator.create_user_deck(self.attacker_profile, attacker_user_card1, attacker_user_card2,
                                       attacker_user_card345, attacker_user_card345, attacker_user_card345)
 
         # Defender Card 1, 3, 4, 5: DMG 99
-        defender_user_card1345 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
-                                                               CardLevelEffects.Target.OPPONENT, "d1345", 99, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 99, 0)]
+        defender_user_card1345 = self.creator.create_user_card(self.defender_profile, effects_data, "d1345")
+
         # Defender Card 2: HEAL 100
-        defender_user_card2 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.HEAL,
-                                                            CardLevelEffects.Target.PLAYER, "d2", 100, 0)
+        effects_data = [(CardEffect.EffectId.HEAL, CardLevelEffects.Target.PLAYER, 100, 0)]
+        defender_user_card2 = self.creator.create_user_card(self.defender_profile, effects_data, "d2")
+
         # Defender Deck
         self.creator.create_user_deck(self.defender_profile, defender_user_card1345, defender_user_card2,
                                       defender_user_card1345, defender_user_card1345, defender_user_card1345)
@@ -245,45 +244,55 @@ class BattleIntegrationTestCase(TestCase):
         """
 
         # Attacker Card 1: DMG 30
-        attacker_user_card1 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "a1", 30, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 30, 0)]
+        attacker_user_card1 = self.creator.create_user_card(self.attacker_profile, effects_data, "a1")
+
         # Attacker Card 2: HEAL 30
-        attacker_user_card2 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.HEAL,
-                                                            CardLevelEffects.Target.PLAYER, "a2", 30, 0)
+        effects_data = [(CardEffect.EffectId.HEAL, CardLevelEffects.Target.PLAYER, 30, 0)]
+        attacker_user_card2 = self.creator.create_user_card(self.attacker_profile, effects_data, "a2")
+
         # Attacker Card 3: DMG 20
-        attacker_user_card3 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "a3", 20, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 20, 0)]
+        attacker_user_card3 = self.creator.create_user_card(self.attacker_profile, effects_data, "a3")
+
         # Attacker Card 4: DMG 50
-        attacker_user_card4 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "a4", 50, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 50, 0)]
+        attacker_user_card4 = self.creator.create_user_card(self.attacker_profile, effects_data, "a4")
+
         # Attacker Card 5: DMG 20
-        attacker_user_card5 = self.creator.create_user_card(self.attacker_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "a5", 20, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 20, 0)]
+        attacker_user_card5 = self.creator.create_user_card(self.attacker_profile, effects_data, "a5")
+
         # Attacker Deck
         self.creator.create_user_deck(self.attacker_profile, attacker_user_card1, attacker_user_card2,
                                       attacker_user_card3, attacker_user_card4, attacker_user_card5)
 
         # Defender Card 1: DMG 40
-        defender_user_card1 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "d1", 40, 0)
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 40, 0)]
+        defender_user_card1 = self.creator.create_user_card(self.defender_profile, effects_data, "d1")
+
         # Defender Card 2: SHIELD 20
-        defender_user_card2 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.SHIELD,
-                                                            CardLevelEffects.Target.PLAYER, "d2", 20, 0)
+        effects_data = [(CardEffect.EffectId.SHIELD, CardLevelEffects.Target.PLAYER, 20, 0)]
+        defender_user_card2 = self.creator.create_user_card(self.defender_profile, effects_data, "d2")
+
         # Defender Card 3: STOP | DMG 40
-        defender_user_card3 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.STOP,
-                                                            CardLevelEffects.Target.OPPONENT, "d3")
-        card_model = defender_user_card3.card
-        card_model.effects.create(card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.DMG),
-                                  target=CardLevelEffects.Target.OPPONENT, power=40, range=0.0)
+        effects_data = [
+            (CardEffect.EffectId.STOP, CardLevelEffects.Target.OPPONENT, None, None),
+            (CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 40, 0)
+        ]
+        defender_user_card3 = self.creator.create_user_card(self.defender_profile, effects_data, "d3")
+
         # Defender Card 4: DMG 50 | SHIELD 20
-        defender_user_card4 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
-                                                            CardLevelEffects.Target.OPPONENT, "d4", 50, 0)
-        card_model = defender_user_card4.card
-        card_model.effects.create(card_effect=CardEffect.objects.get(pk=CardEffect.EffectId.SHIELD),
-                                  target=CardLevelEffects.Target.PLAYER, power=20, range=0.0)
+        effects_data = [
+            (CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 50, 0),
+            (CardEffect.EffectId.SHIELD, CardLevelEffects.Target.PLAYER, 20, 0)
+        ]
+        defender_user_card4 = self.creator.create_user_card(self.defender_profile, effects_data, "d4")
+
         # Defender Card 5: HEAL 30
-        defender_user_card5 = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.HEAL,
-                                                            CardLevelEffects.Target.PLAYER, "d5", 30, 0)
+        effects_data = [(CardEffect.EffectId.HEAL, CardLevelEffects.Target.PLAYER, 30, 0)]
+        defender_user_card5 = self.creator.create_user_card(self.defender_profile, effects_data, "d5")
+
         # Defender Deck
         self.creator.create_user_deck(self.defender_profile, defender_user_card1, defender_user_card2,
                                       defender_user_card3, defender_user_card4, defender_user_card5)
@@ -294,13 +303,15 @@ class BattleIntegrationTestCase(TestCase):
         Creates attacker and defender models with decks containing only cards dealing 10 dmg.
         """
 
-        attacker_user_card = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
-                                                           CardLevelEffects.Target.OPPONENT, "a1", 10, 0)
+        # Attacker
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 10, 0)]
+        attacker_user_card = self.creator.create_user_card(self.defender_profile, effects_data, "a1")
         self.creator.create_user_deck(self.attacker_profile, attacker_user_card, attacker_user_card,
                                       attacker_user_card, attacker_user_card, attacker_user_card)
 
-        defender_user_card = self.creator.create_user_card(self.defender_profile, CardEffect.EffectId.DMG,
-                                                           CardLevelEffects.Target.OPPONENT, "d1", 10, 0)
+        # Defender
+        effects_data = [(CardEffect.EffectId.DMG, CardLevelEffects.Target.OPPONENT, 10, 0)]
+        defender_user_card = self.creator.create_user_card(self.defender_profile, effects_data, "d1")
         self.creator.create_user_deck(self.defender_profile, defender_user_card, defender_user_card,
                                       defender_user_card, defender_user_card, defender_user_card)
 
