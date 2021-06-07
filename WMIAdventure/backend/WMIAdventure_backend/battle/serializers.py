@@ -26,3 +26,15 @@ class OutcomePlayerSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         pass
+
+
+class OutcomeSerializer(serializers.Serializer):
+    winner = serializers.IntegerField(source="get_winner.id", allow_null=True)
+    attacker = OutcomePlayerSerializer()
+    defender = OutcomePlayerSerializer()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
