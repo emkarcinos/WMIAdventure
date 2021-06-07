@@ -22,16 +22,16 @@ class BattleView(APIView):
 
         :param request: Incoming request, attacker user will be retrieved from it.
         :param defender_id: Id of user to attack.
-        :return: Serialized battle Outcome or 404 if given user to attack does not exist.
+        :return: Serialized battle Outcome, 404 if given user to attack does not exist or 400 if given attacker == defender.
         """
 
         attacker_id = request.user.id
 
         # TODO: When when authentication is implemented remove these lines of code.
         if attacker_id is None:
-            attacker_id = User.objects.get(username="test_user4")
+            attacker_id = User.objects.get(username="test_user4").id
 
-        # You can't fight with yourself
+        # You can't fight with yourself.
         if attacker_id == defender_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
