@@ -1,5 +1,8 @@
 name: Production Deployment
 
+on: 
+  workflow_dispatch:
+        
 jobs:
   test-django:
     runs-on: ubuntu-latest
