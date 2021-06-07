@@ -239,9 +239,10 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 - 20 Kart stworzonych w edytorze (US. 1.1.19)
 - Edytor Kart (US. 2.2.1 - 2.2.9, 2.4.4)
 - Serwer produkcyjny dla grupy odbiorców testującej produkt
+- Wybór gracza do pojedynku (US. 1.2.2)
 
 ## Oczekiwane
-- Pojedynek między dwoma graczami - symulator
+- Pojedynek między dwoma graczami - symulator (US. 1.1.9)
 - Zgłaszanie błędów / feedback (US. 1.7.2)
 - Dokumentacja deweloperska na GitHub Wiki obejmująca dotychczasowe prace (Niefunkc. 8, 9)
 
@@ -254,8 +255,7 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 # Kryteria akceptacji projektu dla II semestru prac
 
 ## Wymagane
-- Wybór gracza do pojedynku (US. 1.2.2)
-- Pojedynek między dwoma graczami (US. 1.1.8, 1.1.9)
+- Pojedynek między dwoma graczami (US. 1.1.8)
 - Talia Kart (US. 1.1.13, 1.4.2 - 1.4.7, 1.1.15)
 - Profil Użytkownika (US. 1.4.1, 1.4.2, 1.1.5, 1.1.6, 1.1.14)
 - System rankingowy Battle (US. 1.1.10, 1.1.12, 1.1.18)
