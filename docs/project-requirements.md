@@ -236,18 +236,18 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 # Kryteria akceptacji projektu dla I semestru prac
 
 ## Wymagane
-- Pojedynek między dwoma graczami - symulator
+- 20 Kart stworzonych w edytorze (US. 1.1.19)
 - Edytor Kart (US. 2.2.1 - 2.2.9, 2.4.4)
 
 ## Oczekiwane
+- Pojedynek między dwoma graczami - symulator
 - Serwer produkcyjny dla grupy odbiorców testującej produkt
 - Zgłaszanie błędów / feedback (US. 1.7.2)
+- Dokumentacja deweloperska na GitHub Wiki obejmująca dotychczasowe prace (Niefunkc. 8, 9)
 
 ## Planowane
 - Testy użyteczności trybu Battle i Edytora Kart
-- 20 Kart stworzonych w edytorze (US. 1.1.19)
 - Pokrycie kodu testami jednostkowymi (Niefunkc. 4)
-- Dokumentacja deweloperska na GitHub Wiki obejmująca dotychczasowe prace (Niefunkc. 8, 9)
 - Administracja treściami zgłaszanych przez użytkowników (US. 2.2.10, 3.3, 3.4, 2.4.1, 2.4.2, 1.7.5)
 - Historia Pojedynków (US. 1.1.11)
 
