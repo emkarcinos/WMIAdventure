@@ -5,6 +5,7 @@ from rest_framework import status
 from IngameUsers.models import UserProfile
 from battle.businesslogic.Battle import Battle
 from battle.serializers import OutcomeSerializer
+from users.models import User
 
 
 class BattleView(APIView):
@@ -25,6 +26,10 @@ class BattleView(APIView):
         """
 
         attacker_id = request.user.id
+
+        # TODO: When when authentication is implemented remove these lines of code.
+        if attacker_id is None:
+            attacker_id = User.objects.get(username="test_user4")
 
         try:
             attacker_model = UserProfile.objects.get(pk=attacker_id)
