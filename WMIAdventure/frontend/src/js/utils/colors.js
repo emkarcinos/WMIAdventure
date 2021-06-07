@@ -43,6 +43,7 @@ const colors = {
 
     grey1: '#F2F2F2',
     grey2: '#E0E0E0',
+    grey3: '#828282',
     borderLine: '#333333',
 };
 

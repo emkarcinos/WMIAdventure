@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Tooltip = styled.p`
+const Subject = styled.p`
   font-size: 12px;
   font-weight: 200;
   color: ${({theme}) => theme.colors.grey3};
@@ -11,4 +11,4 @@ const Tooltip = styled.p`
   text-align: start;
 `;
 
-export default Tooltip;
+export default Subject;

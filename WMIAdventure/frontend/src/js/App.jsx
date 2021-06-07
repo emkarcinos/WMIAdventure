@@ -9,10 +9,11 @@ import Event from './pages/entertainment/Event';
 import Quiz from './pages/entertainment/Quiz';
 import HistoryCreator from './pages/creative/HistoryCreator';
 import AnswerCreator from './pages/creative/AnswerCreator';
-import CardsCreator from './pages/creative/CardsCreator';
 import {ThemeProvider} from 'styled-components';
 import theme from './utils/theme';
+import CardsCreatorCreate from './pages/creative/CardsCreatorCreate';
 import CardsCreatorStart from './pages/creative/CardsCreatorStart';
+import CardsCreatorEdit from './pages/creative/CardsCreatorEdit';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
             <Route path='/quiz' component={Quiz} />
             <Route path='/history-creator' component={HistoryCreator} />
             <Route path='/cards-creator-start' component={CardsCreatorStart} />
-              <Route path='/cards-creator' component={CardsCreator} />
+            <Route path='/cards-creator-edit' component={CardsCreatorEdit} />
+            <Route path='/cards-creator-create' component={CardsCreatorCreate} />
             <Route path='/answer-creator' component={AnswerCreator} />
           </Switch>
       </ThemeProvider>

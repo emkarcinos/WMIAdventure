@@ -27,64 +27,62 @@ class EffectChoose extends React.Component {
 
     render() {
         return (
-            <>
-                <TransparentBack show={this.props.showEffectChoose} onClick={this.handleHiding}>
-                    <UlCommon onMouseEnter={this.hoverTrue}
-                              onMouseLeave={this.hoverFalse}
-                              activeCardRank={this.props.activeCardRank}>
-                        <Search />
-                        {
-                            this.props.effectsFromApi.map((effect) => {
-                                return (
-                                  <React.Fragment key={`effect-${effect.id}`}>
-                                      <Effect name={effect.name}
-                                              tooltip={effect.tooltip}
-                                              rank={1}
-                                              effect={effect}
-                                              chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                  </React.Fragment>
-                                );
-                            })
-                        }
-                    </UlCommon>
-                    <UlGold onMouseEnter={this.hoverTrue}
-                            onMouseLeave={this.hoverFalse}
-                            activeCardRank={this.props.activeCardRank}>
-                        <Search />
-                        {
-                            this.props.effectsFromApi.map((effect) => {
-                                return (
-                                    <React.Fragment key={`effect-${effect.id}`}>
-                                        <Effect name={effect.name}
-                                                tooltip={effect.tooltip}
-                                                rank={2}
-                                                effect={effect}
-                                                chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                    </React.Fragment>
-                                );
-                            })
-                        }
-                    </UlGold>
-                    <UlEpic onMouseEnter={this.hoverTrue}
-                            onMouseLeave={this.hoverFalse}
-                            activeCardRank={this.props.activeCardRank}>
-                        <Search />
-                        {
-                            this.props.effectsFromApi.map((effect) => {
-                                return (
-                                    <React.Fragment key={`effect-${effect.id}`}>
-                                        <Effect name={effect.name}
-                                                tooltip={effect.tooltip}
-                                                rank={3}
-                                                effect={effect}
-                                                chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                    </React.Fragment>
-                                );
-                            })
-                        }
-                    </UlEpic>
-                </TransparentBack>
-            </>
+            <TransparentBack show={this.props.showEffectChoose} onClick={this.handleHiding}>
+                <UlCommon onMouseEnter={this.hoverTrue}
+                          onMouseLeave={this.hoverFalse}
+                          activeCardRank={this.props.activeCardRank}>
+                    <Search />
+                    {
+                        this.props.effectsFromApi.map((effect) => {
+                            return (
+                              <React.Fragment key={`effect-${effect.id}`}>
+                                  <Effect name={effect.name}
+                                          tooltip={effect.tooltip}
+                                          rank={1}
+                                          effect={effect}
+                                          chosenEffectsHandler={this.props.chosenEffectsHandler} />
+                              </React.Fragment>
+                            );
+                        })
+                    }
+                </UlCommon>
+                <UlGold onMouseEnter={this.hoverTrue}
+                        onMouseLeave={this.hoverFalse}
+                        activeCardRank={this.props.activeCardRank}>
+                    <Search />
+                    {
+                        this.props.effectsFromApi.map((effect) => {
+                            return (
+                                <React.Fragment key={`effect-${effect.id}`}>
+                                    <Effect name={effect.name}
+                                            tooltip={effect.tooltip}
+                                            rank={2}
+                                            effect={effect}
+                                            chosenEffectsHandler={this.props.chosenEffectsHandler} />
+                                </React.Fragment>
+                            );
+                        })
+                    }
+                </UlGold>
+                <UlEpic onMouseEnter={this.hoverTrue}
+                        onMouseLeave={this.hoverFalse}
+                        activeCardRank={this.props.activeCardRank}>
+                    <Search />
+                    {
+                        this.props.effectsFromApi.map((effect) => {
+                            return (
+                                <React.Fragment key={`effect-${effect.id}`}>
+                                    <Effect name={effect.name}
+                                            tooltip={effect.tooltip}
+                                            rank={3}
+                                            effect={effect}
+                                            chosenEffectsHandler={this.props.chosenEffectsHandler} />
+                                </React.Fragment>
+                            );
+                        })
+                    }
+                </UlEpic>
+            </TransparentBack>
         );
     }
 }

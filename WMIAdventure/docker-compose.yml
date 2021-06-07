@@ -2,11 +2,6 @@ version: '3'
 
 services:
     wmiadventure-backend:
-        environment:
-            - DB_SOURCE=${DB_SOURCE}
-            - DB_PASSWD=${DB_PASSWD}
-            - DJANGO_SECRET=${DJANGO_SECRET}
-            - DJANGO_DEBUG=${DJANGO_DEBUG}
         image: wmiadventure.azurecr.io/wmiadventure:v1
         build: ./backend
         command: python manage.py runserver 0.0.0.0:8000
@@ -15,8 +10,6 @@ services:
             - 8000:8000
     
     wmiadventure-frontend:
-        environment: 
-            - API_URL=${API_URL}
         image: wmiadventure.azurecr.io/frontend:v1
         build: ./frontend
         command: npm run start PORT=80
