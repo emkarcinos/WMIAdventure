@@ -32,11 +32,12 @@ class BattleCard:
         @return: List of effects to be executed by battle simulator.
         """
 
+        self._update_effects()
+
         if self.turns_blocked > 0:
             self.turns_blocked -= 1
             return []  # If card is blocked it should be executed without effects.
 
-        self._update_effects()
         return self.effects
 
     def _update_effects(self) -> None:
