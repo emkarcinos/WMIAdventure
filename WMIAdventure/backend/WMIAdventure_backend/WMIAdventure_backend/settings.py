@@ -97,40 +97,37 @@ WSGI_APPLICATION = 'WMIAdventure_backend.wsgi.application'
 
 '''
 Sets DATABASES variable
-We're running an external database in Azure, so if we set an environment variable DB_SOURCE to 'AZURE'.
-Then we also need to set DB_PASSWD variable with a password to this database.
-'''
-external_db = 'AZURE'
-internal_db = 'localhost'
-DATABASES = {}
-db_source = environ.get('DB_SOURCE')
-if db_source is None:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-elif db_source == internal_db:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+We don't support any other external databases than PostgreSQL, so make sure the paths point to a DB of such type.
+One may run a default django DB without specifying DB_ADDRESS and DB_PORT.
 
-elif db_source == external_db:
+'''
+localhost = "localhost"
+DATABASES = {}
+db_source = environ.get('DB_ADDRESS', None)
+# Defaulting port to PostgreSQL default
+db_port = environ.get('DB_PORT', 5432)
+# If we specified localhost or no address at all, we fallback to default DB
+if db_source is None or (db_source == localhost):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    db_user = environ.get('DB_USER', 'postgres')
+    db_name = environ.get('DB_NAME', 'django')
     db_password = environ.get('DB_PASSWD')
     if db_password is None:
         raise RuntimeError("No DB password specified!")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'django',
-            'USER': 'postgres',
+            'NAME': db_name,
+            'USER': db_user,
             'PASSWORD': db_password,
-            'HOST': '40.114.238.18',
-            'PORT': '5432',
+            'HOST': db_source,
+            'PORT': db_port,
         }
     }
 
