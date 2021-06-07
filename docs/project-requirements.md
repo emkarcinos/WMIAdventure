@@ -238,10 +238,10 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 ## Wymagane
 - 20 Kart stworzonych w edytorze (US. 1.1.19)
 - Edytor Kart (US. 2.2.1 - 2.2.9, 2.4.4)
+- Serwer produkcyjny dla grupy odbiorców testującej produkt
 
 ## Oczekiwane
 - Pojedynek między dwoma graczami - symulator
-- Serwer produkcyjny dla grupy odbiorców testującej produkt
 - Zgłaszanie błędów / feedback (US. 1.7.2)
 - Dokumentacja deweloperska na GitHub Wiki obejmująca dotychczasowe prace (Niefunkc. 8, 9)
 
