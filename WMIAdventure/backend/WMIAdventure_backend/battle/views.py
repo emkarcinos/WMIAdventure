@@ -31,6 +31,10 @@ class BattleView(APIView):
         if attacker_id is None:
             attacker_id = User.objects.get(username="test_user4")
 
+        # You can't fight with yourself
+        if attacker_id == defender_id:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         try:
             attacker_model = UserProfile.objects.get(pk=attacker_id)
             defender_model = UserProfile.objects.get(pk=defender_id)
