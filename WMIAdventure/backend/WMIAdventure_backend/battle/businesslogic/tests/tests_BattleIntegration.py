@@ -518,3 +518,6 @@ class BattleIntegrationTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()
+
+        cls.user1.delete()
+        cls.user2.delete()
