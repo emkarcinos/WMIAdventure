@@ -1,11 +1,15 @@
 from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APIRequestFactory, force_authenticate
 
+from users.models import User
 from .businesslogic.Deck import Deck
 from .businesslogic.Outcome import Outcome
 from .businesslogic.Player import Player
 from .serializers import *
 from .businesslogic.tests import *
 from battle.businesslogic.tests.Creator import Creator
+from . import views
 
 
 class StatisticsSerializerTestCase(TestCase):
@@ -190,3 +194,73 @@ class OutcomeSerializerTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()
+
+
+class BattleViewTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.creator = Creator()
+
+        cls.attacker_user, cls.defender_user = cls.creator.get_user_models()
+
+    def test_get1(self):
+        """
+        Scenario: User is present in the request, given user to attack exists in database.
+        Expected result: Returned response with serialized battle outcome.
+        """
+
+        factory = APIRequestFactory()
+        view = views.BattleView.as_view()
+
+        # Create request
+        test_request = factory.get(f'/api/battle/')
+        # Authenticate attacker user
+        force_authenticate(test_request, user=self.attacker_user)
+
+        # Get response
+        response = view(test_request, defender_id=self.defender_user.id)
+
+        # Assert response attacker
+        actual_attacker = response.data.get("attacker")
+        self.assertEqual(actual_attacker.get("id"), self.attacker_user.id)
+
+        # Assert response defender
+        actual_defender = response.data.get("defender")
+        self.assertEqual(actual_defender.get("id"), self.defender_user.id)
+
+    def test_get2(self):
+        """
+        Scenario: User is present in the request, given user to attack does not exist.
+        Expected result: Returned 404.
+        """
+        not_existing_user_id = _gen_not_existing_user_id()
+
+        factory = APIRequestFactory()
+        view = views.BattleView.as_view()
+
+        # Create request
+        test_request = factory.get(f'/api/battle/')
+        # Authenticate attacker user
+        force_authenticate(test_request, user=self.attacker_user)
+
+        # Get response
+        response = view(test_request, defender_id=not_existing_user_id)
+
+        # Assert 404
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.creator.perform_deletion()
+
+
+def _gen_not_existing_user_id():
+    """
+    Generates id of user that does not exist.
+
+    :return: Id of user that does not exist.
+    """
+    not_existing_user_id = 0
+    while len(User.objects.filter(pk=not_existing_user_id)) > 0:
+        not_existing_user_id += 1
+    return not_existing_user_id

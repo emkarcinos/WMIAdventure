@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/igusers/', include('IngameUsers.urls')),
     path('api/users/', include('users.urls')),
     path('api/cards/', include('cards.urls')),
+    path('api/battle/', include('battle.urls')),
     path('docs/', include_docs_urls(title="WMIAdventure API"))
 ]
 
