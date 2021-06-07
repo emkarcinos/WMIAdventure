@@ -1,9 +1,10 @@
 from django.test import TestCase
 
-# Create your tests here.
-from .businesslogic.Statistics import Statistics
+from .businesslogic.Deck import Deck
+from .businesslogic.Player import Player
 from .serializers import *
 from .businesslogic.tests import *
+from battle.businesslogic.tests.Creator import Creator
 
 
 class StatisticsSerializerTestCase(TestCase):
@@ -34,3 +35,31 @@ class StatisticsSerializerTestCase(TestCase):
 
         self.assertEquals(statistics.hp, self.data.get("hp"))
         self.assertEquals(statistics.armour, self.data.get("armour"))
+
+
+class OutcomePlayerSerializerTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.creator = Creator()
+
+        cls.deck_model = cls.creator.get_attacker_deck()
+        cls.deck = Deck(cls.deck_model)
+
+    def setUp(self) -> None:
+        self.instance = Player(1, self.deck)
+
+        self.data = {"id": 1, "statistics": Statistics()}
+
+    def test_serialization(self):
+        serializer = OutcomePlayerSerializer(instance=self.instance)
+
+        actual_id = serializer.data.get("id")
+        actual_statistics = serializer.data.get("statistics")
+
+        self.assertEquals(actual_id, self.instance.id)
+        self.assertEquals(actual_statistics.get("hp"), self.instance.statistics.hp)
+        self.assertEquals(actual_statistics.get("armour"), self.instance.statistics.armour)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.creator.perform_deletion()

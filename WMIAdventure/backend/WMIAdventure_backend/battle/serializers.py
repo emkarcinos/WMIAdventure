@@ -15,3 +15,14 @@ class StatisticsSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         pass
+
+
+class OutcomePlayerSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    statistics = StatisticsSerializer()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
