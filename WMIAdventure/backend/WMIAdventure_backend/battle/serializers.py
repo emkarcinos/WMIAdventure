@@ -4,8 +4,8 @@ from battle.businesslogic.Statistics import Statistics
 
 
 class StatisticsSerializer(serializers.Serializer):
-    hp = serializers.FloatField()
-    armour = serializers.FloatField()
+    hp = serializers.FloatField(help_text="Health points.")
+    armour = serializers.FloatField(help_text="Armour points.")
 
     def create(self, validated_data):
         stats = Statistics()
@@ -18,8 +18,8 @@ class StatisticsSerializer(serializers.Serializer):
 
 
 class OutcomePlayerSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    statistics = StatisticsSerializer()
+    id = serializers.IntegerField(help_text="Player's id.")
+    statistics = StatisticsSerializer(help_text="Player's statistics.")
 
     def create(self, validated_data):
         pass
@@ -29,9 +29,11 @@ class OutcomePlayerSerializer(serializers.Serializer):
 
 
 class OutcomeSerializer(serializers.Serializer):
-    winner = serializers.IntegerField(source="get_winner.id", allow_null=True)
-    attacker = OutcomePlayerSerializer()
-    defender = OutcomePlayerSerializer()
+    winner = serializers.IntegerField(source="get_winner.id", allow_null=True, help_text="Winner's id - can be None "
+                                                                                         "if both of the players were"
+                                                                                         " defeated (draw)")
+    attacker = OutcomePlayerSerializer(help_text="Attacker - player who started battle.")
+    defender = OutcomePlayerSerializer(help_text="Defender.")
 
     def create(self, validated_data):
         pass
