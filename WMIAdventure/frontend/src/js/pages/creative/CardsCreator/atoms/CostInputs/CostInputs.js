@@ -10,11 +10,11 @@ class CostInputs extends React.Component {
         return (
             <>
                 <CommonDiv existNextCardRank={this.props.createGoldLevel} activateCardRank={this.props.activeCardRank}>
-                    <Label htmlFor={`${this.props.activeCardRank}-next_level_cost`}>
+                    <Label htmlFor={`1-next_level_cost`}>
                         Koszt Ulepszenia
                     </Label>
                     <Span>
-                        <Input id={`${this.props.activeCardRank}-next_level_cost`}
+                        <Input id={`1-next_level_cost`}
                                name='next_level_cost'
                                type='number'
                                min='1'
@@ -23,11 +23,11 @@ class CostInputs extends React.Component {
                     </Span>
                 </CommonDiv>
                 <GoldDiv existNextCardRank={this.props.createEpicLevel} activateCardRank={this.props.activeCardRank}>
-                    <Label htmlFor={`${this.props.activeCardRank}-next_level_cost`}>
+                    <Label htmlFor={`2-next_level_cost`}>
                         Koszt Ulepszenia
                     </Label>
                     <Span>
-                        <Input id={`${this.props.activeCardRank}-next_level_cost`}
+                        <Input id={`2-next_level_cost`}
                                name='next_level_cost'
                                type='number'
                                min='1'
