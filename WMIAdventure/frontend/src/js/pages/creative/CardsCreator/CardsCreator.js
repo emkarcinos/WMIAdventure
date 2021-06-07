@@ -263,6 +263,10 @@ class CardsCreator extends React.Component {
         this.setState({showSendMessage: false});
     }
 
+    refreshPage = () => {
+        window.location.reload();
+    }
+
     render() {
         return (
             <>
@@ -295,8 +299,11 @@ class CardsCreator extends React.Component {
                                 effectsToSend={this.state.effectsToSend}
                             />
                             <Div>
-                                <Button type='submit' onClick={this.sendCardToApi}>
+                                <Button type='submit' onClick={this.sendCardToApi} show={true}>
                                     Wyślij
+                                </Button>
+                                <Button onClick={this.refreshPage} show={this.props.creatorType}>
+                                    Edytuj inną kartę
                                 </Button>
                             </Div>
                         </Form>
