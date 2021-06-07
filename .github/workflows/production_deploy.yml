@@ -59,7 +59,7 @@ jobs:
     - name: SSH - Pull repo, build Docker-compose image and run server
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; docker stop $(docker ps -q); docker container rm $(docker ps -aq); docker image prune -f; docker-compose build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.PROD_DJANGO_SECRET }} --build-arg DB_ADDRESS=${{ env.DB_ADDR }} --build-arg DB_PORT=5432 --build-arg DB_USER=wmiadventure --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False; docker-compose up -d
+        command: cd ~/WMIAdventure; git pull; cd ./WMIAdventure; docker stop $(docker ps -q); docker container rm $(docker ps -aq); docker image prune -f; docker-compose build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.PROD_DJANGO_SECRET }} --build-arg DB_ADDRESS=${{ env.DB_ADDR }} --build-arg DB_PORT=5432 --build-arg DB_USER=wmiadventure --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWORD }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False; docker-compose up -d
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
