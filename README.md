@@ -12,7 +12,9 @@ Cały content aplikacji tworzony będzie przez studentów aktualnie studiującyc
 
 ## Instalacja i używanie
 
-Aplikacja webowa nie wymaga instalacji, aktualnie hostowana na: (main branch)
+Aplikacja webowa nie wymaga instalacji. Aktualnie hostowana w środowisku produkcyjnym na http://wmi-adventure.pl.
+
+Gałąź **main** hostowana jest również w środowisku testowym:
 
 - frontend: [http://wmiadventure.westeurope.cloudapp.azure.com:80]
 
