@@ -1,7 +1,10 @@
 import React from 'react';
 import NavBar from '../MainMenu/organisms/NavBar';
 import Wrapper from './styled-components/Wrapper';
-import GridOneColumn from '../global/molecules/GridOneColumn';
+import H2 from './styled-components/H2';
+import Main from './styled-components/Main';
+import Ul from './styled-components/Ul';
+import UserToFight from './molecules/UserToFight';
 
 class BattleMode extends React.Component {
 
@@ -23,15 +26,21 @@ class BattleMode extends React.Component {
         return (
             <Wrapper>
                 <NavBar />
-                <GridOneColumn rowGaps='32px' margin='0'>
-                    {this.state.users.map((user) => {
-                        return (
-                          <p key={user.user}>
-                              {user.displayedUsername}
-                          </p>
-                        );
-                    })}
-                </GridOneColumn>
+                <Main>
+                    <H2>
+                        Wybierz gracza, którego chcesz wyzwać na pojedynek
+                    </H2>
+                    <Ul>
+                        {this.state.users.map((user) => {
+                            return (
+                                    <UserToFight key={`user-${user.user}`}>
+                                        {user.displayedUsername}
+                                    </UserToFight>
+                            );
+                        })}
+                    </Ul>
+
+                </Main>
             </Wrapper>
         );
     }
