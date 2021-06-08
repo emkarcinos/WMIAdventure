@@ -4,7 +4,7 @@ import Statistic from './atoms/Statistic';
 import StyledWrapper from './StyledWrapper';
 import Avatar from './atoms/Avatar';
 import avatar from '../../../../assets/icons/avatar.svg';
-import GridOneColumn from './molecules/GridOneColumn';
+import GridOneColumn from '../global/molecules/GridOneColumn';
 
 function BattleMode() {
     return (

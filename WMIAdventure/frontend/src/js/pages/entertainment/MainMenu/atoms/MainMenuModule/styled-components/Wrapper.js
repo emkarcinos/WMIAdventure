@@ -1,27 +1,25 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
-import Image from './Image';
-import Header from './Header';
-import Describe from './Describe';
-
-const StyledLink = styled(Link)`
+const Wrapper = styled(Link)`
   background-color: ${({theme}) => theme.colors.ui05};
   color: ${({theme}) => theme.colors.ui06};
   width: 100%;
-  height: 152px;
+  height: 124px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   border-bottom-right-radius: 50px;
   border-top-left-radius: 50px;
   position: relative;
   text-decoration: none;
   overflow: hidden;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 152px;
+  }
 `;
 
-StyledLink.Image = Image;
-StyledLink.Header = Header;
-StyledLink.Describe = Describe;
-
-export default StyledLink;
+export default Wrapper;

@@ -1,17 +1,20 @@
 import React from 'react';
-import StyledLink from './StyledLink';
+import Wrapper from './styled-components/Wrapper';
+import Image from './styled-components/Image';
+import Header from './styled-components/Header';
+import Describe from './styled-components/Describe';
 
 function MainMenuModule({img, alt, header, describe, link}) {
     return (
-        <StyledLink to={link}>
-            <StyledLink.Image src={img} alt={alt}/>
-            <StyledLink.Header>
+        <Wrapper to={link}>
+            <Image src={img} alt={alt}/>
+            <Header>
                 {header}
-            </StyledLink.Header>
-            <StyledLink.Describe>
+            </Header>
+            <Describe>
                 {describe}
-            </StyledLink.Describe>
-        </StyledLink>
+            </Describe>
+        </Wrapper>
     );
 }
 
