@@ -1,34 +1,36 @@
 import React from 'react';
-import StyledMoreOptions from './StyledMoreOptions';
 import {Link} from 'react-router-dom';
+import Wrapper from './styled-components/Wrapper';
+import List from './styled-components/List';
+import Paragraph from './styled-components/Paragraph';
 
 function MoreOptions() {
     return (
-        <StyledMoreOptions>
-            <StyledMoreOptions.List>
-                <StyledMoreOptions.Paragraph border>
+        <Wrapper>
+            <List>
+                <Paragraph border>
                     Dźwięki&nbsp;&nbsp;&nbsp;&nbsp;Wł.
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph>
+                </Paragraph>
+                <Paragraph>
                     Zgłoś błąd
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph border>
+                </Paragraph>
+                <Paragraph border>
                     Repozytorium
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph as={Link} to={'/history-creator'}>
+                </Paragraph>
+                <Paragraph as={Link} to={'/history-creator'}>
                     Edytor Historii
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph as={Link} to={'/cards-creator-start'}>
+                </Paragraph>
+                <Paragraph as={Link} to={'/cards-creator-start'}>
                     Edytor Kart
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph as={Link} border to={'/answer-creator'}>
+                </Paragraph>
+                <Paragraph as={Link} border to={'/answer-creator'}>
                     Edytor Quizu
-                </StyledMoreOptions.Paragraph>
-                <StyledMoreOptions.Paragraph last>
+                </Paragraph>
+                <Paragraph last>
                     Wyloguj
-                </StyledMoreOptions.Paragraph>
-            </StyledMoreOptions.List>
-        </StyledMoreOptions>
+                </Paragraph>
+            </List>
+        </Wrapper>
     );
 }
 

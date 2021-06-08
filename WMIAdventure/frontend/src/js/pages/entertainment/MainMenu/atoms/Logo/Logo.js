@@ -1,17 +1,20 @@
 import React from 'react';
-import StyledLogo from './StyledLogo/StyledLogo';
+import Wrapper from './styled-components/Wrapper';
+import Link from './styled-components/Link';
+import Image from './styled-components/Image';
+import Header from './styled-components/Header';
 import logo from '../../../../../../assets/icons/logo.svg';
 
 function Logo() {
     return (
-        <StyledLogo className='Logo'>
-            <StyledLogo.Link to={'/'}>
-                <StyledLogo.Image src={logo} alt='Logo Wmi Adventure.'/>
-                <StyledLogo.Header>
+        <Wrapper className='Logo'>
+            <Link to={'/'}>
+                <Image src={logo} alt='Logo Wmi Adventure.'/>
+                <Header>
                     WMI Adventure
-                </StyledLogo.Header>
-            </StyledLogo.Link>
-        </StyledLogo>
+                </Header>
+            </Link>
+        </Wrapper>
     );
 }
 
