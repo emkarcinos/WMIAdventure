@@ -196,11 +196,10 @@ class CardSerializerTestCase(TestCase):
         self.info_id = 1
         self.test_level = 1
         self.test_cost = 20
-        # Check whether any CardInfos exist prior to running the tests
-        # Create one if there's none
+
+        # Create CardInfo object for tests.
         while len(CardInfo.objects.filter(pk=self.info_id)) > 0:
             self.info_id += 1
-
         self.cardInfo = CardInfo.objects.create(id=self.info_id)
 
     def tearDown(self) -> None:
@@ -243,6 +242,7 @@ class CardSerializerTestCase(TestCase):
         actual_info = serializer.data.get('info')
         actual_cost = serializer.data.get('next_level_cost')
 
+        self.assertEqual(actual_id, sample.id)
         self.assertEqual(actual_level, self.test_level)
         self.assertEqual(actual_info, self.info_id)
         self.assertEqual(actual_cost, self.test_cost)
