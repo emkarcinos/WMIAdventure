@@ -127,9 +127,24 @@ class DeckTestCase(TestCase):
 
 
 class UserDeckSerializerTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.creator = Creator()
+
     def test_serialization(self):
-        creator = Creator()
-        user = creator.get_user_profile_models()[0]
+        user = self.creator.get_user_profile_models()[0]
         serializer = UserDecksSerializer(user)
         data = serializer.data.get('user_decks')
-        creator.perform_deletion()
+
+        # We get a first deck from the created user
+        actual_deck1 = user.user_decks.all()[0]
+        self.assertEqual(data[0]['deck_number'], actual_deck1.deck_number)
+        # We check selected two cards
+        self.assertEqual(data[0]['card1']['id'], actual_deck1.deck.card1.card.info.id)
+        self.assertEqual(data[0]['card1']['level'], actual_deck1.deck.card1.card.level.level)
+        self.assertEqual(data[0]['card3']['id'], actual_deck1.deck.card3.card.info.id)
+        self.assertEqual(data[0]['card3']['level'], actual_deck1.deck.card3.card.level.level)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.creator.perform_deletion()
