@@ -16,6 +16,7 @@ class Battle:
                                defender=self.defender)
 
         self.recorder = ProcessRecorder()
+        self.turns_count = 0
 
     def start(self):
         self.set_up_battle()
@@ -36,6 +37,7 @@ class Battle:
         """
         self.coordinator.next_turn()
         self.recorder.record_turn(self.attacker, self.defender)
+        self.turns_count += 1
 
     def is_finished(self):
-        return self.outcome.is_done()
+        return self.outcome.is_done(self.turns_count)

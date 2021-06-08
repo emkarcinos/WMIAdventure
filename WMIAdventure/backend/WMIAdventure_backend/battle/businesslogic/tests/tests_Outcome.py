@@ -35,7 +35,7 @@ class OutcomeTestCase(TestCase):
         self.assertIs(self.outcome.defender, expected_defender)
 
     def test_is_done_after_creation(self):
-        self.assertFalse(self.outcome.is_done())
+        self.assertFalse(self.outcome.is_done(turn_num=0))
 
     def test_get_winner_after_creation(self):
         expected_outcome = None
@@ -49,7 +49,7 @@ class OutcomeTestCase(TestCase):
         """
 
         self.outcome.defender.statistics.hp = 0.0
-        self.outcome.is_done()
+        self.outcome.is_done(turn_num=1)
         self.assertIs(self.outcome.get_winner(), self.attacker)
 
         # Restoring defender hp
@@ -62,7 +62,7 @@ class OutcomeTestCase(TestCase):
         """
 
         self.outcome.attacker.statistics.hp = 0.0
-        self.outcome.is_done()
+        self.outcome.is_done(turn_num=1)
         self.assertIs(self.outcome.get_winner(), self.defender)
 
         # Restoring attacker hp
@@ -77,12 +77,33 @@ class OutcomeTestCase(TestCase):
         self.outcome.attacker.statistics.hp = 0.0
         self.outcome.defender.statistics.hp = 0.0
 
-        self.outcome.is_done()
+        self.outcome.is_done(turn_num=1)
         self.assertIsNone(self.outcome.get_winner())
 
         # Restoring players hp
         self.outcome.attacker.statistics.hp = self.outcome.attacker.statistics.MAX_HP
         self.outcome.defender.statistics.hp = self.outcome.defender.statistics.MAX_HP
+
+    def test_is_done1(self):
+        """
+        Scenario: Maximum amount of turns = x, actual turn number = x + 1.
+        Both of players have hp > 0.
+        Expected result: Battle Outcome is completed and there is draw - winner is None.
+        """
+
+        # Assert both players have hp > 0
+        self.assertGreater(self.outcome.attacker.get_hp(), 0)
+        self.assertGreater(self.outcome.defender.get_hp(), 0)
+
+        # Check if battle Outcome is done
+        turn_number = self.outcome.MAX_TURNS + 1
+        self.outcome.is_done(turn_number)
+
+        # Assert battle Outcome is completed
+        self.assertTrue(self.outcome.is_completed)
+
+        # Assert there is draw - winner is None
+        self.assertIsNone(self.outcome.get_winner())
 
     @classmethod
     def tearDownClass(cls):
