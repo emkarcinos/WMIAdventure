@@ -2,11 +2,13 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 
+from battle.businesslogic.tests.Creator import Creator
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from django.contrib.auth import get_user_model
 
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck
+from .serializers import UserDecksSerializer
 
 
 class UserProfileTestCase(TestCase):
@@ -122,3 +124,27 @@ class DeckTestCase(TestCase):
                                 user_profile=u1)
         failing_deck = UserDeck(deck_number=1, deck=deck, user_profile=u1)
         self.assertRaises(IntegrityError, failing_deck.save)
+
+
+class UserDeckSerializerTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.creator = Creator()
+
+    def test_serialization(self):
+        user = self.creator.get_user_profile_models()[0]
+        serializer = UserDecksSerializer(user)
+        data = serializer.data.get('user_decks')
+
+        # We get a first deck from the created user
+        actual_deck1 = user.user_decks.all()[0]
+        self.assertEqual(data[0]['deck_number'], actual_deck1.deck_number)
+        # We check selected two cards
+        self.assertEqual(data[0]['card1']['id'], actual_deck1.deck.card1.card.info.id)
+        self.assertEqual(data[0]['card1']['level'], actual_deck1.deck.card1.card.level.level)
+        self.assertEqual(data[0]['card3']['id'], actual_deck1.deck.card3.card.info.id)
+        self.assertEqual(data[0]['card3']['level'], actual_deck1.deck.card3.card.level.level)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.creator.perform_deletion()
