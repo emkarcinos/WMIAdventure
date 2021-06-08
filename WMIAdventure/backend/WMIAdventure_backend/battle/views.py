@@ -29,7 +29,7 @@ class BattleView(APIView):
 
         # TODO: When when authentication is implemented remove these lines of code.
         if attacker_id is None:
-            attacker_id = User.objects.get(username="test_user4").id
+            attacker_id = User.objects.get(username="PumPkin").id
 
         # You can't fight with yourself.
         if attacker_id == defender_id:

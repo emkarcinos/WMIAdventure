@@ -46,25 +46,47 @@ def create_test_players_data(apps, schema_editor):
     create_test_cards()
 
     # Create 5 test players.
-    test_users_count = 5
-    for test_player_num in range(test_users_count):
-        create_test_player_data(test_player_num)
+    usernames = ["abie", "caecilian", "illegal", "veEradiX", "PumPkin", "pythoniXx"]
+    for test_player_username in usernames:
+        test_player_username = make_sure_username_not_taken(test_player_username)
+        create_test_player_data(test_player_username)
 
 
-def create_test_player_data(player_num: int):
+def make_sure_username_not_taken(username: str):
+    """
+    Makes sure that given username is not already taken.
+    If it is taken, creates new username until finds not taken one.
+    (Appends some numbers to original username)
+
+    :param username:
+    :return: Not taken username
+    """
+
+    new_username = username
+
+    i = 1
+    while len(User.objects.filter(username=new_username)) > 0:
+        new_username = f"{username}{i}"
+        i += 1
+
+    return new_username
+
+
+def create_test_player_data(username: str):
     """
     Creates all data in database for test users to be able to fight in battle.
     Creates test user's deck and all data needed to create deck.
 
-    :param player_num: Test player num, must be unique, will be used to create unique name, email, etc.
+    :param username: Test player username, must be unique.
     :return: None
     """
+
     # Create test User
-    test_user = User.objects.create_user(f"test_user{player_num}", f"test_user{player_num}@company.com")
+    test_user = User.objects.create_user(f"{username}", f"{username}@company.com")
     # Create test UserProfile
-    test_user_profile1 = UserProfile.objects.create(user=test_user, displayedUsername=f"test_user{player_num}",
+    test_user_profile1 = UserProfile.objects.create(user=test_user, displayedUsername=f"{username}",
                                                     semester=Semester.objects.get(pk=1))
-    # Create test UserCards
+    # Create test UserCards (assigning test user 5 cards)
     random_cards = random.sample(list(Card.objects.all()), k=5)
     test_user_cards = []
     for i in range(5):
