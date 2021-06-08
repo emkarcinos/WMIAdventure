@@ -9,6 +9,7 @@ const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border-bottom-right-radius: 50px;
   border-top-left-radius: 50px;
   position: relative;
