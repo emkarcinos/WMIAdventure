@@ -5,11 +5,13 @@ import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
 import UserToFight from './molecules/UserToFight';
+import BattleResult from './atoms/BattleResult';
 
 class BattleMode extends React.Component {
 
     state = {
         users: [],
+        mainVisible: true,
     }
 
     componentDidMount() {
@@ -22,25 +24,36 @@ class BattleMode extends React.Component {
             .catch(error => console.log(error));
     }
 
+    battleResultHandler = (event, id) => {
+        event.preventDefault();
+        this.setState({resultId: id});
+        this.setState({mainVisible: false});
+    }
+
     render() {
         return (
             <Wrapper>
                 <NavBar />
-                <Main>
+                <Main visible={this.state.mainVisible}>
                     <H2>
                         Wybierz gracza, którego chcesz wyzwać na pojedynek
                     </H2>
                     <Ul>
                         {this.state.users.map((user) => {
                             return (
-                                    <UserToFight key={`user-${user.user}`}>
+                                    <UserToFight key={`user-${user.user}`}
+                                                 userId={user.user}
+                                                 battleResultHandler={this.battleResultHandler}>
                                         {user.displayedUsername}
                                     </UserToFight>
                             );
                         })}
                     </Ul>
-
                 </Main>
+                {
+                    this.state && this.state.resultId &&
+                    <BattleResult opponentId={this.state.resultId}/>
+                }
             </Wrapper>
         );
     }

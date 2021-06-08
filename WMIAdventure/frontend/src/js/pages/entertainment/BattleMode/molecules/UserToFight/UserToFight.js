@@ -10,7 +10,8 @@ class UserToFight extends React.Component {
                 <P>
                     {this.props.children}
                 </P>
-                <FightButton />
+                <FightButton userId={this.props.userId}
+                             battleResultHandler={this.props.battleResultHandler} />
             </Li>
         );
     }

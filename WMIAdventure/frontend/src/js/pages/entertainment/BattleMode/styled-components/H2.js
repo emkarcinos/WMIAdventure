@@ -7,6 +7,12 @@ const H2 = styled.h2`
   font-weight: 600;
   margin: 0 0 24px 0;
   color: ${({theme}) => theme.colors.text01};
+  
+  @media (min-width: 768px) {
+    font-size: 32px;
+    max-width: 600px;
+    margin: 0 0 64px 0;
+  }
 `;
 
 export default H2;
