@@ -10,9 +10,14 @@ from users.models import User
 
 class BattleView(APIView):
     """
-    **get**: \n
-    - Starts battle between logged in user (retrieved from incoming request) and given user to attack (defender_id). \n
-    - Returns serialized battle Outcome. \n
+    **get**:
+
+    - Starts battle between logged in user (retrieved from incoming request, **attacker_id**) and given user to attack
+    (**defender_id**).
+    - Returns:
+        - If everything good: serialized battle Outcome.
+        - If given user to attack (defender_id) does not exist: 404 Not Found.
+        - If you try to attack self (attacker_id == defender_id): 400 Bad Request.
     """
 
     def get(self, request, defender_id: int):
