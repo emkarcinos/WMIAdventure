@@ -6,6 +6,11 @@ from .recorder.ProcessRecorder import ProcessRecorder
 
 
 class Battle:
+    """
+    Maximum number of turns for battle (without it there could be case, where battle would never stop)
+    """
+    MAX_TURNS: int = 100
+
     def __init__(self, attacker_model: UserProfile, defender_model: UserProfile):
         player_factory = PlayerFactory.get_instance()
         self.attacker = player_factory.create(attacker_model, is_attacker=True)
@@ -16,6 +21,7 @@ class Battle:
                                defender=self.defender)
 
         self.recorder = ProcessRecorder()
+        self.turns_count = 0
 
     def start(self):
         self.set_up_battle()
@@ -36,6 +42,7 @@ class Battle:
         """
         self.coordinator.next_turn()
         self.recorder.record_turn(self.attacker, self.defender)
+        self.turns_count += 1
 
     def is_finished(self):
-        return self.outcome.is_done()
+        return self.outcome.is_done(self.turns_count, self.MAX_TURNS)
