@@ -2,11 +2,13 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 
+from battle.businesslogic.tests.Creator import Creator
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from django.contrib.auth import get_user_model
 
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck
+from .serializers import UserDecksSerializer
 
 
 class UserProfileTestCase(TestCase):
@@ -122,3 +124,12 @@ class DeckTestCase(TestCase):
                                 user_profile=u1)
         failing_deck = UserDeck(deck_number=1, deck=deck, user_profile=u1)
         self.assertRaises(IntegrityError, failing_deck.save)
+
+
+class UserDeckSerializerTestCase(TestCase):
+    def test_serialization(self):
+        creator = Creator()
+        user = creator.get_user_profile_models()[0]
+        serializer = UserDecksSerializer(user)
+        data = serializer.data.get('user_decks')
+        creator.perform_deletion()
