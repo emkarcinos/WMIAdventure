@@ -1,12 +1,13 @@
 import React from 'react';
 import profile from '../../../../../../assets/icons/profile.svg';
-import StyledProfileButton from './StyledProfileButton';
+import Wrapper from './styled-components/Wrapper';
+import Icon from './styled-components/Icon';
 
 function ProfileButton() {
     return (
-        <StyledProfileButton to={'/profile'} onClick={() => {console.log('profile button clicked');}}>
-            <StyledProfileButton.Icon src={profile} alt='Ikona oznaczająca profil użytkownika, taki tors ludzika.'/>
-        </StyledProfileButton>
+        <Wrapper to={'/profile'} onClick={() => {console.log('profile button clicked');}}>
+            <Icon src={profile} alt='Ikona oznaczająca profil użytkownika, taki tors ludzika.'/>
+        </Wrapper>
     );
 }
 

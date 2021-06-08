@@ -2,7 +2,8 @@ import React from 'react';
 
 import notificationIcon from '../../../../../../assets/icons/notification.svg';
 import Notifications from '../Notifications';
-import StyledButton from './StyledButton';
+import Wrapper from './styled-components/Wrapper';
+import Image from './styled-components/Image';
 
 function NotificationButton() {
 
@@ -23,9 +24,9 @@ function NotificationButton() {
 
     return (
         <>
-            <StyledButton onClick={() => {toggleNotifications();}}>
-                <StyledButton.Image src={notificationIcon} alt='Ikona powiadomień - dzwoneczek.'/>
-            </StyledButton>
+            <Wrapper onClick={() => {toggleNotifications();}}>
+                <Image src={notificationIcon} alt='Ikona powiadomień - dzwoneczek.'/>
+            </Wrapper>
             {showNotificatios()}
         </>
     );
