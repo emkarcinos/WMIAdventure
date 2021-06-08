@@ -19,36 +19,53 @@ class UserProfileTestCase(TestCase):
     def setUp(self) -> None:
         self.test_username = "testuser"
         self.semester = 5
-        self.user_profile = UserProfile(user_id=self.test_user.id,
-                                        displayedUsername=self.test_username,
-                                        semester=Semester(5))
-        self.user_profile.save()
+        self.user_profile = UserProfile.objects.create(user=self.test_user,
+                                                       displayedUsername=self.test_username,
+                                                       semester=Semester.objects.get(pk=5))
+
+    def tearDown(self) -> None:
+        self.user_profile.delete()
 
     def testApiGet(self):
         factory = APIRequestFactory()
         view = views.UserProfileViewSet.as_view({"get": "list"})
         testRequest = factory.get('/api/igusers/basic')
         response = view(testRequest)
-        self.assertEqual(self.test_user.id, response.data[0]['user'])
-        self.assertEqual(self.test_username, response.data[0]['displayedUsername'])
-        self.assertEqual(self.semester, response.data[0]['semester'])
+
+        # Assert user in returned users list.
+        user_ids = [user_data["user"] for user_data in response.data]
+        self.assertTrue(self.test_user.id in user_ids)
+
+        # Assert user has correct data
+        for user_data in response.data:
+            if user_data["user"] == self.test_user.id:
+                self.assertEqual(self.test_username, user_data['displayedUsername'])
+                self.assertEqual(self.semester, user_data['semester'])
 
     def testApiPost(self):
-        self.user_profile.delete()
+        # Setup test view
         factory = APIRequestFactory()
-        view = views.UserProfileViewSet.as_view({"get": "list", "post": "create"})
+        view = views.UserProfileViewSet.as_view({"get": "retrieve", "post": "create"})
+
+        # Create data needed to create new UserProfile
         new_user = get_user_model().objects.create_user(username="asdasa", password="129312", email="tse@tst.sd")
         new_username = "test2"
         new_semester = 5
+
+        # Make post request to create new UserProfile
         result = factory.post('/api/igusers/basic', data={'user': new_user.id,
                                                           'displayedUsername': new_username,
                                                           'semester': new_semester}, format='json')
         view(result)
-        testRequest = factory.get('/api/igusers/basic')
-        response = view(testRequest)
-        self.assertEqual(new_user.id, response.data[0]['user'])
-        self.assertEqual(new_username, response.data[0]['displayedUsername'])
-        self.assertEqual(new_semester, response.data[0]['semester'])
+
+        # Make GET request to check if newly created UserProfile exists.
+        testRequest = factory.get('/api/igusers/basic/')
+        response = view(testRequest, pk=new_user.id)
+
+        # Assert that UserProfile returned by GET has correct data.
+        self.assertEqual(new_user.id, response.data['user'])
+        self.assertEqual(new_username, response.data['displayedUsername'])
+        self.assertEqual(new_semester, response.data['semester'])
 
     @classmethod
     def tearDownClass(cls):
