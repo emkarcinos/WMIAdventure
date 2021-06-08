@@ -1,10 +1,14 @@
 import React from 'react';
-import StyledLink from './StyledLink';
+import Wrapper from './styled-components/Wrapper';
+import Label from './styled-components/Label';
+import Paragraph from './styled-components/Paragraph';
+import Decorate from './styled-components/Decorate';
+import Time from './styled-components/Time';
 
 function decorateHandler(decorate, alt) {
     if (decorate !== false) {
         return (
-            <StyledLink.Decorate src={decorate} alt={alt} />
+            <Decorate src={decorate} alt={alt} />
         );
     }
 }
@@ -12,25 +16,25 @@ function decorateHandler(decorate, alt) {
 function timeLabelHandler(time) {
     if (time !== false) {
         return (
-            <StyledLink.Time>
+            <Time>
                 {time}
-            </StyledLink.Time>
+            </Time>
         );
     }
 }
 
 function MainMenuSmallerModule({link, label, decorate, alt, describe, time}) {
     return (
-        <StyledLink to={link}>
-            <StyledLink.Label>
+        <Wrapper to={link}>
+            <Label>
                 {label}
-            </StyledLink.Label>
+            </Label>
             {decorateHandler(decorate, alt)}
             {timeLabelHandler(time)}
-            <StyledLink.Paragraph>
+            <Paragraph>
                 {describe}
-            </StyledLink.Paragraph>
-        </StyledLink>
+            </Paragraph>
+        </Wrapper>
     );
 }
 
