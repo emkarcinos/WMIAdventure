@@ -4,7 +4,7 @@ from scripts.Login import Login
 
 
 def main():
-    login_script = Login(argv[1])
+    login_script = Login(argv[1] if len(argv) > 1 else '')
     login_script.run()
 
 

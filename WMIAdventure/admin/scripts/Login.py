@@ -1,5 +1,6 @@
 from bullet import VerticalPrompt, Input, Password
 
+from scripts.ModuleSelection import ModuleSelection
 from scripts.Script import Script
 
 
@@ -25,3 +26,6 @@ class Login(Script):
         )
 
         result = cli.launch()
+        # TODO: Connect to DB
+
+        ModuleSelection().run()
