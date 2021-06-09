@@ -24,13 +24,14 @@ class ModuleSelection(Script):
         result = ''
         back = "Wyjście"
         while result is not back:
+            print("\033c")
             names_with_awaiting_numbers = [
                 f"{self.modules['cards']} (Oczekujące: {self.awaiting_cards})",
                 f"{self.modules['stories']} (Oczekujące: {self.awaiting_stories})",
                 f"{self.modules['questions']} (Oczekujące: {self.awaiting_questions})"
             ]
-            cli = Bullet(prompt="Wybierz moduł, którym chcesz zarządzać:",
-                         choices=names_with_awaiting_numbers + [back],
+            print("Wybierz moduł, którym chcesz zarządzać:")
+            cli = Bullet(choices=names_with_awaiting_numbers + [back],
                          indent=4)
             result = cli.launch()
 
@@ -38,3 +39,5 @@ class ModuleSelection(Script):
             if result is names_with_awaiting_numbers[0]:
                 card_module = CardModule()
                 card_module.run()
+
+

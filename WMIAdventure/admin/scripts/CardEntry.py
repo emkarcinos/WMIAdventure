@@ -30,8 +30,16 @@ class CardEntry(Script):
     }
 
     def run(self):
+        # TODO: Fetch cards every time run() gets called
+        print("\033c")
         print(self.card)
-        yes_no = YesNo("Zaakceptować kartę?")
+        yes_no = YesNo("Zaakceptować kartę? ")
         result = yes_no.launch()
-        print(result)
+        if result:
+            confirm = YesNo("Na pewno? ")
+            if confirm.launch():
+                # TODO: Move card from awaiting DB to active
+                print("Zapisano.")
+
+        print('')
 

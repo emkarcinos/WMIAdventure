@@ -16,16 +16,17 @@ class Login(Script):
         return test_db_address if db_alias == 'test' else prod_db_address
 
     def run(self):
-        print(f"Zaloguj się do bazy {self.db_address}")
-        cli = VerticalPrompt(
+        print(f"Zaloguj się do bazy {self.db_address}:")
+        indent = 4
+        login_prompt = VerticalPrompt(
             [
-                Input("Nazwa użytkownika: "),
-                Input("Nazwa bazy: "),
-                Password("Hasło: ")
-            ]
+                Input("Nazwa użytkownika: ", indent=indent),
+                Input("Nazwa bazy: ", indent=indent),
+                Password("Hasło: ", indent=indent)
+            ],
         )
 
-        result = cli.launch()
+        login_result = login_prompt.launch()
         # TODO: Connect to DB
 
         ModuleSelection().run()

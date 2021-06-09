@@ -13,6 +13,7 @@ class CardModule(Script):
         result = ''
         back = "Wstecz"
         while result is not back:
+            print("\033c")
             print("Nowe zgłoszenia kart:")
             cli = ScrollBar(height=5,
                             indent=4,
