@@ -30,7 +30,7 @@ class MoreOptions extends React.Component {
                     <Paragraph border>
                         Dźwięki&nbsp;&nbsp;&nbsp;&nbsp;Wł.
                     </Paragraph>
-                    <Paragraph>
+                    <Paragraph href='https://github.com/emkarcinos/WMIAdventure/issues/new/choose'>
                         Zgłoś błąd
                     </Paragraph>
                     <Paragraph border>
