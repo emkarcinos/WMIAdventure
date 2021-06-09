@@ -5,7 +5,7 @@ const Div = styled.div`
   top: 48px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 48px);
+  min-height: calc(100vh - 48px);
   background-color: ${({theme}) => theme.colors.ui01};
   display: flex;
   flex-direction: column;
