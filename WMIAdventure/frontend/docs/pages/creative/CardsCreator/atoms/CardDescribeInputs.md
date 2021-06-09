@@ -48,15 +48,15 @@ render() {
                 <Legend>
                     Karta
                 </Legend>
-                <Div>
+                <Wrapper>
                     <Label htmlFor='cardName'>
                         Nazwa
                     </Label>
                     <DivInput>
                         <Input id='cardName' name='cardName' type='text' onChange={this.props.updateDescribePreview}/>
                     </DivInput>
-                </Div>
-                <Div>
+                </Wrapper>
+                <Wrapper>
                     <Label htmlFor='cardSubject'>
                         Przedmiot
                     </Label>
@@ -64,8 +64,8 @@ render() {
                         <Input id='cardSubject' name='cardSubject' type='text'
                                onChange={this.props.updateDescribePreview}/>
                     </DivInput>
-                </Div>
-                <Div last>
+                </Wrapper>
+                <Wrapper last>
                     <Label htmlFor='cardTooltip'>
                         Opis
                     </Label>
@@ -73,7 +73,7 @@ render() {
                         <Input id='cardTooltip' name='cardTooltip' type='text'
                                onChange={this.props.updateDescribePreview}/>
                     </DivInput>
-                </Div>
+                </Wrapper>
             </Fieldset>
         </TransparentBack>
     );

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Div = styled.div`
+const Wrapper = styled.div`
   position: absolute;
   top: 48px;
   left: 0;
@@ -11,11 +11,12 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 16px 0;
   
   @media(min-width: 768px) {
-    height: calc(100vh - 64px);
+    min-height: calc(100vh - 64px);
     top: 64px;
   }
 `;
 
-export default Div;
+export default Wrapper;

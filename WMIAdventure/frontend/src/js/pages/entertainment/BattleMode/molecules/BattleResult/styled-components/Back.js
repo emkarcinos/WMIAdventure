@@ -5,7 +5,7 @@ const Back = styled.button`
   border-radius: 10px;
   background-color: ${({theme}) => theme.colors.ui04};
   padding: 6px 12px;
-  margin: 0;
+  margin: 12px 0;
   font-size: 16px;
   cursor: pointer;
   
