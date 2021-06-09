@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-function colorHandler(red, green) {
+function colorHandler(red, blue) {
     if(red) {
         return 'red';
-    } else if(green) {
-        return 'green';
+    } else if(blue) {
+        return 'blue';
     }
 }
 
 const P = styled.p`
   font-size: 18px;
   margin: 0 0 24px 0;
-  color: ${({red, green}) => colorHandler(red, green)};
+  color: ${({red, blue}) => colorHandler(red, blue)};
   text-align: center;
   padding: 0 16px;
   font-weight: 600;

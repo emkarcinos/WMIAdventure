@@ -7,6 +7,7 @@ import CardPreview from '../../atoms/CardPreview';
 import CardsDiv from './styled-components/CardsDiv';
 import Pcard from './styled-components/Pcard';
 import DeckDiv from './styled-components/DeckDiv';
+import Result from './styled-components/Result';
 
 class BattleResult extends React.Component {
 
@@ -23,6 +24,8 @@ class BattleResult extends React.Component {
         enemyCard3: {},
         enemyCard4: {},
         enemyCard5: {},
+
+        battleResult: {},
     }
 
     componentDidMount() {
@@ -32,6 +35,15 @@ class BattleResult extends React.Component {
                 return response.json();
             })
             .then(data => this.setState({cards: data}))
+            .catch(error => console.log(error));
+
+        // http://wmiadventure.westeurope.cloudapp.azure.com:8000/api/battle/14/
+
+        fetch(`http://${API}/api/battle/${this.props.opponentId}/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({battleResult: data}))
             .catch(error => console.log(error));
     }
 
@@ -157,9 +169,37 @@ class BattleResult extends React.Component {
                     this.props.defenderDecks.user_decks.length !== 0
                     && this.props.opponentId !== 15 &&
                     <>
-                        <P green>
+                        <P blue>
                             Walka!
                         </P>
+                        {
+                            this.state.battleResult.winner === 15 &&
+                            <>
+                                <Result win>
+                                    Zwycięstwo!
+                                </Result>
+                                <P>
+                                    Nasze pozostałe HP: {this.state.battleResult.attacker.statistics.hp}
+                                </P>
+                                <P>
+                                    Pozostałe HP przeciwnika: {this.state.battleResult.defender.statistics.hp}
+                                </P>
+                            </>
+                        }
+                        {
+                            this.state.battleResult.winner === this.props.opponentId &&
+                            <>
+                                <Result win={false}>
+                                    Porażka!
+                                </Result>
+                                <P>
+                                    Nasze pozostałe HP: {this.state.battleResult.attacker.statistics.hp}
+                                </P>
+                                <P>
+                                    Pozostałe HP przeciwnika: {this.state.battleResult.defender.statistics.hp}
+                                </P>
+                            </>
+                        }
                         <CardsDiv>
                             <Pcard hide>
                                 Nasza talia
