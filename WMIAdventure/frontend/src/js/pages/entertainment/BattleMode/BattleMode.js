@@ -5,7 +5,7 @@ import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
 import UserToFight from './molecules/UserToFight';
-import BattleResult from './atoms/BattleResult';
+import BattleResult from './molecules/BattleResult';
 
 class BattleMode extends React.Component {
 

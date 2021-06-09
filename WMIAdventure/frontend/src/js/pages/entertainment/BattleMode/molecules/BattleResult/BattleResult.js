@@ -3,6 +3,7 @@ import Div from './styled-components/Div';
 import H3 from './styled-components/H3';
 import Back from './styled-components/Back';
 import P from './styled-components/P';
+import CardPreview from '../../atoms/CardPreview';
 
 class BattleResult extends React.Component {
 
@@ -29,9 +30,16 @@ class BattleResult extends React.Component {
                     this.props.defenderDecks.user_decks &&
                     this.props.defenderDecks.user_decks.length !== 0
                     && this.props.opponentId !== 15 &&
-                    <P green>
-                        Walka!
-                    </P>
+                    <>
+                        <P green>
+                            Walka!
+                        </P>
+                        <CardPreview
+                            name='Quick sort'
+                            subject='Algorytmy i Struktury Danych'
+                            tooltip='Zadaje 25 obrażeń, i zmienia losowo kolejność naszych kart.' />
+                    </>
+
                 }
                 {
                     this.props.opponentId === 15 &&
