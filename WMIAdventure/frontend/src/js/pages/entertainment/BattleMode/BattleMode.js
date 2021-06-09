@@ -11,7 +11,10 @@ class BattleMode extends React.Component {
 
     state = {
         users: [],
+        currentUserDecks: [],
         mainVisible: true,
+
+        defenderDecks: [],
     }
 
     componentDidMount() {
@@ -22,10 +25,25 @@ class BattleMode extends React.Component {
             })
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
+
+        fetch(`http://${API}/api/igusers/15/decks/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({currentUserDecks: data}))
+            .catch(error => console.log(error));
     }
 
     battleResultHandler = (event, id) => {
         event.preventDefault();
+        const API = process.env['REACT_APP_API_URL'];
+        fetch(`http://${API}/api/igusers/${id}/decks/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({defenderDecks: data}))
+            .catch(error => console.log(error));
+
         this.setState({resultId: id});
         this.setState({mainVisible: false});
     }
@@ -52,7 +70,9 @@ class BattleMode extends React.Component {
                 </Main>
                 {
                     this.state && this.state.resultId &&
-                    <BattleResult opponentId={this.state.resultId}/>
+                    <BattleResult opponentId={this.state.resultId}
+                                  defenderDecks={this.state.defenderDecks}
+                                  currentUserDecks={this.state.currentUserDecks}/>
                 }
             </Wrapper>
         );

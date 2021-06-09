@@ -1,7 +1,8 @@
 import React from 'react';
 import Div from './styled-components/Div';
-import P from './styled-components/P';
+import H3 from './styled-components/H3';
 import Back from './styled-components/Back';
+import P from './styled-components/P';
 
 class BattleResult extends React.Component {
 
@@ -11,11 +12,33 @@ class BattleResult extends React.Component {
     }
 
     render() {
+        console.log(this.props.defenderDecks);
         return (
             <Div>
-                <P>
+                <H3>
                   Walka z użytkownikiem o ID: {this.props.opponentId}
-                </P>
+                </H3>
+                {
+                    this.props.defenderDecks.user_decks &&
+                    this.props.defenderDecks.user_decks.length === 0 &&
+                    <P red>
+                        Nie można walczyć z tym graczem, bo nie posiada talii
+                    </P>
+                }
+                {
+                    this.props.defenderDecks.user_decks &&
+                    this.props.defenderDecks.user_decks.length !== 0
+                    && this.props.opponentId !== 15 &&
+                    <P green>
+                        Walka!
+                    </P>
+                }
+                {
+                    this.props.opponentId === 15 &&
+                    <P red>
+                        Użytkownik nie może walczyć sam ze sobą
+                    </P>
+                }
                 <Back onClick={this.refreshPage}>
                     Powrót
                 </Back>
