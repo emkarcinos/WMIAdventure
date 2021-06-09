@@ -1,21 +1,62 @@
 import React from 'react';
 import NavBar from '../MainMenu/organisms/NavBar';
-import Statistic from './atoms/Statistic';
-import StyledWrapper from './StyledWrapper';
-import Avatar from './atoms/Avatar';
-import avatar from '../../../../assets/icons/avatar.svg';
-import GridOneColumn from '../global/molecules/GridOneColumn';
+import Wrapper from './styled-components/Wrapper';
+import H2 from './styled-components/H2';
+import Main from './styled-components/Main';
+import Ul from './styled-components/Ul';
+import UserToFight from './molecules/UserToFight';
+import BattleResult from './atoms/BattleResult';
 
-function BattleMode() {
-    return (
-        <StyledWrapper>
-            <NavBar />
-            <GridOneColumn rowGaps='32px'>
-                <Avatar image={avatar} />
-                <Statistic />
-            </GridOneColumn>
-        </StyledWrapper>
-    );
+class BattleMode extends React.Component {
+
+    state = {
+        users: [],
+        mainVisible: true,
+    }
+
+    componentDidMount() {
+        const API = process.env['REACT_APP_API_URL'];
+        fetch(`http://${API}/api/igusers/basic/`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => this.setState({users: data}))
+            .catch(error => console.log(error));
+    }
+
+    battleResultHandler = (event, id) => {
+        event.preventDefault();
+        this.setState({resultId: id});
+        this.setState({mainVisible: false});
+    }
+
+    render() {
+        return (
+            <Wrapper>
+                <NavBar />
+                <Main visible={this.state.mainVisible}>
+                    <H2>
+                        Wybierz gracza, którego chcesz wyzwać na pojedynek
+                    </H2>
+                    <Ul>
+                        {this.state.users.map((user) => {
+                            return (
+                                    <UserToFight key={`user-${user.user}`}
+                                                 userId={user.user}
+                                                 battleResultHandler={this.battleResultHandler}>
+                                        {user.displayedUsername}
+                                    </UserToFight>
+                            );
+                        })}
+                    </Ul>
+                </Main>
+                {
+                    this.state && this.state.resultId &&
+                    <BattleResult opponentId={this.state.resultId}/>
+                }
+            </Wrapper>
+        );
+    }
 }
 
 export default BattleMode;
