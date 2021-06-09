@@ -1,6 +1,6 @@
-class JSONModel:
+class Model:
     """
-    Parses JSON dict into model fields.
+    Parses dict into model fields.
     """
 
     def __init__(self, data: dict):
