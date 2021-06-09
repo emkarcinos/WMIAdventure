@@ -628,7 +628,7 @@ class WholeCardSerializerTestCase(TestCase):
             }
         valid_serializer = WholeCardSerializer(data=valid_data)
         # Assert no error is being raised with valid data.
-        valid_serializer.is_valid()
+        valid_serializer.is_valid(raise_exception=True)
 
         # Assert that with the same data but without modifiers data is not valid
 
