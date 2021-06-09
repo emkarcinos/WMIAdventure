@@ -12,11 +12,17 @@ class BattleResult extends React.Component {
 
     state = {
         cards: [],
-        card1: {},
-        card2: {},
-        card3: {},
-        card4: {},
-        card5: {},
+        userCard1: {},
+        userCard2: {},
+        userCard3: {},
+        userCard4: {},
+        userCard5: {},
+
+        enemyCard1: {},
+        enemyCard2: {},
+        enemyCard3: {},
+        enemyCard4: {},
+        enemyCard5: {},
     }
 
     componentDidMount() {
@@ -34,7 +40,7 @@ class BattleResult extends React.Component {
             for(let i=0; i<this.state.cards.length; i++) {
                 if(nextProps.defenderDecks.user_decks[0].card1.id === this.state.cards[i].id) {
                     this.setState({
-                        card1: {
+                        enemyCard1: {
                             name: this.state.cards[i].name,
                             subject: this.state.cards[i].subject,
                             tooltip: this.state.cards[i].tooltip,
@@ -43,7 +49,7 @@ class BattleResult extends React.Component {
                 }
                 if(nextProps.defenderDecks.user_decks[0].card2.id === this.state.cards[i].id) {
                     this.setState({
-                        card2: {
+                        enemyCard2: {
                             name: this.state.cards[i].name,
                             subject: this.state.cards[i].subject,
                             tooltip: this.state.cards[i].tooltip,
@@ -52,7 +58,7 @@ class BattleResult extends React.Component {
                 }
                 if(nextProps.defenderDecks.user_decks[0].card3.id === this.state.cards[i].id) {
                     this.setState({
-                        card3: {
+                        enemyCard3: {
                             name: this.state.cards[i].name,
                             subject: this.state.cards[i].subject,
                             tooltip: this.state.cards[i].tooltip,
@@ -61,7 +67,7 @@ class BattleResult extends React.Component {
                 }
                 if(nextProps.defenderDecks.user_decks[0].card4.id === this.state.cards[i].id) {
                     this.setState({
-                        card4: {
+                        enemyCard4: {
                             name: this.state.cards[i].name,
                             subject: this.state.cards[i].subject,
                             tooltip: this.state.cards[i].tooltip,
@@ -70,7 +76,52 @@ class BattleResult extends React.Component {
                 }
                 if(nextProps.defenderDecks.user_decks[0].card5.id === this.state.cards[i].id) {
                     this.setState({
-                        card5: {
+                        enemyCard5: {
+                            name: this.state.cards[i].name,
+                            subject: this.state.cards[i].subject,
+                            tooltip: this.state.cards[i].tooltip,
+                        }
+                    });
+                }
+                if(nextProps.currentUserDecks.user_decks[0].card1.id === this.state.cards[i].id) {
+                    this.setState({
+                        userCard1: {
+                            name: this.state.cards[i].name,
+                            subject: this.state.cards[i].subject,
+                            tooltip: this.state.cards[i].tooltip,
+                        }
+                    });
+                }
+                if(nextProps.currentUserDecks.user_decks[0].card2.id === this.state.cards[i].id) {
+                    this.setState({
+                        userCard2: {
+                            name: this.state.cards[i].name,
+                            subject: this.state.cards[i].subject,
+                            tooltip: this.state.cards[i].tooltip,
+                        }
+                    });
+                }
+                if(nextProps.currentUserDecks.user_decks[0].card3.id === this.state.cards[i].id) {
+                    this.setState({
+                        userCard3: {
+                            name: this.state.cards[i].name,
+                            subject: this.state.cards[i].subject,
+                            tooltip: this.state.cards[i].tooltip,
+                        }
+                    });
+                }
+                if(nextProps.currentUserDecks.user_decks[0].card4.id === this.state.cards[i].id) {
+                    this.setState({
+                        userCard4: {
+                            name: this.state.cards[i].name,
+                            subject: this.state.cards[i].subject,
+                            tooltip: this.state.cards[i].tooltip,
+                        }
+                    });
+                }
+                if(nextProps.currentUserDecks.user_decks[0].card5.id === this.state.cards[i].id) {
+                    this.setState({
+                        userCard5: {
                             name: this.state.cards[i].name,
                             subject: this.state.cards[i].subject,
                             tooltip: this.state.cards[i].tooltip,
@@ -118,25 +169,25 @@ class BattleResult extends React.Component {
                                     Nasza talia
                                 </Pcard>
                                 <CardPreview
-                                    name={this.state.card1.name}
-                                    subject={this.state.card1.subject}
-                                    tooltip={this.state.card1.tooltip} />
+                                    name={this.state.userCard1.name}
+                                    subject={this.state.userCard1.subject}
+                                    tooltip={this.state.userCard1.tooltip} />
                                 <CardPreview
-                                    name={this.state.card2.name}
-                                    subject={this.state.card2.subject}
-                                    tooltip={this.state.card2.tooltip} />
+                                    name={this.state.userCard2.name}
+                                    subject={this.state.userCard2.subject}
+                                    tooltip={this.state.userCard2.tooltip} />
                                 <CardPreview
-                                    name={this.state.card3.name}
-                                    subject={this.state.card3.subject}
-                                    tooltip={this.state.card3.tooltip} />
+                                    name={this.state.userCard3.name}
+                                    subject={this.state.userCard3.subject}
+                                    tooltip={this.state.userCard3.tooltip} />
                                 <CardPreview
-                                    name={this.state.card4.name}
-                                    subject={this.state.card4.subject}
-                                    tooltip={this.state.card4.tooltip} />
+                                    name={this.state.userCard4.name}
+                                    subject={this.state.userCard4.subject}
+                                    tooltip={this.state.userCard4.tooltip} />
                                 <CardPreview
-                                    name={this.state.card5.name}
-                                    subject={this.state.card5.subject}
-                                    tooltip={this.state.card5.tooltip} />
+                                    name={this.state.userCard5.name}
+                                    subject={this.state.userCard5.subject}
+                                    tooltip={this.state.userCard5.tooltip} />
                             </DeckDiv>
                             <Pcard hide>
                                 Talia przeciwnika
@@ -146,25 +197,25 @@ class BattleResult extends React.Component {
                                     Talia przeciwnika
                                 </Pcard>
                                 <CardPreview
-                                    name={this.state.card1.name}
-                                    subject={this.state.card1.subject}
-                                    tooltip={this.state.card1.tooltip} />
+                                    name={this.state.enemyCard1.name}
+                                    subject={this.state.enemyCard1.subject}
+                                    tooltip={this.state.enemyCard1.tooltip} />
                                 <CardPreview
-                                    name={this.state.card2.name}
-                                    subject={this.state.card2.subject}
-                                    tooltip={this.state.card2.tooltip} />
+                                    name={this.state.enemyCard2.name}
+                                    subject={this.state.enemyCard2.subject}
+                                    tooltip={this.state.enemyCard2.tooltip} />
                                 <CardPreview
-                                    name={this.state.card3.name}
-                                    subject={this.state.card3.subject}
-                                    tooltip={this.state.card3.tooltip} />
+                                    name={this.state.enemyCard3.name}
+                                    subject={this.state.enemyCard3.subject}
+                                    tooltip={this.state.enemyCard3.tooltip} />
                                 <CardPreview
-                                    name={this.state.card4.name}
-                                    subject={this.state.card4.subject}
-                                    tooltip={this.state.card4.tooltip} />
+                                    name={this.state.enemyCard4.name}
+                                    subject={this.state.enemyCard4.subject}
+                                    tooltip={this.state.enemyCard4.tooltip} />
                                 <CardPreview
-                                    name={this.state.card5.name}
-                                    subject={this.state.card5.subject}
-                                    tooltip={this.state.card5.tooltip} />
+                                    name={this.state.enemyCard5.name}
+                                    subject={this.state.enemyCard5.subject}
+                                    tooltip={this.state.enemyCard5.tooltip} />
                             </DeckDiv>
                         </CardsDiv>
                     </>
