@@ -97,7 +97,6 @@ class CardEffectTestCase(TestCase):
                           CardEffect.objects.create, id=test_id)
 
 
-
 class CardEffectSerializerTestCase(TestCase):
 
     def setUp(self):
@@ -207,9 +206,9 @@ class CardSerializerTestCase(TestCase):
 
     def test_deserialization(self):
         data = {
-                'info': self.info_id,
-                'level': self.test_level,
-                'next_level_cost': self.test_cost}
+            'info': self.info_id,
+            'level': self.test_level,
+            'next_level_cost': self.test_cost}
 
         serializer = CardSerializer(data=data)
 
@@ -231,9 +230,9 @@ class CardSerializerTestCase(TestCase):
         info = CardInfo.objects.get(pk=self.info_id)
         level = CardLevel.objects.get(pk=self.test_level)
         sample = Card.objects.create(
-                                     info=info,
-                                     level=level,
-                                     next_level_cost=self.test_cost)
+            info=info,
+            level=level,
+            next_level_cost=self.test_cost)
 
         serializer = CardSerializer(instance=sample)
 
@@ -490,8 +489,8 @@ class WholeCardSerializerTestCase(TestCase):
                             {
                                 "card_effect": 2,
                                 "target": 1,
-                                "power": None,
-                                "range": None
+                                "power": 0,
+                                "range": 0
                             }
                         ]
                     }
@@ -522,7 +521,7 @@ class WholeCardSerializerTestCase(TestCase):
                                 "card_effect": 2,
                                 "target": 1,
                                 "power": 101,
-                                "range": None
+                                "range": 0
                             }
                         ]
                     }
@@ -564,8 +563,8 @@ class WholeCardSerializerTestCase(TestCase):
                             {
                                 "card_effect": 2,
                                 "target": 1,
-                                "power": None,
-                                "range": None
+                                "power": 0,
+                                "range": 0
                             }
                         ]
                     }
@@ -578,6 +577,89 @@ class WholeCardSerializerTestCase(TestCase):
 
         serializer = WholeCardSerializer(data=data)
         self.assertFalse(serializer.is_valid())
+
+    def test_empty_modifiers(self):
+        """
+        Scenario: Effect which should have modifiers is provided. Modifiers are not provided.
+        Expected result: ValidationError is raised.
+        """
+
+        # Setup
+        card_effect: CardEffect = CardEffect.objects.filter(has_modifier=True).first()
+
+        subject = None
+        image = None
+        tooltip = "Tooltip"
+        level = 1
+        next_level_cost = None
+        target = 1
+
+        # Assert there is some effect which should have modifiers in database.
+        self.assertIsNotNone(card_effect)
+
+        card_effect_id = card_effect.id
+
+        # Assert that with modifiers everything is OK
+
+        valid_power = 10
+        valid_range = 0.0
+        name1 = "Name1"
+
+        valid_data = \
+            {
+                "name": name1,
+                "subject": subject,
+                "image": image,
+                "tooltip": tooltip,
+                "levels": [
+                    {
+                        "level": level,
+                        "next_level_cost": next_level_cost,
+                        "effects": [
+                            {
+                                "card_effect": card_effect_id,
+                                "target": target,
+                                "power": valid_power,
+                                "range": valid_range
+                            }
+                        ]
+                    }
+                ]
+            }
+        valid_serializer = WholeCardSerializer(data=valid_data)
+        # Assert no error is being raised with valid data.
+        valid_serializer.is_valid(raise_exception=True)
+
+        # Assert that with the same data but without modifiers data is not valid
+
+        invalid_power = None
+        invalid_range = None
+        name2 = "Name2"
+
+        invalid_data = \
+            {
+                "name": name2,
+                "subject": subject,
+                "image": image,
+                "tooltip": tooltip,
+                "levels": [
+                    {
+                        "level": level,
+                        "next_level_cost": next_level_cost,
+                        "effects": [
+                            {
+                                "card_effect": card_effect_id,
+                                "target": target,
+                                "power": invalid_power,
+                                "range": invalid_range
+                            }
+                        ]
+                    }
+                ]
+            }
+        invalid_serializer = WholeCardSerializer(data=invalid_data)
+        # Assert raises Validation Error
+        self.assertRaises(serializers.ValidationError, invalid_serializer.is_valid, raise_exception=True)
 
 
 class WholeCardDetailsTestCase(TestCase):
@@ -687,3 +769,39 @@ class WholeCardListTestCase(TestCase):
         response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class ValidateEffectModifiersTestCase(TestCase):
+    def test_validate_effect_modifiers1(self):
+        """
+        Scenario: Effect which should have modifiers is provided. Modifiers are not provided.
+        Expected result: ValidationError is raised.
+        """
+
+        # Setup
+        card_effect: CardEffect = CardEffect.objects.filter(has_modifier=True).first()
+        power = None
+        range_ = None
+
+        # Assert there is some effect in database which should have modifiers.
+        self.assertIsNotNone(card_effect)
+
+        # Assert raises ValidationError
+        self.assertRaises(serializers.ValidationError, validate_effect_modifiers, card_effect, power, range_)
+
+    def test_validate_effect_modifiers2(self):
+        """
+        Scenario: Effect which should have modifiers is provided. Modifiers are provided.
+        Expected result: ValidationError is not raised.
+        """
+
+        # Setup
+        card_effect: CardEffect = CardEffect.objects.filter(has_modifier=True).first()
+        power = 10
+        range_ = 0.0
+
+        # Assert there is some effect in database which should have modifiers.
+        self.assertIsNotNone(card_effect)
+
+        # Assert ValidationError is not raised
+        validate_effect_modifiers(card_effect, power, range_)

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import *
+from .validators import validate_effect_modifiers
 
 
 class CardEffectSerializer(serializers.ModelSerializer):
@@ -29,6 +30,14 @@ class CardLevelEffectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardLevelEffects
         fields = ['id', 'card', 'card_effect', 'target', 'power', 'range']
+
+    def validate(self, attrs):
+        """
+        Validate that if effect should have modifiers values has them.
+        """
+
+        validate_effect_modifiers(attrs.get('card_effect'), attrs.get('power'), attrs.get('range'))
+        return super(CardLevelEffectsSerializer, self).validate(attrs)
 
 
 class SimpleCardLevelEffectsSerializer(serializers.ModelSerializer):
@@ -71,6 +80,20 @@ class WholeCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardInfo
         fields = ['id', 'name', 'subject', 'image', 'tooltip', 'levels']
+
+    def validate(self, attrs):
+        """
+        Validate that all effects which should have modifiers values have them.
+        """
+
+        for card_data in attrs.get("levels", []):
+            for effect_data in card_data.get("effects"):
+                card_effect = effect_data.get("card_effect")
+                power = effect_data.get("power"),
+                range_ = effect_data.get("range")
+                validate_effect_modifiers(card_effect, power, range_)
+
+        return super(WholeCardSerializer, self).validate(attrs)
 
     def create(self, validated_data):
         info = CardInfo.objects.create(
