@@ -368,13 +368,23 @@ class WholeProposedCardListTestCase(TestCase):
         """
 
         # Setup
+        name = "masDASdk213aksd123Saad"
 
+        # Assert proposed card name is not taken
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Setup
         effect_without_modifiers = CardEffect.objects.filter(has_modifier=False).first()
         effect_with_modifiers = CardEffect.objects.filter(has_modifier=True).first()
 
+        # Assert exists data necessary to perform test
+        self.assertIsNotNone(effect_without_modifiers)
+        self.assertIsNotNone(effect_with_modifiers)
+
+        # Setup
         data = \
             {
-                'name': 'masDASdk213aksd123Saad',
+                'name': name,
                 'tooltip': 'tooltip',
                 'subject': 'WDI',
                 'image': None,
