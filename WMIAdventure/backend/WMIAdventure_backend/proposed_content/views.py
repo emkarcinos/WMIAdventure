@@ -1,7 +1,18 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 from proposed_content.models import ProposedCardInfo
 from proposed_content.serializers import WholeProposedCardSerializer
+
+
+class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
+    """
+    Details of proposed card.
+    """
+
+    queryset = ProposedCardInfo.objects.all()
+    serializer_class = WholeProposedCardSerializer
 
 
 class WholeProposedCardList(generics.ListCreateAPIView):
@@ -101,3 +112,15 @@ class WholeProposedCardList(generics.ListCreateAPIView):
     """
     queryset = ProposedCardInfo.objects.all()
     serializer_class = WholeProposedCardSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = WholeProposedCardSerializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except ValidationError:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+
+        return Response(data=serializer.validated_data, status=status.HTTP_201_CREATED)
