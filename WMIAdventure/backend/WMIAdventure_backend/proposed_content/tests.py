@@ -460,3 +460,39 @@ class WholeProposedCardListTestCase(TestCase):
                 self.assertEqual(effect_data.power, expected_effect.get("power"))
                 self.assertEqual(effect_data.range, expected_effect.get("range"))
                 self.assertEqual(effect_data.target, expected_effect.get("target"))
+
+    def test_post2(self):
+        """
+        Scenario: POST request is made with levels array provided, but empty.
+        Expected result: Proposed card is not created, response status is 400 Bad Request.
+        """
+
+        # Setup
+        name = "aksdlasdkml1213A"
+
+        # Assert proposed card name is not taken
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Setup
+        data = \
+            {
+                'name': name,
+                'tooltip': 'tooltip',
+                'subject': 'WDI',
+                'image': None,
+                "levels": []
+            }
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = WholeProposedCardList.as_view()
+
+        # Make POST request and get response
+        request = factory.post('/api/proposed-content/cards/', data, format='json')
+        response = view(request)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        # Assert proposed card wasn't created
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=data.get("name"))
