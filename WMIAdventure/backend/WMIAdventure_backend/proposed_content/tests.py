@@ -577,3 +577,27 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Cleanup created test data
         card_info.delete()
+
+    def test_get2(self):
+        """
+        Scenario: GET request is performed to view details of non existing card.
+        Expected result: Response status code 404 Not Found.
+        """
+
+        # Setup
+
+        id_ = 91238
+
+        # Assert there is no proposed card with id in database
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, pk=id_)
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = WholeProposedCardDetails.as_view()
+
+        # Make GET request and get response
+        request = factory.get('/api/proposed-content/cards/')
+        response = view(request, pk=id)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
