@@ -1,9 +1,11 @@
 from django.test import TestCase
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.test import APIRequestFactory
 
 from cards.models import CardLevel, CardEffect
-from proposed_content.models import ProposedCardInfo
+from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
+from proposed_content.views import WholeProposedCardList
 
 
 class WholeProposedCardSerializerTestCase(TestCase):
@@ -356,3 +358,95 @@ class WholeProposedCardSerializerTestCase(TestCase):
         invalid_serializer = WholeProposedCardSerializer(data=invalid_data)
         # Assert raises Validation Error
         self.assertRaises(serializers.ValidationError, invalid_serializer.is_valid, raise_exception=True)
+
+
+class WholeProposedCardListTestCase(TestCase):
+    def test_post1(self):
+        """
+        Scenario: POST request is made with correct data.
+        Expected result: Proposed card is created correctly.
+        """
+
+        # Setup
+
+        effect_without_modifiers = CardEffect.objects.filter(has_modifier=False).first()
+        effect_with_modifiers = CardEffect.objects.filter(has_modifier=True).first()
+
+        data = \
+            {
+                'name': 'masDASdk213aksd123Saad',
+                'tooltip': 'tooltip',
+                'subject': 'WDI',
+                'image': None,
+                "levels": [
+                    {
+                        "level": 1,
+                        "next_level_cost": 6,
+                        "effects": [
+                            {
+                                "card_effect": effect_without_modifiers.id,
+                                "target": 2,
+                                "power": None,
+                                "range": None
+                            },
+                            {
+                                "card_effect": effect_with_modifiers.id,
+                                "target": 2,
+                                "power": 5,
+                                "range": 3.0
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "next_level_cost": None,
+                        "effects": [
+                            {
+                                "card_effect": effect_without_modifiers.id,
+                                "target": 2,
+                                "power": None,
+                                "range": None
+                            },
+                            {
+                                "card_effect": effect_with_modifiers.id,
+                                "target": 2,
+                                "power": 50,
+                                "range": 15.5
+                            }
+                        ]
+                    }
+                ]
+            }
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = WholeProposedCardList.as_view()
+
+        # Make POST request and get response
+        request = factory.post('/api/proposed-content/cards/', data, format='json')
+        response = view(request)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Assert proposed card was created
+        created_card_info = ProposedCardInfo.objects.get(name=data.get("name"))
+        self.assertIsNotNone(created_card_info)
+
+        # Assert created card has proper data
+        self.assertEqual(created_card_info.tooltip, data.get('tooltip'))
+        self.assertEqual(created_card_info.subject, data.get('subject'))
+
+        # Assert levels data
+        card_lvl_data: ProposedCard
+        for card_lvl_data, expected_data in zip(created_card_info.levels.all(), data.get("levels")):
+            self.assertEqual(card_lvl_data.level.pk, expected_data.get("level"))
+            self.assertEqual(card_lvl_data.next_level_cost, expected_data.get("next_level_cost"))
+
+            # Assert effects data
+            effect_data: ProposedCardLevelEffects
+            for effect_data, expected_effect in zip(card_lvl_data.effects.all(), expected_data.get("effects")):
+                self.assertEqual(effect_data.card_effect.pk, expected_effect.get("card_effect"))
+                self.assertEqual(effect_data.power, expected_effect.get("power"))
+                self.assertEqual(effect_data.range, expected_effect.get("range"))
+                self.assertEqual(effect_data.target, expected_effect.get("target"))
