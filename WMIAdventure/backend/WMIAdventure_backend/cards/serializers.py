@@ -153,6 +153,8 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             return super(BaseWholeCardSerializer, self).validate(attrs)
 
         def create(self, validated_data):
+            self._before_create_validation(validated_data)
+
             info = card_info_cls.objects.create(
                 name=validated_data.get('name'),
                 tooltip=validated_data.get('tooltip'),
@@ -160,9 +162,6 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                 subject=validated_data.get('subject')
             )
             info.save()
-
-            if validated_data.get("levels") is None or len(validated_data.get("levels")) == 0:
-                raise serializers.ValidationError("levels are required during card creation.")
 
             for card_data in validated_data.get("levels"):
                 card = info.levels.create(
@@ -204,6 +203,27 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             instance.save()
 
             return instance
+
+        def _validate_levels_provided(self, validated_data):
+            """
+            Validates if levels data is provided.
+            :param validated_data: Data validated in serializer.
+            :return: None.
+            :raises: ValidationError if levels are not not provided in validated data.
+            """
+
+            if validated_data.get("levels") is None or len(validated_data.get("levels")) == 0:
+                raise serializers.ValidationError("levels are required during card creation.")
+
+        def _before_create_validation(self, validated_data):
+            """
+            This method should be called at the top of create method to validate data before creation.
+            :param validated_data: Data validated by serializer passed to create method.
+            :return: None.
+            :raises: ValidationError if creation conditions are not met.
+            """
+
+            self._validate_levels_provided(validated_data)
 
     return BaseWholeCardSerializer
 
