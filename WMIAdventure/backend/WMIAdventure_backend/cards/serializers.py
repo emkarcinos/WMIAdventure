@@ -73,14 +73,14 @@ class CardSerializer(serializers.ModelSerializer):
         fields = ['id', 'info', 'level', 'next_level_cost']
 
 
-def base_simple_card_serializer_factory(card_model: type, card_level_effects_model: type):
+def base_simple_card_serializer_factory(card_model: type, simple_card_level_effects_ser: type):
     """
     Use this function when creating simple model serializer for some card model.
 
     Creates base class of model serializer managing simple serialization of given card model.
 
     :param card_model: Concrete card model class which you want to serialize.
-    :param card_level_effects_model: Card level effects class that couples given card model with it's effects. See cards.models.base_card_level_effects_factory
+    :param simple_card_level_effects_ser: Subclass of BaseSimpleCardLevelEffectsSerializer. See: base_simple_card_lvl_efcts_ser_factory
     :return: BaseSimpleCardSerializer which manages simple serialization of given card info model class.
     """
 
@@ -89,7 +89,7 @@ def base_simple_card_serializer_factory(card_model: type, card_level_effects_mod
         Manages simple serialization of given card model class.
         """
 
-        effects = base_simple_card_lvl_efcts_ser_factory(card_level_effects_model)(many=True)
+        effects = simple_card_level_effects_ser(many=True)
 
         class Meta:
             model = card_model
@@ -98,7 +98,7 @@ def base_simple_card_serializer_factory(card_model: type, card_level_effects_mod
     return BaseSimpleCardSerializer
 
 
-class SimpleCardSerializer(base_simple_card_serializer_factory(Card, CardLevelEffects)):
+class SimpleCardSerializer(base_simple_card_serializer_factory(Card, SimpleCardLevelEffectsSerializer)):
     """
     Managing simple serialization of given card model.
 
@@ -106,14 +106,13 @@ class SimpleCardSerializer(base_simple_card_serializer_factory(Card, CardLevelEf
     """
 
 
-def base_whole_card_serializer_factory(card_info_cls: type, card_cls: type, card_level_effects_cls: type):
+def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: type):
     """
     Creates base serializer managing serialization of given card model as a whole. Packs all the
     information scattered across many models in one serializer.
 
     :param card_info_cls: Concrete card info model class which you want to serialize as a whole. See: cards.models.base_card_info_factory
-    :param card_cls: Concrete card model class which you want to serialize as a whole. See: cards.models.base_card_factory
-    :param card_level_effects_cls: Card level effects class that couples given card model with it's effects. See: cards.models.base_card_level_effects_factory
+    :param simple_card_ser: Subclass of BaseSimpleCardSerializer. See: base_simple_card_serializer_factory
     :return: BaseWholeCardSerializer
     """
 
@@ -129,10 +128,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, card_cls: type, card
         etc.
         """
 
-        levels = \
-            base_simple_card_serializer_factory(card_cls, card_level_effects_cls)(many=True, required=False,
-                                                                                  help_text=
-                                                                                  "An array of levels objects.")
+        levels = simple_card_ser(many=True, required=False, help_text="An array of levels objects.")
         subject = serializers.CharField(max_length=50, allow_null=True,
                                         help_text="Subject name. In the future this field"
                                                   "will be an id pointing to Subject "
@@ -212,7 +208,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, card_cls: type, card
     return BaseWholeCardSerializer
 
 
-class WholeCardSerializer(base_whole_card_serializer_factory(CardInfo, Card, CardLevelEffects)):
+class WholeCardSerializer(base_whole_card_serializer_factory(CardInfo, SimpleCardSerializer)):
     """
     (De)Serializes Card as a whole, packs all the information scattered across many models in one serializer.
     Information like:
