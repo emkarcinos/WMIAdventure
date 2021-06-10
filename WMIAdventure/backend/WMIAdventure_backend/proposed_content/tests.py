@@ -5,7 +5,7 @@ from rest_framework.test import APIRequestFactory
 from cards.models import CardLevel, CardEffect
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
-from proposed_content.views import WholeProposedCardList
+from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails
 
 
 class WholeProposedCardSerializerTestCase(TestCase):
@@ -496,3 +496,84 @@ class WholeProposedCardListTestCase(TestCase):
 
         # Assert proposed card wasn't created
         self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=data.get("name"))
+
+
+class WholeProposedCardDetailsTestCase(TestCase):
+    def test_get1(self):
+        """
+        Scenario: Proposed card is created in database. GET request is performed to view details of this card.
+        Expected result: Response status code OK 200. Card returned in response has proper data.
+        """
+
+        # Setup
+
+        name = "askdjkaj1213asd"
+
+        effect_without_modifiers = CardEffect.objects.filter(has_modifier=False).first()
+        effect_with_modifiers = CardEffect.objects.filter(has_modifier=True).first()
+
+        # Assert proposed card name is not taken
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Assert effects data necessary to perform test exists
+        self.assertIsNotNone(effect_without_modifiers)
+        self.assertIsNotNone(effect_with_modifiers)
+
+        # Setup continues
+
+        card_info = ProposedCardInfo.objects.create(name=name, tooltip='tooltip', image=None, subject='subject')
+        cards = [
+            card_info.levels.create(
+                level=CardLevel.objects.get(pk=1),
+                next_level_cost=5
+            ),
+            card_info.levels.create(
+                level=CardLevel.objects.get(pk=2),
+                next_level_cost=None
+            ),
+        ]
+
+        # Setup continues - add effect to 1 level of proposed card
+        cards[0].effects.create(
+            card_effect=effect_without_modifiers, power=None, range=None,
+            target=ProposedCardLevelEffects.Target.OPPONENT
+        )
+
+        # Setup continues - add effect to 2 level of proposed card
+        cards[1].effects.create(
+            card_effect=effect_with_modifiers, power=10, range=5.0,
+            target=ProposedCardLevelEffects.Target.OPPONENT
+        )
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = WholeProposedCardDetails.as_view()
+
+        # Make GET request and get response
+        request = factory.get('/api/proposed-content/cards/')
+        response = view(request, pk=card_info.pk)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert returned by response proposed card data is correct
+        self.assertEqual(response.data.get('id'), card_info.pk)
+        self.assertEqual(response.data.get('name'), card_info.name)
+        self.assertEqual(response.data.get('subject'), card_info.subject)
+        self.assertEqual(response.data.get('image'), card_info.image)
+        self.assertEqual(response.data.get('tooltip'), card_info.tooltip)
+
+        # Assert levels data is correct
+        for level_data, expected_card in zip(response.data.get('levels'), cards):
+            self.assertEqual(level_data.get('level'), expected_card.level.level)
+            self.assertEqual(level_data.get('next_level_cost'), expected_card.next_level_cost)
+
+            # Assert effects data is correct
+            for effect_data, expected_effect in zip(level_data.get('effects'), expected_card.effects.all()):
+                self.assertEqual(effect_data.get('card_effect'), expected_effect.card_effect.id)
+                self.assertEqual(effect_data.get('power'), expected_effect.power)
+                self.assertEqual(effect_data.get('range'), expected_effect.range)
+                self.assertEqual(effect_data.get('target'), expected_effect.target)
+
+        # Cleanup created test data
+        card_info.delete()
