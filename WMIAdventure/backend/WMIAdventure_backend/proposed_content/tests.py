@@ -601,3 +601,132 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Assert response status code
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_put1(self):
+        """
+        Scenario: Proposed card is created in database. PUT request is made to update data of this card.
+        Expected result: Proposed card has updated data.
+        """
+
+        # Setup
+
+        name = "aasdaskdjkaj1213asd"
+
+        effect_without_modifiers = CardEffect.objects.filter(has_modifier=False).first()
+        effect_with_modifiers = CardEffect.objects.filter(has_modifier=True).first()
+
+        # Assert proposed card name is not taken
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Assert effects data necessary to perform test exists
+        self.assertIsNotNone(effect_without_modifiers)
+        self.assertIsNotNone(effect_with_modifiers)
+
+        # Setup continues
+
+        card_info = ProposedCardInfo.objects.create(name=name, tooltip='tooltip', image=None, subject='subject')
+        cards = [
+            card_info.levels.create(
+                level=CardLevel.objects.get(pk=1),
+                next_level_cost=5
+            ),
+            card_info.levels.create(
+                level=CardLevel.objects.get(pk=2),
+                next_level_cost=None
+            ),
+        ]
+
+        # Setup continues - add effect to 1 level of proposed card
+        cards[0].effects.create(
+            card_effect=effect_without_modifiers, power=None, range=None,
+            target=ProposedCardLevelEffects.Target.OPPONENT
+        )
+
+        # Setup continues - add effect to 2 level of proposed card
+        cards[1].effects.create(
+            card_effect=effect_with_modifiers, power=10, range=5.0,
+            target=ProposedCardLevelEffects.Target.OPPONENT
+        )
+
+        # Setup update data
+
+        update_data = \
+            {
+                'name': name + 'NEW NAME',  # Update name
+                'tooltip': card_info.tooltip + 'NEW TOOLTIP',  # Update tooltip
+                'subject': card_info.subject,
+                'levels': [
+                    # Update Level 1
+                    {
+                        'level': 1,
+                        'next_level_cost': cards[0].next_level_cost + 3,  # Update next level cost
+                        'effects': [
+                            {
+                                'card_effect': effect_without_modifiers.id,
+                                'power': None,
+                                'range': None,
+                                'target': ProposedCardLevelEffects.Target.PLAYER  # Update target
+                            }
+                        ]
+                    },
+                    # Update Level 2
+                    {
+                        'level': 2,
+                        'next_level_cost': 13,  # Add next level cost (before was None)
+                        'effects': [
+                            {
+                                'card_effect': effect_with_modifiers.id,
+                                'power': cards[1].effects.first().power + 3,  # Update power
+                                'range': cards[1].effects.first().range + 2.5,  # Update range
+                                'target': ProposedCardLevelEffects.Target.OPPONENT
+                            }
+                        ]
+                    },
+                    # Add new Level - Level 3
+                    {
+                        'level': 3,
+                        'next_level_cost': None,
+                        'effects': [
+                            {
+                                'card_effect': effect_with_modifiers.id,
+                                'power': 13,
+                                'range': 2.1,
+                                'target': ProposedCardLevelEffects.Target.OPPONENT
+                            }
+                        ]
+                    }
+                ]
+            }
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = WholeProposedCardDetails.as_view()
+
+        # Make PUT request and get response
+        request = factory.put('/api/proposed-content/cards/', update_data, format='json')
+        response = view(request, pk=card_info.pk)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Fetch updated card from database
+        card_info = ProposedCardInfo.objects.get(pk=card_info.pk)
+
+        # Assert card in database is updated
+        self.assertEqual(update_data.get('name'), card_info.name)
+        self.assertEqual(update_data.get('tooltip'), card_info.tooltip)
+
+        # Assert levels data is correct
+        for level_data, expected_card in zip(update_data.get('levels'), card_info.levels.all()):
+            self.assertEqual(level_data.get('level'), expected_card.level.level)
+            self.assertEqual(level_data.get('next_level_cost'), expected_card.next_level_cost)
+
+            # Assert effects data is correct
+            for effect_data, expected_effect in zip(level_data.get('effects'), expected_card.effects.all()):
+                self.assertEqual(effect_data.get('card_effect'), expected_effect.card_effect.id)
+                self.assertEqual(effect_data.get('power'), expected_effect.power)
+                self.assertEqual(effect_data.get('range'), expected_effect.range)
+                self.assertEqual(effect_data.get('target'), expected_effect.target)
+
+        # Cleanup created test data
+        card_info.delete()
