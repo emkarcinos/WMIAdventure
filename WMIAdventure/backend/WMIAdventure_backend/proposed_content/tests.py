@@ -828,6 +828,22 @@ class AcceptProposedCardViewTestCase(TestCase):
         Expected result: Response status is 404 Not Found.
         """
 
+        not_existing_proposed_card_id = 9122301203
+
+        # Assert there is no proposed card with given id
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, pk=not_existing_proposed_card_id)
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = AcceptProposedCardView.as_view()
+
+        # Make POST request and get response
+        request = factory.post('/api/cards//accept/')
+        response = view(request, pk=not_existing_proposed_card_id)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def setup_test_post1(self):
         # Setup - Create proposed card.
 
