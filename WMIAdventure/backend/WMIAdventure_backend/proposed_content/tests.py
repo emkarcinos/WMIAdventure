@@ -2,10 +2,10 @@ from django.test import TestCase
 from rest_framework import serializers, status
 from rest_framework.test import APIRequestFactory
 
-from cards.models import CardLevel, CardEffect
+from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
-from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails
+from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails, AcceptProposedCardView
 
 
 class WholeProposedCardSerializerTestCase(TestCase):
@@ -730,3 +730,137 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Cleanup created test data
         card_info.delete()
+
+
+class AcceptProposedCardViewTestCase(TestCase):
+    def test_post1(self):
+        """
+        Scenario: Proposed card exists, there is no accepted card with the same name as this proposed card.
+        Expected result: Accepted card is created with the same data as proposed card. Proposed card is deleted.
+            Response status is 201 Created.
+        """
+
+        # Setup - Create proposed card.
+
+        name = "123123123123123123"
+
+        # Assert proposed card name is not taken
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Assert there is no accepted card with proposed card's name
+        self.assertRaises(CardInfo.DoesNotExist, CardInfo.objects.get, name=name)
+
+        # Setup - proposed card's effects data
+
+        effect_without_modifiers = CardEffect.objects.filter(has_modifier=False).first()
+        effect_with_modifiers = CardEffect.objects.filter(has_modifier=True).first()
+
+        # Assert effects data necessary to perform test exists
+        self.assertIsNotNone(effect_without_modifiers)
+        self.assertIsNotNone(effect_with_modifiers)
+
+        # Setup continues
+
+        proposed_card_data = {
+            'name': name,
+            'tooltip': 'tooltip',
+            'subject': 'subject',
+            'levels': [
+                {
+                    'level': CardLevel.objects.get(pk=1),
+                    'next_level_cost': 5,
+                    'effects': [
+                        {
+                            'card_effect': effect_without_modifiers,
+                            'power': None,
+                            'range': None,
+                            'target': ProposedCardLevelEffects.Target.OPPONENT
+                        }
+                    ]
+                },
+                {
+                    'level': CardLevel.objects.get(pk=2),
+                    'next_level_cost': None,
+                    'effects': [
+                        {
+                            'card_effect': effect_with_modifiers,
+                            'power': 10,
+                            'range': 9.9,
+                            'target': ProposedCardLevelEffects.Target.OPPONENT
+                        }
+                    ]
+                }
+            ]
+        }
+
+        # Create all proposed card models with proposed card data
+
+        proposed_card = ProposedCardInfo.objects.create(name=proposed_card_data['name'],
+                                                        tooltip=proposed_card_data['tooltip'],
+                                                        subject=proposed_card_data['subject'])
+
+        for levels_data in proposed_card_data['levels']:
+            proposed_card_level = proposed_card.levels.create(
+                level=levels_data['level'],
+                next_level_cost=levels_data['next_level_cost']
+            )
+
+            for effects_data in levels_data['effects']:
+                proposed_card_level.effects.create(
+                    card_effect=effects_data['card_effect'],
+                    power=effects_data['power'],
+                    range=effects_data['range'],
+                    target=effects_data['target']
+                )
+
+        # Setup request
+        factory = APIRequestFactory()
+        view = AcceptProposedCardView.as_view()
+
+        # Make POST request and get response
+        request = factory.post('/api/cards//accept/')
+        response = view(request, pk=proposed_card.pk)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Assert proposed card is deleted
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
+
+        # Assert accepted card was created with proper data
+        accepted_card: CardInfo = CardInfo.objects.get(name=name)
+
+        self.assertEqual(accepted_card.name, proposed_card_data['name'])
+        self.assertEqual(accepted_card.tooltip, proposed_card_data['tooltip'])
+        self.assertEqual(accepted_card.subject, proposed_card_data['subject'])
+
+        # Assert levels data is correct
+        accepted_card_level: Card
+        for accepted_card_level, expected_level_data in zip(accepted_card.levels.all(), proposed_card_data['levels']):
+            self.assertEqual(accepted_card_level.level, expected_level_data['level'])
+            self.assertEqual(accepted_card_level.next_level_cost, expected_level_data['next_level_cost'])
+
+            # Assert effects data is correct
+            level_effect: CardLevelEffects
+            for level_effect, expected_effect_data in zip(accepted_card_level.effects.all(),
+                                                          expected_level_data['effects']):
+                self.assertEqual(level_effect.card_effect, expected_effect_data['card_effect'])
+                self.assertEqual(level_effect.power, expected_effect_data['power'])
+                self.assertEqual(level_effect.range, expected_effect_data['range'])
+                self.assertEqual(level_effect.target, expected_effect_data['target'])
+
+        # Cleanup created test data
+        accepted_card.delete()
+
+    def test_post2(self):
+        """
+        Scenario: Proposed card exists and there is accepted card with the same name as this proposed card.
+        Expected result: Accepted card is updated with data from proposed card. Proposed card is deleted.
+            Response status is 200 Ok.
+        """
+
+    def test_post3(self):
+        """
+        Scenario: Proposed card does not exist.
+        Expected result: Response status is 404 Not Found.
+        """
