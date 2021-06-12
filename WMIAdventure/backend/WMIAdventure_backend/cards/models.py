@@ -74,60 +74,144 @@ class CardEffect(models.Model):
         super(CardEffect, self).save(*args, **kwargs)
 
 
-class CardInfo(models.Model):
+def base_card_info_factory(upload_images_to: str):
+    """
+    This function should be used when you need to derive from abstract BaseCardInfo model class.
+
+    Creates abstract model class of card info with provided place to store images.
+    Depending on concrete class that you are creating you may want to store images in different places.
+
+    :param upload_images_to: Place to store card info's images.
+    :return: Abstract BaseCardInfo model class.
+    """
+
+    class BaseCardInfo(models.Model):
+        """
+        Stores generic information about card (name, tooltip, etc ...).
+        """
+
+        class Meta:
+            abstract = True
+
+        name = models.CharField(max_length=50, unique=True, help_text="Displayed card's name. Must be unique.")
+        tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
+        image = models.ImageField(upload_to=upload_images_to, null=True, blank=True,
+                                  help_text="An image. We don't really"
+                                            "know what should that be.")
+        subject = models.CharField(max_length=50, null=True,
+                                   help_text="Subject name. In the future this field will be an"
+                                             " id pointing to Subject object.")
+
+    return BaseCardInfo
+
+
+class CardInfo(base_card_info_factory('cards/images/')):
     """
     Stores generic information about Card.
+
+    See: BaseCardInfo which is inner class in base_card_info_factory function.
     """
 
-    name = models.CharField(max_length=50, unique=True, help_text="Displayed card's name. Must be unique.")
-    tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
-    image = models.ImageField(upload_to='cards/images/', null=True, blank=True, help_text="An image. We don't really"
-                                                                                          "know what should that be.")
-    subject = models.CharField(max_length=50, null=True, help_text="Subject name. In the future this field will be an"
-                                                                   " id pointing to Subject object.")
+    pass
 
 
-class Card(models.Model):
+def base_card_factory(related_card_info_class: type):
+    """
+    This function should be used when you need to derive from abstract BaseCard model class.
+
+    Creates abstract model class of card with provided related card info class.
+    Depending on concrete card model class that you are creating you may want to reference different
+    card info model classes.
+
+    :param related_card_info_class: Card info class that this BaseCard class will be related to.
+    :return: Abstract BaseCard model class related to given card info class.
+    """
+
+    class BaseCard(models.Model):
+        """
+        This may be understood as coupling card's basic info (like name, tooltip) with appropriate levels,
+        that is, if we create a card's info model, we create multiple cards depending on how many levels the card
+        may have.
+        """
+
+        info = models.ForeignKey(related_card_info_class, related_name='levels', unique=False, on_delete=models.CASCADE)
+        level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
+        next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
+                                                                     MaxValueValidator(100)])
+
+        class Meta:
+            abstract = True
+
+            """
+            This makes (info, level) unique
+            """
+            constraints = [
+                models.UniqueConstraint(fields=['info', 'level'],
+                                        name=f'unique_{related_card_info_class.__name__}_level')
+            ]
+
+    return BaseCard
+
+
+class Card(base_card_factory(CardInfo)):
     """
     This may be understood as coupling CardInfo with appropriate levels,
     that is, if we create a CardInfo model, we create multiple Cards depending on how many levels the Card may have.
+
+    See: BaseCard which is inner class in base_card_factory function.
     """
-    info = models.ForeignKey(CardInfo, related_name='levels', unique=False, on_delete=models.CASCADE)
-    level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
-    next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
-                                                                 MaxValueValidator(100)])
 
-    class Meta:
+    pass
+
+
+def base_card_level_effects_factory(foreignkey_card_cls: type):
+    """
+    This function should be used when you need to derive from abstract BaseCardLevelEffects model class.
+
+    Creates abstract base class of card-level effects model with ForeignKey field referencing given card class.
+    Card-level effects model couples concrete card with its effects.
+
+    :param foreignkey_card_cls: Card class that will be referenced by ForeignKey.
+    :return: Abstract BaseCardLevelEffects model class coupling instances of given card model class with it's effects.
+    """
+
+    class BaseCardLevelEffects(models.Model):
         """
-        This makes (info, level) unique
+        This is like an extended many-to-many relation in databases.
+        Couples card objects with its effects.
         """
-        constraints = [
-            models.UniqueConstraint(fields=['info', 'level'],
-                                    name='unique_info_level')
-        ]
+
+        class Meta:
+            abstract = True
+
+        class Target(models.IntegerChoices):
+            """
+            Possible targets.
+            """
+            PLAYER = 1
+            OPPONENT = 2
+
+        card = models.ForeignKey(foreignkey_card_cls, related_name='effects', unique=False, on_delete=models.CASCADE)
+        card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
+        # This isn't unique even as a pair with card, as a single card on a given level '
+        # may have multiple of the same effect.
+        target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
+        power = models.IntegerField(null=True, validators=[MinValueValidator(0),
+                                                           MaxValueValidator(100)])
+        # Range defines how the power attribute will vary in card logic.
+        # So an actual power will be randomized from range (power - range, power + range)
+        range = models.FloatField(null=True, validators=[MinValueValidator(0),
+                                                         MaxValueValidator(100)])
+
+    return BaseCardLevelEffects
 
 
-class CardLevelEffects(models.Model):
+class CardLevelEffects(base_card_level_effects_factory(Card)):
     """
     This is like an extended many-to-many relation in databases.
     Couples Card objects with its effects.
+
+    See: BaseCardLevelEffects which is inner class in base_card_level_effects_factory function.
     """
 
-    class Target(models.IntegerChoices):
-        """
-        Possible targets.
-        """
-        PLAYER = 1
-        OPPONENT = 2
-
-    card = models.ForeignKey(Card, related_name='effects', unique=False, on_delete=models.CASCADE)
-    card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
-    # This isn't unique even as a pair with card, as a single card on a given level '
-    # may have multiple of the same effect.
-    target = models.IntegerField(choices=Target.choices, default=Target.OPPONENT)
-    power = models.IntegerField(null=True, validators=[MinValueValidator(0),
-                                                       MaxValueValidator(100)])
-    # Range defines how the power attribute will vary in card logic.
-    # So an actual power will be randomized from range (power - range, power + range)
-    range = models.FloatField(null=True, validators=[MinValueValidator(0),
-                                                     MaxValueValidator(100)])
+    pass
