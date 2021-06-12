@@ -18,7 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint-fix": "./node_modules/.bin/eslint . --fix",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint .",
+    "win-lint": "npx eslint .",
+    "win-lint-fix": "npx eslint . --fix"
   },
   "eslintConfig": {
     "extends": [
