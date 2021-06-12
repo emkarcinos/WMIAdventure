@@ -1,7 +1,47 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from cards.models import CardInfo
+from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo
 from proposed_content.serializers import WholeProposedCardSerializer
+
+
+class AcceptProposedCardView(APIView):
+    """
+    post:
+
+    Accept proposed card with given id.
+    """
+
+    def post(self, request, pk):
+        try:
+            # Get proposed card that will be accepted
+            proposed_card = ProposedCardInfo.objects.get(pk=pk)
+        except ProposedCardInfo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # Serialize proposed cards data
+        proposed_card_serializer = WholeProposedCardSerializer(instance=proposed_card)
+
+        try:
+            # If card with proposed card's name exists - update existing card with proposed card's data
+            card_to_update = CardInfo.objects.get(name=proposed_card.name)
+            accepted_card_serializer = WholeCardSerializer(instance=card_to_update, data=proposed_card_serializer.data)
+            response_status = status.HTTP_200_OK
+        except CardInfo.DoesNotExist:
+            # If there is no card with proposed card's name - create new card in accepted cards tables.
+            accepted_card_serializer = WholeCardSerializer(data=proposed_card_serializer.data)
+            response_status = status.HTTP_201_CREATED
+
+        accepted_card_serializer.is_valid(raise_exception=True)
+        accepted_card_serializer.save()
+
+        # Remove accepted card from proposed cards tables.
+        proposed_card.delete()
+
+        return Response(data=accepted_card_serializer.data, status=response_status)
 
 
 class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
