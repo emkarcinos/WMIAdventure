@@ -740,6 +740,57 @@ class AcceptProposedCardViewTestCase(TestCase):
             Response status is 201 Created.
         """
 
+        proposed_card, proposed_card_data, factory, view = self.setup_test_post1()
+
+        # Make POST request and get response
+        request = factory.post('/api/cards//accept/')
+        response = view(request, pk=proposed_card.pk)
+
+        # Assert response status code
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Assert proposed card is deleted
+        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=proposed_card_data['name'])
+
+        # Assert accepted card was created with proper data
+        accepted_card: CardInfo = CardInfo.objects.get(name=proposed_card_data['name'])
+
+        self.assertEqual(accepted_card.name, proposed_card_data['name'])
+        self.assertEqual(accepted_card.tooltip, proposed_card_data['tooltip'])
+        self.assertEqual(accepted_card.subject, proposed_card_data['subject'])
+
+        # Assert levels data is correct
+        accepted_card_level: Card
+        for accepted_card_level, expected_level_data in zip(accepted_card.levels.all(), proposed_card_data['levels']):
+            self.assertEqual(accepted_card_level.level, expected_level_data['level'])
+            self.assertEqual(accepted_card_level.next_level_cost, expected_level_data['next_level_cost'])
+
+            # Assert effects data is correct
+            level_effect: CardLevelEffects
+            for level_effect, expected_effect_data in zip(accepted_card_level.effects.all(),
+                                                          expected_level_data['effects']):
+                self.assertEqual(level_effect.card_effect, expected_effect_data['card_effect'])
+                self.assertEqual(level_effect.power, expected_effect_data['power'])
+                self.assertEqual(level_effect.range, expected_effect_data['range'])
+                self.assertEqual(level_effect.target, expected_effect_data['target'])
+
+        # Cleanup created test data
+        accepted_card.delete()
+
+    def test_post2(self):
+        """
+        Scenario: Proposed card exists and there is accepted card with the same name as this proposed card.
+        Expected result: Accepted card is updated with data from proposed card. Proposed card is deleted.
+            Response status is 200 Ok.
+        """
+
+    def test_post3(self):
+        """
+        Scenario: Proposed card does not exist.
+        Expected result: Response status is 404 Not Found.
+        """
+
+    def setup_test_post1(self):
         # Setup - Create proposed card.
 
         name = "123123123123123123"
@@ -817,50 +868,4 @@ class AcceptProposedCardViewTestCase(TestCase):
         factory = APIRequestFactory()
         view = AcceptProposedCardView.as_view()
 
-        # Make POST request and get response
-        request = factory.post('/api/cards//accept/')
-        response = view(request, pk=proposed_card.pk)
-
-        # Assert response status code
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        # Assert proposed card is deleted
-        self.assertRaises(ProposedCardInfo.DoesNotExist, ProposedCardInfo.objects.get, name=name)
-
-        # Assert accepted card was created with proper data
-        accepted_card: CardInfo = CardInfo.objects.get(name=name)
-
-        self.assertEqual(accepted_card.name, proposed_card_data['name'])
-        self.assertEqual(accepted_card.tooltip, proposed_card_data['tooltip'])
-        self.assertEqual(accepted_card.subject, proposed_card_data['subject'])
-
-        # Assert levels data is correct
-        accepted_card_level: Card
-        for accepted_card_level, expected_level_data in zip(accepted_card.levels.all(), proposed_card_data['levels']):
-            self.assertEqual(accepted_card_level.level, expected_level_data['level'])
-            self.assertEqual(accepted_card_level.next_level_cost, expected_level_data['next_level_cost'])
-
-            # Assert effects data is correct
-            level_effect: CardLevelEffects
-            for level_effect, expected_effect_data in zip(accepted_card_level.effects.all(),
-                                                          expected_level_data['effects']):
-                self.assertEqual(level_effect.card_effect, expected_effect_data['card_effect'])
-                self.assertEqual(level_effect.power, expected_effect_data['power'])
-                self.assertEqual(level_effect.range, expected_effect_data['range'])
-                self.assertEqual(level_effect.target, expected_effect_data['target'])
-
-        # Cleanup created test data
-        accepted_card.delete()
-
-    def test_post2(self):
-        """
-        Scenario: Proposed card exists and there is accepted card with the same name as this proposed card.
-        Expected result: Accepted card is updated with data from proposed card. Proposed card is deleted.
-            Response status is 200 Ok.
-        """
-
-    def test_post3(self):
-        """
-        Scenario: Proposed card does not exist.
-        Expected result: Response status is 404 Not Found.
-        """
+        return proposed_card, proposed_card_data, factory, view
