@@ -15,7 +15,7 @@ class ModuleSelection(Script):
                         'stories': 'Nowe historie',
                         'questions': 'Nowe pytania'}
 
-        # TODO: Fetch those from DB
+        # TODO: Fetch those from API
         self.awaiting_cards = 5
         self.awaiting_stories = 0
         self.awaiting_questions = 1

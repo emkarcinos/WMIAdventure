@@ -6,7 +6,7 @@ from scripts.Script import Script
 
 class CardModule(Script):
     def __init__(self):
-        # TODO: Load values from DB
+        # TODO: Load values from API
         self.cards = ['C++', 'ZIP', 'Malloc', 'Quicksort', 'Udowodnij', 'Fork', 'Sudo', 'Python']
 
     def run(self):
