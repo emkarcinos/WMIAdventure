@@ -1,38 +1,29 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+about: Stwórz raport błędu, który pomoże nam ulepszyć aplikację.
+title: 'Bug: '
+labels: 'bug'
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Opis błędu**
+Opisz krótko cały błąd, zaznaczając w jaki sposób utrudnia Ci korzystanie z aplikacji. Możesz też wyrazizić swoją frustrację!
+Jeżeli testujesz aplikację na serwerze testowym, koniecznie to zaznacz.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Jak wywołać błąd?**
+Jeżeli to możliwe, opisz w krokach w jaki sposób można wywołać błąd. Jeżeli błąd występuje losowo, opisz w jaki sposób Ty go otrzymałeś.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Oczekiwane działanie**
+Opis tego jak system powinien się zachować bez błędu.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Zrzuty ekranu**
+Jeżeli to możliwe, załącz zrzuty ekranu które ilustrują problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
+***System i przeglądarka***
+ - OS: [e.g. iOS, Windows, Android]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+**Dodatkowe informacje**
+Jeżeli masz coś jeszcze do dodania, napisz to tutaj.
