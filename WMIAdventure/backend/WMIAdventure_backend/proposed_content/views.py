@@ -127,6 +127,78 @@ class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
             ]
         }
 
+
+    patch:
+
+    Update proposed card partially.
+
+    If `levels` are provided then all the existing levels are cleared and created again with the data that you provide.
+
+    If you want to:
+
+    - update only one level *L* - you have to provide all existing levels and change only *L*
+    - delete only one level *L* - you have to provide all existing levels without *L*
+    - add new level *L* - you have to provide all existing levels and new level *L*
+
+    `levels` should be array defined in a following manner:
+
+    - `level` - an ID of a referenced level (see: card-level)
+    - `next_level_cost` - an integer representing a cost of an upgrade to the next level (can be `null`)
+    - `effects` - an array of effects:
+        * `card_effect` - an ID of a referenced effect (see `card-effect`)
+        * `target` - an integer of either 1 (self targeting) or 2 (target the opponent)
+        * `power` - a float with power value - can be `null` if the specified effect has `has_modifier` set to `false`
+        (see `card-effect`)
+        * `range` - a float that tells us how randomized the card output is.
+                    Final value gets randomized uniformly with values `(power - range), (power + range)`.
+                    Can be `null` if the specified effect has `has_modifier` set to `false` (see `card-effect`)
+
+    `levels` example:
+
+        "levels": [
+            {
+                "level": 1,
+                "next_level_cost": 6,
+                "effects": [
+                    {
+                        "card_effect": 1,
+                        "target": 2,
+                        "power": 6,
+                        "range": 4.0
+                    },
+                    {
+                        "card_effect": 2,
+                        "target": 2,
+                        "power": 5,
+                        "range": 3.0
+                    },
+                    {
+                        "card_effect": 3,
+                        "target": 1,
+                        "power": null,
+                        "range": null
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "next_level_cost": 7,
+                "effects": [
+                    {
+                        "card_effect": 1,
+                        "target": 2,
+                        "power": 5,
+                        "range": 7.0
+                    },
+                    {
+                        "card_effect": 3,
+                        "target": 1,
+                        "power": null,
+                        "range": null
+                    }
+                ]
+            }
+        ]
     """
 
     queryset = ProposedCardInfo.objects.all()
