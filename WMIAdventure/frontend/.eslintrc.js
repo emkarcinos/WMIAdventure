@@ -19,7 +19,8 @@ module.exports = {
     plugins: ["react", "import", "react-hooks"],
     ignorePatterns: ["node_modules/"],
     rules: {
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     },
     settings: {
       react: {
