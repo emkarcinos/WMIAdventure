@@ -1,3 +1,5 @@
+import requests
+
 from models.Card import Card
 from views.View import View
 
@@ -51,3 +53,9 @@ class CardsViews(View):
         """
         cards_data = self._fetch_all()
         self.card_objs = self._make_cards(cards_data)
+
+    def accept(self, card: Card):
+        """
+        Moves the card from Awaiting DB to active DB
+        """
+        requests.post(url=f'{self.api_url}/{card.id}/accept/')

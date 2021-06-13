@@ -25,8 +25,13 @@ class CardModule(Script):
             result = cli.launch()
 
             if result is not back:
-                card_view = CardEntry(self._name_to_card(result))
-                card_view.run()
+                selected_card = self._name_to_card(result)
+                card_entry_menu = CardEntry(selected_card)
+                card_entry_menu.run()
+
+                # Checking the result of card_entry_menu and saving it into DB
+                if card_entry_menu.got_accepted:
+                    self.card_view.accept(selected_card)
 
     def _make_cards_text_array(self) -> list[str]:
         """
