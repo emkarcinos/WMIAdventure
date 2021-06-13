@@ -28,7 +28,7 @@ class Card(Model):
     """
     Parses JSON data to model fields.
     """
-    __slots__ = ['name', 'subject', 'image', 'tooltip', 'levels']
+    __slots__ = ['id', 'name', 'subject', 'image', 'tooltip', 'levels']
 
     def __init__(self, data: dict):
         super().__init__(data)

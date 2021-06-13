@@ -18,7 +18,7 @@ class ModelTestCase(TestCase):
 class CardModelTestCase(TestCase):
     def setUp(self) -> None:
         # Sample card as if it came from the API
-        self.dict = {'name': 'test', 'subject': 'testsubject', 'image': None, 'tooltip': 'testtooltip',
+        self.dict = {'id': 1, 'name': 'test', 'subject': 'testsubject', 'image': None, 'tooltip': 'testtooltip',
                      'levels': [
                          {
                              'level': 1, 'next_level_cost': 1,
@@ -33,6 +33,7 @@ class CardModelTestCase(TestCase):
         card = Card(self.dict)
 
         # Card params
+        self.assertEqual(card.id, self.dict.get('id'))
         self.assertEqual(card.name, self.dict.get('name'))
         self.assertEqual(card.subject, self.dict.get('subject'))
         self.assertEqual(card.image, self.dict.get('image'))
