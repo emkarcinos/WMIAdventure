@@ -13,7 +13,9 @@ class CardsViews(View):
         It also queries them as a cache.
         If one wishes to refresh the query, call the refresh() method.
         """
-        super().__init__(api_url)
+
+        api_suffix = '/api/proposed-content/cards/'
+        super().__init__(f'{api_url}{api_suffix}')
 
         # Stores all card objects
         self.card_objs = []
@@ -26,7 +28,7 @@ class CardsViews(View):
         """
         card_objs = []
         for card in data:
-            self.card_objs.append(Card(card))
+            card_objs.append(Card(card))
 
         return card_objs
 
