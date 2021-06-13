@@ -20,6 +20,5 @@ class Login(Script):
         )
 
         login_result = login_prompt.launch()
-        # TODO: Connect to DB
 
-        ModuleSelection().run()
+        ModuleSelection(self.api_url).run()
