@@ -58,4 +58,4 @@ class CardsViews(View):
         """
         Moves the card from Awaiting DB to active DB
         """
-        requests.post(url=f'{self.api_url}/{card.id}/accept/')
+        requests.post(url=f'{self.api_url}{card.id}/accept/')
