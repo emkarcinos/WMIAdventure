@@ -15,3 +15,9 @@ services:
         command: npm run start PORT=80
         ports:
             - 80:80
+         
+    wmiadventure-admin:
+        image: wmiadventure.azurecr.io/admin:v1
+        build: ./admin
+        ports:
+            - 8001:8001

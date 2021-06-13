@@ -2,6 +2,7 @@ from bullet import Bullet
 
 from scripts.CardModule import CardModule
 from scripts.Script import Script
+from views.CardsViews import CardsViews
 
 
 class ModuleSelection(Script):
@@ -10,20 +11,21 @@ class ModuleSelection(Script):
     It asks the user to select which module is of an interest.
     """
 
-    def __init__(self):
+    def __init__(self, api_url):
         self.modules = {'cards': 'Nowe karty',
                         'stories': 'Nowe historie',
                         'questions': 'Nowe pytania'}
 
-        # TODO: Fetch those from DB
-        self.awaiting_cards = 5
+        self.card_view = CardsViews(api_url)
+        self.awaiting_cards = self.card_view.get_awaiting_count()
         self.awaiting_stories = 0
-        self.awaiting_questions = 1
+        self.awaiting_questions = 0
 
     def run(self):
         result = ''
         back = "Wyjście"
         while result is not back:
+            self.refresh()
             print("\033c")
             names_with_awaiting_numbers = [
                 f"{self.modules['cards']} (Oczekujące: {self.awaiting_cards})",
@@ -35,9 +37,10 @@ class ModuleSelection(Script):
                          indent=4)
             result = cli.launch()
 
-            # TODO: Card selection
             if result is names_with_awaiting_numbers[0]:
-                card_module = CardModule()
+                card_module = CardModule(self.card_view)
                 card_module.run()
 
-
+    def refresh(self):
+        self.card_view.refresh()
+        self.awaiting_cards = self.card_view.get_awaiting_count()

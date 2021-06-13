@@ -1,45 +1,24 @@
 from bullet import YesNo
 
+from models.Card import Card
 from scripts.Script import Script
 
 
 class CardEntry(Script):
-    def __init__(self):
+    def __init__(self, card: Card):
 
-        # TODO: Pretty card printing & get card from DB
-        self.card = {
-        "id": 43,
-        "name": "Malloc",
-        "subject": "Systemy Operacyjne",
-        "image": None,
-        "tooltip": "Przywraca nam 10-20 pkt życia.",
-        "levels": [
-            {
-                "level": 1,
-                "next_level_cost": None,
-                "effects": [
-                    {
-                        "card_effect": 6,
-                        "target": 1,
-                        "power": 15,
-                        "range": 5.0
-                    }
-                ]
-            }
-        ]
-    }
+        self.card = card
+        # This field can be looked up by some other object to check if we had accepted the card
+        self.got_accepted = False
 
     def run(self):
-        # TODO: Fetch cards every time run() gets called
         print("\033c")
-        print(self.card)
+        print(self.card.__repr__())
         yes_no = YesNo("Zaakceptować kartę? ")
         result = yes_no.launch()
         if result:
             confirm = YesNo("Na pewno? ")
-            if confirm.launch():
-                # TODO: Move card from awaiting DB to active
-                print("Zapisano.")
+            self.got_accepted = confirm.launch()
 
         print('')
 

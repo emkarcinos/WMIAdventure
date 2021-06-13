@@ -1,10 +1,13 @@
-from sys import argv
+import os
 
 from scripts.Login import Login
 
+# Default server URL to localhost:8000
+API_URL = os.environ.get('API_URL', 'localhost:8000')
+
 
 def main():
-    login_script = Login(argv[1] if len(argv) > 1 else '')
+    login_script = Login(API_URL)
     login_script.run()
 
 
