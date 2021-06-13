@@ -8,8 +8,8 @@ class Effect(Model):
     __slots__ = ['card_effect', 'target', 'power', 'range']
     
     def __repr__(self):
-        return f'ID: {self.card_effect}\n' \
-               f'Cel: {self.target}, Moc: {self.power}, Losowość: {self.power}'
+        return f'\t\tID: {self.card_effect}\n' \
+               f'\t\tCel: {self.target}, Moc: {self.power}, Losowość: {self.power}\n'
 
 
 class Level(Model):
@@ -28,9 +28,9 @@ class Level(Model):
             self.effects.append(Effect(effect_dict))
 
     def __repr__(self):
-        return f'Poziom: {self.level}  Koszt ulepszenia: {self.next_level_cost}\n' \
-               f'Efekty:\n' \
-               f'\t{self.effects}'
+        return f'\tPoziom: {self.level}  Koszt ulepszenia: {self.next_level_cost}\n' \
+               f'\tEfekty:\n' \
+               f'\t{self.effects}\n'
 
 
 class Card(Model):
@@ -58,4 +58,4 @@ class Card(Model):
         return f'Nazwa: {self.name} \t Przedmiot: {self.subject}\n' \
                f'Opis: {self.tooltip}\n' \
                f'Poziomy:\n' \
-               f'\t{self.levels}'
+               f'{self.levels}\n'
