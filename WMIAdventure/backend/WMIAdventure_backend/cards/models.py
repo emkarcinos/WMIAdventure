@@ -93,7 +93,7 @@ def base_card_info_factory(upload_images_to: str):
         class Meta:
             abstract = True
 
-        name = models.CharField(max_length=50, unique=True, help_text="Displayed card's name. Must be unique.")
+        name = models.CharField(max_length=50, help_text="Displayed card's name.")
         tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
         image = models.ImageField(upload_to=upload_images_to, null=True, blank=True,
                                   help_text="An image. We don't really"
@@ -112,7 +112,10 @@ class CardInfo(base_card_info_factory('cards/images/')):
     See: BaseCardInfo which is inner class in base_card_info_factory function.
     """
 
-    pass
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_CardInfo_name')
+        ]
 
 
 def base_card_factory(related_card_info_class: type):

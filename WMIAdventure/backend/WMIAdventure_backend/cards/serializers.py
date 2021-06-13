@@ -106,14 +106,17 @@ class SimpleCardSerializer(base_simple_card_serializer_factory(Card, SimpleCardL
     """
 
 
-def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: type):
+def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: type,
+                                       before_create_validators: list = None):
     """
     Creates base serializer managing serialization of given card model as a whole. Packs all the
     information scattered across many models in one serializer.
 
     :param card_info_cls: Concrete card info model class which you want to serialize as a whole. See: cards.models.base_card_info_factory
     :param simple_card_ser: Subclass of BaseSimpleCardSerializer. See: base_simple_card_serializer_factory
+    :param before_create_validators: List of validator functions to be called before serializer's create method. They should have validated_data param.
     :return: BaseWholeCardSerializer
+
     """
 
     class BaseWholeCardSerializer(serializers.ModelSerializer):
@@ -224,11 +227,19 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             """
 
             self._validate_levels_provided(validated_data)
+            if before_create_validators is not None:
+                for validator in before_create_validators:
+                    validator(validated_data)
 
     return BaseWholeCardSerializer
 
 
-class WholeCardSerializer(base_whole_card_serializer_factory(CardInfo, SimpleCardSerializer)):
+def validate_name_unique(validated_data):
+    if CardInfo.objects.filter(name=validated_data['name']).count() > 0:
+        raise serializers.ValidationError("name must be unique!")
+
+
+class WholeCardSerializer(base_whole_card_serializer_factory(CardInfo, SimpleCardSerializer, [validate_name_unique])):
     """
     (De)Serializes Card as a whole, packs all the information scattered across many models in one serializer.
     Information like:

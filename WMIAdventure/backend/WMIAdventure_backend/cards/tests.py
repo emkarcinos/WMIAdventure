@@ -576,7 +576,10 @@ class WholeCardSerializerTestCase(TestCase):
         serializer.save()
 
         serializer = WholeCardSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
+        self.assertTrue(
+            serializer.is_valid())  # Assert that validation passes, because serializer is not creating object yet
+        self.assertRaises(serializers.ValidationError,
+                          serializer.save)  # Assert that trying to create card with duplicate name raises error
 
     def test_empty_modifiers(self):
         """
