@@ -247,6 +247,9 @@ class WholeProposedCardSerializerTestCase(TestCase):
         self.assertFalse(serializer.is_valid())
 
     def test_duplicates(self):
+        """
+        Test that you can create proposed cards with the same names.
+        """
         data = \
             {
                 "name": "Quicksort",
@@ -274,7 +277,7 @@ class WholeProposedCardSerializerTestCase(TestCase):
         serializer.save()
 
         serializer = WholeProposedCardSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
+        self.assertTrue(serializer.is_valid())
 
     def test_empty_modifiers(self):
         """
