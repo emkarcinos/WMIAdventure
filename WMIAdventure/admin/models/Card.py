@@ -14,6 +14,15 @@ class Level(Model):
     """
     __slots__ = ['level', 'next_level_cost', 'effects']
 
+    def __init__(self, data: dict):
+        super().__init__(data)
+        dict_effects = data.get('effects')
+
+        # An array of Effect objects
+        self.effects = []
+        for effect_dict in dict_effects:
+            self.effects.append(Effect(effect_dict))
+
 
 class Card(Model):
     """
@@ -21,4 +30,11 @@ class Card(Model):
     """
     __slots__ = ['name', 'subject', 'image', 'tooltip', 'levels']
 
+    def __init__(self, data: dict):
+        super().__init__(data)
+        dict_levels = data.get('levels')
 
+        # An array of Level objects
+        self.levels = []
+        for level_dict in dict_levels:
+            self.levels.append(Level(level_dict))
