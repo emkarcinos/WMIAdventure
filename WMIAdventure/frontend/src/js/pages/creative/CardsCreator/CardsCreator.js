@@ -134,7 +134,7 @@ class CardsCreator extends React.Component {
         const API = process.env['REACT_APP_API_URL'];
 
         if(this.props.creatorType === 'edit') {
-            fetch(`http://${API}/api/proposed-content/cards/`)
+            fetch(`http://${API}/api/cards/`)
                 .then(response => {
                     return response.json();
                 })
@@ -251,7 +251,7 @@ class CardsCreator extends React.Component {
                 });
                 chosenEffectElem = this.state.effectsFromApi.filter(function (elem) {
                     return elem.id === levels[i].effects[j].card_effect;
-                })
+                }).
                 newChosenEffectsList[levels[i].level - 1].push(chosenEffectElem[0]);
             }
         }
