@@ -251,7 +251,7 @@ class CardsCreator extends React.Component {
                 });
                 chosenEffectElem = this.state.effectsFromApi.filter(function (elem) {
                     return elem.id === levels[i].effects[j].card_effect;
-                }).
+                })
                 newChosenEffectsList[levels[i].level - 1].push(chosenEffectElem[0]);
             }
         }
