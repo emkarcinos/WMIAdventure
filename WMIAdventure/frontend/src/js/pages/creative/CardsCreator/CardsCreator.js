@@ -89,8 +89,8 @@ class CardsCreator extends React.Component {
 
         if(this.props.creatorType === 'edit') {
             try {
-                let result = fetch(`http://${API}/api/cards/${this.state.cardId}/`, {
-                    method: 'put',
+                let result = fetch(`http://${API}/api/proposed-content/cards/`, {
+                    method: 'post',
                     headers: {
                         'Accept': 'application/json',
                         'Content-type': 'application/json',
