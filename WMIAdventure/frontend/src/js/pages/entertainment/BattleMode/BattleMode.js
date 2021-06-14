@@ -26,12 +26,25 @@ class BattleMode extends React.Component {
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
 
-        fetch(`http://${API}/api/igusers/15/decks/`)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => this.setState({currentUserDecks: data}))
-            .catch(error => console.log(error));
+
+        setTimeout(() => {
+            let loggedUserId;
+
+            for(let i = 0; i < this.state.users.length; i++) {
+                if(this.state.users[i].displayedUsername === 'PumPkin') {
+                    loggedUserId = this.state.users[i].user;
+                }
+            }
+
+            console.log(loggedUserId);
+
+            fetch(`http://${API}/api/igusers/${loggedUserId}/decks/`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => this.setState({currentUserDecks: data}))
+                .catch(error => console.log(error));
+        }, 2000);
     }
 
     battleResultHandler = (event, id) => {
