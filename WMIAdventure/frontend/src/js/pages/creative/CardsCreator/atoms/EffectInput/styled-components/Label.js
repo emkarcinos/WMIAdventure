@@ -6,7 +6,7 @@ const Label = styled.label`
   margin-right: ${({marginRight}) => marginRight ? '20px' : 0};
   border-radius: 8px;
   padding: 2px 4px;
-  border: ${({checked, theme}) => checked ? `1px solid ${theme.colors.uiBlue}` : 'none'}
+  border: ${({checked, theme}) => checked ? `1px solid ${theme.colors.uiBlue}` : `1px solid ${theme.colors.ui01}`}
 `;
 
 export default Label;
