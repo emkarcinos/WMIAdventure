@@ -7,9 +7,11 @@ const P = styled.p`
   font-weight: 200;
   max-width: 190px;
   text-align: center;
-  @media (min-width:800px) {
+  
+  @media (min-width: 768px) {
     font-size: 24px;
     max-width: 500px;
+    line-height: 30px;
   }
 `;
 
