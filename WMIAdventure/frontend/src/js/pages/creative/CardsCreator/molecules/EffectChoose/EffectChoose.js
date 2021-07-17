@@ -40,6 +40,10 @@ class EffectChoose extends React.Component {
                                           tooltip={effect.tooltip}
                                           rank={1}
                                           effect={effect}
+                                          chosen={
+                                              // If chosenEffects list contains current effect then mark it as chosen
+                                              !!this.props.chosenEffects[0].find(x => x.id === effect.id)
+                                          }
                                           chosenEffectsHandler={this.props.chosenEffectsHandler} />
                               </React.Fragment>
                             );
@@ -58,6 +62,10 @@ class EffectChoose extends React.Component {
                                             tooltip={effect.tooltip}
                                             rank={2}
                                             effect={effect}
+                                            chosen={
+                                                // If chosenEffects list contains current effect then mark it as chosen
+                                                !!this.props.chosenEffects[1].find(x => x.id === effect.id)
+                                            }
                                             chosenEffectsHandler={this.props.chosenEffectsHandler} />
                                 </React.Fragment>
                             );
@@ -76,6 +84,10 @@ class EffectChoose extends React.Component {
                                             tooltip={effect.tooltip}
                                             rank={3}
                                             effect={effect}
+                                            chosen={
+                                                // If chosenEffects list contains current effect then mark it as chosen
+                                                !!this.props.chosenEffects[2].find(x => x.id === effect.id)
+                                            }
                                             chosenEffectsHandler={this.props.chosenEffectsHandler} />
                                 </React.Fragment>
                             );

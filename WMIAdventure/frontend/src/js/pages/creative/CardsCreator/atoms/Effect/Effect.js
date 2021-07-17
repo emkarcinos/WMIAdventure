@@ -6,11 +6,11 @@ import Button from './styled-components/Button';
 class Effect extends React.Component {
     render() {
         return (
-            <Button onClick={(event) => this.props.chosenEffectsHandler(event, this.props.rank, this.props.effect)}>
-                <Name>
+            <Button disabled={this.props.chosen} onClick={(event) => this.props.chosenEffectsHandler(event, this.props.rank, this.props.effect)}>
+                <Name disabled={this.props.chosen}>
                     {this.props.name}
                 </Name>
-                <Tooltip>
+                <Tooltip disabled={this.props.chosen}>
                     {this.props.tooltip}
                 </Tooltip>
             </Button>
