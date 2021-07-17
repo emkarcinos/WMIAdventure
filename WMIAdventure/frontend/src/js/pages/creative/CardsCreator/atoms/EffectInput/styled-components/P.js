@@ -11,7 +11,7 @@ const P = styled.p`
     display: block;
     position: absolute;
     top: -2px;
-    left: 58px;
+    left: 60px;
     width: 12px;
     height: 24px;
     background-image: ${({radioLine}) => radioLine ? `url(${radioLineIcon})` : 'none'};
