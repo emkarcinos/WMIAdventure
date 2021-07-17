@@ -14,12 +14,20 @@ const Button = styled.button`
   font-weight: 300;
   padding: 0;
   border: none;
-  cursor: pointer;
-  background: transparent;
+  cursor: ${
+          ({disabled}) => disabled ? "initial" : "pointer"
+  };
+  background: ${
+    ({theme, disabled}) => disabled ? theme.colors.ui04 : "transparent" 
+  };
+  color: ${
+    ({theme, disabled}) => disabled ? theme.colors.text03 : "initial"
+  };
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
+  
   
   :before {
     content: '';
@@ -30,7 +38,7 @@ const Button = styled.button`
     top: 14px;
     left: 30%;
     border-radius: 50%;
-    background-color: ${({rank, theme}) => dotColor(rank, theme)};
+    background-color: ${({rank, theme, disabled}) => disabled ? theme.colors.ui07trans : dotColor(rank, theme)};
   }
 `;
 
