@@ -2,9 +2,11 @@ import colors from './colors';
 
 const theme = {
     colors,
-    font: {
+    weight: {
+        light: 300,
         regular: 400,
-        bold: 600,
+        semibold: 600,
+        bold: 700,
     }
 };
 
