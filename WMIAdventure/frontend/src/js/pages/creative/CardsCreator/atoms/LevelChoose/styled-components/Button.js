@@ -17,7 +17,7 @@ const Button = styled.button`
   cursor: ${
           ({disabled}) => disabled ? "initial" : "pointer"
   };
-  background: ${
+  background-color: ${
     ({theme, disabled}) => disabled ? theme.colors.ui04 : "transparent" 
   };
   color: ${
