@@ -59,20 +59,29 @@ class CardProperties extends React.Component {
     createCommonLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
-        this.setState({createCommonLevel: true});
+        this.setState({
+            createCommonLevel: true,
+            activeCardRank: 1,
+        });
     }
 
     createGoldLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
-        this.setState({createGoldLevel: true});
+        this.setState({
+            createGoldLevel: true,
+            activeCardRank: 2
+        });
         this.props.levelCostResetHandler(event, 1);
     }
 
     createEpicLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
-        this.setState({createEpicLevel: true});
+        this.setState({
+            createEpicLevel: true,
+            activeCardRank: 3,
+        });
         this.props.levelCostResetHandler(event, 2);
     }
 
@@ -202,9 +211,16 @@ class CardProperties extends React.Component {
                         <P>
                             Poziomy:
                         </P>
-                        <Levels createCommonLevel={this.state.createCommonLevel}
+                        <Levels
+                            createCommonLevel={this.state.createCommonLevel}
+                            activeCommon={this.state.activeCardRank === 1}
+
                             createGoldLevel={this.state.createGoldLevel}
+                            activeGold={this.state.activeCardRank === 2}
+
                             createEpicLevel={this.state.createEpicLevel}
+                            activeEpic={this.state.activeCardRank === 3}
+
                             removeCommonLevelHandler={this.removeCommonLevelHandler}
                             removeGoldLevelHandler={this.removeGoldLevelHandler}
                             removeEpicLevelHandler={this.removeEpicLevelHandler}
