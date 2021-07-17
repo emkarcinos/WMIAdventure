@@ -27,17 +27,17 @@ class LevelChoose extends React.Component {
             <TransparentBack show={this.props.show} onClick={this.handleHiding}>
                 <Ul onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
                     <Li>
-                        <Button rank={1} onClick={this.props.createCommonLevelHandler}>
+                        <Button disabled={this.props.commonLevelChosen} rank={1} onClick={this.props.createCommonLevelHandler}>
                             Typowy
                         </Button>
                     </Li>
                     <Li>
-                        <Button rank={2} onClick={this.props.createGoldLevelHandler}>
+                        <Button disabled={this.props.goldLevelChosen} rank={2} onClick={this.props.createGoldLevelHandler}>
                             Złoty
                         </Button>
                     </Li>
                     <Li last>
-                        <Button rank={3} onClick={this.props.createEpicLevelHandler}>
+                        <Button disabled={this.props.epicLevelChosen} rank={3} onClick={this.props.createEpicLevelHandler}>
                             Epicki
                         </Button>
                     </Li>

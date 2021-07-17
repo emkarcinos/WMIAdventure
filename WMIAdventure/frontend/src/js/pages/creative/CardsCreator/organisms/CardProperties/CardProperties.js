@@ -175,8 +175,11 @@ class CardProperties extends React.Component {
                 <LevelChoose show={this.state.showLevelChoose}
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
                              createCommonLevelHandler = {this.createCommonLevelHandler}
+                             commonLevelChosen={this.state.createCommonLevel}
                              createGoldLevelHandler = {this.createGoldLevelHandler}
-                             createEpicLevelHandler = {this.createEpicLevelHandler} />
+                             goldLevelChosen={this.state.createGoldLevel}
+                             createEpicLevelHandler = {this.createEpicLevelHandler}
+                             epicLevelChosen={this.state.createEpicLevel}/>
                 <EffectChoose
                     showEffectChoose={this.state.showEffectChoose}
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
