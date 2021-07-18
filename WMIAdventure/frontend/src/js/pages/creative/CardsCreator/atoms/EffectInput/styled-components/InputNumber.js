@@ -8,6 +8,14 @@ const InputNumber = styled.input`
   width: 28px;
   height: 26px;
   border-bottom: 1px solid ${({theme}) => theme.colors.borderLine};
+  -moz-appearance: textfield;
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
+
+
 
 export default InputNumber;
