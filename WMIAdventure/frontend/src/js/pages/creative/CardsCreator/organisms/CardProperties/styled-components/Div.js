@@ -7,23 +7,17 @@ function activeRankBorderHandler(activeCardRank, theme) {
         return `4px solid ${theme.colors.gold}`;
     if(activeCardRank === 3)
         return `4px solid ${theme.colors.epic}`;
-    return 'none';
-}
-
-function activeRankHandler(activeCardRank) {
-    if(activeCardRank !== 0)
-        return true;
-    return false;
+    return '4px solid transparent';
 }
 
 const Div = styled.div`
   position: absolute;
   bottom: -38px;
-  left: ${({activeCardRank}) => activeRankHandler(activeCardRank) ? '-4px' : 0};
+  left: -4px;
   display: flex;
   align-items: center;
   padding: 0 16px;
-  width: ${({activeCardRank}) => activeRankHandler(activeCardRank) ? 'calc(100% + 8px)' : '100%'};
+  width: calc(100% + 8px);
   height: 38px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;

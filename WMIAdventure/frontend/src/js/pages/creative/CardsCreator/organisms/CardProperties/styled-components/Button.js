@@ -12,7 +12,7 @@ const Button = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-left: 12px;
+  margin: 4px 0 0 12px;
 `;
 
 export default Button;

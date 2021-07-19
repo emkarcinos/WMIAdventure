@@ -7,7 +7,7 @@ function activeRankHandler(activeCardRank, theme) {
         return `4px solid ${theme.colors.gold}`;
     if(activeCardRank === 3)
         return `4px solid ${theme.colors.epic}`;
-    return 'none';
+    return '4px solid transparent';
 }
 
 const Fieldset = styled.fieldset`
