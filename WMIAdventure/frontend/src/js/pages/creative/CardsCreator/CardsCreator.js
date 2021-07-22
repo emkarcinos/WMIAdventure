@@ -17,9 +17,9 @@ import SendMessage from './atoms/SendMessage';
 class CardsCreator extends React.Component {
     state = {
         cardId: undefined,
-        cardName: 'Nazwa Karty',
-        cardSubject: 'Przedmiot',
-        cardTooltip: 'Opis Karty',
+        cardName: null,
+        cardSubject: null,
+        cardTooltip: null,
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
