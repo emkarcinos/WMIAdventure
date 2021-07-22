@@ -288,6 +288,9 @@ class CardsCreator extends React.Component {
                                 <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
                                     show={this.state.showDescribeInputs}
                                     hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                    cardName={this.state.cardName}
+                                    cardSubject={this.state.cardSubject}
+                                    cardTooltip={this.state.cardTooltip}
                                 />
                                 <CardProperties creatorType={this.props.creatorType}
                                     levelCostValues={this.state.levelCostValues}
@@ -336,6 +339,9 @@ class CardsCreator extends React.Component {
                                 <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
                                     show={this.state.showDescribeInputs}
                                     hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                    cardName={this.state.cardName}
+                                    cardSubject={this.state.cardSubject}
+                                    cardTooltip={this.state.cardTooltip}
                                 />
                                 <CardProperties creatorType={this.props.creatorType}
                                     levelCostValues={this.state.levelCostValues}
