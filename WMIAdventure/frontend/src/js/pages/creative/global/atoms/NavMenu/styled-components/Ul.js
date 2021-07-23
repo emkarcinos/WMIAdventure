@@ -2,15 +2,15 @@ import styled, {keyframes} from 'styled-components';
 
 const Animation = keyframes`
   from {
-    transform: translateY(-300px);
+    transform: translateY(-100%);
   } 
   to {
-    transform: translateY(0);
+    transform: translateY(0%);
   }
 `;
 
 const Ul = styled.ul`
-  animation: ${Animation} .6s ease-in-out;
+  animation: ${Animation} .5s ease-in-out;
   background-color: ${({theme}) => theme.colors.ui01};
   margin: 0;
   list-style: none;
