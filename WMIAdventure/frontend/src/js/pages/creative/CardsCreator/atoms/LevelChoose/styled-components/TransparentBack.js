@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
+
+const transitionStates = {
+    entering: {opacity: 0, display: 'flex'},
+    entered: {opacity: 1, display: 'flex'},
+    exiting: {opacity: 0, display: 'flex'},
+    exited: {opacity: 0, display: 'none'},
+}
+
 const TransparentBack = styled.div`
-  display: ${({show}) => show ? 'flex' : 'none'};
   flex-direction: column;
+  justify-content: end;
   align-items: center;
-  justify-content: flex-end;
   position: absolute;
   top: 0;
   left: 0;
@@ -12,6 +19,12 @@ const TransparentBack = styled.div`
   height: 100%;
   background-color: ${({theme}) => theme.colors.transBack};
   z-index: 2;
+
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  ${
+          ({transitionState}) => transitionStates[transitionState]
+  }
 `;
 
 export default TransparentBack;
