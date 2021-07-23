@@ -4,11 +4,16 @@ import P from './styled-components/P';
 import Section from './styled-components/Section';
 import Pencil from "./styled-components/Pencil";
 import Container from "./styled-components/Container";
+import Button from "./styled-components/Button"
 
 class CardDescribePreview extends React.Component {
     render() {
         return (
-            <Container onClick={this.props.showDescribeInputsHandler}>
+            <Container>
+                {/* Button which is positioned over whole container so that the content is clickable */}
+                <Button onClick={this.props.showDescribeInputsHandler}>
+                </Button>
+
                 {/* Pencil icon */}
                 <Pencil>
                 </Pencil>
