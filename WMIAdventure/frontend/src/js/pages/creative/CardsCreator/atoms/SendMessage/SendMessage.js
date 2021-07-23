@@ -2,6 +2,14 @@ import React from 'react';
 import TransparentBack from './styled-components/TransparentBack';
 import Div from './styled-components/Div';
 import P from './styled-components/P';
+import { Transition } from 'react-transition-group';
+
+/* Transition timeout values */
+const timeout = {
+    appear: 50,
+    enter: 50,
+    exit: 300
+};
 
 class SendMessage extends React.Component {
 
@@ -31,13 +39,17 @@ class SendMessage extends React.Component {
 
     render() {
         return (
-            <TransparentBack show={this.props.showMessage} onClick={this.handleHiding}>
-                <Div onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
-                    <P success={this.props.sendSuccess}>
-                        {this.state.message}
-                    </P>
-                </Div>
-            </TransparentBack>
+            <Transition in={this.props.showMessage} timeout={timeout}>
+                {state => (
+                    <TransparentBack onClick={this.handleHiding} transitionState={state}>
+                        <Div onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
+                            <P success={this.props.sendSuccess}>
+                                {this.state.message}
+                            </P>
+                        </Div>
+                    </TransparentBack>
+                )}
+            </Transition>
         );
     }
 }
