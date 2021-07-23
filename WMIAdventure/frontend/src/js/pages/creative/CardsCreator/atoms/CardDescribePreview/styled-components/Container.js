@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
-const Container = styled.button`
+const Container = styled.div`
+  /* Flex options */
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 32px;
+  
+  /* Positioning */
+  position: relative;
   margin-bottom: 20px;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
 `;
 
 export default Container;
