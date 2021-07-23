@@ -1,20 +1,16 @@
 import styled from 'styled-components';
-import pensil from '../../../../../../../assets/icons/pencil.svg';
 
 const Button = styled.button`
+  /* Positioning and size */
   position: absolute;
-  top: 32px;
-  left: -64px;
-  display: block;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  background-image: url(${pensil});
-  background-position: center;
-  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  
+  /* Styling */
+  cursor: pointer;
   background-color: transparent;
   border: none;
-  cursor: pointer;
 `;
 
 export default Button;
