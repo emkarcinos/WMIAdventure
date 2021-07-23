@@ -22,7 +22,7 @@ const TransparentBack = styled.div`
   z-index: 3;
 
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
   ${
           ({transitionState}) => transitionStates[transitionState]
   }

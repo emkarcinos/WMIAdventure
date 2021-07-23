@@ -9,7 +9,7 @@ import { Transition } from 'react-transition-group';
 const timeout = {
     appear: 50,
     enter: 50,
-    exit: 300
+    exit: 500
 };
 
 class LevelChoose extends React.Component {

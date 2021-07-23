@@ -12,7 +12,7 @@ import { Transition } from 'react-transition-group';
 const timeout = {
     appear: 50,
     enter: 50,
-    exit: 300
+    exit: 500
 };
 
 class CardDescribeInputs extends React.Component {
