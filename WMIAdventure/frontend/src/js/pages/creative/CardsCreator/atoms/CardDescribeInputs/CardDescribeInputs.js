@@ -47,8 +47,10 @@ class CardDescribeInputs extends React.Component {
                                     Nazwa
                                 </Label>
                                 <DivInput>
-                                    <Input id='cardName' name='cardName' type='text'
-                                           onChange={this.props.updateDescribePreview}/>
+                                  <Input id='cardName' name='cardName' type='text' value={this.props.cardName}
+                                         onChange={this.props.updateDescribePreview}
+                                         placeholder={'Nazwa karty'}
+                                  />
                                 </DivInput>
                             </Div>
                             <Div>
@@ -56,8 +58,10 @@ class CardDescribeInputs extends React.Component {
                                     Przedmiot
                                 </Label>
                                 <DivInput>
-                                    <Input id='cardSubject' name='cardSubject' type='text'
-                                           onChange={this.props.updateDescribePreview}/>
+                                  <Input id='cardSubject' name='cardSubject' type='text' value={this.props.cardSubject}
+                                         onChange={this.props.updateDescribePreview}
+                                         placeholder={'Przedmiot'}
+                                  />
                                 </DivInput>
                             </Div>
                             <Div last>
@@ -65,8 +69,10 @@ class CardDescribeInputs extends React.Component {
                                     Opis
                                 </Label>
                                 <DivInput>
-                                    <Input id='cardTooltip' name='cardTooltip' type='text'
-                                           onChange={this.props.updateDescribePreview}/>
+                                  <Input id='cardTooltip' name='cardTooltip' type='text' value={this.props.cardTooltip}
+                                         onChange={this.props.updateDescribePreview}
+                                         placeholder={'Opis Karty'}
+                                  />
                                 </DivInput>
                             </Div>
                         </Fieldset>
