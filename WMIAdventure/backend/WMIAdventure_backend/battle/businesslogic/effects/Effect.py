@@ -101,3 +101,26 @@ class Effect:
         Should be called every turn before activation.
         """
         self.update_buffs()
+
+    def get_power_range(self) -> tuple[float, float]:
+        """
+        Returns a range of possible final power value.
+        """
+        min_val = max(0, self.power - self.range)
+        max_val = self.power + self.range
+
+        return min_val, max_val
+
+    def description(self) -> str:
+        """
+        Get a pretty effect description.
+        This description will be further used to generate a real description.
+        Overload this method to create a description of your own.
+
+        One can use self.target.label ("gracz" or "przeciwnik) with a suffix (eg. using formatted strings 
+            f"{self.target.label}a" gets you "pracza" or "przeciwnika"
+            
+        Don't end the description with any separator or a comma.
+        """
+        min_power, max_power = self.get_power_range()
+        return f"Efekt o mocy {min_power} - {max_power} skierowany w {self.target.label}a"

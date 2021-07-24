@@ -191,8 +191,8 @@ def base_card_level_effects_factory(foreignkey_card_cls: type):
             """
             Possible targets.
             """
-            PLAYER = 1
-            OPPONENT = 2
+            PLAYER = 1, _("gracz")
+            OPPONENT = 2 ,_("przeciwnik")
 
         card = models.ForeignKey(foreignkey_card_cls, related_name='effects', unique=False, on_delete=models.CASCADE)
         card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)
