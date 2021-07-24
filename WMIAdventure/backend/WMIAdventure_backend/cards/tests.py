@@ -1,6 +1,7 @@
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
+from .businesslogic.tests import *
 
 from .serializers import *
 from .views import *
