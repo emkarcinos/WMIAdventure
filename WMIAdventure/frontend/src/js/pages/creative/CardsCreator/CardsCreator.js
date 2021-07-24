@@ -13,7 +13,7 @@ import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
 import SendMessage from './atoms/SendMessage';
-import SendCardPopup from "./atoms/SendCardPopup";
+import SendCardPopup from "./molecules/SendCardPopup";
 
 class CardsCreator extends React.Component {
     state = {

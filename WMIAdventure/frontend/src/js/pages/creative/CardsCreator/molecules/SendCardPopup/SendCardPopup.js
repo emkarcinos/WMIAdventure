@@ -21,7 +21,7 @@ class SendCardPopup extends React.Component {
                 <CenteringContainer show={this.props.show}>
                     <PopupContainer>
                         <ContentContainer>
-                            <Header isMobile={this.props.isMobile}>Wyślij</Header>
+                            <Header>Wyślij</Header>
                             <InfoText>
                                 Możesz dołączyć dodatkową wiadomość dla administratorów weryfikujących kartę.
                             </InfoText>
