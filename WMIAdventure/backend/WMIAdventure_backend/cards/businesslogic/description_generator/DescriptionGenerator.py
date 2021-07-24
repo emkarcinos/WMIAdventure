@@ -1,4 +1,5 @@
 from battle.businesslogic.effects.Effect import Effect
+from cards.businesslogic.description_generator.DescriptionAppender import DescriptionAppender
 
 
 class DescriptionGenerator:
@@ -11,7 +12,7 @@ class DescriptionGenerator:
         pass
 
     @staticmethod
-    def get_instance(self):
+    def get_instance():
         if DescriptionGenerator.instance is None:
             DescriptionGenerator.instance = DescriptionGenerator()
         return DescriptionGenerator.instance
@@ -23,5 +24,8 @@ class DescriptionGenerator:
         @param effects: An array of Effect objects
         @return Generated description as a string
         """
+        appender = DescriptionAppender()
+        for effect in effects:
+            appender.append(effect.description())
 
-        return ""
+        return appender.process()
