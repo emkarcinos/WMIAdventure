@@ -1,6 +1,7 @@
 from copy import copy
 
 from battle.businesslogic.Buff import Buff
+from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardLevelEffects
 
 
@@ -102,15 +103,6 @@ class Effect:
         """
         self.update_buffs()
 
-    def get_power_range(self) -> tuple[float, float]:
-        """
-        Returns a range of possible final power value.
-        """
-        min_val = max(0, self.power - self.range)
-        max_val = self.power + self.range
-
-        return min_val, max_val
-
     def description(self) -> str:
         """
         Get a pretty effect description.
@@ -122,5 +114,5 @@ class Effect:
             
         Don't end the description with any separator or a comma.
         """
-        min_power, max_power = self.get_power_range()
-        return f"Efekt o mocy {min_power} - {max_power} skierowany w {self.target.label}a"
+        power_range = PowerDescription.get_instance().stringify(self.power, self.range)
+        return f"Efekt o mocy {power_range} skierowany w {self.target.label}a"
