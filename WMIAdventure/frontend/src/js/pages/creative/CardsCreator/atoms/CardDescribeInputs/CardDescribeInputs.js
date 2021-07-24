@@ -37,7 +37,7 @@ class CardDescribeInputs extends React.Component {
         return (
             <Transition in={this.props.show} timeout={timeout}>
                 {state => (
-                    <TransparentBack transitionState={state} show={this.props.show} onClick={this.handleHiding}>
+                    <TransparentBack transitionState={state} onClick={this.handleHiding}>
                         <Fieldset onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
                             <Legend>
                                 Karta
