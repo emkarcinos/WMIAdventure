@@ -13,6 +13,7 @@ import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
 import SendMessage from './atoms/SendMessage';
+import SendCardPopup from "./atoms/SendCardPopup";
 
 class CardsCreator extends React.Component {
     state = {
@@ -32,6 +33,7 @@ class CardsCreator extends React.Component {
         chosenEffectsFromCard: [[], [], []],
         showSendMessage: false,
         sendSuccess: false,
+        showSendCardPopup: false,
     }
 
     sendCardToApi = (event) => {
@@ -158,6 +160,16 @@ class CardsCreator extends React.Component {
     hideDescribeInputsHandler = (event) => {
         event.preventDefault();
         this.setState({showDescribeInputs: false});
+    }
+
+    showSendCardPopupHandler = (event) => {
+        event.preventDefault();
+        this.setState({showSendCardPopup : true})
+    }
+
+    hideSendCardPopupHandler = (event) => {
+        event.preventDefault();
+        this.setState({showSendCardPopup : false})
     }
 
     updateDescribePreview = (event) => {
@@ -349,7 +361,7 @@ class CardsCreator extends React.Component {
                                     effectsToSend={this.state.effectsToSend}
                                 />
                                 <Div>
-                                    <Button type='submit' onClick={this.sendCardToApi} show={true}>
+                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
                                         Wyślij
                                     </Button>
                                     <Button onClick={this.refreshPage} show={this.props.creatorType}>
@@ -359,6 +371,8 @@ class CardsCreator extends React.Component {
                             </Form>
                         </Main>
                     </Wrapper>
+                    <SendCardPopup show={this.state.showSendCardPopup}
+                                   hideSendCardPopupHandler={this.hideSendCardPopupHandler} />
                     <SendMessage showMessage={this.state.showSendMessage}
                                  sendSuccess={this.state.sendSuccess}
                                  hideSendMessageHandler={this.hideSendMessageHandler} />
