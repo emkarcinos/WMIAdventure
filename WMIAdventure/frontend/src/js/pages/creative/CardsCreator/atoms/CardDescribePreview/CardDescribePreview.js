@@ -21,13 +21,13 @@ class CardDescribePreview extends React.Component {
                 {/* Main content section */}
                 <Section>
                     <H1>
-                        {this.props.cardName}
+                        {this.props.cardName ? this.props.cardName : 'Nazwa karty'}
                     </H1>
                     <P>
-                        {this.props.cardSubject}
+                        {this.props.cardSubject ? this.props.cardSubject : 'Przedmiot'}
                     </P>
                     <P tooltip>
-                        {this.props.cardTooltip}
+                        {this.props.cardTooltip ? this.props.cardTooltip : 'Opis Karty'}
                     </P>
                 </Section>
 
