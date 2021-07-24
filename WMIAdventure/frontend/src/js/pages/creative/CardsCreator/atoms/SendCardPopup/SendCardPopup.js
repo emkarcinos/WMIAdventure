@@ -32,7 +32,7 @@ class SendCardPopup extends React.Component {
                                 </TextArea>
                             </DivTextArea>
                             <DivButtons>
-                                <Button>Wróć</Button>
+                                <Button onClick={this.props.hideSendCardPopupHandler}>Wróć</Button>
                                 <Button>Wyślij</Button>
                             </DivButtons>
                         </ContentContainer>
