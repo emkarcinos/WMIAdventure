@@ -26,7 +26,7 @@ class SendCardPopup extends React.Component {
                                 Możesz dołączyć dodatkową wiadomość dla administratorów weryfikujących kartę.
                             </InfoText>
                             <DivTextArea>
-                                <TextAreaLabel>Wiadomość</TextAreaLabel>
+                                <TextAreaLabel htmlFor='additionalComments'>Wiadomość</TextAreaLabel>
                                 <TextArea id='additionalComments' name='additionalComments' type='text'
                                           placeholder={'Wiadomość'}>
                                 </TextArea>
