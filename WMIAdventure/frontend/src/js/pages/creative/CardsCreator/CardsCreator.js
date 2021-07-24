@@ -18,9 +18,9 @@ import SendCardPopup from "./molecules/SendCardPopup";
 class CardsCreator extends React.Component {
     state = {
         cardId: undefined,
-        cardName: 'Nazwa Karty',
-        cardSubject: 'Przedmiot',
-        cardTooltip: 'Opis Karty',
+        cardName: null,
+        cardSubject: null,
+        cardTooltip: null,
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
@@ -300,6 +300,9 @@ class CardsCreator extends React.Component {
                                 <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
                                     show={this.state.showDescribeInputs}
                                     hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                    cardName={this.state.cardName}
+                                    cardSubject={this.state.cardSubject}
+                                    cardTooltip={this.state.cardTooltip}
                                 />
                                 <CardProperties creatorType={this.props.creatorType}
                                     levelCostValues={this.state.levelCostValues}
@@ -348,6 +351,9 @@ class CardsCreator extends React.Component {
                                 <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
                                     show={this.state.showDescribeInputs}
                                     hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                    cardName={this.state.cardName}
+                                    cardSubject={this.state.cardSubject}
+                                    cardTooltip={this.state.cardTooltip}
                                 />
                                 <CardProperties creatorType={this.props.creatorType}
                                     levelCostValues={this.state.levelCostValues}
