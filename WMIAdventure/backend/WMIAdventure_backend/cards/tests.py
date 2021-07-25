@@ -322,14 +322,16 @@ class WholeCardSerializerTestCase(TestCase):
         card_info = CardInfo.objects.create(name="Name", tooltip="Tooltip", subject=None)
         card_info.save()
 
-        card1 = card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5)
+        card1 = card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5,
+                                        effects_description="desc1")
         card1.effects.create(
             card_effect=CardEffect.objects.get(pk=1),
             power=5,
             range=1
         )
 
-        card2 = card_info.levels.create(level=CardLevel.objects.get(pk=2), next_level_cost=6)
+        card2 = card_info.levels.create(level=CardLevel.objects.get(pk=2), next_level_cost=6,
+                                        effects_description="desc2")
         card2.effects.create(
             card_effect=CardEffect.objects.get(pk=1),
             power=8,
@@ -347,6 +349,7 @@ class WholeCardSerializerTestCase(TestCase):
             actual_card_data = serializer.data["levels"][i]
             self.assertEqual(actual_card_data['level'], expected_card.level.level)
             self.assertEqual(actual_card_data['next_level_cost'], expected_card.next_level_cost)
+            self.assertEqual(actual_card_data['effects_description'], expected_card.effects_description)
 
             for j, expected_effect in enumerate(expected_card.effects.all()):
                 actual_effect_data = actual_card_data['effects'][j]
@@ -366,6 +369,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 1,
                         "next_level_cost": 2,
+                        "effects_description": "desc1",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -384,6 +388,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 2,
                         "next_level_cost": 4,
+                        "effects_description": "desc2",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -408,6 +413,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 3,
                         "next_level_cost": None,
+                        "effects_description": "desc3",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -446,6 +452,7 @@ class WholeCardSerializerTestCase(TestCase):
             expected_card_data = data["levels"][i]
             self.assertEqual(card.level.level, expected_card_data["level"])
             self.assertEqual(card.next_level_cost, expected_card_data["next_level_cost"])
+            self.assertEqual(card.effects_description, expected_card_data["effects_description"])
 
             for j, effect in enumerate(card.effects.all()):
                 expected_effect_data = expected_card_data["effects"][j]

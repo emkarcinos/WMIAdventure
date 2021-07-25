@@ -170,6 +170,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                 card = info.levels.create(
                     level=card_data.get("level"),
                     next_level_cost=card_data.get("next_level_cost"),
+                    effects_description=card_data.get("effects_description"),
                 )
                 for effect_data in card_data.get("effects"):
                     card.effects.create(
@@ -195,6 +196,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                     card = instance.levels.create(
                         level=card_data.get("level"),
                         next_level_cost=card_data.get("next_level_cost"),
+                        effects_description=card_data.get("effects_description"),
                     )
                     for effect_data in card_data.get("effects"):
                         card.effects.create(
