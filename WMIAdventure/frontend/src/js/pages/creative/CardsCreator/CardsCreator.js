@@ -169,7 +169,7 @@ class CardsCreator extends React.Component {
 
     hideSendCardPopupHandler = (event) => {
         event.preventDefault();
-        this.setState({showSendCardPopup : false})
+        this.setState({showSendCardPopup : false, showSendMessage: false})
     }
 
     updateDescribePreview = (event) => {
