@@ -23,7 +23,7 @@ class Calculator:
 
         effect_power = self._power_without_buffs(power, power_range)
         effect_power = self._calculate_buffs_influence(effect_power, buffs)
-        return effect_power
+        return max(0.0, effect_power)
 
     def _power_without_buffs(self, power, power_range):
         """
