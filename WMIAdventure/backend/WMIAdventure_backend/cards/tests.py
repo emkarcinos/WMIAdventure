@@ -196,6 +196,7 @@ class CardSerializerTestCase(TestCase):
         self.info_id = 1
         self.test_level = 1
         self.test_cost = 20
+        self.test_description = "test"
 
         # Create CardInfo object for tests.
         while len(CardInfo.objects.filter(pk=self.info_id)) > 0:
@@ -209,6 +210,7 @@ class CardSerializerTestCase(TestCase):
         data = {
             'info': self.info_id,
             'level': self.test_level,
+            'effects_description': self.test_description,
             'next_level_cost': self.test_cost}
 
         serializer = CardSerializer(data=data)
@@ -224,6 +226,7 @@ class CardSerializerTestCase(TestCase):
         self.assertEqual(sample.info.id, self.info_id)
         self.assertEqual(sample.level.level, self.test_level)
         self.assertEqual(sample.next_level_cost, self.test_cost)
+        self.assertEqual(sample.effects_description, self.test_description)
 
         sample.delete()  # Delete object from database
 
@@ -233,7 +236,8 @@ class CardSerializerTestCase(TestCase):
         sample = Card.objects.create(
             info=info,
             level=level,
-            next_level_cost=self.test_cost)
+            next_level_cost=self.test_cost,
+            effects_description=self.test_description)
 
         serializer = CardSerializer(instance=sample)
 
@@ -241,11 +245,13 @@ class CardSerializerTestCase(TestCase):
         actual_level = serializer.data.get('level')
         actual_info = serializer.data.get('info')
         actual_cost = serializer.data.get('next_level_cost')
+        actual_desc = serializer.data.get('effects_description')
 
         self.assertEqual(actual_id, sample.id)
         self.assertEqual(actual_level, self.test_level)
         self.assertEqual(actual_info, self.info_id)
         self.assertEqual(actual_cost, self.test_cost)
+        self.assertEqual(actual_desc, self.test_description)
 
 
 class CardLevelEffectsSerializerTestCase(TestCase):
