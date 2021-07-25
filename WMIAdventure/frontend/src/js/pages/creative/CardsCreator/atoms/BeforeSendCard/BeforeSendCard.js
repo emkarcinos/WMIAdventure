@@ -23,7 +23,7 @@ class BeforeSendCard extends React.Component {
                 </DivTextArea>
                 <DivButtons>
                     <Button onClick={this.props.hideSendCardPopupHandler}>Wróć</Button>
-                    <Button>Wyślij</Button>
+                    <Button type='submit' onClick={this.props.sendCard}>Wyślij</Button>
                 </DivButtons>
             </>
         )

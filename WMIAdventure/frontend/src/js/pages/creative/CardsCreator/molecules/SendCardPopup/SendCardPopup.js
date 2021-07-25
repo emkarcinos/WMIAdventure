@@ -15,7 +15,8 @@ class SendCardPopup extends React.Component {
                 <CenteringContainer show={this.props.show}>
                     <PopupContainer>
                         <ContentContainer>
-                            <BeforeSendCard hideSendCardPopupHandler={this.props.hideSendCardPopupHandler} />
+                            <BeforeSendCard hideSendCardPopupHandler={this.props.hideSendCardPopupHandler}
+                                            sendCard={this.props.sendCard} />
                         </ContentContainer>
                     </PopupContainer>
                 </CenteringContainer>

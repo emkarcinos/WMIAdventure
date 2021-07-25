@@ -378,10 +378,10 @@ class CardsCreator extends React.Component {
                         </Main>
                     </Wrapper>
                     <SendCardPopup show={this.state.showSendCardPopup}
-                                   hideSendCardPopupHandler={this.hideSendCardPopupHandler} />
-                    <SendMessage showMessage={this.state.showSendMessage}
-                                 sendSuccess={this.state.sendSuccess}
-                                 hideSendMessageHandler={this.hideSendMessageHandler} />
+                                   hideSendCardPopupHandler={this.hideSendCardPopupHandler}
+                                   sendCard={this.sendCardToApi}
+                                   showSendMessage={this.state.showSendMessage}
+                                   sendSuccess={this.state.sendSuccess}/>
                 </>
             );
         }
