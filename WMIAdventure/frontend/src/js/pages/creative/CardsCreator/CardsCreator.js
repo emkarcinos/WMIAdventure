@@ -66,73 +66,36 @@ class CardsCreator extends React.Component {
             }
         }
 
-        if(this.props.creatorType === 'create') {
-            try {
-                let result = fetch(`http://${API}/api/proposed-content/cards/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: this.state.cardName,
-                        subject: this.state.cardSubject,
-                        image: null,
-                        tooltip: this.state.cardTooltip,
-                        levels: levelsToSend
-                    })
-                }) .then (
-                    response => {
-                        if(response.ok) {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: true,
-                                failedCardSubmissionMsg: null,
-                            });
-                        } else {
-                            this.cardSubmissionFailedHandler(response);
-                        }
+        try {
+            let result = fetch(`http://${API}/api/proposed-content/cards/`, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.state.cardName,
+                    subject: this.state.cardSubject,
+                    image: null,
+                    tooltip: this.state.cardTooltip,
+                    levels: levelsToSend
+                })
+            }) .then (
+                response => {
+                    if(response.ok) {
+                        this.setState({
+                            showSendMessage: true,
+                            sendSuccess: true
+                        });
+                    } else {
+                        this.cardSubmissionFailedHandler(response)
                     }
-                );
-                console.log('Result: ' + result);
-            } catch (e) {
-                console.log(e);
-            }
+                }
+            );
+            console.log('Result: ' + result);
+        } catch (e) {
+            console.log(e);
         }
-
-        if(this.props.creatorType === 'edit') {
-            try {
-                let result = fetch(`http://${API}/api/proposed-content/cards/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: this.state.cardName,
-                        subject: this.state.cardSubject,
-                        image: null,
-                        tooltip: this.state.cardTooltip,
-                        levels: levelsToSend
-                    })
-                }) .then (
-                    response => {
-                        if(response.ok) {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: true
-                            });
-                        } else {
-                            this.cardSubmissionFailedHandler(response)
-                        }
-                    }
-                );
-                console.log('Result: ' + result);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-
     }
 
     componentDidMount() {
