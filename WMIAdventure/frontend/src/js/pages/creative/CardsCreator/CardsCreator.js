@@ -34,7 +34,19 @@ class CardsCreator extends React.Component {
         chosenEffectsFromCard: [[], [], []],
         showSendMessage: false,
         sendSuccess: false,
+        failedCardSubmissionMsg: null,
         showSendCardPopup: false,
+    }
+
+    cardSubmissionFailedHandler(serverResponse){
+        let t = this;
+        serverResponse.json().then(function (jsonResponse){
+            t.setState({
+                showSendMessage: true,
+                sendSuccess: false,
+                failedCardSubmissionMsg: JSON.stringify(jsonResponse),
+            });
+        })
     }
 
     sendCardToApi = (event) => {
@@ -74,13 +86,11 @@ class CardsCreator extends React.Component {
                         if(response.ok) {
                             this.setState({
                                 showSendMessage: true,
-                                sendSuccess: true
+                                sendSuccess: true,
+                                failedCardSubmissionMsg: null,
                             });
                         } else {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: false
-                            });
+                            this.cardSubmissionFailedHandler(response);
                         }
                     }
                 );
@@ -113,10 +123,7 @@ class CardsCreator extends React.Component {
                                 sendSuccess: true
                             });
                         } else {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: false
-                            });
+                            this.cardSubmissionFailedHandler(response)
                         }
                     }
                 );
@@ -387,7 +394,8 @@ class CardsCreator extends React.Component {
                                    hideSendCardPopupHandler={this.hideSendCardPopupHandler}
                                    sendCard={this.sendCardToApi}
                                    showSendMessage={this.state.showSendMessage}
-                                   sendSuccess={this.state.sendSuccess}/>
+                                   sendSuccess={this.state.sendSuccess}
+                                   failedSubmissionMsg={this.state.failedCardSubmissionMsg}/>
                 </>
             );
         }

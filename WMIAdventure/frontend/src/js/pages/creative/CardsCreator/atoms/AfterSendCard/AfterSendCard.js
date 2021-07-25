@@ -28,7 +28,7 @@ class AfterSendCard extends React.Component {
                         Coś poszło nie tak!
                     </InfoText>
                     <InfoText>
-                        Odpowiedź od serwera dlaczego request nie został przyjęty.
+                        {this.props.failedSubmissionMsg}
                     </InfoText>
                 </>
             )

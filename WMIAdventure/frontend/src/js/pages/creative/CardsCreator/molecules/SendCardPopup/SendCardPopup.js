@@ -23,7 +23,8 @@ class SendCardPopup extends React.Component {
         }
         else {
             return <AfterSendCard hideSendCardPopupHandler={this.props.hideSendCardPopupHandler}
-                                  sendSucess={this.props.sendSuccess}/>
+                                  sendSucess={this.props.sendSuccess}
+                                  failedSubmissionMsg={this.props.failedSubmissionMsg}/>
         }
     }
 
