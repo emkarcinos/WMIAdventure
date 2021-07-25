@@ -18,7 +18,7 @@ class BeforeSendCard extends React.Component {
                 <DivTextArea>
                     <TextAreaLabel htmlFor='additionalComments'>Wiadomość</TextAreaLabel>
                     <TextArea id='additionalComments' name='additionalComments' type='text'
-                              placeholder={'Wiadomość'}>
+                              placeholder={'Wiadomość'} onChange={this.props.additionalCommentsInputHandler}>
                     </TextArea>
                 </DivTextArea>
                 <DivButtons>
