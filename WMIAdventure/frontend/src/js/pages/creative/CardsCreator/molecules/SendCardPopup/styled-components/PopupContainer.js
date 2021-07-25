@@ -10,9 +10,9 @@ const PopupContainer = styled.div`
   /* Positioning and size */
   max-width: 95%;
   position: relative;
-  padding: 24px 24px 64px 24px;
+  padding: 24px 24px 32px 24px;
   @media (max-width: 768px){
-    padding: 16px 16px 32px 16px;
+    padding: 16px 16px 24px 16px;
   }
   z-index: 3;
   
