@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const TransparentBack = styled.div`
-  display: ${({show}) => show ? 'flex' : 'none'};
+  display: flex;
   
   /* Flex options */
   justify-content: center;

@@ -14,6 +14,7 @@ import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
 import SendMessage from './atoms/SendMessage';
 import SendCardPopup from "./molecules/SendCardPopup";
+import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 
 class CardsCreator extends React.Component {
     state = {
@@ -169,7 +170,12 @@ class CardsCreator extends React.Component {
 
     hideSendCardPopupHandler = (event) => {
         event.preventDefault();
-        this.setState({showSendCardPopup : false, showSendMessage: false})
+        this.setState({showSendCardPopup : false})
+
+        /* We hide send message after timeout, because SendCardPopup has closing animation. */
+        setTimeout(() => {
+            this.setState({showSendMessage: false});
+        }, SendCardPopupTimeout.exit)
     }
 
     updateDescribePreview = (event) => {
