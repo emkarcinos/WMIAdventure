@@ -9,6 +9,7 @@ const TextArea = styled.textarea`
   padding: 12px;
   
   /* Styling */
+  border-radius: 4px;
   border: none;
   background-color: ${({theme}) => theme.colors.grey1};
   
