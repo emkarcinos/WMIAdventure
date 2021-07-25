@@ -84,6 +84,19 @@ class CalculatorTestCase(TestCase):
             actual_value = self.instance.calculate_effect_power(self.base_power, self.power_range, self.buffs)
             self.assertGreaterEqual(actual_value, expected_min_value)
             self.assertLessEqual(actual_value, expected_max_value)
+            
+    def test_negative_fix(self):
+        import random
+        
+        # This seed returns a negative power inside the calculator.
+        random.seed(241241)
+        
+        # Calculated effect power of this ranges should never drop below zero.
+        power = 1
+        range = 10
+        val = self.instance.calculate_effect_power(power, range, [])
+        
+        self.assertEqual(0, val)
 
     @classmethod
     def tearDownClass(cls) -> None:
