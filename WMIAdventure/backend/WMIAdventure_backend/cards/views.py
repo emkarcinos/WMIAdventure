@@ -2,8 +2,10 @@ import coreapi
 import coreschema
 from rest_framework.schemas import AutoSchema
 
-from .models import CardEffect
-from .serializers import CardEffectSerializer
+from battle.businesslogic.effects.EffectFactory import EffectFactory
+from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
+from .models import CardEffect, CardLevelEffects
+from .serializers import CardEffectSerializer, SimpleCardLevelEffectsSerializer
 from .models import CardLevel, CardInfo
 from .serializers import CardLevelSerializer, WholeCardSerializer
 from rest_framework.views import APIView
@@ -53,6 +55,30 @@ class CardEffectObjectView(generics.RetrieveUpdateAPIView):
 class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = CardInfo.objects.all()
     serializer_class = WholeCardSerializer
+
+
+class DescriptionGeneratorView(APIView):
+    """
+    Generates a description from effects.
+    
+    post:
+    Returns a string with a generated description. Put an array of effects as the data similarly as in WholeCardList:
+    
+        [
+            {
+                "card_effect": 1,
+                "target": 1,
+                "power": 5,
+                "range": 1
+            }
+        ]
+    """
+    def post(self, request, *args, **kwargs):
+        """
+        Takes a JSON array with effect ID's and returns generated string of data. 
+        """
+        generator = DescriptionGenerator.get_instance()
+        return Response(generator.generate_description_from_json(request.data))
 
 
 class WholeCardList(generics.ListCreateAPIView):

@@ -775,6 +775,22 @@ class WholeCardListTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
+class DescriptionGeneratorViewTestCase(TestCase):
+    def test_get(self):
+        data = [
+            {'card_effect': 1,
+             'target': 1,
+             'power': 5.0,
+             'range': 1.0}
+        ]
+        factory = APIRequestFactory()
+        view = DescriptionGeneratorView.as_view()
+        request = factory.post('/api/cards/descriptions/', data, format='json')
+        response = view(request)
+
+        self.assertEqual(200, response.status_code)
+
+
 class ValidateEffectModifiersTestCase(TestCase):
     def test_validate_effect_modifiers1(self):
         """
