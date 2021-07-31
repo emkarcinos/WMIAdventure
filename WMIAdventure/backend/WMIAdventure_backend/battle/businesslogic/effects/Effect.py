@@ -110,7 +110,7 @@ class Effect:
         Overload this method to create a description of your own.
 
         One can use self.target.label ("gracz" or "przeciwnik) with a suffix (eg. using formatted strings 
-            f"{self.target.label}a" gets you "pracza" or "przeciwnika"
+            f"{self.target.label}a" gets you "gracza" or "przeciwnika"
             
         Don't end the description with any separator or a comma.
         """
