@@ -15,4 +15,4 @@ class ShieldEffect(Effect):
 
     def description(self) -> str:
         power_range = PowerDescription.get_instance().stringify(self.power, self.range)
-        return f"Ochrania {self.target.label}a o {power_range}"
+        return f"Dodaje {self.target.label}owi {power_range} pkt tarczy"
