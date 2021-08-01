@@ -259,6 +259,9 @@ class CardProperties extends React.Component {
                             </DivLevel>
                         </Media>
                     </Fieldset>
+                    <Button onClick={this.showLevelChooseHandler}>
+                        Dodaj poziom do karty
+                    </Button>
                 </DivCenter>
             </>
         );
