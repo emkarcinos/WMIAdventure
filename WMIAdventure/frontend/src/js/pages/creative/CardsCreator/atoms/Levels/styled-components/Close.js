@@ -16,6 +16,11 @@ const Close = styled.button`
   background-repeat: no-repeat;
   width: 10px;
   height: 10px;
+  
+  @media (min-width: 768px) {
+    position: static;
+    margin: 0 0 5px 8px;
+  }
 `;
 
 export default Close;

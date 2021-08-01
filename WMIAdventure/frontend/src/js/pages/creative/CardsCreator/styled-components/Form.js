@@ -5,6 +5,8 @@ const Form = styled.form`
   height: 100%;
   padding: 0;
   margin: 0;
+  
+  @media (min-width: 768px) {}
 `;
 
 export default Form;

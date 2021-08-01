@@ -22,9 +22,17 @@ const Fieldset = styled.fieldset`
   position: relative;
   padding: 16px;
   margin: 0 0 64px 0;
-  
   background-color: ${({theme}) => theme.colors.ui01};
-  border: ${({activeCardRank, theme}) => activeRankHandler(activeCardRank, theme)}
+  border: ${({activeCardRank, theme}) => activeRankHandler(activeCardRank, theme)};
+
+  @media (min-width: 768px) {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    max-width: 380px;
+    margin: 0 0 24px 0;
+    height: 532px;
+    padding: 0;
+  }
 `;
 
 export default Fieldset;
