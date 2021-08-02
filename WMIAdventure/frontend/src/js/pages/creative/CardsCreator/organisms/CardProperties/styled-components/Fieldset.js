@@ -10,6 +10,16 @@ function activeRankHandler(activeCardRank, theme) {
     return '4px solid transparent';
 }
 
+function createLevelHandler(createCommon, createGold, createEpic, theme) {
+    if(createCommon)
+        return `4px solid ${theme.colors.common}`;
+    if(createGold)
+        return `4px solid ${theme.colors.gold}`;
+    if(createEpic)
+        return `4px solid ${theme.colors.epic}`;
+    return '4px solid transparent';
+}
+
 const Fieldset = styled.fieldset`
   width: 100%;
   height: 482px;
@@ -29,9 +39,12 @@ const Fieldset = styled.fieldset`
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     max-width: 380px;
-    margin: 0 0 24px 0;
+    margin: 0 6px 24px;
     height: 532px;
     padding: 0;
+    display: ${({create}) => create ? 'flex' : 'none'};
+    border: ${({createCommon, createGold, createEpic, theme}) => 
+            createLevelHandler(createCommon, createGold, createEpic, theme)};
   }
 `;
 

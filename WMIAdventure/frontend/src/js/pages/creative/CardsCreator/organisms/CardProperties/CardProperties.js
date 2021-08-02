@@ -198,9 +198,26 @@ class CardProperties extends React.Component {
                     effectsFromApi={this.props.effectsFromApi}
                     chosenEffects={this.state.chosenEffects}
                     chosenEffectsHandler={this.chosenEffectsHandler} />
-                <DivCenter>
+                <Media query='(max-width: 768px)'>
                     <Fieldset activeCardRank={this.state.activeCardRank}>
-                        <Media query='(min-width: 768px)'>
+                        <DivScroll rank={this.state.activeCardRank}>
+                            <CostInputs activeCardRank={this.state.activeCardRank}
+                                        createGoldLevel={this.state.createGoldLevel}
+                                        createEpicLevel={this.state.createEpicLevel}
+                                        levelCostValues={this.props.levelCostValues}
+                                        levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                            <EffectsInputsList
+                                activeCardRank={this.state.activeCardRank}
+                                showEffectChooseHandler={this.showEffectChooseHandler}
+                                chosenEffects={this.state.chosenEffects}
+                                removeChosenEffectHandler={this.removeChosenEffectHandler}
+                                effectsToSendHandler={this.effectsToSendHandler}
+                                effectsToSend={this.state.effectsToSend} />
+                        </DivScroll>
+                        <DivLevel activeCardRank={this.state.activeCardRank}>
+                            <P>
+                                Poziomy:
+                            </P>
                             <Levels
                                 createCommonLevel={this.state.createCommonLevel}
                                 activeCommon={this.state.activeCardRank === 1}
@@ -217,52 +234,49 @@ class CardProperties extends React.Component {
                                 activeLevelRecognize={this.activeLevelRecognize}
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
-                        </Media>
-                        <DivScroll rank={this.state.activeCardRank}>
-                            <CostInputs activeCardRank={this.state.activeCardRank}
-                                        createGoldLevel={this.state.createGoldLevel}
-                                        createEpicLevel={this.state.createEpicLevel}
-                                        levelCostValues={this.props.levelCostValues}
-                                        levelCostValuesHandler={this.props.levelCostValuesHandler} />
-                            <EffectsInputsList
-                                activeCardRank={this.state.activeCardRank}
-                                showEffectChooseHandler={this.showEffectChooseHandler}
-                                chosenEffects={this.state.chosenEffects}
-                                removeChosenEffectHandler={this.removeChosenEffectHandler}
-                                effectsToSendHandler={this.effectsToSendHandler}
-                                effectsToSend={this.state.effectsToSend} />
-                        </DivScroll>
-                        <Media query='(max-width: 768px)'>
-                            <DivLevel activeCardRank={this.state.activeCardRank}>
-                                <P>
-                                    Poziomy:
-                                </P>
-                                <Levels
-                                    createCommonLevel={this.state.createCommonLevel}
-                                    activeCommon={this.state.activeCardRank === 1}
-
-                                    createGoldLevel={this.state.createGoldLevel}
-                                    activeGold={this.state.activeCardRank === 2}
-
-                                    createEpicLevel={this.state.createEpicLevel}
-                                    activeEpic={this.state.activeCardRank === 3}
-
-                                    removeCommonLevelHandler={this.removeCommonLevelHandler}
-                                    removeGoldLevelHandler={this.removeGoldLevelHandler}
-                                    removeEpicLevelHandler={this.removeEpicLevelHandler}
-                                    activeLevelRecognize={this.activeLevelRecognize}
-                                    levelCostClearHandler={this.props.levelCostClearHandler}
-                                />
-                                <Button onClick={this.showLevelChooseHandler}>
-                                    {/*ikona plusa*/}
-                                </Button>
-                            </DivLevel>
-                        </Media>
+                            <Button onClick={this.showLevelChooseHandler}>
+                                {/*ikona plusa*/}
+                            </Button>
+                        </DivLevel>
                     </Fieldset>
-                    <Button onClick={this.showLevelChooseHandler}>
-                        Dodaj poziom do karty
-                    </Button>
-                </DivCenter>
+                </Media>
+                <Media query='(min-width: 768px)'>
+                    <DivCenter>
+                        <Fieldset create={this.state.createCommonLevel} createCommon={this.state.createCommonLevel}>
+                            <Levels
+                                createCommonLevel={this.state.createCommonLevel}
+                                activeCommon={this.state.activeCardRank === 1}
+                                removeCommonLevelHandler={this.removeCommonLevelHandler}
+                                activeLevelRecognize={this.activeLevelRecognize}
+                                levelCostClearHandler={this.props.levelCostClearHandler}
+                            />
+                        </Fieldset>
+                        <Fieldset create={this.state.createGoldLevel} createGold={this.state.createGoldLevel}>
+                            <Levels
+                                createGoldLevel={this.state.createGoldLevel}
+                                activeGold={this.state.activeCardRank === 2}
+                                removeGoldLevelHandler={this.removeGoldLevelHandler}
+                                activeLevelRecognize={this.activeLevelRecognize}
+                                levelCostClearHandler={this.props.levelCostClearHandler}
+                            />
+                        </Fieldset>
+                        <Fieldset create={this.state.createEpicLevel} createEpic={this.state.createEpicLevel}>
+                            <Levels
+                                createEpicLevel={this.state.createEpicLevel}
+                                activeEpic={this.state.activeCardRank === 3}
+                                removeEpicLevelHandler={this.removeEpicLevelHandler}
+                                activeLevelRecognize={this.activeLevelRecognize}
+                                levelCostClearHandler={this.props.levelCostClearHandler}
+                            />
+                        </Fieldset>
+                        <Button onClick={this.showLevelChooseHandler}
+                                createCommon={this.state.createCommonLevel}
+                                createGold={this.state.createGoldLevel}
+                                createEpic={this.state.createEpicLevel}>
+                            Dodaj poziom do karty
+                        </Button>
+                    </DivCenter>
+                </Media>
             </>
         );
     }

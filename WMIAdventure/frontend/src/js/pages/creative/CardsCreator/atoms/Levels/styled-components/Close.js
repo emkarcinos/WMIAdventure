@@ -18,6 +18,7 @@ const Close = styled.button`
   height: 10px;
   
   @media (min-width: 768px) {
+    display: ${({exist}) => exist ? 'block' : 'none'};
     position: static;
     margin: 0 0 5px 8px;
   }

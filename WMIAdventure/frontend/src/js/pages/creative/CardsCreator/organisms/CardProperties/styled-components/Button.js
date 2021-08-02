@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import plus from '../../../../../../../assets/icons/plus.svg';
 import plusDesktop from '../../../../../../../assets/icons/plusDesktop.svg'
 
+function handleVisible(createCommon, createGold, createEpic) {
+    if(createCommon && createGold && createEpic)
+        return 'none';
+    return 'flex';
+}
+
 const Button = styled.button`
   padding: 0;
   display: block;
@@ -16,15 +22,15 @@ const Button = styled.button`
   margin: 4px 0 0 12px;
   
   @media (min-width: 768px) {
+    display: ${({createCommon, createGold, createEpic}) => handleVisible(createCommon, createGold, createEpic)};
+    justify-content: center;
+    align-items: center;
     font-weight: ${({theme}) => theme.weight.bold};
     font-size: 18px;
     padding-bottom: 52px;
     color: white;
     width: 380px;
     height: 532px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 20px;
     border: solid 4px white;
     background-image: none;
