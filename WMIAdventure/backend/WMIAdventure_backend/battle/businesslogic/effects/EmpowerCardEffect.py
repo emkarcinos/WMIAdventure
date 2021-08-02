@@ -1,6 +1,7 @@
 from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Calculator import Calculator
 from battle.businesslogic.effects.Effect import Effect
+from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 
 
 class EmpowerCardEffect(Effect):
@@ -23,3 +24,7 @@ class EmpowerCardEffect(Effect):
         This method may be overridden if one wishes to assign a buff to a specific effect.
         """
         card_to_buff.assign_buff(buff, None)
+
+    def description(self) -> str:
+        power_range = PowerDescription.get_instance().stringify(self.power, self.range)
+        return f"Wzmacnia działanie następnej karty {self.target.label}a o {power_range}"

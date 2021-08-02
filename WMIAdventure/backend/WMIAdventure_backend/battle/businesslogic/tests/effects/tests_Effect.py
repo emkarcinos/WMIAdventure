@@ -70,6 +70,11 @@ class EffectTestCase(TestCase):
 
         self.assertIs(chosen_target, expected_target)
 
+    def test_description(self):
+        description = self.effect.description()
+        expected_description = "Efekt o mocy 3 - 7 skierowany w przeciwnika"
+        self.assertEqual(description, expected_description)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
