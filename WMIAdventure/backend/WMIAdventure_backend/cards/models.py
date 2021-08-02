@@ -138,6 +138,8 @@ def base_card_factory(related_card_info_class: type):
         """
 
         info = models.ForeignKey(related_card_info_class, related_name='levels', unique=False, on_delete=models.CASCADE)
+        effects_description = models.CharField(max_length=100, help_text="A brief description of this level's effects.",
+                                               null=True, default="description")
         level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
         next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
                                                                      MaxValueValidator(100)])

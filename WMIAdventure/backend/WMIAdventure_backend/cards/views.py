@@ -91,6 +91,7 @@ class WholeCardList(generics.ListCreateAPIView):
     
     - `level` - an ID of a referenced level (see `card-level`)
     - `next_level_cost` - an integer representing a cost of an upgrade to the next level (can be `null`)
+    - `effects_description` - a brief text describing what and how effects in that level work.
     - `effects` - an array of effects:
         * `card_effect` - an ID of a referenced effect (see `card-effect`)
         * `target` - an integer of either 1 (self targeting) or 2 (target the opponent)
