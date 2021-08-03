@@ -257,6 +257,7 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
+                                    createCommonLevel={this.state.createCommonLevel}
                                     activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
@@ -280,6 +281,7 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
+                                    createGoldLevel={this.state.createGoldLevel}
                                     activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
@@ -303,6 +305,7 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
+                                    createEpicLevel={this.state.createEpicLevel}
                                     activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}

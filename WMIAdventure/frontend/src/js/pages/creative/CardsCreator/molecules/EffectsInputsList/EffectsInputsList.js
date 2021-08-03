@@ -15,7 +15,8 @@ class EffectsInputsList extends React.Component {
                     <P>
                         Efekty:
                     </P>
-                    <UlCommon rank={this.props.activeCardRank}>
+                    <UlCommon createLevel={this.props.createCommonLevel}
+                              rank={this.props.activeCardRank}>
                         {
                             this.props.chosenEffects[0].map((effect) => {
                                 return (
@@ -32,7 +33,8 @@ class EffectsInputsList extends React.Component {
                             })
                         }
                     </UlCommon>
-                    <UlGold rank={this.props.activeCardRank}>
+                    <UlGold createLevel={this.props.createGoldLevel}
+                            rank={this.props.activeCardRank}>
                         {
                             this.props.chosenEffects[1].map((effect) => {
                                 return (
@@ -49,7 +51,8 @@ class EffectsInputsList extends React.Component {
                             })
                         }
                     </UlGold>
-                    <UlEpic rank={this.props.activeCardRank}>
+                    <UlEpic createLevel={this.props.createEpicLevel}
+                            rank={this.props.activeCardRank}>
                         {
                             this.props.chosenEffects[2].map((effect) => {
                                 return (

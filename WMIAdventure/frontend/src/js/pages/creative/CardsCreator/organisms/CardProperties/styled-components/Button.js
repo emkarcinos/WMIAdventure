@@ -34,7 +34,7 @@ const Button = styled.button`
     border-radius: 20px;
     border: solid 4px white;
     background-image: none;
-    margin: 0 0 24px 12px;
+    margin: 0 12px 24px;
     position: relative;
     
     :after {
