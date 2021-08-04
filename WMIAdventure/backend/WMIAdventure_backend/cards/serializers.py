@@ -155,16 +155,27 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
 
             return super(BaseWholeCardSerializer, self).validate(attrs)
 
-        def create(self, validated_data):
-            self._before_create_validation(validated_data)
-
+        def _create_info(self, validated_data):
             info = card_info_cls.objects.create(
                 name=validated_data.get('name'),
                 tooltip=validated_data.get('tooltip'),
                 image=validated_data.get('image', None),
                 subject=validated_data.get('subject')
             )
+
             info.save()
+            return info
+
+        def _update_info(self, instance, validated_data):
+            instance.name = validated_data.get('name', instance.name)
+            instance.tooltip = validated_data.get('tooltip', instance.tooltip)
+            instance.image = validated_data.get('image', instance.image)
+            instance.subject = validated_data.get('subject')
+
+        def create(self, validated_data):
+            self._before_create_validation(validated_data)
+
+            info = self._create_info(validated_data)
 
             for card_data in validated_data.get("levels"):
                 card = info.levels.create(
@@ -182,10 +193,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             return info
 
         def update(self, instance, validated_data):
-            instance.name = validated_data.get('name', instance.name)
-            instance.tooltip = validated_data.get('tooltip', instance.tooltip)
-            instance.image = validated_data.get('image', instance.image)
-            instance.subject = validated_data.get('subject')
+            self._update_info(instance, validated_data)
 
             cards_data = validated_data.get("levels", None)
             if cards_data:

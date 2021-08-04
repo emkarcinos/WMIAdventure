@@ -1,3 +1,5 @@
+from django.db import models
+
 from cards.models import base_card_factory, base_card_info_factory, base_card_level_effects_factory
 
 
@@ -8,7 +10,11 @@ class ProposedCardInfo(base_card_info_factory('proposed_content/cards/images/'))
     See: BaseCardInfo which is inner class in cards.models.base_card_info_factory function.
     """
 
-    pass
+    comment = models.TextField(help_text="Comment field for users to send a message to the admins alongside their "
+                                         "created card",
+                               null=True,
+                               blank=True,
+                               max_length=150)
 
 
 class ProposedCard(base_card_factory(ProposedCardInfo)):
