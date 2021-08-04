@@ -60,6 +60,9 @@ class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
     - `tooltip` - card description
     - `subject` - card's subject
 
+    One may also add a comment to the card for admins to see:
+    - `comment` - creator's message to admins
+
     If `levels` are provided then all the existing levels are cleared and created again with the data that you provide.
 
     If you want to:
@@ -250,7 +253,11 @@ class WholeProposedCardList(generics.ListCreateAPIView):
     get:
     Get all cards that exist in the database.
     post:
-    Create a new card. Each card also needs to have an array of levels defined in a following manner:
+    Create a new card.
+
+    One may also specify a comment that admins will see alongside card contents.
+    - `comment` - text for admins
+    Each card also needs to have an array of levels defined in a following manner:
     **levels**:
 
     - `level` - an ID of a referenced level (see `card-level`)
@@ -270,6 +277,7 @@ class WholeProposedCardList(generics.ListCreateAPIView):
             "subject": "PrzedmiotKarty",
             "image": null,
             "tooltip": "OpisKarty",
+            "comment": "Proszę rozpatrzcie moją kartę pozytywnie",
             "levels": [
                 {
                     "level": 1,

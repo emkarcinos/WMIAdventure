@@ -13,6 +13,8 @@ import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
 import SendMessage from './atoms/SendMessage';
+import SendCardPopup from "./molecules/SendCardPopup";
+import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 
 class CardsCreator extends React.Component {
     state = {
@@ -32,6 +34,20 @@ class CardsCreator extends React.Component {
         chosenEffectsFromCard: [[], [], []],
         showSendMessage: false,
         sendSuccess: false,
+        failedCardSubmissionMsg: null,
+        showSendCardPopup: false,
+        comment: "",
+    }
+
+    cardSubmissionFailedHandler(serverResponse){
+        let t = this;
+        serverResponse.json().then(function (jsonResponse){
+            t.setState({
+                showSendMessage: true,
+                sendSuccess: false,
+                failedCardSubmissionMsg: JSON.stringify(jsonResponse),
+            });
+        })
     }
 
     sendCardToApi = (event) => {
@@ -51,78 +67,37 @@ class CardsCreator extends React.Component {
             }
         }
 
-        if(this.props.creatorType === 'create') {
-            try {
-                let result = fetch(`http://${API}/api/proposed-content/cards/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: this.state.cardName,
-                        subject: this.state.cardSubject,
-                        image: null,
-                        tooltip: this.state.cardTooltip,
-                        levels: levelsToSend
-                    })
-                }) .then (
-                    response => {
-                        if(response.ok) {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: true
-                            });
-                        } else {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: false
-                            });
-                        }
+        try {
+            let result = fetch(`http://${API}/api/proposed-content/cards/`, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.state.cardName,
+                    subject: this.state.cardSubject,
+                    image: null,
+                    tooltip: this.state.cardTooltip,
+                    levels: levelsToSend,
+                    comment: this.state.comment
+                })
+            }) .then (
+                response => {
+                    if(response.ok) {
+                        this.setState({
+                            showSendMessage: true,
+                            sendSuccess: true
+                        });
+                    } else {
+                        this.cardSubmissionFailedHandler(response)
                     }
-                );
-                console.log('Result: ' + result);
-            } catch (e) {
-                console.log(e);
-            }
+                }
+            );
+            console.log('Result: ' + result);
+        } catch (e) {
+            console.log(e);
         }
-
-        if(this.props.creatorType === 'edit') {
-            try {
-                let result = fetch(`http://${API}/api/proposed-content/cards/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: this.state.cardName,
-                        subject: this.state.cardSubject,
-                        image: null,
-                        tooltip: this.state.cardTooltip,
-                        levels: levelsToSend
-                    })
-                }) .then (
-                    response => {
-                        if(response.ok) {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: true
-                            });
-                        } else {
-                            this.setState({
-                                showSendMessage: true,
-                                sendSuccess: false
-                            });
-                        }
-                    }
-                );
-                console.log('Result: ' + result);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-
     }
 
     componentDidMount() {
@@ -158,6 +133,21 @@ class CardsCreator extends React.Component {
     hideDescribeInputsHandler = (event) => {
         event.preventDefault();
         this.setState({showDescribeInputs: false});
+    }
+
+    showSendCardPopupHandler = (event) => {
+        event.preventDefault();
+        this.setState({showSendCardPopup : true})
+    }
+
+    hideSendCardPopupHandler = (event) => {
+        event.preventDefault();
+        this.setState({showSendCardPopup : false})
+
+        /* We hide send message after timeout, because SendCardPopup has closing animation. */
+        setTimeout(() => {
+            this.setState({showSendMessage: false});
+        }, SendCardPopupTimeout.exit)
     }
 
     updateDescribePreview = (event) => {
@@ -268,6 +258,12 @@ class CardsCreator extends React.Component {
         window.location.reload();
     }
 
+    commentInputHandler = (event) => {
+        const keyName = event.target.name;
+        let keyValue = event.target.value;
+        this.setState({[keyName]: keyValue});
+    }
+
     render() {
         if (isMobile) {
             return (
@@ -355,7 +351,7 @@ class CardsCreator extends React.Component {
                                     effectsToSend={this.state.effectsToSend}
                                 />
                                 <Div>
-                                    <Button type='submit' onClick={this.sendCardToApi} show={true}>
+                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
                                         Wyślij
                                     </Button>
                                     <Button onClick={this.refreshPage} show={this.props.creatorType}>
@@ -365,9 +361,13 @@ class CardsCreator extends React.Component {
                             </Form>
                         </Main>
                     </Wrapper>
-                    <SendMessage showMessage={this.state.showSendMessage}
-                                 sendSuccess={this.state.sendSuccess}
-                                 hideSendMessageHandler={this.hideSendMessageHandler} />
+                    <SendCardPopup show={this.state.showSendCardPopup}
+                                   hideSendCardPopupHandler={this.hideSendCardPopupHandler}
+                                   sendCard={this.sendCardToApi}
+                                   showSendMessage={this.state.showSendMessage}
+                                   sendSuccess={this.state.sendSuccess}
+                                   failedSubmissionMsg={this.state.failedCardSubmissionMsg}
+                                   commentInputHandler={this.commentInputHandler}/>
                 </>
             );
         }
