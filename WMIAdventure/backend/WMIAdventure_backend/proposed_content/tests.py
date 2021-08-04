@@ -10,7 +10,10 @@ from proposed_content.views import WholeProposedCardList, WholeProposedCardDetai
 
 class WholeProposedCardSerializerTestCase(TestCase):
     def test_serialization(self):
-        proposed_card_info = ProposedCardInfo.objects.create(name="Name", tooltip="Tooltip", subject=None)
+        proposed_card_info = ProposedCardInfo.objects.create(name="Name",
+                                                             tooltip="Tooltip",
+                                                             subject=None,
+                                                             comment="comment")
         proposed_card_info.save()
 
         proposed_card1 = proposed_card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5)
@@ -53,6 +56,7 @@ class WholeProposedCardSerializerTestCase(TestCase):
                 "subject": None,
                 "image": None,
                 "tooltip": "tekst",
+                "comment": "komentarz",
                 "levels": [
                     {
                         "level": 1,
@@ -132,6 +136,7 @@ class WholeProposedCardSerializerTestCase(TestCase):
         self.assertEqual(card_info.tooltip, data["tooltip"])
         self.assertEqual(card_info.image, data["image"])
         self.assertEqual(card_info.subject, data["subject"])
+        self.assertEqual(card_info.comment, data["comment"])
 
         for i, card in enumerate(card_info.levels.all()):
             expected_card_data = data["levels"][i]
