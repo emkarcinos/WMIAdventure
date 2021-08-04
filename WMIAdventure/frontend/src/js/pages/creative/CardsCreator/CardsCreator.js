@@ -36,7 +36,7 @@ class CardsCreator extends React.Component {
         sendSuccess: false,
         failedCardSubmissionMsg: null,
         showSendCardPopup: false,
-        additionalComments: "",
+        comment: "",
     }
 
     cardSubmissionFailedHandler(serverResponse){
@@ -80,7 +80,7 @@ class CardsCreator extends React.Component {
                     image: null,
                     tooltip: this.state.cardTooltip,
                     levels: levelsToSend,
-                    additionalComments: this.state.additionalComments
+                    comment: this.state.comment
                 })
             }) .then (
                 response => {
@@ -258,7 +258,7 @@ class CardsCreator extends React.Component {
         window.location.reload();
     }
 
-    additionalCommentsInputHandler = (event) => {
+    commentInputHandler = (event) => {
         const keyName = event.target.name;
         let keyValue = event.target.value;
         this.setState({[keyName]: keyValue});
@@ -367,7 +367,7 @@ class CardsCreator extends React.Component {
                                    showSendMessage={this.state.showSendMessage}
                                    sendSuccess={this.state.sendSuccess}
                                    failedSubmissionMsg={this.state.failedCardSubmissionMsg}
-                                   additionalCommentsInputHandler={this.additionalCommentsInputHandler}/>
+                                   commentInputHandler={this.commentInputHandler}/>
                 </>
             );
         }

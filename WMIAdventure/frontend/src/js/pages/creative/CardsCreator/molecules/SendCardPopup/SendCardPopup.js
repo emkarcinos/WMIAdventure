@@ -20,7 +20,7 @@ class SendCardPopup extends React.Component {
         if(!this.props.showSendMessage){
             return <BeforeSendCard hideSendCardPopupHandler={this.props.hideSendCardPopupHandler}
                                    sendCard={this.props.sendCard}
-                                   additionalCommentsInputHandler={this.props.additionalCommentsInputHandler}/>
+                                   commentInputHandler={this.props.commentInputHandler}/>
         }
         else {
             return <AfterSendCard hideSendCardPopupHandler={this.props.hideSendCardPopupHandler}
