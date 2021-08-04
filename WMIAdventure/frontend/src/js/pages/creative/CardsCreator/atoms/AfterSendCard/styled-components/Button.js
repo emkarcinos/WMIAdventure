@@ -20,7 +20,6 @@ const Button = styled.button`
   cursor: pointer;
   
   /* Font styling */
-  font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   font-weight: ${({theme}) =>  theme.weight.bold};
   color: ${({theme}) => theme.colors.text01};
