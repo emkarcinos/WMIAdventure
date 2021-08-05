@@ -50,7 +50,7 @@ class Levels extends React.Component {
                         onClick={this.activeCommonStyleHandler}>
                         TYPOWY
                     </Button>
-                    <Close show={this.props.activeCommon}
+                    <Close show={this.props.activeCommon} exist={this.props.createCommonLevel}
                        onClick={this.removeCommonLevelHandler}>
                        {/*close icon*/}
                     </Close>
@@ -60,7 +60,7 @@ class Levels extends React.Component {
                         onClick={this.activeGoldStyleHandler}>
                         ZŁOTY
                     </Button>
-                    <Close show={this.props.activeGold}
+                    <Close show={this.props.activeGold} exist={this.props.createGoldLevel}
                        onClick={this.removeGoldLevelHandler}>
                        {/*close icon*/}
                     </Close>
@@ -70,7 +70,7 @@ class Levels extends React.Component {
                         onClick={this.activeEpicStyleHandler}>
                         EPICKI
                     </Button>
-                    <Close show={this.props.activeEpic}
+                    <Close show={this.props.activeEpic} exist={this.props.createEpicLevel}
                        onClick={this.removeEpicLevelHandler}>
                        {/*close icon*/}
                     </Close>

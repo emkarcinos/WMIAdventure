@@ -7,8 +7,19 @@ function rankHandlerGold(rank) {
     return 'none'
 }
 
+function createLevelHandler(createLevel) {
+    if(createLevel)
+        return 'grid';
+    return 'none';
+}
+
 const UlGold = styled(Ul)`
-  display: ${({rank}) => rankHandlerGold(rank)};
+  @media (max-width: 768px) {
+    display: ${({rank}) => rankHandlerGold(rank)};
+  }
+  @media (min-width: 768px) {
+    display: ${({createLevel}) => createLevelHandler(createLevel)};
+  }
 `;
 
 export default UlGold;

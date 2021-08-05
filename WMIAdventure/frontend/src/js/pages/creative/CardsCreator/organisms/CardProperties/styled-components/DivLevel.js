@@ -10,7 +10,7 @@ function activeRankBorderHandler(activeCardRank, theme) {
     return '4px solid transparent';
 }
 
-const Div = styled.div`
+const DivLevel = styled.div`
   position: absolute;
   bottom: -38px;
   left: -4px;
@@ -27,4 +27,4 @@ const Div = styled.div`
   border-right: ${({activeCardRank, theme}) => activeRankBorderHandler(activeCardRank, theme)};
 `;
 
-export default Div;
+export default DivLevel;
