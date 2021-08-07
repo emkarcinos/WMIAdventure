@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import pensil from '../../../../../../../assets/icons/pencil.svg';
 
 const Pencil = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 70px;
+  height: 70px;
   background-image: url(${pensil});
   background-position: center;
   background-repeat: no-repeat;
