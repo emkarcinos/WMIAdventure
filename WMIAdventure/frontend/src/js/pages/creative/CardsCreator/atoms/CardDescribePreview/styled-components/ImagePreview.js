@@ -7,6 +7,8 @@ const ImagePreview = styled.img`
   
   /* Styling */
   border-radius: 4px;
+  
+  object-fit: contain;
 `;
 
 export default ImagePreview;

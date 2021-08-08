@@ -14,6 +14,8 @@ const CardImagePreview = styled.img`
   border-radius: 4px;
   background-color: ${({theme}) => theme.colors.grey1};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  
+  object-fit: contain;
 `;
 
 export default CardImagePreview;
