@@ -6,6 +6,7 @@ const DivImageInput = styled.div`
   /* Flex options */
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   align-self: center;
   
   position: relative;
