@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
+function visibilityHandler(name, searchInput) {
+  if (name.includes(searchInput) || searchInput === '') {
+    return 'flex';
+  }
+  return 'none';
+}
+
 const Button = styled.button`
   padding: 12px 10px;
   margin: 0;
   list-style: none;
-  display: flex;
+  display: ${({name, searchInput}) => visibilityHandler(name, searchInput)};
   flex-direction: column;
   justify-content: center;
   background-color: ${
