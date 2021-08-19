@@ -31,7 +31,7 @@ class CardChoose extends React.Component {
             this.props.hideCardChooseHandler(event);
             setTimeout(() => {
                 this.setState({searchInput: ''});
-            }, 1000);
+            }, 600);
         }
     }
 

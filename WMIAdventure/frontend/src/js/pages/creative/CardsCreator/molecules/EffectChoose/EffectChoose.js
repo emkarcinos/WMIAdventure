@@ -34,7 +34,7 @@ class EffectChoose extends React.Component {
             this.props.hideEffectChooseHandler(event);
             setTimeout(() => {
                 this.setState({searchInput: ''});
-            }, 1000);
+            }, 600);
         }
     }
 
