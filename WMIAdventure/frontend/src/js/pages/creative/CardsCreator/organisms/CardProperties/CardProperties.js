@@ -250,7 +250,7 @@ class CardProperties extends React.Component {
                                 activeLevelRecognize={this.activeLevelRecognize}
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
-                            <DivScroll rank={this.state.activeCardRank}>
+                            <DivScroll>
                                 <CostInputs activeCardRank={this.state.activeCardRank}
                                             createGoldLevel={this.state.createGoldLevel}
                                             createEpicLevel={this.state.createEpicLevel}
@@ -258,7 +258,6 @@ class CardProperties extends React.Component {
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
                                     createCommonLevel={this.state.createCommonLevel}
-                                    activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
@@ -274,7 +273,7 @@ class CardProperties extends React.Component {
                                 activeLevelRecognize={this.activeLevelRecognize}
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
-                            <DivScroll rank={this.state.activeCardRank}>
+                            <DivScroll>
                                 <CostInputs activeCardRank={this.state.activeCardRank}
                                             createGoldLevel={this.state.createGoldLevel}
                                             createEpicLevel={this.state.createEpicLevel}
@@ -282,7 +281,6 @@ class CardProperties extends React.Component {
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
                                     createGoldLevel={this.state.createGoldLevel}
-                                    activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
@@ -298,7 +296,7 @@ class CardProperties extends React.Component {
                                 activeLevelRecognize={this.activeLevelRecognize}
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
-                            <DivScroll rank={this.state.activeCardRank}>
+                            <DivScroll>
                                 <CostInputs activeCardRank={this.state.activeCardRank}
                                             createGoldLevel={this.state.createGoldLevel}
                                             createEpicLevel={this.state.createEpicLevel}
@@ -306,7 +304,6 @@ class CardProperties extends React.Component {
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
                                     createEpicLevel={this.state.createEpicLevel}
-                                    activeCardRank={this.state.activeCardRank}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
