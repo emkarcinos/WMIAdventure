@@ -6,7 +6,7 @@ function colorHandler(common, gold, epic) {
     else if(gold)
         return '#F2C94C';
     else if(epic)
-        return '#4D15EA';
+        return '#BB6BD9';
 }
 
 const Article = styled.article`

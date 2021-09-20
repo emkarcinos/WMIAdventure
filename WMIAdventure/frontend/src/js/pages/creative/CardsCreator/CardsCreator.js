@@ -268,7 +268,10 @@ class CardsCreator extends React.Component {
 
     showCardViewHandler = (event) => {
         event.preventDefault();
-        this.setState({showCardView: true});
+        if(this.state.effectsToSend[0].length !== 0 ||
+            this.state.effectsToSend[1].length !== 0 ||
+            this.state.effectsToSend[2].length !== 0)
+            this.setState({showCardView: true});
     }
 
     hideCardViewHandler = (event) => {
@@ -312,11 +315,16 @@ class CardsCreator extends React.Component {
                                     effectsToSend={this.state.effectsToSend}
                                 />
                                 <Div>
-                                    <Button type='submit' onClick={this.sendCardToApi} show={true}>
-                                        Wyślij
-                                    </Button>
-                                    <Button onClick={this.refreshPage} show={this.props.creatorType}>
+                                    <Button access onClick={this.refreshPage} show={this.props.creatorType}>
                                         Edytuj inną kartę
+                                    </Button>
+                                    <Button show access={this.state.effectsToSend[0].length !== 0 ||
+                                    this.state.effectsToSend[1].length !== 0 ||
+                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                                        Podgląd
+                                    </Button>
+                                    <Button type='submit' access onClick={this.sendCardToApi} show={true}>
+                                        Wyślij
                                     </Button>
                                 </Div>
                             </Form>
@@ -363,16 +371,18 @@ class CardsCreator extends React.Component {
                                     effectsToSend={this.state.effectsToSend}
                                 />
                                 <Div>
-                                    <Button onClick={this.refreshPage} show={!this.props.creatorType}>
+                                    <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
                                         Zacznij od nowa
                                     </Button>
                                     <Button onClick={this.refreshPage} show={this.props.creatorType}>
                                         Edytuj inną kartę
                                     </Button>
-                                    <Button show onClick={this.showCardViewHandler}>
+                                    <Button show access={this.state.effectsToSend[0].length !== 0 ||
+                                    this.state.effectsToSend[1].length !== 0 ||
+                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                                         Podgląd
                                     </Button>
-                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show>
+                                    <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
                                         Wyślij
                                     </Button>
                                 </Div>

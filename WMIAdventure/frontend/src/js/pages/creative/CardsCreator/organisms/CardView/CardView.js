@@ -9,20 +9,41 @@ import LevelView from '../../molecules/LevelView';
 class CardView extends React.Component {
 
     state = {
-        showCommon: true,
-        showGold: false,
+        activeCommon: false,
+        activeGold: false,
+        activeEpic: false,
     }
 
-    accessLevelCommonHandler = () => {
-        return this.props.cardEffects[0].length !== 0;
+    componentDidUpdate(prevProps) {
+        if(prevProps.show !== this.props.show) {
+            if(this.props.cardEffects[2].length !== 0)
+                this.setState({activeEpic: true, activeGold: false, activeCommon: false});
+            if(this.props.cardEffects[1].length !== 0)
+                this.setState({activeEpic: false, activeGold: true, activeCommon: false});
+            if(this.props.cardEffects[0].length !== 0)
+                this.setState({activeEpic: false, activeGold: false, activeCommon: true});
+        }
     }
 
-    accessLevelGoldHandler = () => {
-        return this.props.cardEffects[1].length !== 0;
+    setCommonToActive = () => {
+        if(this.props.cardEffects[0].length !== 0)
+            this.setState({activeEpic: false, activeGold: false, activeCommon: true});
     }
 
-    accessLevelEpicHandler = () => {
-        return this.props.cardEffects[2].length !== 0;
+    setGoldToActive = () => {
+        if(this.props.cardEffects[1].length !== 0)
+            this.setState({activeEpic: false, activeGold: true, activeCommon: false});
+    }
+
+    setEpicToActive = () => {
+        if(this.props.cardEffects[2].length !== 0)
+            this.setState({activeEpic: true, activeGold: false, activeCommon: false});
+    }
+
+    closeCardViewHandler = (event) => {
+        event.preventDefault();
+        this.setState({activeEpic: false, activeGold: false, activeCommon: false});
+        this.props.hideCardViewHandler(event);
     }
 
     render() {
@@ -31,21 +52,24 @@ class CardView extends React.Component {
                 <H2>
                     Podgląd
                 </H2>
-                <LevelView show={false} common />
-                <LevelView show gold />
-                <LevelView show={false} epic />
+                <LevelView show={this.state.activeCommon} common />
+                <LevelView show={this.state.activeGold} gold />
+                <LevelView show={this.state.activeEpic} epic />
                 <Div>
-                    <Button access={this.accessLevelCommonHandler}>
+                    <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
+                            access={this.props.cardEffects[0].length !== 0}>
                         Typowy
                     </Button>
-                    <Button access={this.accessLevelGoldHandler}>
+                    <Button activeGold={this.state.activeGold} onClick={this.setGoldToActive}
+                            access={this.props.cardEffects[1].length !== 0}>
                         Złoty
                     </Button>
-                    <Button access={this.accessLevelEpicHandler}>
+                    <Button activeEpic={this.state.activeEpic} onClick={this.setEpicToActive}
+                            access={this.props.cardEffects[2].length !== 0}>
                         Epicki
                     </Button>
                 </Div>
-                <Close onClick={this.props.hideCardViewHandler}>
+                <Close onClick={this.closeCardViewHandler}>
                     {/*close icon*/}
                 </Close>
             </Section>
