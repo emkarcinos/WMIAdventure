@@ -15,6 +15,7 @@ import CardChoose from './molecules/CardChoose';
 import SendMessage from './atoms/SendMessage';
 import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
+import CardView from './organisms/CardView';
 
 class CardsCreator extends React.Component {
     state = {
@@ -37,9 +38,10 @@ class CardsCreator extends React.Component {
         failedCardSubmissionMsg: null,
         showSendCardPopup: false,
         comment: "",
+        showCardView: false,
     }
 
-    cardSubmissionFailedHandler(serverResponse){
+    cardSubmissionFailedHandler(serverResponse) {
         let t = this;
         serverResponse.json().then(function (jsonResponse){
             t.setState({
@@ -264,6 +266,16 @@ class CardsCreator extends React.Component {
         this.setState({[keyName]: keyValue});
     }
 
+    showCardViewHandler = (event) => {
+        event.preventDefault();
+        this.setState({showCardView: true});
+    }
+
+    hideCardViewHandler = (event) => {
+        event.preventDefault();
+        this.setState({showCardView: false});
+    }
+
     render() {
         if (isMobile) {
             return (
@@ -351,11 +363,17 @@ class CardsCreator extends React.Component {
                                     effectsToSend={this.state.effectsToSend}
                                 />
                                 <Div>
-                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
-                                        Wyślij
+                                    <Button onClick={this.refreshPage} show={!this.props.creatorType}>
+                                        Zacznij od nowa
                                     </Button>
                                     <Button onClick={this.refreshPage} show={this.props.creatorType}>
                                         Edytuj inną kartę
+                                    </Button>
+                                    <Button show onClick={this.showCardViewHandler}>
+                                        Podgląd
+                                    </Button>
+                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show>
+                                        Wyślij
                                     </Button>
                                 </Div>
                             </Form>
@@ -368,6 +386,9 @@ class CardsCreator extends React.Component {
                                    sendSuccess={this.state.sendSuccess}
                                    failedSubmissionMsg={this.state.failedCardSubmissionMsg}
                                    commentInputHandler={this.commentInputHandler}/>
+                    <CardView hideCardViewHandler={this.hideCardViewHandler}
+                              show={this.state.showCardView}
+                              cardEffects={this.state.effectsToSend} />
                 </>
             );
         }
