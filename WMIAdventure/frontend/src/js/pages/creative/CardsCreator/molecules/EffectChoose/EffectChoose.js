@@ -1,7 +1,5 @@
 import React from 'react';
-import UlCommon from './styled-components/UlCommon';
-import UlGold from './styled-components/UlGold';
-import UlEpic from './styled-components/UlEpic';
+import Ul from './styled-components/Ul'
 import TransparentBack from './styled-components/TransparentBack';
 import Effect from '../../atoms/Effect';
 import Search from '../../atoms/Search';
@@ -33,77 +31,48 @@ class EffectChoose extends React.Component {
             this.props.hideEffectChooseHandler(event);
     }
 
+    /**
+     * Chooses proper components that should be rendered for given card level.
+     * @param cardRank Card level which will determine which components are rendered.
+     * @returns {JSX.Element} Chosen components.
+     */
+    chooseProperComponentsForCardRank = (cardRank) => {
+        if (cardRank < 1) {
+            return <></>
+        }
+        else {
+            return (
+                <Ul onMouseEnter={this.hoverTrue}
+                          onMouseLeave={this.hoverFalse}>
+                    <Search />
+                    {
+                        this.props.effectsFromApi.map((effect) => {
+                            return (
+                                <React.Fragment key={`effect-${effect.id}`}>
+                                    <Effect name={effect.name}
+                                            tooltip={effect.tooltip}
+                                            rank={cardRank}
+                                            effect={effect}
+                                            chosen={
+                                                // If chosenEffects list contains current effect then mark it as chosen
+                                                !!this.props.chosenEffects[cardRank - 1].find(x => x.id === effect.id)
+                                            }
+                                            chosenEffectsHandler={this.props.chosenEffectsHandler} />
+                                </React.Fragment>
+                            );
+                        })
+                    }
+                </Ul>
+            )
+        }
+    }
+
     render() {
         return (
             <Transition in={this.props.showEffectChoose} timeout={timeout}>
                 {state => (
                     <TransparentBack onClick={this.handleHiding} transitionState={state}>
-                        <UlCommon onMouseEnter={this.hoverTrue}
-                                  onMouseLeave={this.hoverFalse}
-                                  activeCardRank={this.props.activeCardRank}>
-                            <Search />
-                            {
-                                this.props.effectsFromApi.map((effect) => {
-                                    return (
-                                        <React.Fragment key={`effect-${effect.id}`}>
-                                            <Effect name={effect.name}
-                                                    tooltip={effect.tooltip}
-                                                    rank={1}
-                                                    effect={effect}
-                                                    chosen={
-                                                        // If chosenEffects list contains current effect then mark it as chosen
-                                                        !!this.props.chosenEffects[0].find(x => x.id === effect.id)
-                                                    }
-                                                    chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                        </React.Fragment>
-                                    );
-                                })
-                            }
-                        </UlCommon>
-                        <UlGold onMouseEnter={this.hoverTrue}
-                                onMouseLeave={this.hoverFalse}
-                                activeCardRank={this.props.activeCardRank}>
-                            <Search />
-                            {
-                                this.props.effectsFromApi.map((effect) => {
-                                    return (
-                                        <React.Fragment key={`effect-${effect.id}`}>
-                                            <Effect name={effect.name}
-                                                    tooltip={effect.tooltip}
-                                                    rank={2}
-                                                    effect={effect}
-                                                    chosen={
-                                                        // If chosenEffects list contains current effect then mark it as chosen
-                                                        !!this.props.chosenEffects[1].find(x => x.id === effect.id)
-                                                    }
-                                                    chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                        </React.Fragment>
-                                    );
-                                })
-                            }
-                        </UlGold>
-                        <UlEpic onMouseEnter={this.hoverTrue}
-                                onMouseLeave={this.hoverFalse}
-                                activeCardRank={this.props.activeCardRank}>
-                            <Search />
-                            {
-                                this.props.effectsFromApi.map((effect) => {
-                                    return (
-                                        <React.Fragment key={`effect-${effect.id}`}>
-                                            <Effect name={effect.name}
-                                                    tooltip={effect.tooltip}
-                                                    rank={3}
-                                                    effect={effect}
-                                                    chosen={
-                                                        // If chosenEffects list contains current effect then mark it as chosen
-                                                        !!this.props.chosenEffects[2].find(x => x.id === effect.id)
-                                                    }
-                                                    chosenEffectsHandler={this.props.chosenEffectsHandler} />
-                                        </React.Fragment>
-                                    );
-                                })
-                            }
-                        </UlEpic>
+                        {this.chooseProperComponentsForCardRank(this.props.cardRank)}
                     </TransparentBack>
                 )}
             </Transition>
