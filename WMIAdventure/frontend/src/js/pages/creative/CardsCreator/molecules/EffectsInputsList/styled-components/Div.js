@@ -1,13 +1,7 @@
 import styled from 'styled-components';
 
-function showHandler(activeCardRank) {
-    if(activeCardRank !== 0)
-        return 'grid';
-    return 'none';
-}
-
 const Div = styled.div`
-  display: ${({activeCardRank}) => showHandler(activeCardRank)};
+  display: grid;
   grid-template-columns: auto;
   grid-row-gap: 10px;
   width: 100%;
