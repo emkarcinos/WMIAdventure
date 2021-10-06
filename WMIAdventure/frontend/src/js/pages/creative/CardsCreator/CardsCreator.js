@@ -26,6 +26,10 @@ class CardsCreator extends React.Component {
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
+        /**
+         * Level objects as received from the server, obtained when editing existing card.
+         */
+        levelsFromApi: [],
 
         headerLabel: '',
         showCardChoose: false,
@@ -196,7 +200,8 @@ class CardsCreator extends React.Component {
             cardId: id,
             cardName: name,
             cardSubject: subject,
-            cardTooltip: tooltip
+            cardTooltip: tooltip,
+            levelsFromApi: levels
         });
 
         this.setLevelsListFromCard(levels);
