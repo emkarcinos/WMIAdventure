@@ -315,6 +315,7 @@ class CardsCreator extends React.Component {
                                     levelsListFromCard={this.state.levelsListFromCard}
                                     chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                     effectsToSend={this.state.effectsToSend}
+                                    removeLevelHandler={this.removeLevelHandler}
                                 />
                                 <Div>
                                     <Button type='submit' onClick={this.sendCardToApi} show={true}>
@@ -366,6 +367,7 @@ class CardsCreator extends React.Component {
                                     levelsListFromCard={this.state.levelsListFromCard}
                                     chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                     effectsToSend={this.state.effectsToSend}
+                                    removeLevelHandler={this.removeLevelHandler}
                                 />
                                 <Div>
                                     <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
