@@ -140,6 +140,7 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 7. Chcę widzieć poziomy swoich kart, żeby łatwiej dostosowywać talię.
 8. Chcę zawsze widzieć ilość punktów Skilli, żeby łatwiej podejmować decyzję ulepszania kart.
 9. W każdej chwili chcę mieć możliwość podjęcia się rozwiązania quizu, żeby otrzymać nowe punkty Skilli.
+10. Chcę mieć dostępne dwie talie kart - do obrony i do ataku, aby odpowiednio przygotować się na nadchodzące pojedynki
 
 #### 6. Quizy
 
@@ -256,17 +257,27 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 ## Wymagane
 - Pojedynek między dwoma graczami (US. 1.1.8)
-- Talia Kart (US. 1.1.13, 1.4.2 - 1.4.7, 1.1.15)
-- Profil Użytkownika (US. 1.4.1, 1.4.2, 1.1.5, 1.1.6, 1.1.14)
-- System rankingowy Battle (US. 1.1.10, 1.1.12, 1.1.18)
-- Tabele rankingowe (US. 1.3.1 - 1.3.7)
-- Pełne widoki interfejsu głównego prowadzącego do trybu Battle (US 1.1.1, 1.1.3, 1.1.7, 1.1.16, 1.1.20, 1.7.6)
+- Talia Kart (US. 1.1.13, 1.4.2 - 1.4.5, 1.4.7, 1.1.15)
+- Profil Użytkownika (US. 1.4.1, 1.1.5)
+- UI/UX (US 1.1.1, 1.1.3, 1.1.7, 1.1.16, 1.7.1)
+- Podstawowy Balans Battle (US 1.1.12)
 
 ## Oczekiwane
+- Walki z bossami w trybie adventure (US 1.2.1, 1.2.3, 1.2.9 - 1.2.11)
+- Samouczek w formie krótkiej historii
+- Zdobywanie kart (US 1.2.6, 1.2.12)
+- Edytor Adventure w formie tworzenia bossów i tekstów prowadzących do walki (US 2.1.4, 2.1.6)
+- Integracja z USOS (US 2.1.4)
+
 
 ## Planowane
-- Automatyczna sugestia przeciwników do walki (US. 1.1.4)
-- Narzędzie weryfikujące balans kart wspomagające administrację treściami
+- Historie tekstowe w Adventure z prostymi elementami graficznymi (US 1.2.2, 1.2.7)
+- Edytori historii uzupełniony o funkcje z punktu wyżej (US 2.2.8, 2.2.9)
+- Podstawowe Rankingi (US 1.3.2 - 1.3.5, 1.3.7, 1.1.6, 1.1.14)
+- System punktów umożliwiający ulepszanie kart (US 1.4.7, 1.4.8)
+- Historia Pojedynków (US 1.1.11)
+- Balans Battle (US 1.1.17 - 1.1.18)
+- Dwie talie kart (US 1.4.10)
 
 # Organizacja pracy zespołu
 
