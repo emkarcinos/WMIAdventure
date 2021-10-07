@@ -20,6 +20,10 @@ class CardProperties extends React.Component {
         createEpicLevel: false,
         activeCardRank: 0,
         showEffectChoose: false,
+        /**
+         * Determines for which card level effects list will be shown.
+         */
+        effectChooseForCardRank: 0,
         chosenEffects: [[], [], []],
         effectsToSend: [[], [], []],
         startEdit: false,
@@ -128,9 +132,18 @@ class CardProperties extends React.Component {
         this.setState({activeCardRank: activeCardRank});
     }
 
-    showEffectChooseHandler = (event) => {
-        event.preventDefault();
-        this.setState({showEffectChoose: true});
+    /**
+     * Calls function which sets appropriate state. This state causes showing list of effects to choose from.
+     * Chosen effects will be attached to the card with given level.
+     * @param cardRank Card level to which chosen effects will be attached.
+     * @returns {(function(): void)|*} Function which will be called to set appropriate states.
+     */
+    showEffectChooseHandler = (cardRank) => {
+        let t = this;
+        return function (event) {
+            event.preventDefault();
+            t.setState( {showEffectChoose: true, effectChooseForCardRank: cardRank})
+        }
     }
 
     hideEffectChooseHandler = (event) => {
@@ -194,10 +207,11 @@ class CardProperties extends React.Component {
                 <EffectChoose
                     showEffectChoose={this.state.showEffectChoose}
                     hideEffectChooseHandler={this.hideEffectChooseHandler}
-                    activeCardRank={this.state.activeCardRank}
+                    cardRank={this.state.effectChooseForCardRank}
                     effectsFromApi={this.props.effectsFromApi}
                     chosenEffects={this.state.chosenEffects}
                     chosenEffectsHandler={this.chosenEffectsHandler} />
+                {/* Mobile sized screens */}
                 <Media query='(max-width: 768px)'>
                     <Fieldset activeCardRank={this.state.activeCardRank}>
                         <DivScroll rank={this.state.activeCardRank}>
@@ -207,7 +221,7 @@ class CardProperties extends React.Component {
                                         levelCostValues={this.props.levelCostValues}
                                         levelCostValuesHandler={this.props.levelCostValuesHandler} />
                             <EffectsInputsList
-                                activeCardRank={this.state.activeCardRank}
+                                cardRank={this.state.activeCardRank}
                                 showEffectChooseHandler={this.showEffectChooseHandler}
                                 chosenEffects={this.state.chosenEffects}
                                 removeChosenEffectHandler={this.removeChosenEffectHandler}
@@ -240,6 +254,7 @@ class CardProperties extends React.Component {
                         </DivLevel>
                     </Fieldset>
                 </Media>
+                {/* Desktop sized screens */}
                 <Media query='(min-width: 768px)'>
                     <DivCenter>
                         <Fieldset create={this.state.createCommonLevel} createCommon={this.state.createCommonLevel}>
@@ -257,7 +272,7 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
-                                    createCommonLevel={this.state.createCommonLevel}
+                                    cardRank={this.state.createCommonLevel ? 1 : 0}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
@@ -280,7 +295,7 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
-                                    createGoldLevel={this.state.createGoldLevel}
+                                    cardRank={this.state.createCommonLevel ? 2 : 0}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
@@ -303,7 +318,8 @@ class CardProperties extends React.Component {
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
-                                    createEpicLevel={this.state.createEpicLevel}
+                                    cardRank={this.state.createCommonLevel ? 3 : 0}
+
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
