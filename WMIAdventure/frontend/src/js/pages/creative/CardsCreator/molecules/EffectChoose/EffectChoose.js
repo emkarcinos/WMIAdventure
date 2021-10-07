@@ -54,7 +54,7 @@ class EffectChoose extends React.Component {
             return (
                 <Ul onMouseEnter={this.hoverTrue}
                           onMouseLeave={this.hoverFalse}>
-                    <Search />
+                    <Search handleSearch={this.handleSearch}/>
                     {
                         this.props.effectsFromApi.map((effect) => {
                             return (
@@ -67,7 +67,9 @@ class EffectChoose extends React.Component {
                                                 // If chosenEffects list contains current effect then mark it as chosen
                                                 !!this.props.chosenEffects[cardRank - 1].find(x => x.id === effect.id)
                                             }
-                                            chosenEffectsHandler={this.props.chosenEffectsHandler} />
+                                            chosenEffectsHandler={this.props.chosenEffectsHandler}
+                                            searchInput={this.state.searchInput}
+                                    />
                                 </React.Fragment>
                             );
                         })
