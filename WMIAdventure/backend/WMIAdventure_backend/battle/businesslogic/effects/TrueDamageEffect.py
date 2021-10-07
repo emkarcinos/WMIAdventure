@@ -1,5 +1,6 @@
 from battle.businesslogic.Calculator import Calculator
 from battle.businesslogic.effects.Effect import Effect
+from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 
 
 class TrueDamageEffect(Effect):
@@ -12,3 +13,7 @@ class TrueDamageEffect(Effect):
         dmg = calculator.calculate_effect_power(self.power, self.range, self.buffs)
 
         target.statistics.deal_true_damage(dmg)
+
+    def description(self) -> str:
+        power_range = PowerDescription.get_instance().stringify(self.power, self.range)
+        return f"Zadaje {self.target.label}owi {power_range} nieuchronnych obrażeń"
