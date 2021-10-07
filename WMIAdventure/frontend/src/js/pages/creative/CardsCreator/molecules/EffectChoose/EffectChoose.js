@@ -16,6 +16,7 @@ class EffectChoose extends React.Component {
 
     state = {
         listHover: false,
+        searchInput: '',
     }
 
     hoverTrue = () => {
@@ -27,8 +28,17 @@ class EffectChoose extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.listHover)
+        if(!this.state.listHover) {
             this.props.hideEffectChooseHandler(event);
+            setTimeout(() => {
+                this.setState({searchInput: ''});
+            }, 600);
+        }
+    }
+
+    handleSearch = (event) => {
+        let keyValue = event.target.value;
+        this.setState({searchInput: keyValue});
     }
 
     /**

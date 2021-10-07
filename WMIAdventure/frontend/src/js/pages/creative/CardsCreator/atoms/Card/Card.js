@@ -6,7 +6,8 @@ import Name from './styled-components/Name';
 class Card extends React.Component {
     render() {
         return (
-            <Button onClick={
+            <Button searchInput={this.props.searchInput}
+                    name={this.props.name} onClick={
                 (event) => this.props.chosenCardHandler (
                     event, this.props.id, this.props.name, this.props.subject, this.props.tooltip, this.props.levels
                 )}>
