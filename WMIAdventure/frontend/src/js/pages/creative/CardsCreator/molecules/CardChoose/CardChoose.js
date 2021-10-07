@@ -15,6 +15,7 @@ const timeout = {
 class CardChoose extends React.Component {
     state = {
         listHover: false,
+        searchInput: '',
     }
 
     hoverTrue = () => {
@@ -26,8 +27,17 @@ class CardChoose extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.listHover)
+        if(!this.state.listHover) {
             this.props.hideCardChooseHandler(event);
+            setTimeout(() => {
+                this.setState({searchInput: ''});
+            }, 600);
+        }
+    }
+
+    handleSearch = (event) => {
+        let keyValue = event.target.value;
+        this.setState({searchInput: keyValue});
     }
 
     render() {
@@ -37,7 +47,7 @@ class CardChoose extends React.Component {
                     <TransparentBack transitionState={state} onClick={this.handleHiding}>
                         <Ul onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}>
-                            <Search />
+                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch} />
                             {
                                 this.props.cardsFromAPI.map((card) => {
                                     return (
@@ -45,6 +55,7 @@ class CardChoose extends React.Component {
                                             <Card id={card.id} name={card.name}
                                                   subject={card.subject}
                                                   tooltip={card.tooltip}
+                                                  searchInput={this.state.searchInput}
                                                   levels={card.levels}
                                                   chosenCardHandler={this.props.chosenCardHandler} />
                                         </React.Fragment>

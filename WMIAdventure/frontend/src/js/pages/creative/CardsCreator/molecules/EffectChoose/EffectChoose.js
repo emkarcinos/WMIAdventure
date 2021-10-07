@@ -18,6 +18,7 @@ class EffectChoose extends React.Component {
 
     state = {
         listHover: false,
+        searchInput: '',
     }
 
     hoverTrue = () => {
@@ -29,8 +30,17 @@ class EffectChoose extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.listHover)
+        if(!this.state.listHover) {
             this.props.hideEffectChooseHandler(event);
+            setTimeout(() => {
+                this.setState({searchInput: ''});
+            }, 600);
+        }
+    }
+
+    handleSearch = (event) => {
+        let keyValue = event.target.value;
+        this.setState({searchInput: keyValue});
     }
 
     render() {
@@ -41,7 +51,7 @@ class EffectChoose extends React.Component {
                         <UlCommon onMouseEnter={this.hoverTrue}
                                   onMouseLeave={this.hoverFalse}
                                   activeCardRank={this.props.activeCardRank}>
-                            <Search />
+                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch} />
                             {
                                 this.props.effectsFromApi.map((effect) => {
                                     return (
@@ -50,6 +60,7 @@ class EffectChoose extends React.Component {
                                                     tooltip={effect.tooltip}
                                                     rank={1}
                                                     effect={effect}
+                                                    searchInput={this.state.searchInput}
                                                     chosen={
                                                         // If chosenEffects list contains current effect then mark it as chosen
                                                         !!this.props.chosenEffects[0].find(x => x.id === effect.id)
@@ -63,7 +74,7 @@ class EffectChoose extends React.Component {
                         <UlGold onMouseEnter={this.hoverTrue}
                                 onMouseLeave={this.hoverFalse}
                                 activeCardRank={this.props.activeCardRank}>
-                            <Search />
+                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch} />
                             {
                                 this.props.effectsFromApi.map((effect) => {
                                     return (
@@ -72,6 +83,7 @@ class EffectChoose extends React.Component {
                                                     tooltip={effect.tooltip}
                                                     rank={2}
                                                     effect={effect}
+                                                    searchInput={this.state.searchInput}
                                                     chosen={
                                                         // If chosenEffects list contains current effect then mark it as chosen
                                                         !!this.props.chosenEffects[1].find(x => x.id === effect.id)
@@ -85,7 +97,7 @@ class EffectChoose extends React.Component {
                         <UlEpic onMouseEnter={this.hoverTrue}
                                 onMouseLeave={this.hoverFalse}
                                 activeCardRank={this.props.activeCardRank}>
-                            <Search />
+                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch} />
                             {
                                 this.props.effectsFromApi.map((effect) => {
                                     return (
@@ -94,6 +106,7 @@ class EffectChoose extends React.Component {
                                                     tooltip={effect.tooltip}
                                                     rank={3}
                                                     effect={effect}
+                                                    searchInput={this.state.searchInput}
                                                     chosen={
                                                         // If chosenEffects list contains current effect then mark it as chosen
                                                         !!this.props.chosenEffects[2].find(x => x.id === effect.id)

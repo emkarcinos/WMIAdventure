@@ -6,7 +6,9 @@ class Search extends React.Component {
     render() {
         return (
             <P>
-                <Input placeholder='Wyszukaj' type='text'/>
+                <Input placeholder='Wyszukaj' type='text'
+                       onChange={this.props.handleSearch}
+                       value={this.props.searchInput}/>
             </P>
         );
     }

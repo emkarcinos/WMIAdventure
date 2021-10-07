@@ -18,6 +18,7 @@ class CostInputs extends React.Component {
                                name='next_level_cost'
                                type='number'
                                min='1'
+                               max='99'
                                value={this.props.levelCostValues[this.props.activeCardRank - 1]}
                                onChange={this.props.levelCostValuesHandler}/>
                     </Span>
@@ -31,6 +32,7 @@ class CostInputs extends React.Component {
                                name='next_level_cost'
                                type='number'
                                min='1'
+                               max='99'
                                value={this.props.levelCostValues[this.props.activeCardRank - 1]}
                                onChange={this.props.levelCostValuesHandler}/>
                     </Span>
