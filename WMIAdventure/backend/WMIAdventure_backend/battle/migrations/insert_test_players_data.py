@@ -104,7 +104,7 @@ def create_test_player_data(username: str):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('cards', '__latest__'),
+        ('cards', '0011_auto_20210613_1831'),
         ('IngameUsers', '0003_auto_20210514_0253'),
         ('users', '0001_initial')
     ]
