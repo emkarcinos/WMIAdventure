@@ -15,6 +15,12 @@ const Button = styled.button`
   font-weight: 700;
   background-color: transparent;
   color: inherit;
+  
+  @media (min-width: 768px) {
+    height: auto;
+    margin: 0 0 4px 0;
+    cursor: auto;
+  }
 `;
 
 export default Button;

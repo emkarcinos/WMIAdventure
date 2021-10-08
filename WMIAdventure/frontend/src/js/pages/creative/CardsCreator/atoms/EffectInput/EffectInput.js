@@ -93,14 +93,14 @@ class EffectInput extends React.Component {
                             Moc
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-power`} value={this.state.power}
-                                     name='power' type='number' onChange={this.cardAttributesHandler}/>
+                                     name='power' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
                         <Label marginRight htmlFor={`${this.props.id}-${this.props.rank}-range`}>
                             Losowość
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-range`} value={this.state.range}
-                                     name='range' type='number' onChange={this.cardAttributesHandler}/>
+                                     name='range' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>

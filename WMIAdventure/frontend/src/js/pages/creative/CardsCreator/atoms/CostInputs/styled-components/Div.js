@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Div = styled.div`
+  display: flex;
   align-items: center;
   justify-content: space-around;
   border-radius: 10px;
