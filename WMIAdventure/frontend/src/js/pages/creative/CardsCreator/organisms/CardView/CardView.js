@@ -12,6 +12,74 @@ class CardView extends React.Component {
         activeCommon: false,
         activeGold: false,
         activeEpic: false,
+
+        commonDescription: '',
+        goldDescription: '',
+        epicDescription: '',
+    }
+
+    getDescriptions = () => {
+        const API = process.env['REACT_APP_API_URL'];
+
+        if(this.props.cardEffects[0].length !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.props.cardEffects[0])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => this.setState({commonDescription: data}))
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        if(this.props.cardEffects[1] !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.props.cardEffects[1])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => this.setState({goldDescription: data}))
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        if(this.props.cardEffects[2] !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.props.cardEffects[2])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => this.setState({epicDescription: data}))
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -22,6 +90,8 @@ class CardView extends React.Component {
                 this.setState({activeEpic: false, activeGold: true, activeCommon: false});
             if(this.props.cardEffects[0].length !== 0)
                 this.setState({activeEpic: false, activeGold: false, activeCommon: true});
+
+            this.getDescriptions();
         }
     }
 
@@ -52,9 +122,27 @@ class CardView extends React.Component {
                 <H2>
                     Podgląd
                 </H2>
-                <LevelView show={this.state.activeCommon} common />
-                <LevelView show={this.state.activeGold} gold />
-                <LevelView show={this.state.activeEpic} epic />
+                <LevelView common
+                           show={this.state.activeCommon}
+                           cardName={this.props.cardName}
+                           cardSubject={this.props.cardSubject}
+                           cardImage={this.props.cardImage}
+                           cardTooltip={this.props.cardTooltip}
+                           description={this.state.commonDescription} />
+                <LevelView gold
+                           show={this.state.activeGold}
+                           cardName={this.props.cardName}
+                           cardSubject={this.props.cardSubject}
+                           cardImage={this.props.cardImage}
+                           cardTooltip={this.props.cardTooltip}
+                           description={this.state.goldDescription} />
+                <LevelView epic
+                           show={this.state.activeEpic}
+                           cardName={this.props.cardName}
+                           cardSubject={this.props.cardSubject}
+                           cardImage={this.props.cardImage}
+                           cardTooltip={this.props.cardTooltip}
+                           description={this.state.epicDescription} />
                 <Div>
                     <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
                             access={this.props.cardEffects[0].length !== 0}>

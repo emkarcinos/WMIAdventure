@@ -16,8 +16,8 @@ class EffectInput extends React.Component {
 
         card_effect: undefined,
         target: undefined,
-        power: undefined,
-        range: undefined,
+        power: null,
+        range: null,
     }
 
     componentDidMount() {
@@ -73,9 +73,9 @@ class EffectInput extends React.Component {
         setTimeout(() => {
             let newEffect = {
                 card_effect: this.state.card_effect,
-                target: this.state.target,
-                power: this.state.power,
-                range: this.state.range
+                target: Number(this.state.target),
+                power: Number(this.state.power),
+                range: Number(this.state.range)
             }
             this.props.effectsToSendHandler(this.props.rank, newEffect);
         }, 10);

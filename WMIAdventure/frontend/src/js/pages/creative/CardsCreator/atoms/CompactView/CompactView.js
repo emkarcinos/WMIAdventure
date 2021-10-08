@@ -9,7 +9,7 @@ class CompactView extends React.Component {
         return (
             <Div common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
                 <Name>
-                    C++
+                    {this.props.cardName ? this.props.cardName : "null"}
                 </Name>
                 <Img src={prototypeIcon} alt='Prototypowa ikona.'/>
             </Div>

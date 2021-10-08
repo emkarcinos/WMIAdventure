@@ -12,21 +12,17 @@ class FullView extends React.Component {
         return (
             <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
                 <H3>
-                    Test
+                    {this.props.cardName ? this.props.cardName : "null"}
                 </H3>
                 <Category>
-                    Test
+                    {this.props.cardSubject ? this.props.cardSubject : "null"}
                 </Category>
                 <Img src={prototypeIcon} alt='Prototype icon.' />
                 <Describe>
-                    Gotta go fast Linia 2
+                    {this.props.cardImage ? this.props.cardImage : "null"}
                 </Describe>
                 <Tooltip>
-                    Zadaje 15 obrażeń i zatrzymuje przeciwnika na jedną turę.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
+                    {this.props.description ? this.props.description : "null"}
                 </Tooltip>
             </Article>
         );

@@ -23,6 +23,7 @@ class CardsCreator extends React.Component {
         cardName: null,
         cardSubject: null,
         cardTooltip: null,
+        cardImage: null,
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
@@ -398,6 +399,10 @@ class CardsCreator extends React.Component {
                                    commentInputHandler={this.commentInputHandler}/>
                     <CardView hideCardViewHandler={this.hideCardViewHandler}
                               show={this.state.showCardView}
+                              cardName={this.state.cardName}
+                              cardSubject={this.state.cardSubject}
+                              cardTooltip={this.state.cardTooltip}
+                              cardImage={this.state.cardImage}
                               cardEffects={this.state.effectsToSend} />
                 </>
             );
