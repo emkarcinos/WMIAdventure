@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import kIcon from '../../../../../../../assets/icons/k-icon.svg';
 
 function visibilityHandler(name, searchInput) {
-    if (name.includes(searchInput) || searchInput === '') {
+    if (name.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
         return 'flex';
     }
     return 'none';
