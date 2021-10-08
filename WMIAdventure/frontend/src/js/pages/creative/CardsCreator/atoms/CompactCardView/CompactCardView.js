@@ -4,7 +4,7 @@ import Div from './styled-components/Div';
 import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 
-class CompactView extends React.Component {
+class CompactCardView extends React.Component {
     render() {
         return (
             <Div common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
@@ -17,4 +17,4 @@ class CompactView extends React.Component {
     }
 }
 
-export default CompactView;
+export default CompactCardView;

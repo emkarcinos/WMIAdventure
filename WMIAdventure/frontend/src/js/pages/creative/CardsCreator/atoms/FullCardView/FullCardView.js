@@ -7,7 +7,7 @@ import Img from './styled-components/Img';
 import Describe from './styled-components/Describe';
 import Tooltip from './styled-components/Tooltip';
 
-class FullView extends React.Component {
+class FullCardView extends React.Component {
     render() {
         return (
             <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
@@ -29,4 +29,4 @@ class FullView extends React.Component {
     }
 }
 
-export default FullView;
+export default FullCardView;
