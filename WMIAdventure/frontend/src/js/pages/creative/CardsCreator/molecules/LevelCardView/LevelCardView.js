@@ -1,10 +1,10 @@
 import React from 'react';
 import P from './styled-components/P';
-import FullCardView from '../../atoms/FullView';
+import FullCardView from '../../atoms/FullCardView';
 import Div from './styled-components/Div';
-import CompactCardView from '../../atoms/CompactView';
+import CompactCardView from '../../atoms/CompactCardView';
 
-class LevelView extends React.Component {
+class LevelCardView extends React.Component {
     render() {
         return (
             <Div show={this.props.show}>
@@ -32,4 +32,4 @@ class LevelView extends React.Component {
     }
 }
 
-export default LevelView;
+export default LevelCardView;

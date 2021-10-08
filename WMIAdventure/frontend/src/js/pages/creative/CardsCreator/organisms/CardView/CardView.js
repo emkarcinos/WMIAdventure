@@ -4,7 +4,7 @@ import Close from './styled-components/Close';
 import H2 from './styled-components/H2';
 import Div from './styled-components/Div';
 import Button from './styled-components/Button';
-import LevelView from '../../molecules/LevelView';
+import LevelCardView from '../../molecules/LevelCardView';
 
 class CardView extends React.Component {
 
@@ -122,27 +122,27 @@ class CardView extends React.Component {
                 <H2>
                     Podgląd
                 </H2>
-                <LevelView common
-                           show={this.state.activeCommon}
-                           cardName={this.props.cardName}
-                           cardSubject={this.props.cardSubject}
-                           cardImage={this.props.cardImage}
-                           cardTooltip={this.props.cardTooltip}
-                           description={this.state.commonDescription} />
-                <LevelView gold
-                           show={this.state.activeGold}
-                           cardName={this.props.cardName}
-                           cardSubject={this.props.cardSubject}
-                           cardImage={this.props.cardImage}
-                           cardTooltip={this.props.cardTooltip}
-                           description={this.state.goldDescription} />
-                <LevelView epic
-                           show={this.state.activeEpic}
-                           cardName={this.props.cardName}
-                           cardSubject={this.props.cardSubject}
-                           cardImage={this.props.cardImage}
-                           cardTooltip={this.props.cardTooltip}
-                           description={this.state.epicDescription} />
+                <LevelCardView common
+                               show={this.state.activeCommon}
+                               cardName={this.props.cardName}
+                               cardSubject={this.props.cardSubject}
+                               cardImage={this.props.cardImage}
+                               cardTooltip={this.props.cardTooltip}
+                               description={this.state.commonDescription} />
+                <LevelCardView gold
+                               show={this.state.activeGold}
+                               cardName={this.props.cardName}
+                               cardSubject={this.props.cardSubject}
+                               cardImage={this.props.cardImage}
+                               cardTooltip={this.props.cardTooltip}
+                               description={this.state.goldDescription} />
+                <LevelCardView epic
+                               show={this.state.activeEpic}
+                               cardName={this.props.cardName}
+                               cardSubject={this.props.cardSubject}
+                               cardImage={this.props.cardImage}
+                               cardTooltip={this.props.cardTooltip}
+                               description={this.state.epicDescription} />
                 <Div>
                     <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
                             access={this.props.cardEffects[0].length !== 0}>
