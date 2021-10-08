@@ -1,6 +1,7 @@
 from copy import copy
 
 from battle.businesslogic.Buff import Buff
+from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardLevelEffects
 
 
@@ -101,3 +102,17 @@ class Effect:
         Should be called every turn before activation.
         """
         self.update_buffs()
+
+    def description(self) -> str:
+        """
+        Get a pretty effect description.
+        This description will be further used to generate a real description.
+        Overload this method to create a description of your own.
+
+        One can use self.target.label ("gracz" or "przeciwnik) with a suffix (eg. using formatted strings 
+            f"{self.target.label}a" gets you "gracza" or "przeciwnika"
+            
+        Don't end the description with any separator or a comma.
+        """
+        power_range = PowerDescription.get_instance().stringify(self.power, self.range)
+        return f"Efekt o mocy {power_range} skierowany w {self.target.label}a"

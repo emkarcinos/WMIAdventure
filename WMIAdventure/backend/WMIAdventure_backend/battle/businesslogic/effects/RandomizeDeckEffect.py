@@ -22,3 +22,6 @@ class RandomizeDeckEffect(Effect):
         cards_in_new_order = tuple([deck.lookup(ind) for ind in new_cards_order])
 
         deck.create_cards_queue(cards_in_new_order)
+
+    def description(self) -> str:
+        return f"Zamienia losowo kolejność kart {self.target.label}a"

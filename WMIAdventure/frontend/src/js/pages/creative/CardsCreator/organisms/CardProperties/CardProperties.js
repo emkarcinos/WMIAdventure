@@ -100,7 +100,7 @@ class CardProperties extends React.Component {
         newListEffectsToSend[0] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
+        this.props.removeLevelHandler(1);
     }
 
     removeGoldLevelHandler = (event) => {
@@ -112,7 +112,7 @@ class CardProperties extends React.Component {
         newListEffectsToSend[1] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
+        this.props.removeLevelHandler(2);
     }
 
     removeEpicLevelHandler = (event) => {
@@ -124,7 +124,7 @@ class CardProperties extends React.Component {
         newListEffectsToSend[2] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
+        this.props.removeLevelHandler(3);
     }
 
     activeLevelRecognize = (event, activeCardRank) => {
