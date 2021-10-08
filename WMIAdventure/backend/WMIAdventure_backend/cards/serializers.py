@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework.fields import ImageField
 
+from utils.SVGAndImageFormField import SVGAndImageFormField
 from .models import *
 from .validators import validate_effect_modifiers
 
@@ -20,7 +22,7 @@ class CardInfoSerializer(serializers.ModelSerializer):
     """
     Manages serialization and deserialization of CardInfo instances.
     """
-
+    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
     class Meta:
         model = CardInfo
         fields = ['id', 'name', 'tooltip', 'image']

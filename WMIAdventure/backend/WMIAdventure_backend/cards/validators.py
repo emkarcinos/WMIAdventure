@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from cards.models import CardEffect
@@ -18,3 +19,12 @@ def validate_effect_modifiers(card_effect: CardEffect, power: int or None, range
     if card_effect.has_modifier:
         if power is None or range_ is None:
             raise serializers.ValidationError("All effect's modifiers must be provided.")
+
+
+def validate_file_size(value):
+    filesize = value.size
+
+    if filesize > 1048576:
+        raise ValidationError("The maximum file size that can be uploaded is 1MB")
+    else:
+        return value
