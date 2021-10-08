@@ -193,6 +193,22 @@ class CardProperties extends React.Component {
         this.props.setEffectsToSendHandler(newList);
     }
 
+    /**
+     * Checks if there is created level higher than provided.
+     * @param cardLevel
+     * @returns {boolean}
+     */
+    existsHigherLevel = (cardLevel) => {
+        if (cardLevel === 1){
+            return this.state.createGoldLevel || this.state.createEpicLevel;
+        }
+        else if (cardLevel === 2) {
+            return this.state.createEpicLevel;
+        }
+
+        return false;
+    }
+
     render() {
         return (
             <>
@@ -215,9 +231,7 @@ class CardProperties extends React.Component {
                 <Media query='(max-width: 768px)'>
                     <Fieldset activeCardRank={this.state.activeCardRank}>
                         <DivScroll rank={this.state.activeCardRank}>
-                            <CostInputs activeCardRank={this.state.activeCardRank}
-                                        createGoldLevel={this.state.createGoldLevel}
-                                        createEpicLevel={this.state.createEpicLevel}
+                            <CostInputs cardRank={this.existsHigherLevel(this.state.activeCardRank) ? this.state.activeCardRank : 0}
                                         levelCostValues={this.props.levelCostValues}
                                         levelCostValuesHandler={this.props.levelCostValuesHandler} />
                             <EffectsInputsList
@@ -266,9 +280,7 @@ class CardProperties extends React.Component {
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
-                                <CostInputs activeCardRank={this.state.activeCardRank}
-                                            createGoldLevel={this.state.createGoldLevel}
-                                            createEpicLevel={this.state.createEpicLevel}
+                                <CostInputs cardRank={this.state.createGoldLevel || this.state.createEpicLevel ? 1 : 0}
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
@@ -289,9 +301,7 @@ class CardProperties extends React.Component {
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
-                                <CostInputs activeCardRank={this.state.activeCardRank}
-                                            createGoldLevel={this.state.createGoldLevel}
-                                            createEpicLevel={this.state.createEpicLevel}
+                                <CostInputs cardRank={this.state.createEpicLevel ? 2 : 0}
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
@@ -312,9 +322,7 @@ class CardProperties extends React.Component {
                                 levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
-                                <CostInputs activeCardRank={this.state.activeCardRank}
-                                            createGoldLevel={this.state.createGoldLevel}
-                                            createEpicLevel={this.state.createEpicLevel}
+                                <CostInputs cardRank={0}
                                             levelCostValues={this.props.levelCostValues}
                                             levelCostValuesHandler={this.props.levelCostValuesHandler} />
                                 <EffectsInputsList
