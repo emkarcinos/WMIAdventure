@@ -18,3 +18,6 @@ class TwoTimesExecuteEffect(Effect):
         # We need some mechanism to remove appended card from the deck after it gets used.
 
         deck.temp_cards_queue.append(next_card)
+
+    def description(self) -> str:
+        return f"Następna karta {self.target.label}a wykona się dwukrotnie"

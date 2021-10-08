@@ -28,6 +28,10 @@ class CardsCreator extends React.Component {
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
+        /**
+         * Level objects as received from the server, obtained when editing existing card.
+         */
+        levelsFromApi: [],
 
         headerLabel: '',
         showCardChoose: false,
@@ -188,6 +192,18 @@ class CardsCreator extends React.Component {
         this.setState({effectsToSend: effects});
     }
 
+    /**
+     * Removes level.
+     * @param level Given level to remove.
+     */
+    removeLevelHandler = (level) => {
+        let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
+        this.setState({levelsFromApi: newLevelsFromApi});
+        this.setLevelsListFromCard(newLevelsFromApi);
+        this.setLevelCostValuesFromCard(newLevelsFromApi);
+        this.setChosenEffectsFromCard(newLevelsFromApi);
+    }
+
     hideCardChooseHandler = (event) => {
         event.preventDefault();
         this.setState({showCardChoose: false});
@@ -199,7 +215,8 @@ class CardsCreator extends React.Component {
             cardId: id,
             cardName: name,
             cardSubject: subject,
-            cardTooltip: tooltip
+            cardTooltip: tooltip,
+            levelsFromApi: levels
         });
 
         this.setLevelsListFromCard(levels);
@@ -314,6 +331,7 @@ class CardsCreator extends React.Component {
                                     levelsListFromCard={this.state.levelsListFromCard}
                                     chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                     effectsToSend={this.state.effectsToSend}
+                                    removeLevelHandler={this.removeLevelHandler}
                                 />
                                 <Div>
                                     <Button access onClick={this.refreshPage} show={this.props.creatorType}>
@@ -370,6 +388,7 @@ class CardsCreator extends React.Component {
                                     levelsListFromCard={this.state.levelsListFromCard}
                                     chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                     effectsToSend={this.state.effectsToSend}
+                                    removeLevelHandler={this.removeLevelHandler}
                                 />
                                 <Div>
                                     <Button onClick={this.refreshPage} access show={!this.props.creatorType}>

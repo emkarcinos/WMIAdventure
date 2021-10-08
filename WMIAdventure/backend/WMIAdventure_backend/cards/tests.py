@@ -1,6 +1,7 @@
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
+from .businesslogic.tests import *
 
 from .serializers import *
 from .views import *
@@ -195,6 +196,7 @@ class CardSerializerTestCase(TestCase):
         self.info_id = 1
         self.test_level = 1
         self.test_cost = 20
+        self.test_description = "test"
 
         # Create CardInfo object for tests.
         while len(CardInfo.objects.filter(pk=self.info_id)) > 0:
@@ -208,6 +210,7 @@ class CardSerializerTestCase(TestCase):
         data = {
             'info': self.info_id,
             'level': self.test_level,
+            'effects_description': self.test_description,
             'next_level_cost': self.test_cost}
 
         serializer = CardSerializer(data=data)
@@ -223,6 +226,7 @@ class CardSerializerTestCase(TestCase):
         self.assertEqual(sample.info.id, self.info_id)
         self.assertEqual(sample.level.level, self.test_level)
         self.assertEqual(sample.next_level_cost, self.test_cost)
+        self.assertEqual(sample.effects_description, self.test_description)
 
         sample.delete()  # Delete object from database
 
@@ -232,7 +236,8 @@ class CardSerializerTestCase(TestCase):
         sample = Card.objects.create(
             info=info,
             level=level,
-            next_level_cost=self.test_cost)
+            next_level_cost=self.test_cost,
+            effects_description=self.test_description)
 
         serializer = CardSerializer(instance=sample)
 
@@ -240,11 +245,13 @@ class CardSerializerTestCase(TestCase):
         actual_level = serializer.data.get('level')
         actual_info = serializer.data.get('info')
         actual_cost = serializer.data.get('next_level_cost')
+        actual_desc = serializer.data.get('effects_description')
 
         self.assertEqual(actual_id, sample.id)
         self.assertEqual(actual_level, self.test_level)
         self.assertEqual(actual_info, self.info_id)
         self.assertEqual(actual_cost, self.test_cost)
+        self.assertEqual(actual_desc, self.test_description)
 
 
 class CardLevelEffectsSerializerTestCase(TestCase):
@@ -315,14 +322,16 @@ class WholeCardSerializerTestCase(TestCase):
         card_info = CardInfo.objects.create(name="Name", tooltip="Tooltip", subject=None)
         card_info.save()
 
-        card1 = card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5)
+        card1 = card_info.levels.create(level=CardLevel.objects.get(pk=1), next_level_cost=5,
+                                        effects_description="desc1")
         card1.effects.create(
             card_effect=CardEffect.objects.get(pk=1),
             power=5,
             range=1
         )
 
-        card2 = card_info.levels.create(level=CardLevel.objects.get(pk=2), next_level_cost=6)
+        card2 = card_info.levels.create(level=CardLevel.objects.get(pk=2), next_level_cost=6,
+                                        effects_description="desc2")
         card2.effects.create(
             card_effect=CardEffect.objects.get(pk=1),
             power=8,
@@ -340,6 +349,7 @@ class WholeCardSerializerTestCase(TestCase):
             actual_card_data = serializer.data["levels"][i]
             self.assertEqual(actual_card_data['level'], expected_card.level.level)
             self.assertEqual(actual_card_data['next_level_cost'], expected_card.next_level_cost)
+            self.assertEqual(actual_card_data['effects_description'], expected_card.effects_description)
 
             for j, expected_effect in enumerate(expected_card.effects.all()):
                 actual_effect_data = actual_card_data['effects'][j]
@@ -359,6 +369,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 1,
                         "next_level_cost": 2,
+                        "effects_description": "desc1",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -377,6 +388,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 2,
                         "next_level_cost": 4,
+                        "effects_description": "desc2",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -401,6 +413,7 @@ class WholeCardSerializerTestCase(TestCase):
                     {
                         "level": 3,
                         "next_level_cost": None,
+                        "effects_description": "desc3",
                         "effects": [
                             {
                                 "card_effect": 2,
@@ -439,6 +452,7 @@ class WholeCardSerializerTestCase(TestCase):
             expected_card_data = data["levels"][i]
             self.assertEqual(card.level.level, expected_card_data["level"])
             self.assertEqual(card.next_level_cost, expected_card_data["next_level_cost"])
+            self.assertEqual(card.effects_description, expected_card_data["effects_description"])
 
             for j, effect in enumerate(card.effects.all()):
                 expected_effect_data = expected_card_data["effects"][j]
@@ -772,6 +786,22 @@ class WholeCardListTestCase(TestCase):
         response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class DescriptionGeneratorViewTestCase(TestCase):
+    def test_get(self):
+        data = [
+            {'card_effect': 1,
+             'target': 1,
+             'power': 5.0,
+             'range': 1.0}
+        ]
+        factory = APIRequestFactory()
+        view = DescriptionGeneratorView.as_view()
+        request = factory.post('/api/cards/descriptions/', data, format='json')
+        response = view(request)
+
+        self.assertEqual(200, response.status_code)
 
 
 class ValidateEffectModifiersTestCase(TestCase):

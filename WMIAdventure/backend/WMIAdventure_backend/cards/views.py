@@ -2,8 +2,10 @@ import coreapi
 import coreschema
 from rest_framework.schemas import AutoSchema
 
-from .models import CardEffect
-from .serializers import CardEffectSerializer
+from battle.businesslogic.effects.EffectFactory import EffectFactory
+from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
+from .models import CardEffect, CardLevelEffects
+from .serializers import CardEffectSerializer, SimpleCardLevelEffectsSerializer
 from .models import CardLevel, CardInfo
 from .serializers import CardLevelSerializer, WholeCardSerializer
 from rest_framework.views import APIView
@@ -55,6 +57,30 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = WholeCardSerializer
 
 
+class DescriptionGeneratorView(APIView):
+    """
+    Generates a description from effects.
+    
+    post:
+    Returns a string with a generated description. Put an array of effects as the data similarly as in WholeCardList:
+    
+        [
+            {
+                "card_effect": 1,
+                "target": 1,
+                "power": 5,
+                "range": 1
+            }
+        ]
+    """
+    def post(self, request, *args, **kwargs):
+        """
+        Takes a JSON array with effect ID's and returns generated string of data. 
+        """
+        generator = DescriptionGenerator.get_instance()
+        return Response(generator.generate_description_from_json(request.data))
+
+
 class WholeCardList(generics.ListCreateAPIView):
     """
     get:
@@ -65,6 +91,7 @@ class WholeCardList(generics.ListCreateAPIView):
     
     - `level` - an ID of a referenced level (see `card-level`)
     - `next_level_cost` - an integer representing a cost of an upgrade to the next level (can be `null`)
+    - `effects_description` - a brief text describing what and how effects in that level work.
     - `effects` - an array of effects:
         * `card_effect` - an ID of a referenced effect (see `card-effect`)
         * `target` - an integer of either 1 (self targeting) or 2 (target the opponent)
