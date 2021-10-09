@@ -100,6 +100,8 @@ class CardProperties extends React.Component {
         newListEffectsToSend[0] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(1);
     }
 
@@ -112,6 +114,8 @@ class CardProperties extends React.Component {
         newListEffectsToSend[1] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(2);
     }
 
@@ -124,6 +128,8 @@ class CardProperties extends React.Component {
         newListEffectsToSend[2] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
+        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
+        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(3);
     }
 

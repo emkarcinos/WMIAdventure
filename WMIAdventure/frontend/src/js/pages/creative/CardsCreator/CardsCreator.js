@@ -189,6 +189,10 @@ class CardsCreator extends React.Component {
         this.setState({effectsToSend: effects});
     }
 
+    setChosenEffectsToCardHandler = (effects) => {
+        this.setState({chosenEffectsFromCard: effects});
+    }
+
     /**
      * Removes level.
      * @param level Given level to remove.
@@ -321,15 +325,16 @@ class CardsCreator extends React.Component {
                             />
                             <CardProperties creatorType={this.props.creatorType}
                                             levelCostValues={this.state.levelCostValues}
+                                            levelsListFromCard={this.state.levelsListFromCard}
+                                            effectsFromApi={this.state.effectsFromApi}
+                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
+                                            effectsToSend={this.state.effectsToSend}
                                             levelCostValuesHandler={this.levelCostValuesHandler}
                                             levelCostClearHandler={this.levelCostClearHandler}
                                             levelCostResetHandler={this.levelCostResetHandler}
-                                            effectsFromApi={this.state.effectsFromApi}
-                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                            levelsListFromCard={this.state.levelsListFromCard}
-                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
-                                            effectsToSend={this.state.effectsToSend}
                                             removeLevelHandler={this.removeLevelHandler}
+                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
+                                            setChosenEffectsToCardHandler={this.setChosenEffectsToCardHandler}
                             />
                             <Div>
                                 <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
