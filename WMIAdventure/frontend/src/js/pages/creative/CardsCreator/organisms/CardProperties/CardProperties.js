@@ -62,6 +62,46 @@ class CardProperties extends React.Component {
         this.setState({showLevelChoose: false});
     }
 
+    /**
+     * Resets cost of upgrade for proper card levels.
+     * @param event
+     * @param createdLevel Based on a created level, function will decide which upgrade costs should be reset.
+     */
+    determineWhichLevelCostToReset = (event, createdLevel) => {
+        event.preventDefault();
+
+        let levelsToReset = [];
+
+        // If common level was created
+        if (createdLevel === 1) {
+            if (this.state.createGoldLevel || this.state.createEpicLevel){
+                levelsToReset.push(1);
+            }
+        }
+
+        // If gold level was created
+        else if (createdLevel === 2) {
+            if (this.state.createCommonLevel){
+                levelsToReset.push(1);
+            }
+            if (this.state.createCommonLevel && this.state.createEpicLevel) {
+                levelsToReset.push(2);
+            }
+        }
+
+        // If epic level was created
+        else if (createdLevel === 3) {
+            if(this.state.createGoldLevel){
+                levelsToReset.push(2);
+            }
+            else if(this.state.createCommonLevel){
+                levelsToReset.push(1);
+            }
+        }
+
+        this.props.levelCostResetHandler(event, levelsToReset);
+    }
+
     createCommonLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
@@ -69,6 +109,7 @@ class CardProperties extends React.Component {
             createCommonLevel: true,
             activeCardRank: 1,
         });
+        this.determineWhichLevelCostToReset(event, 1);
     }
 
     createGoldLevelHandler = (event) => {
@@ -78,7 +119,7 @@ class CardProperties extends React.Component {
             createGoldLevel: true,
             activeCardRank: 2
         });
-        this.props.levelCostResetHandler(event, 1);
+        this.determineWhichLevelCostToReset(event, 2);
     }
 
     createEpicLevelHandler = (event) => {
@@ -88,7 +129,7 @@ class CardProperties extends React.Component {
             createEpicLevel: true,
             activeCardRank: 3,
         });
-        this.props.levelCostResetHandler(event, 2);
+        this.determineWhichLevelCostToReset(event, 3);
     }
 
     removeCommonLevelHandler = (event) => {

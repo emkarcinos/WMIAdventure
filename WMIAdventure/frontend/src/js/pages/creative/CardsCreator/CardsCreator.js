@@ -19,7 +19,14 @@ class CardsCreator extends React.Component {
         cardName: null,
         cardSubject: null,
         cardTooltip: null,
-        levelCostValues: [],
+        /**
+         * index 0 - cost of upgrade from level common to higher
+         *
+         * index 1 - cost of upgrade from level gold to higher
+         *
+         * index 2 - always undefined, there is no higher level than epic
+         */
+        levelCostValues: [undefined, undefined, undefined],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
@@ -175,10 +182,15 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
-    levelCostResetHandler = (event, rank) => {
+    /**
+     * Resets upgrade cost for given array of card levels.
+     * @param event
+     * @param levels Array of card levels which will have their upgrade cost reset.
+     */
+    levelCostResetHandler = (event, levels) => {
         event.preventDefault();
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = 1;
+        levels.forEach((rank) => {newList[rank - 1] = 1});
         this.setState({levelCostValues: newList});
     }
 
