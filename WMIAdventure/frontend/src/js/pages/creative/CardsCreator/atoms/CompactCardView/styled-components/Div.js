@@ -20,6 +20,7 @@ const Div = styled.div`
   position: relative;
   margin-bottom: 60px;
   padding-top: 18px;
+  overflow-y: hidden;
 
   &:before {
     content: '';

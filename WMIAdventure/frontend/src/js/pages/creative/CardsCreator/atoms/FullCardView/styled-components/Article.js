@@ -20,6 +20,8 @@ const Article = styled.article`
   border-radius: 24px;
   position: relative;
   padding-top: 64px;
+  overflow-y: hidden;
+
   
   &:before {
     content: '';
