@@ -63,7 +63,7 @@ class CardProperties extends React.Component {
     }
 
     /**
-     * Resets cost of upgrade for proper card levels.
+     * Resets cost of upgrade for proper card levels after some card level was created.
      * @param event
      * @param createdLevel Based on a created level, function will decide which upgrade costs should be reset.
      */
