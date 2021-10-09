@@ -5,6 +5,8 @@ import Section from './styled-components/Section';
 import Pencil from "./styled-components/Pencil";
 import Container from "./styled-components/Container";
 import Button from "./styled-components/Button"
+import ImagePreview from "./styled-components/ImagePreview";
+import upload_image from "../../../../../../assets/icons/upload_image.svg";
 
 class CardDescribePreview extends React.Component {
     render() {
@@ -14,9 +16,8 @@ class CardDescribePreview extends React.Component {
                 <Button onClick={this.props.showDescribeInputsHandler}>
                 </Button>
 
-                {/* Pencil icon */}
-                <Pencil>
-                </Pencil>
+                <ImagePreview src={this.props.cardImage ? this.props.cardImage : upload_image}>
+                </ImagePreview>
 
                 {/* Main content section */}
                 <Section>
@@ -31,9 +32,10 @@ class CardDescribePreview extends React.Component {
                     </P>
                 </Section>
 
-                {/* Invisible pencil used to center main section in container flexbox */}
-                <Pencil invisible={true}>
+                {/* Pencil icon */}
+                <Pencil>
                 </Pencil>
+
             </Container>
         );
     }
