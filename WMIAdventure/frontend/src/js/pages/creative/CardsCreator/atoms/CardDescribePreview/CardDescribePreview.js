@@ -16,8 +16,7 @@ class CardDescribePreview extends React.Component {
                 <Button onClick={this.props.showDescribeInputsHandler}>
                 </Button>
 
-                <ImagePreview src={this.props.cardImage ? this.props.cardImage : upload_image}>
-                </ImagePreview>
+                <ImagePreview src={this.props.cardImage ? this.props.cardImage : upload_image} alt="Image for card." />
 
                 {/* Main content section */}
                 <Section>

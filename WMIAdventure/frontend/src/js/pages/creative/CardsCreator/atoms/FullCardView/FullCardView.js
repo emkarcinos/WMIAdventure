@@ -1,11 +1,11 @@
 import React from 'react';
-import prototypeIcon from '../../../../../../assets/images/prototypeCardIcon.png';
 import Article from './styled-components/Article';
 import H3 from './styled-components/H3';
 import Category from './styled-components/Category';
 import Img from './styled-components/Img';
 import Tooltip from './styled-components/Tooltip';
 import Describe from './styled-components/Describe';
+import upload_image from "../../../../../../assets/icons/upload_image.svg";
 
 class FullCardView extends React.Component {
     render() {
@@ -17,7 +17,7 @@ class FullCardView extends React.Component {
                 <Category>
                     {this.props.cardSubject ? this.props.cardSubject : "null"}
                 </Category>
-                <Img src={prototypeIcon} alt='Prototype icon.' />
+                <Img src={this.props.cardImage ? this.props.cardImage : upload_image} alt="Image for card." />
                 <Tooltip>
                     {this.props.cardTooltip ? this.props.cardTooltip : "null"}
                 </Tooltip>

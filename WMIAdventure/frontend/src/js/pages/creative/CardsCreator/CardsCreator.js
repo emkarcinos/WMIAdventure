@@ -447,7 +447,7 @@ class CardsCreator extends React.Component {
                           cardName={this.state.cardName}
                           cardSubject={this.state.cardSubject}
                           cardTooltip={this.state.cardTooltip}
-                          cardImage={this.state.cardImage}
+                          cardImage={this.state.cardImageURLPreview}
                           cardEffects={this.state.effectsToSend} />
             </>
         );

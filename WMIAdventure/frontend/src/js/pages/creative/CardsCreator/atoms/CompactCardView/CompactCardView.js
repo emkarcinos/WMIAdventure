@@ -1,8 +1,8 @@
 import React from 'react';
-import prototypeIcon from '../../../../../../assets/images/prototypeCardIcon.png';
 import Div from './styled-components/Div';
 import Name from './styled-components/Name';
 import Img from './styled-components/Img';
+import upload_image from '../../../../../../assets/icons/upload_image.svg';
 
 class CompactCardView extends React.Component {
     render() {
@@ -11,7 +11,7 @@ class CompactCardView extends React.Component {
                 <Name>
                     {this.props.cardName ? this.props.cardName : "null"}
                 </Name>
-                <Img src={prototypeIcon} alt='Prototypowa ikona.'/>
+                <Img src={this.props.cardImage ? this.props.cardImage : upload_image} alt="Image for card." />
             </Div>
         );
     }
