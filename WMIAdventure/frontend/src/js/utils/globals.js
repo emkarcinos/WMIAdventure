@@ -1,4 +1,4 @@
-const mobile = '(max-width: 768px)';
-const desktop = '(min-width: 768px)';
+const mobile = '(max-width: 1024px)';
+const desktop = '(min-width: 1024px)';
 
 export {mobile, desktop};

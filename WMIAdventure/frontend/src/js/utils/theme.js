@@ -8,7 +8,7 @@ const theme = {
         semibold: 600,
         bold: 700,
     },
-    overMobile: 768,
+    overMobile: 1024,
 };
 
 export default theme;
