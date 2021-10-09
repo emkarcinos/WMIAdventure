@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
-const Tooltip = styled.div`
-  font-size: 14px;
-  font-weight: ${({theme}) => theme.weight.light};
-  margin: 0;
+const Tooltip = styled.p`
+  margin: 0 0 22px 0;
+  font-size: 12px;
+  color: ${({theme}) => theme.colors.borderLine};
+  font-weight: ${({theme}) => theme.weight.regular};
+  font-style: italic;
+  text-transform: uppercase;
+  max-width: 120px;
   text-align: center;
-  max-width: 220px;
 `;
 
 export default Tooltip;

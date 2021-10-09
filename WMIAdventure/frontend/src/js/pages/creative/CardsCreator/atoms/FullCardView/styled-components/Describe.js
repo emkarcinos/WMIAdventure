@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 const Describe = styled.p`
-  margin: 0 0 22px 0;
-  font-size: 12px;
-  color: ${({theme}) => theme.colors.borderLine};
-  font-weight: ${({theme}) => theme.weight.regular};
-  font-style: italic;
-  text-transform: uppercase;
-  max-width: 120px;
+  font-size: 14px;
+  font-weight: ${({theme}) => theme.weight.light};
+  margin: 0;
   text-align: center;
+  max-width: 220px;
 `;
 
 export default Describe;
