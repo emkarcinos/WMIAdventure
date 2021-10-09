@@ -18,7 +18,7 @@ const Close = styled.button`
   height: 16px;
   z-index: 5;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 24px;
     height: 24px;
     top: 20px;

@@ -8,7 +8,7 @@ const Result = styled.p`
   text-align: center;
   margin: 0 0 32px 0;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 48px;
   }
 `;

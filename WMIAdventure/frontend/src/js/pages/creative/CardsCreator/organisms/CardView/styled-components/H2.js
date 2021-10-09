@@ -6,7 +6,7 @@ const H2 = styled.h2`
   font-weight: ${({theme}) => theme.weight.semibold};
   margin: 20px 0 14px 0;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     margin-bottom: 32px;
   }
 `;

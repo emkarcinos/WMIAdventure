@@ -15,7 +15,7 @@ const Wrapper = styled.button`
   padding: 0;
   margin: 0 12px 0 0;
   
-  @media(min-width: 768px) {
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
     width: 48px;
     height: 48px;
     margin: 0 36px 0 0;

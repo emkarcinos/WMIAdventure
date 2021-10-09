@@ -16,7 +16,7 @@ const Button = styled.button`
   background-color: transparent;
   color: inherit;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     height: auto;
     margin: 0 0 4px 0;
     cursor: auto;

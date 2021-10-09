@@ -5,7 +5,7 @@ const Header = styled.h1`
   font-weight: 600;
   margin: 8px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 24px;
     font-weight: 600;
     margin-left: 16px;

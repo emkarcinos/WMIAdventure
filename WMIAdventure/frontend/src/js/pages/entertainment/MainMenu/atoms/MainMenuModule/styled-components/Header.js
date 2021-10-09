@@ -11,7 +11,7 @@ const Header = styled.p`
   margin: 0 0 12px 0;
   font-size: 32px;
 
-  @media(min-width: 768px) {
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
     position: absolute;
     font-size: 40px;
     margin: 0;

@@ -5,7 +5,7 @@ const Image = styled.img`
   height: 24px;
   margin-left: 8px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 112px;
     height: 48px;
     margin-left: 16px;

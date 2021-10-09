@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Decorate = styled.img`
   display: none;
   
-  @media(min-width: 768px) {
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
     display: block;
 
     position: absolute;

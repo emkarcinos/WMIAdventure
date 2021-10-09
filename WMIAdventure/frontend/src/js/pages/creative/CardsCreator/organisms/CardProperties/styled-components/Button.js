@@ -21,7 +21,7 @@ const Button = styled.button`
   cursor: pointer;
   margin: 4px 0 0 12px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({createCommon, createGold, createEpic}) => handleVisible(createCommon, createGold, createEpic)};
     justify-content: center;
     align-items: center;

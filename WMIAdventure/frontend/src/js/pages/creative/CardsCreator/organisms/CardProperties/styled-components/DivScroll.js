@@ -15,7 +15,7 @@ const DivScroll = styled.div`
   width: 100%;
   overflow-y: scroll;
   padding-top: 10px;
-  @media (max-width: 768px) {
+  @media (max-width: ${({theme}) => theme.overMobile}px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
   }
 `;

@@ -11,7 +11,7 @@ const Describe = styled.p`
   text-align: center;
   margin: 0;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 18px;
     height: 100%;
     width: 300px;

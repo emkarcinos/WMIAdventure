@@ -19,7 +19,7 @@ const Article = styled.article`
     margin: 0 32px 12px;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     margin: 0 128px 12px;
   }
   

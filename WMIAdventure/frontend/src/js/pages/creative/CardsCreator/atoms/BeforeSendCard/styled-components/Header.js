@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Header = styled.h1`
   /* Styling */
   font-size: 36px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     font-size: 24px;
   };
   font-weight: ${({theme}) => theme.weight.semibold};

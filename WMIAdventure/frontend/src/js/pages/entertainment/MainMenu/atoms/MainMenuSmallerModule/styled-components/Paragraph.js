@@ -5,7 +5,7 @@ const Paragraph = styled.p`
   margin: 0;
   font-size: 10px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 32px;
   }
 `;

@@ -16,7 +16,7 @@ const Wrapper = styled(Link)`
   text-decoration: none;
   margin: 0 6px 16px 6px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     border: 7px solid ${({theme}) => theme.colors.gold};
     height: 124px;
     width: 336px;

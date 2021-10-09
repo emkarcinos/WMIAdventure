@@ -12,7 +12,7 @@ const Container = styled.div`
   margin-bottom: 20px;
 
   /* Options for mobile devices */
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     gap: 8px;
   }
 `;

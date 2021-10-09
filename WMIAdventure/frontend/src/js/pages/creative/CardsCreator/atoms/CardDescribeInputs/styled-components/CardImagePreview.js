@@ -4,7 +4,7 @@ const CardImagePreview = styled.img`
   /* Size */
   width: 200px;
   height: 200px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     width: 138px;
     height: 138px;
   }
