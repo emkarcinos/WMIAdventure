@@ -21,6 +21,11 @@ class CardsCreator extends React.Component {
         cardSubject: null,
         cardTooltip: null,
         cardImage: null,
+
+        /**
+         * cardImage is file object and can't be used to preview uploaded image, so this variable exists
+         */
+        cardImageURLPreview: null,
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
@@ -43,6 +48,13 @@ class CardsCreator extends React.Component {
         showCardView: false,
     }
 
+    cardSubmissionSuccessHandler = () => {
+        this.setState({
+            showSendMessage: true,
+            sendSuccess: true
+        });
+    }
+
     cardSubmissionFailedHandler(serverResponse) {
         let t = this;
         serverResponse.json().then(function (jsonResponse) {
@@ -54,6 +66,59 @@ class CardsCreator extends React.Component {
         })
     }
 
+
+    /**
+     * Creates form data with card image which can be sent to the server.
+     * @returns {FormData}
+     */
+    createFormDataToSendCardImage() {
+        const formData = new FormData();
+
+        formData.append('image', this.state.cardImage, this.state.cardImage.name);
+        // Required data that has to be sent even if we only want to send image.
+        formData.append('name', this.state.cardName);
+        formData.append('subject', this.state.cardSubject);
+        formData.append('tooltip', this.state.cardTooltip);
+
+        return formData;
+    }
+
+    /**
+     * This function makes PUT request to send image of newly created proposed card.
+     * @param serverResponse Server response after we created proposed card. Card's id will be retrieved from it and used to send PUT request.
+     */
+    sendCardImage = (serverResponse) => {
+        serverResponse.json().then(jsonResponse => {
+            const newProposedCardId = jsonResponse['id'];
+            const API = process.env['REACT_APP_API_URL'];
+            const formData = this.createFormDataToSendCardImage();
+
+            // Try make PUT request with image
+            try {
+                fetch(`http://${API}/api/proposed-content/cards/${newProposedCardId}/`, {
+                    method: 'put',
+                    body: formData
+                }) .then (
+                    response => {
+                        if(response.ok) {
+                            this.cardSubmissionSuccessHandler();
+                        } else {
+                            this.cardSubmissionFailedHandler(response)
+                        }
+                    }
+                );
+            }
+            catch (e) {
+                console.log(e);
+            }
+        })
+    }
+
+    /**
+     * Sends card data without image to the server.
+     * If image was uploaded then it will be sent in second PUT request.
+     * @param event
+     */
     sendCardToApi = (event) => {
         event.preventDefault();
         const API = process.env['REACT_APP_API_URL'];
@@ -88,11 +153,14 @@ class CardsCreator extends React.Component {
                 })
             }).then(
                 response => {
-                    if (response.ok) {
-                        this.setState({
-                            showSendMessage: true,
-                            sendSuccess: true
-                        });
+                    if(response.ok) {
+                        if(this.state.cardImage){
+                            this.sendCardImage(response);
+                        }
+                        else{
+                            this.cardSubmissionSuccessHandler();
+                        }
+
                     } else {
                         this.cardSubmissionFailedHandler(response)
                     }
@@ -161,6 +229,15 @@ class CardsCreator extends React.Component {
             keyValue = event.target.value;
         else keyValue = '-';
         this.setState({[keyName]: keyValue});
+    }
+
+    onCardImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            this.setState({
+                cardImage: event.target.files[0],
+                cardImageURLPreview: URL.createObjectURL(event.target.files[0])
+            });
+        }
     }
 
     levelCostValuesHandler = (event) => {
@@ -314,14 +391,17 @@ class CardsCreator extends React.Component {
                                              cardSubject={this.state.cardSubject}
                                              cardTooltip={this.state.cardTooltip}
                                              showDescribeInputsHandler={this.showDescribeInputsHandler}
+                                             cardImage={this.state.cardImageURLPreview}
                         />
                         <Form>
                             <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
+                                                onCardImageChange={this.onCardImageChange}
                                                 show={this.state.showDescribeInputs}
                                                 hideDescribeInputsHandler={this.hideDescribeInputsHandler}
                                                 cardName={this.state.cardName}
                                                 cardSubject={this.state.cardSubject}
                                                 cardTooltip={this.state.cardTooltip}
+                                                cardImage={this.state.cardImageURLPreview}
                             />
                             <CardProperties creatorType={this.props.creatorType}
                                             levelCostValues={this.state.levelCostValues}
@@ -376,4 +456,3 @@ class CardsCreator extends React.Component {
 
 
 export default CardsCreator;
-

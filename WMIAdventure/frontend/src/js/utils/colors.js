@@ -7,6 +7,9 @@ const colors = {
     brand02: '#4E4E5A',
     $brand03: '#727279',
 
+    // New text
+    new_text01: '#333333',
+
     // Text
     text01: '#232735',
     text02: '#505565',

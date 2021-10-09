@@ -7,6 +7,11 @@ import Input from './styled-components/Input';
 import Label from './styled-components/Label';
 import DivInput from './styled-components/DivInput';
 import { Transition } from 'react-transition-group';
+import ImageInput from "./styled-components/ImageInput";
+import DivImageInput from "./styled-components/DivImageInput";
+import CardImagePreview from "./styled-components/CardImagePreview";
+import upload_image_dark from '../../../../../../assets/icons/upload_image_dark.svg'
+import ImageInputPrompt from "./styled-components/ImageInputPrompt";
 
 /* Transition timeout values */
 const timeout = {
@@ -64,7 +69,7 @@ class CardDescribeInputs extends React.Component {
                                   />
                                 </DivInput>
                             </Div>
-                            <Div last>
+                            <Div>
                                 <Label htmlFor='cardTooltip'>
                                     Opis
                                 </Label>
@@ -74,6 +79,20 @@ class CardDescribeInputs extends React.Component {
                                          placeholder={'Opis Karty'}
                                   />
                                 </DivInput>
+                            </Div>
+                            <Div last>
+                                <Label htmlFor='cardImage'>
+                                    Ikona
+                                </Label>
+                                <DivImageInput>
+                                    <CardImagePreview
+                                        src={this.props.cardImage ? this.props.cardImage : upload_image_dark}
+                                        alt='Załadowany obrazek/ikona'/>
+                                    <ImageInput id='cardImage' name='cardImage' type='file' accept='image/png, .svg'
+                                                onChange={this.props.onCardImageChange}
+                                                />
+                                    <ImageInputPrompt>Wybierz z pliku</ImageInputPrompt>
+                                </DivImageInput>
                             </Div>
                         </Fieldset>
                     </TransparentBack>
