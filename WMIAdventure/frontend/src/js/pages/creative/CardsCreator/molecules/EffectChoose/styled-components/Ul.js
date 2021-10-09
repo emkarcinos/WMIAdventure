@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Ul = styled.ul`
+  display: flex;
   background-color: ${({theme}) => theme.colors.ui01};
   flex-direction: column;
   

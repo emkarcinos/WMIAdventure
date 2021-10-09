@@ -27,3 +27,6 @@ class StopPlayerEffect(Effect):
 
         super().on_activation(target, turns_queue)
         target.turns_stopped += self.turns_stopped
+        
+    def description(self) -> str:
+        return f"Zatrzymuje {self.target.label}a na {self.turns_stopped} turę"

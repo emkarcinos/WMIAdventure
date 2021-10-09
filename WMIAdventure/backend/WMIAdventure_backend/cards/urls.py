@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import CardEffectList, CardEffectObjectView, CardLevelList, CardLevelDetail, WholeCardDetails, WholeCardList
+from .views import CardEffectList, CardEffectObjectView, CardLevelList, CardLevelDetail, WholeCardDetails, \
+    WholeCardList, DescriptionGeneratorView
 
 urlpatterns = [
     path('card-effect/', CardEffectList.as_view(), name='card-effect'),
@@ -7,5 +8,6 @@ urlpatterns = [
     path('card-level/', CardLevelList.as_view(), name='cards-levels-list'),
     path('card-level/<int:pk>/', CardLevelDetail.as_view(), name='cards-level-details'),
     path('<int:pk>/', WholeCardDetails.as_view(), name='cards-card-details'),
-    path('', WholeCardList.as_view(), name='cards-card-list')
+    path('', WholeCardList.as_view(), name='cards-card-list'),
+    path('descriptions/', DescriptionGeneratorView.as_view(), name='description_generator')
 ]

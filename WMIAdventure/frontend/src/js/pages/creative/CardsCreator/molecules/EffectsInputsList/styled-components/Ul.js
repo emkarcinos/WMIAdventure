@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Ul = styled.ul`
+  display: grid;
   padding: 10px 0;
   margin: 0;
   list-style: none;

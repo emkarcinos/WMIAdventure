@@ -22,3 +22,6 @@ class BlockCardEffect(Effect):
         """
 
         target.deck.lookup().turns_blocked += self.turns
+
+    def description(self) -> str:
+        return f"Blokuje działanie następnej karty {self.target.label}a"

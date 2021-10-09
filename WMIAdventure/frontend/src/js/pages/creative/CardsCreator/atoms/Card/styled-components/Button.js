@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 import kIcon from '../../../../../../../assets/icons/k-icon.svg';
 
+function visibilityHandler(name, searchInput) {
+    if (name.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
+        return 'flex';
+    }
+    return 'none';
+}
+
 const Button = styled.button`
   padding: 12px 10px 10px 48px;
   margin: 0;
   list-style: none;
-  display: flex;
+  display: ${({name, searchInput}) => visibilityHandler(name, searchInput)};
   flex-direction: column;
   justify-content: center;
   background-color: transparent;
