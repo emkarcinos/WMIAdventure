@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 function visibilityHandler(name, searchInput) {
-  if (name.includes(searchInput) || searchInput === '') {
+  if (name.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
     return 'flex';
   }
   return 'none';

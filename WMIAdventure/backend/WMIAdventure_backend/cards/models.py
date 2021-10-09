@@ -93,11 +93,13 @@ def base_card_info_factory(upload_images_to: str):
         class Meta:
             abstract = True
 
+        from cards.validators import validate_file_size
         name = models.CharField(max_length=50, help_text="Displayed card's name.")
         tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
-        image = models.ImageField(upload_to=upload_images_to, null=True, blank=True,
+        image = models.FileField(upload_to=upload_images_to, null=True, blank=True,
                                   help_text="An image. We don't really"
-                                            "know what should that be.")
+                                            "know what should that be.",
+                                 validators=[validate_file_size])
         subject = models.CharField(max_length=50, null=True,
                                    help_text="Subject name. In the future this field will be an"
                                              " id pointing to Subject object.")
@@ -138,6 +140,8 @@ def base_card_factory(related_card_info_class: type):
         """
 
         info = models.ForeignKey(related_card_info_class, related_name='levels', unique=False, on_delete=models.CASCADE)
+        effects_description = models.CharField(max_length=100, help_text="A brief description of this level's effects.",
+                                               null=True, default="description")
         level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
         next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
                                                                      MaxValueValidator(100)])
@@ -191,8 +195,8 @@ def base_card_level_effects_factory(foreignkey_card_cls: type):
             """
             Possible targets.
             """
-            PLAYER = 1
-            OPPONENT = 2
+            PLAYER = 1, _("gracz")
+            OPPONENT = 2 ,_("przeciwnik")
 
         card = models.ForeignKey(foreignkey_card_cls, related_name='effects', unique=False, on_delete=models.CASCADE)
         card_effect = models.ForeignKey(CardEffect, unique=False, on_delete=models.CASCADE)

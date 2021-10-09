@@ -1,6 +1,4 @@
 import React from 'react';
-import isMobile from "react-device-detect";
-
 import Main from './styled-components/Main';
 import Wrapper from './styled-components/Wrapper';
 import Form from './styled-components/Form';
@@ -12,7 +10,6 @@ import CardDescribeInputs from './atoms/CardDescribeInputs';
 import CardProperties from './organisms/CardProperties';
 import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
-import SendMessage from './atoms/SendMessage';
 import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 
@@ -22,6 +19,11 @@ class CardsCreator extends React.Component {
         cardName: null,
         cardSubject: null,
         cardTooltip: null,
+        cardImage: null,
+        /**
+         * cardImage is file object and can't be used to preview uploaded image, so this variable exists
+         */
+        cardImageURLPreview: null,
         levelCostValues: [],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
@@ -43,9 +45,16 @@ class CardsCreator extends React.Component {
         comment: "",
     }
 
-    cardSubmissionFailedHandler(serverResponse){
+    cardSubmissionSuccessHandler = () => {
+        this.setState({
+            showSendMessage: true,
+            sendSuccess: true
+        });
+    }
+
+    cardSubmissionFailedHandler(serverResponse) {
         let t = this;
-        serverResponse.json().then(function (jsonResponse){
+        serverResponse.json().then(function (jsonResponse) {
             t.setState({
                 showSendMessage: true,
                 sendSuccess: false,
@@ -54,14 +63,67 @@ class CardsCreator extends React.Component {
         })
     }
 
+
+    /**
+     * Creates form data with card image which can be sent to the server.
+     * @returns {FormData}
+     */
+    createFormDataToSendCardImage() {
+        const formData = new FormData();
+
+        formData.append('image', this.state.cardImage, this.state.cardImage.name);
+        // Required data that has to be sent even if we only want to send image.
+        formData.append('name', this.state.cardName);
+        formData.append('subject', this.state.cardSubject);
+        formData.append('tooltip', this.state.cardTooltip);
+
+        return formData;
+    }
+
+    /**
+     * This function makes PUT request to send image of newly created proposed card.
+     * @param serverResponse Server response after we created proposed card. Card's id will be retrieved from it and used to send PUT request.
+     */
+    sendCardImage = (serverResponse) => {
+        serverResponse.json().then(jsonResponse => {
+            const newProposedCardId = jsonResponse['id'];
+            const API = process.env['REACT_APP_API_URL'];
+            const formData = this.createFormDataToSendCardImage();
+
+            // Try make PUT request with image
+            try {
+                fetch(`http://${API}/api/proposed-content/cards/${newProposedCardId}/`, {
+                    method: 'put',
+                    body: formData
+                }) .then (
+                    response => {
+                        if(response.ok) {
+                            this.cardSubmissionSuccessHandler();
+                        } else {
+                            this.cardSubmissionFailedHandler(response)
+                        }
+                    }
+                );
+            }
+            catch (e) {
+                console.log(e);
+            }
+        })
+    }
+
+    /**
+     * Sends card data without image to the server.
+     * If image was uploaded then it will be sent in second PUT request.
+     * @param event
+     */
     sendCardToApi = (event) => {
         event.preventDefault();
         const API = process.env['REACT_APP_API_URL'];
 
         const levelsToSend = [];
-        for(let i=0; i < this.state.effectsToSend.length; i++) {
-            if(this.state.effectsToSend[i].length !== 0) {
-                levelsToSend.push (
+        for (let i = 0; i < this.state.effectsToSend.length; i++) {
+            if (this.state.effectsToSend[i].length !== 0) {
+                levelsToSend.push(
                     {
                         level: String(i + 1),
                         next_level_cost: this.state.levelCostValues[i],
@@ -86,13 +148,16 @@ class CardsCreator extends React.Component {
                     levels: levelsToSend,
                     comment: this.state.comment
                 })
-            }) .then (
+            }).then(
                 response => {
                     if(response.ok) {
-                        this.setState({
-                            showSendMessage: true,
-                            sendSuccess: true
-                        });
+                        if(this.state.cardImage){
+                            this.sendCardImage(response);
+                        }
+                        else{
+                            this.cardSubmissionSuccessHandler();
+                        }
+
                     } else {
                         this.cardSubmissionFailedHandler(response)
                     }
@@ -105,14 +170,14 @@ class CardsCreator extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.creatorType === 'edit')
+        if (this.props.creatorType === 'edit')
             this.setState({headerLabel: 'Edytowanie karty', showCardChoose: true});
-        else if(this.props.creatorType === 'create')
+        else if (this.props.creatorType === 'create')
             this.setState({headerLabel: 'Nowa karta', showCardChoose: false});
 
         const API = process.env['REACT_APP_API_URL'];
 
-        if(this.props.creatorType === 'edit') {
+        if (this.props.creatorType === 'edit') {
             fetch(`http://${API}/api/cards/`)
                 .then(response => {
                     return response.json();
@@ -141,12 +206,12 @@ class CardsCreator extends React.Component {
 
     showSendCardPopupHandler = (event) => {
         event.preventDefault();
-        this.setState({showSendCardPopup : true})
+        this.setState({showSendCardPopup: true})
     }
 
     hideSendCardPopupHandler = (event) => {
         event.preventDefault();
-        this.setState({showSendCardPopup : false})
+        this.setState({showSendCardPopup: false})
 
         /* We hide send message after timeout, because SendCardPopup has closing animation. */
         setTimeout(() => {
@@ -157,15 +222,24 @@ class CardsCreator extends React.Component {
     updateDescribePreview = (event) => {
         const keyName = event.target.name;
         let keyValue;
-        if(event.target.value !== '')
+        if (event.target.value !== '')
             keyValue = event.target.value;
         else keyValue = '-';
         this.setState({[keyName]: keyValue});
     }
 
+    onCardImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            this.setState({
+                cardImage: event.target.files[0],
+                cardImageURLPreview: URL.createObjectURL(event.target.files[0])
+            });
+        }
+    }
+
     levelCostValuesHandler = (event) => {
         let newList = this.state.levelCostValues.slice();
-        if(event.target.value > 0)
+        if (event.target.value > 0)
             newList[Number(event.target.id[0]) - 1] = event.target.value;
         else newList[Number(event.target.id[0]) - 1] = undefined;
         this.setState({levelCostValues: newList});
@@ -194,11 +268,13 @@ class CardsCreator extends React.Component {
      * @param level Given level to remove.
      */
     removeLevelHandler = (level) => {
-        let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
-        this.setState({levelsFromApi: newLevelsFromApi});
-        this.setLevelsListFromCard(newLevelsFromApi);
-        this.setLevelCostValuesFromCard(newLevelsFromApi);
-        this.setChosenEffectsFromCard(newLevelsFromApi);
+        if (this.state.levelsFromApi.length > 0){
+            let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
+            this.setState({levelsFromApi: newLevelsFromApi});
+            this.setLevelsListFromCard(newLevelsFromApi);
+            this.setLevelCostValuesFromCard(newLevelsFromApi);
+            this.setChosenEffectsFromCard(newLevelsFromApi);
+        }
     }
 
     hideCardChooseHandler = (event) => {
@@ -224,7 +300,7 @@ class CardsCreator extends React.Component {
 
     setLevelsListFromCard = (levels) => {
         let newLevelsList = [];
-        for (let i=0; i<levels.length; i++) {
+        for (let i = 0; i < levels.length; i++) {
             newLevelsList.push(levels[i].level);
         }
         this.setState({levelsListFromCard: newLevelsList});
@@ -233,9 +309,9 @@ class CardsCreator extends React.Component {
     setLevelCostValuesFromCard = (levels) => {
         let newCostList = this.state.levelCostValues.slice();
         try {
-            if(levels[0].next_level_cost)
+            if (levels[0].next_level_cost)
                 newCostList[levels[0].level - 1] = levels[0].next_level_cost;
-            if(levels[1].next_level_cost)
+            if (levels[1].next_level_cost)
                 newCostList[levels[1].level - 1] = levels[1].next_level_cost;
             this.setState({levelCostValues: newCostList});
         } catch (error) {
@@ -247,8 +323,8 @@ class CardsCreator extends React.Component {
         let newEffectsList = [[], [], []];
         let newChosenEffectsList = [[], [], []];
         let chosenEffectElem;
-        for (let i=0; i<levels.length; i++) {
-            for (let j=0; j<levels[i].effects.length; j++) {
+        for (let i = 0; i < levels.length; i++) {
+            for (let j = 0; j < levels[i].effects.length; j++) {
                 newEffectsList[levels[i].level - 1].push({
                     card_effect: levels[i].effects[j].card_effect,
                     target: levels[i].effects[j].target,
@@ -282,115 +358,63 @@ class CardsCreator extends React.Component {
     }
 
     render() {
-        if (isMobile) {
-            return (
-                <>
-                    <CardChoose showCardChoose={this.state.showCardChoose}
-                                hideCardChooseHandler={this.hideCardChooseHandler}
-                                cardsFromAPI={this.state.cardsFromApi}
-                                chosenCardHandler={this.chosenCardHandler} />
-                    <Wrapper>
-                        <NavHeader backLink={'/cards-creator-start'} label={this.state.headerLabel} />
-                        <Main>
-                            <CardDescribePreview cardName={this.state.cardName}
-                                cardSubject={this.state.cardSubject}
-                                cardTooltip={this.state.cardTooltip}
-                                showDescribeInputsHandler={this.showDescribeInputsHandler}
+        return (
+            <>
+                <CardChoose showCardChoose={this.state.showCardChoose}
+                            hideCardChooseHandler={this.hideCardChooseHandler}
+                            cardsFromAPI={this.state.cardsFromApi}
+                            chosenCardHandler={this.chosenCardHandler}/>
+                <Wrapper>
+                    <NavHeader backLink={'/cards-creator-start'} label={this.state.headerLabel}/>
+                    <Main>
+                        <CardDescribePreview cardName={this.state.cardName}
+                                             cardSubject={this.state.cardSubject}
+                                             cardTooltip={this.state.cardTooltip}
+                                             showDescribeInputsHandler={this.showDescribeInputsHandler}
+                                             cardImage={this.state.cardImageURLPreview}
+                        />
+                        <Form>
+                            <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
+                                                onCardImageChange={this.onCardImageChange}
+                                                show={this.state.showDescribeInputs}
+                                                hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                                cardName={this.state.cardName}
+                                                cardSubject={this.state.cardSubject}
+                                                cardTooltip={this.state.cardTooltip}
+                                                cardImage={this.state.cardImageURLPreview}
                             />
-                            <Form>
-                                <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
-                                    show={this.state.showDescribeInputs}
-                                    hideDescribeInputsHandler={this.hideDescribeInputsHandler}
-                                    cardName={this.state.cardName}
-                                    cardSubject={this.state.cardSubject}
-                                    cardTooltip={this.state.cardTooltip}
-                                />
-                                <CardProperties creatorType={this.props.creatorType}
-                                    levelCostValues={this.state.levelCostValues}
-                                    levelCostValuesHandler={this.levelCostValuesHandler}
-                                    levelCostClearHandler={this.levelCostClearHandler}
-                                    levelCostResetHandler={this.levelCostResetHandler}
-                                    effectsFromApi={this.state.effectsFromApi}
-                                    setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                    levelsListFromCard={this.state.levelsListFromCard}
-                                    chosenEffectsFromCard={this.state.chosenEffectsFromCard}
-                                    effectsToSend={this.state.effectsToSend}
-                                    removeLevelHandler={this.removeLevelHandler}
-                                />
-                                <Div>
-                                    <Button type='submit' onClick={this.sendCardToApi} show={true}>
-                                        Wyślij
-                                    </Button>
-                                    <Button onClick={this.refreshPage} show={this.props.creatorType}>
-                                        Edytuj inną kartę
-                                    </Button>
-                                </Div>
-                            </Form>
-                        </Main>
-                    </Wrapper>
-                    <SendMessage showMessage={this.state.showSendMessage}
-                                 sendSuccess={this.state.sendSuccess}
-                                 hideSendMessageHandler={this.hideSendMessageHandler} />
-                </>
-            );
-        }
-        else {
-            return (
-                <>
-                    <CardChoose showCardChoose={this.state.showCardChoose}
-                                hideCardChooseHandler={this.hideCardChooseHandler}
-                                cardsFromAPI={this.state.cardsFromApi}
-                                chosenCardHandler={this.chosenCardHandler} />
-                    <Wrapper>
-                        <NavHeader backLink={'/cards-creator-start'} label={this.state.headerLabel} />
-                        <Main>
-                            <CardDescribePreview cardName={this.state.cardName}
-                                cardSubject={this.state.cardSubject}
-                                cardTooltip={this.state.cardTooltip}
-                                showDescribeInputsHandler={this.showDescribeInputsHandler}
+                            <CardProperties creatorType={this.props.creatorType}
+                                            levelCostValues={this.state.levelCostValues}
+                                            levelCostValuesHandler={this.levelCostValuesHandler}
+                                            levelCostClearHandler={this.levelCostClearHandler}
+                                            levelCostResetHandler={this.levelCostResetHandler}
+                                            effectsFromApi={this.state.effectsFromApi}
+                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
+                                            levelsListFromCard={this.state.levelsListFromCard}
+                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
+                                            effectsToSend={this.state.effectsToSend}
+                                            removeLevelHandler={this.removeLevelHandler}
                             />
-                            <Form style={{"max-width": '450px'}}>
-                                <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
-                                    show={this.state.showDescribeInputs}
-                                    hideDescribeInputsHandler={this.hideDescribeInputsHandler}
-                                    cardName={this.state.cardName}
-                                    cardSubject={this.state.cardSubject}
-                                    cardTooltip={this.state.cardTooltip}
-                                />
-                                <CardProperties creatorType={this.props.creatorType}
-                                    levelCostValues={this.state.levelCostValues}
-                                    levelCostValuesHandler={this.levelCostValuesHandler}
-                                    levelCostClearHandler={this.levelCostClearHandler}
-                                    levelCostResetHandler={this.levelCostResetHandler}
-                                    effectsFromApi={this.state.effectsFromApi}
-                                    setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                    levelsListFromCard={this.state.levelsListFromCard}
-                                    chosenEffectsFromCard={this.state.chosenEffectsFromCard}
-                                    effectsToSend={this.state.effectsToSend}
-                                    removeLevelHandler={this.removeLevelHandler}
-                                />
-                                <Div>
-                                    <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
-                                        Wyślij
-                                    </Button>
-                                    <Button onClick={this.refreshPage} show={this.props.creatorType}>
-                                        Edytuj inną kartę
-                                    </Button>
-                                </Div>
-                            </Form>
-                        </Main>
-                    </Wrapper>
-                    <SendCardPopup show={this.state.showSendCardPopup}
-                                   hideSendCardPopupHandler={this.hideSendCardPopupHandler}
-                                   sendCard={this.sendCardToApi}
-                                   showSendMessage={this.state.showSendMessage}
-                                   sendSuccess={this.state.sendSuccess}
-                                   failedSubmissionMsg={this.state.failedCardSubmissionMsg}
-                                   commentInputHandler={this.commentInputHandler}/>
-                </>
-            );
-        }
-
+                            <Div>
+                                <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
+                                    Wyślij
+                                </Button>
+                                <Button onClick={this.refreshPage} show={this.props.creatorType}>
+                                    Edytuj inną kartę
+                                </Button>
+                            </Div>
+                        </Form>
+                    </Main>
+                </Wrapper>
+                <SendCardPopup show={this.state.showSendCardPopup}
+                               hideSendCardPopupHandler={this.hideSendCardPopupHandler}
+                               sendCard={this.sendCardToApi}
+                               showSendMessage={this.state.showSendMessage}
+                               sendSuccess={this.state.sendSuccess}
+                               failedSubmissionMsg={this.state.failedCardSubmissionMsg}
+                               commentInputHandler={this.commentInputHandler}/>
+            </>
+        );
     }
 }
 

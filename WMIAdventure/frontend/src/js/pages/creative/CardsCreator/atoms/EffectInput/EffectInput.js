@@ -32,27 +32,31 @@ class EffectInput extends React.Component {
             });
             if(effectAttributes.length !== 0) break;
         }
-        try {
-            if(effectAttributes[0].target === 1) {
-                this.setState({checkedPlayer: true, checkedEnemy: false});
-                this.setState({target: 1});
+
+        if (effectAttributes.length > 0) {
+            try {
+                if(effectAttributes[0].target === 1) {
+                    this.setState({checkedPlayer: true, checkedEnemy: false});
+                    this.setState({target: 1});
+                }
+                else if(effectAttributes[0].target === 2) {
+                    this.setState({checkedPlayer: false, checkedEnemy: true});
+                    this.setState({target: 2});
+                }
+            } catch (error) {
+                console.log(error);
             }
-            else if(effectAttributes[0].target === 2) {
-                this.setState({checkedPlayer: false, checkedEnemy: true});
-                this.setState({target: 2});
+
+            try {
+                this.setState({
+                    power: effectAttributes[0].power,
+                    range: effectAttributes[0].range
+                });
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
 
-        try {
-            this.setState({
-                power: effectAttributes[0].power,
-                range: effectAttributes[0].range
-            });
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     checkedTargetHandler = (event) => {
@@ -93,14 +97,14 @@ class EffectInput extends React.Component {
                             Moc
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-power`} value={this.state.power}
-                                     name='power' type='number' onChange={this.cardAttributesHandler}/>
+                                     name='power' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
                         <Label marginRight htmlFor={`${this.props.id}-${this.props.rank}-range`}>
                             Losowość
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-range`} value={this.state.range}
-                                     name='range' type='number' onChange={this.cardAttributesHandler}/>
+                                     name='range' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>

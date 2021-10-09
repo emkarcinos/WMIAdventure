@@ -10,6 +10,11 @@ const Input = styled.input`
   font-size: 16px;
   font-weight: 700;
   position: relative;
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export default Input;

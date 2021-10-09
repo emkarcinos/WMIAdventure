@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework.fields import ImageField
 
+from utils.SVGAndImageFormField import SVGAndImageFormField
 from .models import *
 from .validators import validate_effect_modifiers
 
@@ -20,7 +22,7 @@ class CardInfoSerializer(serializers.ModelSerializer):
     """
     Manages serialization and deserialization of CardInfo instances.
     """
-
+    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
     class Meta:
         model = CardInfo
         fields = ['id', 'name', 'tooltip', 'image']
@@ -70,7 +72,7 @@ class SimpleCardLevelEffectsSerializer(base_simple_card_lvl_efcts_ser_factory(Ca
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
-        fields = ['id', 'info', 'level', 'next_level_cost']
+        fields = ['id', 'info', 'level', 'effects_description', 'next_level_cost']
 
 
 def base_simple_card_serializer_factory(card_model: type, simple_card_level_effects_ser: type):
@@ -93,7 +95,7 @@ def base_simple_card_serializer_factory(card_model: type, simple_card_level_effe
 
         class Meta:
             model = card_model
-            fields = ['level', 'next_level_cost', 'effects']
+            fields = ['level', 'next_level_cost', 'effects_description', 'effects']
 
     return BaseSimpleCardSerializer
 
@@ -181,6 +183,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                 card = info.levels.create(
                     level=card_data.get("level"),
                     next_level_cost=card_data.get("next_level_cost"),
+                    effects_description=card_data.get("effects_description"),
                 )
                 for effect_data in card_data.get("effects"):
                     card.effects.create(
@@ -203,6 +206,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                     card = instance.levels.create(
                         level=card_data.get("level"),
                         next_level_cost=card_data.get("next_level_cost"),
+                        effects_description=card_data.get("effects_description"),
                     )
                     for effect_data in card_data.get("effects"):
                         card.effects.create(
