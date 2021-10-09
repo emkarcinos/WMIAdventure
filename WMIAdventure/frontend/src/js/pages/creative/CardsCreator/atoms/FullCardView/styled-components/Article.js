@@ -12,7 +12,6 @@ function colorHandler(common, gold, epic) {
 const Article = styled.article`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 262px;
   height: 466px;
@@ -20,6 +19,7 @@ const Article = styled.article`
   margin-bottom: 14px;
   border-radius: 24px;
   position: relative;
+  padding-top: 64px;
   
   &:before {
     content: '';

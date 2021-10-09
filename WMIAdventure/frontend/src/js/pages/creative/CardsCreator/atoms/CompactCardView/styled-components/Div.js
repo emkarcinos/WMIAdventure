@@ -12,7 +12,6 @@ function colorHandler(common, gold, epic) {
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 116px;
   height: 182px;
@@ -20,6 +19,7 @@ const Div = styled.div`
   border-radius: 8px;
   position: relative;
   margin-bottom: 60px;
+  padding-top: 18px;
 
   &:before {
     content: '';
