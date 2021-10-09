@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Div = styled.div`
+const MobileLevelsMenu = styled.div`
   display: flex;
   position: fixed;
   bottom: 0;
@@ -10,4 +10,4 @@ const Div = styled.div`
   background-color: ${({theme}) => theme.colors.grey1};
 `;
 
-export default Div;
+export default MobileLevelsMenu;

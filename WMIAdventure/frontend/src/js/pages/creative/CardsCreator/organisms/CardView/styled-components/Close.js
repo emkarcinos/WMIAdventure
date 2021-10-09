@@ -17,6 +17,13 @@ const Close = styled.button`
   width: 16px;
   height: 16px;
   z-index: 5;
+
+  @media (min-width: 768px) {
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 20px;
+  }
 `;
 
 export default Close;

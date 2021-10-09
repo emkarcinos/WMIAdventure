@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
 const Div = styled.div`
-  display: ${({show}) => show ? 'flex' : 'none'};
+  @media(max-width: 768px) {
+    display: ${({show}) => show ? 'flex' : 'none'};
+
+  }
+  @media(min-width: 768px) {
+    display: ${({exist}) => exist ? 'flex' : 'none'};
+    margin: 0 48px;
+  }
   flex-direction: column;
   justify-content: center;
   align-items: center;

@@ -7,7 +7,7 @@ import CompactCardView from '../../atoms/CompactCardView';
 class LevelCardView extends React.Component {
     render() {
         return (
-            <Div show={this.props.show}>
+            <Div show={this.props.show} exist={this.props.exist}>
                 <P>
                     Pełna
                 </P>
