@@ -7,6 +7,7 @@ import Button from './styled-components/Button';
 import LevelCardView from '../../molecules/LevelCardView';
 import Media from 'react-media';
 import DesktopContainer from './styled-components/DesktopContainer';
+import {mobile} from '../../../../../utils/globals';
 
 class CardView extends React.Component {
 
@@ -149,7 +150,7 @@ class CardView extends React.Component {
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
                                    description={this.state.epicDescription} />
-                    <Media query='(max-width: 768px)'>
+                    <Media query={mobile}>
                         <MobileLevelsMenu>
                             <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
                                     access={this.props.cardEffects[0].length !== 0}>

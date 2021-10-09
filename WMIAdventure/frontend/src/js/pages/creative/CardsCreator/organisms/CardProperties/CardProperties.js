@@ -11,6 +11,7 @@ import EffectChoose from '../../molecules/EffectChoose';
 import DivScroll from './styled-components/DivScroll';
 import Media from 'react-media';
 import DivCenter from './styled-components/DivCenter';
+import {desktop, mobile} from '../../../../../utils/globals';
 
 class CardProperties extends React.Component {
     state = {
@@ -234,7 +235,7 @@ class CardProperties extends React.Component {
                     chosenEffects={this.state.chosenEffects}
                     chosenEffectsHandler={this.chosenEffectsHandler} />
                 {/* Mobile sized screens */}
-                <Media query='(max-width: 768px)'>
+                <Media query={mobile}>
                     <Fieldset activeCardRank={this.state.activeCardRank}>
                         <DivScroll rank={this.state.activeCardRank}>
                             <CostInputs cardRank={this.existsHigherLevel(this.state.activeCardRank) ? this.state.activeCardRank : 0}
@@ -275,7 +276,7 @@ class CardProperties extends React.Component {
                     </Fieldset>
                 </Media>
                 {/* Desktop sized screens */}
-                <Media query='(min-width: 768px)'>
+                <Media query={desktop}>
                     <DivCenter>
                         <Fieldset create={this.state.createCommonLevel} createCommon={this.state.createCommonLevel}>
                             <Levels

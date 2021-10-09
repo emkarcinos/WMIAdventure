@@ -35,7 +35,7 @@ const Fieldset = styled.fieldset`
   background-color: ${({theme}) => theme.colors.ui01};
   border: ${({activeCardRank, theme}) => activeRankHandler(activeCardRank, theme)};
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     max-width: 380px;
