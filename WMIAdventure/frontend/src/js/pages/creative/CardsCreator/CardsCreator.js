@@ -21,7 +21,7 @@ class CardsCreator extends React.Component {
         cardTooltip: null,
         cardImage: null,
         /**
-         * cardImage is file object and can't be used to preview uploaded image, so this variable exists
+         * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
         cardImageURLPreview: null,
         levelCostValues: [],
