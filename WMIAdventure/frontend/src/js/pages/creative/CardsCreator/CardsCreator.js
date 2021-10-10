@@ -175,10 +175,13 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
-    levelCostClearHandler = (event, rank) => {
-        event.preventDefault();
+    /**
+     * Clears upgrade cost for given array of card levels.
+     * @param levels Array of card levels which will have their upgrade cost cleared.
+     */
+    levelCostClearHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = undefined;
+        levels.forEach((rank) => {newList[rank - 1] = undefined});
         this.setState({levelCostValues: newList});
     }
 
