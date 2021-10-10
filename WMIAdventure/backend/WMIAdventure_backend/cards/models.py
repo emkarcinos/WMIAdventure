@@ -18,7 +18,7 @@ class CardLevel(models.Model):
 
     level = models.IntegerField(primary_key=True, choices=Level.choices, default=Level.COMMON)
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=15)
 
     def __str__(self):
         return f"{self.name}"
@@ -56,7 +56,7 @@ class CardEffect(models.Model):
 
     id = models.IntegerField(primary_key=True, choices=EffectId.choices, default=EffectId.DMG)
     name = models.CharField(max_length=50, help_text="A pretty effect name on-display.")
-    tooltip = models.TextField(max_length=150, null=True, help_text="Effect description")
+    tooltip = models.TextField(max_length=60, null=True, help_text="Effect description")
 
     has_modifier = models.BooleanField(default=False, help_text="# This field tells us whether a specific effect can "
                                                                 "have modifiers (power, range, etc). Most of the "
@@ -94,13 +94,14 @@ def base_card_info_factory(upload_images_to: str):
             abstract = True
 
         from cards.validators import validate_file_size
-        name = models.CharField(max_length=50, help_text="Displayed card's name.")
-        tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.")
+        name = models.CharField(max_length=36, help_text="Displayed card's name.")
+        tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.",
+                                   max_length=50)
         image = models.FileField(upload_to=upload_images_to, null=True, blank=True,
                                   help_text="An image. We don't really"
                                             "know what should that be.",
                                  validators=[validate_file_size])
-        subject = models.CharField(max_length=50, null=True,
+        subject = models.CharField(max_length=25, null=True,
                                    help_text="Subject name. In the future this field will be an"
                                              " id pointing to Subject object.")
 
