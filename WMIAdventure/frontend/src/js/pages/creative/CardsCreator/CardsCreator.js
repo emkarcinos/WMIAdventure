@@ -264,6 +264,16 @@ class CardsCreator extends React.Component {
     }
 
     /**
+     * Being called after new level is created.
+     * @param level Newly created level.
+     */
+    levelCreatedHandler = (level) => {
+        let newLevelsListFromCard = this.state.levelsListFromCard;
+        newLevelsListFromCard.push(level);
+        this.setState({levelsListFromCard: newLevelsListFromCard});
+    }
+
+    /**
      * Removes level.
      * @param level Given level to remove.
      */
@@ -400,6 +410,7 @@ class CardsCreator extends React.Component {
                                             chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                             effectsToSend={this.state.effectsToSend}
                                             removeLevelHandler={this.removeLevelHandler}
+                                            levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
                                 <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
