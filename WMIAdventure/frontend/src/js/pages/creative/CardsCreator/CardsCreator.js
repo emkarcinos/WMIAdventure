@@ -420,7 +420,7 @@ class CardsCreator extends React.Component {
                                 <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
                                     Zacznij od nowa
                                 </Button>
-                                <Button onClick={this.refreshPage} show={this.props.creatorType}>
+                                <Button onClick={this.refreshPage} access show={this.props.creatorType}>
                                     Edytuj inną kartę
                                 </Button>
                                 <Button show access={this.state.effectsToSend[0].length !== 0 ||
