@@ -8,7 +8,7 @@ const Category = styled.p`
   color: ${({theme}) => theme.colors.borderLine};
   text-align: center;
   overflow-wrap: anywhere;
-  max-width: 156px;
+  max-width: 200px;
 `;
 
 export default Category;

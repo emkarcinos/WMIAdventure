@@ -5,7 +5,7 @@ const Describe = styled.p`
   font-weight: ${({theme}) => theme.weight.light};
   margin: 0;
   text-align: center;
-  max-width: 220px;
+  max-width: 240px;
   overflow-wrap: anywhere;
 `;
 

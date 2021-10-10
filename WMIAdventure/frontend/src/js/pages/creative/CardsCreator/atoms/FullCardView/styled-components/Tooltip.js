@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const Tooltip = styled.p`
-  margin: 0 0 22px 0;
+  margin: 0 0 20px 0;
   font-size: 12px;
   color: ${({theme}) => theme.colors.borderLine};
   font-weight: ${({theme}) => theme.weight.regular};
   font-style: italic;
   text-transform: uppercase;
-  max-width: 120px;
+  max-width: 200px;
   text-align: center;
   color: ${({theme}) => theme.colors.borderLine};
   overflow-wrap: anywhere;
