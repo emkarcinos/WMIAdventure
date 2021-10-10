@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import plusIcon from '../../../../../../../assets/icons/plus.svg';
 
 const Button = styled.button`
+  display: ${({access}) => access ? 'block' : 'none'};
   border: none;
   padding: 0;
   margin: 10px 0 0 8px;
