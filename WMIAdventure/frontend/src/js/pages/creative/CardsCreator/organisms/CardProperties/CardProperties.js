@@ -126,34 +126,33 @@ class CardProperties extends React.Component {
         this.props.levelCostClearHandler(levelsToClear);
     }
 
-    createCommonLevelHandler = (event) => {
-        event.preventDefault();
-        this.hideLevelChooseHandler(event);
-        this.setState({
-            createCommonLevel: true,
-            activeCardRank: 1,
-        });
-        this.determineWhichLevelCostToReset(1);
+    /**
+     * Sets appropriate state after some card level was created.
+     * @param level Which card level was created.
+     */
+    setStateAfterLevelCreation = (level) => {
+        if (level === 1) {
+            this.setState({createCommonLevel: true});
+        }
+        else if (level === 2) {
+            this.setState({createGoldLevel: true});
+        }
+        else if (level === 3) {
+            this.setState({createEpicLevel : true});
+        }
+        this.setState({activeCardRank: level});
     }
 
-    createGoldLevelHandler = (event) => {
+    /**
+     * Handles creating card level.
+     * @param event
+     * @param level Level which was created.
+     */
+    createLevelHandler = (event, level) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
-        this.setState({
-            createGoldLevel: true,
-            activeCardRank: 2
-        });
-        this.determineWhichLevelCostToReset(2);
-    }
-
-    createEpicLevelHandler = (event) => {
-        event.preventDefault();
-        this.hideLevelChooseHandler(event);
-        this.setState({
-            createEpicLevel: true,
-            activeCardRank: 3,
-        });
-        this.determineWhichLevelCostToReset(3);
+        this.setStateAfterLevelCreation(level);
+        this.determineWhichLevelCostToReset(level);
     }
 
     removeCommonLevelHandler = (event) => {
@@ -282,11 +281,9 @@ class CardProperties extends React.Component {
             <>
                 <LevelChoose show={this.state.showLevelChoose}
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
-                             createCommonLevelHandler = {this.createCommonLevelHandler}
+                             createLevelHandler = {this.createLevelHandler}
                              commonLevelChosen={this.state.createCommonLevel}
-                             createGoldLevelHandler = {this.createGoldLevelHandler}
                              goldLevelChosen={this.state.createGoldLevel}
-                             createEpicLevelHandler = {this.createEpicLevelHandler}
                              epicLevelChosen={this.state.createEpicLevel}/>
                 <EffectChoose
                     showEffectChoose={this.state.showEffectChoose}
