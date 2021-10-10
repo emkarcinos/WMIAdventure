@@ -69,6 +69,7 @@ class CardProperties extends React.Component {
             createCommonLevel: true,
             activeCardRank: 1,
         });
+        this.props.levelCreatedHandler(1);
     }
 
     createGoldLevelHandler = (event) => {
@@ -79,6 +80,7 @@ class CardProperties extends React.Component {
             activeCardRank: 2
         });
         this.props.levelCostResetHandler(event, 1);
+        this.props.levelCreatedHandler(2);
     }
 
     createEpicLevelHandler = (event) => {
@@ -89,6 +91,7 @@ class CardProperties extends React.Component {
             activeCardRank: 3,
         });
         this.props.levelCostResetHandler(event, 2);
+        this.props.levelCreatedHandler(3);
     }
 
     removeCommonLevelHandler = (event) => {
