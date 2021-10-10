@@ -64,12 +64,9 @@ class CardProperties extends React.Component {
 
     /**
      * Resets cost of upgrade for proper card levels after some card level was created.
-     * @param event
      * @param createdLevel Based on a created level, function will decide which upgrade costs should be reset.
      */
-    determineWhichLevelCostToReset = (event, createdLevel) => {
-        event.preventDefault();
-
+    determineWhichLevelCostToReset = (createdLevel) => {
         let levelsToReset = [];
 
         // If common level was created
@@ -109,7 +106,7 @@ class CardProperties extends React.Component {
             createCommonLevel: true,
             activeCardRank: 1,
         });
-        this.determineWhichLevelCostToReset(event, 1);
+        this.determineWhichLevelCostToReset(1);
     }
 
     createGoldLevelHandler = (event) => {
@@ -119,7 +116,7 @@ class CardProperties extends React.Component {
             createGoldLevel: true,
             activeCardRank: 2
         });
-        this.determineWhichLevelCostToReset(event, 2);
+        this.determineWhichLevelCostToReset(2);
     }
 
     createEpicLevelHandler = (event) => {
@@ -129,7 +126,7 @@ class CardProperties extends React.Component {
             createEpicLevel: true,
             activeCardRank: 3,
         });
-        this.determineWhichLevelCostToReset(event, 3);
+        this.determineWhichLevelCostToReset(3);
     }
 
     removeCommonLevelHandler = (event) => {
@@ -360,7 +357,6 @@ class CardProperties extends React.Component {
                                 activeEpic={this.state.activeCardRank === 3}
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={0}
