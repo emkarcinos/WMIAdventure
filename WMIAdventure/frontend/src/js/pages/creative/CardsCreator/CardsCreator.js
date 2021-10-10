@@ -268,13 +268,19 @@ class CardsCreator extends React.Component {
      * @param level Given level to remove.
      */
     removeLevelHandler = (level) => {
-        if (this.state.levelsFromApi.length > 0){
-            let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
-            this.setState({levelsFromApi: newLevelsFromApi});
-            this.setLevelsListFromCard(newLevelsFromApi);
-            this.setLevelCostValuesFromCard(newLevelsFromApi);
-            this.setChosenEffectsFromCard(newLevelsFromApi);
-        }
+        let newEffectsToSend = this.state.effectsToSend.slice();
+        let newChosenEffectsFromCard = this.state.chosenEffectsFromCard.slice();
+
+        newEffectsToSend[level - 1] = [];
+        newChosenEffectsFromCard[level - 1] = [];
+
+        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => { return l !== level });
+
+        this.setState({
+            effectsToSend: newEffectsToSend,
+            chosenEffectsFromCard: newChosenEffectsFromCard,
+            levelsListFromCard: newLevelsListFromCard
+        })
     }
 
     hideCardChooseHandler = (event) => {
