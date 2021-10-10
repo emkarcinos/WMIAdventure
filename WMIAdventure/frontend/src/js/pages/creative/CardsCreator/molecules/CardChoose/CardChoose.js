@@ -55,6 +55,7 @@ class CardChoose extends React.Component {
                                             <Card id={card.id} name={card.name}
                                                   subject={card.subject}
                                                   tooltip={card.tooltip}
+                                                  image={card.image}
                                                   searchInput={this.state.searchInput}
                                                   levels={card.levels}
                                                   chosenCardHandler={this.props.chosenCardHandler} />
