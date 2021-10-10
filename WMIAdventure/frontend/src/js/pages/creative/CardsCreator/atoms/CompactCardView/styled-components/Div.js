@@ -21,6 +21,7 @@ const Div = styled.div`
   margin-bottom: 60px;
   padding-top: 18px;
   overflow-y: hidden;
+  font-family: 'Roboto', sans-serif;
 
   &:before {
     content: '';

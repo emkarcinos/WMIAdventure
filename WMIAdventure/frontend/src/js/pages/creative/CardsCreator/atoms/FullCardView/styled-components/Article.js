@@ -21,7 +21,7 @@ const Article = styled.article`
   position: relative;
   padding-top: 64px;
   overflow-y: hidden;
-
+  font-family: 'Roboto', sans-serif;
   
   &:before {
     content: '';

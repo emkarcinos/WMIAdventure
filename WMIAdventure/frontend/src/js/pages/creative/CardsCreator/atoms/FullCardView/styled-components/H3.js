@@ -27,6 +27,9 @@ const H3 = styled.h3`
   text-align: center;
   margin: 0;
   text-transform: uppercase;
+  line-height: 36px;
+  max-width: 100%;
+  color: ${({theme}) => theme.colors.borderLine};
   
   &:before {
     content: '';

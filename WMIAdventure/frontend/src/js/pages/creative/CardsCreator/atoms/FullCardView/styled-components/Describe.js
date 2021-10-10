@@ -6,6 +6,7 @@ const Describe = styled.p`
   margin: 0;
   text-align: center;
   max-width: 220px;
+  overflow-wrap: anywhere;
 `;
 
 export default Describe;

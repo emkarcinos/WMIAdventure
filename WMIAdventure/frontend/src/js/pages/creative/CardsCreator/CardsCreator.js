@@ -227,7 +227,7 @@ class CardsCreator extends React.Component {
         let keyValue;
         if (event.target.value !== '')
             keyValue = event.target.value;
-        else keyValue = '-';
+        else keyValue = '';
         this.setState({[keyName]: keyValue});
     }
 
