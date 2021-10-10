@@ -32,14 +32,12 @@ class Levels extends React.Component {
         event.preventDefault();
         this.props.removeGoldLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
-        this.props.levelCostClearHandler(event, 1);
     }
 
     removeEpicLevelHandler = (event) => {
         event.preventDefault();
         this.props.removeEpicLevelHandler(event);
         this.props.activeLevelRecognize(event, 0);
-        this.props.levelCostClearHandler(event, 2);
     }
 
     render() {
