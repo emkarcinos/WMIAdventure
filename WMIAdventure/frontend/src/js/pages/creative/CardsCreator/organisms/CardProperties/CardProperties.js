@@ -81,7 +81,7 @@ class CardProperties extends React.Component {
             if (this.state.createCommonLevel){
                 levelsToReset.push(1);
             }
-            if (this.state.createCommonLevel && this.state.createEpicLevel) {
+            if (this.state.createEpicLevel) {
                 levelsToReset.push(2);
             }
         }
