@@ -13,7 +13,12 @@ function handleExistMobile(rank) {
 
 const DivScroll = styled.div`
   width: 100%;
-  overflow-y: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE 10+ */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
   padding-top: 10px;
   @media (max-width: 768px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
