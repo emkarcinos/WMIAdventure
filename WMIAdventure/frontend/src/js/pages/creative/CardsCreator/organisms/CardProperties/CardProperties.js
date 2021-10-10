@@ -99,6 +99,33 @@ class CardProperties extends React.Component {
         this.props.levelCostResetHandler(event, levelsToReset);
     }
 
+    /**
+     * Clears cost of upgrade for proper card levels after some card level was removed.
+     * @param removedLevel Based on the removed level, function will decide which upgrade costs should be cleared.
+     */
+    clearUpgradeCostAfterRemove = (removedLevel) => {
+        let levelsToClear = [removedLevel];
+
+        // If gold level was removed
+        if (removedLevel === 2) {
+            if (!this.state.createEpicLevel){
+                levelsToClear.push(1);
+            }
+        }
+
+        // If epic level was removed
+        else if (removedLevel === 3) {
+            if(this.state.createGoldLevel){
+                levelsToClear.push(2);
+            }
+            else if(this.state.createCommonLevel){
+                levelsToClear.push(1);
+            }
+        }
+
+        this.props.levelCostClearHandler(levelsToClear);
+    }
+
     createCommonLevelHandler = (event) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
