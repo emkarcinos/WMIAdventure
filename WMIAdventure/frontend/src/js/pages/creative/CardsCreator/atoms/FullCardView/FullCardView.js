@@ -8,11 +8,22 @@ import Describe from './styled-components/Describe';
 import upload_image_dark from "../../../../../../assets/icons/upload_image_dark.svg";
 
 class FullCardView extends React.Component {
+
+    cardNameLengthHandler = (cardNameLength) => {
+        try {
+            if(cardNameLength.length)
+                return cardNameLength.length;
+            return 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+
     render() {
         return (
             <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
                 <H3 common={this.props.common} gold={this.props.gold} epic={this.props.epic}
-                    nameLength={this.props.cardName.length}>
+                    nameLength={this.cardNameLengthHandler(this.props.cardName)}>
                     {this.props.cardName ? this.props.cardName : "null"}
                 </H3>
                 <Category>
