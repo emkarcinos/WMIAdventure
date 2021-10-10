@@ -19,6 +19,7 @@ const DivScroll = styled.div`
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
+  margin-bottom: 10px;
   padding: 10px; 
   @media (max-width: 768px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
