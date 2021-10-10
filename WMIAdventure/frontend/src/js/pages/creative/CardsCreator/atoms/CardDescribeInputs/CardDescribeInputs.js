@@ -12,6 +12,7 @@ import DivImageInput from "./styled-components/DivImageInput";
 import CardImagePreview from "./styled-components/CardImagePreview";
 import upload_image_dark from '../../../../../../assets/icons/upload_image_dark.svg'
 import ImageInputPrompt from "./styled-components/ImageInputPrompt";
+import {maxCardName, maxCardSubject, maxCardTooltip} from '../../../../../utils/globals';
 
 /* Transition timeout values */
 const timeout = {
@@ -54,7 +55,7 @@ class CardDescribeInputs extends React.Component {
                                 <DivInput>
                                   <Input id='cardName' name='cardName' type='text' value={this.props.cardName}
                                          onChange={this.props.updateDescribePreview}
-                                         placeholder={'Nazwa karty'}
+                                         placeholder={'Nazwa karty'} maxLength={maxCardName}
                                   />
                                 </DivInput>
                             </Div>
@@ -65,7 +66,7 @@ class CardDescribeInputs extends React.Component {
                                 <DivInput>
                                   <Input id='cardSubject' name='cardSubject' type='text' value={this.props.cardSubject}
                                          onChange={this.props.updateDescribePreview}
-                                         placeholder={'Przedmiot'}
+                                         placeholder={'Przedmiot'} maxLength={maxCardSubject}
                                   />
                                 </DivInput>
                             </Div>
@@ -75,7 +76,7 @@ class CardDescribeInputs extends React.Component {
                                 </Label>
                                 <DivInput>
                                   <Input id='cardTooltip' name='cardTooltip' type='text' value={this.props.cardTooltip}
-                                         onChange={this.props.updateDescribePreview}
+                                         onChange={this.props.updateDescribePreview} maxLength={maxCardTooltip}
                                          placeholder={'Opis Karty'}
                                   />
                                 </DivInput>

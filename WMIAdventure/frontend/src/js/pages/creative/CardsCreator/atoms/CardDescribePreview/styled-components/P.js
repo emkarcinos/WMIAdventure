@@ -6,6 +6,7 @@ const P = styled.p`
   font-size: ${({tooltip}) => tooltip ? '14px' : '18px'};
   max-width: 290px;
   overflow-wrap: anywhere;
+  text-align: center;
 `;
 
 export default P;

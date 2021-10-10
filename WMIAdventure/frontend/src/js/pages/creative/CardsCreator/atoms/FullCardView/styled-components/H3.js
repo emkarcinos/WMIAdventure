@@ -21,14 +21,28 @@ function iconHeightHandler(common, gold, epic) {
         return '31px';
 }
 
+function nameLengthHandler(nameLength) {
+    if(nameLength < 16) {
+        return '32px';
+    } return '20px';
+}
+function nameLineHeightHandler(nameLength) {
+    if(nameLength < 16) {
+        return '36px';
+    } return '24px';
+}
+
+
+
 const H3 = styled.h3`
-  font-size: 32px;
+  font-size: ${({nameLength}) => nameLengthHandler(nameLength)};
   padding: 4px;
   text-align: center;
   margin: 0;
   text-transform: uppercase;
-  line-height: 36px;
-  max-width: 100%;
+  line-height: ${({nameLength}) => nameLineHeightHandler(nameLength)};
+  overflow-wrap: anywhere;
+  max-width: 156px;
   color: ${({theme}) => theme.colors.borderLine};
   
   &:before {

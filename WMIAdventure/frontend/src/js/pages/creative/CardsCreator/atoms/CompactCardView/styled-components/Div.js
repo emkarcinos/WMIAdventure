@@ -13,8 +13,9 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 116px;
-  height: 182px;
+  justify-content: space-between;
+  width: 144px;
+  height: 220px;
   background-color: ${({theme}) => theme.colors.grey1};
   border-radius: 8px;
   position: relative;

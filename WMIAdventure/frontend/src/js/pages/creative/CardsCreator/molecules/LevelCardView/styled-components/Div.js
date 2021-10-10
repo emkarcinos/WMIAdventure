@@ -7,7 +7,7 @@ const Div = styled.div`
   }
   @media(min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({exist}) => exist ? 'flex' : 'none'};
-    margin: 0 48px;
+    margin: 0 24px;
   }
   flex-direction: column;
   justify-content: center;

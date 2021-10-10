@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const Img = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
+  margin-bottom: 14px;
 `;
 
 export default Img;

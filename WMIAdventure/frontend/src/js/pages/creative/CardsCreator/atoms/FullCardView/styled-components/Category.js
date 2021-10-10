@@ -6,6 +6,9 @@ const Category = styled.p`
   text-transform: uppercase;
   margin: 0;
   color: ${({theme}) => theme.colors.borderLine};
+  text-align: center;
+  overflow-wrap: anywhere;
+  max-width: 156px;
 `;
 
 export default Category;

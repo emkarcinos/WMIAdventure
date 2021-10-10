@@ -13,8 +13,8 @@ const Article = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 262px;
-  height: 466px;
+  width: 300px;
+  height: 500px;
   background-color: ${({theme}) => theme.colors.grey1};
   margin-bottom: 14px;
   border-radius: 24px;

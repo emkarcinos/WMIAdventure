@@ -7,7 +7,7 @@ const Tooltip = styled.p`
   font-weight: ${({theme}) => theme.weight.regular};
   font-style: italic;
   text-transform: uppercase;
-  max-width: 100%;
+  max-width: 120px;
   text-align: center;
   color: ${({theme}) => theme.colors.borderLine};
   overflow-wrap: anywhere;
