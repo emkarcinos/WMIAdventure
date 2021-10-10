@@ -14,7 +14,7 @@ class PowerDescription:
     
     def _remove_trailing_zeros_in_float(self, number: float) -> str:
         text = str(number)
-        text = text.strip('0')
+        text = text.rstrip('0')
         
         # We may have a dot remaining to the left.
         return text.rstrip(r'.')
