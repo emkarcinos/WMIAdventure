@@ -24,14 +24,9 @@ class EffectInput extends React.Component {
         let effectsFromCard = this.props.effectsFromCard;
         let rank = this.props.rank;
         let id = this.props.id;
-        let effectAttributes;
-
-        for (let i=0; i<effectsFromCard.length; i++) {
-            effectAttributes = effectsFromCard[i].filter(function (elem) {
-                return elem.level === rank && elem.card_effect === id;
-            });
-            if(effectAttributes.length !== 0) break;
-        }
+        let effectAttributes = effectsFromCard[rank - 1].filter((effect) => {
+            return effect.card_effect === id;
+        });
 
         if (effectAttributes.length > 0) {
             try {
@@ -77,9 +72,9 @@ class EffectInput extends React.Component {
         setTimeout(() => {
             let newEffect = {
                 card_effect: this.state.card_effect,
-                target: this.state.target,
-                power: this.state.power,
-                range: this.state.range
+                target: Number(this.state.target),
+                power: Number(this.state.power),
+                range: Number(this.state.range)
             }
             this.props.effectsToSendHandler(this.props.rank, newEffect);
         }, 10);
