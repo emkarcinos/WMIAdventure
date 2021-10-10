@@ -19,6 +19,7 @@ class AcceptProposedCardView(APIView):
         try:
             # Get proposed card that will be accepted
             proposed_card = ProposedCardInfo.objects.get(pk=pk)
+            proposed_card.image = None
         except ProposedCardInfo.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -36,8 +37,9 @@ class AcceptProposedCardView(APIView):
             response_status = status.HTTP_201_CREATED
 
         accepted_card_serializer.is_valid(raise_exception=True)
-        accepted_card_serializer.save()
-
+        new_card = accepted_card_serializer.save()
+        new_card.image = ProposedCardInfo.objects.get(pk=pk).image
+        new_card.save()
         # Remove accepted card from proposed cards tables.
         proposed_card.delete()
 
