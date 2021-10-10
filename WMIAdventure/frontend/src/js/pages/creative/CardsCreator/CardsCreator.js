@@ -23,7 +23,7 @@ class CardsCreator extends React.Component {
         cardImage: null,
 
         /**
-         * cardImage is file object and can't be used to preview uploaded image, so this variable exists
+         * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
         cardImageURLPreview: null,
         levelCostValues: [],
@@ -289,13 +289,15 @@ class CardsCreator extends React.Component {
         this.setState({showCardChoose: false});
     }
 
-    chosenCardHandler = (event, id, name, subject, tooltip, levels) => {
+    chosenCardHandler = (event, id, name, subject, tooltip, image, levels) => {
         event.preventDefault();
         this.setState({
             cardId: id,
             cardName: name,
             cardSubject: subject,
             cardTooltip: tooltip,
+            cardImage: image,
+            cardImageURLPreview: image,
             levelsFromApi: levels
         });
 

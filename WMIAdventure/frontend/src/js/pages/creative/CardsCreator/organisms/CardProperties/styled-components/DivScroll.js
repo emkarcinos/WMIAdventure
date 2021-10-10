@@ -14,7 +14,8 @@ function handleExistMobile(rank) {
 const DivScroll = styled.div`
   width: 100%;
   overflow-y: scroll;
-  padding-top: 10px;
+  padding: 10px;
+  
   @media (max-width: ${({theme}) => theme.overMobile}px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
   }
