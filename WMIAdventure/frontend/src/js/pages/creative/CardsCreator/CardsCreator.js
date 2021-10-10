@@ -264,11 +264,9 @@ class CardsCreator extends React.Component {
 
     /**
      * Resets upgrade cost for given array of card levels.
-     * @param event
      * @param levels Array of card levels which will have their upgrade cost reset.
      */
-    levelCostResetHandler = (event, levels) => {
-        event.preventDefault();
+    levelCostResetHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
         levels.forEach((rank) => {newList[rank - 1] = 1});
         this.setState({levelCostValues: newList});

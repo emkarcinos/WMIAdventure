@@ -96,7 +96,7 @@ class CardProperties extends React.Component {
             }
         }
 
-        this.props.levelCostResetHandler(event, levelsToReset);
+        this.props.levelCostResetHandler(levelsToReset);
     }
 
     /**
