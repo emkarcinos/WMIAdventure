@@ -282,13 +282,15 @@ class CardsCreator extends React.Component {
         this.setState({showCardChoose: false});
     }
 
-    chosenCardHandler = (event, id, name, subject, tooltip, levels) => {
+    chosenCardHandler = (event, id, name, subject, tooltip, image, levels) => {
         event.preventDefault();
         this.setState({
             cardId: id,
             cardName: name,
             cardSubject: subject,
             cardTooltip: tooltip,
+            cardImage: image,
+            cardImageURLPreview: image,
             levelsFromApi: levels
         });
 
