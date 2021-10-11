@@ -14,8 +14,13 @@ function handleExistMobile(rank) {
 const DivScroll = styled.div`
   width: 100%;
   overflow-y: scroll;
-  padding: 10px;
-  
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE 10+ */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+  margin-bottom: 10px;
+  padding: 10px; 
   @media (max-width: ${({theme}) => theme.overMobile}px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
   }

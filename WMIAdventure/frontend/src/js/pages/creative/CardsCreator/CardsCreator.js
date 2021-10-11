@@ -26,14 +26,17 @@ class CardsCreator extends React.Component {
          * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
         cardImageURLPreview: null,
-        levelCostValues: [],
+        /**
+         * index 0 - cost of upgrade from level common to higher
+         *
+         * index 1 - cost of upgrade from level gold to higher
+         *
+         * index 2 - always undefined, there is no higher level than epic
+         */
+        levelCostValues: [undefined, undefined, undefined],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
-        /**
-         * Level objects as received from the server, obtained when editing existing card.
-         */
-        levelsFromApi: [],
 
         headerLabel: '',
         showCardChoose: false,
@@ -248,17 +251,23 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
-    levelCostClearHandler = (event, rank) => {
-        event.preventDefault();
+    /**
+     * Clears upgrade cost for given array of card levels.
+     * @param levels Array of card levels which will have their upgrade cost cleared.
+     */
+    levelCostClearHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = undefined;
+        levels.forEach((rank) => {newList[rank - 1] = undefined});
         this.setState({levelCostValues: newList});
     }
 
-    levelCostResetHandler = (event, rank) => {
-        event.preventDefault();
+    /**
+     * Resets upgrade cost for given array of card levels.
+     * @param levels Array of card levels which will have their upgrade cost reset.
+     */
+    levelCostResetHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = 1;
+        levels.forEach((rank) => {newList[rank - 1] = 1});
         this.setState({levelCostValues: newList});
     }
 
@@ -271,17 +280,33 @@ class CardsCreator extends React.Component {
     }
 
     /**
+     * Being called after new level is created.
+     * @param level Newly created level.
+     */
+    levelCreatedHandler = (level) => {
+        let newLevelsListFromCard = this.state.levelsListFromCard;
+        newLevelsListFromCard.push(level);
+        this.setState({levelsListFromCard: newLevelsListFromCard});
+    }
+
+    /**
      * Removes level.
      * @param level Given level to remove.
      */
     removeLevelHandler = (level) => {
-        if (this.state.levelsFromApi.length > 0){
-            let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
-            this.setState({levelsFromApi: newLevelsFromApi});
-            this.setLevelsListFromCard(newLevelsFromApi);
-            this.setLevelCostValuesFromCard(newLevelsFromApi);
-            this.setChosenEffectsFromCard(newLevelsFromApi);
-        }
+        let newEffectsToSend = this.state.effectsToSend.slice();
+        let newChosenEffectsFromCard = this.state.chosenEffectsFromCard.slice();
+
+        newEffectsToSend[level - 1] = [];
+        newChosenEffectsFromCard[level - 1] = [];
+
+        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => { return l !== level });
+
+        this.setState({
+            effectsToSend: newEffectsToSend,
+            chosenEffectsFromCard: newChosenEffectsFromCard,
+            levelsListFromCard: newLevelsListFromCard
+        })
     }
 
     hideCardChooseHandler = (event) => {
@@ -298,7 +323,6 @@ class CardsCreator extends React.Component {
             cardTooltip: tooltip,
             cardImage: image,
             cardImageURLPreview: image,
-            levelsFromApi: levels
         });
 
         this.setLevelsListFromCard(levels);
@@ -417,6 +441,7 @@ class CardsCreator extends React.Component {
                                             removeLevelHandler={this.removeLevelHandler}
                                             setEffectsToSendHandler={this.setEffectsToSendHandler}
                                             setChosenEffectsToCardHandler={this.setChosenEffectsToCardHandler}
+                                            levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
                                 <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
