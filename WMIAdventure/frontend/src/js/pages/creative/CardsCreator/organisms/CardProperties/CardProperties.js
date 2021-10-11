@@ -62,36 +62,97 @@ class CardProperties extends React.Component {
         this.setState({showLevelChoose: false});
     }
 
-    createCommonLevelHandler = (event) => {
-        event.preventDefault();
-        this.hideLevelChooseHandler(event);
-        this.setState({
-            createCommonLevel: true,
-            activeCardRank: 1,
-        });
-        this.props.levelCreatedHandler(1);
+    /**
+     * Resets cost of upgrade for proper card levels after some card level was created.
+     * @param createdLevel Based on a created level, function will decide which upgrade costs should be reset.
+     */
+    determineWhichLevelCostToReset = (createdLevel) => {
+        let levelsToReset = [];
+
+        // If common level was created
+        if (createdLevel === 1) {
+            if (this.state.createGoldLevel || this.state.createEpicLevel){
+                levelsToReset.push(1);
+            }
+        }
+
+        // If gold level was created
+        else if (createdLevel === 2) {
+            if (this.state.createCommonLevel){
+                levelsToReset.push(1);
+            }
+            if (this.state.createEpicLevel) {
+                levelsToReset.push(2);
+            }
+        }
+
+        // If epic level was created
+        else if (createdLevel === 3) {
+            if(this.state.createGoldLevel){
+                levelsToReset.push(2);
+            }
+            else if(this.state.createCommonLevel){
+                levelsToReset.push(1);
+            }
+        }
+
+        this.props.levelCostResetHandler(levelsToReset);
     }
 
-    createGoldLevelHandler = (event) => {
-        event.preventDefault();
-        this.hideLevelChooseHandler(event);
-        this.setState({
-            createGoldLevel: true,
-            activeCardRank: 2
-        });
-        this.props.levelCostResetHandler(event, 1);
-        this.props.levelCreatedHandler(2);
+    /**
+     * Clears cost of upgrade for proper card levels after some card level was removed.
+     * @param removedLevel Based on the removed level, function will decide which upgrade costs should be cleared.
+     */
+    clearUpgradeCostAfterRemove = (removedLevel) => {
+        let levelsToClear = [removedLevel];
+
+        // If gold level was removed
+        if (removedLevel === 2) {
+            if (!this.state.createEpicLevel){
+                levelsToClear.push(1);
+            }
+        }
+
+        // If epic level was removed
+        else if (removedLevel === 3) {
+            if(this.state.createGoldLevel){
+                levelsToClear.push(2);
+            }
+            else if(this.state.createCommonLevel){
+                levelsToClear.push(1);
+            }
+        }
+
+        this.props.levelCostClearHandler(levelsToClear);
     }
 
-    createEpicLevelHandler = (event) => {
+    /**
+     * Sets appropriate state after some card level was created.
+     * @param level Which card level was created.
+     */
+    setStateAfterLevelCreation = (level) => {
+        if (level === 1) {
+            this.setState({createCommonLevel: true});
+        }
+        else if (level === 2) {
+            this.setState({createGoldLevel: true});
+        }
+        else if (level === 3) {
+            this.setState({createEpicLevel : true});
+        }
+        this.setState({activeCardRank: level});
+    }
+
+    /**
+     * Handles creating card level.
+     * @param event
+     * @param level Level which was created.
+     */
+    createLevelHandler = (event, level) => {
         event.preventDefault();
         this.hideLevelChooseHandler(event);
-        this.setState({
-            createEpicLevel: true,
-            activeCardRank: 3,
-        });
-        this.props.levelCostResetHandler(event, 2);
-        this.props.levelCreatedHandler(3);
+        this.setStateAfterLevelCreation(level);
+        this.determineWhichLevelCostToReset(level);
     }
 
     removeCommonLevelHandler = (event) => {
@@ -104,6 +165,7 @@ class CardProperties extends React.Component {
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
         this.props.removeLevelHandler(1);
+        this.clearUpgradeCostAfterRemove(1);
     }
 
     removeGoldLevelHandler = (event) => {
@@ -116,6 +178,7 @@ class CardProperties extends React.Component {
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
         this.props.removeLevelHandler(2);
+        this.clearUpgradeCostAfterRemove(2);
     }
 
     removeEpicLevelHandler = (event) => {
@@ -128,6 +191,7 @@ class CardProperties extends React.Component {
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
         this.props.removeLevelHandler(3);
+        this.clearUpgradeCostAfterRemove(3);
     }
 
     activeLevelRecognize = (event, activeCardRank) => {
@@ -217,11 +281,9 @@ class CardProperties extends React.Component {
             <>
                 <LevelChoose show={this.state.showLevelChoose}
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
-                             createCommonLevelHandler = {this.createCommonLevelHandler}
+                             createLevelHandler = {this.createLevelHandler}
                              commonLevelChosen={this.state.createCommonLevel}
-                             createGoldLevelHandler = {this.createGoldLevelHandler}
                              goldLevelChosen={this.state.createGoldLevel}
-                             createEpicLevelHandler = {this.createEpicLevelHandler}
                              epicLevelChosen={this.state.createEpicLevel}/>
                 <EffectChoose
                     showEffectChoose={this.state.showEffectChoose}
@@ -263,7 +325,6 @@ class CardProperties extends React.Component {
                                 removeGoldLevelHandler={this.removeGoldLevelHandler}
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <Button onClick={this.showLevelChooseHandler}>
                                 {/*ikona plusa*/}
@@ -280,7 +341,6 @@ class CardProperties extends React.Component {
                                 activeCommon={this.state.activeCardRank === 1}
                                 removeCommonLevelHandler={this.removeCommonLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createGoldLevel || this.state.createEpicLevel ? 1 : 0}
@@ -301,7 +361,6 @@ class CardProperties extends React.Component {
                                 activeGold={this.state.activeCardRank === 2}
                                 removeGoldLevelHandler={this.removeGoldLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createEpicLevel ? 2 : 0}
@@ -322,7 +381,6 @@ class CardProperties extends React.Component {
                                 activeEpic={this.state.activeCardRank === 3}
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={0}

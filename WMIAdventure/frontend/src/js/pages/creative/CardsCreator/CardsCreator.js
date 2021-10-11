@@ -21,10 +21,17 @@ class CardsCreator extends React.Component {
         cardTooltip: null,
         cardImage: null,
         /**
-         * cardImage is file object and can't be used to preview uploaded image, so this variable exists
+         * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
         cardImageURLPreview: null,
-        levelCostValues: [],
+        /**
+         * index 0 - cost of upgrade from level common to higher
+         *
+         * index 1 - cost of upgrade from level gold to higher
+         *
+         * index 2 - always undefined, there is no higher level than epic
+         */
+        levelCostValues: [undefined, undefined, undefined],
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
@@ -241,17 +248,23 @@ class CardsCreator extends React.Component {
         this.setState({levelCostValues: newList});
     }
 
-    levelCostClearHandler = (event, rank) => {
-        event.preventDefault();
+    /**
+     * Clears upgrade cost for given array of card levels.
+     * @param levels Array of card levels which will have their upgrade cost cleared.
+     */
+    levelCostClearHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = undefined;
+        levels.forEach((rank) => {newList[rank - 1] = undefined});
         this.setState({levelCostValues: newList});
     }
 
-    levelCostResetHandler = (event, rank) => {
-        event.preventDefault();
+    /**
+     * Resets upgrade cost for given array of card levels.
+     * @param levels Array of card levels which will have their upgrade cost reset.
+     */
+    levelCostResetHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        newList[rank - 1] = 1;
+        levels.forEach((rank) => {newList[rank - 1] = 1});
         this.setState({levelCostValues: newList});
     }
 
@@ -294,13 +307,15 @@ class CardsCreator extends React.Component {
         this.setState({showCardChoose: false});
     }
 
-    chosenCardHandler = (event, id, name, subject, tooltip, levels) => {
+    chosenCardHandler = (event, id, name, subject, tooltip, image, levels) => {
         event.preventDefault();
         this.setState({
             cardId: id,
             cardName: name,
             cardSubject: subject,
             cardTooltip: tooltip,
+            cardImage: image,
+            cardImageURLPreview: image,
         });
 
         this.setLevelsListFromCard(levels);
