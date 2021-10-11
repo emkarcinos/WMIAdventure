@@ -13,13 +13,14 @@ const Article = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 300px;
   height: 500px;
   background-color: ${({theme}) => theme.colors.grey1};
   margin-bottom: 14px;
   border-radius: 24px;
   position: relative;
-  padding-top: 64px;
+  //padding-top: 64px;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
   
