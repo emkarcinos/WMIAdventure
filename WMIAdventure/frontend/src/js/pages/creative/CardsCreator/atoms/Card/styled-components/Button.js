@@ -28,20 +28,19 @@ const Button = styled.button`
   :before {
     content: '';
     display: block;
-    width: 26px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%; // Making circular shape
     
     /* Background */
     background-image: url(${({image}) => image ? image : kIcon});
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 26px;
+    background-size: 36px;
     
     /* Positioning */
     position: absolute;
-    top: 16px;
-    left: 6px;
+    left: 2px;
   }
 `;
 
