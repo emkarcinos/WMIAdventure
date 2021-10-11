@@ -7,7 +7,7 @@ class Card extends React.Component {
     render() {
         return (
             <Button searchInput={this.props.searchInput}
-                    name={this.props.name} onClick={
+                    name={this.props.name} image={this.props.image} onClick={
                 (event) => this.props.chosenCardHandler (
                     event, this.props.id, this.props.name, this.props.subject, this.props.tooltip, this.props.image, this.props.levels
                 )}>
