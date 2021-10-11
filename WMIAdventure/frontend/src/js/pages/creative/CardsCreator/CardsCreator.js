@@ -19,6 +19,11 @@ class CardsCreator extends React.Component {
         cardName: null,
         cardSubject: null,
         cardTooltip: null,
+        cardImage: null,
+        /**
+         * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
+         */
+        cardImageURLPreview: null,
         /**
          * index 0 - cost of upgrade from level common to higher
          *
@@ -27,18 +32,9 @@ class CardsCreator extends React.Component {
          * index 2 - always undefined, there is no higher level than epic
          */
         levelCostValues: [undefined, undefined, undefined],
-        cardImage: null,
-        /**
-         * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
-         */
-        cardImageURLPreview: null,
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
-        /**
-         * Level objects as received from the server, obtained when editing existing card.
-         */
-        levelsFromApi: [],
 
         headerLabel: '',
         showCardChoose: false,
@@ -277,17 +273,33 @@ class CardsCreator extends React.Component {
     }
 
     /**
+     * Being called after new level is created.
+     * @param level Newly created level.
+     */
+    levelCreatedHandler = (level) => {
+        let newLevelsListFromCard = this.state.levelsListFromCard;
+        newLevelsListFromCard.push(level);
+        this.setState({levelsListFromCard: newLevelsListFromCard});
+    }
+
+    /**
      * Removes level.
      * @param level Given level to remove.
      */
     removeLevelHandler = (level) => {
-        if (this.state.levelsFromApi.length > 0){
-            let newLevelsFromApi = this.state.levelsFromApi.filter((l) => l.level !== level);
-            this.setState({levelsFromApi: newLevelsFromApi});
-            this.setLevelsListFromCard(newLevelsFromApi);
-            this.setLevelCostValuesFromCard(newLevelsFromApi);
-            this.setChosenEffectsFromCard(newLevelsFromApi);
-        }
+        let newEffectsToSend = this.state.effectsToSend.slice();
+        let newChosenEffectsFromCard = this.state.chosenEffectsFromCard.slice();
+
+        newEffectsToSend[level - 1] = [];
+        newChosenEffectsFromCard[level - 1] = [];
+
+        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => { return l !== level });
+
+        this.setState({
+            effectsToSend: newEffectsToSend,
+            chosenEffectsFromCard: newChosenEffectsFromCard,
+            levelsListFromCard: newLevelsListFromCard
+        })
     }
 
     hideCardChooseHandler = (event) => {
@@ -304,7 +316,6 @@ class CardsCreator extends React.Component {
             cardTooltip: tooltip,
             cardImage: image,
             cardImageURLPreview: image,
-            levelsFromApi: levels
         });
 
         this.setLevelsListFromCard(levels);
@@ -409,6 +420,7 @@ class CardsCreator extends React.Component {
                                             chosenEffectsFromCard={this.state.chosenEffectsFromCard}
                                             effectsToSend={this.state.effectsToSend}
                                             removeLevelHandler={this.removeLevelHandler}
+                                            levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
                                 <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
