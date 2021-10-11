@@ -24,35 +24,34 @@ class EffectInput extends React.Component {
         let effectsFromCard = this.props.effectsFromCard;
         let rank = this.props.rank;
         let id = this.props.id;
-        let effectAttributes;
+        let effectAttributes = effectsFromCard[rank - 1].filter((effect) => {
+            return effect.card_effect === id;
+        });
 
-        for (let i=0; i<effectsFromCard.length; i++) {
-            effectAttributes = effectsFromCard[i].filter(function (elem) {
-                return elem.level === rank && elem.card_effect === id;
-            });
-            if(effectAttributes.length !== 0) break;
-        }
-        try {
-            if(effectAttributes[0].target === 1) {
-                this.setState({checkedPlayer: true, checkedEnemy: false});
-                this.setState({target: 1});
+        if (effectAttributes.length > 0) {
+            try {
+                if(effectAttributes[0].target === 1) {
+                    this.setState({checkedPlayer: true, checkedEnemy: false});
+                    this.setState({target: 1});
+                }
+                else if(effectAttributes[0].target === 2) {
+                    this.setState({checkedPlayer: false, checkedEnemy: true});
+                    this.setState({target: 2});
+                }
+            } catch (error) {
+                console.log(error);
             }
-            else if(effectAttributes[0].target === 2) {
-                this.setState({checkedPlayer: false, checkedEnemy: true});
-                this.setState({target: 2});
+
+            try {
+                this.setState({
+                    power: effectAttributes[0].power,
+                    range: effectAttributes[0].range
+                });
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
 
-        try {
-            this.setState({
-                power: effectAttributes[0].power,
-                range: effectAttributes[0].range
-            });
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     checkedTargetHandler = (event) => {
