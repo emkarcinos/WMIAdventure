@@ -30,9 +30,15 @@ const Button = styled.button`
     display: block;
     width: 26px;
     height: 26px;
-    background-image: url(${kIcon});
+    border-radius: 50%; // Making circular shape
+    
+    /* Background */
+    background-image: url(${({image}) => image ? image : kIcon});
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 26px;
+    
+    /* Positioning */
     position: absolute;
     top: 16px;
     left: 6px;
