@@ -5,14 +5,25 @@ services:
         image: wmiadventure.azurecr.io/wmiadventure:v1
         build: ./backend
         command: python manage.py runserver 0.0.0.0:8000
-
+        volumes:
+            - type: bind
+              source: ./backend/WMIAdventure_backend
+              target: /backend/
         ports:
             - 8000:8000
     
     wmiadventure-frontend:
         image: wmiadventure.azurecr.io/frontend:v1
         build: ./frontend
-        command: npm run start PORT=80
+        entrypoint: npm start PORT=80
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        
+        volumes:
+            - type: bind
+              source: ./frontend
+              target: /frontend/
+            - node_modules:/frontend/node_modules
         ports:
             - 80:80
          
@@ -21,3 +32,6 @@ services:
         build: ./admin
         ports:
             - 8001:8001
+
+volumes:
+    node_modules:
