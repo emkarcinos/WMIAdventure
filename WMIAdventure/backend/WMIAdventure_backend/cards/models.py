@@ -96,12 +96,12 @@ def base_card_info_factory(upload_images_to: str):
         from cards.validators import validate_file_size
         name = models.CharField(max_length=36, help_text="Displayed card's name.")
         tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.",
-                                   max_length=50)
+                                   max_length=80)
         image = models.FileField(upload_to=upload_images_to, null=True, blank=True,
                                   help_text="An image. We don't really"
                                             "know what should that be.",
                                  validators=[validate_file_size])
-        subject = models.CharField(max_length=25, null=True,
+        subject = models.CharField(max_length=60, null=True,
                                    help_text="Subject name. In the future this field will be an"
                                              " id pointing to Subject object.")
 
