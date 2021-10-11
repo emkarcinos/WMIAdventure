@@ -165,8 +165,6 @@ class CardProperties extends React.Component {
         newListEffectsToSend[0] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(1);
         this.clearUpgradeCostAfterRemove(1);
     }
@@ -180,8 +178,6 @@ class CardProperties extends React.Component {
         newListEffectsToSend[1] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(2);
         this.clearUpgradeCostAfterRemove(2);
     }
@@ -195,8 +191,6 @@ class CardProperties extends React.Component {
         newListEffectsToSend[2] = [];
         this.setState({chosenEffects: newListChosenEffects});
         this.setState({effectsToSend: newListEffectsToSend});
-        this.props.setChosenEffectsToCardHandler(newListChosenEffects);
-        this.props.setEffectsToSendHandler(newListEffectsToSend);
         this.props.removeLevelHandler(3);
         this.clearUpgradeCostAfterRemove(3);
     }
@@ -332,7 +326,6 @@ class CardProperties extends React.Component {
                                 removeGoldLevelHandler={this.removeGoldLevelHandler}
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <Button onClick={this.showLevelChooseHandler}>
                                 {/*ikona plusa*/}
@@ -349,7 +342,6 @@ class CardProperties extends React.Component {
                                 activeCommon={this.state.activeCardRank === 1}
                                 removeCommonLevelHandler={this.removeCommonLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createGoldLevel || this.state.createEpicLevel ? 1 : 0}
@@ -370,7 +362,6 @@ class CardProperties extends React.Component {
                                 activeGold={this.state.activeCardRank === 2}
                                 removeGoldLevelHandler={this.removeGoldLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createEpicLevel ? 2 : 0}
@@ -391,7 +382,6 @@ class CardProperties extends React.Component {
                                 activeEpic={this.state.activeCardRank === 3}
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
-                                levelCostClearHandler={this.props.levelCostClearHandler}
                             />
                             <DivScroll>
                                 <CostInputs cardRank={0}

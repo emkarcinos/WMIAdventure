@@ -275,10 +275,6 @@ class CardsCreator extends React.Component {
         this.setState({effectsToSend: effects});
     }
 
-    setChosenEffectsToCardHandler = (effects) => {
-        this.setState({chosenEffectsFromCard: effects});
-    }
-
     /**
      * Being called after new level is created.
      * @param level Newly created level.
@@ -440,7 +436,6 @@ class CardsCreator extends React.Component {
                                             levelCostResetHandler={this.levelCostResetHandler}
                                             removeLevelHandler={this.removeLevelHandler}
                                             setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                            setChosenEffectsToCardHandler={this.setChosenEffectsToCardHandler}
                                             levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
