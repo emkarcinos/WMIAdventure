@@ -21,68 +21,12 @@ class CardView extends React.Component {
         epicDescription: '',
     }
 
-    getDescriptions = () => {
-        const API = process.env['REACT_APP_API_URL'];
-
-        if(this.props.cardEffects[0].length !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[0])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({commonDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
-        if(this.props.cardEffects[1] !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[1])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({goldDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
-        if(this.props.cardEffects[2] !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[2])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({epicDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
-        }
+    setDescriptions = () => {
+        this.setState({
+            commonDescription: this.props.levelDescriptions[0],
+            goldDescription: this.props.levelDescriptions[1],
+            epicDescription: this.props.levelDescriptions[2]
+        });
     }
 
     componentDidUpdate(prevProps) {
@@ -94,7 +38,7 @@ class CardView extends React.Component {
             if(this.props.cardEffects[0].length !== 0)
                 this.setState({activeEpic: false, activeGold: false, activeCommon: true});
 
-            this.getDescriptions();
+            this.setDescriptions();
         }
     }
 

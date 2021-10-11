@@ -37,6 +37,7 @@ class CardsCreator extends React.Component {
         effectsFromApi: [],
         effectsToSend: [[], [], []],
         showDescribeInputs: false,
+        levelDescriptions: ['description', 'description', 'description'],
 
         headerLabel: '',
         showCardChoose: false,
@@ -133,6 +134,7 @@ class CardsCreator extends React.Component {
                     {
                         level: String(i + 1),
                         next_level_cost: this.state.levelCostValues[i],
+                        effects_description: this.state.levelDescriptions[i],
                         effects: this.state.effectsToSend[i]
                     }
                 );
@@ -273,6 +275,7 @@ class CardsCreator extends React.Component {
 
     setEffectsToSendHandler = (effects) => {
         this.setState({effectsToSend: effects});
+        this.getDescriptions();
     }
 
     /**
@@ -371,11 +374,6 @@ class CardsCreator extends React.Component {
         this.setState({chosenEffectsFromCard: newChosenEffectsList});
     }
 
-    hideSendMessageHandler = (event) => {
-        event.preventDefault();
-        this.setState({showSendMessage: false});
-    }
-
     refreshPage = () => {
         window.location.reload();
     }
@@ -397,6 +395,82 @@ class CardsCreator extends React.Component {
     hideCardViewHandler = (event) => {
         event.preventDefault();
         this.setState({showCardView: false});
+    }
+
+    getDescriptions = () => {
+        const API = process.env['REACT_APP_API_URL'];
+
+        if(this.state.effectsToSend[0].length !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.state.effectsToSend[0])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        let newLevelDescriptions = this.state.levelDescriptions.slice();
+                        newLevelDescriptions[0] = data;
+                        this.setState({levelDescriptions: newLevelDescriptions});
+                    });
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        if(this.state.effectsToSend[1].length !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.state.effectsToSend[1])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        let newLevelDescriptions = this.state.levelDescriptions.slice();
+                        newLevelDescriptions[1] = data;
+                        this.setState({levelDescriptions: newLevelDescriptions});
+                    });
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
+
+        if(this.state.effectsToSend[2].length !== 0) {
+            try {
+                fetch(`http://${API}/api/cards/descriptions/`, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(this.state.effectsToSend[2])
+                })
+                    .then (response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        let newLevelDescriptions = this.state.levelDescriptions.slice();
+                        newLevelDescriptions[2] = data;
+                        this.setState({levelDescriptions: newLevelDescriptions});
+                    });
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
     }
 
     render() {
@@ -470,7 +544,8 @@ class CardsCreator extends React.Component {
                           cardSubject={this.state.cardSubject}
                           cardTooltip={this.state.cardTooltip}
                           cardImage={this.state.cardImageURLPreview}
-                          cardEffects={this.state.effectsToSend} />
+                          cardEffects={this.state.effectsToSend}
+                          levelDescriptions={this.state.levelDescriptions} />
             </>
         );
     }
