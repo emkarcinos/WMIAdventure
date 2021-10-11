@@ -22,10 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='cardeffect',
-            name='has_modifier',
-            field=models.BooleanField(default=False),
-        ),
         migrations.RunPython(update_missing_modifiers),
     ]
