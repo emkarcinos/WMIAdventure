@@ -418,54 +418,37 @@ Niektóre elementy systemu mogą mieć skomplikowną strukturę i szeroką logik
 # Kamienie milowe
 
 ## Tryb Battle
-Planowana data zrealizowania: 20.06.2021
+Planowana data zrealizowania: 10.12.2021
 
 Skład z terminami ukończenia:
-- Edytor Kart - narzędzie do tworzenia / edytowania kart (15.05.2021)
+- Edytor Kart - narzędzie do tworzenia / edytowania kart (12.10.2021)
 - Funkcje Kart - co mogą robić karty (15.05.2021 / 29.05.2021)
 - Zawartość: Stworzenie 20 kart (29.05.2021)
-- Symulacja Pojedynku - walka między dwoma graczami (29.05.2021)
-- Talia kart u gracza - możliwość wyboru kart do walki spośród wszystkich dostępnych (12.06.2021)
-- Interfejs całego trybu (12.06.2021)
-- Narzędzie weryfikujące balans kart - automatyczne wyszukiwanie kart, które łamią balans rozgrywki (12.06.2021)
-- Rankingi (12.06.2011)
-- Upublicznienie Edytora Kart do testów przez studentów (29.05.2021)
-- Upublicznienie całego trybu do testów przez studentów (20.06.2021)
+- Symulacja Pojedynku - walka między dwoma graczami (05.11.2021)
+- Talia kart u gracza - możliwość wyboru kart do walki spośród wszystkich dostępnych (03.12.2021)
+- Interfejs całego trybu (12.11.2021)
+- Upublicznienie Edytora Kart do testów przez studentów (25.10.2021)
+- Upublicznienie całego trybu do testów przez studentów (10.12.2021)
 
 ## Tryb Adventure
-Planowana data zrealizowania: 20.10.2021
+Planowana data zrealizowania: 24.12.2021
 
 Skład:
-- Edytor Historii - narzędzie do tworzenia / edytowania historii
-- Zawartość: 50 historii
-- Interfejs całego trybu
+- Edytor Historii - narzędzie do tworzenia / edytowania historii (24.12.2021)
+- Zawartość: 20 Historii / Bossów (03.01.2022)
+- Interfejs całego trybu (24.12.2021)
+- Zdobywanie kart (12.01.2022)
 
 ## Integracja z USOS
-Planowana data zrealizowania: 20.11.2021
+Planowana data zrealizowania: 03.12.2021
 
 Skład:
-- Zarządzanie kontami użytkowników
-- Połączenie konta USOS z kontem w aplikacji
-- Karty zmieniające wygląd w zależności od ocen studenta
-- Dostępność historii w zależności od przedmiotów studenta
+- Zarządzanie kontami użytkowników (03.12.2021)
+- Połączenie konta USOS z kontem w aplikacji (03.12.2021)
+- Dostępność historii w zależności od przedmiotów studenta  (24.12.2021)
 
 ## Panel Administratora
-Planowana data zrealizowania: 20.11.2021
+Planowana data zrealizowania: 24.12.2021
 
 Skład:
-- Administracja treściami zgłaszanymi przez Twórców
-
-## Quizy
-Planowana data zrealizowania: 20.01.2022
-
-Skład:
-- Edytor Pytań
-- Administracja zgłoszonymi pytaniami
-- Interfejs i rozwiązywanie Quizów
-- Punkty PU
-
-## Minigry
-Planowana data zrealizowania: 20.01.2022
-
-Skład:
-- Implementacja 3 powtarzających się minigier
+- Administracja treściami zgłaszanymi przez Twórców (24.12.2021)
