@@ -12,6 +12,7 @@ import NavHeader from '../global/molecules/NavHeader';
 import CardChoose from './molecules/CardChoose';
 import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
+import CardView from './organisms/CardView';
 
 class CardsCreator extends React.Component {
     state = {
@@ -20,6 +21,7 @@ class CardsCreator extends React.Component {
         cardSubject: null,
         cardTooltip: null,
         cardImage: null,
+
         /**
          * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
@@ -46,6 +48,7 @@ class CardsCreator extends React.Component {
         failedCardSubmissionMsg: null,
         showSendCardPopup: false,
         comment: "",
+        showCardView: false,
     }
 
     cardSubmissionSuccessHandler = () => {
@@ -227,7 +230,7 @@ class CardsCreator extends React.Component {
         let keyValue;
         if (event.target.value !== '')
             keyValue = event.target.value;
-        else keyValue = '-';
+        else keyValue = '';
         this.setState({[keyName]: keyValue});
     }
 
@@ -383,6 +386,19 @@ class CardsCreator extends React.Component {
         this.setState({[keyName]: keyValue});
     }
 
+    showCardViewHandler = (event) => {
+        event.preventDefault();
+        if(this.state.effectsToSend[0].length !== 0 ||
+            this.state.effectsToSend[1].length !== 0 ||
+            this.state.effectsToSend[2].length !== 0)
+            this.setState({showCardView: true});
+    }
+
+    hideCardViewHandler = (event) => {
+        event.preventDefault();
+        this.setState({showCardView: false});
+    }
+
     render() {
         return (
             <>
@@ -411,23 +427,31 @@ class CardsCreator extends React.Component {
                             />
                             <CardProperties creatorType={this.props.creatorType}
                                             levelCostValues={this.state.levelCostValues}
+                                            levelsListFromCard={this.state.levelsListFromCard}
+                                            effectsFromApi={this.state.effectsFromApi}
+                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
+                                            effectsToSend={this.state.effectsToSend}
                                             levelCostValuesHandler={this.levelCostValuesHandler}
                                             levelCostClearHandler={this.levelCostClearHandler}
                                             levelCostResetHandler={this.levelCostResetHandler}
-                                            effectsFromApi={this.state.effectsFromApi}
-                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                            levelsListFromCard={this.state.levelsListFromCard}
-                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
-                                            effectsToSend={this.state.effectsToSend}
                                             removeLevelHandler={this.removeLevelHandler}
+                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
                                             levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
-                                <Button type='submit' onClick={this.showSendCardPopupHandler} show={true}>
-                                    Wyślij
+                                <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
+                                    Zacznij od nowa
                                 </Button>
-                                <Button onClick={this.refreshPage} show={this.props.creatorType}>
+                                <Button onClick={this.refreshPage} access show={this.props.creatorType}>
                                     Edytuj inną kartę
+                                </Button>
+                                <Button show access={this.state.effectsToSend[0].length !== 0 ||
+                                this.state.effectsToSend[1].length !== 0 ||
+                                this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                                    Podgląd
+                                </Button>
+                                <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
+                                    Wyślij
                                 </Button>
                             </Div>
                         </Form>
@@ -440,9 +464,17 @@ class CardsCreator extends React.Component {
                                sendSuccess={this.state.sendSuccess}
                                failedSubmissionMsg={this.state.failedCardSubmissionMsg}
                                commentInputHandler={this.commentInputHandler}/>
+                <CardView hideCardViewHandler={this.hideCardViewHandler}
+                          show={this.state.showCardView}
+                          cardName={this.state.cardName}
+                          cardSubject={this.state.cardSubject}
+                          cardTooltip={this.state.cardTooltip}
+                          cardImage={this.state.cardImageURLPreview}
+                          cardEffects={this.state.effectsToSend} />
             </>
         );
     }
 }
+
 
 export default CardsCreator;

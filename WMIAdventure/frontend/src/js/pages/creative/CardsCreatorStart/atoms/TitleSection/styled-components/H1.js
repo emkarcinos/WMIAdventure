@@ -5,7 +5,7 @@ const H1 = styled.h1`
   font-family: 'Ubuntu', sans-serif;
   font-weight: ${({theme}) => theme.weight.regular};
   margin: 0 0 16px 0;
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 52px;
     text-align: center;
     margin: 0 0 24px 0;

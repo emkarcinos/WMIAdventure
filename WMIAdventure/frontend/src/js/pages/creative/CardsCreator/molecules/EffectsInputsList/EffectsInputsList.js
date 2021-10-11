@@ -6,6 +6,13 @@ import EffectInput from '../../atoms/EffectInput';
 import Ul from "./styled-components/Ul";
 
 class EffectsInputsList extends React.Component {
+
+    addEffectAccessHandler = (chosenLvlEffects) => {
+        if(chosenLvlEffects.length < 5) {
+            return true;
+        } return false;
+    }
+
     render() {
         if (this.props.cardRank > 0){
             return (
@@ -32,7 +39,8 @@ class EffectsInputsList extends React.Component {
                             }
                         </Ul>
 
-                        <Button onClick={this.props.showEffectChooseHandler(this.props.cardRank)}>
+                        <Button access={this.addEffectAccessHandler(this.props.chosenEffects[this.props.cardRank - 1])}
+                                onClick={this.props.showEffectChooseHandler(this.props.cardRank)}>
                             {/*plus icon*/}
                         </Button>
                     </Div>

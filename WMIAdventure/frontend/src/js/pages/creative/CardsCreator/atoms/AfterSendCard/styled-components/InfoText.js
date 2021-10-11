@@ -7,7 +7,7 @@ const InfoText = styled.div`
   /* Styling */
   text-align: center;
   font-size: 24px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     font-size: 18px;
   }
   

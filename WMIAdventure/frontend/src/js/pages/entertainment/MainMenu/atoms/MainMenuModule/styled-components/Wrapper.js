@@ -16,7 +16,7 @@ const Wrapper = styled(Link)`
   text-decoration: none;
   overflow: hidden;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     flex-direction: row;
     justify-content: space-between;
     height: 152px;

@@ -8,7 +8,7 @@ const Label = styled.label`
   font-weight: 600;
   margin: 0;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 18px;
   }
 `;

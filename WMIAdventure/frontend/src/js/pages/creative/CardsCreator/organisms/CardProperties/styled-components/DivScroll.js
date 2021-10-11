@@ -21,7 +21,7 @@ const DivScroll = styled.div`
   }
   margin-bottom: 10px;
   padding: 10px; 
-  @media (max-width: 768px) {
+  @media (max-width: ${({theme}) => theme.overMobile}px) {
     padding-top: ${({rank}) => handleExistMobile(rank)};
   }
 `;

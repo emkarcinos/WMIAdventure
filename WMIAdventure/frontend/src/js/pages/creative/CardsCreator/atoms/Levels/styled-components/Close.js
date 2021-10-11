@@ -17,7 +17,7 @@ const Close = styled.button`
   width: 10px;
   height: 10px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({exist}) => exist ? 'block' : 'none'};
     position: static;
     margin: 0 0 5px 8px;

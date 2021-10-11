@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Time = styled.p`
   display: none;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: flex;
     justify-content: center;
     align-items: center;

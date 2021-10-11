@@ -11,7 +11,7 @@ const PopupContainer = styled.div`
   max-width: 95%;
   position: relative;
   padding: 24px 24px 32px 24px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     padding: 16px 16px 24px 16px;
   }
   z-index: 3;

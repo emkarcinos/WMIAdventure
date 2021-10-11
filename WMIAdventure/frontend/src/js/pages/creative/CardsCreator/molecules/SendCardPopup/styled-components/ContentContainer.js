@@ -6,7 +6,7 @@ const ContentContainer = styled.div`
   /* Flex options */
   flex-direction: column;
   gap: 32px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     gap:16px
   }
   align-items: center;

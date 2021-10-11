@@ -16,8 +16,8 @@ class EffectInput extends React.Component {
 
         card_effect: undefined,
         target: undefined,
-        power: undefined,
-        range: undefined,
+        power: null,
+        range: null,
     }
 
     componentDidMount() {

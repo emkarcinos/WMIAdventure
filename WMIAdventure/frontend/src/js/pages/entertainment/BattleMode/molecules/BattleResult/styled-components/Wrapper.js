@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 16px 0;
   
-  @media(min-width: 768px) {
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
     min-height: calc(100vh - 64px);
     top: 64px;
   }

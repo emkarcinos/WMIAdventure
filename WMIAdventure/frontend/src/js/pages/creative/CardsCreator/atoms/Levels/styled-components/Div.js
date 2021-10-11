@@ -11,7 +11,7 @@ const Div = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     height: auto;
     width: 100%;
     padding: 12px 0;

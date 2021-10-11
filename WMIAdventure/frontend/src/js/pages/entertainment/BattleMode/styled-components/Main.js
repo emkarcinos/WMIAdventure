@@ -9,7 +9,7 @@ const Main = styled.main`
   align-items: center;
   padding: 0 16px;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 80%;
     margin-top: 112px;
   }

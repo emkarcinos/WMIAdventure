@@ -8,7 +8,7 @@ const P = styled.p`
   max-width: 190px;
   text-align: center;
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 24px;
     max-width: 500px;
     line-height: 30px;

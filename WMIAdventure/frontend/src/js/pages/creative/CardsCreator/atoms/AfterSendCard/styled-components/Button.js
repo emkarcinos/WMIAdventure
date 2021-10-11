@@ -9,7 +9,7 @@ const Button = styled.button`
   
   /* Other */
   padding: 16px 40px;
-  @media (max-width: 768px){
+  @media (max-width: ${({theme}) => theme.overMobile}px){
     padding: 8px 24px;
   }
   text-align: center;
