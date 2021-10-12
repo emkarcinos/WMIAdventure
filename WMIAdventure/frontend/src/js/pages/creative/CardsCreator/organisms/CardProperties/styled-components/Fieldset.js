@@ -30,7 +30,7 @@ const Fieldset = styled.fieldset`
     height: 50vh;
   }
   @media (min-height: 900px) {
-    height: 482px;
+    height: 532px;
   }
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -53,7 +53,6 @@ const Fieldset = styled.fieldset`
     border-bottom-right-radius: 20px;
     max-width: 380px;
     margin: 0 6px 24px;
-    height: 532px;
     padding: 0;
     display: ${({create}) => create ? 'flex' : 'none'};
     border: ${({createCommon, createGold, createEpic, theme}) => 
