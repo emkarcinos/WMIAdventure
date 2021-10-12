@@ -25,6 +25,14 @@ const DivLevel = styled.div`
   border-bottom: ${({activeCardRank, theme}) => activeRankBorderHandler(activeCardRank, theme)};
   border-left: ${({activeCardRank, theme}) => activeRankBorderHandler(activeCardRank, theme)};
   border-right: ${({activeCardRank, theme}) => activeRankBorderHandler(activeCardRank, theme)};
+  
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  -ms-overflow-style: none; /* IE 10+ */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
 `;
 
 export default DivLevel;
