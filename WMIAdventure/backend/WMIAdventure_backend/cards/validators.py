@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
-from cards.models import CardEffect
+from cards.models import CardEffect, CardLevel
+
+MAX_EFFECTS_PER_LEVEL = 5
 
 
 def validate_effect_modifiers(card_effect: CardEffect, power: int or None, range_: float or None):
@@ -28,3 +30,8 @@ def validate_file_size(value):
         raise ValidationError("The maximum file size that can be uploaded is 1MB")
     else:
         return value
+
+
+def validate_does_not_exceed_effect_per_level_limit(effects: list[CardEffect]):
+    if len(effects) > MAX_EFFECTS_PER_LEVEL:
+        raise serializers.ValidationError(f"Cards can only have up to {MAX_EFFECTS_PER_LEVEL} effect per level")
