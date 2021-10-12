@@ -17,8 +17,13 @@ const Button = styled.button`
   text-decoration: none;
   max-width: 380px;
   
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+  
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    padding: 16px;
+    padding: 14px;
   }
 `;
 
