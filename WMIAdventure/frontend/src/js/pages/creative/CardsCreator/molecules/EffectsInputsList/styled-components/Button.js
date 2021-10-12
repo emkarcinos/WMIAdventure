@@ -12,6 +12,13 @@ const Button = styled.button`
   background-repeat: no-repeat;
   width: 20px;
   height: 20px;
+  cursor: pointer;
+
+  /* Animation */
+  transition: transform .3s ease-in-out;
+  &:hover {
+    transform: scale(1.25);
+  }
 `;
 
 export default Button;

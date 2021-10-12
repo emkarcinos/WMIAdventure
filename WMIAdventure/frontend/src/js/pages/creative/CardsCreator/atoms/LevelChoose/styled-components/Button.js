@@ -28,6 +28,13 @@ const Button = styled.button`
   height: 100%;
   text-align: center;
   
+  transition: background-color 0.3s ease-in-out;
+  &:hover {
+    background-color: ${
+            ({theme, disabled}) => disabled ? theme.colors.ui04 : theme.colors.grey2
+    };
+  }
+  
   
   :before {
     content: '';

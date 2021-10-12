@@ -17,6 +17,12 @@ const Button = styled.button`
   padding: 12px;
   margin: 0 12px;
   cursor: ${({access}) => access ? 'pointer' : 'default'};
+
+  /* Animation */
+  transition: transform .3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export default Button;

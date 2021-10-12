@@ -10,6 +10,12 @@ const Container = styled.div`
   /* Positioning */
   position: relative;
   margin-bottom: 20px;
+  
+  /* Animation */
+  transition: transform .3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 
   /* Options for mobile devices */
   @media (max-width: ${({theme}) => theme.overMobile}px){
