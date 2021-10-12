@@ -48,7 +48,6 @@ jobs:
         cd ./WMIAdventure/frontend
         npm run test -- --passWithNoTests
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: [test-django, test-frontend]
@@ -59,18 +58,27 @@ jobs:
       ACR_SERVER: wmiadventure.azurecr.io
     steps:
     - uses: actions/checkout@v2
-    - name: SSH into Azure VM, pull changes, rebuild and start docker containers
+
+    - name: Docker compose build and push to ACR
+      run: |
+        docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
+        cd ./WMIAdventure/
+        docker-compose build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
+        docker push ${{ env.ACR_SERVER }}/wmiadventure:v1
+        docker push ${{ env.ACR_SERVER }}/frontend:v1
+
+    - name: Pull backend docker image from ACR on server and run using ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: |
-          cd /home/azureuser/WMIAdventure/
-          git fetch 
-          git pull origin main
-          cd WMIAdventure/
-          docker-compose down
-          docker-compose stop
-          docker-compose build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
-          docker-compose up
+        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:v1; docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run -d --name=wmi-adventure -p 8000:8000 -d ${{ env.ACR_SERVER }}/wmiadventure:v1
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USER }}
+        privateKey: ${{ secrets.SERVER_KEY}}
+
+    - name: Pull frontend docker image from ACR on server and run using ssh
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -d --name=wmi-adventure-frontend -p 80:80 -d ${{ env.ACR_SERVER }}/frontend:v1
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
