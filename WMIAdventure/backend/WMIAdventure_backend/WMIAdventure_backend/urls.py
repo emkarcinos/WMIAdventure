@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import include
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
@@ -27,7 +27,8 @@ urlpatterns = [
     path('api/cards/', include('cards.urls')),
     path('api/battle/', include('battle.urls')),
     path('api/proposed-content/', include('proposed_content.urls')),
-    path('docs/', include_docs_urls(title="WMIAdventure API"))
+    path('docs/', include_docs_urls(title="WMIAdventure API")),
+    url(r'^files/', include('db_file_storage.urls')),
 ]
 
 if settings.DEBUG:

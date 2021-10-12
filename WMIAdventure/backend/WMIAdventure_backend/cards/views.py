@@ -56,6 +56,15 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = CardInfo.objects.all()
     serializer_class = WholeCardSerializer
 
+    def get(self, request, *args, **kwargs):
+        # This disasterous piece of code is caused by the way external library for handling data uploads works.
+        # It servers DOWNLOADABLE files in a default endpoint, we had to switch the behaviour to GET.
+        # I couldn't find any other way other than messing with the library itself, so here's a dirty fix
+        response = super().get(request, *args, **kwargs)
+        image_path = response.data.get('image')
+        response.data['image'] = image_path.replace('download', 'get', 1)
+        return response
+
 
 class DescriptionGeneratorView(APIView):
     """
