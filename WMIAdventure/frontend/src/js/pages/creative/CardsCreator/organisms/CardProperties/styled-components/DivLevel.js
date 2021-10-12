@@ -28,7 +28,7 @@ const DivLevel = styled.div`
   
   overflow-x: scroll;
   overflow-y: hidden;
-  scrollbar-width: none;
+  scrollbar-width: thin;
   -ms-overflow-style: none; /* IE 10+ */
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
