@@ -3,7 +3,7 @@ from rest_framework.fields import ImageField
 
 from utils.SVGAndImageFormField import SVGAndImageFormField
 from .models import *
-from .validators import validate_effect_modifiers
+from .validators import validate_effect_modifiers, validate_does_not_exceed_effect_per_level_limit
 
 
 class CardEffectSerializer(serializers.ModelSerializer):
@@ -96,6 +96,10 @@ def base_simple_card_serializer_factory(card_model: type, simple_card_level_effe
         class Meta:
             model = card_model
             fields = ['level', 'next_level_cost', 'effects_description', 'effects']
+
+        def validate(self, attrs):
+            validate_does_not_exceed_effect_per_level_limit(attrs['effects'])
+            return super().validate(attrs)
 
     return BaseSimpleCardSerializer
 

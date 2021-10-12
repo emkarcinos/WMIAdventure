@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
@@ -838,3 +839,48 @@ class ValidateEffectModifiersTestCase(TestCase):
 
         # Assert ValidationError is not raised
         validate_effect_modifiers(card_effect, power, range_)
+
+
+class SimpleCardSerializerTestCase(TestCase):
+    def setUp(self) -> None:
+        self.limit = 5
+
+    def test_throws_on_too_many_effects(self):
+        data = {
+            'level': 1,
+            'next_level_cost': 1,
+            'effects_description': "",
+            'effects': [
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+                {'card_effect': 1,
+                 'target': 1,
+                 'power': 5.0,
+                 'range': 1.0},
+
+            ]
+        }
+        serializer = SimpleCardSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
