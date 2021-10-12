@@ -6,4 +6,4 @@ class ProposedContentConfig(AppConfig):
     name = 'proposed_content'
 
     def ready(self):
-        pass
+        import proposed_content.signals
