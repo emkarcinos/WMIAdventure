@@ -62,9 +62,10 @@ jobs:
     - name: SSH into Azure VM, pull changes, rebuild and start docker containers
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: sh -c "cd ~/WMIAdventure/WMIAdventure/ 
+        command: sh -c "cd ~/WMIAdventure/
                         \&& git fetch 
                         \&& git pull origin main
+                        \&& cd WMIAdventure/
                         \&& docker-compose down
                         \&& docker-compose stop
                         \&& docker-compose build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
