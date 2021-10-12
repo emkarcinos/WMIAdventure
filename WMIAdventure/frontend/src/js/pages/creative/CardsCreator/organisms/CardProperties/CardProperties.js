@@ -327,7 +327,11 @@ class CardProperties extends React.Component {
                                 removeEpicLevelHandler={this.removeEpicLevelHandler}
                                 activeLevelRecognize={this.activeLevelRecognize}
                             />
-                            <Button onClick={this.showLevelChooseHandler}>
+                            <Button onClick={this.showLevelChooseHandler}
+                                    createCommon={this.state.createCommonLevel}
+                                    createGold={this.state.createGoldLevel}
+                                    createEpic={this.state.createEpicLevel}
+                            >
                                 {/*ikona plusa*/}
                             </Button>
                         </DivLevel>

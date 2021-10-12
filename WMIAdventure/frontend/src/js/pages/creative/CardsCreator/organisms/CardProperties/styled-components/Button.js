@@ -10,7 +10,7 @@ function handleVisible(createCommon, createGold, createEpic) {
 
 const Button = styled.button`
   padding: 0;
-  display: block;
+  display: ${({createCommon, createGold, createEpic}) => handleVisible(createCommon, createGold, createEpic)};
   width: 16px;
   height: 16px;
   background-image: url(${plus});
