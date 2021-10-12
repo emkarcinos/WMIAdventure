@@ -5,6 +5,7 @@ const Header = styled.p`
   font-weight: 700;
   margin: 0 0 16px 0;
   max-width: 90%;
+  color: ${({theme}) => theme.colors.borderLine};
 `;
 
 export default Header;

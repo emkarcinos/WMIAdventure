@@ -9,6 +9,7 @@ const Tooltip = styled.p`
   max-width: 260px;
   line-height: 16px;
   text-align: start;
+  color: ${({theme}) => theme.colors.borderLine};
 `;
 
 export default Tooltip;

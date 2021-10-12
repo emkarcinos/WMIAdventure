@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Name = styled.p`
-  color: ${({theme}) => theme.colors.ui07};
+  color: ${({theme}) => theme.colors.borderLine};
   font-size: 18px;
   font-weight: 700;
   padding: 0;

@@ -7,6 +7,7 @@ const InputNumber = styled.input`
   text-align: center;
   width: 28px;
   height: 26px;
+  color: ${({theme}) => theme.colors.borderLine};
   border-bottom: 1px solid ${({theme}) => theme.colors.borderLine};
   -moz-appearance: textfield;
 
