@@ -12,10 +12,14 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   margin: 0 0 10px 0;
-  padding: 16px;
+  padding: 12px;
   cursor: pointer;
   text-decoration: none;
   max-width: 380px;
+  
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    padding: 16px;
+  }
 `;
 
 export default Button;

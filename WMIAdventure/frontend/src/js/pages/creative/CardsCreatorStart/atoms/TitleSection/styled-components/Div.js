@@ -6,7 +6,7 @@ const Div = styled.div`
   align-items: center;
   flex-direction: column;
   color: ${({theme}) => theme.colors.ui01};
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 `;
 
 export default Div;
