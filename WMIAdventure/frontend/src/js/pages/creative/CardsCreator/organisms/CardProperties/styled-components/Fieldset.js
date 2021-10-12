@@ -22,7 +22,16 @@ function createLevelHandler(createCommon, createGold, createEpic, theme) {
 
 const Fieldset = styled.fieldset`
   width: 100%;
-  height: 482px;
+  height: 32vh;
+  @media (min-height: 660px) {
+    height: 41vh;
+  }
+  @media (min-height: 800px) {
+    height: 50vh;
+  }
+  @media (min-height: 900px) {
+    height: 482px;
+  }
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: none;
@@ -31,9 +40,13 @@ const Fieldset = styled.fieldset`
   align-items: center;
   position: relative;
   padding: 16px;
-  margin: 0 0 64px 0;
+  margin: 0 0 52px 0;
   background-color: ${({theme}) => theme.colors.ui01};
   border: ${({activeCardRank, theme}) => activeRankHandler(activeCardRank, theme)};
+  
+  @media (min-height: 800px) {
+    margin: 0 0 64px 0;
+  }
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     border-bottom-left-radius: 20px;
