@@ -10,6 +10,7 @@ const Name = styled.p`
   margin: 0 0 6px 0;
   max-width: 280px;
   text-align: start;
+  color: ${({theme}) => theme.colors.borderLine};
 `;
 
 export default Name;

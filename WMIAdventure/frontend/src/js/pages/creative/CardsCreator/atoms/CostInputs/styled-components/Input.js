@@ -4,6 +4,7 @@ const Input = styled.input`
   width: 48px;
   height: 24px;
   border: none;
+  color: ${({theme}) => theme.colors.borderLine};
   border-bottom: 1px solid ${({theme}) => theme.colors.grey2};
   text-align: end;
   padding-right: 6px;

@@ -25,7 +25,7 @@ const colors = {
     ui06: '#232735',
     ui07: '#000000',
 
-    ui07trans: '#00000066',
+    ui07trans: '#24343766',
 
     // Hover
     hoverprimary: '#3E465F',
@@ -33,20 +33,20 @@ const colors = {
 
 
     // Card Editor
-    uiGreen: '#27AE60',
-    uiBlue: '#2D9CDB',
+    uiGreen: '#13876F',
+    uiBlue: '#243437',
     transBack: '#00000044',
 
-    common: '#6FCF97',
+    common: '#13876F',
     gold: '#F2C94C',
-    cardGold: '#E2C781',
+    cardGold: '#F2C94C',
     epic: '#BB6BD9',
     cardEpic: '#4D15EA',
 
     grey1: '#F2F2F2',
     grey2: '#E0E0E0',
     grey3: '#828282',
-    borderLine: '#333333',
+    borderLine: '#243437',
 };
 
 export default colors;

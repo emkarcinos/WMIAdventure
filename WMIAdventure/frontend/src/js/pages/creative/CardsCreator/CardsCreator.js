@@ -440,7 +440,7 @@ class CardsCreator extends React.Component {
                             />
                             <Div>
                                 <Button onClick={this.refreshPage} access show={this.props.creatorType}>
-                                    Edytuj inną kartę
+                                    Edytuj inną
                                 </Button>
                                 <Button show access={this.state.effectsToSend[0].length !== 0 ||
                                 this.state.effectsToSend[1].length !== 0 ||

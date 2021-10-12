@@ -21,7 +21,7 @@ const Button = styled.button`
     ({theme, disabled}) => disabled ? theme.colors.ui04 : "transparent" 
   };
   color: ${
-    ({theme, disabled}) => disabled ? theme.colors.text03 : "initial"
+    ({theme, disabled}) => disabled ? theme.colors.borderLine : "initial"
   };
   position: relative;
   width: 100%;
