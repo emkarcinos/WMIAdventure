@@ -27,6 +27,7 @@ const DivLevel = styled.div`
   border-right: ${({activeCardRank, theme}) => activeRankBorderHandler(activeCardRank, theme)};
   
   overflow-x: scroll;
+  overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE 10+ */
   ::-webkit-scrollbar {
