@@ -427,7 +427,7 @@ Skład z terminami ukończenia:
 - Symulacja Pojedynku - walka między dwoma graczami (05.11.2021)
 - Talia kart u gracza - możliwość wyboru kart do walki spośród wszystkich dostępnych (03.12.2021)
 - Interfejs całego trybu (12.11.2021)
-- Upublicznienie Edytora Kart do testów przez studentów (25.10.2021)
+- Upublicznienie Edytora Kart do testów przez studentów (05.11.2021)
 - Upublicznienie całego trybu do testów przez studentów (10.12.2021)
 
 ## Tryb Adventure
