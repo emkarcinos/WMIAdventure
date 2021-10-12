@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 function colorHandler(common, gold, epic) {
     if(common)
-        return '#6FCF97';
+        return ({theme}) => theme.colors.common;
     else if(gold)
-        return '#F2C94C';
+        return ({theme}) => theme.colors.gold;
     else if(epic)
-        return '#BB6BD9';
+        return ({theme}) => theme.colors.epic;
 }
 
 const Div = styled.div`
