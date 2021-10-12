@@ -62,7 +62,7 @@ jobs:
     - name: SSH into Azure VM, pull changes, rebuild and start docker containers
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: sh -c "cd ~/WMIAdventure/
+        command: sh -c "cd /home/azureuser/WMIAdventure/
                         \&& git fetch 
                         \&& git pull origin main
                         \&& cd WMIAdventure/
