@@ -18,7 +18,8 @@ class Effect:
 
         self.effect_model = effect_model
 
-        self.target = effect_model.target
+        # This usage of Target constructor is to make sure self.target is Target object, not int
+        self.target = CardLevelEffects.Target(effect_model.target)
         self.power = effect_model.power
         self.range = effect_model.range
 
