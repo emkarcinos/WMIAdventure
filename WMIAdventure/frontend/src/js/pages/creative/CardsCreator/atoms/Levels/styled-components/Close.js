@@ -16,6 +16,12 @@ const Close = styled.button`
   background-repeat: no-repeat;
   width: 10px;
   height: 10px;
+
+  /* Animation */
+  transition: transform .3s ease-in-out;
+  &:hover {
+    transform: scale(1.25);
+  }
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({exist}) => exist ? 'block' : 'none'};

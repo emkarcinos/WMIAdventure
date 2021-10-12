@@ -20,6 +20,12 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   margin: 4px 0 0 12px;
+
+  /* Animation */
+  transition: transform .3s ease-in-out;
+  &:hover {
+    transform: scale(1.25);
+  }
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({createCommon, createGold, createEpic}) => handleVisible(createCommon, createGold, createEpic)};
@@ -36,6 +42,10 @@ const Button = styled.button`
     background-image: none;
     margin: 0 12px 24px;
     position: relative;
+
+    &:hover {
+      transform: scale(1.05);
+    }
     
     :after {
       content: '';
