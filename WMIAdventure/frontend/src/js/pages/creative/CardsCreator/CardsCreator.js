@@ -439,9 +439,6 @@ class CardsCreator extends React.Component {
                                             levelCreatedHandler={this.levelCreatedHandler}
                             />
                             <Div>
-                                <Button onClick={this.refreshPage} access show={!this.props.creatorType}>
-                                    Zacznij od nowa
-                                </Button>
                                 <Button onClick={this.refreshPage} access show={this.props.creatorType}>
                                     Edytuj inną kartę
                                 </Button>
