@@ -2,6 +2,8 @@ from django.test import TestCase
 from rest_framework import serializers, status
 from rest_framework.test import APIRequestFactory
 
+from battle.businesslogic.effects.EffectFactory import EffectFactory
+from cards.businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
 from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
@@ -436,6 +438,13 @@ class WholeProposedCardListTestCase(TestCase):
                 ]
             }
 
+        # EffectFactory will be used to create Effect objects.
+        # Effect objects will be used to generate expected effects_description
+        effect_factory = EffectFactory.get_instance()
+
+        # DescriptionGenerator will be used to generate expected effects_description
+        description_generator = DescriptionGenerator.get_instance()
+
         # Setup request
         factory = APIRequestFactory()
         view = WholeProposedCardList.as_view()
@@ -468,6 +477,11 @@ class WholeProposedCardListTestCase(TestCase):
                 self.assertEqual(effect_data.power, expected_effect.get("power"))
                 self.assertEqual(effect_data.range, expected_effect.get("range"))
                 self.assertEqual(effect_data.target, expected_effect.get("target"))
+
+            # Assert effects_description after effects data has been asserted
+            effects_list = [effect_factory.create(effect_model) for effect_model in card_lvl_data.effects.all()]
+            expected_effects_description = description_generator.generate_description(effects_list)
+            self.assertEqual(card_lvl_data.effects_description, expected_effects_description)
 
     def test_post2(self):
         """
@@ -748,7 +762,8 @@ class AcceptProposedCardViewTestCase(TestCase):
             Response status is 201 Created.
         """
 
-        proposed_card, proposed_card_data, factory, view = self.setup_test_post1()
+        proposed_card, proposed_card_data, factory, view, effect_factory, description_generator = \
+            self.setup_test_post1()
 
         # Make POST request and get response
         request = factory.post('/api/cards//accept/')
@@ -782,6 +797,11 @@ class AcceptProposedCardViewTestCase(TestCase):
                 self.assertEqual(level_effect.range, expected_effect_data['range'])
                 self.assertEqual(level_effect.target, expected_effect_data['target'])
 
+            # Assert effects_description after effects data has been asserted
+            effects_list = [effect_factory.create(effect_model) for effect_model in accepted_card_level.effects.all()]
+            expected_effects_description = description_generator.generate_description(effects_list)
+            self.assertEqual(accepted_card_level.effects_description, expected_effects_description)
+
         # Cleanup created test data
         accepted_card.delete()
 
@@ -792,7 +812,8 @@ class AcceptProposedCardViewTestCase(TestCase):
             Response status is 200 Ok.
         """
 
-        accepted_card, proposed_card, proposed_card_data, factory, view = self.setup_test_post2()
+        accepted_card, proposed_card, proposed_card_data, factory, view, effect_factory, description_generator \
+            = self.setup_test_post2()
 
         # Make POST request and get response
         request = factory.post('/api/cards//accept/')
@@ -826,6 +847,11 @@ class AcceptProposedCardViewTestCase(TestCase):
                 self.assertEqual(level_effect.power, expected_effect_data['power'])
                 self.assertEqual(level_effect.range, expected_effect_data['range'])
                 self.assertEqual(level_effect.target, expected_effect_data['target'])
+
+            # Assert effects_description after effects data has been asserted
+            effects_list = [effect_factory.create(effect_model) for effect_model in accepted_card_level.effects.all()]
+            expected_effects_description = description_generator.generate_description(effects_list)
+            self.assertEqual(accepted_card_level.effects_description, expected_effects_description)
 
         # Cleanup created test data
         accepted_card.delete()
@@ -906,6 +932,13 @@ class AcceptProposedCardViewTestCase(TestCase):
             ]
         }
 
+        # EffectFactory will be used to create Effect objects.
+        # Effect objects will be used to generate expected effects_description
+        effect_factory = EffectFactory.get_instance()
+
+        # DescriptionGenerator will be used to generate expected effects_description
+        description_generator = DescriptionGenerator.get_instance()
+
         # Create all proposed card models with proposed card data
 
         proposed_card = ProposedCardInfo.objects.create(name=proposed_card_data['name'],
@@ -930,7 +963,7 @@ class AcceptProposedCardViewTestCase(TestCase):
         factory = APIRequestFactory()
         view = AcceptProposedCardView.as_view()
 
-        return proposed_card, proposed_card_data, factory, view
+        return proposed_card, proposed_card_data, factory, view, effect_factory, description_generator
 
     def setup_test_post2(self):
         # Setup - Create proposed card.
@@ -984,6 +1017,15 @@ class AcceptProposedCardViewTestCase(TestCase):
                 }
             ]
         }
+
+        # Setup continues
+
+        # EffectFactory will be used to create Effect objects.
+        # Effect objects will be used to generate expected effects_description
+        effect_factory = EffectFactory.get_instance()
+
+        # DescriptionGenerator will be used to generate expected effects_description
+        description_generator = DescriptionGenerator.get_instance()
 
         # Create all proposed card models with proposed card data
         accepted_card = CardInfo.objects.create(name=accepted_card_data['name'],
@@ -1078,4 +1120,4 @@ class AcceptProposedCardViewTestCase(TestCase):
         factory = APIRequestFactory()
         view = AcceptProposedCardView.as_view()
 
-        return accepted_card, proposed_card, proposed_card_data, factory, view
+        return accepted_card, proposed_card, proposed_card_data, factory, view, effect_factory, description_generator
