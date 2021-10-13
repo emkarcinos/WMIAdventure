@@ -2,6 +2,8 @@ from django.test import TestCase
 from rest_framework import serializers, status
 from rest_framework.test import APIRequestFactory
 
+from battle.businesslogic.effects.EffectFactory import EffectFactory
+from cards.businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
 from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
@@ -436,6 +438,13 @@ class WholeProposedCardListTestCase(TestCase):
                 ]
             }
 
+        # EffectFactory will be used to create Effect objects.
+        # Effect objects will be used to generate expected effects_description
+        effect_factory = EffectFactory.get_instance()
+
+        # DescriptionGenerator will be used to generate expected effects_description
+        description_generator = DescriptionGenerator.get_instance()
+
         # Setup request
         factory = APIRequestFactory()
         view = WholeProposedCardList.as_view()
@@ -468,6 +477,11 @@ class WholeProposedCardListTestCase(TestCase):
                 self.assertEqual(effect_data.power, expected_effect.get("power"))
                 self.assertEqual(effect_data.range, expected_effect.get("range"))
                 self.assertEqual(effect_data.target, expected_effect.get("target"))
+
+            # Assert effects_description after effects data has been asserted
+            effects_list = [effect_factory.create(effect_model) for effect_model in card_lvl_data.effects.all()]
+            expected_effects_description = description_generator.generate_description(effects_list)
+            self.assertEqual(card_lvl_data.effects_description, expected_effects_description)
 
     def test_post2(self):
         """
