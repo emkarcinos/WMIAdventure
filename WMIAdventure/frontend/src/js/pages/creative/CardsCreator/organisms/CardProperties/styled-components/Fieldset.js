@@ -22,16 +22,27 @@ function createLevelHandler(createCommon, createGold, createEpic, theme) {
 
 const Fieldset = styled.fieldset`
   width: 100%;
-  height: 32vh;
-  @media (min-height: 660px) {
-    height: 41vh;
+  
+  @media (max-height: 568px) {
+    height: 220px;
   }
+
+  @media (max-height: 640px) {
+    height: 320px;
+  }
+
+  @media (max-height: 800px) {
+    height: 400px;
+  }
+  
   @media (min-height: 800px) {
-    height: 50vh;
+    height: 482px;
   }
+
   @media (min-height: 900px) {
     height: 532px;
   }
+  
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: none;
@@ -52,6 +63,7 @@ const Fieldset = styled.fieldset`
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     max-width: 380px;
+    height: 532px;
     margin: 0 6px 24px;
     padding: 0;
     display: ${({create}) => create ? 'flex' : 'none'};
