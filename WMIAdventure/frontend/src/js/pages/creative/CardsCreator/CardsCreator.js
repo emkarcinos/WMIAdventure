@@ -64,7 +64,7 @@ class CardsCreator extends React.Component {
             t.setState({
                 showSendMessage: true,
                 sendSuccess: false,
-                failedCardSubmissionMsg: JSON.stringify(jsonResponse),
+                failedCardSubmissionMsg: JSON.stringify(jsonResponse).replace(/[{}"\]]+/g, '').replace(/[,[]+/g, ' '),
             });
         })
     }
