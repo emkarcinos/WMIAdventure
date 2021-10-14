@@ -26,6 +26,16 @@ const Button = styled.button`
   &:hover {
     transform: scale(1.25);
   }
+
+  @media (min-height: 660px) and (min-width: ${({theme}) => theme.overMobile}px) {
+    height: 41vh;
+  }
+  @media (min-height: 800px) and (min-width: ${({theme}) => theme.overMobile}px){
+    height: 50vh;
+  }
+  @media (min-height: 900px) and (min-width: ${({theme}) => theme.overMobile}px){
+    height: 532px;
+  }
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     display: ${({createCommon, createGold, createEpic}) => handleVisible(createCommon, createGold, createEpic)};
@@ -36,7 +46,6 @@ const Button = styled.button`
     padding-bottom: 52px;
     color: white;
     width: 380px;
-    height: 532px;
     border-radius: 20px;
     border: solid 4px white;
     background-image: none;
@@ -57,7 +66,7 @@ const Button = styled.button`
       background-repeat: no-repeat;
       background-color: transparent;
       position: absolute;
-      top: 272px;
+      top: 60%;
     }
   }
 `;

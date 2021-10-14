@@ -9,6 +9,16 @@ import ImagePreview from "./styled-components/ImagePreview";
 import upload_image from "../../../../../../assets/icons/upload_image.svg";
 
 class CardDescribePreview extends React.Component {
+
+    handlePropsLength = (props) => {
+        try {
+            if(props.length) return props.length;
+        } catch (e) {
+            return 0;
+        }
+
+    }
+
     render() {
         return (
             <Container>
@@ -20,13 +30,13 @@ class CardDescribePreview extends React.Component {
 
                 {/* Main content section */}
                 <Section>
-                    <H1>
+                    <H1 len={this.handlePropsLength(this.props.cardName)}>
                         {this.props.cardName ? this.props.cardName : 'Nazwa karty'}
                     </H1>
-                    <P>
+                    <P len={this.handlePropsLength(this.props.cardSubject)}>
                         {this.props.cardSubject ? this.props.cardSubject : 'Przedmiot'}
                     </P>
-                    <P tooltip>
+                    <P tooltip len={this.handlePropsLength(this.props.cardTooltip)}>
                         {this.props.cardTooltip ? this.props.cardTooltip : 'Opis Karty'}
                     </P>
                 </Section>
