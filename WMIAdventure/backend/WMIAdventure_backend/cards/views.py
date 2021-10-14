@@ -58,7 +58,11 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         # This disasterous piece of code is caused by the way external library for handling data uploads works.
-        # It servers DOWNLOADABLE files in a default endpoint, we had to switch the behaviour to GET.
+        # After migrating to in-databse file storage, serializer field responsible for serving the file got replaced
+        # and I could not figure out how to make those changes there, as it would be most optimal.
+        # Serializer would normally provide a download link, which has a different behaviour than we had before
+        # It servers DOWNLOADABLE files. To maintain compatibility we need to rewrite the image URL to serve files for
+        # viewing, not downloading.
         # I couldn't find any other way other than messing with the library itself, so here's a dirty fix
         response = super().get(request, *args, **kwargs)
         image_path = response.data.get('image')

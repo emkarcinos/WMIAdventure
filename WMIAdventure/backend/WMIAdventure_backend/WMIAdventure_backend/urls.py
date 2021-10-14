@@ -28,6 +28,9 @@ urlpatterns = [
     path('api/battle/', include('battle.urls')),
     path('api/proposed-content/', include('proposed_content.urls')),
     path('docs/', include_docs_urls(title="WMIAdventure API")),
+    # Files are stored here
+    # Download links are served in download/ domain,
+    # File viewing is at get/ domain.
     url(r'^files/', include('db_file_storage.urls')),
 ]
 
