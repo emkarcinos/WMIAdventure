@@ -1,3 +1,4 @@
+from db_file_storage.model_utils import delete_file_if_needed, delete_file
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -97,13 +98,21 @@ def base_card_info_factory(upload_images_to: str):
         name = models.CharField(max_length=36, help_text="Displayed card's name.")
         tooltip = models.TextField(help_text="Card's description. Gets displayed together with the card as a tooltip.",
                                    max_length=80)
-        image = models.FileField(upload_to=upload_images_to, null=True, blank=True,
+        image = models.FileField(upload_to='cards.ImageStorage/bytes/filename/mimetype', null=True, blank=True,
                                   help_text="An image. We don't really"
                                             "know what should that be.",
                                  validators=[validate_file_size])
         subject = models.CharField(max_length=60, null=True,
                                    help_text="Subject name. In the future this field will be an"
                                              " id pointing to Subject object.")
+
+        def save(self, *args, **kwargs):
+            delete_file_if_needed(self, 'image')
+            super(BaseCardInfo, self).save(*args, **kwargs)
+
+        def delete(self, *args, **kwargs):
+            super(BaseCardInfo, self).delete(*args, **kwargs)
+            delete_file(self, 'image')
 
     return BaseCardInfo
 
@@ -223,3 +232,9 @@ class CardLevelEffects(base_card_level_effects_factory(Card)):
     """
 
     pass
+
+
+class ImageStorage(models.Model):
+    bytes = models.BinaryField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
