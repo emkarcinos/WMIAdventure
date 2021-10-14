@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'battle',
     'proposed_content',
     'corsheaders',
-    'db_file_storage'
+    'db_file_storage',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
