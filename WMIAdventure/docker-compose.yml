@@ -1,10 +1,19 @@
 version: '3.2'
 
 services:
-    wmiadventure-backend:
+    django-migrate:
         image: wmiadventure.azurecr.io/wmiadventure:v1
         build: ./backend
-        command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+        command: python manage.py migrate
+        volumes:
+            - ./backend/WMIAdventure_backend:/backend/
+
+    wmiadventure-backend:
+        depends_on:
+            - django-migrate
+        image: wmiadventure.azurecr.io/wmiadventure:v1
+        build: ./backend
+        command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - ./backend/WMIAdventure_backend:/backend/
         ports:
