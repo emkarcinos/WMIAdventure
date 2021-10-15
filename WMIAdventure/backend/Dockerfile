@@ -25,7 +25,7 @@ ADD ./requirements.txt .
 
 RUN pip install -r requirements.txt
 
-ADD ./WMIAdventure_backend/ .
+ADD ./WMIAdventure_backend/ ./
 
 RUN python manage.py migrate
 EXPOSE 8000
