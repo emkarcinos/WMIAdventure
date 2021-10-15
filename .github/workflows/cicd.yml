@@ -68,7 +68,7 @@ jobs:
           git pull
           cd ./WMIAdventure/
           docker-compose build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django wmiadventure-backend wmiadventure-frontend 
-          docker-compose up wmiadventure-backend wmiadventure-frontend
+          docker-compose up wmiadventure-backend wmiadventure-frontend -d
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
