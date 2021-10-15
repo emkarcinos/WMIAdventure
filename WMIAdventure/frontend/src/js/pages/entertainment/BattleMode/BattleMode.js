@@ -81,7 +81,7 @@ class BattleMode extends React.Component {
                     {/*        );*/}
                     {/*    })}*/}
                     {/*</Ul>*/}
-                    <UserListItem />
+                    <UserListItem avatar={null} />
                 </Main>
                 {
                     this.state && this.state.resultId &&

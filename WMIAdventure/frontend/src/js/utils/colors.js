@@ -47,6 +47,10 @@ const colors = {
     grey2: '#E0E0E0',
     grey3: '#828282',
     borderLine: '#243437',
+
+    // new colors
+    light2: '#F7F7F7',
+    darkgrey: '#282829',
 };
 
 export default colors;

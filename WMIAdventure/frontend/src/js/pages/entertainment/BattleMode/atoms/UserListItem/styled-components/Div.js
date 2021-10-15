@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Div = styled.div`
-  background-color: green;
+  width: calc(100% - 102px);
 `;
 
 export default Div;
