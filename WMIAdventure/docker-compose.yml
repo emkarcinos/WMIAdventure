@@ -6,9 +6,7 @@ services:
         build: ./backend
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
-            - type: bind
-              source: ./backend/WMIAdventure_backend
-              target: /backend/
+            - ./backend/WMIAdventure_backend:/backend/
         ports:
             - 8000:8000
     
@@ -20,10 +18,7 @@ services:
             - CHOKIDAR_USEPOLLING=true
 
         volumes:
-            - type: bind
-              source: ./frontend
-              target: /frontend/
-            - node_modules:/frontend/node_modules
+            - ./frontend:/frontend
         ports:
             - 80:80
          
@@ -32,6 +27,3 @@ services:
         build: ./admin
         ports:
             - 8001:8001
-
-volumes:
-    node_modules:
