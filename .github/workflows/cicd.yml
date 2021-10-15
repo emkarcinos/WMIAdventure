@@ -67,18 +67,16 @@ jobs:
         docker push ${{ env.ACR_SERVER }}/wmiadventure:v1
         docker push ${{ env.ACR_SERVER }}/frontend:v1
 
-    - name: Pull backend docker image from ACR on server and run using ssh
+    - name: Pull docker image from ACR on server and run using ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:v1; docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run -d --name=wmi-adventure -p 8000:8000 -d ${{ env.ACR_SERVER }}/wmiadventure:v1
-        host: ${{ env.SERVER_IP }}
-        username: ${{ env.SERVER_USER }}
-        privateKey: ${{ secrets.SERVER_KEY}}
-
-    - name: Pull frontend docker image from ACR on server and run using ssh
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -d --name=wmi-adventure-frontend -p 80:80 -d ${{ env.ACR_SERVER }}/frontend:v1
+        command: |
+          cd ~/WMIAdventure/
+          git fetch
+          git pull
+          cd ./WMIAdventure/
+          docker-compose pull wmiadventure-backend wmiadventure-frontend
+          docker-compose up wmiadventure-backend wmiadventure-frontend
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
