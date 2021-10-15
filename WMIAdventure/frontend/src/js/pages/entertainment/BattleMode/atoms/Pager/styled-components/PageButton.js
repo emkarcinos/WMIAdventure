@@ -11,7 +11,7 @@ const PageButton = styled.button`
   height: 32px;
   
   /* Styling */
-  background: ${({theme, disabled}) => !disabled ? theme.colors.grey1 : theme.colors.grey2};
+  background: ${({theme, disabled}) => !disabled ? theme.colors.ui02 : theme.colors.ui05};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border-style: none;
