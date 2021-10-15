@@ -21,14 +21,13 @@ ENV DB_USER	${DB_USER}
 ENV DB_NAME	${DB_NAME}
 
 WORKDIR /backend
-ADD ./WMIAdventure_backend /backend
-
-COPY ./requirements.txt /backend/requirements.txt
+ADD ./requirements.txt .
 
 RUN pip install -r requirements.txt
-RUN python manage.py migrate
-COPY . /backend
 
+ADD ./WMIAdventure_backend/ .
+
+RUN python manage.py migrate
 EXPOSE 8000
 
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
