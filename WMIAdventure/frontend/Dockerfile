@@ -11,6 +11,6 @@ ARG API_URL="localhost:8000"
 ENV API_URL=${API_URL}
 
 ADD . .
-
+ENV PATH /frontend/node_modules/.bin:$PATH
 EXPOSE 80
 ENTRYPOINT ["npm", "start", "PORT=80"]
