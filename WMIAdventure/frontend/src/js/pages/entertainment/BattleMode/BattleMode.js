@@ -3,9 +3,10 @@ import NavBar from '../MainMenu/organisms/NavBar';
 import Wrapper from './styled-components/Wrapper';
 import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
-import Ul from './styled-components/Ul';
-import UserToFight from './molecules/UserToFight';
+// import Ul from './styled-components/Ul';
+// import UserToFight from './molecules/UserToFight';
 import BattleResult from './molecules/BattleResult';
+import UserListItem from './atoms/UserListItem';
 
 class BattleMode extends React.Component {
 
@@ -69,17 +70,18 @@ class BattleMode extends React.Component {
                     <H2>
                         Wybierz gracza, którego chcesz wyzwać na pojedynek
                     </H2>
-                    <Ul>
-                        {this.state.users.map((user) => {
-                            return (
-                                    <UserToFight key={`user-${user.user}`}
-                                                 userId={user.user}
-                                                 battleResultHandler={this.battleResultHandler}>
-                                        {user.displayedUsername}
-                                    </UserToFight>
-                            );
-                        })}
-                    </Ul>
+                    {/*<Ul>*/}
+                    {/*    {this.state.users.map((user) => {*/}
+                    {/*        return (*/}
+                    {/*                <UserToFight key={`user-${user.user}`}*/}
+                    {/*                             userId={user.user}*/}
+                    {/*                             battleResultHandler={this.battleResultHandler}>*/}
+                    {/*                    {user.displayedUsername}*/}
+                    {/*                </UserToFight>*/}
+                    {/*        );*/}
+                    {/*    })}*/}
+                    {/*</Ul>*/}
+                    <UserListItem />
                 </Main>
                 {
                     this.state && this.state.resultId &&
