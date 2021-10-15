@@ -1,9 +1,6 @@
 ### Installs dependencies
 FROM node:15
 
-ARG USER
-
-USER $USER
 WORKDIR /frontend
 ADD ./package*.json ./
 
