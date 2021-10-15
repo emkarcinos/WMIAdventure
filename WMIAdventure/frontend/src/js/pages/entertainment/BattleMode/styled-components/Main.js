@@ -2,12 +2,15 @@ import styled from 'styled-components';
 
 const Main = styled.main`
   width: 100%;
-  margin-top: 72px;
   display: ${({visible}) => visible ? 'flex' : 'none'};
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 16px;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  background-color: ${({theme}) => theme.colors.uiGreen};
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 80%;
