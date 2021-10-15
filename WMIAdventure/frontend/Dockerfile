@@ -1,15 +1,20 @@
 ### Installs dependencies
-FROM node:15
+FROM node:15 as builder
 
 WORKDIR /frontend
 ADD ./package*.json ./
 
 RUN npm install
-RUN chown -R node:node node_modules
+
+### Copy installed dependencies with node ownership
+FROM node:15
+COPY --from=builder --chown=node /frontend /frontend
 
 # From build arg
 ARG API_URL="localhost:8000"
 ENV API_URL=${API_URL}
+
+WORKDIR /frontend
 
 ADD . .
 ENV PATH /frontend/node_modules/.bin:$PATH
