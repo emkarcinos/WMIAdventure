@@ -4,7 +4,7 @@ services:
     wmiadventure-backend:
         image: wmiadventure.azurecr.io/wmiadventure:v1
         build: ./backend
-        command: python manage.py runserver 0.0.0.0:8000
+        command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
         volumes:
             - ./backend/WMIAdventure_backend:/backend/
         ports:

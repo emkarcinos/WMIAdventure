@@ -1,10 +1,14 @@
 ### Installs dependencies
 FROM node:15
 
+ARG USER
+
+USER $USER
 WORKDIR /frontend
 ADD ./package*.json ./
 
 RUN npm install
+RUN chown -R node:node node_modules
 
 # From build arg
 ARG API_URL="localhost:8000"
