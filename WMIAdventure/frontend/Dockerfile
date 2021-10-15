@@ -2,7 +2,7 @@
 FROM node:15
 
 WORKDIR /frontend
-ADD ./package*.json .
+ADD ./package*.json ./
 
 RUN npm install
 
