@@ -8,7 +8,6 @@ class Pager extends React.Component {
             <MainDiv>
                 <PageButton disabled={true}>&lt;</PageButton>
                 <PageButton>1</PageButton>
-                <PageButton>2</PageButton>
                 <PageButton disabled={false}>&gt;</PageButton>
             </MainDiv>
 
