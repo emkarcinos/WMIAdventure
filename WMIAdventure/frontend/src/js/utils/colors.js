@@ -27,6 +27,8 @@ const colors = {
 
     ui07trans: '#24343766',
 
+    light2: '#F7F7F7',
+
     // Hover
     hoverprimary: '#3E465F',
     hoverrow: '#EEEEF1',
