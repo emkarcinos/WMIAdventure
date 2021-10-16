@@ -28,6 +28,7 @@ services:
 
         volumes:
             - ./frontend:/frontend
+            - /frontend/node_modules
         ports:
             - 80:80
          
