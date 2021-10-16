@@ -22,11 +22,28 @@ class RequestSender {
      * @param url
      * @param body Request body. You have to prepare body in the format that you want it to be. (json, form data, etc.)
      * @param headers
-     * @returns {Promise<any>} Response.
+     * @returns {Promise<Response>} Response.
      */
     static post = (url, body, headers={}) => {
         return fetch(url, {
             method: 'post',
+            headers: headers,
+            body: body
+        }).then(
+            response => response
+        );
+    }
+
+    /**
+     * Sends PUT request.
+     * @param url
+     * @param body Request body. You have to prepare body in the format that you want it to be. (json, form data, etc.)
+     * @param headers
+     * @returns {Promise<Response>} Response.
+     */
+    static put = (url, body, headers={}) => {
+        return fetch(url, {
+            method: 'put',
             headers: headers,
             body: body
         }).then(
