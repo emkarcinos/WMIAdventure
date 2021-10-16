@@ -14,6 +14,7 @@ import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 import CardView from './organisms/CardView';
 
+
 class CardsCreator extends React.Component {
     state = {
         cardId: undefined,
