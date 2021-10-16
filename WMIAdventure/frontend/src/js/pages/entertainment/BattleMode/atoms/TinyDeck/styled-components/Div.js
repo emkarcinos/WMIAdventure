@@ -25,6 +25,7 @@ const Div = styled.div`
   position: relative;
   transition: opacity 0.5s ease-in-out;
   opacity: ${({show}) => show ? 1 : 0};
+  cursor: pointer;
 
   &:before {
     content: '';
