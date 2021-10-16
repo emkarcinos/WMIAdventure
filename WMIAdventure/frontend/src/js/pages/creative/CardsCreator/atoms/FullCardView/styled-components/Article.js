@@ -14,15 +14,19 @@ const Article = styled.article`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 500px;
+  width: 262px;
+  height: 464px;
   background-color: ${({theme}) => theme.colors.grey1};
   margin-bottom: 14px;
   border-radius: 24px;
   position: relative;
-  //padding-top: 64px;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
+  
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 300px;
+    height: 500px;
+  }
   
   &:before {
     content: '';
