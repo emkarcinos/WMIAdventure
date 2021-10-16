@@ -15,6 +15,14 @@ class CardsAPIGateway {
         return RequestSender.get(CardsEndpoints.main);
     }
 
+    /**
+     * Gets all effects from API.
+     * @returns {Promise<*>} Array of effect objects.
+     */
+    static getAllEffects() {
+        return RequestSender.get(CardsEndpoints.effects);
+    }
+
 }
 
 export default CardsAPIGateway;
