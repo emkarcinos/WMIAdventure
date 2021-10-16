@@ -51,6 +51,7 @@ const colors = {
     // new colors
     light2: '#F7F7F7',
     darkgrey: '#282829',
+    userItemHover: '#E5E5E5',
 };
 
 export default colors;

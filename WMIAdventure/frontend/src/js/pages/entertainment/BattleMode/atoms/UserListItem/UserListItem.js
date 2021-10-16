@@ -7,6 +7,7 @@ import Label from './styled-components/Label';
 import BattleIcon from './styled-components/BattleIcon';
 import LabelsContainer from './styled-components/LabelsContainer';
 import AvatarContainer from './styled-components/AvatarContainer';
+import battleIcon from './../../../../../../assets/icons/upload_image_dark.svg';
 
 class UserListItem extends React.Component {
     render() {
@@ -17,18 +18,18 @@ class UserListItem extends React.Component {
                 </AvatarContainer>
                 <Div>
                     <Login>
-                        emkarcinos
+                        {this.props.login}
                     </Login>
                     <LabelsContainer>
-                        <Label>
-                            Semestr x
+                        <Label term={this.props.term}>
+                            Semestr: {this.props.term}
                         </Label>
-                        <Label>
-                            Level x
+                        <Label level={this.props.level}>
+                            Level: {this.props.level}
                         </Label>
                     </LabelsContainer>
                 </Div>
-                <BattleIcon />
+                <BattleIcon src={battleIcon} />
             </Item>
         );
     }
