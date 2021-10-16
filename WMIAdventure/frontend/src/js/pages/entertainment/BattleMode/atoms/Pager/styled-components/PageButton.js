@@ -15,6 +15,7 @@ const PageButton = styled.button`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border-style: none;
+  cursor: ${({disabled}) => disabled ? 'auto' : 'pointer'} ;
 
   /* Font */
   color: ${({theme, disabled}) => !disabled ? theme.colors.text01 : theme.colors.grey1};
