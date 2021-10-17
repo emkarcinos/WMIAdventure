@@ -8,6 +8,7 @@ import LevelCardView from '../../molecules/LevelCardView';
 import Media from 'react-media';
 import DesktopContainer from './styled-components/DesktopContainer';
 import {mobile} from '../../../../../utils/globals';
+import CardsAPIGateway from "../../../../../api/gateways/CardsAPIGateway";
 
 class CardView extends React.Component {
 
@@ -22,21 +23,9 @@ class CardView extends React.Component {
     }
 
     getDescriptions = () => {
-        const API = process.env['REACT_APP_API_URL'];
-
         if(this.props.cardEffects[0].length !== 0) {
             try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[0])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
+                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[0])
                     .then(data => this.setState({commonDescription: data}))
 
             } catch(e) {
@@ -46,17 +35,7 @@ class CardView extends React.Component {
 
         if(this.props.cardEffects[1] !== 0) {
             try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[1])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
+                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[1])
                     .then(data => this.setState({goldDescription: data}))
 
             } catch(e) {
@@ -66,17 +45,7 @@ class CardView extends React.Component {
 
         if(this.props.cardEffects[2] !== 0) {
             try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[2])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
+                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[2])
                     .then(data => this.setState({epicDescription: data}))
 
             } catch(e) {

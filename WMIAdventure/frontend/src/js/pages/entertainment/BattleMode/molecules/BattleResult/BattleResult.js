@@ -8,6 +8,7 @@ import CardsDiv from './styled-components/CardsDiv';
 import Pcard from './styled-components/Pcard';
 import DeckDiv from './styled-components/DeckDiv';
 import Result from './styled-components/Result';
+import CardsAPIGateway from "../../../../../api/gateways/CardsAPIGateway";
 
 class BattleResult extends React.Component {
 
@@ -30,10 +31,7 @@ class BattleResult extends React.Component {
 
     componentDidMount() {
         const API = process.env['REACT_APP_API_URL'];
-        fetch(`http://${API}/api/cards/`)
-            .then(response => {
-                return response.json();
-            })
+        CardsAPIGateway.getAllCards()
             .then(data => this.setState({cards: data}))
             .catch(error => console.log(error));
 

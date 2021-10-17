@@ -13,6 +13,7 @@ import CardChoose from './molecules/CardChoose';
 import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 import CardView from './organisms/CardView';
+import CardsAPIGateway from "../../../api/gateways/CardsAPIGateway";
 
 class CardsCreator extends React.Component {
     state = {
@@ -181,21 +182,12 @@ class CardsCreator extends React.Component {
         else if (this.props.creatorType === 'create')
             this.setState({headerLabel: 'Nowa karta', showCardChoose: false});
 
-        const API = process.env['REACT_APP_API_URL'];
-
         if (this.props.creatorType === 'edit') {
-            fetch(`http://${API}/api/cards/`)
-                .then(response => {
-                    return response.json();
-                })
+            CardsAPIGateway.getAllCards()
                 .then(data => this.setState({cardsFromApi: data}))
                 .catch(error => console.log(error));
         }
-
-        fetch(`http://${API}/api/cards/card-effect/`)
-            .then(response => {
-                return response.json();
-            })
+        CardsAPIGateway.getAllEffects()
             .then(data => this.setState({effectsFromApi: data}))
             .catch(error => console.log(error));
     }
