@@ -12,7 +12,7 @@ function backColorHandler(theme, term, level) {
 }
 
 function colorHandler(theme, term, level) {
-    if(level)
+    if(level < 10 || level >= 20)
         return theme.colors.ui01;
     else
         return theme.colors.ui07;
@@ -26,6 +26,8 @@ const Label = styled.p`
   color: ${({theme, term, level}) => colorHandler(theme, term, level)};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   padding: 4px 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 `;
 
 export default Label;

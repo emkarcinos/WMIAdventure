@@ -7,17 +7,17 @@ import Label from './styled-components/Label';
 import BattleIcon from './styled-components/BattleIcon';
 import LabelsContainer from './styled-components/LabelsContainer';
 import AvatarContainer from './styled-components/AvatarContainer';
-import battleIcon from './../../../../../../assets/icons/upload_image_dark.svg';
+import battleIcon from './../../../../../../assets/images/battleIcon.png';
 
 class UserListItem extends React.Component {
     render() {
         return (
             <Item>
-                <AvatarContainer>
-                    {this.props.avatar ? <Avatar src={this.props.avatar} alt=""/> : ''}
+                <AvatarContainer access={this.props.access}>
+                    {this.props.avatar ? <Avatar access={this.props.access} src={this.props.avatar} alt=""/> : ''}
                 </AvatarContainer>
                 <Div>
-                    <Login>
+                    <Login access={this.props.access}>
                         {this.props.login}
                     </Login>
                     <LabelsContainer>
@@ -29,7 +29,7 @@ class UserListItem extends React.Component {
                         </Label>
                     </LabelsContainer>
                 </Div>
-                <BattleIcon src={battleIcon} />
+                <BattleIcon access={this.props.access} src={battleIcon} />
             </Item>
         );
     }

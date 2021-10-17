@@ -81,9 +81,9 @@ class BattleMode extends React.Component {
                     {/*        );*/}
                     {/*    })}*/}
                     {/*</Ul>*/}
-                    <UserListItem login={'dawidos kaktus'} avatar={null} term={1} level={2} />
-                    <UserListItem login={'sweet michael'} avatar={null} term={2} level={10} />
-                    <UserListItem login={'emkarcinos'} avatar={null} term={3} level={20} />
+                    <UserListItem access login={'dawidos kaktus'} avatar={null} term={1} level={2} />
+                    <UserListItem access login={'sweet michael'} avatar={null} term={2} level={10} />
+                    <UserListItem access={false} login={'emkarcinos'} avatar={null} term={3} level={20} />
                 </Main>
                 {
                     this.state && this.state.resultId &&
