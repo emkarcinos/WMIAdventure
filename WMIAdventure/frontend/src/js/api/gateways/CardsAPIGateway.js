@@ -36,6 +36,14 @@ class CardsAPIGateway {
         }
         return RequestSender.post(CardsEndpoints.descriptions, body, headers).then(response => response.json());
     }
+
+    /**
+     * Gets all possible levels that card can have from API.
+     * @returns {Promise<*>} Array of level objects.
+     */
+    static getLevels() {
+        return RequestSender.get(CardsEndpoints.levels);
+    }
 }
 
 export default CardsAPIGateway;
