@@ -11,11 +11,19 @@ function backColorHandler(theme, term, level) {
         return theme.colors.epic;
 }
 
+function colorHandler(theme, term, level) {
+    if(level)
+        return theme.colors.ui01;
+    else
+        return theme.colors.ui07;
+}
+
 const Label = styled.p`
   margin: 0 10px 0 0;
   font-size: 10px;
   border-radius: 18px;
   background-color: ${({theme, term, level}) => backColorHandler(theme, term, level)};
+  color: ${({theme, term, level}) => colorHandler(theme, term, level)};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   padding: 4px 10px;
 `;
