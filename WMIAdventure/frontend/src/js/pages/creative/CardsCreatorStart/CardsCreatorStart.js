@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from 'react-helmet';
 import Wrapper from './styled-components/Wrapper';
 import Main from './styled-components/Main';
 import FlexStyle from './styled-components/FlexStyle';
@@ -15,6 +16,9 @@ class CardsCreatorStart extends React.Component {
 
         return (
             <>
+                <Helmet>
+                    <title> Narzędzie kreatora kart WMI Adventure </title>
+                </Helmet>
                 <Media query={mobile}>
                     <Wrapper>
                         <NavHeader backLink={'/'} label='Kreator Kart'/>

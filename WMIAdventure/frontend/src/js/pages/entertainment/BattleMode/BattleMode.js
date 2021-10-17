@@ -95,4 +95,5 @@ class BattleMode extends React.Component {
         );
     }
 }
+
 export default BattleMode;

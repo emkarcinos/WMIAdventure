@@ -14,8 +14,8 @@ const Div = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 144px;
-  height: 220px;
+  width: 114px;
+  height: 182px;
   background-color: ${({theme}) => theme.colors.grey1};
   border-radius: 8px;
   position: relative;
@@ -23,6 +23,11 @@ const Div = styled.div`
   padding-top: 18px;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 144px;
+    height: 220px;
+  }
 
   &:before {
     content: '';
