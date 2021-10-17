@@ -9,6 +9,8 @@ const Main = styled.main`
   padding: 0 16px;
   background-color: ${({theme}) => theme.colors.uiGreen};
   height: 100vh;
+  overflow: hidden;
+  position: relative;
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 80%;
