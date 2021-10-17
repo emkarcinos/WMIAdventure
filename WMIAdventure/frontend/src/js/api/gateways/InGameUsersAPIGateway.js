@@ -9,4 +9,13 @@ const getAllBasicUsersInfo = () => {
     return RequestSender.get(InGameUsersEndpoints.basic_user_info);
 }
 
-export default {getAllBasicUsersInfo};
+/**
+ * Gets given user's decks from API.
+ * @param userId
+ * @returns {Promise<*>} Array of user decks objects.
+ */
+const getUserDecks = (userId) => {
+    return RequestSender.get(InGameUsersEndpoints.user_decks(userId));
+}
+
+export default {getAllBasicUsersInfo, getUserDecks};
