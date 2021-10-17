@@ -6,6 +6,7 @@ import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
 import UserToFight from './molecules/UserToFight';
 import BattleResult from './molecules/BattleResult';
+import InGameUsersAPIGateway from "../../../api/gateways/InGameUsersAPIGateway";
 
 class BattleMode extends React.Component {
 
@@ -18,14 +19,9 @@ class BattleMode extends React.Component {
     }
 
     componentDidMount() {
-        const API = process.env['REACT_APP_API_URL'];
-        fetch(`http://${API}/api/igusers/basic/`)
-            .then(response => {
-                return response.json();
-            })
+        InGameUsersAPIGateway.getAllBasicUsersInfo()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
-
 
         setTimeout(() => {
             let loggedUserId;
@@ -38,10 +34,7 @@ class BattleMode extends React.Component {
 
             console.log(loggedUserId);
 
-            fetch(`http://${API}/api/igusers/${loggedUserId}/decks/`)
-                .then(response => {
-                    return response.json();
-                })
+            InGameUsersAPIGateway.getUserDecks(loggedUserId)
                 .then(data => this.setState({currentUserDecks: data}))
                 .catch(error => console.log(error));
         }, 2000);
@@ -49,11 +42,8 @@ class BattleMode extends React.Component {
 
     battleResultHandler = (event, id) => {
         event.preventDefault();
-        const API = process.env['REACT_APP_API_URL'];
-        fetch(`http://${API}/api/igusers/${id}/decks/`)
-            .then(response => {
-                return response.json();
-            })
+
+        InGameUsersAPIGateway.getUserDecks(id)
             .then(data => this.setState({defenderDecks: data}))
             .catch(error => console.log(error));
 
