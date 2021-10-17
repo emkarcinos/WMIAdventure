@@ -34,7 +34,7 @@ class UserList(APIView):
         return Response(serializer.data)
 
 
-class NoAuthorizationAuthToken(APIView):
+class AuthTokenView(APIView):
     """
     Provides way of accessing authorization tokens just by providing username in the request.
 
