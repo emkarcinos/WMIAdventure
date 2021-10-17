@@ -24,33 +24,21 @@ class CardView extends React.Component {
 
     getDescriptions = () => {
         if(this.props.cardEffects[0].length !== 0) {
-            try {
-                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[0])
-                    .then(data => this.setState({commonDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
+            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[0])
+                .then(data => this.setState({commonDescription: data}))
+                .catch(err => console.log(err))
         }
 
         if(this.props.cardEffects[1] !== 0) {
-            try {
-                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[1])
-                    .then(data => this.setState({goldDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
+            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[1])
+                .then(data => this.setState({goldDescription: data}))
+                .catch(err => console.log(err));
         }
 
         if(this.props.cardEffects[2] !== 0) {
-            try {
-                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[2])
-                    .then(data => this.setState({epicDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
+            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[2])
+                .then(data => this.setState({epicDescription: data}))
+                .catch(err => console.log(err))
         }
     }
 

@@ -79,7 +79,8 @@ class CardsCreator extends React.Component {
        event.preventDefault();
        ProposedContentAPIGateway.sendProposedCard(this.state.cardName, this.state.cardSubject, this.state.cardImage,
            this.state.cardTooltip, this.state.effectsToSend, this.state.comment, this.state.levelCostValues,
-           this.cardSubmissionSuccessHandler, this.cardSubmissionFailedHandler);
+           this.cardSubmissionSuccessHandler, this.cardSubmissionFailedHandler)
+           .catch(err => console.log(err));
     }
 
     componentDidMount() {

@@ -48,27 +48,23 @@ const sendProposedCard = (cardName, cardSubject, image, cardTooltip, effectsToSe
     const requestData =
         cards_utils.prepareRequestData(cardName, cardSubject, cardTooltip, effectsToSend, comment, levelCostValues);
 
-    try {
-        RequestSender.post(ProposedContentEndpoints.cards, requestData.body, requestData.headers)
-            .then(response => {
-                if(response.ok) {
-                    // Card's data was sent successfully and there is card image.
-                    if(image){
-                        sendCardImage(response, image, cardName, cardSubject, cardTooltip,
-                            successHandler, failureHandler);
-                    }
-                    // Card's data was sent successfully and there is no card image.
-                    else{
-                        successHandler();
-                    }
-                } else {
-                    failureHandler(response.json());
+    return RequestSender.post(ProposedContentEndpoints.cards, requestData.body, requestData.headers)
+        .then(response => {
+            if(response.ok) {
+                // Card's data was sent successfully and there is card image.
+                if(image){
+                    sendCardImage(response, image, cardName, cardSubject, cardTooltip,
+                        successHandler, failureHandler);
                 }
+                // Card's data was sent successfully and there is no card image.
+                else{
+                    successHandler();
+                }
+            } else {
+                failureHandler(response.json());
             }
-        );
-    } catch (e) {
-        console.log(e);
-    }
+        }
+    );
 }
 
 
