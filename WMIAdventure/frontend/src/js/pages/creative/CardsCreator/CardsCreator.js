@@ -14,6 +14,7 @@ import SendCardPopup from "./molecules/SendCardPopup";
 import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCardPopup";
 import CardView from './organisms/CardView';
 import CardsAPIGateway from "../../../api/gateways/CardsAPIGateway";
+import ProposedContentAPIGateway from "../../../api/gateways/proposed-content/ProposedContentAPIGateway";
 
 class CardsCreator extends React.Component {
     state = {
@@ -59,63 +60,14 @@ class CardsCreator extends React.Component {
         });
     }
 
-    cardSubmissionFailedHandler(serverResponse) {
-        let t = this;
-        serverResponse.json().then(function (jsonResponse) {
-            t.setState({
+    cardSubmissionFailedHandler = (response) => {
+        response.then(response => {
+            this.setState({
                 showSendMessage: true,
                 sendSuccess: false,
-                failedCardSubmissionMsg: JSON.stringify(jsonResponse).replace(/[{}"\]]+/g, '').replace(/[,[]+/g, ' '),
+                failedCardSubmissionMsg: JSON.stringify(response).replace(/[{}"\]]+/g, '').replace(/[,[]+/g, ' '),
             });
-        })
-    }
-
-
-    /**
-     * Creates form data with card image which can be sent to the server.
-     * @returns {FormData}
-     */
-    createFormDataToSendCardImage() {
-        const formData = new FormData();
-
-        formData.append('image', this.state.cardImage, this.state.cardImage.name);
-        // Required data that has to be sent even if we only want to send image.
-        formData.append('name', this.state.cardName);
-        formData.append('subject', this.state.cardSubject);
-        formData.append('tooltip', this.state.cardTooltip);
-
-        return formData;
-    }
-
-    /**
-     * This function makes PUT request to send image of newly created proposed card.
-     * @param serverResponse Server response after we created proposed card. Card's id will be retrieved from it and used to send PUT request.
-     */
-    sendCardImage = (serverResponse) => {
-        serverResponse.json().then(jsonResponse => {
-            const newProposedCardId = jsonResponse['id'];
-            const API = process.env['REACT_APP_API_URL'];
-            const formData = this.createFormDataToSendCardImage();
-
-            // Try make PUT request with image
-            try {
-                fetch(`http://${API}/api/proposed-content/cards/${newProposedCardId}/`, {
-                    method: 'put',
-                    body: formData
-                }) .then (
-                    response => {
-                        if(response.ok) {
-                            this.cardSubmissionSuccessHandler();
-                        } else {
-                            this.cardSubmissionFailedHandler(response)
-                        }
-                    }
-                );
-            }
-            catch (e) {
-                console.log(e);
-            }
-        })
+        });
     }
 
     /**
@@ -124,56 +76,10 @@ class CardsCreator extends React.Component {
      * @param event
      */
     sendCardToApi = (event) => {
-        event.preventDefault();
-        const API = process.env['REACT_APP_API_URL'];
-
-        const levelsToSend = [];
-        for (let i = 0; i < this.state.effectsToSend.length; i++) {
-            if (this.state.effectsToSend[i].length !== 0) {
-                levelsToSend.push(
-                    {
-                        level: String(i + 1),
-                        next_level_cost: this.state.levelCostValues[i],
-                        effects: this.state.effectsToSend[i]
-                    }
-                );
-            }
-        }
-
-        try {
-            let result = fetch(`http://${API}/api/proposed-content/cards/`, {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: this.state.cardName,
-                    subject: this.state.cardSubject,
-                    image: null,
-                    tooltip: this.state.cardTooltip,
-                    levels: levelsToSend,
-                    comment: this.state.comment
-                })
-            }).then(
-                response => {
-                    if(response.ok) {
-                        if(this.state.cardImage){
-                            this.sendCardImage(response);
-                        }
-                        else{
-                            this.cardSubmissionSuccessHandler();
-                        }
-
-                    } else {
-                        this.cardSubmissionFailedHandler(response)
-                    }
-                }
-            );
-            console.log('Result: ' + result);
-        } catch (e) {
-            console.log(e);
-        }
+       event.preventDefault();
+       ProposedContentAPIGateway.sendProposedCard(this.state.cardName, this.state.cardSubject, this.state.cardImage,
+           this.state.cardTooltip, this.state.effectsToSend, this.state.comment, this.state.levelCostValues,
+           this.cardSubmissionSuccessHandler, this.cardSubmissionFailedHandler);
     }
 
     componentDidMount() {
