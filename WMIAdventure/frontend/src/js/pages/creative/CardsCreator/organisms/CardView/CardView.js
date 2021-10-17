@@ -17,28 +17,37 @@ class CardView extends React.Component {
         activeGold: false,
         activeEpic: false,
 
-        commonDescription: '',
-        goldDescription: '',
-        epicDescription: '',
+        /**
+         * index 0 - effects description of common card level
+         *
+         * index 1 - effects description of gold card level
+         *
+         * index 2 - effects description of epic card level
+         */
+        descriptions: [null, null, null]
     }
 
+    /**
+     * Sets new description for given card level.
+     * @param level Card level that will have new description attached.
+     * @param newDescription
+     */
+    setNewDescription = (level, newDescription) => {
+        let newDescriptions = this.state.descriptions.slice();
+        newDescriptions[level] = newDescription;
+        this.setState({descriptions: newDescriptions});
+    }
+
+    /**
+     * Gets effects descriptions from API and saves them.
+     */
     getDescriptions = () => {
-        if(this.props.cardEffects[0].length !== 0) {
-            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[0])
-                .then(data => this.setState({commonDescription: data}))
-                .catch(err => console.log(err))
-        }
-
-        if(this.props.cardEffects[1] !== 0) {
-            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[1])
-                .then(data => this.setState({goldDescription: data}))
-                .catch(err => console.log(err));
-        }
-
-        if(this.props.cardEffects[2] !== 0) {
-            CardsAPIGateway.getEffectsDescription(this.props.cardEffects[2])
-                .then(data => this.setState({epicDescription: data}))
-                .catch(err => console.log(err))
+        for (let i = 0; i < 3; i++) {
+            if(this.props.cardEffects[i].length !== 0) {
+                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[i])
+                    .then(data => this.setNewDescription(i, data))
+                    .catch(err => console.log(err))
+            }
         }
     }
 
@@ -90,7 +99,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.commonDescription} />
+                                   description={this.state.descriptions[0]} />
                     <LevelCardView gold
                                    show={this.state.activeGold}
                                    exist={this.props.cardEffects[1].length !== 0}
@@ -98,7 +107,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.goldDescription} />
+                                   description={this.state.descriptions[1]} />
                     <LevelCardView epic
                                    show={this.state.activeEpic}
                                    exist={this.props.cardEffects[2].length !== 0}
@@ -106,7 +115,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.epicDescription} />
+                                   description={this.state.descriptions[2]} />
                     <Media query={mobile}>
                         <MobileLevelsMenu>
                             <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
