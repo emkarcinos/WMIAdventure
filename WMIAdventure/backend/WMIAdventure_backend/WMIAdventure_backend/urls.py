@@ -22,7 +22,7 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/igusers/', include('IngameUsers.urls')),
+    path('api/userprofiles/', include('IngameUsers.urls')),
     path('api/users/', include('users.urls')),
     path('api/cards/', include('cards.urls')),
     path('api/battle/', include('battle.urls')),

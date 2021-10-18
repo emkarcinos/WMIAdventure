@@ -1,5 +1,6 @@
+from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.pagination import PageNumberPagination
 
 from . import serializers
 from . import models
@@ -7,9 +8,24 @@ from .models import UserProfile
 from .serializers import UserDecksSerializer
 
 
-class UserProfileViewSet(ModelViewSet):
+class UserPagination(PageNumberPagination):
+    page_size = 5000
+    page_size_query_param = 'pagesize'
+    max_page_size = 5000
+
+
+class PaginatedUsersView(generics.ListCreateAPIView):
     """
-    UserProfile class view.
+    Lists all users with paging
+    """
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    pagination_class = UserPagination
+
+
+class UserView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Fetches a user.
     """
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
