@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Login = styled.div`
   font-family: 'Roboto', sans-serif;
-  font-weight: normal;
+  font-weight: ${({theme}) => theme.weight.medium};
   font-size: 18px;
   color: ${({theme, access}) => access ? theme.colors.darkgrey : theme.colors.grey2};
   margin-bottom: 10px;

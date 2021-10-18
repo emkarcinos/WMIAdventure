@@ -27,7 +27,7 @@ const Label = styled.p`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   padding: 4px 10px;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
+  font-weight: ${({theme}) => theme.weight.light};
 `;
 
 export default Label;
