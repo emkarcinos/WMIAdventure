@@ -6,7 +6,7 @@ import InGameUsersEndpoints from "../endpoints/InGameUsersEndpoints";
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = () => {
-    return RequestSender.get(InGameUsersEndpoints.basic_user_info);
+    return RequestSender.get(InGameUsersEndpoints.basicUserInfo);
 }
 
 /**

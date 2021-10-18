@@ -1,10 +1,10 @@
-import api_url from "./api_url";
+import API_URL from "./API_URL";
 
 /**
  * Holds all API endpoints to Battle service.
  */
 class BattleEndpoints {
-    static main = api_url + 'battle/';
+    static main = API_URL + 'battle/';
     static fightWithUser = (userId) => {return `${BattleEndpoints.main}${userId}/`}
 }
 

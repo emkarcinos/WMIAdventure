@@ -1,10 +1,10 @@
-import api_url from "./api_url";
+import API_URL from "./API_URL";
 
 /**
  * Holds all API endpoints to cards service.
  */
 class CardsEndpoints {
-    static main = api_url + 'cards/';
+    static main = API_URL + 'cards/';
     static effects = CardsEndpoints.main + 'card-effect/';
     static descriptions = CardsEndpoints.main + 'descriptions/';
     static levels = CardsEndpoints.main + 'card-level/';

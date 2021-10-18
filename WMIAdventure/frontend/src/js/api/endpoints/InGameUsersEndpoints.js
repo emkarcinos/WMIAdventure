@@ -1,11 +1,11 @@
-import api_url from "./api_url";
+import API_URL from "./API_URL";
 
 /**
  * Holds all API endpoints to InGameUsers service.
  */
 class InGameUsersEndpoints {
-    static main = api_url + 'igusers/';
-    static basic_user_info = InGameUsersEndpoints.main + 'basic/';
+    static main = API_URL + 'igusers/';
+    static basicUserInfo = InGameUsersEndpoints.main + 'basic/';
     static user_decks = (user_id) => {return `${InGameUsersEndpoints.main}${user_id}/decks/`};
 }
 
