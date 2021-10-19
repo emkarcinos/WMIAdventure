@@ -1,6 +1,6 @@
 import RequestSender from "../../RequestSender";
-import ProposedContentEndpoints from "../../endpoints/ProposedContentEndpoints";
 import cards_utils from "./cards_utils";
+import CardsEndpoints from "../../endpoints/CardsEndpoints";
 
 /**
  * This function makes PUT request to send image of newly created proposed card.
@@ -17,7 +17,7 @@ const sendCardImage = (serverResponse, cardImage, cardName, cardSubject, cardToo
     serverResponse.json().then(jsonResponse => {
         const newProposedCardId = jsonResponse['id'];
         const formData = cards_utils.createFormDataToSendCardImage(cardImage, cardName, cardSubject, cardTooltip);
-        const url = ProposedContentEndpoints.cards + `${newProposedCardId}/`;
+        const url = CardsEndpoints.proposed_cards + `${newProposedCardId}/`;
 
         RequestSender.put(url, formData).then (
             response => {
@@ -48,7 +48,7 @@ const sendProposedCard = (cardName, cardSubject, image, cardTooltip, effectsToSe
     const requestData =
         cards_utils.prepareRequestData(cardName, cardSubject, cardTooltip, effectsToSend, comment, levelCostValues);
 
-    return RequestSender.post(ProposedContentEndpoints.cards, requestData.body, requestData.headers)
+    return RequestSender.post(CardsEndpoints.proposed_cards, requestData.body, requestData.headers)
         .then(response => {
             if(response.ok) {
                 // Card's data was sent successfully and there is card image.

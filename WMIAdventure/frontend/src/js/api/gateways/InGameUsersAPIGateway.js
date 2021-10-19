@@ -1,12 +1,12 @@
 import RequestSender from "../RequestSender";
-import InGameUsersEndpoints from "../endpoints/InGameUsersEndpoints";
+import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
 
 /**
  * Returns list of all users with their basic information.
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = () => {
-    return RequestSender.get(InGameUsersEndpoints.basicUserInfo);
+    return RequestSender.get(UserProfilesEndpoints.basicUserInfo);
 }
 
 /**
@@ -15,7 +15,7 @@ const getAllBasicUsersInfo = () => {
  * @returns {Promise<*>} Array of user decks objects.
  */
 const getUserDecks = (userId) => {
-    return RequestSender.get(InGameUsersEndpoints.user_decks(userId));
+    return RequestSender.get(UserProfilesEndpoints.user_decks(userId));
 }
 
 export default {getAllBasicUsersInfo, getUserDecks};
