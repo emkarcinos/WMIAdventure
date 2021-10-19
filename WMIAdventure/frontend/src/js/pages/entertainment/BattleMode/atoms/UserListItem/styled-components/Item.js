@@ -17,7 +17,7 @@ const Item = styled.li`
   height: 58px;
   transition: background-color 0.3s ease-in-out;
   border-radius: 6px;
-  margin: 5px 0;
+  margin: 10px 0;
   
   &:hover {
     background-color: ${({theme}) => theme.colors.userItemHover};

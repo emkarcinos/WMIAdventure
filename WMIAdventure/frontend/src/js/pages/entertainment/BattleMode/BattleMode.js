@@ -8,6 +8,7 @@ import UserListItem from './atoms/UserListItem';
 import Pager from './atoms/Pager';
 import MyProfileMobile from './molecules/MyProfileMobile';
 import Search from '../../creative/CardsCreator/atoms/Search';
+import UserProfilesAPIGateway from '../../../api/gateways/UserProfilesAPIGateway';
 
 class BattleMode extends React.Component {
 
@@ -17,6 +18,12 @@ class BattleMode extends React.Component {
         mainVisible: true,
         searchInput: '',
         defenderDecks: [],
+    }
+
+    componentDidMount() {
+        UserProfilesAPIGateway.getAllBasicUsersInfo()
+            .then(data => this.setState({users: data}))
+            .catch(error => console.log(error));
     }
 
     handleSearch = (event) => {
@@ -39,31 +46,18 @@ class BattleMode extends React.Component {
                         <Search searchInput={this.state.searchInput}
                                 handleSearch={this.handleSearch} />
 
-                        <UserListItem access login={'emkarcinos'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={4} level={12} />
-
-                        <UserListItem access login={'wirus006'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={1} level={2} />
-
-                        <UserListItem access login={'sweet michael'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={2} level={10} />
-
-                        <UserListItem access login={'sweet michael'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={2} level={10} />
-
-                        <UserListItem access login={'sweet michael'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={2} level={10} />
-
-                        <UserListItem access={false} login={'dawidos kaktus'}
-                                      searchInput={this.state.searchInput}
-                                      avatar={null} term={3} level={20} />
+                        {this.state.users.results ? this.state.users.results.map((elem) => {
+                            return (
+                                <UserListItem key={elem.user} access={elem.semester < 2}
+                                              login={elem.displayedUsername}
+                                              searchInput={this.state.searchInput}
+                                              term={elem.semester}
+                                              level={Math.floor(Math.random() * 30)} />
+                            );
+                        }) : ''}
                     </Ul>
-                    <Pager />
+                    <Pager next={this.state.users.next}
+                           previous={this.state.users.previous} />
                     <MyProfileMobile />
                 </Main>
             </>
