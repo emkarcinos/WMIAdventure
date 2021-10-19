@@ -5,18 +5,15 @@ import CardsEndpoints from "../../endpoints/CardsEndpoints";
 /**
  * This function makes PUT request to send image of newly created proposed card.
  * @param serverResponse Server response after we created proposed card. Card's id will be retrieved from it and used to send PUT request.
- * @param cardImage Card's image that you want to send.
- * @param cardName This data is required even if you only want to send image.
- * @param cardSubject This data is required even if you only want to send image.
- * @param cardTooltip This data is required even if you only want to send image.
+ * @param basicCardData {BasicCardData}
  * @param successHandler Function that will be called if request was successful.
  * @param failureHandler Function that will be called if request was a failure.
  */
-const sendCardImage = (serverResponse, cardImage, cardName, cardSubject, cardTooltip,
+const sendCardImage = (serverResponse, basicCardData,
                        successHandler, failureHandler) => {
     serverResponse.json().then(jsonResponse => {
         const newProposedCardId = jsonResponse['id'];
-        const formData = cards_utils.createFormDataToSendCardImage(cardImage, cardName, cardSubject, cardTooltip);
+        const formData = cards_utils.createFormDataToSendCardImage(basicCardData);
         const url = CardsEndpoints.proposed_cards + `${newProposedCardId}/`;
 
         RequestSender.put(url, formData).then (
@@ -33,28 +30,21 @@ const sendCardImage = (serverResponse, cardImage, cardName, cardSubject, cardToo
 
 /**
  * Sends proposed card to API.
- * @param cardName
- * @param cardSubject
- * @param image
- * @param cardTooltip
- * @param effectsToSend
- * @param comment
- * @param levelCostValues
+ * @param wholeCardData {WholeCardData}
+ * @param comment {string}
  * @param successHandler Function that will be called if request was successful.
  * @param failureHandler Function that will be called if request was a failure.
  */
-const sendProposedCard = (cardName, cardSubject, image, cardTooltip, effectsToSend, comment, levelCostValues,
-                          successHandler, failureHandler) => {
+const sendProposedCard = (wholeCardData, comment, successHandler, failureHandler) => {
     const requestData =
-        cards_utils.prepareRequestData(cardName, cardSubject, cardTooltip, effectsToSend, comment, levelCostValues);
+        cards_utils.prepareRequestData(wholeCardData, comment);
 
     return RequestSender.post(CardsEndpoints.proposed_cards, requestData.body, requestData.headers)
         .then(response => {
             if(response.ok) {
                 // Card's data was sent successfully and there is card image.
-                if(image){
-                    sendCardImage(response, image, cardName, cardSubject, cardTooltip,
-                        successHandler, failureHandler);
+                if(wholeCardData.basicCardData.image){
+                    sendCardImage(response, wholeCardData.basicCardData, successHandler, failureHandler);
                 }
                 // Card's data was sent successfully and there is no card image.
                 else{

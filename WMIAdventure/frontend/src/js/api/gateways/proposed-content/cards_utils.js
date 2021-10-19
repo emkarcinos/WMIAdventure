@@ -1,19 +1,16 @@
 /**
  * Creates form data with card image which can be sent to the server.
- * @param cardImage Card's image that you want to send.
- * @param cardName This data is required even if you only want to send image.
- * @param cardSubject This data is required even if you only want to send image.
- * @param cardTooltip This data is required even if you only want to send image.
+ * @param basicCardData {BasicCardData}
  * @returns {FormData}
  */
-const createFormDataToSendCardImage = (cardImage, cardName, cardSubject, cardTooltip) => {
+const createFormDataToSendCardImage = (basicCardData) => {
     const formData = new FormData();
 
-    formData.append('image', cardImage, cardImage.name);
+    formData.append('image', basicCardData.image, basicCardData.image.name);
     // Required data that has to be sent even if we only want to send image.
-    formData.append('name', cardName);
-    formData.append('subject', cardSubject);
-    formData.append('tooltip', cardTooltip);
+    formData.append('name', basicCardData.name);
+    formData.append('subject', basicCardData.subject);
+    formData.append('tooltip', basicCardData.tooltip);
 
     return formData;
 }
@@ -42,16 +39,12 @@ const prepareLevelsToSend = (effectsToSend, levelCostValues) => {
 
 /**
  * Prepares data for request to send proposed card to API.
- * @param cardName
- * @param cardSubject
- * @param cardTooltip
- * @param effectsToSend
+ * @param wholeCardData {WholeCardData}
  * @param comment
- * @param levelCostValues
  * @returns {{headers: {"Content-type": string, Accept: string}, body: string}}
  */
-const prepareRequestData = (cardName, cardSubject, cardTooltip, effectsToSend, comment, levelCostValues) => {
-    const levelsToSend = prepareLevelsToSend(effectsToSend, levelCostValues);
+const prepareRequestData = (wholeCardData, comment) => {
+    const levelsToSend = prepareLevelsToSend(wholeCardData.effects, wholeCardData.levelCostValues);
 
     const headers = {
         'Accept': 'application/json',
@@ -59,10 +52,10 @@ const prepareRequestData = (cardName, cardSubject, cardTooltip, effectsToSend, c
     };
 
     const body = JSON.stringify({
-        name: cardName,
-        subject: cardSubject,
+        name: wholeCardData.basicCardData.name,
+        subject: wholeCardData.basicCardData.subject,
         image: null,
-        tooltip: cardTooltip,
+        tooltip: wholeCardData.basicCardData.tooltip,
         levels: levelsToSend,
         comment: comment
     });

@@ -15,6 +15,8 @@ import {timeout as SendCardPopupTimeout} from "./molecules/SendCardPopup/SendCar
 import CardView from './organisms/CardView';
 import CardsAPIGateway from "../../../api/gateways/CardsAPIGateway";
 import ProposedContentAPIGateway from "../../../api/gateways/proposed-content/ProposedContentAPIGateway";
+import BasicCardData from "../../../api/data-models/cards/BasicCardData";
+import WholeCardData from "../../../api/data-models/cards/WholeCardData";
 
 class CardsCreator extends React.Component {
     state = {
@@ -77,9 +79,11 @@ class CardsCreator extends React.Component {
      */
     sendCardToApi = (event) => {
        event.preventDefault();
-       ProposedContentAPIGateway.sendProposedCard(this.state.cardName, this.state.cardSubject, this.state.cardImage,
-           this.state.cardTooltip, this.state.effectsToSend, this.state.comment, this.state.levelCostValues,
-           this.cardSubmissionSuccessHandler, this.cardSubmissionFailedHandler)
+
+       let basicCardData = new BasicCardData(this.state.cardName, this.state.cardSubject, this.state.cardTooltip, this.state.cardImage);
+       let wholeCardData = new WholeCardData(basicCardData, this.state.effectsToSend, this.state.levelCostValues);
+       ProposedContentAPIGateway.sendProposedCard(wholeCardData, this.state.comment, this.cardSubmissionSuccessHandler,
+           this.cardSubmissionFailedHandler)
            .catch(err => console.log(err));
     }
 
