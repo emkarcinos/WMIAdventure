@@ -27,8 +27,6 @@ const colors = {
 
     ui07trans: '#24343766',
 
-    light2: '#F7F7F7',
-
     // Hover
     hoverprimary: '#3E465F',
     hoverrow: '#EEEEF1',
@@ -49,6 +47,11 @@ const colors = {
     grey2: '#E0E0E0',
     grey3: '#828282',
     borderLine: '#243437',
+
+    // new colors
+    light2: '#F7F7F7',
+    darkgrey: '#282829',
+    userItemHover: '#E5E5E5',
 };
 
 export default colors;

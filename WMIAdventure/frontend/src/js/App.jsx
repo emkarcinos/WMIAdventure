@@ -3,7 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import MainMenu from './pages/entertainment/MainMenu';
 import Profile from './pages/entertainment/Profile';
 import AdventureMode from './pages/entertainment/AdventureMode';
-import BattleMode from './pages/entertainment/BattleMode/BattleMode';
+import BattleMode from './pages/entertainment/BattleMode';
 import Ranking from './pages/entertainment/Ranking/Ranking';
 import Event from './pages/entertainment/Event';
 import Quiz from './pages/entertainment/Quiz';

@@ -6,7 +6,7 @@ import Main from './styled-components/Main';
 // import Ul from './styled-components/Ul';
 // import UserToFight from './molecules/UserToFight';
 import BattleResult from './molecules/BattleResult';
-import MyProfileMobile from './molecules/MyProfileMobile';
+import UserListItem from './atoms/UserListItem';
 
 class BattleMode extends React.Component {
 
@@ -81,7 +81,10 @@ class BattleMode extends React.Component {
                     {/*        );*/}
                     {/*    })}*/}
                     {/*</Ul>*/}
-                    <MyProfileMobile />
+                    <UserListItem access login={'emkarcinos'} avatar={null} term={4} level={12} />
+                    <UserListItem access login={'wirus006'} avatar={null} term={1} level={2} />
+                    <UserListItem access login={'sweet michael'} avatar={null} term={2} level={10} />
+                    <UserListItem access={false} login={'dawidos kaktus'} avatar={null} term={3} level={20} />
                 </Main>
                 {
                     this.state && this.state.resultId &&

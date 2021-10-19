@@ -30,6 +30,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  text-transform: uppercase;
   font-weight: ${({theme}) => theme.weight.bold};
   padding: 0;
   margin: 0;

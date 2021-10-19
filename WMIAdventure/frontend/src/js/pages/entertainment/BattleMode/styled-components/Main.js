@@ -7,10 +7,10 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   padding: 0 16px;
+  background-color: ${({theme}) => theme.colors.uiGreen};
+  height: 100vh;
   overflow: hidden;
   position: relative;
-  height: 100%;
-  background-color: ${({theme}) => theme.colors.uiGreen};
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 80%;
