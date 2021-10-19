@@ -18,6 +18,7 @@ import ProposedContentAPIGateway from "../../../api/gateways/proposed-content/Pr
 import BasicCardData from "../../../api/data-models/cards/BasicCardData";
 import WholeCardData from "../../../api/data-models/cards/WholeCardData";
 
+
 class CardsCreator extends React.Component {
     state = {
         cardId: undefined,
