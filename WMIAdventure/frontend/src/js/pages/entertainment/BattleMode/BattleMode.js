@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from 'react-helmet';
 import NavBar from '../MainMenu/organisms/NavBar';
 import Main from './styled-components/Main';
 import H2 from './styled-components/H2';
@@ -26,6 +27,9 @@ class BattleMode extends React.Component {
     render() {
         return (
             <>
+                <Helmet>
+                    <title>Tryb Battle</title>
+                </Helmet>
                 <NavBar />
                 <Main>
                     <H2>

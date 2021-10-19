@@ -28,16 +28,16 @@ class UserProfileTestCase(TestCase):
 
     def testApiGet(self):
         factory = APIRequestFactory()
-        view = views.UserProfileViewSet.as_view({"get": "list"})
-        testRequest = factory.get('/api/igusers/basic')
+        view = views.PaginatedUsersView.as_view()
+        testRequest = factory.get('/api/userprofiles/?pagesize=50000')
         response = view(testRequest)
 
         # Assert user in returned users list.
-        user_ids = [user_data["user"] for user_data in response.data]
+        user_ids = [user_data["user"] for user_data in response.data['results']]
         self.assertTrue(self.test_user.id in user_ids)
 
         # Assert user has correct data
-        for user_data in response.data:
+        for user_data in response.data['results']:
             if user_data["user"] == self.test_user.id:
                 self.assertEqual(self.test_username, user_data['displayedUsername'])
                 self.assertEqual(self.semester, user_data['semester'])
@@ -45,7 +45,8 @@ class UserProfileTestCase(TestCase):
     def testApiPost(self):
         # Setup test view
         factory = APIRequestFactory()
-        view = views.UserProfileViewSet.as_view({"get": "retrieve", "post": "create"})
+        view = views.PaginatedUsersView.as_view()
+        fetchView = views.UserView.as_view()
 
         # Create data needed to create new UserProfile
         new_user = get_user_model().objects.create_user(username="asdasa", password="129312", email="tse@tst.sd")
@@ -53,14 +54,14 @@ class UserProfileTestCase(TestCase):
         new_semester = 5
 
         # Make post request to create new UserProfile
-        result = factory.post('/api/igusers/basic', data={'user': new_user.id,
+        result = factory.post('/api/userprofiles', data={'user': new_user.id,
                                                           'displayedUsername': new_username,
                                                           'semester': new_semester}, format='json')
         view(result)
 
         # Make GET request to check if newly created UserProfile exists.
-        testRequest = factory.get('/api/igusers/basic/')
-        response = view(testRequest, pk=new_user.id)
+        testRequest = factory.get(f'/api/userprofiles/')
+        response = fetchView(testRequest, pk=new_user.id)
 
         # Assert that UserProfile returned by GET has correct data.
         self.assertEqual(new_user.id, response.data['user'])

@@ -5,6 +5,7 @@ import useInput from './useInput';
 import Fieldset from './styled-components/Fieldset';
 import Paragraph from './styled-components/Paragraph';
 import Div from './styled-components/Div';
+import CardsAPIGateway from "../../../../../api/gateways/CardsAPIGateway";
 
 function CardFormRaw() {
     const API = process.env['REACT_APP_API_URL'];
@@ -12,19 +13,13 @@ function CardFormRaw() {
     const [effects, setEffects] = React.useState([]);
 
     React.useEffect(() => {
-        fetch(`http://${API}/api/cards/card-level/`)
-            .then(response => {
-                return response.json();
-            })
+        CardsAPIGateway.getLevels()
             .then(data => setLevels(data))
             .catch(error => console.log(error));
-    }, [API]);
+    });
 
     React.useEffect(() => {
-        fetch(`http://${API}/api/cards/card-effect/`)
-            .then(response => {
-                return response.json();
-            })
+        CardsAPIGateway.getAllEffects()
             .then(data => setEffects(data))
             .catch(error => console.log(error));
     }, [API]);

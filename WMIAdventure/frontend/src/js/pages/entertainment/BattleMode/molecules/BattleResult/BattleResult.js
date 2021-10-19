@@ -8,6 +8,8 @@ import CardsDiv from './styled-components/CardsDiv';
 import Pcard from './styled-components/Pcard';
 import DeckDiv from './styled-components/DeckDiv';
 import Result from './styled-components/Result';
+import CardsAPIGateway from "../../../../../api/gateways/CardsAPIGateway";
+import BattleAPIGateway from "../../../../../api/gateways/BattleAPIGateway";
 
 class BattleResult extends React.Component {
 
@@ -29,20 +31,13 @@ class BattleResult extends React.Component {
     }
 
     componentDidMount() {
-        const API = process.env['REACT_APP_API_URL'];
-        fetch(`http://${API}/api/cards/`)
-            .then(response => {
-                return response.json();
-            })
+        CardsAPIGateway.getAllCards()
             .then(data => this.setState({cards: data}))
             .catch(error => console.log(error));
 
         // http://wmiadventure.westeurope.cloudapp.azure.com:8000/api/battle/14/
 
-        fetch(`http://${API}/api/battle/${this.props.opponentId}/`)
-            .then(response => {
-                return response.json();
-            })
+        BattleAPIGateway.fightWithUser(this.props.opponentId)
             .then(data => this.setState({battleResult: data}))
             .catch(error => console.log(error));
     }

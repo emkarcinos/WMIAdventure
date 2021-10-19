@@ -8,6 +8,7 @@ import LevelCardView from '../../molecules/LevelCardView';
 import Media from 'react-media';
 import DesktopContainer from './styled-components/DesktopContainer';
 import {mobile} from '../../../../../utils/globals';
+import CardsAPIGateway from "../../../../../api/gateways/CardsAPIGateway";
 
 class CardView extends React.Component {
 
@@ -16,71 +17,36 @@ class CardView extends React.Component {
         activeGold: false,
         activeEpic: false,
 
-        commonDescription: '',
-        goldDescription: '',
-        epicDescription: '',
+        /**
+         * index 0 - effects description of common card level
+         *
+         * index 1 - effects description of gold card level
+         *
+         * index 2 - effects description of epic card level
+         */
+        descriptions: [null, null, null]
     }
 
+    /**
+     * Sets new description for given card level.
+     * @param level Card level that will have new description attached.
+     * @param newDescription
+     */
+    setNewDescription = (level, newDescription) => {
+        let newDescriptions = this.state.descriptions.slice();
+        newDescriptions[level] = newDescription;
+        this.setState({descriptions: newDescriptions});
+    }
+
+    /**
+     * Gets effects descriptions from API and saves them.
+     */
     getDescriptions = () => {
-        const API = process.env['REACT_APP_API_URL'];
-
-        if(this.props.cardEffects[0].length !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[0])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({commonDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
-        if(this.props.cardEffects[1] !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[1])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({goldDescription: data}))
-
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
-        if(this.props.cardEffects[2] !== 0) {
-            try {
-                fetch(`http://${API}/api/cards/descriptions/`, {
-                    method: 'post',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(this.props.cardEffects[2])
-                })
-                    .then (response => {
-                        return response.json();
-                    })
-                    .then(data => this.setState({epicDescription: data}))
-
-            } catch(e) {
-                console.log(e);
+        for (let i = 0; i < 3; i++) {
+            if(this.props.cardEffects[i].length !== 0) {
+                CardsAPIGateway.getEffectsDescription(this.props.cardEffects[i])
+                    .then(data => this.setNewDescription(i, data))
+                    .catch(err => console.log(err))
             }
         }
     }
@@ -133,7 +99,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.commonDescription} />
+                                   description={this.state.descriptions[0]} />
                     <LevelCardView gold
                                    show={this.state.activeGold}
                                    exist={this.props.cardEffects[1].length !== 0}
@@ -141,7 +107,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.goldDescription} />
+                                   description={this.state.descriptions[1]} />
                     <LevelCardView epic
                                    show={this.state.activeEpic}
                                    exist={this.props.cardEffects[2].length !== 0}
@@ -149,7 +115,7 @@ class CardView extends React.Component {
                                    cardSubject={this.props.cardSubject}
                                    cardImage={this.props.cardImage}
                                    cardTooltip={this.props.cardTooltip}
-                                   description={this.state.epicDescription} />
+                                   description={this.state.descriptions[2]} />
                     <Media query={mobile}>
                         <MobileLevelsMenu>
                             <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}

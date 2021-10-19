@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.db.models.functions import Upper
 
 from cards.models import Card
 
@@ -22,6 +23,9 @@ class UserProfile(models.Model):
     Handy information about a given in-app user.
     Stores non-vital data just to make a user appear pretty.
     """
+    class Meta:
+        ordering = [Upper('displayedUsername')]
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
