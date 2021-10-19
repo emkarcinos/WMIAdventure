@@ -13,7 +13,7 @@ const PageButton = styled.button`
   /* Styling */
   background: ${({theme, disabled}) => !disabled ? theme.colors.ui02 : theme.colors.ui05};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 50%;
   border-style: none;
   cursor: ${({disabled}) => disabled ? 'auto' : 'pointer'} ;
 

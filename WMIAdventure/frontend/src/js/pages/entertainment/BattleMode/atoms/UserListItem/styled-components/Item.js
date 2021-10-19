@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
+function visibilityHandler(login, searchInput) {
+    if (login.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
+        return 'flex';
+    }
+    return 'none';
+}
+
 const Item = styled.li`
-  display: flex;
+  display: ${({login, searchInput}) => visibilityHandler(login, searchInput)};
   align-items: center;
   
   padding: 6px 10px;

@@ -9,7 +9,7 @@ const MainDiv = styled.div`
   align-items: center;
   gap: 16px;
   
-  margin: 24px 0;
+  margin: 16px 0 76px 0;
 `
 
 export default MainDiv;
