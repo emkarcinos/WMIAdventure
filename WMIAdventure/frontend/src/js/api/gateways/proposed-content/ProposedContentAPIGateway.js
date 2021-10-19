@@ -1,5 +1,5 @@
 import RequestSender from "../../RequestSender";
-import cards_utils from "./cards_utils";
+import CardsUtils from "./CardsUtils";
 import CardsEndpoints from "../../endpoints/CardsEndpoints";
 
 /**
@@ -13,8 +13,8 @@ const sendCardImage = (serverResponse, basicCardData,
                        successHandler, failureHandler) => {
     serverResponse.json().then(jsonResponse => {
         const newProposedCardId = jsonResponse['id'];
-        const formData = cards_utils.createFormDataToSendCardImage(basicCardData);
-        const url = CardsEndpoints.proposed_cards + `${newProposedCardId}/`;
+        const formData = CardsUtils.createFormDataToSendCardImage(basicCardData);
+        const url = CardsEndpoints.proposedCards + `${newProposedCardId}/`;
 
         RequestSender.put(url, formData).then (
             response => {
@@ -37,9 +37,9 @@ const sendCardImage = (serverResponse, basicCardData,
  */
 const sendProposedCard = (wholeCardData, comment, successHandler, failureHandler) => {
     const requestData =
-        cards_utils.prepareRequestData(wholeCardData, comment);
+        CardsUtils.prepareRequestData(wholeCardData, comment);
 
-    return RequestSender.post(CardsEndpoints.proposed_cards, requestData.body, requestData.headers)
+    return RequestSender.post(CardsEndpoints.proposedCards, requestData.body, requestData.headers)
         .then(response => {
             if(response.ok) {
                 // Card's data was sent successfully and there is card image.

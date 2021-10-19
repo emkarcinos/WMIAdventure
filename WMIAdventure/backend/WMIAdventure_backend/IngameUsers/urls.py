@@ -5,7 +5,7 @@ from . import views
 from .views import UserDeckView
 
 router = DefaultRouter()
-router.register('basic', views.UserProfileViewSet)
+router.register('', views.UserProfileViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

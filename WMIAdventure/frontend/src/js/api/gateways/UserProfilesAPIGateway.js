@@ -6,7 +6,7 @@ import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = () => {
-    return RequestSender.get(UserProfilesEndpoints.basicUserInfo);
+    return RequestSender.get(UserProfilesEndpoints.main);
 }
 
 /**
@@ -15,7 +15,7 @@ const getAllBasicUsersInfo = () => {
  * @returns {Promise<*>} Array of user decks objects.
  */
 const getUserDecks = (userId) => {
-    return RequestSender.get(UserProfilesEndpoints.user_decks(userId));
+    return RequestSender.get(UserProfilesEndpoints.userDecks(userId));
 }
 
 export default {getAllBasicUsersInfo, getUserDecks};

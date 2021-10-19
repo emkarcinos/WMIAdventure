@@ -9,7 +9,7 @@ class CardsEndpoints {
     static descriptions = CardsEndpoints.main + 'descriptions/';
     static levels = CardsEndpoints.main + 'card-level/';
 
-    static proposed_cards = `${API_URL}proposed-content/cards/`
+    static proposedCards = `${API_URL}proposed-content/cards/`
 }
 
 export default CardsEndpoints;

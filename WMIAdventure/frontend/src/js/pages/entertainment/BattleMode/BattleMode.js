@@ -6,7 +6,7 @@ import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
 import UserToFight from './molecules/UserToFight';
 import BattleResult from './molecules/BattleResult';
-import InGameUsersAPIGateway from "../../../api/gateways/InGameUsersAPIGateway";
+import InGameUsersAPIGateway from "../../../api/gateways/UserProfilesAPIGateway";
 
 class BattleMode extends React.Component {
 
