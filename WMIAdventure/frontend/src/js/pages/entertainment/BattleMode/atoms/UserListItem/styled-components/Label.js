@@ -15,7 +15,7 @@ function colorHandler(theme, term, level) {
     if(level < 10 || level >= 20)
         return theme.colors.ui01;
     else
-        return theme.colors.ui07;
+        return theme.colors.borderLine;
 }
 
 const Label = styled.p`
