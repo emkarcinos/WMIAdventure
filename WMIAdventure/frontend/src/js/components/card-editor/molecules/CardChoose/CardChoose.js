@@ -1,9 +1,9 @@
 import React from 'react';
 import TransparentBack from './styled-components/TransparentBack';
-import Search from '../../atoms/Search';
 import Ul from './styled-components/Ul';
 import Card from '../../atoms/Card';
 import { Transition } from 'react-transition-group';
+import Search from '../../../global/atoms/Search';
 
 /* Transition timeout values */
 const timeout = {

@@ -2,7 +2,7 @@ import React from 'react';
 import Ul from './styled-components/Ul'
 import TransparentBack from './styled-components/TransparentBack';
 import Effect from '../../atoms/Effect';
-import Search from '../../atoms/Search';
+import Search from '../../../global/atoms/Search';
 import { Transition } from 'react-transition-group';
 
 /* Transition timeout values */
