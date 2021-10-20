@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import thunderIcon from '../../../../../../../assets/icons/thunder.svg';
+import thunderIcon from '../../../../../../assets/icons/thunder.svg';
 
 const Button = styled.button`
   padding: 16px 32px 16px 8px;

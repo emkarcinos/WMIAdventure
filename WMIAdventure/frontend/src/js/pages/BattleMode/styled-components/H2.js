@@ -1,18 +1,12 @@
 import styled from 'styled-components';
 
 const H2 = styled.h2`
-  font-size: 20px;
-  max-width: 290px;
+  font-size: 26px;
+  text-transform: uppercase;
   text-align: center;
-  font-weight: 600;
-  margin: 0 0 24px 0;
-  color: ${({theme}) => theme.colors.text01};
-  
-  @media (min-width: ${({theme}) => theme.overMobile}px) {
-    font-size: 32px;
-    max-width: 600px;
-    margin: 0 0 64px 0;
-  }
+  font-weight: ${({theme}) => theme.weight.bold};
+  margin: 80px 0 32px 0;
+  color: ${({theme}) => theme.colors.light2};
 `;
 
 export default H2;
