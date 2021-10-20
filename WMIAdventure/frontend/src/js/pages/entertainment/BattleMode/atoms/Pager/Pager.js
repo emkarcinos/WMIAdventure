@@ -6,9 +6,9 @@ class Pager extends React.Component {
     render() {
         return (
             <MainDiv>
-                <PageButton disabled={true}>&lt;</PageButton>
+                <PageButton disabled={!this.props.previous}>&lt;</PageButton>
                 <PageButton>1</PageButton>
-                <PageButton disabled={false}>&gt;</PageButton>
+                <PageButton disabled={!this.props.next}>&gt;</PageButton>
             </MainDiv>
 
         );
