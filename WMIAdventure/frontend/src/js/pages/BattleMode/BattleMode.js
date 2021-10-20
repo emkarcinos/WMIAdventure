@@ -4,8 +4,7 @@ import NavBar from '../../components/prototype/organisms/NavBar';
 import Wrapper from './styled-components/Wrapper';
 import Main from './styled-components/Main';
 import MobilePopUp from '../../components/battle/organisms/MobilePopUp';
-import TinyUserProfile from '../../components/battle/molecules/TinyUserProfile';
-import darkImagePlaceholder from '../../../assets/icons/upload_image_dark.svg';
+import OpponentSelected from '../../components/battle/organisms/OpponentSelected';
 
 class BattleMode extends React.Component {
 
@@ -57,8 +56,7 @@ class BattleMode extends React.Component {
                         <MobilePopUp visible={this.state.userPreviewRun}
                                      setTranslateY={this.state.userPreviewPos}
                                      closeHandler={this.closeUserPreviewHandler}>
-                            <TinyUserProfile displayedUsername={'skromnośćToPotęga'}
-                                             term={2} level={22} rank={11} avatar={darkImagePlaceholder}/>
+                            <OpponentSelected />
                         </MobilePopUp>
                     </Main>
                 </Wrapper>

@@ -4,7 +4,7 @@ const ImageContainer = styled.div`
   order: -1;
   width: 48px;
   height: 48px;
-  background-color: ${({theme}) => theme.uiGreen};
+  background-color: ${({theme}) => theme.colors.uiGreen};
   border-radius: 50%;
   margin-right: 10px;
 `;
