@@ -9,6 +9,7 @@ import UserProfilesAPIGateway from '../../api/gateways/UserProfilesAPIGateway';
 import Search from '../../components/global/atoms/Search';
 import UserListItem from '../../components/battle/atoms/UserListItem';
 import MyProfileMobile from '../../components/battle/molecules/MyProfileMobile';
+import SearchContainer from './styled-components/SearchContainer';
 
 class BattleMode extends React.Component {
 
@@ -42,16 +43,18 @@ class BattleMode extends React.Component {
                     <H2>
                         Wybierz przeciwnika
                     </H2>
-                    <Ul>
+                    <SearchContainer>
                         <Search searchInput={this.state.searchInput}
                                 handleSearch={this.handleSearch} />
+                    </SearchContainer>
+                    <Ul>
                         {this.state.users.results ? this.state.users.results.map((elem) => {
                             return (
                                 <UserListItem key={elem.user} access={elem.semester < 2}
                                               login={elem.displayedUsername}
                                               searchInput={this.state.searchInput}
                                               term={elem.semester}
-                                              level={Math.floor(Math.random() * 30 + 1)} />
+                                              level={elem.user * 4} />
                             );
                         }) : ''}
                     </Ul>
