@@ -113,7 +113,7 @@ od stanu `levelCostValues`, działa wszystko, ale nie wiem jak to zrobić bez te
 ```js
 render() {
     return (
-      <Wrapper>
+      <Main>
         <Header></Header>
         <Main>
           <CardDescribePreview
@@ -136,20 +136,20 @@ render() {
             />
           </Form>
         </Main>
-      </Wrapper>
+      </Main>
     );
 }
 ```
-### Wrapper
+### Main
 
-Element **Wrapper** to główny pojemnik na nasz Kreator Kart, zwykły *div*, który środkuje nasze elementy,
-nadaje wysokość, oraz sprawia, że możemy określać koordynaty elementów względem obszaru tego **Wrapper** dzięki
+Element **Main** to główny pojemnik na nasz Kreator Kart, zwykły *div*, który środkuje nasze elementy,
+nadaje wysokość, oraz sprawia, że możemy określać koordynaty elementów względem obszaru tego **Main** dzięki
 `position: relative`.
 
 ```js
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Main = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,7 +159,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-export default Wrapper;
+export default Main;
 ```
 Elementy wyjeżdżające poza ten element nie będą wpływać na rozmiar okna przeglądarki dzięki `overflow: hidden`.
 

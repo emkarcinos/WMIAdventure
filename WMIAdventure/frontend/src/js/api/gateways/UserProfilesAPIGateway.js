@@ -6,7 +6,7 @@ import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = () => {
-    return RequestSender.get(UserProfilesEndpoints.main);
+    return RequestSender.get(UserProfilesEndpoints.main + '?pagesize=1000&page=1');
 }
 
 /**

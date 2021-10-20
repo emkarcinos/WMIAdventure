@@ -7,7 +7,7 @@ import uploadImageDark from '../../../../../assets/icons/upload_image_dark.svg';
 class TinyCards extends React.Component {
     render() {
         return (
-            <MainContainer setMargin={this.props.setMargin}>
+            <MainContainer setMargin={this.props.setMargin} gap={this.props.gap}>
                 {[...Array(5)].map(
                     (e,i) => {
                         return (

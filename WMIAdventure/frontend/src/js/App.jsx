@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
+
 import MainMenu from './pages/MainMenu';
 import Profile from './pages/Profile';
 import AdventureMode from './pages/AdventureMode';

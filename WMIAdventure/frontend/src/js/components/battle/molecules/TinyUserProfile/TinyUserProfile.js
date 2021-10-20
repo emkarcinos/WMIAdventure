@@ -1,11 +1,11 @@
 import React from 'react';
-import UserLabel from '../../atoms/UserLabel';
 import Article from './styled-components/Article';
 import ContentContainer from './styled-components/ContentContainer';
 import Div from './styled-components/Div';
 import H2 from './styled-components/H2';
 import ImageContainer from './styled-components/ImageContainer';
 import Avatar from './styled-components/Avatar';
+import UserLabel from '../../atoms/UserLabel';
 
 class TinyUserProfile extends React.Component {
     render() {
