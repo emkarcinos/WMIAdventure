@@ -12,13 +12,13 @@ import battleIcon from './../../../../../assets/images/battleIcon.png';
 class UserListItem extends React.Component {
     render() {
         return (
-            <Item login={this.props.login} searchInput={this.props.searchInput}>
+            <Item displayedUsername={this.props.displayedUsername} searchInput={this.props.searchInput}>
                 <AvatarContainer access={this.props.access}>
                     {this.props.avatar ? <Avatar access={this.props.access} src={this.props.avatar} alt=""/> : ''}
                 </AvatarContainer>
                 <Div>
                     <Login access={this.props.access}>
-                        {this.props.login}
+                        {this.props.displayedUsername}
                     </Login>
                     <LabelsContainer>
                         <Label term={this.props.term}>
