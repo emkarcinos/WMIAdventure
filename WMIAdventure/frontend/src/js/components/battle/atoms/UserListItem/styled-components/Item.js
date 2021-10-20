@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-function visibilityHandler(login, searchInput) {
-    if (login.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
+function visibilityHandler(displayedUsername, searchInput) {
+    if (displayedUsername.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
         return 'flex';
     }
     return 'none';
 }
 
 const Item = styled.li`
-  display: ${({login, searchInput}) => visibilityHandler(login, searchInput)};
+  display: ${({displayedUsername, searchInput}) => visibilityHandler(displayedUsername, searchInput)};
   align-items: center;
   
   padding: 6px 10px;
