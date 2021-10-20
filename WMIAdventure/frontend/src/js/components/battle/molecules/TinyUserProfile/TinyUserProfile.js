@@ -10,7 +10,7 @@ import Avatar from './styled-components/Avatar';
 class TinyUserProfile extends React.Component {
     render() {
         return (
-            <Article setMargin={'0 0 24px 0'}>
+            <Article setMargin={this.props.setMargin}>
                 <ContentContainer>
                     <H2>
                         {this.props.displayedUsername}
