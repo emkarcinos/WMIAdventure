@@ -3,10 +3,6 @@ import closeIcon from '../../../../../../assets/icons/x-close-black.svg';
 
 const Close = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 20px;
-  height: 20px;
   border: none;
   background-color: transparent;
   background-position: center;
@@ -14,6 +10,18 @@ const Close = styled.button`
   background-repeat: no-repeat;
   background-image: url(${closeIcon});
   cursor: pointer;
+
+  width: 12px;
+  height: 12px;
+  top: 12px;
+  right: 12px;
+  
+  @media (min-width: 360px) {
+    width: 16px;
+    height: 16px;
+    top: 16px;
+    right: 16px;
+  }
 `;
 
 export default Close;
