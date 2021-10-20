@@ -5,10 +5,11 @@ const Ul = styled.ul`
   max-width: 340px;
   overflow-y: scroll;
   list-style: none;
-  margin: 0 auto;
+  margin: 0 auto 92px;
   padding: 0 10px 10px;
   background-color: ${({theme}) => theme.colors.ui01};
   border-radius: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export default Ul;

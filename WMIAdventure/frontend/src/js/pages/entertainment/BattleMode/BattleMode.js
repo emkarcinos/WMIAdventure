@@ -5,7 +5,6 @@ import Main from './styled-components/Main';
 import H2 from './styled-components/H2';
 import Ul from './styled-components/Ul';
 import UserListItem from './atoms/UserListItem';
-import Pager from './atoms/Pager';
 import MyProfileMobile from './molecules/MyProfileMobile';
 import Search from '../../creative/CardsCreator/atoms/Search';
 import UserProfilesAPIGateway from '../../../api/gateways/UserProfilesAPIGateway';
@@ -45,19 +44,18 @@ class BattleMode extends React.Component {
                     <Ul>
                         <Search searchInput={this.state.searchInput}
                                 handleSearch={this.handleSearch} />
-
                         {this.state.users.results ? this.state.users.results.map((elem) => {
                             return (
                                 <UserListItem key={elem.user} access={elem.semester < 2}
                                               login={elem.displayedUsername}
                                               searchInput={this.state.searchInput}
                                               term={elem.semester}
-                                              level={Math.floor(Math.random() * 30)} />
+                                              level={Math.floor(Math.random() * 30 + 1)} />
                             );
                         }) : ''}
                     </Ul>
-                    <Pager next={this.state.users.next}
-                           previous={this.state.users.previous} />
+                    {/*<Pager next={this.state.users.next}*/}
+                    {/*       previous={this.state.users.previous} />*/}
                     <MyProfileMobile />
                 </Main>
             </>
