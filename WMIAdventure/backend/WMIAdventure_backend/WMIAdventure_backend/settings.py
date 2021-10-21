@@ -63,6 +63,9 @@ MIDDLEWARE = [
 ]
 DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 
+SESSION_COOKIE_NAME = 'session'
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
