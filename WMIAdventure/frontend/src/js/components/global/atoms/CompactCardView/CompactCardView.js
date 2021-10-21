@@ -19,13 +19,17 @@ class CompactCardView extends React.Component {
 
     render() {
         return (
-            <Div common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
+            <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight} setMargin={this.props.setMargin}
+                 common={this.props.common} gold={this.props.gold} epic={this.props.epic} decorationHeight={this.props.decorationHeight}>
                 <NameContainer>
-                    <Name nameLength={this.cardNameLengthHandler(this.props.cardName)}>
+                    <Name nameLength={this.cardNameLengthHandler(this.props.cardName)}
+                          ownFontSize={this.props.ownFontSize}>
                         {this.props.cardName ? this.props.cardName : "null"}
                     </Name>
                 </ NameContainer>
-                <Img src={this.props.cardImage ? this.props.cardImage : upload_image_dark} alt="Image for card." />
+                <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}
+                     setIconMarginBottom={this.props.setIconMarginBottom} alt="Image for card."
+                     src={this.props.cardImage ? this.props.cardImage : upload_image_dark} />
             </Div>
         );
     }
