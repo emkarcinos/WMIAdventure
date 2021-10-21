@@ -8,7 +8,7 @@ import P from './styled-components/P';
 class ButtonWithIcon extends React.Component {
     render() {
         return (
-            <Button setMargin={this.props.setMargin}>
+            <Button onClick={this.props.handler} setMargin={this.props.setMargin}>
                 <IconContainer color={this.props.color}>
                     <Img src={this.props.icon ? this.props.icon : placeholderImg} />
                 </IconContainer>

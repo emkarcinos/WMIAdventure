@@ -35,7 +35,8 @@ class OpponentSelected extends React.Component {
                         <TinyCards cardImages={[]} setMargin={'16px 0 16px 0'} />
 
                         <UserInfoContainer>
-                            <ButtonWithIcon setMargin={'0 36px 0 0'} color={theme.colors.gold} icon={xClose}>
+                            <ButtonWithIcon handler={this.props.closeUserPreviewHandler}
+                                            setMargin={'0 36px 0 0'} color={theme.colors.gold} icon={xClose}>
                                 Wróć
                             </ButtonWithIcon>
                             <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
@@ -68,7 +69,8 @@ class OpponentSelected extends React.Component {
                         <TinyCards cardImages={[]} setMargin={'24px 0 24px 0'} />
 
                         <UserInfoContainer>
-                            <ButtonWithIcon setMargin={'0 36px 0 0'} color={theme.colors.gold} icon={xClose}>
+                            <ButtonWithIcon setMargin={'0 36px 0 0'} handler={this.props.closeUserPreviewHandler}
+                                            color={theme.colors.gold} icon={xClose}>
                                 Wróć
                             </ButtonWithIcon>
                             <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>

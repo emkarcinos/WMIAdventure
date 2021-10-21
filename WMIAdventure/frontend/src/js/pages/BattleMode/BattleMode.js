@@ -98,7 +98,7 @@ class BattleMode extends React.Component {
                 <MobilePopUp visible={this.state.userPreviewRun}
                              setTranslateY={this.state.userPreviewPos}
                              closeHandler={this.closeUserPreviewHandler}>
-                    <OpponentSelected />
+                    <OpponentSelected closeUserPreviewHandler={this.closeUserPreviewHandler} />
                 </MobilePopUp>
             </>
         );
