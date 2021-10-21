@@ -23,6 +23,7 @@ const Div = styled.div`
   padding-top: 18px;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
+  box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 144px;
