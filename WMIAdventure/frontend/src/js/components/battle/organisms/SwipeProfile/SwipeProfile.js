@@ -14,6 +14,8 @@ class SwipeProfile extends React.Component {
             hide: false,
             tinyDeckVisible: false,
         });
+
+        this.props.hideScroll();
     }
 
     render() {
