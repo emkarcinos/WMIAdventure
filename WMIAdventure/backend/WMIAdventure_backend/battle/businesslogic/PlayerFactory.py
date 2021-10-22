@@ -1,4 +1,5 @@
-from IngameUsers.models import UserProfile
+from IngameUsers.models import UserProfile, UserDeck
+from .BadBattleProfileException import BadBattleProfileException
 from .Deck import Deck
 from .Player import Player
 
@@ -36,6 +37,8 @@ class PlayerFactory:
         # TODO: Getting the decks is this way is kind of stupid. Enum would be better.
         user_decks = user_profile_model.user_decks.all()
 
+        if len(user_decks) == 0:
+            raise BadBattleProfileException (user_profile_model)
         deck_model = None
         if is_attacker and len(user_decks) == 2:
             deck_model = user_decks[1].deck
