@@ -1,8 +1,9 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from IngameUsers.models import UserProfile
+from battle.businesslogic.BadBattleProfileException import BadBattleProfileException
 from battle.businesslogic.Battle import Battle
 from battle.serializers import OutcomeSerializer
 from users.models import User
@@ -46,7 +47,11 @@ class BattleView(APIView):
         except UserProfile.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        battle = Battle(attacker_model, defender_model)
+        try:
+            battle = Battle(attacker_model, defender_model)
+        except BadBattleProfileException as e:
+            return Response(status=status.HTTP_404_NOT_FOUND, data=str(e))
+
         battle.start()
 
         serializer = OutcomeSerializer(instance=battle.outcome)
