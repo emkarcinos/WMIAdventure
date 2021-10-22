@@ -25,6 +25,7 @@ class BattleMode extends React.Component {
 
         userPreviewRun: false,
         userPreviewPos: '-100vh',
+        scrollVisible: true,
     }
 
     componentDidMount() {
@@ -39,6 +40,8 @@ class BattleMode extends React.Component {
             userPreviewRun: true,
         });
 
+        this.hideScroll();
+
         setTimeout(() => {
             this.setState({
                 userPreviewPos: '0',
@@ -49,14 +52,28 @@ class BattleMode extends React.Component {
     closeUserPreviewHandler = () => {
         this.setState({
             userPreviewPos: '-100vh',
+            scrollVisible: true,
         });
+
+        this.showScroll();
 
         setTimeout(() => {
             this.setState({
                 userPreviewRun: false,
             });
         }, 550);
+    }
 
+    hideScroll = () => {
+        this.setState({
+            scrollVisible: false
+        });
+    }
+
+    showScroll = () => {
+        this.setState({
+            scrollVisible: true
+        });
     }
 
     handleSearch = (event) => {
@@ -79,20 +96,20 @@ class BattleMode extends React.Component {
                         <Search searchInput={this.state.searchInput}
                                 handleSearch={this.handleSearch} />
                     </SearchContainer>
-                    <Ul>
+                    <Ul scrollVisible={this.state.scrollVisible}>
                         {this.state.users.results ? this.state.users.results.map((elem) => {
                             return (
                                 <UserListItem key={elem.user} access={elem.semester < 2}
                                               displayedUsername={elem.displayedUsername}
                                               searchInput={this.state.searchInput}
-                                              term={elem.semester}
-                                              level={elem.user * 4} runUserPreviewHandler={this.runUserPreviewHandler} />
+                                              term={elem.semester} level={elem.user * 4}
+                                              runUserPreviewHandler={this.runUserPreviewHandler} />
                             );
                         }) : ''}
                     </Ul>
                     {/*<Pager next={this.state.users.next}*/}
                     {/*       previous={this.state.users.previous} />*/}
-                    <SwipeProfile />
+                    <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
                 </Main>
 
                 <MobilePopUp visible={this.state.userPreviewRun}

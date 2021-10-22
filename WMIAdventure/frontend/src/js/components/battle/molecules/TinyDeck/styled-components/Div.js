@@ -26,7 +26,7 @@ const Div = styled.div`
   display: ${({visible}) => visible ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   opacity: ${({show}) => show ? 1 : 0};
   cursor: pointer;
 

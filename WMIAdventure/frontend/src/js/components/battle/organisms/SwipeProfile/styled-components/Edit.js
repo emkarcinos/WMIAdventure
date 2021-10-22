@@ -4,8 +4,10 @@ const Edit = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   border: none;
   padding: 0;
+  margin: 0;
   background-color: ${({theme}) => theme.colors.light2};
   color: ${({theme}) => theme.colors.uiBlue};
   font-weight: ${({theme}) => theme.weight.light};

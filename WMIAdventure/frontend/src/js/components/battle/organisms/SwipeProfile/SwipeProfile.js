@@ -9,6 +9,9 @@ import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGap
 import Media from 'react-media';
 import Deck from '../../molecules/Deck';
 import Edit from './styled-components/Edit';
+import {mobile} from '../../../../utils/globals';
+import FlexEndContainer from './styled-components/FlexEndContainer';
+import FlexCenterContainer from './styled-components/FlexCenterContainer';
 
 class SwipeProfile extends React.Component {
 
@@ -29,6 +32,8 @@ class SwipeProfile extends React.Component {
                 tinyDeckDisplay: false,
             });
         }, 500);
+
+        this.props.hideScroll();
     }
 
     hideHandler = () => {
@@ -42,6 +47,8 @@ class SwipeProfile extends React.Component {
                 tinyDeckVisible: true,
             });
         }, 5);
+
+        this.props.showScroll();
     }
 
     render() {
@@ -55,34 +62,23 @@ class SwipeProfile extends React.Component {
                 />
                 <Article visible={!this.state.hide}>
                     <Close onClick={this.hideHandler} />
-                    <Media query={'(max-width: 399px)'}>
+                    <Media query={mobile}>
                         <>
-                            <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0 0 16px 0'}
-                                             term={7} level={50} rank={2} avatar={null}/>
-                            <FlexGapContainer gap={'40px'}  setMargin={'0 0 16px 0'}>
-                                <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
-                            </FlexGapContainer>
-                            <Deck />
-                            <Edit>
-                                Edytuj
-                            </Edit>
-                        </>
-                    </Media>
-                    <Media query={'(min-width: 400px) and (max-width: 1024px)'}>
-                        <>
-                            <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0 0 24px 0'}
-                                             term={7} level={50} rank={2} avatar={null}/>
-                            <FlexGapContainer gap={'40px'}  setMargin={'0 0 40px 0'}>
-                                <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
-                            </FlexGapContainer>
-                            <Deck />
-                            <Edit>
-                                Edytuj
-                            </Edit>
+                            <FlexCenterContainer>
+                                <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0 0 24px 0'}
+                                                 term={7} level={50} rank={2} avatar={null}/>
+                                <FlexGapContainer gap={'40px'}  setMargin={'0 0 40px 0'}>
+                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
+                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
+                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                </FlexGapContainer>
+                            </FlexCenterContainer>
+                            <FlexEndContainer>
+                                <Deck />
+                                <Edit>
+                                    Edytuj
+                                </Edit>
+                            </FlexEndContainer>
                         </>
                     </Media>
                 </Article>

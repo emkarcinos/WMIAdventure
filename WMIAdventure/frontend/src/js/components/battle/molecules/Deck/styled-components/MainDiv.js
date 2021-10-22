@@ -5,11 +5,7 @@ const MainDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
-
-  @media (min-width: 400px) {
-    margin-bottom: 26px;
-  }
+  margin: ${({setMargin}) => setMargin ? setMargin : '0 0 16px 0'};
 `;
 
 export default MainDiv;
