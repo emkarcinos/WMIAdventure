@@ -5,7 +5,6 @@ const Div = styled.div`
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
   transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   position: absolute;
   top: 48px;
@@ -15,6 +14,7 @@ const Div = styled.div`
   background-color: ${({theme}) => theme.colors.ui01};
   transition: opacity 0.3s ease-in-out, transform  0.3s ease-in-out;
   z-index: 5;
+  overflow-y: scroll;
 `;
 
 export default Div;
