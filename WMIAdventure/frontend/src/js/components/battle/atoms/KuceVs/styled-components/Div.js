@@ -5,7 +5,7 @@ const Div = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 10px;
+  padding: 10px;
 `;
 
 export default Div;
