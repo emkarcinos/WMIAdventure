@@ -3,16 +3,18 @@ import Item from './styled-components/Item';
 import Avatar from './styled-components/Avatar';
 import Login from './styled-components/Login';
 import Div from './styled-components/Div';
-import Label from './styled-components/Label';
 import BattleIcon from './styled-components/BattleIcon';
 import LabelsContainer from './styled-components/LabelsContainer';
 import AvatarContainer from './styled-components/AvatarContainer';
 import battleIcon from './../../../../../assets/images/battleIcon.png';
+import UserLabel from '../../atoms/UserLabel';
 
 class UserListItem extends React.Component {
     render() {
         return (
-            <Item displayedUsername={this.props.displayedUsername} searchInput={this.props.searchInput}>
+            <Item onClick={this.props.runUserPreviewHandler}
+                  displayedUsername={this.props.displayedUsername}
+                  searchInput={this.props.searchInput}>
                 <AvatarContainer access={this.props.access}>
                     {this.props.avatar ? <Avatar access={this.props.access} src={this.props.avatar} alt=""/> : ''}
                 </AvatarContainer>
@@ -21,12 +23,12 @@ class UserListItem extends React.Component {
                         {this.props.displayedUsername}
                     </Login>
                     <LabelsContainer>
-                        <Label term={this.props.term}>
+                        <UserLabel setMargin={'0 10px 0 0'} term={this.props.term}>
                             Semestr: {this.props.term}
-                        </Label>
-                        <Label level={this.props.level}>
+                        </UserLabel>
+                        <UserLabel setMargin={'0'} level={this.props.level}>
                             Level: {this.props.level}
-                        </Label>
+                        </UserLabel>
                     </LabelsContainer>
                 </Div>
                 <BattleIcon access={this.props.access} src={battleIcon} />

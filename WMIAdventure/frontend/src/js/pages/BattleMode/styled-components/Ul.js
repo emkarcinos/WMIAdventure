@@ -12,6 +12,12 @@ const Ul = styled.ul`
   border-bottom-right-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   position: relative;
+
+  scrollbar-width: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'};
+  -ms-overflow-style: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* IE 10+ */
+  ::-webkit-scrollbar {
+    display: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* Chrome Safari */
+  }
 `;
 
 export default Ul;

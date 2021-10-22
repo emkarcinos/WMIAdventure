@@ -1,8 +1,8 @@
 import React from 'react';
 import Div from './styled-components/Div';
-import TinyDeck from '../../../battle/atoms/TinyDeck';
+import TinyDeck from '../../molecules/TinyDeck';
 
-class MyProfileMobile extends React.Component {
+class SwipeProfile extends React.Component {
 
     state = {
         hide: true,
@@ -14,6 +14,8 @@ class MyProfileMobile extends React.Component {
             hide: false,
             tinyDeckVisible: false,
         });
+
+        this.props.hideScroll();
     }
 
     render() {
@@ -29,4 +31,4 @@ class MyProfileMobile extends React.Component {
     }
 }
 
-export default MyProfileMobile;
+export default SwipeProfile;
