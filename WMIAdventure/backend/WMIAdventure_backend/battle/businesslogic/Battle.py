@@ -7,6 +7,13 @@ from .recorder.ProcessRecorder import ProcessRecorder
 
 class Battle:
     def __init__(self, attacker_model: UserProfile, defender_model: UserProfile):
+        """
+
+        @param attacker_model:
+        @param defender_model:
+        @raise BadBattleProfileException: If one of the user models doesn't have deck.
+        """
+
         player_factory = PlayerFactory.get_instance()
         self.attacker = player_factory.create(attacker_model, is_attacker=True)
         self.defender = player_factory.create(defender_model, is_attacker=False)
