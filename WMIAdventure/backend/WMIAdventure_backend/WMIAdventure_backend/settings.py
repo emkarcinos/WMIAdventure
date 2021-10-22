@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'battle',
     'proposed_content',
     'corsheaders',
-    'db_file_storage'
+    'db_file_storage',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
+
+SESSION_COOKIE_NAME = 'session'
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_ALL_ORIGINS = True
@@ -179,4 +183,9 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
