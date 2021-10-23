@@ -13,6 +13,8 @@ const LevelNumber = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: ${({theme}) => theme.weight.regular};
+  z-index: 2;
+  position: relative;
 `;
 
 export default LevelNumber;

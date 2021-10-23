@@ -10,7 +10,6 @@ import Media from 'react-media';
 import Deck from '../../molecules/Deck';
 import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
-import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 
 class SwipeProfile extends React.Component {
@@ -73,12 +72,12 @@ class SwipeProfile extends React.Component {
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                 </FlexGapContainer>
                             </FlexCenterContainer>
-                            <FlexEndContainer>
+                            <FlexCenterContainer>
                                 <Deck />
                                 <Edit>
                                     Edytuj
                                 </Edit>
-                            </FlexEndContainer>
+                            </FlexCenterContainer>
                         </>
                     </Media>
                 </Article>

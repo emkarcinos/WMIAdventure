@@ -12,10 +12,10 @@ class PostBattle extends React.Component {
     render() {
         return (
             <MobilePopUp visible={this.props.postBattle}
-                         >
+                         closeHandler={this.props.closeHandler}>
                 <Article>
                     <ColumnGapContainer gap={'10px'}>
-                        <BattleResult result={'Wygrana'} image={imagePlaceholder} />
+                        <BattleResult win={true} image={imagePlaceholder} />
                         <FlexGapContainer gap={'32px'}>
                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
