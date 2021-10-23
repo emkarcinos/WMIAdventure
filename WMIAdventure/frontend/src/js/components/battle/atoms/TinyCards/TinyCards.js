@@ -1,26 +1,25 @@
 import React from 'react';
-import Div from './styled-components/Div';
+import MainContainer from './styled-components/MainContainer';
 import ImageContainer from './styled-components/ImageContainer';
 import CardImage from './styled-components/CardImage';
-import upload_image_dark from "../../../../../assets/icons/upload_image_dark.svg";
+import uploadImageDark from '../../../../../assets/icons/upload_image_dark.svg';
 
-class TinyDeck extends React.Component {
-
+class TinyCards extends React.Component {
     render() {
         return (
-            <Div onClick={this.props.showHandler} show={this.props.tinyDeckVisible}>
+            <MainContainer setMargin={this.props.setMargin} gap={this.props.gap}>
                 {[...Array(5)].map(
                     (e,i) => {
                         return (
                             <ImageContainer key={`cardImage-${i}`}>
-                                <CardImage src={this.props.cardImages[i] ? this.props.cardImages[i] : upload_image_dark} />
+                                <CardImage src={this.props.cardImages[i] ? this.props.cardImages[i] : uploadImageDark} />
                             </ImageContainer>
                         );
                     }
                 )}
-            </Div>
+            </MainContainer>
         );
     }
 }
 
-export default TinyDeck;
+export default TinyCards;

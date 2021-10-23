@@ -66,8 +66,21 @@ DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 SESSION_COOKIE_NAME = 'session'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    # prod
+    'http://wmi-adventure.pl',
+    'https://wmi-adventure.pl',
+    'http://wmiadventure.projektstudencki.pl',
+    'https://wmiadventure.projektstudencki.pl',
+
+    # dev
+    'http://wmiadventure.westeurope.cloudapp.azure.com',
+    'https://wmiadventure.westeurope.cloudapp.azure.com',
+    
+    # local development
+    'http://localhost',
+]
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',

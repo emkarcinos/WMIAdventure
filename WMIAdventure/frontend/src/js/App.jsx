@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 
 import MainMenu from './pages/MainMenu';
 import Profile from './pages/Profile';
+import UserRegistrationPage from "./pages/UserRegistration";
 import AdventureMode from './pages/AdventureMode';
 import BattleMode from './pages/BattleMode';
 import Ranking from './pages/Ranking';
@@ -19,6 +20,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={MainMenu} />
             <Route path='/profile' component={Profile} />
+            <Route path='/registration' component={UserRegistrationPage} />
             <Route path='/adventure' component={AdventureMode} />
             <Route path='/battle' component={BattleMode} />
             <Route path='/ranking' component={Ranking} />
