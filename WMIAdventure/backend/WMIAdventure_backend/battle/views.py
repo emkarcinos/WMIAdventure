@@ -27,7 +27,6 @@ class BattleView(APIView):
 
     def get(self, request, defender_id: int):
         """
-        TODO: when authentication is implemented require being logged in to access this view.
         Starts battle between logged in user and given user to attack.
 
         :param request: Incoming request, attacker user will be retrieved from it.
@@ -36,10 +35,6 @@ class BattleView(APIView):
         """
 
         attacker_id = request.user.id
-
-        # TODO: When when authentication is implemented remove these lines of code.
-        if attacker_id is None:
-            attacker_id = User.objects.get(username="PumPkin").id
 
         # You can't fight with yourself.
         if attacker_id == defender_id:
