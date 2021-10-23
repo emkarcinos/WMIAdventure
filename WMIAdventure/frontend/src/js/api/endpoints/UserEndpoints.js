@@ -13,6 +13,8 @@ class UserEndpoints {
     static userRegistration = () => {
         return `${UserEndpoints.main}register/`
     };
+
+    static whoAmI = `${UserEndpoints.main}whoami/`;
 }
 
 export default UserEndpoints;

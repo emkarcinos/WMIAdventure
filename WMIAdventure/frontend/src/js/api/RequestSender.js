@@ -27,7 +27,7 @@ class RequestSender {
             headers: headers,
         };
 
-        return RequestSender.makeRequest(url, init).then(response => response.json());
+        return RequestSender.makeRequest(url, init);
     }
 
     /**

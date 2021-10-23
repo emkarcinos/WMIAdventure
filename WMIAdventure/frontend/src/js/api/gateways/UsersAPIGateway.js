@@ -1,5 +1,6 @@
 import RequestSender from "../RequestSender";
 import UserEndpoints from "../endpoints/UserEndpoints";
+import Cookies from "../Cookies";
 
 const headers = {
     'Accept': 'application/json',
@@ -18,4 +19,13 @@ const registerUser = (newUserData) => {
     return RequestSender.post(UserEndpoints.userRegistration(), body, headers).then(response => response.json());
 };
 
-export default {registerUser, login};
+const isUserLoggedIn = async () => {
+    const response = await RequestSender.get(UserEndpoints.whoAmI);
+    return response.ok;
+}
+
+const logout = () => {
+    Cookies.removeSessionToken();
+}
+
+export default {registerUser, login, isUserLoggedIn, logout};
