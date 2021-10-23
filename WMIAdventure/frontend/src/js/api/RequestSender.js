@@ -11,7 +11,8 @@ class RequestSender {
     static get = (url, headers={}) => {
         return fetch(url, {
             method: 'get',
-            headers: headers
+            headers: headers,
+            credentials:'include'
         }).then(
             response => response.json()
         );
@@ -28,7 +29,8 @@ class RequestSender {
         return fetch(url, {
             method: 'post',
             headers: headers,
-            body: body
+            body: body,
+            credentials: 'include'
         }).then(
             response => response
         );
@@ -45,7 +47,8 @@ class RequestSender {
         return fetch(url, {
             method: 'put',
             headers: headers,
-            body: body
+            body: body,
+            credentials: 'include'
         }).then(
             response => response
         );
