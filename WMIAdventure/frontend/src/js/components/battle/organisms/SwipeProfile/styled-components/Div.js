@@ -11,7 +11,8 @@ const Div = styled.div`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   transform: ${({hide}) => hide ? 'translateY(calc(100vh - (48px + 60px)))' : 'translateY(0)'};
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  overflow-y: scroll;
 `;
 
 export default Div;

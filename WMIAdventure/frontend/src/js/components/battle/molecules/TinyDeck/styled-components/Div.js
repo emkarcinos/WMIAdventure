@@ -1,6 +1,7 @@
 import styled, {keyframes} from 'styled-components';
 import swipeUp from '../../../../../../assets/icons/swipe-up.svg';
 
+
 const swipeUpSignal = keyframes`
   0% {
     transform: translateY(2px);    
@@ -14,16 +15,18 @@ const swipeUpSignal = keyframes`
 `;
 
 const Div = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   background-color: ${({theme}) => theme.colors.light2};
-  display: flex;
+  display: ${({visible}) => visible ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
-  position: relative;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   opacity: ${({show}) => show ? 1 : 0};
   cursor: pointer;
 

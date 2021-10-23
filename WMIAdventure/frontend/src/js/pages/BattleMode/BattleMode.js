@@ -109,7 +109,7 @@ class BattleMode extends React.Component {
                     </Ul>
                     {/*<Pager next={this.state.users.next}*/}
                     {/*       previous={this.state.users.previous} />*/}
-                    <SwipeProfile hideScroll={this.hideScroll} />
+                    <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
                 </Main>
 
                 <MobilePopUp visible={this.state.userPreviewRun}

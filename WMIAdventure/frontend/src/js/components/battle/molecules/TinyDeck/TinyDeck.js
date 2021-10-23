@@ -7,7 +7,9 @@ class TinyDeck extends React.Component {
 
     render() {
         return (
-            <Div onClick={this.props.showHandler} show={this.props.tinyDeckVisible}>
+            <Div onClick={this.props.showHandler}
+                 show={this.props.tinyDeckVisible}
+                 visible={this.props.tinyDeckDisplay}>
                 <Media query={'(max-width: 340px)'}>
                     <TinyCards cardImages={this.props.cardImages} setMargin={'0'} gap={'2px'} />
                 </Media>
