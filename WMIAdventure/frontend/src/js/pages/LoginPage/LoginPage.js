@@ -12,8 +12,14 @@ class LoginPage extends React.Component {
         username: null
     }
 
-    loginFailedHandler = () => {
-        alert("Login failed");
+    loginFailedHandler = (response) => {
+        let msg;
+
+        if (response.status === 404) {
+            msg = 'User not found.';
+        }
+
+        alert(`Login failed. ${msg} Status: ${response.status}`);
     }
 
     loginSuccessHandler = () => {
@@ -28,7 +34,7 @@ class LoginPage extends React.Component {
                 if (response.ok)
                     this.loginSuccessHandler();
                 else
-                    this.loginFailedHandler();
+                    this.loginFailedHandler(response);
             })
             .catch(err => {console.log(err); this.loginFailedHandler()});
     }
