@@ -9,7 +9,6 @@ import UserProfilesAPIGateway from '../../api/gateways/UserProfilesAPIGateway';
 import Search from '../../components/global/atoms/Search';
 import SwipeProfile from '../../components/battle/organisms/SwipeProfile';
 import SearchContainer from './styled-components/SearchContainer';
-import MobilePopUp from '../../components/battle/organisms/MobilePopUp';
 import OpponentSelected from '../../components/battle/organisms/OpponentSelected';
 import UserListItem from '../../components/battle/molecules/UserListItem';
 
@@ -109,14 +108,12 @@ class BattleMode extends React.Component {
                     </Ul>
                     {/*<Pager next={this.state.users.next}*/}
                     {/*       previous={this.state.users.previous} />*/}
-                    <SwipeProfile hideScroll={this.hideScroll} />
+                    <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
                 </Main>
-
-                <MobilePopUp visible={this.state.userPreviewRun}
-                             setTranslateY={this.state.userPreviewPos}
-                             closeHandler={this.closeUserPreviewHandler}>
-                    <OpponentSelected closeUserPreviewHandler={this.closeUserPreviewHandler} />
-                </MobilePopUp>
+                <OpponentSelected visible={this.state.userPreviewRun}
+                                  setTranslateY={this.state.userPreviewPos}
+                                  runUserPreviewHandler={this.runUserPreviewHandler}
+                                  closeUserPreviewHandler={this.closeUserPreviewHandler} />
             </>
         );
     }

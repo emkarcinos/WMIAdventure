@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
-const NameContainer = styled.div`
+const Div = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  
 `;
 
-export default NameContainer;
+export default Div;
