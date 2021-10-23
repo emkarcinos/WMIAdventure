@@ -66,6 +66,7 @@ DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 SESSION_COOKIE_NAME = 'session'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # One month
 
+CORS_ALLOW_CREDENTIALS = True  # Like cookies, etc.
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     # prod
