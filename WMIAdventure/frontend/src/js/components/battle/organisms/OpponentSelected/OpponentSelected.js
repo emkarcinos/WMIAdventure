@@ -14,8 +14,21 @@ import {mobile} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
+import PostBattle from '../PostBattle';
 
 class OpponentSelected extends React.Component {
+
+    state = {
+        postBattle: false,
+    }
+
+    quickBattleHandler = () => {
+        this.props.closeUserPreviewHandler();
+        this.setState({
+            postBattle: true,
+        });
+    }
+
     render() {
         return (
             <>
@@ -50,12 +63,15 @@ class OpponentSelected extends React.Component {
                                     Walcz
                                 </ButtonWithIcon>
                             </FlexGapContainer>
-                            <ButtonWithIcon setMargin={'14px 0 16px 0'} color={theme.colors.common} icon={fastIcon}>
+                            <ButtonWithIcon handler={this.quickBattleHandler}
+                                            setMargin={'14px 0 16px 0'} color={theme.colors.common} icon={fastIcon}>
                                 Szybka walka
                             </ButtonWithIcon>
                         </FlexEndContainer>
                     </GridContainer>
                 </Media>
+
+                <PostBattle postBattle={this.state.postBattle} />
             </>
         );
     }
