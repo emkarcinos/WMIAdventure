@@ -1,9 +1,8 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import WholePageDiv from "./styled-components/WholePageDiv";
-import LoginForm from "./styled-components/LoginForm";
-import FormItemContainer from "./styled-components/FormItemContainer";
-import AuthAPIGateway from "../../api/gateways/AuthAPIGateway";
+import UsersAPIGateway from "../../api/gateways/UsersAPIGateway";
+import LoginForm from "../../components/auth/molecules/LoginForm";
 
 
 class LoginPage extends React.Component {
@@ -15,10 +14,20 @@ class LoginPage extends React.Component {
         alert("Login failed");
     }
 
+    loginSuccessHandler = () => {
+        alert(`Logged in as ${this.state.username}`);
+    }
+
     submitHandler = (event) => {
         event.preventDefault();
 
-        AuthAPIGateway.login(this.state.username)
+        UsersAPIGateway.login(this.state.username)
+            .then(response => {
+                if (response.ok)
+                    this.loginSuccessHandler();
+                else
+                    this.loginFailedHandler();
+            })
             .catch(err => {console.log(err); this.loginFailedHandler()});
     }
 
@@ -37,16 +46,10 @@ class LoginPage extends React.Component {
                 <WholePageDiv>
                     <h1>Login Page</h1>
 
-                    <LoginForm onSubmit={this.submitHandler}>
-                        <FormItemContainer>
-                            <label htmlFor={'username'}>Nazwa użytkownika: </label>
-                            <input type={'text'} id={'username'} name={'username'} onChange={this.usernameChangedHandler} autoFocus={true}/>
-                        </FormItemContainer>
-
-                        <FormItemContainer>
-                            <input type={'submit'} value={'Zaloguj się'} />
-                        </FormItemContainer>
-                    </LoginForm>
+                    <LoginForm
+                        usernameChangedHandler={this.usernameChangedHandler}
+                        submitHandler={this.submitHandler}
+                    />
                 </WholePageDiv>
 
             </>
