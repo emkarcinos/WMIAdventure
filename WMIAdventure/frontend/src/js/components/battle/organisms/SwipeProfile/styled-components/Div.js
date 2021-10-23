@@ -13,6 +13,10 @@ const Div = styled.div`
   transform: ${({hide}) => hide ? 'translateY(calc(100vh - (48px + 60px)))' : 'translateY(0)'};
   transition: transform 0.3s ease-in-out;
   overflow-y: scroll;
+  
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
+    display: none;
+  }
 `;
 
 export default Div;

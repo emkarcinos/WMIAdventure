@@ -9,6 +9,14 @@ const Main = styled.main`
   background-color: ${({theme}) => theme.colors.uiGreen};
   overflow: hidden;
   position: relative;
+
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 132px 16px 268px;
+  }
 `;
 
 export default Main;

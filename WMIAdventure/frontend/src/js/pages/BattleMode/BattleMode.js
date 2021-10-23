@@ -11,6 +11,13 @@ import SwipeProfile from '../../components/battle/organisms/SwipeProfile';
 import SearchContainer from './styled-components/SearchContainer';
 import OpponentSelected from '../../components/battle/organisms/OpponentSelected';
 import UserListItem from '../../components/battle/molecules/UserListItem';
+import Media from 'react-media';
+import {desktop, mobile} from '../../utils/globals';
+import DesktopLeft from './styled-components/DesktopLeft';
+import DesktopRight from './styled-components/DesktopRight';
+import kuceBattle from '../../../assets/images/kuceBattle.png';
+import KuceBattleImage from './styled-components/KuceBattleImage';
+import Title from './styled-components/Title';
 
 class BattleMode extends React.Component {
 
@@ -88,27 +95,60 @@ class BattleMode extends React.Component {
                 </Helmet>
                 <NavBar />
                 <Main>
-                    <H2>
-                        Wybierz przeciwnika
-                    </H2>
-                    <SearchContainer>
-                        <Search searchInput={this.state.searchInput}
-                                handleSearch={this.handleSearch} />
-                    </SearchContainer>
-                    <Ul scrollVisible={this.state.scrollVisible}>
-                        {this.state.users.results ? this.state.users.results.map((elem) => {
-                            return (
-                                <UserListItem key={elem.user} access={elem.semester < 2}
-                                              displayedUsername={elem.displayedUsername}
-                                              searchInput={this.state.searchInput}
-                                              term={elem.semester} level={elem.user * 4}
-                                              runUserPreviewHandler={this.runUserPreviewHandler} />
-                            );
-                        }) : ''}
-                    </Ul>
-                    {/*<Pager next={this.state.users.next}*/}
-                    {/*       previous={this.state.users.previous} />*/}
-                    <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
+                    <Media query={mobile}>
+                        <>
+                            <H2>
+                                Wybierz przeciwnika
+                            </H2>
+                            <SearchContainer>
+                                <Search searchInput={this.state.searchInput}
+                                        handleSearch={this.handleSearch} />
+                            </SearchContainer>
+                            <Ul scrollVisible={this.state.scrollVisible}>
+                                {this.state.users.results ? this.state.users.results.map((elem) => {
+                                    return (
+                                        <UserListItem key={elem.user} access={elem.semester < 2}
+                                                      displayedUsername={elem.displayedUsername}
+                                                      searchInput={this.state.searchInput}
+                                                      term={elem.semester} level={elem.user * 4}
+                                                      runUserPreviewHandler={this.runUserPreviewHandler} />
+                                    );
+                                }) : ''}
+                            </Ul>
+                            <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
+                        </>
+                    </Media>
+
+                    <Media query={desktop}>
+                        <>
+                            <DesktopRight>
+                                <H2>
+                                    Wybierz przeciwnika
+                                </H2>
+                                <KuceBattleImage src={kuceBattle} alt=""/>
+                                <Title>
+                                    Battle
+                                </Title>
+                            </DesktopRight>
+                            <DesktopLeft>
+                                <SearchContainer>
+                                    <Search searchInput={this.state.searchInput}
+                                            handleSearch={this.handleSearch} />
+                                </SearchContainer>
+                                <Ul scrollVisible={this.state.scrollVisible}>
+                                    {this.state.users.results ? this.state.users.results.map((elem) => {
+                                        return (
+                                            <UserListItem key={elem.user} access={elem.semester < 2}
+                                                          displayedUsername={elem.displayedUsername}
+                                                          searchInput={this.state.searchInput}
+                                                          term={elem.semester} level={elem.user * 4}
+                                                          runUserPreviewHandler={this.runUserPreviewHandler} />
+                                        );
+                                    }) : ''}
+                                </Ul>
+                            </DesktopLeft>
+                        </>
+                    </Media>
                 </Main>
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   setTranslateY={this.state.userPreviewPos}
