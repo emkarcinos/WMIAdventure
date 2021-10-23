@@ -18,7 +18,7 @@ const Label = styled.div`
   border: 1px solid ${({theme, term, level, rank}) => backColorHandler(theme, term, level, rank)};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   background-color: ${({theme}) => theme.colors.light2};
-  padding: 4px;
+  padding: 0 6px;
   min-width: 40px;
   height: 24px;
 `;

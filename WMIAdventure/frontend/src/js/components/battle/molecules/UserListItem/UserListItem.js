@@ -28,7 +28,7 @@ class UserListItem extends React.Component {
                     <LabelsContainer>
                         <UserLabel setMargin={'0 10px 0 0'} icon={termIcon}
                                    term={this.props.term} number={this.props.term} />
-                        <UserLabel setMargin={'0'}  icon={levelIcon}
+                        <UserLabel setMargin={'0 10px 0 0'}  icon={levelIcon}
                                    level={this.props.level} number={this.props.level} />
                         <UserLabel setMargin={'0'} icon={rankIcon}
                                    rank={'2'} number={'2'} />

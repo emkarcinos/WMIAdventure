@@ -23,10 +23,10 @@ class TinyUserProfile extends React.Component {
                                    icon={termIcon} number={this.props.term}
                                    setMargin={'0 6px 0 0'} />
                         <UserLabel level={this.props.level} number={this.props.level}
-                                   icon={levelIcon} setMargin={'0'} />
+                                   icon={levelIcon} setMargin={'0 6px 0 0'} />
+                        <UserLabel rank={this.props.rank} number={'6'}
+                                   icon={rankIcon} setMargin={'0'} />
                     </Div>
-                    <UserLabel rank={this.props.rank} number={'6'}
-                               icon={rankIcon} setMargin={'0'} />
                 </ContentContainer>
                 <ImageContainer>
                     {this.props.avatar ? <Avatar src={this.props.avatar} alt="" /> : ''}
