@@ -50,6 +50,7 @@ const colors = {
 
 
     // new colors
+    red: '#DB4E4E',
     light2: '#F7F7F7',
     darkgrey: '#282829',
     userItemHover: '#E5E5E5',
