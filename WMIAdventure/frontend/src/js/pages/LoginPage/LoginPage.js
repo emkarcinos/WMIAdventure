@@ -3,6 +3,8 @@ import {Helmet} from 'react-helmet';
 import WholePageDiv from "./styled-components/WholePageDiv";
 import UsersAPIGateway from "../../api/gateways/UsersAPIGateway";
 import LoginForm from "../../components/auth/molecules/LoginForm";
+import StyledWrapper from "../MainMenu/StyledWrapper";
+import NavBar from "../../components/prototype/organisms/NavBar";
 
 
 class LoginPage extends React.Component {
@@ -43,15 +45,17 @@ class LoginPage extends React.Component {
                     <title>Login Page</title>
                 </Helmet>
 
-                <WholePageDiv>
-                    <h1>Login Page</h1>
+                <StyledWrapper>
+                    <NavBar/>
+                    <WholePageDiv>
+                        <h1>Login Page</h1>
 
-                    <LoginForm
-                        usernameChangedHandler={this.usernameChangedHandler}
-                        submitHandler={this.submitHandler}
-                    />
-                </WholePageDiv>
-
+                        <LoginForm
+                            usernameChangedHandler={this.usernameChangedHandler}
+                            submitHandler={this.submitHandler}
+                        />
+                    </WholePageDiv>
+                </StyledWrapper>
             </>
 
         )
