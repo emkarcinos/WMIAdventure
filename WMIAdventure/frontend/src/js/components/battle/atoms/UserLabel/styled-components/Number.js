@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Number = styled.p`
-  font-size: 12px;
+  font-size: 14px;
   font-family: 'Roboto', sans-serif;
   font-weight: ${({theme}) => theme.weight.medium};
   color: ${({theme}) => theme.colors.darkgrey};
