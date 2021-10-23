@@ -1,17 +1,13 @@
-import coreapi
-import coreschema
-from rest_framework.schemas import AutoSchema
-
-from battle.businesslogic.effects.EffectFactory import EffectFactory
-from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
-from .models import CardEffect, CardLevelEffects
-from .serializers import CardEffectSerializer, SimpleCardLevelEffectsSerializer
-from .models import CardLevel, CardInfo
-from .serializers import CardLevelSerializer, WholeCardSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
+from .models import CardEffect
+from .models import CardLevel, CardInfo
+from utils.permissions import IsAbleToEdit
+from .serializers import CardEffectSerializer
+from .serializers import CardLevelSerializer, WholeCardSerializer
 
 
 class CardLevelList(APIView):
@@ -38,6 +34,7 @@ class CardEffectList(APIView):
     """
     List all effects.
     """
+
     def get(self, request, *args, **kwargs):
         cardEffects = CardEffect.objects.all()
         serializer = CardEffectSerializer(cardEffects, many=True)
@@ -48,6 +45,9 @@ class CardEffectObjectView(generics.RetrieveUpdateAPIView):
     """
     Get a single effect.
     """
+
+    permission_classes = [IsAbleToEdit]
+
     queryset = CardEffect.objects.all()
     serializer_class = CardEffectSerializer
 
@@ -55,6 +55,8 @@ class CardEffectObjectView(generics.RetrieveUpdateAPIView):
 class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = CardInfo.objects.all()
     serializer_class = WholeCardSerializer
+
+    permission_classes = [IsAbleToEdit]
 
     def get(self, request, *args, **kwargs):
         # This disasterous piece of code is caused by the way external library for handling data uploads works.
@@ -66,7 +68,8 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
         # I couldn't find any other way other than messing with the library itself, so here's a dirty fix
         response = super().get(request, *args, **kwargs)
         image_path = response.data.get('image')
-        response.data['image'] = image_path.replace('download', 'get', 1)
+        if image_path:
+            response.data['image'] = image_path.replace('download', 'get', 1)
         return response
 
 
@@ -86,6 +89,7 @@ class DescriptionGeneratorView(APIView):
             }
         ]
     """
+
     def post(self, request, *args, **kwargs):
         """
         Takes a JSON array with effect ID's and returns generated string of data. 
@@ -95,6 +99,7 @@ class DescriptionGeneratorView(APIView):
 
 
 class WholeCardList(generics.ListCreateAPIView):
+    permission_classes = [IsAbleToEdit]
     """
     get:
     Get all cards that exist in the database.  

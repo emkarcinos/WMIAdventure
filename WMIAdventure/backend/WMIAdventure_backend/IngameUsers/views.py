@@ -1,21 +1,44 @@
-from rest_framework.generics import RetrieveAPIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.generics import RetrieveAPIView, get_object_or_404
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 
 from . import serializers
 from . import models
 from .models import UserProfile
+from .permissions import IsOwner
 from .serializers import UserDecksSerializer
 
 
-class UserProfileViewSet(ModelViewSet):
+class UserPagination(PageNumberPagination):
+    page_size = 5000
+    page_size_query_param = 'pagesize'
+    max_page_size = 5000
+
+
+class PaginatedUsersView(generics.ListCreateAPIView):
     """
-    UserProfile class view.
+    Lists all users with paging
+    """
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    pagination_class = UserPagination
+
+
+class UserView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Fetches a user.
     """
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
 
 
 class UserDeckView(RetrieveAPIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsOwner]
+
     """
     Get decks of a given user.
 
@@ -57,8 +80,3 @@ class UserDeckView(RetrieveAPIView):
     """
     serializer_class = UserDecksSerializer
     queryset = UserProfile.objects.all()
-
-
-
-
-
