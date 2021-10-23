@@ -1,7 +1,20 @@
 /**
  * Handles sending requests.
  */
+import Cookies from "./Cookies";
+
 class RequestSender {
+    static makeRequest = (url, init) => {
+        init.credentials = 'include';
+
+        const token = Cookies.getSessionToken();
+        if (token) {
+            init.headers.Authorization = `Token ${Cookies.getSessionToken()}`;
+        }
+
+        return fetch(url, init);
+    }
+
     /**
      * Sends GET request.
      * @param url
@@ -9,12 +22,12 @@ class RequestSender {
      * @returns {Promise<any>} Response as json.
      */
     static get = (url, headers={}) => {
-        return fetch(url, {
+        let init = {
             method: 'get',
-            headers: headers
-        }).then(
-            response => response.json()
-        );
+            headers: headers,
+        };
+
+        return RequestSender.makeRequest(url, init).then(response => response.json());
     }
 
     /**
@@ -25,13 +38,13 @@ class RequestSender {
      * @returns {Promise<Response>} Response.
      */
     static post = (url, body, headers={}) => {
-        return fetch(url, {
+        let init = {
             method: 'post',
             headers: headers,
             body: body
-        }).then(
-            response => response
-        );
+        };
+
+        return RequestSender.makeRequest(url, init);
     }
 
     /**
@@ -42,13 +55,13 @@ class RequestSender {
      * @returns {Promise<Response>} Response.
      */
     static put = (url, body, headers={}) => {
-        return fetch(url, {
+        let init = {
             method: 'put',
             headers: headers,
             body: body
-        }).then(
-            response => response
-        );
+        };
+
+        return RequestSender.makeRequest(url, init);
     }
 }
 

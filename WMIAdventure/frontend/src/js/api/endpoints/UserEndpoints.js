@@ -5,6 +5,11 @@ import API_URL from "./API_URL";
  */
 class UserEndpoints {
     static main = API_URL + 'users/';
+
+    static authToken = (username) => {
+        return `${UserEndpoints.main}api-token-auth/${username}/`
+    };
+
     static userRegistration = () => {
         return `${UserEndpoints.main}register/`
     };

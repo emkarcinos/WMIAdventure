@@ -1,6 +1,6 @@
 import React from "react";
 import UserRegistrationForm from "../../molecules/UserRegistrationForm";
-import registerUser from "../../../../api/gateways/UsersAPIGateway";
+import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 
 class UserRegistration extends React.Component {
     state = {
@@ -12,7 +12,7 @@ class UserRegistration extends React.Component {
     
     onRegistrationFormSubmit = (event) => {
         event.preventDefault();
-        registerUser(this.state)
+        UsersAPIGateway.registerUser(this.state)
             .then(resp => {
                 alert(JSON.stringify(resp)
                     .replace(/[{}"\]]+/g, '')

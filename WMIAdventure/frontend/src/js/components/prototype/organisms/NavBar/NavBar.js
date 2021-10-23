@@ -4,6 +4,7 @@ import NotificationButton from '../../molecules/NotificationButton';
 import ProfileButton from '../../atoms/ProfileButton';
 import ShowMoreButton from '../../molecules/ShowMoreButton';
 import StyledNavBar from './StyledNavBar';
+import {Link} from "react-router-dom";
 
 function NavBar() {
     return (
@@ -14,6 +15,7 @@ function NavBar() {
                     <NotificationButton />
                     <ProfileButton />
                     <ShowMoreButton />
+                    <Link to={'/login/'}>Login</Link>
                 </StyledNavBar.IconsWrapper>
             </StyledNavBar.Navigation>
         </StyledNavBar>
