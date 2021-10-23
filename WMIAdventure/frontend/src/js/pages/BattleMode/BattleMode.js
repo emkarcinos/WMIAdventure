@@ -18,6 +18,7 @@ import DesktopRight from './styled-components/DesktopRight';
 import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
+import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
 
 class BattleMode extends React.Component {
 
@@ -150,6 +151,7 @@ class BattleMode extends React.Component {
                         </>
                     </Media>
                 </Main>
+                <TinyProfileDesktop />
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   setTranslateY={this.state.userPreviewPos}
                                   runUserPreviewHandler={this.runUserPreviewHandler}
