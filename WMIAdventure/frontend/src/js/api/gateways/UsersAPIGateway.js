@@ -1,15 +1,21 @@
 import RequestSender from "../RequestSender";
 import UserEndpoints from "../endpoints/UserEndpoints";
 
-function login(username) {
+const headers = {
+    'Accept': 'application/json',
+    'Content-type': 'application/json',
+};
+
+const login = (username) => {
     const url = UserEndpoints.authToken(username);
     const body = JSON.stringify({username: username})
-    const headers = {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-    }
 
     return RequestSender.post(url, body, headers);
-}
+};
 
-export default {login};
+const registerUser = (newUserData) => {
+    let body = JSON.stringify(newUserData);
+    return RequestSender.post(UserEndpoints.userRegistration(), body, headers).then(response => response.json());
+};
+
+export default {registerUser, login};
