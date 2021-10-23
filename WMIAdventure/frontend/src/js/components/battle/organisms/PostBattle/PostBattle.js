@@ -18,7 +18,7 @@ class PostBattle extends React.Component {
                          closeHandler={this.props.closeHandler}>
                 <Article>
                     <ColumnGapContainer gap={'10px'}>
-                        <BattleResult win={true} />
+                        <BattleResult win={this.props.win} />
                         <FlexGapContainer gap={'32px'}>
                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
@@ -27,15 +27,15 @@ class PostBattle extends React.Component {
                         <UserLevel levelNumber={'25'} setTransform={'16px'} />
                     </ColumnGapContainer>
 
-                    <Div win={true}>
-                        <Decoration win={true} />
+                    <Div win={this.props.win}>
+                        <Decoration win={this.props.win} />
                         <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
                                          displayedUsername={'skromność to potęga'} />
                         <TinyCards cardImages={[]} />
                     </Div>
 
-                    <Div win={false}>
-                        <Decoration win={false} />
+                    <Div win={!this.props.win}>
+                        <Decoration win={!this.props.win} />
                         <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
                                          displayedUsername={'emkarcinos'} />
                         <TinyCards cardImages={[]} />

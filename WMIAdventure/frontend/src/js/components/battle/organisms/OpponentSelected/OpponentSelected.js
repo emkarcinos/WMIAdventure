@@ -80,7 +80,7 @@ class OpponentSelected extends React.Component {
                                 </FlexEndContainer>
                             </GridContainer>
                         </MobilePopUp>
-                        <PostBattle postBattle={this.state.postBattle}
+                        <PostBattle postBattle={this.state.postBattle} win={true}
                                     closeHandler={this.quickBattleCloseHandler} />
                     </>
                 </Media>
