@@ -11,7 +11,7 @@ class TinyProfileDesktop extends React.Component {
                 {/*TinyCards w wersji desktop*/}
 
                 <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'24px 0 0 0'}
-                                 term={7} level={50} rank={2} avatar={null}/>
+                                 term={7} level={50} rank={2} avatar={null} />
             </Div>
         );
     }
