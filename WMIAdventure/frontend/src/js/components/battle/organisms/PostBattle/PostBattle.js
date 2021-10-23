@@ -6,7 +6,10 @@ import Article from './styled-components/Article';
 import BattleResult from '../../atoms/BattleResult';
 import UserLevel from '../../atoms/UserLevel';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import imagePlaceholder from  '../../../../../assets/icons/upload_image_dark.svg';
+import TinyUserProfile from '../../molecules/TinyUserProfile';
+import Div from './styled-components/Div';
+import Decoration from './styled-components/Decoration';
+import TinyCards from '../../atoms/TinyCards/TinyCards';
 
 class PostBattle extends React.Component {
     render() {
@@ -15,7 +18,7 @@ class PostBattle extends React.Component {
                          closeHandler={this.props.closeHandler}>
                 <Article>
                     <ColumnGapContainer gap={'10px'}>
-                        <BattleResult win={true} image={imagePlaceholder} />
+                        <BattleResult win={true} />
                         <FlexGapContainer gap={'32px'}>
                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
@@ -23,6 +26,20 @@ class PostBattle extends React.Component {
                         </FlexGapContainer>
                         <UserLevel levelNumber={'25'} setTransform={'16px'} />
                     </ColumnGapContainer>
+
+                    <Div win={true}>
+                        <Decoration win={true} />
+                        <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
+                                         displayedUsername={'skromność to potęga'} />
+                        <TinyCards cardImages={[]} />
+                    </Div>
+
+                    <Div win={false}>
+                        <Decoration win={false} />
+                        <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
+                                         displayedUsername={'emkarcinos'} />
+                        <TinyCards cardImages={[]} />
+                    </Div>
                 </Article>
             </MobilePopUp>
         );
