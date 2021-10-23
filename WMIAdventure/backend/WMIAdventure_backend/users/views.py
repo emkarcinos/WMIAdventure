@@ -10,6 +10,8 @@ from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserS
 
 
 # Create your views here.
+from .signals import user_registered
+
 
 class UserRegister(APIView):
 
@@ -20,7 +22,8 @@ class UserRegister(APIView):
 
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            user_registered.send(sender=self.__class__, user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
