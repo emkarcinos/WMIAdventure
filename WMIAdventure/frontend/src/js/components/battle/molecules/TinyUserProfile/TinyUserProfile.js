@@ -6,6 +6,9 @@ import H2 from './styled-components/H2';
 import ImageContainer from './styled-components/ImageContainer';
 import Avatar from './styled-components/Avatar';
 import UserLabel from '../../atoms/UserLabel';
+import termIcon from '../../../../../assets/images/termIcon.png';
+import levelIcon from '../../../../../assets/icons/levelIcon.svg';
+import rankIcon from '../../../../../assets/images/rankIcon.png';
 
 class TinyUserProfile extends React.Component {
     render() {
@@ -16,16 +19,14 @@ class TinyUserProfile extends React.Component {
                         {this.props.displayedUsername}
                     </H2>
                     <Div>
-                        <UserLabel term={this.props.term} setMargin={'0 6px 0 0'}>
-                            Semestr: {this.props.term}
-                        </UserLabel>
-                        <UserLabel level={this.props.level} setMargin={'0'}>
-                            Level: {this.props.level}
-                        </UserLabel>
+                        <UserLabel term={this.props.term}
+                                   icon={termIcon} number={this.props.term}
+                                   setMargin={'0 6px 0 0'} />
+                        <UserLabel level={this.props.level} number={this.props.level}
+                                   icon={levelIcon} setMargin={'0 6px 0 0'} />
+                        <UserLabel rank={this.props.rank} number={'6'}
+                                   icon={rankIcon} setMargin={'0'} />
                     </Div>
-                    <UserLabel rank={this.props.rank} setMargin={'0'}>
-                        Rank: {this.props.rank}
-                    </UserLabel>
                 </ContentContainer>
                 <ImageContainer>
                     {this.props.avatar ? <Avatar src={this.props.avatar} alt="" /> : ''}

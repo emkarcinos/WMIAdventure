@@ -8,6 +8,9 @@ import LabelsContainer from './styled-components/LabelsContainer';
 import AvatarContainer from './styled-components/AvatarContainer';
 import battleIcon from './../../../../../assets/images/battleIcon.png';
 import UserLabel from '../../atoms/UserLabel';
+import termIcon from '../../../../../assets/images/termIcon.png';
+import levelIcon from '../../../../../assets/icons/levelIcon.svg';
+import rankIcon from '../../../../../assets/images/rankIcon.png';
 
 class UserListItem extends React.Component {
     render() {
@@ -23,12 +26,12 @@ class UserListItem extends React.Component {
                         {this.props.displayedUsername}
                     </Login>
                     <LabelsContainer>
-                        <UserLabel setMargin={'0 10px 0 0'} term={this.props.term}>
-                            Semestr: {this.props.term}
-                        </UserLabel>
-                        <UserLabel setMargin={'0'} level={this.props.level}>
-                            Level: {this.props.level}
-                        </UserLabel>
+                        <UserLabel setMargin={'0 10px 0 0'} icon={termIcon}
+                                   term={this.props.term} number={this.props.term} />
+                        <UserLabel setMargin={'0 10px 0 0'}  icon={levelIcon}
+                                   level={this.props.level} number={this.props.level} />
+                        <UserLabel setMargin={'0'} icon={rankIcon}
+                                   rank={'2'} number={'2'} />
                     </LabelsContainer>
                 </Div>
                 <BattleIcon access={this.props.access} src={battleIcon} />
