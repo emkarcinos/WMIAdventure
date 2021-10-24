@@ -12,7 +12,7 @@ class CardsAPIGateway {
      * @returns {Promise<*>} Array of card objects.
      */
     static getAllCards() {
-        return RequestSender.get(CardsEndpoints.main);
+        return RequestSender.get(CardsEndpoints.main).then(response => response.json());
     }
 
     /**
@@ -20,7 +20,7 @@ class CardsAPIGateway {
      * @returns {Promise<*>} Array of effect objects.
      */
     static getAllEffects() {
-        return RequestSender.get(CardsEndpoints.effects);
+        return RequestSender.get(CardsEndpoints.effects).then(response => response.json());
     }
 
     /**
@@ -42,7 +42,7 @@ class CardsAPIGateway {
      * @returns {Promise<*>} Array of level objects.
      */
     static getLevels() {
-        return RequestSender.get(CardsEndpoints.levels);
+        return RequestSender.get(CardsEndpoints.levels).then(response => response.json());
     }
 }
 
