@@ -1,6 +1,7 @@
 import React from "react";
 import UserRegistrationForm from "../../molecules/UserRegistrationForm";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
+import {Redirect} from "react-router-dom";
 
 class UserRegistration extends React.Component {
     state = {
@@ -8,18 +9,26 @@ class UserRegistration extends React.Component {
         email: null,
         password: null,
         password2: null,
+        hasRegistered: false
     }
-    
+    onRegistrationSuccess = () => {
+        UsersAPIGateway.login(this.state.username)
+            .then(resp => {
+                resp.ok ? this.setState({hasRegistered: true}) : null;
+            });
+    }
     onRegistrationFormSubmit = (event) => {
         event.preventDefault();
         UsersAPIGateway.registerUser(this.state)
             .then(resp => {
-                alert(JSON.stringify(resp)
+                resp.json().then( msg => alert(JSON.stringify(msg)
                     .replace(/[{}"\]]+/g, '')
-                    .replace(/[,[]+/g, ' '))
-            })
+                    .replace(/[,[]+/g, ' ')))
+                resp.ok ? this.onRegistrationSuccess() : null;
+                }
+            );
     }
-    
+
     updateState = (event) => {
         const keyName = event.target.name;
         let keyValue;
@@ -28,7 +37,7 @@ class UserRegistration extends React.Component {
         else keyValue = '';
         this.setState({[keyName]: keyValue});
     }
-    
+
     render() {
         return (
             <>
@@ -39,6 +48,9 @@ class UserRegistration extends React.Component {
                                       onSubmit={this.onRegistrationFormSubmit}
                                       updateState={this.updateState}
                 />
+                {
+                    this.state.hasRegistered ? <Redirect to={'/'}/> : null
+                }
             </>
         )
     }
