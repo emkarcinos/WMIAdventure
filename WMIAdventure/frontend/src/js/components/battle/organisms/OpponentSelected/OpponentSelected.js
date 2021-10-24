@@ -16,11 +16,18 @@ import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import PostBattle from '../PostBattle';
 import MobilePopUp from '../MobilePopUp';
+import {getCurrentUsername} from "../../../../utils/userData";
 
 class OpponentSelected extends React.Component {
 
     state = {
         postBattle: false,
+        caller: null,
+    }
+
+    componentDidMount() {
+        getCurrentUsername()
+            .then(user => this.setState({caller: user}))
     }
 
     quickBattleRunHandler = () => {
@@ -50,10 +57,10 @@ class OpponentSelected extends React.Component {
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                         <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                     </FlexGapContainer>
-                                    <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'24px 0 0 0'}
+                                    <TinyUserProfile displayedUsername={this.state.caller} setMargin={'24px 0 0 0'}
                                                      term={7} level={50} rank={2} avatar={null}/>
                                     <KuceVs />
-                                    <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0 0 24px 0'}
+                                    <TinyUserProfile displayedUsername={this.props.opponent.username} setMargin={'0 0 24px 0'}
                                                      term={7} level={39} rank={15} avatar={null}/>
                                     <FlexGapContainer gap={'40px'}>
                                         <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
