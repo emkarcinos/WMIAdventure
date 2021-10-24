@@ -16,7 +16,7 @@ const login = (username) => {
 
 const registerUser = (newUserData) => {
     let body = JSON.stringify(newUserData);
-    return RequestSender.post(UserEndpoints.userRegistration(), body, headers).then(response => response.json());
+    return RequestSender.post(UserEndpoints.userRegistration(), body, headers);
 };
 
 const isUserLoggedIn = async () => {
