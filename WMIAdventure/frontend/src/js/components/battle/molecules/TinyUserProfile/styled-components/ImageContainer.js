@@ -9,6 +9,12 @@ const ImageContainer = styled.div`
   margin-right: 10px;
 
   @media(min-width: ${({theme}) => theme.overMobile}px) {
+    width: 72px;
+    height: 72px;
+    background-color: ${({theme}) => theme.colors.red};
+  }
+  
+  @media(min-width: 1172px) {
     width: 106px;
     height: 106px;
     background-color: ${({theme}) => theme.colors.red};
