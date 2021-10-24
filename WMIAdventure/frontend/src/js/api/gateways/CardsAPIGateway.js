@@ -44,6 +44,10 @@ class CardsAPIGateway {
     static getLevels() {
         return RequestSender.get(CardsEndpoints.levels).then(response => response.json());
     }
+
+    static getCardById(id) {
+        return RequestSender.get(CardsEndpoints.byId(id))
+    }
 }
 
 export default CardsAPIGateway;
