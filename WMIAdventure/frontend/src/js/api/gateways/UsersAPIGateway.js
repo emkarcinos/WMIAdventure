@@ -1,6 +1,7 @@
 import RequestSender from "../RequestSender";
 import UserEndpoints from "../endpoints/UserEndpoints";
 import Cookies from "../Cookies";
+import {isLoggedIn} from "../../utils/userData"
 
 const headers = {
     'Accept': 'application/json',
@@ -20,8 +21,7 @@ const registerUser = (newUserData) => {
 };
 
 const isUserLoggedIn = async () => {
-    const response = await RequestSender.get(UserEndpoints.whoAmI);
-    return response.ok;
+    return await isLoggedIn()
 }
 
 const logout = () => {
