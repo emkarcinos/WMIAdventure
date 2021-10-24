@@ -17,12 +17,14 @@ import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import PostBattle from '../PostBattle';
 import MobilePopUp from '../MobilePopUp';
 import {getCurrentUsername} from "../../../../utils/userData";
+import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 
 class OpponentSelected extends React.Component {
 
     state = {
         postBattle: false,
         caller: null,
+        win: null
     }
 
     componentDidMount() {
@@ -30,11 +32,22 @@ class OpponentSelected extends React.Component {
             .then(user => this.setState({caller: user}))
     }
 
-    quickBattleRunHandler = () => {
-        this.props.closeUserPreviewHandler();
+    postBattle = (data) => {
         this.setState({
             postBattle: true,
         });
+        data.winner === data.attacker.id ? this.setState({win: true}) : this.setState({win: false})
+    }
+
+    quickBattleRunHandler = () => {
+        this.props.closeUserPreviewHandler();
+        fightWithUser(this.props.opponent.id)
+            .then(response => {
+                if(response.ok) {
+                    response.json()
+                        .then(data => this.postBattle(data))
+                }
+            });
     }
 
     quickBattleCloseHandler = () => {
@@ -87,8 +100,10 @@ class OpponentSelected extends React.Component {
                                 </FlexEndContainer>
                             </GridContainer>
                         </MobilePopUp>
-                        <PostBattle postBattle={this.state.postBattle} win={true}
-                                    closeHandler={this.quickBattleCloseHandler} />
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.state.caller}
+                                    opponent={this.props.opponent.username} />
                     </>
                 </Media>
             </>

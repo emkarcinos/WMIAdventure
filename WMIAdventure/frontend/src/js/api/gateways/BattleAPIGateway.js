@@ -6,8 +6,8 @@ import BattleEndpoints from "../endpoints/BattleEndpoints";
  * @param userId Opponent.
  * @returns {Promise<*>} Battle result.
  */
-const fightWithUser = (userId) => {
-    return RequestSender.get(BattleEndpoints.fightWithUser(userId)).then(response => response.json());
+export const fightWithUser = (userId) => {
+    return RequestSender.get(BattleEndpoints.fightWithUser(userId));
 }
 
 export default {fightWithUser};

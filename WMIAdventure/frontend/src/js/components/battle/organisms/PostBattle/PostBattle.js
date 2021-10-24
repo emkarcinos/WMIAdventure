@@ -30,14 +30,14 @@ class PostBattle extends React.Component {
                     <Div win={this.props.win}>
                         <Decoration win={this.props.win} />
                         <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
-                                         displayedUsername={'skromność to potęga'} />
+                                         displayedUsername={this.props.attacker} />
                         <TinyCards cardImages={[]} />
                     </Div>
 
                     <Div win={!this.props.win}>
                         <Decoration win={!this.props.win} />
                         <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
-                                         displayedUsername={'emkarcinos'} />
+                                         displayedUsername={this.props.opponent} />
                         <TinyCards cardImages={[]} />
                     </Div>
                 </Article>
