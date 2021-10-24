@@ -9,7 +9,7 @@ const StyledNavBar = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 13;
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     height: 64px;
