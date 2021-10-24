@@ -17,7 +17,7 @@ class PostBattle extends React.Component {
             <MobilePopUp visible={this.props.postBattle}
                          closeHandler={this.props.closeHandler}>
                 <Article>
-                    <ColumnGapContainer gap={'10px'}>
+                    <ColumnGapContainer gap={'10px'} setMargin={'0 0 16px 0'}>
                         <BattleResult win={this.props.win} />
                         <FlexGapContainer gap={'32px'}>
                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
