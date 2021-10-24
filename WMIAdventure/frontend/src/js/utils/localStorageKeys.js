@@ -2,4 +2,8 @@ const userDataKeys = {
     username: 'username'
 };
 
-export {userDataKeys};
+const cardKey = (id) => {
+    return `card${id}`;
+}
+
+export {userDataKeys, cardKey};
