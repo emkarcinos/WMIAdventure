@@ -1,5 +1,7 @@
 const userDataKeys = {
-    username: 'username'
+    username: 'username',
+    id: 'currentUserId',
+    userDecks: 'userDecks',
 };
 
 const cardKey = (id) => {

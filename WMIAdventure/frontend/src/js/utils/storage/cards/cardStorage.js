@@ -13,4 +13,12 @@ export const getCardById = async (id) => {
     return cardData;
 }
 
-export default {getCardById};
+export const getCardsFromDeck = async (deck) => {
+    const card1 = getCardById(deck.card1.id);
+    const card2 = getCardById(deck.card2.id);
+    const card3 = getCardById(deck.card3.id);
+    const card4 = getCardById(deck.card4.id);
+    const card5 = getCardById(deck.card5.id);
+    return [card1, card2, card3, card4, card5];
+}
+export default {getCardById, getCardsFromDeck};

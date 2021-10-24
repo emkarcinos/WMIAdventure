@@ -1,8 +1,8 @@
 import {userDataKeys} from "./localStorageKeys";
 import Cookies from "../api/Cookies";
-import RequestSender from "../api/RequestSender";
-import UserEndpoints from "../api/endpoints/UserEndpoints";
-
+import {getWithSetCallback, invalidateItem} from "./cache";
+import UserProfilesAPIGateway from "../api/gateways/UserProfilesAPIGateway";
+import {whoAmI} from "../api/gateways/UsersAPIGateway";
 export const isLoggedIn = async () => {
     return !!await getCurrentUsername();
 }
@@ -13,22 +13,46 @@ export const hasSessionCookie = () => {
 
 export const getCurrentUsername = async () => {
     if(!hasSessionCookie()) {
-        sessionStorage.removeItem(userDataKeys.username);
+        invalidateItem(userDataKeys.username);
         return null;
     }
 
-    const cachedUsername = sessionStorage.getItem(userDataKeys.username);
-    if(cachedUsername)
-        return cachedUsername;
-
-    const response = await RequestSender.get(UserEndpoints.whoAmI);
-    if(response.ok) {
-        const respData = await response.json();
-        const username = respData.username;
-        sessionStorage.setItem(userDataKeys.username, username);
-        return username;
+    const backendCallback = async () => {
+        const who = await whoAmI();
+        if(who){
+            return who.username;
+        }
+        return null;
     }
-    return null;
+    return await getWithSetCallback(userDataKeys.username, backendCallback);
 }
 
+export const getCurrentUserId = async () => {
+    const backendCallback = async () => {
+        const who = await whoAmI();
+        if(who)
+            return who.id;
+        return null;
+    }
+    return await getWithSetCallback(userDataKeys.id, backendCallback);
+}
+export const getCurrentUserDecks = async () => {
+    const currentUserId = await getCurrentUserId()
+
+    const backendCall = async () => {
+        const resp = await UserProfilesAPIGateway.getUserDecks(currentUserId);
+        if(resp.ok){
+            const data = await resp.json();
+            return data.user_decks;
+        }
+        return null
+    }
+    return await getWithSetCallback(userDataKeys.userDecks, backendCall)
+
+}
+
+export const purgeUserData = () => {
+    for (const [, value] of Object.entries(userDataKeys))
+        invalidateItem(value);
+}
 export default {isLoggedIn, getCurrentUsername, hasSessionCookie};

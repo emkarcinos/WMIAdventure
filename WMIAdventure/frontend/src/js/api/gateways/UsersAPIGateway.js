@@ -1,7 +1,7 @@
 import RequestSender from "../RequestSender";
 import UserEndpoints from "../endpoints/UserEndpoints";
 import Cookies from "../Cookies";
-import {isLoggedIn} from "../../utils/userData"
+import {isLoggedIn, purgeUserData} from "../../utils/userData"
 
 const headers = {
     'Accept': 'application/json',
@@ -26,6 +26,15 @@ const isUserLoggedIn = async () => {
 
 const logout = () => {
     Cookies.removeSessionToken();
+    purgeUserData();
 }
 
-export default {registerUser, login, isUserLoggedIn, logout};
+export const whoAmI = async () => {
+    const response = await RequestSender.get(UserEndpoints.whoAmI);
+    if(response.ok)
+        return await response.json();
+
+    return null
+}
+
+export default {registerUser, login, isUserLoggedIn, logout, whoAmI};
