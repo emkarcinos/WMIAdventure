@@ -36,11 +36,10 @@ export const getCurrentUserId = async () => {
     }
     return await getWithSetCallback(userDataKeys.id, backendCallback);
 }
-export const getCurrentUserDecks = async () => {
-    const currentUserId = await getCurrentUserId()
 
+export const getUsersDecks = async (userId) => {
     const backendCall = async () => {
-        const resp = await UserProfilesAPIGateway.getUserDecks(currentUserId);
+        const resp = await UserProfilesAPIGateway.getUserDecks(userId);
         if(resp.ok){
             const data = await resp.json();
             return data.user_decks;
@@ -48,6 +47,12 @@ export const getCurrentUserDecks = async () => {
         return null
     }
     return await getWithSetCallback(userDataKeys.userDecks, backendCall)
+}
+
+export const getCurrentUserDecks = async () => {
+    const currentUserId = await getCurrentUserId()
+
+    return await getUsersDecks(currentUserId);
 
 }
 
