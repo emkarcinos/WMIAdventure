@@ -64,6 +64,19 @@ class OpponentSelected extends React.Component {
         }, 550);
     }
 
+    quickBattleRunMobileHandler = () => {
+        this.props.closeUserPreviewHandler();
+        this.setState({
+            postBattle: true,
+        });
+    }
+
+    quickBattleCloseMobileHandler = () => {
+        this.setState({
+            postBattle: false,
+        });
+    }
+
     hoverTrue = () => {
         this.setState({popUpHover: true});
     }
@@ -115,7 +128,7 @@ class OpponentSelected extends React.Component {
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
-                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
+                                    <ButtonWithIcon handler={this.quickBattleRunMobileHandler} setMargin={'14px 0 16px 0'}
                                                     color={theme.colors.common} icon={fastIcon}>
                                         Szybka walka
                                     </ButtonWithIcon>
@@ -123,7 +136,7 @@ class OpponentSelected extends React.Component {
                             </GridContainer>
                         </PopUp>
                         <PostBattle postBattle={this.state.postBattle} win={true}
-                                    closeHandler={this.quickBattleCloseHandler} />
+                                    closeHandler={this.quickBattleCloseMobileHandler} />
                     </>
                 </Media>
 
