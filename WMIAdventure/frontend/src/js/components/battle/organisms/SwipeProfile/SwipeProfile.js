@@ -78,7 +78,7 @@ class SwipeProfile extends React.Component {
                     <Media query={mobile}>
                         <>
                             <FlexCenterContainer>
-                                <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0 0 24px 0'}
+                                <TinyUserProfile displayedUsername={this.props.username} setMargin={'0 0 24px 0'}
                                                  term={7} level={50} rank={2} avatar={null}/>
                                 <FlexGapContainer gap={'40px'}  setMargin={'0 0 40px 0'}>
                                     <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
