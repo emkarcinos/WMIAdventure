@@ -32,7 +32,7 @@ export const set = (key, obj) => {
     if(obj){
         const val = JSON.stringify(obj)
         sessionStorage.setItem(key, val);
-        return val;
+        return obj;
     }
     return null
 }
