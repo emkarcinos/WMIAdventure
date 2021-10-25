@@ -12,6 +12,10 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 
   @media (min-width: 360px) {
     height: 36px;

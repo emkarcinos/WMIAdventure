@@ -15,6 +15,24 @@ import {desktop, mobile} from '../../../../utils/globals';
 import TransBack from '../../../global/organisms/TransBack';
 
 class PostBattle extends React.Component {
+
+    state = {
+        popUpHover: false,
+    }
+
+    hoverTrue = () => {
+        this.setState({popUpHover: true});
+    }
+
+    hoverFalse = () => {
+        this.setState({popUpHover: false});
+    }
+
+    handleHiding = () => {
+        if(!this.state.popUpHover)
+            this.props.closeHandler();
+    }
+
     render() {
         return (
             <>
@@ -49,9 +67,10 @@ class PostBattle extends React.Component {
                     </PopUp>
                 </Media>
                 <Media query={desktop}>
-                    <TransBack visible={this.props.postBattle}>
+                    <TransBack visible={this.props.postBattle} closeHandler={this.handleHiding}>
                         <PopUp visible={this.props.postBattle} setWidth={'932px'} setHeight={'560px'}
-                               closeHandler={this.props.closeHandler}>
+                               closeHandler={this.props.closeHandler}
+                               hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse} >
                             <ColumnGapContainer gap={'10px'} setMargin={'0 0 28px 0'}>
                                 <BattleResult win={this.props.win} />
                                 <FlexGapContainer gap={'32px'}>

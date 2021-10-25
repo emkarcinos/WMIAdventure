@@ -4,7 +4,9 @@ import Div from './styled-components/Div';
 class TransBack extends React.Component {
     render() {
         return (
-            <Div visible={this.props.visible} setOpacity={this.props.setOpacity}>
+            <Div visible={this.props.visible}
+                 setOpacity={this.props.setOpacity}
+                 onClick={this.props.closeHandler}>
                 {this.props.children}
             </Div>
         );

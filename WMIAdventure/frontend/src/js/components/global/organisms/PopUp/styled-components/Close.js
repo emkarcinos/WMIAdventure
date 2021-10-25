@@ -15,7 +15,13 @@ const Close = styled.button`
   height: 12px;
   top: 12px;
   right: 12px;
-  
+
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+
+
   @media (min-width: 360px) {
     width: 16px;
     height: 16px;

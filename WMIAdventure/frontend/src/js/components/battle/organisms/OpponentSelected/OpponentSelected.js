@@ -24,6 +24,7 @@ class OpponentSelected extends React.Component {
 
     state = {
         postBattle: false,
+        popUpHover: false,
     }
 
     quickBattleRunHandler = () => {
@@ -39,12 +40,26 @@ class OpponentSelected extends React.Component {
         });
     }
 
+    hoverTrue = () => {
+        this.setState({popUpHover: true});
+    }
+
+    hoverFalse = () => {
+        this.setState({popUpHover: false});
+    }
+
+    handleHiding = () => {
+        if(!this.state.popUpHover)
+            this.props.closeUserPreviewHandler();
+    }
+
     render() {
         return (
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
+                        <PopUp visible={this.props.visible}
+                               closeHandler={this.props.closeUserPreviewHandler}
                                setTranslateY={this.props.setTranslateY}>
                             <GridContainer>
                                 <FlexCenterContainer>
@@ -90,9 +105,13 @@ class OpponentSelected extends React.Component {
 
                 <Media query={desktop}>
                     <>
-                        <TransBack visible={this.props.visible} setOpacity={this.props.setOpacity}>
-                            <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
-                                         setTranslateY={this.props.setTranslateY}>
+                        <TransBack closeHandler={this.handleHiding}
+                                   visible={this.props.visible}
+                                   setOpacity={this.props.setOpacity}>
+                            <PopUp visible={this.props.visible}
+                                   closeHandler={this.props.closeUserPreviewHandler}
+                                   setTranslateY={this.props.setTranslateY}
+                                   hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'24px'}  setMargin={'0 0 0 26px'}>
                                         <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0'}
