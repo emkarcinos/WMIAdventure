@@ -87,7 +87,7 @@ class OpponentSelected extends React.Component {
                 </Media>
 
                 <Media query={desktop}>
-                    <TransBack visible={this.props.visible}>
+                    <TransBack visible={this.props.visible} setOpacity={this.props.setOpacity}>
                         <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
                                      setTranslateY={this.props.setTranslateY}>
                             <TinyCards cardImages={[]} setMargin={'24px 0 36px 0'} />
