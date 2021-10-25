@@ -9,6 +9,9 @@ import termIcon from '../../../../../assets/images/termIcon.png';
 import levelIcon from '../../../../../assets/icons/levelIcon.svg';
 import rankIcon from '../../../../../assets/images/rankIcon.png';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
+import Media from 'react-media';
+import {desktop} from '../../../../utils/globals';
+import UserLevel from '../../atoms/UserLevel';
 
 class TinyUserProfile extends React.Component {
     render() {
@@ -27,6 +30,9 @@ class TinyUserProfile extends React.Component {
                         <UserLabel rank={this.props.rank} number={this.props.rank}
                                    icon={rankIcon} setMargin={'0'} />
                     </FlexGapContainer>
+                    <Media query={desktop}>
+                        <UserLevel levelNumber={'20'} setTransform={'43px'} setMargin={'14px 0 0 0'} />
+                    </Media>
                 </ContentContainer>
                 <ImageContainer>
                     {this.props.avatar ? <Avatar src={this.props.avatar} alt="" /> : ''}

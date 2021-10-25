@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const Div = styled.div`
+const DesktopLeft = styled.div`
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: ${({gap}) => gap ? gap : '0'};
-  margin: ${({setMargin}) => setMargin ? setMargin : '0'};
+  order: -1;
 `;
 
-export default Div;
+export default DesktopLeft;

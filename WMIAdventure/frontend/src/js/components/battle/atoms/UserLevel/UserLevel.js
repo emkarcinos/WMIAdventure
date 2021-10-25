@@ -6,7 +6,7 @@ import ValueDiv from './styled-components/ValueDiv';
 class UserLevel extends React.Component {
     render() {
         return (
-            <MainDiv>
+            <MainDiv setMargin={this.props.setMargin}>
                 <LevelNumber>
                     {this.props.levelNumber}
                 </LevelNumber>

@@ -8,6 +8,7 @@ const Div = styled.div`
   width: 100%;
   position: relative;
   margin-bottom: 10px;
+  padding-top: 24px;
   
   &:before {
     content: "";

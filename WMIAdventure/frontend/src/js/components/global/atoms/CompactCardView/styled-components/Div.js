@@ -26,8 +26,10 @@ const Div = styled.div`
   box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    width: 144px;
-    height: 220px;
+    width: ${({setWidth}) => setWidth ? setWidth : '144px'};
+    height: ${({setHeight}) => setHeight ? setHeight : '220px'};
+    box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
+    margin: ${({setMargin}) => setMargin ? setMargin : '0 0 60px 0'};
   }
 
   &:before {
