@@ -10,12 +10,13 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {mobile} from '../../../../utils/globals';
+import {desktop, mobile} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import PostBattle from '../PostBattle';
-import MobilePopUp from '../MobilePopUp';
+import PopUp from '../../../global/organisms/PopUp';
+import TransBack from '../../../global/organisms/TransBack';
 
 class OpponentSelected extends React.Component {
 
@@ -41,8 +42,8 @@ class OpponentSelected extends React.Component {
             <>
                 <Media query={mobile}>
                     <>
-                        <MobilePopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
-                                     setTranslateY={this.props.setTranslateY}>
+                        <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
+                               setTranslateY={this.props.setTranslateY}>
                             <GridContainer>
                                 <FlexCenterContainer>
                                     <FlexGapContainer gap={'40px'} setMargin={'32px 0 0 0'}>
@@ -79,10 +80,34 @@ class OpponentSelected extends React.Component {
                                     </ButtonWithIcon>
                                 </FlexEndContainer>
                             </GridContainer>
-                        </MobilePopUp>
+                        </PopUp>
                         <PostBattle postBattle={this.state.postBattle} win={true}
                                     closeHandler={this.quickBattleCloseHandler} />
                     </>
+                </Media>
+
+                <Media query={desktop}>
+                    <TransBack visible={this.props.visible}>
+                        <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
+                                     setTranslateY={this.props.setTranslateY}>
+                            <TinyCards cardImages={[]} setMargin={'24px 0 36px 0'} />
+                            <FlexGapContainer gap={'36px'}>
+                                <ButtonWithIcon setMargin={'0'} handler={this.props.closeUserPreviewHandler}
+                                                color={theme.colors.gold} icon={xClose}>
+                                    Wróć
+                                </ButtonWithIcon>
+                                <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
+                                    Walcz
+                                </ButtonWithIcon>
+                                <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
+                                                color={theme.colors.common} icon={fastIcon}>
+                                    Szybka walka
+                                </ButtonWithIcon>
+                            </FlexGapContainer>
+                        </PopUp>
+                        <PostBattle postBattle={this.state.postBattle} win={true}
+                                    closeHandler={this.quickBattleCloseHandler} />
+                    </TransBack>
                 </Media>
             </>
         );

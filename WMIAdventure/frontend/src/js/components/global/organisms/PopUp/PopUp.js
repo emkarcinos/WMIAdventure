@@ -2,7 +2,7 @@ import React from 'react';
 import Div from './styled-components/Div';
 import Close from './styled-components/Close';
 
-class MobilePopUp extends React.Component {
+class PopUp extends React.Component {
     render() {
         return (
             <Div visible={this.props.visible}
@@ -15,4 +15,4 @@ class MobilePopUp extends React.Component {
     }
 }
 
-export default MobilePopUp;
+export default PopUp;

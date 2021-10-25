@@ -15,6 +15,18 @@ const Div = styled.div`
   transition: opacity 0.3s ease-in-out, transform  0.3s ease-in-out;
   z-index: 5;
   overflow-y: scroll;
+  
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    position: static;
+    border-radius: 20px;
+    width: 924px;
+    height: 454px;
+
+    -ms-overflow-style: none; /* IE 10+ */
+    ::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+  }
 `;
 
 export default Div;
