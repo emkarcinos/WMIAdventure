@@ -16,12 +16,12 @@ import UserLevel from '../../atoms/UserLevel';
 class TinyUserProfile extends React.Component {
     render() {
         return (
-            <Article setMargin={this.props.setMargin}>
+            <Article setMargin={this.props.setMargin} vertical={this.props.vertical}>
                 <ContentContainer>
-                    <H2>
+                    <H2 as={this.props.vertical ? 'p' : 'h2'} vertical={this.props.vertical}>
                         {this.props.displayedUsername}
                     </H2>
-                    <FlexGapContainer gap={'6px'}>
+                    <FlexGapContainer gap={this.props.vertical ? '24px' : '6px'}>
                         <UserLabel term={this.props.term}
                                    icon={termIcon} number={this.props.term}
                                    setMargin={'0'} />
@@ -31,11 +31,13 @@ class TinyUserProfile extends React.Component {
                                    icon={rankIcon} setMargin={'0'} />
                     </FlexGapContainer>
                     <Media query={desktop}>
-                        <UserLevel levelNumber={'20'} setTransform={'43px'} setMargin={'14px 0 0 0'} />
+                        {this.props.vertical ? '' :
+                            <UserLevel levelNumber={'20'} setTransform={'43px'} setMargin={'14px 0 0 0'} />}
                     </Media>
                 </ContentContainer>
-                <ImageContainer>
-                    {this.props.avatar ? <Avatar src={this.props.avatar} alt="" /> : ''}
+                <ImageContainer vertical={this.props.vertical}>
+                    {this.props.avatar ? <Avatar src={this.props.avatar}
+                                                 vertical={this.props.vertical} alt="" /> : ''}
                 </ImageContainer>
             </Article>
         );

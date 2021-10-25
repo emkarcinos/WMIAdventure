@@ -32,6 +32,7 @@ class BattleMode extends React.Component {
 
         userPreviewRun: false,
         userPreviewPos: '-100vh',
+        userPreviewOpacity: '0',
         scrollVisible: true,
     }
 
@@ -52,6 +53,7 @@ class BattleMode extends React.Component {
         setTimeout(() => {
             this.setState({
                 userPreviewPos: '0',
+                userPreviewOpacity: '1'
             });
         }, 5);
     }
@@ -59,6 +61,7 @@ class BattleMode extends React.Component {
     closeUserPreviewHandler = () => {
         this.setState({
             userPreviewPos: '-100vh',
+            userPreviewOpacity: '0',
             scrollVisible: true,
         });
 
@@ -154,6 +157,7 @@ class BattleMode extends React.Component {
                 <TinyProfileDesktop />
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   setTranslateY={this.state.userPreviewPos}
+                                  setOpacity={this.state.userPreviewOpacity}
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler} />
             </>

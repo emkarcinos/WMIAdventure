@@ -9,7 +9,7 @@ const ImageContainer = styled.div`
   border-radius: 12px;
   background-color: ${({theme}) => theme.colors.ui01};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  margin: 0 5px;
+  margin: 0;
 `;
 
 export default ImageContainer;

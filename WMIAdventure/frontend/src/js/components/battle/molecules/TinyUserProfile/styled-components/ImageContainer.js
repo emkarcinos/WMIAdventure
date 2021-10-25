@@ -15,10 +15,10 @@ const ImageContainer = styled.div`
   }
   
   @media(min-width: 1172px) {
-    width: 106px;
-    height: 106px;
-    background-color: ${({theme}) => theme.colors.red};
-    margin-right: 24px;
+    width: ${({vertical}) => vertical ? '84px' : '106px'};
+    height: ${({vertical}) => vertical ? '84px' : '106px'};
+    background-color: ${({theme, vertical}) => vertical ? theme.colors.uiGreen : theme.colors.red};
+    margin: ${({vertical}) => vertical ? '0 0 10px 0' : '0 24px 0 0'};
   }
 `;
 

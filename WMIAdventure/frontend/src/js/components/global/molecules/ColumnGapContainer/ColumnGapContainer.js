@@ -4,7 +4,9 @@ import Div from './styled-components/Div';
 class ColumnGapContainer extends React.Component {
     render() {
         return (
-            <Div gap={this.props.gap} setMargin={this.props.setMargin}>
+            <Div gap={this.props.gap}
+                 setMargin={this.props.setMargin}
+                 setWidth={this.props.setWidth} setHeight={this.props.setHeight}>
                 {this.props.children}
             </Div>
         );

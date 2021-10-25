@@ -10,8 +10,8 @@ const Avatar = styled.img`
   }
 
   @media(min-width: 1172px) {
-    width: 106px;
-    height: 106px;
+    width: ${({vertical}) => vertical ? '84px' : '106px'};
+    height: ${({vertical}) => vertical ? '84px' : '106px'};
   }
 `;
 

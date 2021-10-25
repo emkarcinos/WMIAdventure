@@ -1,5 +1,4 @@
 import React from 'react';
-import MobilePopUp from '../MobilePopUp';
 import UserInfo from '../../atoms/UserInfo';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Article from './styled-components/Article';
@@ -10,12 +9,13 @@ import TinyUserProfile from '../../molecules/TinyUserProfile';
 import Div from './styled-components/Div';
 import Decoration from './styled-components/Decoration';
 import TinyCards from '../../atoms/TinyCards/TinyCards';
+import PopUp from '../../../global/organisms/PopUp';
 
 class PostBattle extends React.Component {
     render() {
         return (
-            <MobilePopUp visible={this.props.postBattle}
-                         closeHandler={this.props.closeHandler}>
+            <PopUp visible={this.props.postBattle}
+                   closeHandler={this.props.closeHandler}>
                 <Article>
                     <ColumnGapContainer gap={'10px'} setMargin={'0 0 16px 0'}>
                         <BattleResult win={this.props.win} />
@@ -41,7 +41,7 @@ class PostBattle extends React.Component {
                         <TinyCards cardImages={[]} />
                     </Div>
                 </Article>
-            </MobilePopUp>
+            </PopUp>
         );
     }
 }
