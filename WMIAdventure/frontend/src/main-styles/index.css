@@ -12,6 +12,10 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  scrollbar-width: none;
+}
+
 *,
 *:before,
 *:after {

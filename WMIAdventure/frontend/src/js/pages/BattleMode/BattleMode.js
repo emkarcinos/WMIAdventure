@@ -34,6 +34,7 @@ class BattleMode extends React.Component {
         userPreviewPos: '-100vh',
         userPreviewOpacity: '0',
         scrollVisible: true,
+        kuceFight: false,
     }
 
     componentDidMount() {
@@ -91,6 +92,18 @@ class BattleMode extends React.Component {
         this.setState({searchInput: keyValue});
     }
 
+    kuceStartFight = () => {
+        this.setState({
+            kuceFight: true,
+        });
+    }
+
+    kuceStopFight = () => {
+        this.setState({
+            kuceFight: false,
+        });
+    }
+
     render() {
         return (
             <>
@@ -129,7 +142,7 @@ class BattleMode extends React.Component {
                                 <H2>
                                     Wybierz przeciwnika
                                 </H2>
-                                <KuceBattleImage src={kuceBattle} alt=""/>
+                                <KuceBattleImage src={kuceBattle} fight={this.state.kuceFight} alt=""/>
                                 <Title>
                                     Battle
                                 </Title>
@@ -159,7 +172,8 @@ class BattleMode extends React.Component {
                                   setTranslateY={this.state.userPreviewPos}
                                   setOpacity={this.state.userPreviewOpacity}
                                   runUserPreviewHandler={this.runUserPreviewHandler}
-                                  closeUserPreviewHandler={this.closeUserPreviewHandler} />
+                                  closeUserPreviewHandler={this.closeUserPreviewHandler}
+                                  kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight} />
             </>
         );
     }

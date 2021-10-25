@@ -25,16 +25,53 @@ class OpponentSelected extends React.Component {
     state = {
         postBattle: false,
         popUpHover: false,
+        postBattlePos: '-100vh',
+        postBattleOpacity: '0',
     }
 
     quickBattleRunHandler = () => {
+        this.props.closeUserPreviewHandler();
+        this.props.kuceStartFight();
+
+        setTimeout(() => {
+            this.setState({
+                postBattle: true,
+            });
+            this.props.kuceStopFight();
+            this.postBattleOpenHandler();
+        }, 1600);
+    }
+
+    postBattleOpenHandler = () => {
+        setTimeout(() => {
+            this.setState({
+                postBattlePos: '0',
+                postBattleOpacity: '1'
+            });
+        }, 5);
+    }
+
+    quickBattleCloseHandler = () => {
+        this.setState({
+            postBattlePos: '-100vh',
+            postBattleOpacity: '0'
+        });
+
+        setTimeout(() => {
+            this.setState({
+                postBattle: false,
+            });
+        }, 550);
+    }
+
+    quickBattleRunMobileHandler = () => {
         this.props.closeUserPreviewHandler();
         this.setState({
             postBattle: true,
         });
     }
 
-    quickBattleCloseHandler = () => {
+    quickBattleCloseMobileHandler = () => {
         this.setState({
             postBattle: false,
         });
@@ -91,7 +128,7 @@ class OpponentSelected extends React.Component {
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
-                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
+                                    <ButtonWithIcon handler={this.quickBattleRunMobileHandler} setMargin={'14px 0 16px 0'}
                                                     color={theme.colors.common} icon={fastIcon}>
                                         Szybka walka
                                     </ButtonWithIcon>
@@ -99,58 +136,64 @@ class OpponentSelected extends React.Component {
                             </GridContainer>
                         </PopUp>
                         <PostBattle postBattle={this.state.postBattle} win={true}
-                                    closeHandler={this.quickBattleCloseHandler} />
+                                    closeHandler={this.quickBattleCloseMobileHandler} />
                     </>
                 </Media>
 
                 <Media query={desktop}>
-                    <TransBack closeHandler={this.handleHiding}
-                               visible={this.props.visible}
-                               setOpacity={this.props.setOpacity}>
-                        <PopUp visible={this.props.visible}
-                               closeHandler={this.props.closeUserPreviewHandler}
-                               setTranslateY={this.props.setTranslateY}
-                               hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
-                            <FlexGapContainer gap={'10px'} setWidth={'100%'}>
-                                <ColumnGapContainer gap={'24px'}  setMargin={'0 0 0 26px'}>
-                                    <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0'}
-                                                     term={7} level={39} rank={15} avatar={null} vertical/>
-                                    <FlexGapContainer gap={'52px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
-                                    </FlexGapContainer>
-                                    <TinyCards cardImages={[]} setMargin={'0'} gap={'10px'} />
-                                </ColumnGapContainer>
-                                <KuceVs />
-                                <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
-                                    <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0'}
-                                                     term={7} level={39} rank={15} avatar={null} vertical/>
-                                    <FlexGapContainer gap={'52px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
-                                    </FlexGapContainer>
-                                    <TinyCards cardImages={[unknownIcon, unknownIcon, unknownIcon, unknownIcon ,unknownIcon]}
-                                               setMargin={'0'} gap={'10px'} />
-                                </ColumnGapContainer>
-                            </FlexGapContainer>
+                    <>
+                        <TransBack closeHandler={this.handleHiding}
+                                   visible={this.props.visible}
+                                   setOpacity={this.props.setOpacity}>
+                            <PopUp visible={this.props.visible}
+                                   closeHandler={this.props.closeUserPreviewHandler}
+                                   setTranslateY={this.props.setTranslateY}
+                                   hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
+                                <FlexGapContainer gap={'10px'} setWidth={'100%'}>
+                                    <ColumnGapContainer gap={'24px'}  setMargin={'0 0 0 26px'}>
+                                        <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0'}
+                                                         term={7} level={39} rank={15} avatar={null} vertical/>
+                                        <FlexGapContainer gap={'52px'}>
+                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
+                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
+                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                        </FlexGapContainer>
+                                        <TinyCards cardImages={[]} setMargin={'0'} gap={'10px'} />
+                                    </ColumnGapContainer>
+                                    <KuceVs />
+                                    <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
+                                        <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0'}
+                                                         term={7} level={39} rank={15} avatar={null} vertical/>
+                                        <FlexGapContainer gap={'52px'}>
+                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
+                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
+                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                        </FlexGapContainer>
+                                        <TinyCards cardImages={[unknownIcon, unknownIcon, unknownIcon, unknownIcon ,unknownIcon]}
+                                                   setMargin={'0'} gap={'10px'} />
+                                    </ColumnGapContainer>
+                                </FlexGapContainer>
 
-                            <FlexGapContainer gap={'40px'} setMargin={'36px 0 0 0'}>
-                                <ButtonWithIcon setMargin={'0'} handler={this.props.closeUserPreviewHandler}
-                                                color={theme.colors.gold} icon={xClose}>
-                                    Wróć
-                                </ButtonWithIcon>
-                                <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
-                                    Walcz
-                                </ButtonWithIcon>
-                                <ButtonWithIcon  setMargin={'0'}
-                                                color={theme.colors.common} icon={fastIcon}>
-                                    Szybka walka
-                                </ButtonWithIcon>
-                            </FlexGapContainer>
-                        </PopUp>
-                    </TransBack>
+                                <FlexGapContainer gap={'40px'} setMargin={'36px 0 0 0'}>
+                                    <ButtonWithIcon setMargin={'0'} handler={this.props.closeUserPreviewHandler}
+                                                    color={theme.colors.gold} icon={xClose}>
+                                        Wróć
+                                    </ButtonWithIcon>
+                                    <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
+                                        Walcz
+                                    </ButtonWithIcon>
+                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
+                                                    color={theme.colors.common} icon={fastIcon}>
+                                        Szybka walka
+                                    </ButtonWithIcon>
+                                </FlexGapContainer>
+                            </PopUp>
+                        </TransBack>
+                        <PostBattle postBattle={this.state.postBattle}
+                                    setOpacity={this.state.postBattleOpacity}
+                                    setTranslateY={this.state.postBattlePos}
+                                    win={true} closeHandler={this.quickBattleCloseHandler} />
+                    </>
                 </Media>
             </>
         );
