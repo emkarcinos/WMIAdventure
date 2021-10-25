@@ -6,6 +6,7 @@ class PopUp extends React.Component {
     render() {
         return (
             <Div visible={this.props.visible}
+                 onMouseEnter={this.props.hoverTrue} onMouseLeave={this.props.hoverFalse}
                  setOpacity={this.props.setOpacity}
                  setTranslateY={this.props.setTranslateY}>
                 {this.props.children}
