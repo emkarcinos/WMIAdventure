@@ -25,19 +25,43 @@ class OpponentSelected extends React.Component {
     state = {
         postBattle: false,
         popUpHover: false,
+        postBattlePos: '-100vh',
+        postBattleOpacity: '0',
     }
 
     quickBattleRunHandler = () => {
         this.props.closeUserPreviewHandler();
-        this.setState({
-            postBattle: true,
-        });
+        this.props.kuceStartFight();
+
+        setTimeout(() => {
+            this.setState({
+                postBattle: true,
+            });
+            this.props.kuceStopFight();
+            this.postBattleOpenHandler();
+        }, 1600);
+    }
+
+    postBattleOpenHandler = () => {
+        setTimeout(() => {
+            this.setState({
+                postBattlePos: '0',
+                postBattleOpacity: '1'
+            });
+        }, 5);
     }
 
     quickBattleCloseHandler = () => {
         this.setState({
-            postBattle: false,
+            postBattlePos: '-100vh',
+            postBattleOpacity: '0'
         });
+
+        setTimeout(() => {
+            this.setState({
+                postBattle: false,
+            });
+        }, 550);
     }
 
     hoverTrue = () => {
@@ -152,8 +176,10 @@ class OpponentSelected extends React.Component {
                                 </FlexGapContainer>
                             </PopUp>
                         </TransBack>
-                        <PostBattle postBattle={this.state.postBattle} win={true}
-                                    closeHandler={this.quickBattleCloseHandler} />
+                        <PostBattle postBattle={this.state.postBattle}
+                                    setOpacity={this.state.postBattleOpacity}
+                                    setTranslateY={this.state.postBattlePos}
+                                    win={true} closeHandler={this.quickBattleCloseHandler} />
                     </>
                 </Media>
             </>

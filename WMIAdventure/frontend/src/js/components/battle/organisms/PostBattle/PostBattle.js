@@ -67,8 +67,10 @@ class PostBattle extends React.Component {
                     </PopUp>
                 </Media>
                 <Media query={desktop}>
-                    <TransBack visible={this.props.postBattle} closeHandler={this.handleHiding}>
-                        <PopUp visible={this.props.postBattle} setWidth={'932px'} setHeight={'560px'}
+                    <TransBack visible={this.props.postBattle}
+                               setOpacity={this.props.setOpacity} closeHandler={this.handleHiding}>
+                        <PopUp visible={this.props.postBattle} setTranslateY={this.props.setTranslateY}
+                               setWidth={'932px'} setHeight={'560px'}
                                closeHandler={this.props.closeHandler}
                                hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse} >
                             <ColumnGapContainer gap={'10px'} setMargin={'0 0 28px 0'}>
