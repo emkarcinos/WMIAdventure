@@ -19,8 +19,10 @@ const Div = styled.div`
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     position: static;
     border-radius: 20px;
-    width: 924px;
-    height: 454px;
+
+    width: ${({setWidth}) => setWidth ? setWidth : '924px'};
+    height: ${({setHeight}) => setHeight ? setHeight : '454px'};
+    
     justify-content: center;
 
     -ms-overflow-style: none; /* IE 10+ */

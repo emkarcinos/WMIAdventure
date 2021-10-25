@@ -11,6 +11,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   @media (min-width: 360px) {
     height: 36px;

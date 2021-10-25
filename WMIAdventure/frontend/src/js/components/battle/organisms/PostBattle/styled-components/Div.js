@@ -39,6 +39,11 @@ const Div = styled.div`
     background-color: ${({theme, win}) => win ? theme.colors.common : theme.colors.red};
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 430px;
+    padding-top: 16px;
+  }
 `;
 
 export default Div;

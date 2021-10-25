@@ -5,7 +5,7 @@ import Close from './styled-components/Close';
 class PopUp extends React.Component {
     render() {
         return (
-            <Div visible={this.props.visible}
+            <Div visible={this.props.visible} setWidth={this.props.setWidth} setHeight={this.props.setHeight}
                  setOpacity={this.props.setOpacity}
                  setTranslateY={this.props.setTranslateY}>
                 {this.props.children}
