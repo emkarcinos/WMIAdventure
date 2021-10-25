@@ -21,6 +21,7 @@ const Div = styled.div`
     border-radius: 20px;
     width: 924px;
     height: 454px;
+    justify-content: center;
 
     -ms-overflow-style: none; /* IE 10+ */
     ::-webkit-scrollbar {
