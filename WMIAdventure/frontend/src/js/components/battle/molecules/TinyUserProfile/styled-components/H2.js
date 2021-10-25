@@ -9,7 +9,7 @@ const H2 = styled.h2`
 
   @media(min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 24px;
-    margin: 0 0 14px 0;
+    margin: ${({vertical}) => vertical ? '0 0 10px 0' : '0 0 14px 0'};
   }
 `;
 

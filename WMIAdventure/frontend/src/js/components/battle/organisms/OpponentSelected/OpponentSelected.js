@@ -90,6 +90,8 @@ class OpponentSelected extends React.Component {
                     <TransBack visible={this.props.visible} setOpacity={this.props.setOpacity}>
                         <PopUp visible={this.props.visible} closeHandler={this.props.closeUserPreviewHandler}
                                      setTranslateY={this.props.setTranslateY}>
+                            <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0 0 24px 0'}
+                                             term={7} level={39} rank={15} avatar={null} vertical/>
                             <TinyCards cardImages={[]} setMargin={'24px 0 36px 0'} />
                             <FlexGapContainer gap={'36px'}>
                                 <ButtonWithIcon setMargin={'0'} handler={this.props.closeUserPreviewHandler}
