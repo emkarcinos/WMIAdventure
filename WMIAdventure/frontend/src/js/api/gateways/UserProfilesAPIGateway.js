@@ -15,7 +15,7 @@ const getAllBasicUsersInfo = () => {
  * @returns {Promise<*>} Array of user decks objects.
  */
 const getUserDecks = (userId) => {
-    return RequestSender.get(UserProfilesEndpoints.userDecks(userId)).then(response => response.json());
+    return RequestSender.get(UserProfilesEndpoints.userDecks(userId));
 }
 
 export default {getAllBasicUsersInfo, getUserDecks};

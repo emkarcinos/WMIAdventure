@@ -11,6 +11,7 @@ import SwipeProfile from '../../components/battle/organisms/SwipeProfile';
 import SearchContainer from './styled-components/SearchContainer';
 import OpponentSelected from '../../components/battle/organisms/OpponentSelected';
 import UserListItem from '../../components/battle/molecules/UserListItem';
+import {getCurrentUserId, getCurrentUsername} from "../../utils/userData";
 
 class BattleMode extends React.Component {
 
@@ -23,6 +24,8 @@ class BattleMode extends React.Component {
         defenderDecks: [],
 
         userPreviewRun: false,
+        loggedInUserId: 0,
+        loggedInUsername: ' ',
         userPreviewPos: '-100vh',
         scrollVisible: true,
         selectedUser: {}
@@ -32,6 +35,10 @@ class BattleMode extends React.Component {
         UserProfilesAPIGateway.getAllBasicUsersInfo()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
+        getCurrentUserId()
+            .then(id => id ? this.setState({loggedInUserId: id}) : null);
+        getCurrentUsername()
+            .then(name => name ? this.setState({loggedInUsername: name}) : null);
     }
 
 
@@ -115,7 +122,8 @@ class BattleMode extends React.Component {
                     </Ul>
                     {/*<Pager next={this.state.users.next}*/}
                     {/*       previous={this.state.users.previous} />*/}
-                    <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
+                    <SwipeProfile userId={this.state.loggedInUserId} username={this.state.loggedInUsername}
+                                  hideScroll={this.hideScroll} showScroll={this.showScroll} />
                 </Main>
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   opponent={this.state.selectedUser}

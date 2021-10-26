@@ -11,6 +11,7 @@ import Deck from '../../molecules/Deck';
 import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
+import {getUsersDecks} from "../../../../utils/userData";
 
 class SwipeProfile extends React.Component {
 
@@ -18,6 +19,7 @@ class SwipeProfile extends React.Component {
         hide: true,
         tinyDeckVisible: true,
         tinyDeckDisplay: true,
+        userDeck: null
     }
 
     showHandler = () => {
@@ -33,6 +35,18 @@ class SwipeProfile extends React.Component {
         }, 500);
 
         this.props.hideScroll();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.userId === this.props.userId) return;
+
+        getUsersDecks(this.props.userId)
+            .then(resp => {
+                if(resp){
+                    const attackerDeck = resp[0];
+                    this.setState({userDeck: attackerDeck});
+                }
+            });
     }
 
     hideHandler = () => {
@@ -64,7 +78,7 @@ class SwipeProfile extends React.Component {
                     <Media query={mobile}>
                         <>
                             <FlexCenterContainer>
-                                <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0 0 24px 0'}
+                                <TinyUserProfile displayedUsername={this.props.username} setMargin={'0 0 24px 0'}
                                                  term={7} level={50} rank={2} avatar={null}/>
                                 <FlexGapContainer gap={'40px'}  setMargin={'0 0 40px 0'}>
                                     <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
@@ -73,7 +87,7 @@ class SwipeProfile extends React.Component {
                                 </FlexGapContainer>
                             </FlexCenterContainer>
                             <FlexCenterContainer>
-                                <Deck />
+                                <Deck deck={this.state.userDeck}/>
                                 <Edit>
                                     Edytuj
                                 </Edit>

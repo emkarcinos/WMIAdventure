@@ -1,5 +1,11 @@
 const userDataKeys = {
-    username: 'username'
+    username: 'username',
+    id: 'currentUserId',
+    userDecks: 'userDecks',
 };
 
-export {userDataKeys};
+const cardKey = (id) => {
+    return `card${id}`;
+}
+
+export {userDataKeys, cardKey};
