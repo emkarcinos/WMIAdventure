@@ -45,7 +45,10 @@ class NavBar extends React.Component {
                                      <ShowMoreButton />
                                      <button onClick={this.logoutHandler}>Logout</button>
                                  </> :
+                                 <>
                                      <button><Link to={'/login/'}>Login</Link></button>
+                                     <button><Link to={'/registration'}>Rejestracja</Link></button>
+                                 </>
                         }
                     </StyledNavBar.IconsWrapper>
                     {
