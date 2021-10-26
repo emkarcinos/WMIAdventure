@@ -25,6 +25,7 @@ class BattleMode extends React.Component {
         userPreviewRun: false,
         userPreviewPos: '-100vh',
         scrollVisible: true,
+        selectedUser: {}
     }
 
     componentDidMount() {
@@ -34,9 +35,13 @@ class BattleMode extends React.Component {
     }
 
 
-    runUserPreviewHandler = () => {
+    runUserPreviewHandler = (username, userId) => {
         this.setState({
             userPreviewRun: true,
+            selectedUser: {
+                username: username,
+                id: userId
+            }
         });
 
         this.hideScroll();
@@ -102,7 +107,9 @@ class BattleMode extends React.Component {
                                               displayedUsername={elem.displayedUsername}
                                               searchInput={this.state.searchInput}
                                               term={elem.semester} level={elem.user * 4}
-                                              runUserPreviewHandler={this.runUserPreviewHandler} />
+                                              runUserPreviewHandler={() => this.runUserPreviewHandler(
+                                                                            elem.displayedUsername,
+                                                                            elem.user)} />
                             );
                         }) : ''}
                     </Ul>
@@ -111,6 +118,7 @@ class BattleMode extends React.Component {
                     <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
                 </Main>
                 <OpponentSelected visible={this.state.userPreviewRun}
+                                  opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler} />
