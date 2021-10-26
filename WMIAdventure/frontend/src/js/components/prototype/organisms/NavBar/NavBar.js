@@ -4,12 +4,13 @@ import NotificationButton from '../../molecules/NotificationButton';
 import ProfileButton from '../../atoms/ProfileButton';
 import ShowMoreButton from '../../molecules/ShowMoreButton';
 import StyledNavBar from './StyledNavBar';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 
 class NavBar extends React.Component {
     state = {
-        userLoggedIn: false
+        userLoggedIn: false,
+        postLogout: false
     }
 
     checkIfUserLoggedIn = () => {
@@ -21,7 +22,9 @@ class NavBar extends React.Component {
         event.preventDefault();
         UsersAPIGateway.logout();
         this.checkIfUserLoggedIn();
-        alert("You've been logged out.")
+        alert("You've been logged out.");
+
+        this.setState({postLogout: true});
     }
 
     componentDidMount() {
@@ -42,13 +45,18 @@ class NavBar extends React.Component {
                                      <ShowMoreButton />
                                      <button onClick={this.logoutHandler}>Logout</button>
                                  </> :
-                                 <button><Link to={'/login/'}>Login</Link></button>
-
+                                     <button><Link to={'/login/'}>Login</Link></button>
                         }
-
                     </StyledNavBar.IconsWrapper>
+                    {
+                        this.state.postLogout ?
+                            <>
+                                <Redirect to={''}/>
+                            </>: null
+                    }
                 </StyledNavBar.Navigation>
             </StyledNavBar>
+
         );
     }
 }
