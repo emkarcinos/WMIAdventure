@@ -13,9 +13,15 @@ import levelIcon from '../../../../../assets/icons/levelIcon.svg';
 import rankIcon from '../../../../../assets/images/rankIcon.png';
 
 class UserListItem extends React.Component {
+
+    notAccessToFightMessage = () => {
+        alert("Nie możesz walczyć z tym graczem.");
+    }
+
     render() {
         return (
-            <Item onClick={this.props.runUserPreviewHandler}
+            <Item onClick={this.props.access ?
+                this.props.runUserPreviewHandler : this.notAccessToFightMessage}
                   displayedUsername={this.props.displayedUsername}
                   searchInput={this.props.searchInput}>
                 <AvatarContainer access={this.props.access}>
