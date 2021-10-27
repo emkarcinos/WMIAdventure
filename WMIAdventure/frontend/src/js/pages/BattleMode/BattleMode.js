@@ -140,7 +140,9 @@ class BattleMode extends React.Component {
                                                       displayedUsername={elem.displayedUsername}
                                                       searchInput={this.state.searchInput}
                                                       term={elem.semester} level={elem.user * 4}
-                                                      runUserPreviewHandler={this.runUserPreviewHandler} />
+                                                      runUserPreviewHandler={() => this.runUserPreviewHandler(
+                                                          elem.displayedUsername,
+                                                          elem.user)} />
                                     );
                                 }) : ''}
                             </Ul>
@@ -172,7 +174,9 @@ class BattleMode extends React.Component {
                                                           displayedUsername={elem.displayedUsername}
                                                           searchInput={this.state.searchInput}
                                                           term={elem.semester} level={elem.user * 4}
-                                                          runUserPreviewHandler={this.runUserPreviewHandler} />
+                                                          runUserPreviewHandler={() => this.runUserPreviewHandler(
+                                                              elem.displayedUsername,
+                                                              elem.user)} />
                                         );
                                     }) : ''}
                                 </Ul>

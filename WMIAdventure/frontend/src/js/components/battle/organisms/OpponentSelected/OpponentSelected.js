@@ -45,7 +45,7 @@ class OpponentSelected extends React.Component {
                     response.json()
                         .then(data => {
                             this.postBattle(data);
-                            this.props.kuceStopFight();
+                            this.postBattleOpenHandler();
                         })
                 }
             });
@@ -63,11 +63,12 @@ class OpponentSelected extends React.Component {
     }
 
     postBattle = (data) => {
+        this.props.kuceStopFight();
         this.setState({
             postBattle: true,
         });
         data.winner === data.attacker.id ?
-            this.setState({win: true}) : this.setState({win: false})
+            this.setState({win: true}) : this.setState({win: false});
     }
 
     postBattleOpenHandler = () => {
