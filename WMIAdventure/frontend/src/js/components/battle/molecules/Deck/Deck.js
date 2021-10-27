@@ -17,8 +17,10 @@ class Deck extends React.Component {
     }
 
     setCardsStateFromDeckProps = () => {
-        if(this.props.deck === null) return;
+        if(this.props.deck == null) return;
+
         for (const [cardNumber, card] of Object.entries(this.props.deck)) {
+            if(card.id == null) continue;
             getCardById(card.id)
                 .then(respCard => {
                     if(respCard) {

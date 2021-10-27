@@ -18,8 +18,7 @@ import PostBattle from '../PostBattle';
 import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import unknownIcon from '../../../../../assets/images/unknown.png';
-import {getCurrentUsername} from "../../../../utils/userData";
+import {getCurrentUserDecks, getCurrentUsername} from "../../../../utils/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 
 class OpponentSelected extends React.Component {
@@ -29,11 +28,19 @@ class OpponentSelected extends React.Component {
         popUpHover: false,
         postBattlePos: '-100vh',
         postBattleOpacity: '0',
+        userDeck: null
     }
 
     componentDidMount() {
         getCurrentUsername()
             .then(user => this.setState({caller: user}))
+        getCurrentUserDecks()
+            .then(resp => {
+                if(resp){
+                    const attackerDeck = resp[0];
+                    this.setState({userDeck: attackerDeck});
+                }
+            });
     }
 
     quickBattleRunHandler = () => {
@@ -140,7 +147,7 @@ class OpponentSelected extends React.Component {
                                 </FlexCenterContainer>
 
                                 <FlexEndContainer>
-                                    <TinyCards cardImages={[]} setMargin={'24px 0 36px 0'} />
+                                    <TinyCards deck={this.state.userDeck} setMargin={'24px 0 36px 0'} />
                                     <FlexGapContainer gap={'36px'}>
                                         <ButtonWithIcon setMargin={'0 36px 0 0'} handler={this.props.closeUserPreviewHandler}
                                                         color={theme.colors.gold} icon={xClose}>
@@ -182,7 +189,7 @@ class OpponentSelected extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                             <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                         </FlexGapContainer>
-                                        <TinyCards cardImages={[]} setMargin={'0'} gap={'10px'} />
+                                        <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'} />
                                     </ColumnGapContainer>
                                     <KuceVs />
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
@@ -193,8 +200,7 @@ class OpponentSelected extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                             <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                         </FlexGapContainer>
-                                        <TinyCards cardImages={[unknownIcon, unknownIcon, unknownIcon, unknownIcon ,unknownIcon]}
-                                                   setMargin={'0'} gap={'10px'} />
+                                        <TinyCards deck={null} setMargin={'0'} gap={'10px'} />
                                     </ColumnGapContainer>
                                 </FlexGapContainer>
 
