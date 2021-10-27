@@ -13,13 +13,17 @@ const Item = styled.li`
   
   padding: 6px 10px;
   width: 100%;
-  height: 58px;
+  height: 60px;
   transition: background-color 0.3s ease-in-out;
   border-radius: 6px;
   margin: 10px 0;
   
   &:hover {
     background-color: ${({theme}) => theme.colors.userItemHover};
+  }
+  
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    height: 72px;
   }
 `;
 

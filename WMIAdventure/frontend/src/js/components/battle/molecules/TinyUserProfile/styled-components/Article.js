@@ -5,6 +5,8 @@ const Article = styled.article`
   justify-content: center;
   align-items: center;
   margin: ${({setMargin}) => setMargin};
+  
+  flex-direction: ${({vertical}) => vertical ? 'column' : 'row'};
 `;
 
 export default Article;
