@@ -22,6 +22,7 @@ const Div = styled.div`
 
     width: ${({setWidth}) => setWidth ? setWidth : '924px'};
     height: ${({setHeight}) => setHeight ? setHeight : '454px'};
+    max-height: 100%;
     
     justify-content: center;
 
