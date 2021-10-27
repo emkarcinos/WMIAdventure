@@ -13,6 +13,7 @@ const Ul = styled.ul`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   position: relative;
 
+  scrollbar-width: ${({scrollVisible}) => scrollVisible ? 'thin' : 'none'};
   -ms-overflow-style: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* IE 10+ */
   ::-webkit-scrollbar {
     display: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* Chrome Safari */
@@ -20,6 +21,7 @@ const Ul = styled.ul`
   
   @media(min-width: ${({theme}) => theme.overMobile}px) {
     -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none; /* Chrome Safari */
     }

@@ -26,6 +26,7 @@ const Div = styled.div`
     justify-content: center;
 
     -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none; /* Chrome Safari */
     }
