@@ -19,6 +19,7 @@ import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
+import {getCurrentUserId, getCurrentUsername} from "../../utils/userData";
 
 class BattleMode extends React.Component {
 
@@ -31,22 +32,33 @@ class BattleMode extends React.Component {
         defenderDecks: [],
 
         userPreviewRun: false,
+        loggedInUserId: 0,
+        loggedInUsername: ' ',
         userPreviewPos: '-100vh',
         userPreviewOpacity: '0',
         scrollVisible: true,
         kuceFight: false,
+        selectedUser: {}
     }
 
     componentDidMount() {
         UserProfilesAPIGateway.getAllBasicUsersInfo()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
+        getCurrentUserId()
+            .then(id => id ? this.setState({loggedInUserId: id}) : null);
+        getCurrentUsername()
+            .then(name => name ? this.setState({loggedInUsername: name}) : null);
     }
 
 
-    runUserPreviewHandler = () => {
+    runUserPreviewHandler = (username, userId) => {
         this.setState({
             userPreviewRun: true,
+            selectedUser: {
+                username: username,
+                id: userId
+            }
         });
 
         this.hideScroll();
@@ -132,7 +144,8 @@ class BattleMode extends React.Component {
                                     );
                                 }) : ''}
                             </Ul>
-                            <SwipeProfile hideScroll={this.hideScroll} showScroll={this.showScroll} />
+                            <SwipeProfile userId={this.state.loggedInUserId} username={this.state.loggedInUsername}
+                                          hideScroll={this.hideScroll} showScroll={this.showScroll} />
                         </>
                     </Media>
 
@@ -169,6 +182,7 @@ class BattleMode extends React.Component {
                 </Main>
                 <TinyProfileDesktop />
                 <OpponentSelected visible={this.state.userPreviewRun}
+                                  opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
                                   setOpacity={this.state.userPreviewOpacity}
                                   runUserPreviewHandler={this.runUserPreviewHandler}

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'battle',
     'proposed_content',
     'corsheaders',
-    'db_file_storage'
+    'db_file_storage',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,10 @@ MIDDLEWARE = [
 ]
 DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 
+SESSION_COOKIE_NAME = 'session'
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # One month
+
+CORS_ALLOW_CREDENTIALS = True  # Like cookies, etc.
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     # prod
@@ -73,7 +78,7 @@ CORS_ALLOWED_ORIGINS = [
     # dev
     'http://wmiadventure.westeurope.cloudapp.azure.com',
     'https://wmiadventure.westeurope.cloudapp.azure.com',
-    
+
     # local development
     'http://localhost',
 ]
@@ -192,4 +197,9 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}

@@ -33,7 +33,7 @@ class WholeProposedCardSerializer(base_whole_card_serializer_factory(ProposedCar
 
     class Meta:
         model = ProposedCardInfo
-        fields = ['id', 'name', 'subject', 'image', 'tooltip', 'comment', 'levels']
+        fields = ['id', 'name', 'subject', 'image', 'tooltip', 'comment', 'owner', 'levels']
 
     def _create_info(self, validated_data):
         info = ProposedCardInfo.objects.create(
@@ -41,7 +41,8 @@ class WholeProposedCardSerializer(base_whole_card_serializer_factory(ProposedCar
             tooltip=validated_data.get('tooltip'),
             image=validated_data.get('image', None),
             subject=validated_data.get('subject'),
-            comment=validated_data.get('comment')
+            comment=validated_data.get('comment'),
+            owner=validated_data.get('owner')
         )
 
         info.save()

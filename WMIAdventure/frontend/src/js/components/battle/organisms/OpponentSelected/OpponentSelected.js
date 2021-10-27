@@ -19,6 +19,8 @@ import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import unknownIcon from '../../../../../assets/images/unknown.png';
+import {getCurrentUsername} from "../../../../utils/userData";
+import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 
 class OpponentSelected extends React.Component {
 
@@ -29,17 +31,43 @@ class OpponentSelected extends React.Component {
         postBattleOpacity: '0',
     }
 
+    componentDidMount() {
+        getCurrentUsername()
+            .then(user => this.setState({caller: user}))
+    }
+
     quickBattleRunHandler = () => {
         this.props.closeUserPreviewHandler();
         this.props.kuceStartFight();
-
-        setTimeout(() => {
-            this.setState({
-                postBattle: true,
+        fightWithUser(this.props.opponent.id)
+            .then(response => {
+                if(response.ok) {
+                    response.json()
+                        .then(data => {
+                            this.postBattle(data);
+                            this.props.kuceStopFight();
+                        })
+                }
             });
-            this.props.kuceStopFight();
-            this.postBattleOpenHandler();
-        }, 1600);
+    }
+
+    quickBattleRunMobileHandler = () => {
+        this.props.closeUserPreviewHandler();
+        fightWithUser(this.props.opponent.id)
+            .then(response => {
+                if(response.ok) {
+                    response.json()
+                        .then(data => this.postBattle(data))
+                }
+            });
+    }
+
+    postBattle = (data) => {
+        this.setState({
+            postBattle: true,
+        });
+        data.winner === data.attacker.id ?
+            this.setState({win: true}) : this.setState({win: false})
     }
 
     postBattleOpenHandler = () => {
@@ -62,13 +90,6 @@ class OpponentSelected extends React.Component {
                 postBattle: false,
             });
         }, 550);
-    }
-
-    quickBattleRunMobileHandler = () => {
-        this.props.closeUserPreviewHandler();
-        this.setState({
-            postBattle: true,
-        });
     }
 
     quickBattleCloseMobileHandler = () => {
@@ -105,10 +126,10 @@ class OpponentSelected extends React.Component {
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                         <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                     </FlexGapContainer>
-                                    <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'24px 0 0 0'}
+                                    <TinyUserProfile displayedUsername={this.state.caller} setMargin={'24px 0 0 0'}
                                                      term={7} level={50} rank={2} avatar={null}/>
                                     <KuceVs />
-                                    <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0 0 24px 0'}
+                                    <TinyUserProfile displayedUsername={this.props.opponent.username} setMargin={'0 0 24px 0'}
                                                      term={7} level={39} rank={15} avatar={null}/>
                                     <FlexGapContainer gap={'40px'}>
                                         <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
@@ -135,8 +156,10 @@ class OpponentSelected extends React.Component {
                                 </FlexEndContainer>
                             </GridContainer>
                         </PopUp>
-                        <PostBattle postBattle={this.state.postBattle} win={true}
-                                    closeHandler={this.quickBattleCloseMobileHandler} />
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.state.caller}
+                                    opponent={this.props.opponent.username} />
                     </>
                 </Media>
 
@@ -151,7 +174,7 @@ class OpponentSelected extends React.Component {
                                    hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'24px'}  setMargin={'0 0 0 26px'}>
-                                        <TinyUserProfile displayedUsername={'skromnośćToPotęga'} setMargin={'0'}
+                                        <TinyUserProfile displayedUsername={this.state.caller} setMargin={'0'}
                                                          term={7} level={39} rank={15} avatar={null} vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
@@ -162,7 +185,7 @@ class OpponentSelected extends React.Component {
                                     </ColumnGapContainer>
                                     <KuceVs />
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
-                                        <TinyUserProfile displayedUsername={'Emkarcinos'} setMargin={'0'}
+                                        <TinyUserProfile displayedUsername={this.props.opponent.username} setMargin={'0'}
                                                          term={7} level={39} rank={15} avatar={null} vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
@@ -189,10 +212,12 @@ class OpponentSelected extends React.Component {
                                 </FlexGapContainer>
                             </PopUp>
                         </TransBack>
-                        <PostBattle postBattle={this.state.postBattle}
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.state.caller}
+                                    opponent={this.props.opponent.username}
                                     setOpacity={this.state.postBattleOpacity}
-                                    setTranslateY={this.state.postBattlePos}
-                                    win={true} closeHandler={this.quickBattleCloseHandler} />
+                                    setTranslateY={this.state.postBattlePos} />
                     </>
                 </Media>
             </>

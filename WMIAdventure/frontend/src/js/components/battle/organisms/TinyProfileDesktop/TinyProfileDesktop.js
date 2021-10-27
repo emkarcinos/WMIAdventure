@@ -24,26 +24,17 @@ class TinyProfileDesktop extends React.Component {
                     </ColumnGapContainer>
                 </Container>
                 <FlexGapContainer gap={'16px'}>
-                    <CompactCardView setWidth={'90px'}  setHeight={'150px'}
-                                     setMargin={'0'} ownFontSize={'20px'} common
-                                     setIconWidth={'60px'} setIconHeight={'60px'}
-                                     decorationHeight={'18px'} />
-                    <CompactCardView setWidth={'90px'}  setHeight={'150px'}
-                                     setMargin={'0'} ownFontSize={'20px'} common
-                                     setIconWidth={'60px'} setIconHeight={'60px'}
-                                     decorationHeight={'18px'} />
-                    <CompactCardView setWidth={'90px'}  setHeight={'150px'} gold
-                                     setMargin={'0'} ownFontSize={'20px'}
-                                     setIconWidth={'60px'} setIconHeight={'60px'}
-                                     decorationHeight={'18px'} />
-                    <CompactCardView setWidth={'90px'}  setHeight={'150px'} epic
-                                     setMargin={'0'} ownFontSize={'20px'}
-                                     setIconWidth={'60px'} setIconHeight={'60px'}
-                                     decorationHeight={'18px'} />
-                    <CompactCardView setWidth={'90px'}  setHeight={'150px'} common
-                                     setMargin={'0'} ownFontSize={'20px'}
-                                     setIconWidth={'60px'} setIconHeight={'60px'}
-                                     decorationHeight={'18px'} />
+                    {[...Array(5)].map(
+                        (e,i) => {
+                            return (
+                                <CompactCardView key={`compactCard-${i}`}
+                                                 setWidth={'90px'}  setHeight={'150px'} common
+                                                 setMargin={'0'} ownFontSize={'20px'}
+                                                 setIconWidth={'60px'} setIconHeight={'60px'}
+                                                 decorationHeight={'18px'} />
+                            );
+                        }
+                    )}
                 </FlexGapContainer>
             </Div>
         );

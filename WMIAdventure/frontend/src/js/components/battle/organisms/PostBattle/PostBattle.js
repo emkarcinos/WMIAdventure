@@ -53,14 +53,14 @@ class PostBattle extends React.Component {
                             <Div win={this.props.win}>
                                 <Decoration win={this.props.win} />
                                 <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
-                                                 displayedUsername={'skromność to potęga'} />
+                                                 displayedUsername={this.props.attacker} />
                                 <TinyCards cardImages={[]} gap={'10px'} />
                             </Div>
 
                             <Div win={!this.props.win}>
                                 <Decoration win={!this.props.win} />
                                 <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
-                                                 displayedUsername={'emkarcinos'} />
+                                                 displayedUsername={this.props.opponent} />
                                 <TinyCards cardImages={[]} gap={'10px'} />
                             </Div>
                         </Article>
@@ -87,14 +87,14 @@ class PostBattle extends React.Component {
                                 <Div win={this.props.win}>
                                     <Decoration win={this.props.win} />
                                     <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'0 0 24px 0'}
-                                                     displayedUsername={'skromność to potęga'} vertical />
+                                                     displayedUsername={this.props.attacker} vertical />
                                     <TinyCards cardImages={[]} gap={'10px'} />
                                 </Div>
 
                                 <Div win={!this.props.win}>
                                     <Decoration win={!this.props.win} />
                                     <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'0 0 24px 0'}
-                                                     displayedUsername={'emkarcinos'} vertical />
+                                                     displayedUsername={this.props.opponent} vertical />
                                     <TinyCards cardImages={[]} gap={'10px'} />
                                 </Div>
                             </FlexGapContainer>
@@ -102,7 +102,6 @@ class PostBattle extends React.Component {
                     </TransBack>
                 </Media>
             </>
-
         );
     }
 }

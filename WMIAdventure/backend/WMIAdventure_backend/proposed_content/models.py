@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from cards.models import base_card_factory, base_card_info_factory, base_card_level_effects_factory
@@ -15,6 +16,12 @@ class ProposedCardInfo(base_card_info_factory('proposed_content/cards/images/'))
                                null=True,
                                blank=True,
                                max_length=150)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        help_text="A reference to Django user model"
+    )
 
 
 class ProposedCard(base_card_factory(ProposedCardInfo)):
