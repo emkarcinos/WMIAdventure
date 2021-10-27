@@ -5,6 +5,7 @@ import CardImage from './styled-components/CardImage';
 import uploadImageDark from '../../../../../assets/icons/upload_image_dark.svg';
 
 class TinyCards extends React.Component {
+
     render() {
         return (
             <MainContainer setMargin={this.props.setMargin} gap={this.props.gap}>

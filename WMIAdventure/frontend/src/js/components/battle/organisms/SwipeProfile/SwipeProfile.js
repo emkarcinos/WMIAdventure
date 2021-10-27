@@ -69,7 +69,7 @@ class SwipeProfile extends React.Component {
             <Div hide={this.state.hide}>
                 <TinyDeck
                     showHandler={this.showHandler}
-                    cardImages={[]}
+                    deck={this.state.userDeck}
                     tinyDeckVisible={this.state.tinyDeckVisible}
                     tinyDeckDisplay={this.state.tinyDeckDisplay}
                 />
