@@ -136,7 +136,8 @@ class BattleMode extends React.Component {
                             <Ul scrollVisible={this.state.scrollVisible}>
                                 {this.state.users.results ? this.state.users.results.map((elem) => {
                                     return (
-                                        <UserListItem key={elem.user} access={elem.semester < 2}
+                                        <UserListItem key={elem.user}
+                                                      access={!(elem.user === this.state.loggedInUserId)}
                                                       displayedUsername={elem.displayedUsername}
                                                       searchInput={this.state.searchInput}
                                                       term={elem.semester} level={elem.user * 4}
@@ -170,7 +171,8 @@ class BattleMode extends React.Component {
                                 <Ul scrollVisible={this.state.scrollVisible}>
                                     {this.state.users.results ? this.state.users.results.map((elem) => {
                                         return (
-                                            <UserListItem key={elem.user} access={elem.semester < 2}
+                                            <UserListItem key={elem.user}
+                                                          access={!(elem.user === this.state.loggedInUserId)}
                                                           displayedUsername={elem.displayedUsername}
                                                           searchInput={this.state.searchInput}
                                                           term={elem.semester} level={elem.user * 4}
