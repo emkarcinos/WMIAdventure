@@ -42,7 +42,7 @@ class SwipeProfile extends React.Component {
 
         getUsersDecks(this.props.userId)
             .then(resp => {
-                if(resp){
+                if (resp) {
                     const attackerDeck = resp[0];
                     this.setState({userDeck: attackerDeck});
                 }
@@ -66,24 +66,25 @@ class SwipeProfile extends React.Component {
 
     render() {
         return (
-            <Div hide={this.state.hide}>
-                <TinyDeck
-                    showHandler={this.showHandler}
-                    cardImages={[]}
-                    tinyDeckVisible={this.state.tinyDeckVisible}
-                    tinyDeckDisplay={this.state.tinyDeckDisplay}
-                />
-                <Article visible={!this.state.hide}>
-                    <Close onClick={this.hideHandler} />
-                    <Media query={mobile}>
+
+            <Media query={mobile}>
+                <Div hide={this.state.hide}>
+                    <TinyDeck
+                        showHandler={this.showHandler}
+                        deck={this.state.userDeck}
+                        tinyDeckVisible={this.state.tinyDeckVisible}
+                        tinyDeckDisplay={this.state.tinyDeckDisplay}
+                    />
+                    <Article visible={!this.state.hide}>
+                        <Close onClick={this.hideHandler}/>
                         <>
                             <FlexCenterContainer>
                                 <TinyUserProfile displayedUsername={this.props.username} setMargin={'0 0 24px 0'}
                                                  term={7} level={50} rank={2} avatar={null}/>
-                                <FlexGapContainer gap={'40px'}  setMargin={'0 0 40px 0'}>
-                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                <FlexGapContainer gap={'40px'} setMargin={'0 0 40px 0'}>
+                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
+                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
+                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
                             </FlexCenterContainer>
                             <FlexCenterContainer>
@@ -93,9 +94,9 @@ class SwipeProfile extends React.Component {
                                 </Edit>
                             </FlexCenterContainer>
                         </>
-                    </Media>
-                </Article>
-            </Div>
+                    </Article>
+                </Div>
+            </Media>
         );
     }
 }
