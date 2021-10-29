@@ -44,8 +44,10 @@ class AcceptProposedCardView(APIView):
 
         accepted_card_serializer.is_valid(raise_exception=True)
         new_card = accepted_card_serializer.save()
-        new_card.image = ProposedCardInfo.objects.get(pk=pk).image
-        new_card.save()
+        new_image = ProposedCardInfo.objects.get(pk=pk).image
+        if new_image:
+            new_card.image = ProposedCardInfo.objects.get(pk=pk).image
+            new_card.save()
         # Remove accepted card from proposed cards tables.
         proposed_card.delete()
 

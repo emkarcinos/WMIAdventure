@@ -122,7 +122,7 @@ class BattleMode extends React.Component {
                 <Helmet>
                     <title>Tryb Battle</title>
                 </Helmet>
-                <NavBar />
+                <NavBar/>
                 <Main>
                     <Media query={mobile}>
                         <>
@@ -131,23 +131,24 @@ class BattleMode extends React.Component {
                             </H2>
                             <SearchContainer>
                                 <Search searchInput={this.state.searchInput}
-                                        handleSearch={this.handleSearch} />
+                                        handleSearch={this.handleSearch}/>
                             </SearchContainer>
                             <Ul scrollVisible={this.state.scrollVisible}>
                                 {this.state.users.results ? this.state.users.results.map((elem) => {
                                     return (
-                                        <UserListItem key={elem.user} access={elem.semester < 2}
+                                        <UserListItem key={elem.user}
+                                                      access={!(elem.user === this.state.loggedInUserId)}
                                                       displayedUsername={elem.displayedUsername}
                                                       searchInput={this.state.searchInput}
                                                       term={elem.semester} level={elem.user * 4}
                                                       runUserPreviewHandler={() => this.runUserPreviewHandler(
                                                           elem.displayedUsername,
-                                                          elem.user)} />
+                                                          elem.user)}/>
                                     );
                                 }) : ''}
                             </Ul>
                             <SwipeProfile userId={this.state.loggedInUserId} username={this.state.loggedInUsername}
-                                          hideScroll={this.hideScroll} showScroll={this.showScroll} />
+                                          hideScroll={this.hideScroll} showScroll={this.showScroll}/>
                         </>
                     </Media>
 
@@ -165,18 +166,19 @@ class BattleMode extends React.Component {
                             <DesktopLeft>
                                 <SearchContainer>
                                     <Search searchInput={this.state.searchInput}
-                                            handleSearch={this.handleSearch} />
+                                            handleSearch={this.handleSearch}/>
                                 </SearchContainer>
                                 <Ul scrollVisible={this.state.scrollVisible}>
                                     {this.state.users.results ? this.state.users.results.map((elem) => {
                                         return (
-                                            <UserListItem key={elem.user} access={elem.semester < 2}
+                                            <UserListItem key={elem.user}
+                                                          access={!(elem.user === this.state.loggedInUserId)}
                                                           displayedUsername={elem.displayedUsername}
                                                           searchInput={this.state.searchInput}
                                                           term={elem.semester} level={elem.user * 4}
                                                           runUserPreviewHandler={() => this.runUserPreviewHandler(
                                                               elem.displayedUsername,
-                                                              elem.user)} />
+                                                              elem.user)}/>
                                         );
                                     }) : ''}
                                 </Ul>
@@ -184,14 +186,14 @@ class BattleMode extends React.Component {
                         </>
                     </Media>
                 </Main>
-                <TinyProfileDesktop />
+                <TinyProfileDesktop userId={this.state.loggedInUserId} username={this.state.loggedInUsername}/>
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
                                   setOpacity={this.state.userPreviewOpacity}
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
-                                  kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight} />
+                                  kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
             </>
         );
     }

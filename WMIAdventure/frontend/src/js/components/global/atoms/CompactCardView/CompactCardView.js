@@ -4,11 +4,10 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
-import {getCardById} from "../../../../utils/storage/cards/cardStorage";
 
 class CompactCardView extends React.Component {
     state = {
-        name: '',
+        name: ' ',
         level: 1,
         image: null
     }
@@ -27,18 +26,23 @@ class CompactCardView extends React.Component {
         }
     }
 
+    setStateFromProps = () => {
+        this.props.cardName ? this.setState({name: this.props.cardName}) : null;
+        this.props.level ? this.setState({level: this.props.level}) : null;
+        this.props.cardImage ? this.setState({image: this.props.cardImage}) : null;
+    }
+
+    propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
+        prevProps.image !== this.props.image ||
+        prevProps.level !== this.props.level;
+
+    componentDidMount() {
+        this.setStateFromProps();
+    }
+
     componentDidUpdate(prevProps) {
-        if ((prevProps === this.props) || !this.props.card) return;
-        getCardById(this.props.card.id)
-            .then(card => {
-                if(card) {
-                    this.setState({
-                        name: card.name,
-                        level: this.props.card.level,
-                        image: card.image
-                    });
-                }
-            });
+        if(this.propsChanged(prevProps))
+            this.setStateFromProps();
     }
 
     render() {
