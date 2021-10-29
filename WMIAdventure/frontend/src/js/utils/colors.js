@@ -40,21 +40,27 @@ const colors = {
     common: '#13876F',
     gold: '#F2C94C',
     cardGold: '#F2C94C',
-    epic: '#BB6BD9',
-    cardEpic: '#4D15EA',
+    epic: '#9B51E0',
+    cardEpic: '#9B51E0',
 
     grey1: '#F2F2F2',
     grey2: '#E0E0E0',
     grey3: '#828282',
     borderLine: '#243437',
 
-
-    // new colors
-    red: '#DB4E4E',
+    // Battle
+    black: '#0D0D0D',
+    black2: '#0F0F0F',
+    darkGray: '#282829',
     light2: '#F7F7F7',
-    darkgrey: '#282829',
-    userItemHover: '#E5E5E5',
     lightGray2: '#B2AFAF',
+    red: '#DB4E4E',
+    red2: '#D93434',
+    red3: '#FF5454',
+    redLight: '#FFB897',
+    
+
+
 };
 
 export default colors;
