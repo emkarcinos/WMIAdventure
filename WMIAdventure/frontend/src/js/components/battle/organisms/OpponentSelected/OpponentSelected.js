@@ -73,7 +73,7 @@ class OpponentSelected extends React.Component {
                 postBattlePos: '0',
                 postBattleOpacity: '1'
             });
-        }, 5);
+        }, 1005);
     }
 
     quickBattleCloseHandler = () => {

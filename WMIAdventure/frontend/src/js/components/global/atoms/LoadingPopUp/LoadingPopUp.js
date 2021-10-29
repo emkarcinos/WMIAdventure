@@ -6,9 +6,30 @@ import P from "./styled-components/P";
 import kuceFight from '../../../../../assets/images/kuceBattle.png';
 
 class LoadingPopUp extends React.Component {
+
+    state = {
+        visible: false,
+    }
+
+    componentDidUpdate(prevProps) {
+        if((prevProps.visible !== this.props.visible)
+            && prevProps.visible && (prevProps.visible === true)) {
+            setTimeout(() => {
+                this.setState({
+                    visible: false,
+                });
+            }, 1000);
+        } else if((prevProps.visible !== this.props.visible)
+            && prevProps.visible === false) {
+            this.setState({
+               visible: true,
+            });
+        }
+    }
+
     render() {
         return (
-            <Section visible={this.props.visible}>
+            <Section visible={this.state.visible}>
                 <View>
                     {this.props.view ? this.props.view : 'Widok'}
                 </View>
