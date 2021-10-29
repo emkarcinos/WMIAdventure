@@ -5,8 +5,9 @@
  */
 const createFormDataToSendCardImage = (basicCardData) => {
     const formData = new FormData();
-
-    formData.append('image', basicCardData.image, basicCardData.image.name);
+    // If we didn't change the image it will not be an object.
+    if (typeof (basicCardData.image) === 'object')
+        formData.append('image', basicCardData.image, basicCardData.image.name);
     // Required data that has to be sent even if we only want to send image.
     formData.append('name', basicCardData.name);
     formData.append('subject', basicCardData.subject);

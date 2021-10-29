@@ -176,7 +176,10 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
         def _update_info(self, instance, validated_data):
             instance.name = validated_data.get('name', instance.name)
             instance.tooltip = validated_data.get('tooltip', instance.tooltip)
-            instance.image = validated_data.get('image', instance.image)
+            incoming_image = validated_data.get('image', None)
+            if incoming_image is not None:
+                print(incoming_image)
+                instance.image = incoming_image
             instance.subject = validated_data.get('subject')
 
         def create(self, validated_data):
