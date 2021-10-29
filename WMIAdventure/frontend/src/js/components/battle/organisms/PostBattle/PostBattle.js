@@ -38,7 +38,8 @@ class PostBattle extends React.Component {
             <>
                 <Media query={mobile}>
                     <PopUp visible={this.props.postBattle}
-                           closeHandler={this.props.closeHandler}>
+                           closeHandler={this.props.closeHandler}
+                           setTranslateY={this.props.setTranslateY}>
                         <Article>
                             <ColumnGapContainer gap={'10px'} setMargin={'0 0 16px 0'}>
                                 <BattleResult win={this.props.win} />

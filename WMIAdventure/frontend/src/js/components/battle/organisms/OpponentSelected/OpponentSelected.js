@@ -58,17 +58,6 @@ class OpponentSelected extends React.Component {
             });
     }
 
-    quickBattleRunMobileHandler = () => {
-        this.props.closeUserPreviewHandler();
-        fightWithUser(this.props.opponent.id)
-            .then(response => {
-                if(response.ok) {
-                    response.json()
-                        .then(data => this.postBattle(data))
-                }
-            });
-    }
-
     postBattle = (data) => {
         this.props.kuceStopFight();
         this.setState({
@@ -98,12 +87,6 @@ class OpponentSelected extends React.Component {
                 postBattle: false,
             });
         }, 550);
-    }
-
-    quickBattleCloseMobileHandler = () => {
-        this.setState({
-            postBattle: false,
-        });
     }
 
     hoverTrue = () => {
@@ -157,7 +140,7 @@ class OpponentSelected extends React.Component {
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
-                                    <ButtonWithIcon handler={this.quickBattleRunMobileHandler} setMargin={'14px 0 16px 0'}
+                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
                                                     color={theme.colors.common} icon={fastIcon}>
                                         Szybka walka
                                     </ButtonWithIcon>
@@ -167,7 +150,8 @@ class OpponentSelected extends React.Component {
                         <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
-                                    opponent={this.props.opponent.username} />
+                                    opponent={this.props.opponent.username}
+                                    setTranslateY={this.state.postBattlePos} />
                     </>
                 </Media>
 
