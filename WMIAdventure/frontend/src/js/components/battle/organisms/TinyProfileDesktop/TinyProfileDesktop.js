@@ -11,7 +11,7 @@ import {getUsersDecks} from "../../../../utils/userData";
 
 class TinyProfileDesktop extends React.Component {
     placeholderCard = {
-        name: '423434',
+        name: ' ',
         level: 1,
         image: null
     }
@@ -29,32 +29,12 @@ class TinyProfileDesktop extends React.Component {
         }
     }
 
-    setCards = () => {
-        if (this.state.userDeck === null || this.state.userDeck === undefined) return;
-
-        for (const [cardNumber, card] of Object.entries(this.state.userDeck)) {
-            if (card.id === null || card.id === undefined) continue;
-            getCardById(card.id)
-                .then(respCard => {
-                    if (respCard) {
-                        this.setState({
-                            [cardNumber]: {
-                                name: respCard.name,
-                                level: card.level,
-                                image: respCard.image
-                            }
-                        });
-                    }
-                });
-        }
-    }
-
     getCards = () => {
         if (!this.props.userId) return;
         getUsersDecks(this.props.userId)
             .then(deck => {
                 if (!deck) return;
-                const attackerDeck = deck[0];
+                const attackerDeck = deck[0] ? deck[0] : [];
 
                 for (const [cardNumber, card] of Object.entries(attackerDeck)) {
                     if (card.id === null || card.id === undefined) continue;
