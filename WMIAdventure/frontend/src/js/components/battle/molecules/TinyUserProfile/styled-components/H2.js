@@ -6,6 +6,11 @@ const H2 = styled.h2`
   font-family: 'Open Sans', sans-serif;
   font-weight: ${({theme}) => theme.weight.semibold};
   color: ${({theme}) => theme.colors.uiBlue};
+
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
+    font-size: 24px;
+    margin: ${({vertical}) => vertical ? '0 0 10px 0' : '0 0 14px 0'};
+  }
 `;
 
 export default H2;

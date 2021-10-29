@@ -1,14 +1,20 @@
 from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cards.models import CardInfo
 from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo
+from proposed_content.permissions import CanEdit
 from proposed_content.serializers import WholeProposedCardSerializer
+from utils.permissions import IsAbleToEdit
 
 
 class AcceptProposedCardView(APIView):
+
+    permission_classes = [IsAbleToEdit]
     """
     post:
 
@@ -38,8 +44,10 @@ class AcceptProposedCardView(APIView):
 
         accepted_card_serializer.is_valid(raise_exception=True)
         new_card = accepted_card_serializer.save()
-        new_card.image = ProposedCardInfo.objects.get(pk=pk).image
-        new_card.save()
+        new_image = ProposedCardInfo.objects.get(pk=pk).image
+        if new_image:
+            new_card.image = ProposedCardInfo.objects.get(pk=pk).image
+            new_card.save()
         # Remove accepted card from proposed cards tables.
         proposed_card.delete()
 
@@ -47,6 +55,8 @@ class AcceptProposedCardView(APIView):
 
 
 class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
+
+    permission_classes = [CanEdit]
     """
     get:
 
@@ -251,6 +261,8 @@ class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
 
 
 class WholeProposedCardList(generics.ListCreateAPIView):
+
+    permission_classes = [IsAuthenticated]
     """
     get:
     Get all cards that exist in the database.
@@ -352,3 +364,6 @@ class WholeProposedCardList(generics.ListCreateAPIView):
     """
     queryset = ProposedCardInfo.objects.all()
     serializer_class = WholeProposedCardSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

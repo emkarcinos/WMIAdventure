@@ -22,6 +22,25 @@ const AvatarContainer = styled.div`
     background-position: center;
     background-image: url(${kLetter});
   }
+  
+  @media(min-width: ${({theme}) => theme.overMobile}px) {
+    width: 44px;
+    height: 44px;
+
+    &:after {
+      display: ${({access}) => access ? 'block' : 'none'};
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 13px;
+      width: 18px;
+      height: 20px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-image: url(${kLetter});
+    }
+  }
 `;
 
 export default AvatarContainer;

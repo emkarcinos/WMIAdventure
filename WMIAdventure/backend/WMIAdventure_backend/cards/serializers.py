@@ -23,6 +23,7 @@ class CardInfoSerializer(serializers.ModelSerializer):
     Manages serialization and deserialization of CardInfo instances.
     """
     image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
+
     class Meta:
         model = CardInfo
         fields = ['id', 'name', 'tooltip', 'image']
@@ -175,7 +176,10 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
         def _update_info(self, instance, validated_data):
             instance.name = validated_data.get('name', instance.name)
             instance.tooltip = validated_data.get('tooltip', instance.tooltip)
-            instance.image = validated_data.get('image', instance.image)
+            incoming_image = validated_data.get('image', None)
+            if incoming_image is not None:
+                print(incoming_image)
+                instance.image = incoming_image
             instance.subject = validated_data.get('subject')
 
         def create(self, validated_data):
@@ -203,22 +207,26 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             self._update_info(instance, validated_data)
 
             cards_data = validated_data.get("levels", None)
-            if cards_data:
-                instance.levels.all().delete()
+            if not cards_data:
+                instance.save()
+                return instance
 
-                for card_data in cards_data:
-                    card = instance.levels.create(
-                        level=card_data.get("level"),
-                        next_level_cost=card_data.get("next_level_cost"),
-                        effects_description=card_data.get("effects_description"),
+            for card_data in cards_data:
+                card, _ = instance.levels.update_or_create(
+                    level=card_data.get("level"),
+                    defaults={'next_level_cost': card_data.get("next_level_cost"),
+                              'effects_description': card_data.get("effects_description")},
+                )
+                # We have to delete all effect before hand, as there is no way to tell whether an effect was updated
+                # or a new one was added. There are no unique constraints here.
+                card.effects.all().delete()
+                for effect_data in card_data.get("effects"):
+                    card.effects.create(
+                        card_effect=effect_data.get("card_effect"),
+                        target=effect_data.get("target", CardLevelEffects.Target.OPPONENT),
+                        power=effect_data.get("power"),
+                        range=effect_data.get("range")
                     )
-                    for effect_data in card_data.get("effects"):
-                        card.effects.create(
-                            card_effect=effect_data.get("card_effect"),
-                            target=effect_data.get("target", CardLevelEffects.Target.OPPONENT),
-                            power=effect_data.get("power"),
-                            range=effect_data.get("range")
-                        )
             instance.save()
 
             return instance

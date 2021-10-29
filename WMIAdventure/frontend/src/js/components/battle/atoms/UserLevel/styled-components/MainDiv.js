@@ -8,6 +8,7 @@ const MainDiv = styled.div`
   background-color: ${({theme}) => theme.colors.light2};
   position: relative;
   overflow: hidden;
+  margin: ${({setMargin}) => setMargin ? setMargin : '0'};
 `;
 
 export default MainDiv;

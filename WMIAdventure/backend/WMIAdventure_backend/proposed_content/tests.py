@@ -1,6 +1,6 @@
 from django.test import TestCase
 from rest_framework import serializers, status
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
@@ -8,6 +8,7 @@ from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
 from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails, AcceptProposedCardView
+from users.models import User
 
 
 class WholeProposedCardSerializerTestCase(TestCase):
@@ -371,6 +372,9 @@ class WholeProposedCardSerializerTestCase(TestCase):
 
 
 class WholeProposedCardListTestCase(TestCase):
+    def setUp(self) -> None:
+        self.staff_user = User.objects.create(username='staffuser', is_staff=True)
+
     def test_post1(self):
         """
         Scenario: POST request is made with correct data.
@@ -451,6 +455,8 @@ class WholeProposedCardListTestCase(TestCase):
 
         # Make POST request and get response
         request = factory.post('/api/proposed-content/cards/', data, format='json')
+
+        force_authenticate(request=request, user=self.staff_user)
         response = view(request)
 
         # Assert response status code
@@ -511,6 +517,8 @@ class WholeProposedCardListTestCase(TestCase):
 
         # Make POST request and get response
         request = factory.post('/api/proposed-content/cards/', data, format='json')
+
+        force_authenticate(request=request, user=self.staff_user)
         response = view(request)
 
         # Assert response status code
@@ -521,6 +529,9 @@ class WholeProposedCardListTestCase(TestCase):
 
 
 class WholeProposedCardDetailsTestCase(TestCase):
+    def setUp(self) -> None:
+        self.staff_user = User.objects.create(username='staffuser', is_staff=True)
+
     def test_get1(self):
         """
         Scenario: Proposed card is created in database. GET request is performed to view details of this card.
@@ -573,6 +584,7 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Make GET request and get response
         request = factory.get('/api/proposed-content/cards/')
+        force_authenticate(request=request, user=self.staff_user)
         response = view(request, pk=card_info.pk)
 
         # Assert response status code
@@ -619,6 +631,7 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Make GET request and get response
         request = factory.get('/api/proposed-content/cards/')
+        force_authenticate(request=request, user=self.staff_user)
         response = view(request, pk=id)
 
         # Assert response status code
@@ -726,6 +739,8 @@ class WholeProposedCardDetailsTestCase(TestCase):
 
         # Make PUT request and get response
         request = factory.put('/api/proposed-content/cards/', update_data, format='json')
+
+        force_authenticate(request=request, user=self.staff_user)
         response = view(request, pk=card_info.pk)
 
         # Assert response status code
