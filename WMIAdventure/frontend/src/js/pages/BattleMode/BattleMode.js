@@ -20,6 +20,7 @@ import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
 import {getCurrentUserId, getCurrentUsername} from "../../utils/userData";
+import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 
 class BattleMode extends React.Component {
 
@@ -37,7 +38,7 @@ class BattleMode extends React.Component {
         userPreviewPos: '-100vh',
         userPreviewOpacity: '0',
         scrollVisible: true,
-        kuceFight: false,
+        fightLoading: false,
         selectedUser: {}
     }
 
@@ -106,13 +107,13 @@ class BattleMode extends React.Component {
 
     kuceStartFight = () => {
         this.setState({
-            kuceFight: true,
+            fightLoading: true,
         });
     }
 
     kuceStopFight = () => {
         this.setState({
-            kuceFight: false,
+            fightLoading: false,
         });
     }
 
@@ -158,7 +159,7 @@ class BattleMode extends React.Component {
                                 <H2>
                                     Wybierz przeciwnika
                                 </H2>
-                                <KuceBattleImage src={kuceBattle} fight={this.state.kuceFight} alt=""/>
+                                <KuceBattleImage src={kuceBattle} alt=""/>
                                 <Title>
                                     Battle
                                 </Title>
@@ -194,6 +195,7 @@ class BattleMode extends React.Component {
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
                                   kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
+                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'} />
             </>
         );
     }
