@@ -3,5 +3,6 @@ const desktop = '(min-width: 1024px)';
 const maxCardName = 36;
 const maxCardSubject = 60;
 const maxCardTooltip = 80;
+const loadingMinimalDuration = 500;
 
-export {mobile, desktop, maxCardName, maxCardSubject, maxCardTooltip};
+export {mobile, desktop, maxCardName, maxCardSubject, maxCardTooltip, loadingMinimalDuration};

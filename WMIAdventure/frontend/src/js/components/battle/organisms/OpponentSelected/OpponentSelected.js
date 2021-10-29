@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, mobile} from '../../../../utils/globals';
+import {desktop, loadingMinimalDuration, mobile} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -73,7 +73,7 @@ class OpponentSelected extends React.Component {
                 postBattlePos: '0',
                 postBattleOpacity: '1'
             });
-        }, 1005);
+        }, loadingMinimalDuration);
     }
 
     quickBattleCloseHandler = () => {
