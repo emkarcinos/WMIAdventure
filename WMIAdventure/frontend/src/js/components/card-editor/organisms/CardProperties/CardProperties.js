@@ -30,7 +30,7 @@ class CardProperties extends React.Component {
         startEdit: false,
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentDidUpdate(nextProps) {
         setTimeout(() => {
             if(!this.state.startEdit) {
                 let levelsList = nextProps.levelsListFromCard;
