@@ -20,15 +20,21 @@ import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import {getCurrentUserDecks, getCurrentUsername} from "../../../../utils/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
+import BattleView from "../BattleView";
 
 class OpponentSelected extends React.Component {
 
     state = {
+        // states uses for mount postBattle
         postBattle: false,
         popUpHover: false,
         postBattlePos: '-100vh',
         postBattleOpacity: '0',
-        userDeck: null
+        userDeck: null,
+
+        // states uses for mount battleView
+        battleView: false,
+        battleViewPos: '-100vh',
     }
 
     componentDidMount() {
@@ -89,6 +95,34 @@ class OpponentSelected extends React.Component {
         }, 550);
     }
 
+    // method that run dynamic battle view
+    battleViewRunHandler = () => {
+        this.setState({
+            battleView: true,
+        });
+
+        setTimeout(() => {
+            this.setState({
+                battleViewPos: '0',
+            });
+        }, loadingMinimalDuration);
+    }
+
+    // method that close dynamic battle view
+    battleViewCloseHandler = () => {
+        this.setState({
+            battleViewPos: '-100vh',
+        });
+
+        setTimeout(() => {
+            this.setState({
+                battleView: false,
+            });
+        }, 550);
+
+        this.postBattleOpenHandler();
+    }
+
     hoverTrue = () => {
         this.setState({popUpHover: true});
     }
@@ -136,7 +170,8 @@ class OpponentSelected extends React.Component {
                                                         color={theme.colors.gold} icon={xClose}>
                                             Wróć
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
+                                        <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                                        color={theme.colors.epic} icon={battleIcon}>
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
@@ -152,6 +187,9 @@ class OpponentSelected extends React.Component {
                                     attacker={this.state.caller}
                                     opponent={this.props.opponent.username}
                                     setTranslateY={this.state.postBattlePos} />
+                        <BattleView battleView={this.state.battleView}
+                                    closeHandler={this.battleViewCloseHandler}
+                                    setTranslateY={this.state.battleViewPos} />
                     </>
                 </Media>
 
