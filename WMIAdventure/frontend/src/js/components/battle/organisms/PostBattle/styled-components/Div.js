@@ -9,7 +9,7 @@ const Div = styled.div`
   position: relative;
   margin-bottom: 10px;
   padding-top: 24px;
-  
+
   &:before {
     content: "";
     position: absolute;
@@ -21,7 +21,7 @@ const Div = styled.div`
     height: 50px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: ${({theme, win}) => win ? theme.colors.common : theme.colors.red};
+    background-color: ${({theme, win}) => win ? theme.colors.greenyBluey : theme.colors.red};
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -36,7 +36,7 @@ const Div = styled.div`
     height: 50px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: ${({theme, win}) => win ? theme.colors.common : theme.colors.red};
+    background-color: ${({theme, win}) => win ? theme.colors.greenyBluey : theme.colors.red};
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
 

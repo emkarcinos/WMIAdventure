@@ -13,7 +13,7 @@ const H2 = styled.h2`
     font-family: 'Roboto', sans-serif;
     font-weight: ${({theme}) => theme.weight.regular};
     font-size: 48px;
-    color: ${({theme}) => theme.colors.ui01};
+    color: ${({theme}) => theme.colors.whiteAlmost};
     letter-spacing: 3px;
     order: 3;
   }

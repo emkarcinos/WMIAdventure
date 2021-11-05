@@ -11,7 +11,7 @@ const Div = styled.div`
   left: 0;
   height: calc(100vh - 48px);
   width: 100%;
-  background-color: ${({theme}) => theme.colors.ui07trans};
+  background-color: ${({theme}) => theme.colors.darkTrans};
 `;
 
 export default Div;

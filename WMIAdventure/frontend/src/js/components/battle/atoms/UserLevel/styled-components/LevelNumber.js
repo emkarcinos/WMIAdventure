@@ -8,8 +8,8 @@ const LevelNumber = styled.div`
   height: 28px;
   border-bottom-left-radius: 76px;
   border-top-left-radius: 76px;
-  color: ${({theme}) => theme.colors.ui01};
-  background-color: ${({theme}) => theme.colors.darkgrey};
+  color: ${({theme}) => theme.colors.whiteAlmost};
+  background-color: ${({theme}) => theme.colors.dark};
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: ${({theme}) => theme.weight.regular};

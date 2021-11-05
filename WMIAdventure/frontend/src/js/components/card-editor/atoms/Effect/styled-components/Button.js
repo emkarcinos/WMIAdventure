@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 function visibilityHandler(name, searchInput) {
-  if (name.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
-    return 'flex';
-  }
-  return 'none';
+    if (name.toLowerCase().includes(searchInput.toLowerCase()) || searchInput === '') {
+        return 'flex';
+    }
+    return 'none';
 }
 
 const Button = styled.button`
@@ -15,17 +15,17 @@ const Button = styled.button`
   flex-direction: column;
   justify-content: center;
   background-color: ${
-          ({theme, disabled}) => disabled ? theme.colors.grey2 : "transparent"
-  };
+    ({theme, disabled}) => disabled ? theme.colors.lightGray : "transparent"
+};
   border: none;
   transition: background-color 0.4s ease-in-out;
   cursor: ${
-      ({disabled}) => disabled ? "initial" : "pointer"
-  };
+    ({disabled}) => disabled ? "initial" : "pointer"
+};
   
   :hover {
     // Ternary expression in case disabled button color changes in the future.
-    background-color: ${({disabled, theme}) => disabled ? theme.colors.grey2 : theme.colors.grey2};
+    background-color: ${({disabled, theme}) => disabled ? theme.colors.lightGray : theme.colors.lightGray};
   }
 `;
 

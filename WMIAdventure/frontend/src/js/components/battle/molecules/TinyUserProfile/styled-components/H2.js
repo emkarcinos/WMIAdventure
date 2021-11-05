@@ -5,9 +5,9 @@ const H2 = styled.h2`
   font-size: 18px;
   font-family: 'Open Sans', sans-serif;
   font-weight: ${({theme}) => theme.weight.semibold};
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
 
-  @media(min-width: ${({theme}) => theme.overMobile}px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 24px;
     margin: ${({vertical}) => vertical ? '0 0 10px 0' : '0 0 14px 0'};
   }

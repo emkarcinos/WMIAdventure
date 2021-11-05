@@ -7,8 +7,8 @@ const Wrapper = styled.div`
   top: 48px;
   width: 100vw;
   height: calc(100vh - 48px);
-  background-color: ${({theme}) => theme.colors.ui07trans};
-  
+  background-color: ${({theme}) => theme.colors.darkTrans};
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     height: calc(100vh - 64px);
     top: 64px;

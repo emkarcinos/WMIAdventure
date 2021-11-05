@@ -4,7 +4,7 @@ const View = styled.h2`
   font-family: 'Roboto', sans-serif;
   font-size: 28px;
   font-weight: ${({theme}) => theme.weight.medium};
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
   text-transform: uppercase;
   margin: 0 0 36px 0;
   

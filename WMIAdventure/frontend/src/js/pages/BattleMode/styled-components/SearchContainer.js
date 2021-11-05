@@ -6,7 +6,7 @@ const SearchContainer = styled.div`
   margin: 0 auto;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   padding: 0 10px;
 
   @media(min-width: ${({theme}) => theme.overMobile}px) {

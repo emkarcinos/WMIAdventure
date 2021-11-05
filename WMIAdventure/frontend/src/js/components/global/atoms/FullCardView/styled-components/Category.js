@@ -5,7 +5,7 @@ const Category = styled.p`
   font-weight: ${({theme}) => theme.weight.regular};
   text-transform: uppercase;
   margin: 0;
-  color: ${({theme}) => theme.colors.borderLine};
+  color: ${({theme}) => theme.colors.dark};
   text-align: center;
   overflow-wrap: anywhere;
   max-width: 200px;

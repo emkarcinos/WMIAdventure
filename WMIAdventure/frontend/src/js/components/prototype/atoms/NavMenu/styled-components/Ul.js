@@ -11,7 +11,7 @@ const Animation = keyframes`
 
 const Ul = styled.ul`
   animation: ${Animation} .5s ease-in-out;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   margin: 0;
   list-style: none;
   width: 100%;

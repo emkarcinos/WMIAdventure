@@ -7,7 +7,7 @@ const MobileLevelsMenu = styled.div`
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: ${({theme}) => theme.colors.grey1};
+  background-color: ${({theme}) => theme.colors.light2};
 `;
 
 export default MobileLevelsMenu;

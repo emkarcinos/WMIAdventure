@@ -8,7 +8,7 @@ const Div = styled.div`
   width: 100%;
   height: 48px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   margin-bottom: 16px;
 `;
 
