@@ -10,7 +10,9 @@ class KuceInBattle extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if((prevProps.visible !== this.props.visible)
+        if(prevProps.visible === undefined)
+            this.runKuceInBattle();
+        else if((prevProps.visible !== this.props.visible)
             && this.props.visible === true) {
             this.runKuceInBattle();
         } else if((prevProps.visible !== this.props.visible)
@@ -27,15 +29,15 @@ class KuceInBattle extends React.Component {
 
         setTimeout(() => {
             this.setState({
-                setScale: '1.1',
+                setScale: '1.2',
             });
-        }, 15);
+        }, 800);
 
         setTimeout(() => {
             this.setState({
                 setScale: '1',
             });
-        }, 555);
+        }, 1300);
     }
 
     // hide kuce animation

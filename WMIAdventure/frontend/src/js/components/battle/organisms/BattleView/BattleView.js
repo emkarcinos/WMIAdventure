@@ -11,6 +11,15 @@ class BattleView extends React.Component {
         kuceInBattleVisible: false,
     }
 
+    componentDidUpdate(prevProps) {
+        if((prevProps.battleView !== this.props.battleView)
+            && this.props.battleView === true) {
+            this.setState({
+                kuceInBattleVisible: true,
+            });
+        }
+    }
+
     render() {
         return (
             <>
