@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 const Wrapper = styled(Link)`
-  background-color: ${({theme}) => theme.colors.ui05};
+  background-color: ${({theme}) => theme.colors.lightGray};
   color: ${({theme}) => theme.colors.ui06};
   width: 100%;
   height: 124px;
@@ -15,7 +15,7 @@ const Wrapper = styled(Link)`
   position: relative;
   text-decoration: none;
   overflow: hidden;
-  
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     flex-direction: row;
     justify-content: space-between;

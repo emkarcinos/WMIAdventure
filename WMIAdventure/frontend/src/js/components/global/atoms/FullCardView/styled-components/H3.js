@@ -4,34 +4,36 @@ import lvlIconGold from '../../../../../../assets/icons/lvlIconGold.svg';
 import lvlIconEpic from '../../../../../../assets/icons/lvlIconEpic.svg';
 
 function iconHandler(common, gold, epic) {
-    if(common)
+    if (common)
         return lvlIconCommon;
-    else if(gold)
+    else if (gold)
         return lvlIconGold;
-    else if(epic)
+    else if (epic)
         return lvlIconEpic;
 }
 
 function iconHeightHandler(common, gold, epic) {
-    if(common)
+    if (common)
         return '15px';
-    else if(gold)
+    else if (gold)
         return '22px';
-    else if(epic)
+    else if (epic)
         return '31px';
 }
 
 function nameLengthHandler(nameLength) {
-    if(nameLength < 20) {
+    if (nameLength < 20) {
         return '32px';
-    } return '16px';
-}
-function nameLineHeightHandler(nameLength) {
-    if(nameLength < 20) {
-        return '36px';
-    } return '20px';
+    }
+    return '16px';
 }
 
+function nameLineHeightHandler(nameLength) {
+    if (nameLength < 20) {
+        return '36px';
+    }
+    return '20px';
+}
 
 
 const H3 = styled.h3`
@@ -43,7 +45,7 @@ const H3 = styled.h3`
   line-height: ${({nameLength}) => nameLineHeightHandler(nameLength)};
   overflow-wrap: anywhere;
   max-width: 200px;
-  color: ${({theme}) => theme.colors.borderLine};
+  color: ${({theme}) => theme.colors.dark};
   
   &:before {
     content: '';

@@ -6,7 +6,7 @@ const P = styled.p`
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   font-size: 14px;
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
   font-weight: ${({theme}) => theme.weight.medium};
 `;
 

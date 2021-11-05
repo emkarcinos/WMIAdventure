@@ -15,7 +15,7 @@ const Ul = styled.ul`
   justify-content: center;
   align-items: center;
   animation: ${Animation} .6s ease-in-out;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
   border: none;

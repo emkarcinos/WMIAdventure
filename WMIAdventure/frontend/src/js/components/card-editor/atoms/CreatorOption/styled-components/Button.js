@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  color: ${({theme}) => theme.colors.ui01};
+  color: ${({theme}) => theme.colors.whiteAlmost};
   font-size: 18px;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   width: 100%;
   background-color: transparent;
-  border: 2px solid ${({theme}) => theme.colors.ui01};
+  border: 2px solid ${({theme}) => theme.colors.whiteAlmost};
   border-radius: 10px;
   display: flex;
   justify-content: center;

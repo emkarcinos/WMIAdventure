@@ -6,12 +6,12 @@ const Button = styled.button`
   margin: 0 12px 0 0;
   font-size: 14px;
   font-weight: 600;
-  background-color: ${({theme}) => theme.colors.ui05};
+  background-color: ${({theme}) => theme.colors.lightGray};
   cursor: pointer;
   border: none;
   border-radius: 4px;
   position: relative;
-  
+
   // :before {
   //   content: '';
   //   display: block;
@@ -20,7 +20,7 @@ const Button = styled.button`
   //   left: 2px;
   //   width: 18px;
   //   height: 28px;
-  //   background-image: url(${thunderIcon});
+    //   background-image: url(${thunderIcon});
   //   background-repeat: no-repeat;
   //   background-position: center;
   // }

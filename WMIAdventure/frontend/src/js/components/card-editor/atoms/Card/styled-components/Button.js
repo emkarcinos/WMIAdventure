@@ -22,7 +22,7 @@ const Button = styled.button`
   position: relative;
 
   :hover {
-    background-color: ${({theme}) => theme.colors.grey2};
+    background-color: ${({theme}) => theme.colors.lightGray};
   }
   
   :before {

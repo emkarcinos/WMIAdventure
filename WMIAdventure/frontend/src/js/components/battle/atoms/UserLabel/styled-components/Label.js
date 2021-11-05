@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 function backColorHandler(theme, term, level, rank) {
-    if(level < 10 || rank < 20 || term < 4)
-        return theme.colors.common;
-    else if((level >= 10 && level < 20) || (rank >= 20 && rank < 50) || (term >= 4 && term < 6))
-        return theme.colors.gold;
-    else if(level >= 20 || rank >= 50 || term >= 6)
-        return theme.colors.epic;
+    if (level < 10 || rank < 20 || term < 4)
+        return theme.colors.greenyBluey;
+    else if ((level >= 10 && level < 20) || (rank >= 20 && rank < 50) || (term >= 4 && term < 6))
+        return theme.colors.yellowyOrangy;
+    else if (level >= 20 || rank >= 50 || term >= 6)
+        return theme.colors.purplyPinky;
 }
 
 const Label = styled.div`

@@ -6,7 +6,7 @@ const Wrapper = styled.button`
   align-items: center;
   cursor: pointer;
 
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   border: none;
   border-radius: 50%;
   width: 32px;

@@ -5,7 +5,7 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: ${({theme}) => theme.colors.ui01};
+  color: ${({theme}) => theme.colors.whiteAlmost};
   margin-bottom: 20px;
 `;
 

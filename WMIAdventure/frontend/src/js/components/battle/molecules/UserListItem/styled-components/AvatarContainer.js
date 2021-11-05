@@ -4,11 +4,11 @@ import kLetter from '../../../../../../assets/icons/k-letter.svg';
 const AvatarContainer = styled.div`
   width: 36px;
   height: 36px;
-  background-color: ${({theme, access}) => access ? theme.colors.uiGreen : theme.colors.grey2};
+  background-color: ${({theme, access}) => access ? theme.colors.greenyBluey : theme.colors.lightGray};
   border-radius: 50%;
   position: relative;
   margin-right: 10px;
-  
+
   &:after {
     display: ${({access}) => access ? 'block' : 'none'};
     content: '';
@@ -22,8 +22,8 @@ const AvatarContainer = styled.div`
     background-position: center;
     background-image: url(${kLetter});
   }
-  
-  @media(min-width: ${({theme}) => theme.overMobile}px) {
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 44px;
     height: 44px;
 

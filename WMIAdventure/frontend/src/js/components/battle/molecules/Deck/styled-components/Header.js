@@ -5,7 +5,7 @@ const Header = styled.p`
   font-size: 24px;
   margin: 0 0 26px 0;
   font-weight: ${({theme}) => theme.weight.semibold};
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
   text-transform: uppercase;
 `;
 

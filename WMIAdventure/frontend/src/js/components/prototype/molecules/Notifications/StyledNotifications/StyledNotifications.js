@@ -10,7 +10,7 @@ const StyledNotifications = styled.div`
   left: 0;
   width: 100vw;
   height: calc(100vh - 64px);
-  background-color: ${({theme}) => theme.colors.ui07trans};
+  background-color: ${({theme}) => theme.colors.darkTrans};
 `;
 
 StyledNotifications.Header = Header;

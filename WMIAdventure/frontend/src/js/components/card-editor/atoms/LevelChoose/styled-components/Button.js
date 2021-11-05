@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 function dotColor(rank, theme) {
-    if(rank === 1)
-        return theme.colors.common;
-    if(rank === 2)
-        return theme.colors.gold;
-    if(rank === 3)
-        return theme.colors.epic;
+    if (rank === 1)
+        return theme.colors.greenyBluey;
+    if (rank === 2)
+        return theme.colors.yellowyOrangy;
+    if (rank === 3)
+        return theme.colors.purplyPinky;
 }
 
 const Button = styled.button`
@@ -18,24 +18,25 @@ const Button = styled.button`
           ({disabled}) => disabled ? "initial" : "pointer"
   };
   background-color: ${
-    ({theme, disabled}) => disabled ? theme.colors.ui04 : "transparent" 
+          ({theme, disabled}) => disabled ? theme.colors.lightGray : "transparent"
   };
   color: ${
-    ({theme, disabled}) => disabled ? theme.colors.borderLine : "initial"
+          ({theme, disabled}) => disabled ? theme.colors.dark : "initial"
   };
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
-  
+
   transition: background-color 0.3s ease-in-out;
+
   &:hover {
     background-color: ${
-            ({theme, disabled}) => disabled ? theme.colors.ui04 : theme.colors.grey2
+            ({theme, disabled}) => disabled ? theme.colors.lightGray : theme.colors.lightGray
     };
   }
-  
-  
+
+
   :before {
     content: '';
     display: block;
@@ -45,7 +46,7 @@ const Button = styled.button`
     top: 14px;
     left: 30%;
     border-radius: 50%;
-    background-color: ${({rank, theme, disabled}) => disabled ? theme.colors.ui07trans : dotColor(rank, theme)};
+    background-color: ${({rank, theme, disabled}) => disabled ? theme.colors.darkTrans : dotColor(rank, theme)};
   }
 `;
 

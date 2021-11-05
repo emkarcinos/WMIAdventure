@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const P = styled.p`
   margin: 0;
   text-transform: uppercase;
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
   font-weight: ${({theme}) => theme.weight.medium};
   font-size: 18px;
 `;
