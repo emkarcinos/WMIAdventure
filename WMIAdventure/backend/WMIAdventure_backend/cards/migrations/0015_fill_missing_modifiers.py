@@ -1,18 +1,20 @@
-from django.db import migrations, models
-from cards.models import CardEffect
+from django.db import migrations
+
+from cards.models import CardEffect as ModelCardEffect
 
 
 def update_missing_modifiers(apps, schema_editor):
-    def change_modifier_true(effect: CardEffect.EffectId):
+    CardEffect = apps.get_model('cards', 'CardEffect')
+    def change_modifier_true(effect: ModelCardEffect.EffectId):
         effect = CardEffect.objects.get(pk=effect.value)
         effect.has_modifier = True
         effect.save()
 
-    change_modifier_true(CardEffect.EffectId.EMPOWER)
-    change_modifier_true(CardEffect.EffectId.EMPOWER_DMG)
-    change_modifier_true(CardEffect.EffectId.EMPOWER_SHIELD)
-    change_modifier_true(CardEffect.EffectId.EMPOWER_HEAL)
-    change_modifier_true(CardEffect.EffectId.TRUE_DMG)
+    change_modifier_true(ModelCardEffect.EffectId.EMPOWER)
+    change_modifier_true(ModelCardEffect.EffectId.EMPOWER_DMG)
+    change_modifier_true(ModelCardEffect.EffectId.EMPOWER_SHIELD)
+    change_modifier_true(ModelCardEffect.EffectId.EMPOWER_HEAL)
+    change_modifier_true(ModelCardEffect.EffectId.TRUE_DMG)
 
 
 class Migration(migrations.Migration):

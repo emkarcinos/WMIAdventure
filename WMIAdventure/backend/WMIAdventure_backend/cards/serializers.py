@@ -7,9 +7,11 @@ from .validators import validate_effect_modifiers, validate_does_not_exceed_effe
 
 
 class CardEffectSerializer(serializers.ModelSerializer):
+    icon = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
+
     class Meta:
         model = CardEffect
-        fields = ['id', 'name', 'tooltip', 'has_modifier']
+        fields = ['id', 'name', 'tooltip', 'has_modifier', 'icon']
 
 
 class CardLevelSerializer(serializers.ModelSerializer):
