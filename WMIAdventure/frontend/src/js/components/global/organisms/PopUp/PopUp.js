@@ -10,7 +10,7 @@ class PopUp extends React.Component {
                  setOpacity={this.props.setOpacity}
                  setTranslateY={this.props.setTranslateY}>
                 {this.props.children}
-                <Close onClick={this.props.closeHandler} />
+                <Close visible={!this.props.disableClose} onClick={this.props.closeHandler} />
             </Div>
         );
     }

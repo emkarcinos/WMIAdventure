@@ -8,7 +8,7 @@ class BattleView extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <PopUp visible={this.props.battleView}
+                    <PopUp visible={this.props.battleView} disableClose
                            closeHandler={this.props.closeHandler}
                            setTranslateY={this.props.setTranslateY}>
 
