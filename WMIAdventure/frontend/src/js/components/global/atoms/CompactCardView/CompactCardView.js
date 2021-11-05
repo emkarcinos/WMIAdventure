@@ -9,7 +9,7 @@ class CompactCardView extends React.Component {
     state = {
         name: ' ',
         level: 1,
-        image: null
+        cardImage: null
     }
 
     isCommon = () => this.state.level === 1;
@@ -29,11 +29,11 @@ class CompactCardView extends React.Component {
     setStateFromProps = () => {
         this.props.cardName ? this.setState({name: this.props.cardName}) : null;
         this.props.level ? this.setState({level: this.props.level}) : null;
-        this.props.cardImage ? this.setState({image: this.props.cardImage}) : null;
+        this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
     }
 
     propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
-        prevProps.image !== this.props.image ||
+        prevProps.cardImage !== this.props.cardImage ||
         prevProps.level !== this.props.level;
 
     componentDidMount() {
@@ -58,7 +58,7 @@ class CompactCardView extends React.Component {
                 </ NameContainer>
                 <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}
                      setIconMarginBottom={this.props.setIconMarginBottom} alt="Image for card."
-                     src={this.state.image ? this.state.image : upload_image_dark} />
+                     src={this.state.cardImage ? this.state.cardImage : upload_image_dark} />
             </Div>
         );
     }
