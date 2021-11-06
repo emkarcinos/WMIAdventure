@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-from battle.businesslogic.Battle import Battle
 from battle.businesslogic.PlayerFactory import PlayerFactory
 from battle.businesslogic.recorder.ProcessRecorder import ProcessRecorder
 from battle.businesslogic.tests.Creator import Creator
@@ -15,17 +14,15 @@ class ProcessRecorderTestCase(TestCase):
         cls.defender = PlayerFactory.get_instance().create(defender, is_attacker=False)
 
     def test_creation(self):
-        recorder = ProcessRecorder()
+        recorder = ProcessRecorder(self.attacker, self.defender)
         self.assertIs(recorder.get_winner(), None)
         self.assertEqual(recorder.get_states(), [])
 
     def test_turn_recording(self):
-        recorder = ProcessRecorder()
-        recorder.record_turn(self.attacker, self.defender)
-        states = recorder.get_states()
+        recorder = ProcessRecorder(self.attacker, self.defender)
         # Testing first turn
-        self.assertEqual(states[0].attacker.get_stats().hp, self.attacker.get_hp())
-        self.assertEqual(states[0].defender.get_stats().hp, self.defender.get_hp())
+        self.assertEqual(recorder.initial_state.attacker.get_stats().hp, self.attacker.get_hp())
+        self.assertEqual(recorder.initial_state.defender.get_stats().hp, self.defender.get_hp())
 
         # Testing second turn
         player_hp_before_alteration = self.attacker.get_hp()
@@ -37,11 +34,11 @@ class ProcessRecorderTestCase(TestCase):
         recorder.record_turn(self.attacker, self.defender)
 
         # We're checking if the previous state remains intact
-        self.assertEqual(states[0].attacker.get_stats().hp, player_hp_before_alteration)
-        self.assertEqual(states[0].defender.get_stats().hp, player_hp_before_alteration)
+        self.assertEqual(recorder.initial_state.attacker.get_stats().hp, player_hp_before_alteration)
+        self.assertEqual(recorder.initial_state.defender.get_stats().hp, player_hp_before_alteration)
 
-        self.assertEqual(states[1].attacker.get_stats().hp, self.attacker.get_hp())
-        self.assertEqual(states[1].defender.get_stats().hp, self.defender.get_hp())
+        self.assertEqual(recorder.states[0].attacker.get_stats().hp, self.attacker.get_hp())
+        self.assertEqual(recorder.states[0].defender.get_stats().hp, self.defender.get_hp())
 
 
     @classmethod

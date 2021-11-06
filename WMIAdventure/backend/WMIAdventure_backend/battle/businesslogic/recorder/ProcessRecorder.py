@@ -11,7 +11,8 @@ class ProcessRecorder:
     states: list[State]
     winner: Union[Player, None]
 
-    def __init__(self):
+    def __init__(self, attacker: Player, defender: Player):
+        self.initial_state = State(attacker, defender)
         self.states = []
         self.winner = None
 
