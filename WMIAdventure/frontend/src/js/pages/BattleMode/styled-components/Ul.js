@@ -7,7 +7,7 @@ const Ul = styled.ul`
   list-style: none;
   margin: 0 auto 92px;
   padding: 0 10px 10px;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);

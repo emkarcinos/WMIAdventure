@@ -17,7 +17,7 @@ const PopupContainer = styled.div`
   z-index: 3;
   
   /* Styling */
-  background: ${({theme}) => theme.colors.ui01};
+  background: ${({theme}) => theme.colors.whiteAlmost};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 `;

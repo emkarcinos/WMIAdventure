@@ -6,7 +6,7 @@ const Li = styled.li`
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  background-color: ${({theme}) => theme.colors.grey1};
+  background-color: ${({theme}) => theme.colors.light2};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 40px;

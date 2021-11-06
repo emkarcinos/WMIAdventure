@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Subject = styled.p`
   font-size: 12px;
   font-weight: 200;
-  color: ${({theme}) => theme.colors.borderLine};
+  color: ${({theme}) => theme.colors.dark};
   padding: 0;
   margin: 0;
   max-width: 260px;

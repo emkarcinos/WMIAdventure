@@ -2,25 +2,27 @@
 
 from django.db import migrations
 
-from cards.models import CardEffect, CardLevel
+from cards.models import CardEffect as ModelCardEffect
 
 
 def insert_card_effects_values_to_db(apps, schema_editor):
-    for value in CardEffect.EffectId.values:
-        if not CardEffect.objects.filter(pk=value).exists():
-            item = CardEffect.objects.create(id=value)
+    CardEffect = apps.get_model('cards', 'CardEffect')
+    for e in ModelCardEffect.EffectId:
+        if not CardEffect.objects.filter(pk=e.value).exists():
+            item = CardEffect.objects.create(id=e.value,
+                                             name=e.label)
             item.save()
 
     # Modifying has_modifier values for some effects
     # One may also use views to modify them, we just set them here initially.
-    def change_modifier_true(effect: CardEffect.EffectId):
+    def change_modifier_true(effect: ModelCardEffect.EffectId):
         effect = CardEffect.objects.get(pk=effect.value)
         effect.has_modifier = True
         effect.save()
 
-    change_modifier_true(CardEffect.EffectId.DMG)
-    change_modifier_true(CardEffect.EffectId.SHIELD)
-    change_modifier_true(CardEffect.EffectId.HEAL)
+    change_modifier_true(ModelCardEffect.EffectId.DMG)
+    change_modifier_true(ModelCardEffect.EffectId.SHIELD)
+    change_modifier_true(ModelCardEffect.EffectId.HEAL)
 
 
 class Migration(migrations.Migration):

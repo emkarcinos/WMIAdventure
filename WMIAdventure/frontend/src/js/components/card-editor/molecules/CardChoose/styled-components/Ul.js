@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Ul = styled.ul`
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   display: flex;
   flex-direction: column;
 

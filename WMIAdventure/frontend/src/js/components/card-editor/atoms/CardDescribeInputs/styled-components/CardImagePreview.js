@@ -4,17 +4,17 @@ const CardImagePreview = styled.img`
   /* Size */
   width: 200px;
   height: 200px;
-  @media (max-width: ${({theme}) => theme.overMobile}px){
+  @media (max-width: ${({theme}) => theme.overMobile}px) {
     width: 138px;
     height: 138px;
   }
-  
-  
+
+
   /* Styling */
   border-radius: 4px;
-  background-color: ${({theme}) => theme.colors.grey1};
+  background-color: ${({theme}) => theme.colors.light2};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  
+
   object-fit: contain;
 `;
 

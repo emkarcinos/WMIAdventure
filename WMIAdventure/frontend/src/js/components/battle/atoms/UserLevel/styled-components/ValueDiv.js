@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 function handleColor(number, theme) {
-    if(number < 10)
-        return theme.colors.common;
-    else if((number >= 10 && number < 20))
-        return theme.colors.gold;
-    else if(number >= 20)
-        return theme.colors.epic;
+    if (number < 10)
+        return theme.colors.greenyBluey;
+    else if ((number >= 10 && number < 20))
+        return theme.colors.yellowyOrangy;
+    else if (number >= 20)
+        return theme.colors.purplyPinky;
 }
 
 const ValueDiv = styled.div`

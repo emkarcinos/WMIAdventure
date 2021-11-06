@@ -11,7 +11,7 @@ const Div = styled.div`
   left: 0;
   height: calc(100vh - 48px);
   width: 100%;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   transition: opacity 0.3s ease-in-out, transform  0.3s ease-in-out;
   z-index: 5;
   overflow-y: scroll;

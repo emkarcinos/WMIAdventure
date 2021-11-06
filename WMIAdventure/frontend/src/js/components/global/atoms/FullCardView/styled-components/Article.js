@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 function colorHandler(common, gold, epic) {
-    if(common)
-        return ({theme}) => theme.colors.common;
-    else if(gold)
-        return ({theme}) => theme.colors.gold;
-    else if(epic)
-        return ({theme}) => theme.colors.epic;
+    if (common)
+        return ({theme}) => theme.colors.greenyBluey;
+    else if (gold)
+        return ({theme}) => theme.colors.yellowyOrangy;
+    else if (epic)
+        return ({theme}) => theme.colors.purplyPinky;
 }
 
 const Article = styled.article`
@@ -16,18 +16,18 @@ const Article = styled.article`
   justify-content: center;
   width: 262px;
   height: 464px;
-  background-color: ${({theme}) => theme.colors.grey1};
+  background-color: ${({theme}) => theme.colors.light2};
   margin-bottom: 14px;
   border-radius: 24px;
   position: relative;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
-  
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 300px;
     height: 500px;
   }
-  
+
   &:before {
     content: '';
     display: block;

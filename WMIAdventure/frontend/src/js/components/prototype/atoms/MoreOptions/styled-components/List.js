@@ -5,7 +5,7 @@ const List = styled.ul`
   position: absolute;
   top: 16px;
   right: 16px;
-  background-color: ${({theme}) => theme.colors.ui04};
+  background-color: ${({theme}) => theme.colors.lightGray};
   border-radius: 10px;
   z-index: 3;
   margin: 0;

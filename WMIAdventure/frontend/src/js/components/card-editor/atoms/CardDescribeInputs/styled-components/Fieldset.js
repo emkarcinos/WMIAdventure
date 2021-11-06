@@ -23,7 +23,7 @@ const Fieldset = styled.fieldset`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
   
   animation: ${Animation} .6s ease-in-out;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
 `;
 
 export default Fieldset;

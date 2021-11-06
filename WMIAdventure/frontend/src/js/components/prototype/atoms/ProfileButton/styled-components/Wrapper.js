@@ -5,7 +5,7 @@ const Wrapper = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   border: none;
   border-radius: 50%;
   width: 32px;

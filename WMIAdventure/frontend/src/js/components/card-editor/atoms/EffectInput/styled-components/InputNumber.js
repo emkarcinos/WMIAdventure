@@ -7,8 +7,8 @@ const InputNumber = styled.input`
   text-align: center;
   width: 28px;
   height: 26px;
-  color: ${({theme}) => theme.colors.borderLine};
-  border-bottom: 1px solid ${({theme}) => theme.colors.borderLine};
+  color: ${({theme}) => theme.colors.dark};
+  border-bottom: 1px solid ${({theme}) => theme.colors.dark};
   -moz-appearance: textfield;
 
   ::-webkit-inner-spin-button {
@@ -16,7 +16,6 @@ const InputNumber = styled.input`
     margin: 0;
   }
 `;
-
 
 
 export default InputNumber;

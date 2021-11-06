@@ -7,10 +7,10 @@ const Describe = styled.p`
   justify-content: center;
   font-size: 16px;
   font-weight: 400;
-  color: ${({theme}) => theme.colors.ui07};
+  color: ${({theme}) => theme.colors.dark};
   text-align: center;
   margin: 0;
-  
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     font-size: 18px;
     height: 100%;

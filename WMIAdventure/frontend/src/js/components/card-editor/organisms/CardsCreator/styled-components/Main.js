@@ -10,7 +10,7 @@ const Main = styled.main`
   padding: 20px 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: ${({theme}) => theme.colors.uiBlue};
+  background-color: ${({theme}) => theme.colors.dark};
 `;
 
 export default Main;

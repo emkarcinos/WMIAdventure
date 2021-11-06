@@ -42,7 +42,7 @@ class OpponentSelected extends React.Component {
             .then(user => this.setState({caller: user}))
         getCurrentUserDecks()
             .then(resp => {
-                if(resp){
+                if (resp) {
                     const attackerDeck = resp[0];
                     this.setState({userDeck: attackerDeck});
                 }
@@ -54,7 +54,7 @@ class OpponentSelected extends React.Component {
         this.props.kuceStartFight();
         fightWithUser(this.props.opponent.id)
             .then(response => {
-                if(response.ok) {
+                if (response.ok) {
                     response.json()
                         .then(data => {
                             this.postBattle(data);
@@ -132,7 +132,7 @@ class OpponentSelected extends React.Component {
     }
 
     handleHiding = () => {
-        if(!this.state.popUpHover)
+        if (!this.state.popUpHover)
             this.props.closeUserPreviewHandler();
     }
 
@@ -147,36 +147,38 @@ class OpponentSelected extends React.Component {
                             <GridContainer>
                                 <FlexCenterContainer>
                                     <FlexGapContainer gap={'40px'} setMargin={'32px 0 0 0'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
+                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
+                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                     </FlexGapContainer>
                                     <TinyUserProfile displayedUsername={this.state.caller} setMargin={'24px 0 0 0'}
                                                      term={7} level={50} rank={2} avatar={null}/>
-                                    <KuceVs />
-                                    <TinyUserProfile displayedUsername={this.props.opponent.username} setMargin={'0 0 24px 0'}
+                                    <KuceVs/>
+                                    <TinyUserProfile displayedUsername={this.props.opponent.username}
+                                                     setMargin={'0 0 24px 0'}
                                                      term={7} level={39} rank={15} avatar={null}/>
                                     <FlexGapContainer gap={'40px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
+                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
+                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                     </FlexGapContainer>
                                 </FlexCenterContainer>
 
                                 <FlexEndContainer>
-                                    <TinyCards deck={this.state.userDeck} setMargin={'24px 0 36px 0'} />
+                                    <TinyCards deck={this.state.userDeck} setMargin={'24px 0 36px 0'}/>
                                     <FlexGapContainer gap={'36px'}>
-                                        <ButtonWithIcon setMargin={'0 36px 0 0'} handler={this.props.closeUserPreviewHandler}
-                                                        color={theme.colors.gold} icon={xClose}>
+                                        <ButtonWithIcon setMargin={'0 36px 0 0'}
+                                                        handler={this.props.closeUserPreviewHandler}
+                                                        color={theme.colors.yellowyOrangy} icon={xClose}>
                                             Wróć
                                         </ButtonWithIcon>
                                         <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
-                                                        color={theme.colors.epic} icon={battleIcon}>
+                                                        color={theme.colors.purplyPinky} icon={battleIcon}>
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
                                     <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
-                                                    color={theme.colors.common} icon={fastIcon}>
+                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
                                         Szybka walka
                                     </ButtonWithIcon>
                                 </FlexEndContainer>
@@ -203,39 +205,40 @@ class OpponentSelected extends React.Component {
                                    setTranslateY={this.props.setTranslateY}
                                    hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
-                                    <ColumnGapContainer gap={'24px'}  setMargin={'0 0 0 26px'}>
+                                    <ColumnGapContainer gap={'24px'} setMargin={'0 0 0 26px'}>
                                         <TinyUserProfile displayedUsername={this.state.caller} setMargin={'0'}
                                                          term={7} level={39} rank={15} avatar={null} vertical/>
                                         <FlexGapContainer gap={'52px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
+                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
+                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                         </FlexGapContainer>
-                                        <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'} />
+                                        <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
-                                    <KuceVs />
+                                    <KuceVs/>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
-                                        <TinyUserProfile displayedUsername={this.props.opponent.username} setMargin={'0'}
+                                        <TinyUserProfile displayedUsername={this.props.opponent.username}
+                                                         setMargin={'0'}
                                                          term={7} level={39} rank={15} avatar={null} vertical/>
                                         <FlexGapContainer gap={'52px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'} />
-                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
-                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
+                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
+                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
+                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                         </FlexGapContainer>
-                                        <TinyCards deck={null} setMargin={'0'} gap={'10px'} />
+                                        <TinyCards deck={null} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
                                 </FlexGapContainer>
 
                                 <FlexGapContainer gap={'40px'} setMargin={'36px 0 0 0'}>
                                     <ButtonWithIcon setMargin={'0'} handler={this.props.closeUserPreviewHandler}
-                                                    color={theme.colors.gold} icon={xClose}>
+                                                    color={theme.colors.yellowyOrangy} icon={xClose}>
                                         Wróć
                                     </ButtonWithIcon>
-                                    <ButtonWithIcon setMargin={'0'} color={theme.colors.epic} icon={battleIcon}>
+                                    <ButtonWithIcon setMargin={'0'} color={theme.colors.purplyPinky} icon={battleIcon}>
                                         Walcz
                                     </ButtonWithIcon>
                                     <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
-                                                    color={theme.colors.common} icon={fastIcon}>
+                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
                                         Szybka walka
                                     </ButtonWithIcon>
                                 </FlexGapContainer>
@@ -246,7 +249,7 @@ class OpponentSelected extends React.Component {
                                     attacker={this.state.caller}
                                     opponent={this.props.opponent.username}
                                     setOpacity={this.state.postBattleOpacity}
-                                    setTranslateY={this.state.postBattlePos} />
+                                    setTranslateY={this.state.postBattlePos}/>
                     </>
                 </Media>
             </>

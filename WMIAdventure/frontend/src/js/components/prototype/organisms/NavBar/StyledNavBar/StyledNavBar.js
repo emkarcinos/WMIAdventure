@@ -3,14 +3,14 @@ import IconsWrapper from './IconsWrapper';
 import Navigation from './Navigation';
 
 const StyledNavBar = styled.header`
-  background-color: ${({theme}) => theme.colors.ui04};
+  background-color: ${({theme}) => theme.colors.lightGray};
   width: 100%;
   height: 48px;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 13;
-  
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     height: 64px;
   }

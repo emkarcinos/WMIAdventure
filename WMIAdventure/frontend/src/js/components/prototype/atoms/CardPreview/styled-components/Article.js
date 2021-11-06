@@ -7,12 +7,12 @@ const Article = styled.article`
   align-items: center;
   width: 120px;
   height: 160px;
-  background-color: ${({theme}) => theme.colors.ui05};
+  background-color: ${({theme}) => theme.colors.lightGray};
   border-radius: 12px;
-  border: 2px solid ${({theme}) => theme.colors.hoverprimary};
+  border: 2px solid ${({theme}) => theme.colors.greenyBluey};
   padding: 12px;
   margin: 0 12px 8px;
-  
+
   @media (min-width: 440px) {
     width: 130px;
     height: 190px;
@@ -22,7 +22,7 @@ const Article = styled.article`
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     margin: 0 128px 12px;
   }
-  
+
   @media (min-width: 1200px) {
     margin: 0 8px 12px;
   }

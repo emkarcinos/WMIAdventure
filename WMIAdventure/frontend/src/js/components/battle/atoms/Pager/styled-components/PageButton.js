@@ -5,20 +5,20 @@ const PageButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   /* Sizing */
   width: 32px;
   height: 32px;
-  
+
   /* Styling */
-  background: ${({theme, disabled}) => !disabled ? theme.colors.ui02 : theme.colors.ui05};
+  background: ${({theme, disabled}) => !disabled ? theme.colors.whiteAlmost : theme.colors.lightGray};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-style: none;
-  cursor: ${({disabled}) => disabled ? 'auto' : 'pointer'} ;
+  cursor: ${({disabled}) => disabled ? 'auto' : 'pointer'};
 
   /* Font */
-  color: ${({theme, disabled}) => !disabled ? theme.colors.text01 : theme.colors.grey1};
+  color: ${({theme, disabled}) => !disabled ? theme.colors.dark : theme.colors.light2};
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 600;

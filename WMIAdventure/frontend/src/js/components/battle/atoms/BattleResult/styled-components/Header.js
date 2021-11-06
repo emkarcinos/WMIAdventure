@@ -7,7 +7,7 @@ const Header = styled.h2`
   margin: 0 0 10px 0;
   text-transform: uppercase;
   text-align: center;
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
 `;
 
 export default Header;

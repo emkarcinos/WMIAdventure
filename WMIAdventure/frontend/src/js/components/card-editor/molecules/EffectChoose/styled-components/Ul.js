@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Ul = styled.ul`
   display: flex;
-  background-color: ${({theme}) => theme.colors.ui01};
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
   flex-direction: column;
   
   width: 80%;

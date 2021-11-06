@@ -9,7 +9,7 @@ const Edit = styled.button`
   padding: 0;
   margin: 0;
   background-color: ${({theme}) => theme.colors.light2};
-  color: ${({theme}) => theme.colors.uiBlue};
+  color: ${({theme}) => theme.colors.dark};
   font-weight: ${({theme}) => theme.weight.light};
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;

@@ -5,7 +5,7 @@ const Title = styled.p`
   font-size: 80px;
   font-weight: ${({theme}) => theme.weight.bold};
   letter-spacing: 18px;
-  color: ${({theme}) => theme.colors.ui01};
+  color: ${({theme}) => theme.colors.whiteAlmost};
   text-transform: uppercase;
   order: 1;
 

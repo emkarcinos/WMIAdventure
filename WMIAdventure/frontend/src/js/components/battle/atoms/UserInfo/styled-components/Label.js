@@ -6,7 +6,7 @@ const Label = styled.p`
   font-size: 12px;
   font-family: 'Roboto', sans-serif;
   font-weight: ${({theme}) => theme.weight.light};
-  color: ${({theme}) => theme.colors.lightGray2};
+  color: ${({theme}) => theme.colors.darkGray};
 `;
 
 export default Label;
