@@ -62,14 +62,33 @@ class SimplifiedDeckSerializer(serializers.Serializer):
     cards = SimplifiedCardSerializer(many=True)
 
 
-class InitialStatePlayerSerializer(serializers.Serializer):
-    player_id = serializers.IntegerField()
+class SimplifiedPlayerSerializer(serializers.Serializer):
+    id = serializers.IntegerField(source="player_id")
+    stats = StatisticsSerializer()
     deck = SimplifiedDeckSerializer()
 
 
-class InitialStateSerializer(serializers.Serializer):
-    attacker = InitialStatePlayerSerializer()
-    defender = InitialStatePlayerSerializer()
+class UsedEffectSerializer(serializers.Serializer):
+    """
+    Serializes information of used effect, who was target and what changes this effect caused.
+    """
+
+    id = serializers.IntegerField()
+    target_player = serializers.IntegerField()
+
+    # Not all effects have power
+    power = serializers.FloatField(required=False)
+
+    # Not all effects change stats
+    changed_stats = StatisticsSerializer(required=False)
+
+
+class TurnSerializer(serializers.Serializer):
+    attacker = SimplifiedPlayerSerializer()
+    defender = SimplifiedPlayerSerializer()
+    card_executor = serializers.IntegerField(source="card_executor_id")
+    used_card = SimplifiedCardSerializer()
+    used_effects = UsedEffectSerializer(many=True)
 
 
 class BattleSerializer(serializers.Serializer):
@@ -77,7 +96,7 @@ class BattleSerializer(serializers.Serializer):
     Serializes Battle.
     """
 
-    initial_state = InitialStateSerializer(source="recorder.initial_state")
+    turns = TurnSerializer(source="recorder.turns", many=True)
 
     outcome = OutcomeSerializer()
 
