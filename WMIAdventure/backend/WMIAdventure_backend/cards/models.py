@@ -63,6 +63,10 @@ class CardEffect(models.Model):
                                                                 "have modifiers (power, range, etc). Most of the "
                                                                 "effect have no such modifiers, so I set the default "
                                                                 "to be False.")
+    icon = models.FileField(null=True,
+                            blank=True,
+                            help_text="# Holds an image representing the effect",
+                            upload_to='cards.ImageStorage/bytes/filename/mimetype')
 
     def __str__(self):
         return f"{self.name}"
