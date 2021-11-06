@@ -11,7 +11,7 @@ class UserStat extends React.Component {
                     {this.props.statNumber}
                 </StatNumber>
                 <ValueDiv type={this.props.type}
-                          setTransform={this.props.setTransform}
+                          currentLvlValue={this.props.currentLvlValue}
                           statNumber={this.props.statNumber} />
             </MainDiv>
         );

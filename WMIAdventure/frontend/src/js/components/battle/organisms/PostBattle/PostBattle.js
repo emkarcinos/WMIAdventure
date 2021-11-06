@@ -48,7 +48,7 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                 </FlexGapContainer>
-                                <UserStat statNumber={'25'} type={'level'} setTransform={'16px'} />
+                                <UserStat statNumber={'25'} type={'level'} currentLvlValue={'16'} />
                             </ColumnGapContainer>
 
                             <Div win={this.props.win}>
@@ -81,7 +81,7 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'} />
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'} />
                                 </FlexGapContainer>
-                                <UserStat statNumber={'25'} type={'level'} setTransform={'16px'} />
+                                <UserStat statNumber={'25'} type={'level'} currentLvlValue={'60'} />
                             </ColumnGapContainer>
 
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>

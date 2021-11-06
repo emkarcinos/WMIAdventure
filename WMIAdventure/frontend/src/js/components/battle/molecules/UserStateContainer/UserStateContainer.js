@@ -22,11 +22,11 @@ class UserStateContainer extends React.Component {
                 </TopDiv>
                 <FlexGapContainer gap={'16px'} setMargin={'12px 0 10px 0'}>
                     <Icon src={health} />
-                    <UserStat type={'hp'} statNumber={'50'} setTransform={'30px'} />
+                    <UserStat type={'hp'} statNumber={'0'} />
                 </FlexGapContainer>
                 <FlexGapContainer gap={'16px'}>
                     <Icon src={shield} />
-                    <UserStat type={'shield'} statNumber={'10'} setTransform={'20px'} />
+                    <UserStat type={'shield'} statNumber={'0'} />
                 </FlexGapContainer>
             </Container>
         );
