@@ -21,6 +21,9 @@ class SimplifiedPlayer:
         # Create simplified player's deck
         self.deck = SimplifiedDeck(player.deck)
 
+    def __str__(self):
+        return f"Simplified Player {self.player_id}"
+
     def get_id(self) -> int:
         """
         Returns an ID of a Player referenced by this object.

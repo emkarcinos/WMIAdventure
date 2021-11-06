@@ -26,6 +26,9 @@ class BattleCard:
 
         self.turns_blocked = 0
 
+    def __str__(self):
+        return f"Card info id {self.card_model.info.id} lvl: {self.card_model.level.level}"
+
     def use(self) -> List[Effect]:
         """
         Updates card's buffs and returns list of card's effects to be executed in battle simulation.
