@@ -51,3 +51,38 @@ class OutcomeSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         pass
+
+
+class SimplifiedCardSerializer(serializers.Serializer):
+    id = serializers.IntegerField(source="card_info_id")
+    level = serializers.IntegerField()
+
+
+class SimplifiedDeckSerializer(serializers.Serializer):
+    cards = SimplifiedCardSerializer(many=True)
+
+
+class InitialStatePlayerSerializer(serializers.Serializer):
+    player_id = serializers.IntegerField()
+    deck = SimplifiedDeckSerializer()
+
+
+class InitialStateSerializer(serializers.Serializer):
+    attacker = InitialStatePlayerSerializer()
+    defender = InitialStatePlayerSerializer()
+
+
+class BattleSerializer(serializers.Serializer):
+    """
+    Serializes Battle.
+    """
+
+    initial_state = InitialStateSerializer(source="recorder.initial_state")
+
+    outcome = OutcomeSerializer()
+
+    def create(self, validated_data):
+        return super(BattleSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super(BattleSerializer, self).update(instance, validated_data)

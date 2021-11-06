@@ -2,14 +2,13 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+from battle.businesslogic.tests.Creator import Creator
 from users.models import User
+from . import views
 from .businesslogic.Deck import Deck
 from .businesslogic.Outcome import Outcome
 from .businesslogic.Player import Player
 from .serializers import *
-from .businesslogic.tests import *
-from battle.businesslogic.tests.Creator import Creator
-from . import views
 
 
 class StatisticsSerializerTestCase(TestCase):
@@ -221,11 +220,11 @@ class BattleViewTestCase(TestCase):
         response = view(test_request, defender_id=self.defender_user.id)
 
         # Assert response attacker
-        actual_attacker = response.data.get("attacker")
+        actual_attacker = response.data.get("outcome").get("attacker")
         self.assertEqual(actual_attacker.get("id"), self.attacker_user.id)
 
         # Assert response defender
-        actual_defender = response.data.get("defender")
+        actual_defender = response.data.get("outcome").get("defender")
         self.assertEqual(actual_defender.get("id"), self.defender_user.id)
 
     def test_get2(self):

@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from IngameUsers.models import UserProfile
 from battle.businesslogic.BadBattleProfileException import BadBattleProfileException
 from battle.businesslogic.Battle import Battle
-from battle.serializers import OutcomeSerializer
+from battle.serializers import BattleSerializer
 
 
 class BattleView(APIView):
@@ -53,5 +53,5 @@ class BattleView(APIView):
 
         battle.start()
 
-        serializer = OutcomeSerializer(instance=battle.outcome)
+        serializer = BattleSerializer(instance=battle)
         return Response(serializer.data)
