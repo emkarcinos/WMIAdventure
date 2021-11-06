@@ -4,6 +4,9 @@ import Media from "react-media";
 import PopUp from "../../../global/organisms/PopUp";
 import MainContainer from "./styled-components/MainContainer";
 import KuceInBattle from "../../atoms/KuceInBattle";
+import FlexGapContainer from "../../../global/molecules/FlexGapContainer/FlexGapContainer";
+import UserStateContainer from "../../molecules/UserStateContainer";
+import CompactCardView from "../../../global/atoms/CompactCardView";
 
 class BattleView extends React.Component {
 
@@ -28,7 +31,15 @@ class BattleView extends React.Component {
                            closeHandler={this.props.closeHandler}
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
+                            <FlexGapContainer setMargin={'10px 0 0 0'}>
+                                <UserStateContainer />
+                                <CompactCardView setWidth={'124px'} setHeight={'192px'} setMargin={'0 0 0 10px'} />
+                            </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
+                            <FlexGapContainer setMargin={'0 0 10px 0'}>
+                                <CompactCardView setWidth={'124px'} setHeight={'192px'} setMargin={'0 10px 0 0'} />
+                                <UserStateContainer />
+                            </FlexGapContainer>
                         </MainContainer>
                     </PopUp>
                 </Media>
