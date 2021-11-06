@@ -11,7 +11,7 @@ import rankIcon from '../../../../../assets/images/rankIcon.png';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import {desktop} from '../../../../utils/globals';
-import UserLevel from '../../atoms/UserLevel';
+import UserStat from '../../atoms/UserStat';
 
 class TinyUserProfile extends React.Component {
     render() {
@@ -32,7 +32,7 @@ class TinyUserProfile extends React.Component {
                     </FlexGapContainer>
                     <Media query={desktop}>
                         {this.props.vertical ? '' :
-                            <UserLevel levelNumber={'20'} setTransform={'43px'} setMargin={'14px 0 0 0'} />}
+                            <UserStat statNumber={'20'} type={'level'} setTransform={'43px'} setMargin={'14px 0 0 0'} />}
                     </Media>
                 </ContentContainer>
                 <ImageContainer vertical={this.props.vertical}>

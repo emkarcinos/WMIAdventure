@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LevelNumber = styled.div`
+const StatNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,4 +17,4 @@ const LevelNumber = styled.div`
   position: relative;
 `;
 
-export default LevelNumber;
+export default StatNumber;

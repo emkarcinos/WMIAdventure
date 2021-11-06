@@ -8,7 +8,7 @@ import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGap
 import Icon from './styled-components/Icon';
 import health from '../../../../../assets/icons/health.svg';
 import shield from '../../../../../assets/icons/shield.svg'
-import UserLevel from "../../atoms/UserLevel";
+import UserStat from "../../atoms/UserStat";
 
 class UserStateContainer extends React.Component {
     render() {
@@ -22,11 +22,11 @@ class UserStateContainer extends React.Component {
                 </TopDiv>
                 <FlexGapContainer gap={'16px'} setMargin={'12px 0 10px 0'}>
                     <Icon src={health} />
-                    <UserLevel levelNumber={'50'} setTransform={'30px'} />
+                    <UserStat type={'hp'} statNumber={'50'} setTransform={'30px'} />
                 </FlexGapContainer>
                 <FlexGapContainer gap={'16px'}>
                     <Icon src={shield} />
-                    <UserLevel levelNumber={'10'} setTransform={'20px'} />
+                    <UserStat type={'shield'} statNumber={'10'} setTransform={'20px'} />
                 </FlexGapContainer>
             </Container>
         );
