@@ -24,7 +24,7 @@ class BattleTestCase(TestCase):
         battle.turn()
         battle.turn()
 
-        self.assertGreater(len(battle.recorder.states), 1)
+        self.assertGreater(len(battle.recorder.turns), 1)
 
     @classmethod
     def tearDownClass(cls) -> None:

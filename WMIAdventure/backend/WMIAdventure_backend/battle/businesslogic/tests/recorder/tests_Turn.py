@@ -1,11 +1,11 @@
 from unittest import TestCase
 
 from battle.businesslogic.PlayerFactory import PlayerFactory
-from battle.businesslogic.recorder.State import State
+from battle.businesslogic.recorder.Turn import Turn
 from battle.businesslogic.tests.Creator import Creator
 
 
-class StateTestCase(TestCase):
+class TurnTestCase(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.creator = Creator()
@@ -14,10 +14,11 @@ class StateTestCase(TestCase):
         cls.defender = PlayerFactory.get_instance().create(defender, is_attacker=False)
 
     def test_creation(self):
-        state = State(attacker=self.attacker,
-                      defender=self.defender)
-        self.assertEquals(state.get_attacker().player_id, self.attacker.id)
-        self.assertEquals(state.get_defender().player_id, self.defender.id)
+        turn = Turn(attacker=self.attacker,
+                    defender=self.defender, card_executor=self.attacker)
+        self.assertEquals(turn.get_attacker().player_id, self.attacker.id)
+        self.assertEquals(turn.get_defender().player_id, self.defender.id)
+        self.assertEquals(turn.card_executor_id, self.attacker.id)
 
     @classmethod
     def tearDownClass(cls) -> None:

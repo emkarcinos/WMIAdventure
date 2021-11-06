@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from battle.businesslogic.Deck import Deck
 from battle.businesslogic.BattleCard import BattleCard
+from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from battle.businesslogic.tests.Creator import Creator
@@ -24,7 +24,7 @@ class EffectsIntegrationsTestCase(TestCase):
             e.buffs.clear()
 
     def activate_card(self, card_owner, other_player):
-        effects = card_owner.use_card()
+        _, effects = card_owner.use_card()
         for e in effects:
             e.activate(card_owner, other_player, None)
 
@@ -145,7 +145,7 @@ class EffectsIntegrationsTestCase(TestCase):
         # This activation activates blocked card
         self.activate_card(self.player1, self.player2)
         # Effect in next activation should not be buffed
-        effect = self.player1.use_card()[0]
+        effect = self.player1.use_card()[1][0]
         self.assertEqual(len(effect.buffs), 0)
 
     def test_buff_does_not_get_duplicated_on_double_card(self):
@@ -180,7 +180,7 @@ class EffectsIntegrationsTestCase(TestCase):
         # This activation should be buffed
         self.activate_card(self.player1, self.player2)
         # This one should not
-        effect = self.player1.use_card()[0]
+        effect = self.player1.use_card()[1][0]
         self.assertEqual(len(effect.buffs), 0)
 
     def test_block_and_skip(self):

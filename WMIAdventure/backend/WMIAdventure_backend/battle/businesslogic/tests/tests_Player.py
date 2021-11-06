@@ -20,10 +20,12 @@ class PlayerTestCase(TestCase):
         )
 
     def test_use_card(self):
-        card_first_in_turn: BattleCard = list(self.battle_player.deck.cards_queue)[0]
-        expected_effects = card_first_in_turn.effects
+        expected_used_card: BattleCard = list(self.battle_player.deck.cards_queue)[0]
+        expected_effects = expected_used_card.effects
 
-        actual_effects = self.battle_player.use_card()
+        actual_used_card, actual_effects = self.battle_player.use_card()
+
+        self.assertIs(actual_used_card, expected_used_card)
 
         for actual_effect, expected_effect in zip(actual_effects, expected_effects):
             self.assertIs(actual_effect, expected_effect)

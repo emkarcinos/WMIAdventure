@@ -43,7 +43,7 @@ class BlockCardEffectTestCase(TestCase):
         self.block_card_effect.activate(self.card_owner, self.other_player, None)
 
         expected_effects = []
-        actual_effects = self.target.use_card()
+        _, actual_effects = self.target.use_card()
 
         expected_turns_blocked = self.how_many_turns_blocked - 1
         actual_turns_blocked = self.blocked_card.turns_blocked
