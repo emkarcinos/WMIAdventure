@@ -1,29 +1,26 @@
 from typing import Union
 
 from battle.businesslogic.Player import Player
-from battle.businesslogic.recorder.State import State
+from battle.businesslogic.recorder.Turn import Turn
 
 
 class ProcessRecorder:
     """
     Registers every turn that has happened in a single Battle.
     """
-    states: list[State]
+    turns: list[Turn]
     winner: Union[Player, None]
 
-    def __init__(self, attacker: Player, defender: Player):
-        self.initial_state = State(attacker, defender)
-        self.states = []
+    def __init__(self):
+        self.turns = []
         self.winner = None
 
-    def record_turn(self, attacker: Player, defender: Player):
+    def record_turn(self, turn: Turn):
         """
         Saves the turn.
-        @param attacker: Attacking Player instance
-        @param defender: Defending Player instance
         """
-        self.states.append(State(attacker=attacker,
-                                 defender=defender))
+
+        self.turns.append(turn)
 
     def set_winner(self, winner: Player):
         """
@@ -32,11 +29,12 @@ class ProcessRecorder:
         """
         self.winner = winner
 
-    def get_states(self) -> list[State]:
+    def get_turns(self) -> list[Turn]:
         """
-        Returns an array of states recorded in this process.
+        Returns an array of turns recorded in this process.
         """
-        return self.states
+
+        return self.turns
 
     def get_winner(self) -> Union[Player, None]:
         """
