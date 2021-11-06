@@ -32,13 +32,13 @@ class BattleView extends React.Component {
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
-                                <UserStateContainer />
+                                <UserStateContainer enemy />
                                 <CompactCardView setWidth={'124px'} setHeight={'192px'} setMargin={'0 0 0 10px'} />
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 <CompactCardView setWidth={'124px'} setHeight={'192px'} setMargin={'0 10px 0 0'} />
-                                <UserStateContainer />
+                                <UserStateContainer user />
                             </FlexGapContainer>
                         </MainContainer>
                     </PopUp>

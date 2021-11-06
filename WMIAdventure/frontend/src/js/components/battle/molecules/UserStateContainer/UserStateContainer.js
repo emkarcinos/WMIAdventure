@@ -9,25 +9,62 @@ import Icon from './styled-components/Icon';
 import health from '../../../../../assets/icons/health.svg';
 import shield from '../../../../../assets/icons/shield.svg'
 import UserStat from "../../atoms/UserStat";
+import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 
 class UserStateContainer extends React.Component {
     render() {
         return (
             <Container>
-                <TopDiv>
-                    <Avatar src={this.props.image ? this.props.image : kuc1} />
-                    <Nick>
-                        skromnoscpotega
-                    </Nick>
-                </TopDiv>
-                <FlexGapContainer gap={'16px'} setMargin={'12px 0 10px 0'}>
-                    <Icon src={health} />
-                    <UserStat type={'hp'} statNumber={'0'} />
-                </FlexGapContainer>
-                <FlexGapContainer gap={'16px'}>
-                    <Icon src={shield} />
-                    <UserStat type={'shield'} statNumber={'0'} />
-                </FlexGapContainer>
+                {
+                    this.props.enemy ?
+                        <TopDiv enemy>
+                            <Avatar src={this.props.image ? this.props.image : kuc1} />
+                            <Nick>
+                                skromnoscpotega
+                            </Nick>
+                        </TopDiv>
+                        : ''
+                }
+                <ColumnGapContainer gap={'8px'}>
+                    {
+                        this.props.enemy ?
+                            <>
+                                <FlexGapContainer gap={'16px'}>
+                                    <Icon src={health} />
+                                    <UserStat type={'hp'} statNumber={'0'} />
+                                </FlexGapContainer>
+                                <FlexGapContainer gap={'16px'}>
+                                    <Icon src={shield} />
+                                    <UserStat type={'shield'} statNumber={'0'} />
+                                </FlexGapContainer>
+                            </>
+                        : ''
+                    }
+                    {
+                        this.props.user ?
+                            <>
+                                <FlexGapContainer gap={'16px'}>
+                                    <Icon src={shield} />
+                                    <UserStat type={'shield'} statNumber={'0'} />
+                                </FlexGapContainer>
+                                <FlexGapContainer gap={'16px'}>
+                                    <Icon src={health} />
+                                    <UserStat type={'hp'} statNumber={'0'} />
+                                </FlexGapContainer>
+                            </>
+                        : ''
+                    }
+                </ColumnGapContainer>
+                {
+                    this.props.user ?
+                        <TopDiv user>
+                            <Avatar src={this.props.image ? this.props.image : kuc1} />
+                            <Nick>
+                                skromnoscpotega
+                            </Nick>
+                        </TopDiv>
+                        : ''
+                }
             </Container>
         );
     }
