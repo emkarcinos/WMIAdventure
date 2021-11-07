@@ -63,6 +63,10 @@ class OpponentSelected extends React.Component {
         this.setState({
             postBattle: true,
         });
+        if (data.winner === null) {
+            this.setState({win: null})
+            return
+        }
         data.winner === data.attacker.id ?
             this.setState({win: true}) : this.setState({win: false});
     }

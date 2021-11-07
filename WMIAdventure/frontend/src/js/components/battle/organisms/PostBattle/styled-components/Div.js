@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import winnerColorHandler from "./winnerColorHandler";
 
 const Div = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Div = styled.div`
     height: 50px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: ${({theme, win}) => win ? theme.colors.greenyBluey : theme.colors.red};
+    background-color: ${({theme, win}) => winnerColorHandler(theme, win)};
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -36,7 +37,7 @@ const Div = styled.div`
     height: 50px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: ${({theme, win}) => win ? theme.colors.greenyBluey : theme.colors.red};
+    background-color: ${({theme, win}) => winnerColorHandler(theme, win)};
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
 
