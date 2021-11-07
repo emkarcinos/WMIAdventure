@@ -29,7 +29,7 @@ class LevelCardView extends React.Component {
                 <P>
                     Kompaktowa
                 </P>
-                <CompactCardView level={this.levelHandler()}
+                <CompactCardView cardLevel={this.levelHandler()}
                                  cardName={this.props.cardName}
                                  cardImage={this.props.cardImage}/>
             </Div>

@@ -11,7 +11,7 @@ import rankIcon from '../../../../../assets/images/rankIcon.png';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import {desktop} from '../../../../utils/globals';
-import UserStatistic from '../../atoms/UserStat';
+import UserStatistic from '../../atoms/UserStatistic';
 
 class TinyUserProfile extends React.Component {
     render() {

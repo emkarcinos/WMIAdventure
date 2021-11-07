@@ -8,7 +8,7 @@ import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGap
 import Icon from './styled-components/Icon';
 import health from '../../../../../assets/icons/health.svg';
 import shield from '../../../../../assets/icons/shield.svg'
-import UserStatistic from "../../atoms/UserStat";
+import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 
 class UserStateContainer extends React.Component {

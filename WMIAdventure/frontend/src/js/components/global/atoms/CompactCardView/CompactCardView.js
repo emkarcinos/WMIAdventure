@@ -15,13 +15,13 @@ class CompactCardView extends React.Component {
         shadow -> signal that component has shadow
         ownFontSize -> set font size of card name
         setTranslateX -> handle movement animation
-        level -> information about card level
+        cardLevel -> information about card level
         cardImage -> card icon
      */
 
     state = {
-        name: ' ',
-        level: 1,
+        cardName: ' ',
+        cardLevel: 1,
         cardImage: null
     }
 
@@ -36,14 +36,14 @@ class CompactCardView extends React.Component {
     }
 
     setStateFromProps = () => {
-        this.props.cardName ? this.setState({name: this.props.cardName}) : null;
-        this.props.level ? this.setState({level: this.props.level}) : null;
+        this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
+        this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
         this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
     }
 
     propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
         prevProps.cardImage !== this.props.cardImage ||
-        prevProps.level !== this.props.level;
+        prevProps.cardLevel !== this.props.cardLevel;
 
     componentDidMount() {
         this.setStateFromProps();
@@ -57,13 +57,13 @@ class CompactCardView extends React.Component {
     render() {
         return (
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
-                 setMargin={this.props.setMargin} level={this.props.level}
+                 setMargin={this.props.setMargin} level={this.props.cardLevel}
                  setTranslateX={this.props.setTranslateX}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}>
                 <NameContainer>
-                    <Name nameLength={this.cardNameLengthHandler(this.state.name)}
+                    <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>
-                        {this.state.name ? this.state.name : "null"}
+                        {this.state.cardName ? this.state.cardName : "null"}
                     </Name>
                 </ NameContainer>
                 <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}

@@ -3,7 +3,7 @@ import UserInfo from '../../atoms/UserInfo';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Article from './styled-components/Article';
 import BattleResult from '../../atoms/BattleResult';
-import UserStatistic from '../../atoms/UserStat';
+import UserStatistic from '../../atoms/UserStatistic';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
 import Div from './styled-components/Div';

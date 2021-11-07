@@ -131,14 +131,14 @@ class BattleView extends React.Component {
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
                                 <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} level={3} setHeight={'200px'}
+                                                 setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                                  setTranslateX={this.state.enemyCompactCardTranslateX}
                                                  setMargin={'0 0 0 10px'} />
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} level={1} setHeight={'200px'}
+                                                 setWidth={'124px'} cardLevel={1} setHeight={'200px'}
                                                  setTranslateX={this.state.userCompactCardTranslateX}
                                                  setMargin={'0 10px 0 0'} />
                                 <ColumnGapContainer gap={'0'}>
