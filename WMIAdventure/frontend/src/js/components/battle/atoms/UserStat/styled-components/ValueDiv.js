@@ -61,9 +61,9 @@ const ValueDiv = styled.div`
   top: 0;
   left: calc(-100% + 56px);
   transition: transform 0.5s ease-in-out;
-  transform: ${({statNumber, type, currentLvlValue}) => (statNumber && type) ? 
-          `translateX(${handleTransform(statNumber, type, currentLvlValue)})` : `translateX(0)`};
-  background-color: ${({statNumber, theme, type}) => handleColor(statNumber, theme, type)};
+  transform: ${({statisticNumber, type, currentLvlValue}) => (statisticNumber && type) ? 
+          `translateX(${handleTransform(statisticNumber, type, currentLvlValue)})` : `translateX(0)`};
+  background-color: ${({statisticNumber, theme, type}) => handleColor(statisticNumber, theme, type)};
 `;
 
 export default ValueDiv;

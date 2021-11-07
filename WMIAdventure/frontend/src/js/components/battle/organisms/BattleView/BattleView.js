@@ -14,6 +14,7 @@ import icon2 from '../../../../../assets/images/icon2.png';
 import icon3 from '../../../../../assets/images/icon3.png';
 import icon4 from '../../../../../assets/images/icon4.png';
 import icon5 from '../../../../../assets/images/icon5.png';
+import EnemyStateContainer from "../../molecules/EnemyStateContainer";
 
 class BattleView extends React.Component {
 
@@ -109,8 +110,8 @@ class BattleView extends React.Component {
                         <MainContainer>
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
                                 <ColumnGapContainer gap={'0'}>
-                                    <UserStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
-                                                        enemy hp={this.state.enemyHp} shield={this.state.enemyShield} />
+                                    <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
+                                                         hp={this.state.enemyHp} shield={this.state.enemyShield} />
                                     <FlexGapContainer setWidth={'100%'} space>
                                         {/* first card is not visible because is the same as Compact card */}
                                         <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
@@ -159,7 +160,7 @@ class BattleView extends React.Component {
                                                       animationDuration={'0.6'} />
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
-                                                        user hp={this.state.userHp} shield={this.state.userShield} />
+                                                        hp={this.state.userHp} shield={this.state.userShield} />
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>

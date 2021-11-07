@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StatNumber = styled.div`
+const StatisticNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,4 +18,4 @@ const StatNumber = styled.div`
   padding: 1px 0 0 2px;
 `;
 
-export default StatNumber;
+export default StatisticNumber;

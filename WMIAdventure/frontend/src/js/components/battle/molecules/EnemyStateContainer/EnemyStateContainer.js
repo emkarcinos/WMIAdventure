@@ -11,7 +11,7 @@ import shield from '../../../../../assets/icons/shield.svg'
 import UserStatistic from "../../atoms/UserStat";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 
-class UserStateContainer extends React.Component {
+class EnemyStateContainer extends React.Component {
 
     /*
     props:
@@ -23,25 +23,25 @@ class UserStateContainer extends React.Component {
     render() {
         return (
             <Container setTranslateX={this.props.setTranslateX}>
-                <ColumnGapContainer gap={'8px'}>
-                    <FlexGapContainer gap={'16px'}>
-                        <Icon src={shield} />
-                        <UserStatistic type={'shield'} statisticNumber={this.props.shield} />
-                    </FlexGapContainer>
-                    <FlexGapContainer gap={'16px'}>
-                        <Icon src={health} />
-                        <UserStatistic type={'hp'} statisticNumber={this.props.hp} />
-                    </FlexGapContainer>
-                </ColumnGapContainer>
                 <NickDiv user>
                     <Avatar src={this.props.image ? this.props.image : kuc1} />
                     <Nick>
                         skromnoscpotega
                     </Nick>
                 </NickDiv>
+                <ColumnGapContainer gap={'8px'}>
+                    <FlexGapContainer gap={'16px'}>
+                        <Icon src={health} />
+                        <UserStatistic type={'hp'} statisticNumber={this.props.hp} />
+                    </FlexGapContainer>
+                    <FlexGapContainer gap={'16px'}>
+                        <Icon src={shield} />
+                        <UserStatistic type={'shield'} statisticNumber={this.props.shield} />
+                    </FlexGapContainer>
+                </ColumnGapContainer>
             </Container>
         );
     }
 }
 
-export default UserStateContainer;
+export default EnemyStateContainer;

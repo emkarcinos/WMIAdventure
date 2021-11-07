@@ -1,1 +1,1 @@
-export {default} from './UserStat';
+export {default} from './UserStatistic';

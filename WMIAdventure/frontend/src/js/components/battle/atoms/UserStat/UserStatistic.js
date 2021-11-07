@@ -1,21 +1,21 @@
 import React from 'react';
 import MainDiv from './styled-components/MainDiv';
-import StatNumber from './styled-components/StatNumber';
+import StatisticNumber from './styled-components/StatisticNumber';
 import ValueDiv from './styled-components/ValueDiv';
 
-class UserStat extends React.Component {
+class UserStatistic extends React.Component {
     render() {
         return (
             <MainDiv setMargin={this.props.setMargin}>
-                <StatNumber>
-                    {this.props.statNumber}
-                </StatNumber>
+                <StatisticNumber>
+                    {this.props.statisticNumber}
+                </StatisticNumber>
                 <ValueDiv type={this.props.type}
                           currentLvlValue={this.props.currentLvlValue}
-                          statNumber={this.props.statNumber} />
+                          statisticNumber={this.props.statisticNumber} />
             </MainDiv>
         );
     }
 }
 
-export default UserStat;
+export default UserStatistic;
