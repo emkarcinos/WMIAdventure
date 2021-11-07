@@ -6,8 +6,11 @@ import ValueDiv from './styled-components/ValueDiv';
 class UserStatistic extends React.Component {
     render() {
         return (
-            <MainDiv setMargin={this.props.setMargin}>
-                <StatisticNumber>
+            <MainDiv setMargin={this.props.setMargin} type={this.props.type}>
+                <StatisticNumber type={this.props.type}
+                                 numberLength = {
+                                     this.props.statisticNumber ? this.props.statisticNumber.length : 0
+                                 }>
                     {this.props.statisticNumber}
                 </StatisticNumber>
                 <ValueDiv type={this.props.type}

@@ -125,7 +125,7 @@ class BattleView extends React.Component {
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
                                                                   visible={!(i===0)} animationDuration={`0.${10 - i}`}
-                                                                  cardImage={this.state.icons[i]}/>
+                                                                  cardImage={this.state.icons[5 - i]}/>
                                                 );
                                             }
                                         )}

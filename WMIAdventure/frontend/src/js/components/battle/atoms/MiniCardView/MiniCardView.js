@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from "./styled-components/Container";
 import Icon from "./styled-components/Icon";
-import LevelBorder from "./styled-components/LevelBorder";
 import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
+import IconContainer from "./styled-components/IconContainer";
 
 class MiniCardView extends React.Component {
     /*
@@ -18,21 +18,23 @@ class MiniCardView extends React.Component {
     render() {
         return (
             <Container visible={this.props.visible} setTranslateX={this.props.setTranslateX}
-                       enemy={this.props.enemy} user={this.props.user}
+                       enemy={this.props.enemy} user={this.props.user} level={this.props.cardLevel}
                        animationDuration={this.props.animationDuration}>
                 {
                     this.props.enemy ?
                         <>
-                            <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
-                            <LevelBorder enemy={this.props.enemy} user={this.props.user} level={this.props.cardLevel} />
+                            <IconContainer enemy>
+                                <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                            </IconContainer>
                         </>
                         : ''
                 }
                 {
                     this.props.user ?
                         <>
-                            <LevelBorder enemy={this.props.enemy} user={this.props.user} level={this.props.cardLevel} />
-                            <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                            <IconContainer>
+                                <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                            </IconContainer>
                         </>
                         : ''
                 }
