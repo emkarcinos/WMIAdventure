@@ -1,5 +1,5 @@
 import React from 'react';
-import {desktop, mobile} from "../../../../utils/globals";
+import {battleInitLoadingDuration, secondStepAnimationDuration, desktop, mobile} from "../../../../utils/globals";
 import Media from "react-media";
 import PopUp from "../../../global/organisms/PopUp";
 import MainContainer from "./styled-components/MainContainer";
@@ -19,6 +19,8 @@ class BattleView extends React.Component {
 
     state = {
         kuceInBattleVisible: false,
+        enemyCompactCardTranslateX: '-100vw',
+        userCompactCardTranslateX: '100vw',
     }
 
     componentDidUpdate(prevProps) {
@@ -27,7 +29,23 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
+            this.itemsAnimationInit();
         }
+    }
+
+    itemsAnimationInit = () => {
+        setTimeout(() => {
+            this.setState({
+                enemyCompactCardTranslateX: '8vw',
+                userCompactCardTranslateX: '-8vw'
+            });
+        }, battleInitLoadingDuration);
+        setTimeout(() => {
+            this.setState({
+                enemyCompactCardTranslateX: '0',
+                userCompactCardTranslateX: '0'
+            });
+        }, battleInitLoadingDuration + secondStepAnimationDuration);
     }
 
     render() {
@@ -50,15 +68,15 @@ class BattleView extends React.Component {
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
                                 <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} level={3}
-                                                 setHeight={'200px'}
+                                                 setWidth={'124px'} level={3} setHeight={'200px'}
+                                                 setTranslateX={this.state.enemyCompactCardTranslateX}
                                                  setMargin={'0 0 0 10px'} />
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} level={1}
-                                                 setHeight={'200px'}
+                                                 setWidth={'124px'} level={1} setHeight={'200px'}
+                                                 setTranslateX={this.state.userCompactCardTranslateX}
                                                  setMargin={'0 10px 0 0'} />
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} space>

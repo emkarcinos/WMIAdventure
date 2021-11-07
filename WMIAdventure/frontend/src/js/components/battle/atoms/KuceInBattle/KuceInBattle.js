@@ -1,6 +1,10 @@
 import React from 'react';
 import kuce from '../../../../../assets/images/kuceBattle.png';
 import Img from "./styled-components/Img";
+import {
+    battleInitLoadingDuration,
+    secondStepAnimationDuration,
+} from "../../../../utils/globals";
 
 class KuceInBattle extends React.Component {
 
@@ -31,13 +35,13 @@ class KuceInBattle extends React.Component {
             this.setState({
                 setScale: '1.2',
             });
-        }, 800);
+        }, battleInitLoadingDuration);
 
         setTimeout(() => {
             this.setState({
                 setScale: '1',
             });
-        }, 1300);
+        }, battleInitLoadingDuration + secondStepAnimationDuration);
     }
 
     // hide kuce animation

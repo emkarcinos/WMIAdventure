@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, loadingMinimalDuration, mobile} from '../../../../utils/globals';
+import {desktop, popUpLoadingMinimalDuration, mobile, secondStepAnimationDuration} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -79,7 +79,7 @@ class OpponentSelected extends React.Component {
                 postBattlePos: '0',
                 postBattleOpacity: '1'
             });
-        }, loadingMinimalDuration);
+        }, popUpLoadingMinimalDuration);
     }
 
     quickBattleCloseHandler = () => {
@@ -92,7 +92,7 @@ class OpponentSelected extends React.Component {
             this.setState({
                 postBattle: false,
             });
-        }, 550);
+        }, secondStepAnimationDuration);
     }
 
     // method that run dynamic battle view
@@ -105,7 +105,7 @@ class OpponentSelected extends React.Component {
             this.setState({
                 battleViewPos: '0',
             });
-        }, loadingMinimalDuration);
+        }, popUpLoadingMinimalDuration);
     }
 
     // method that close dynamic battle view
