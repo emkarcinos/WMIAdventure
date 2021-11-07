@@ -1,8 +1,8 @@
-from typing import List, Union
+from typing import List
 
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
-from cards.models import Card, CardEffect
+from cards.models import Card
 from .Buff import Buff
 
 
@@ -58,3 +58,18 @@ class BattleCard:
             card_type = effect.effect_model.card_effect.id
             if buff.buff_type is None or card_type == buff.buff_type:
                 effect.add_buff(buff)
+
+    def get_buffs(self):
+        """
+        :return: List of buffs assigned to effects of this card.
+        """
+
+        buffs = []
+
+        # TODO: Test if duplicates are not appended to buffs array
+        for effect in self.effects:
+            for buff in effect.buffs:
+                if buff not in buffs:
+                    buffs.append(buff)
+
+        return buffs
