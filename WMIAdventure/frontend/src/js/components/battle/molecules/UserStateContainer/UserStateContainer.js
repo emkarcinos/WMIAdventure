@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from './styled-components/Container';
-import TopDiv from './styled-components/TopDiv';
+import NickDiv from './styled-components/NickDiv';
 import Avatar from './styled-components/Avatar';
 import kuc1 from '../../../../../assets/icons/kuc1.svg';
 import Nick from './styled-components/Nick';
@@ -17,12 +17,12 @@ class UserStateContainer extends React.Component {
             <Container>
                 {
                     this.props.enemy ?
-                        <TopDiv enemy>
+                        <NickDiv enemy>
                             <Avatar src={this.props.image ? this.props.image : kuc1} />
                             <Nick>
                                 skromnoscpotega
                             </Nick>
-                        </TopDiv>
+                        </NickDiv>
                         : ''
                 }
                 <ColumnGapContainer gap={'8px'}>
@@ -31,11 +31,11 @@ class UserStateContainer extends React.Component {
                             <>
                                 <FlexGapContainer gap={'16px'}>
                                     <Icon src={health} />
-                                    <UserStat type={'hp'} statNumber={'0'} />
+                                    <UserStat type={'hp'} statNumber={this.props.hp} />
                                 </FlexGapContainer>
                                 <FlexGapContainer gap={'16px'}>
                                     <Icon src={shield} />
-                                    <UserStat type={'shield'} statNumber={'0'} />
+                                    <UserStat type={'shield'} statNumber={this.props.shield} />
                                 </FlexGapContainer>
                             </>
                         : ''
@@ -45,11 +45,11 @@ class UserStateContainer extends React.Component {
                             <>
                                 <FlexGapContainer gap={'16px'}>
                                     <Icon src={shield} />
-                                    <UserStat type={'shield'} statNumber={'0'} />
+                                    <UserStat type={'shield'} statNumber={this.props.shield} />
                                 </FlexGapContainer>
                                 <FlexGapContainer gap={'16px'}>
                                     <Icon src={health} />
-                                    <UserStat type={'hp'} statNumber={'0'} />
+                                    <UserStat type={'hp'} statNumber={this.props.hp} />
                                 </FlexGapContainer>
                             </>
                         : ''
@@ -57,12 +57,12 @@ class UserStateContainer extends React.Component {
                 </ColumnGapContainer>
                 {
                     this.props.user ?
-                        <TopDiv user>
+                        <NickDiv user>
                             <Avatar src={this.props.image ? this.props.image : kuc1} />
                             <Nick>
                                 skromnoscpotega
                             </Nick>
-                        </TopDiv>
+                        </NickDiv>
                         : ''
                 }
             </Container>

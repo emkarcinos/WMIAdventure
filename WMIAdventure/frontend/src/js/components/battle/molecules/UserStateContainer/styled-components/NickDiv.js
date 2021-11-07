@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TopDiv = styled.div`
+const NickDiv = styled.div`
   width: 100%;
   height: 42px;
   border-top-left-radius: ${({enemy}) => enemy ? '16px' : '0'};
@@ -14,4 +14,4 @@ const TopDiv = styled.div`
   margin: ${({user}) => user ? '12px' : '0'} 0 ${({enemy}) => enemy ? '12px' : '0'} 0;
 `;
 
-export default TopDiv;
+export default NickDiv;
