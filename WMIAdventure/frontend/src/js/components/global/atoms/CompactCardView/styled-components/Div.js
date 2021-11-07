@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-function colorHandler(common, gold, epic) {
-    if (common)
-        return ({theme}) => theme.colors.greenyBluey;
-    else if (gold)
-        return ({theme}) => theme.colors.yellowyOrangy;
-    else if (epic)
-        return ({theme}) => theme.colors.purplyPinky;
+function colorHandler(level, theme) {
+    if (level === 1)
+        return theme.colors.greenyBluey;
+    else if (level === 2)
+        return theme.colors.yellowyOrangy;
+    else if (level === 3)
+        return theme.colors.purplyPinky;
 }
 
 const Div = styled.div`
@@ -44,10 +44,8 @@ const Div = styled.div`
     width: 100%;
     height: ${({decorationHeight}) => decorationHeight ? decorationHeight : '20px'};
     border-top: ${({decorationHeight}) => decorationHeight ? decorationHeight : '22px'} solid ${({
-                                                                                                   common,
-                                                                                                   gold,
-                                                                                                   epic
-                                                                                                 }) => colorHandler(common, gold, epic)};
+                                                                                                   level, theme
+                                                                                                 }) => colorHandler(level, theme)};
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }

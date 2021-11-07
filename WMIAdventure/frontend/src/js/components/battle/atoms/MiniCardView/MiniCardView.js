@@ -10,9 +10,9 @@ class MiniCardView extends React.Component {
         setTranslateX -> handle init animation
         enemy -> signal that card belong to enemy
         user -> signal that card belong to current user
-        rank -> information about card level
+        level -> information about card level
         visible -> handle visibility of card
-        icon -> card icon
+        cardImage -> card icon
      */
 
     render() {
@@ -23,16 +23,16 @@ class MiniCardView extends React.Component {
                 {
                     this.props.enemy ?
                         <>
-                            <Icon src={this.props.icon ? this.props.icon : iconPlaceholder} />
-                            <LevelBorder enemy={this.props.enemy} user={this.props.user} rank={this.props.rank} />
+                            <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                            <LevelBorder enemy={this.props.enemy} user={this.props.user} level={this.props.level} />
                         </>
                         : ''
                 }
                 {
                     this.props.user ?
                         <>
-                            <LevelBorder enemy={this.props.enemy} user={this.props.user} rank={this.props.rank} />
-                            <Icon src={this.props.icon ? this.props.icon : iconPlaceholder} />
+                            <LevelBorder enemy={this.props.enemy} user={this.props.user} level={this.props.level} />
+                            <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
                         </>
                         : ''
                 }
