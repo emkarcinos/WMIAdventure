@@ -1,6 +1,7 @@
 from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Calculator import Calculator
 from battle.businesslogic.effects.Effect import Effect
+from battle.businesslogic.recorder.effects_impacts.CardBuffedEffectImpact import CardBuffedEffectImpact
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 
 
@@ -16,14 +17,20 @@ class EmpowerCardEffect(Effect):
 
         card_to_buff = target.deck.lookup()
 
-        buff = Buff(modifier=emp_amount)
-        self.assign_buff_to_card(card_to_buff, buff)
+        buff = self.assign_buff_to_card(card_to_buff, emp_amount)
 
-    def assign_buff_to_card(self, card_to_buff, buff: Buff):
+        return CardBuffedEffectImpact(self.effect_model.card_effect.id, target.id, buff, card_to_buff)
+
+    def assign_buff_to_card(self, card_to_buff, emp_amount) -> Buff:
         """
         This method may be overridden if one wishes to assign a buff to a specific effect.
+
+        :return: Assigned Buff.
         """
-        card_to_buff.assign_buff(buff, None)
+
+        buff = Buff(buff_type=None, modifier=emp_amount)
+        card_to_buff.assign_buff(buff)
+        return buff
 
     def description(self) -> str:
         power_range = PowerDescription.get_instance().stringify(self.power, self.range)

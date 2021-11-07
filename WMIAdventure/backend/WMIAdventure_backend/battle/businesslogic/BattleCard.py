@@ -47,15 +47,14 @@ class BattleCard:
         for effect in self.effects:
             effect.update()
 
-    def assign_buff(self, buff: Buff, effect_type: Union[CardEffect.EffectId, None] = None):
+    def assign_buff(self, buff: Buff):
         """
         This method assigns a buff to this card's appropriate effects.
         @param: buff - Buff instance
-        @param: effect_type - Enum that will determine which effect will be boosted
         """
         for effect in self.effects:
-            # We check if any of the effects if of the type specified in the parameter
-            # If we specified none, it applies to all effect types.
+            # We check if any of the effects is of the type specified in the buff_type
+            # If we specified None in the buff_type, it applies to all effect types.
             card_type = effect.effect_model.card_effect.id
-            if effect_type is None or card_type == effect_type:
+            if buff.buff_type is None or card_type == buff.buff_type:
                 effect.add_buff(buff)

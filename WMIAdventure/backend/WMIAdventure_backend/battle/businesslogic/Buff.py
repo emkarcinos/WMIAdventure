@@ -1,6 +1,7 @@
 class Buff:
 
     def __init__(self,
+                 buff_type=None,
                  multiplier=1.0,
                  modifier=0.0,
                  active_turns=1,
@@ -8,6 +9,8 @@ class Buff:
         """
         Creates a buff.
         Buffs can have an expiration date, and they can activate themselves after specified amount of turns.
+
+        @param buff_type: Id of effect that this buff applies to. Can be None if buff applies to all kinds of effects.
         @param multiplier: A factor by which the statistic will get multiplied
         @param modifier: An amount which will get added to the statistic value
         @param active_turns: Number of turns this buff will last
@@ -17,6 +20,8 @@ class Buff:
         self.modifier = modifier
         self.turns_remaining = active_turns + 1
         self.sleep_remaining = activation_delay_turns + 1
+
+        self.buff_type = buff_type
 
     def tick(self):
         """
