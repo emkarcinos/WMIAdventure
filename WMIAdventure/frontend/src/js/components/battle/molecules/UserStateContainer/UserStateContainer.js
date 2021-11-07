@@ -14,7 +14,7 @@ import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 class UserStateContainer extends React.Component {
     render() {
         return (
-            <Container>
+            <Container setTranslateX={this.props.setTranslateX}>
                 {
                     this.props.enemy ?
                         <NickDiv enemy>

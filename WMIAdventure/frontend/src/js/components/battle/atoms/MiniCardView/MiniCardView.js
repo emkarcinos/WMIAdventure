@@ -7,8 +7,9 @@ import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 class MiniCardView extends React.Component {
     render() {
         return (
-            <Container visible={this.props.visible}
-                       enemy={this.props.enemy} user={this.props.user}>
+            <Container visible={this.props.visible} setTranslateX={this.props.setTranslateX}
+                       enemy={this.props.enemy} user={this.props.user}
+                       animationDuration={this.props.animationDuration}>
                 {
                     this.props.enemy ?
                         <>

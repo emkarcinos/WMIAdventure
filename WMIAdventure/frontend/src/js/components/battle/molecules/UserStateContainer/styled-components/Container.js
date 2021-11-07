@@ -10,6 +10,9 @@ const Container = styled.div`
   height: 136px;
   width: 60%;
   max-width: 380px;
+  
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
 `;
 
 export default Container;
