@@ -28,15 +28,14 @@ class PlayerDeckField(serializers.Field):
         pass
 
     def to_representation(self, value):
-        player_profile = UserProfile.objects.get(user_id=value)
-
-        # We only use one deck for now, so we will just return the first one here.
-        # Appropriate deck should be returned based on whether this player was the attacker or the defender,
-        # but I couldn't do it easily so I just left it like this.
-        # TODO: Change this after adding multiple deck support
         try:
+            player_profile = UserProfile.objects.get(user_id=value)
+            # We only use one deck for now, so we will just return the first one here.
+            # Appropriate deck should be returned based on whether this player was the attacker or the defender,
+            # but I couldn't do it easily so I just left it like this.
+            # TODO: Change this after adding multiple deck support
             return UserDecksSerializer(player_profile).data.get('user_decks', None)[0]
-        except IndexError:
+        except (UserProfile.DoesNotExist, IndexError):
             return None
 
 
