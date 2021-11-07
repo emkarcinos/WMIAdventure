@@ -42,6 +42,10 @@ class BattleView extends React.Component {
         userHp: '0',
         enemyShield: '0',
         userShield: '0',
+
+        // prototype data
+        cardLevels : [3, 3, 2, 1, 1],
+        icons : [icon1, icon2, icon3, icon4, icon5],
     }
 
     componentDidUpdate(prevProps) {
@@ -114,20 +118,17 @@ class BattleView extends React.Component {
                                                          hp={this.state.enemyHp} shield={this.state.enemyShield} />
                                     <FlexGapContainer setWidth={'100%'} space>
                                         {/* first card is not visible because is the same as Compact card */}
-                                        <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                      enemy rank={3} visible={false} icon={icon1} />
-                                        <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                      enemy rank={2} visible icon={icon2}
-                                                      animationDuration={'0.9'} />
-                                        <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                      enemy rank={3} visible icon={icon3}
-                                                      animationDuration={'0.8'} />
-                                        <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                      enemy rank={1} visible icon={icon4}
-                                                      animationDuration={'0.7'} />
-                                        <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                      enemy rank={1} visible icon={icon5}
-                                                      animationDuration={'0.6'} />
+                                        {[...Array(5)].map(
+                                            (e,i) => {
+                                                return (
+                                                    <MiniCardView key={`enemyCard-${i}`}
+                                                                  setTranslateX={this.state.enemyMiniCardsTranslateX}
+                                                                  enemy cardLevel={this.state.cardLevels[i]}
+                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
+                                                                  cardImage={this.state.icons[i]}/>
+                                                );
+                                            }
+                                        )}
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
                                 <CompactCardView cardImage={icon1} cardName={'Karta 1'}
@@ -144,20 +145,17 @@ class BattleView extends React.Component {
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} space>
                                         {/* first card is not visible because is the same as Compact card */}
-                                        <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
-                                                      user rank={1} visible={false} icon={icon1} />
-                                        <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
-                                                      user rank={2} visible icon={icon2}
-                                                      animationDuration={'0.9'} />
-                                        <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
-                                                      user rank={1} visible icon={icon3}
-                                                      animationDuration={'0.8'} />
-                                        <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
-                                                      user rank={2} visible icon={icon4}
-                                                      animationDuration={'0.7'} />
-                                        <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
-                                                      user rank={3} visible icon={icon5}
-                                                      animationDuration={'0.6'} />
+                                        {[...Array(5)].map(
+                                            (e,i) => {
+                                                return (
+                                                    <MiniCardView key={`userCard-${i}`}
+                                                                  setTranslateX={this.state.userMiniCardsTranslateX}
+                                                                  user cardLevel={this.state.cardLevels[i]}
+                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
+                                                                  cardImage={this.state.icons[i]}/>
+                                                );
+                                            }
+                                        )}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
                                                         hp={this.state.userHp} shield={this.state.userShield} />
