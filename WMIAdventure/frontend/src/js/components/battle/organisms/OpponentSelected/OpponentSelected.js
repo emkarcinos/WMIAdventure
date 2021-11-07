@@ -62,6 +62,7 @@ class OpponentSelected extends React.Component {
         this.props.kuceStopFight();
         this.setState({
             postBattle: true,
+            opponentDeck: data.defender.deck
         });
         data.winner === data.attacker.id ?
             this.setState({win: true}) : this.setState({win: false});
@@ -210,7 +211,9 @@ class OpponentSelected extends React.Component {
                         <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
+                                    attackerDeck={this.state.userDeck}
                                     opponent={this.props.opponent.username}
+                                    opponentDeck={this.state.opponentDeck}
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
                     </>
