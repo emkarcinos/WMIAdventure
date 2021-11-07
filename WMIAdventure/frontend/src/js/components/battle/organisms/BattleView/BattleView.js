@@ -17,8 +17,18 @@ import icon5 from '../../../../../assets/images/icon5.png';
 
 class BattleView extends React.Component {
 
+    /*
+    props:
+        battleView <- handle if component is visible
+        closeHandler <- handle to make component invisible
+        setTranslateY <- handle component open and close animation
+     */
+
     state = {
+        // false -> kuce in the middle not visible, true -> visible
         kuceInBattleVisible: false,
+
+        // states for items animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
         enemyMiniCardsTranslateX: '-100vw',
@@ -28,6 +38,7 @@ class BattleView extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        // to init animations when BattleView component will mount
         if((prevProps.battleView !== this.props.battleView)
             && this.props.battleView === true) {
             this.setState({
@@ -38,6 +49,7 @@ class BattleView extends React.Component {
     }
 
     itemsAnimationInit = () => {
+        // Users containers show first
         setTimeout(() => {
             this.setState({
                 enemyStateContainerTranslateX: '8vw',
@@ -45,6 +57,7 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration);
 
+        // Second step of users containers animation and first of Compact cards
         setTimeout(() => {
             this.setState({
                 enemyStateContainerTranslateX: '0',
@@ -55,6 +68,7 @@ class BattleView extends React.Component {
         }, battleInitLoadingDuration
             + secondStepAnimationDuration);
 
+        // Second step of Compact cards animation
         setTimeout(() => {
             this.setState({
                 enemyCompactCardTranslateX: '0',
@@ -64,6 +78,7 @@ class BattleView extends React.Component {
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2);
 
+        // Mini cards animations in one step
         setTimeout(() => {
             this.setState({
                 enemyMiniCardsTranslateX: '0',
@@ -87,6 +102,7 @@ class BattleView extends React.Component {
                                     <UserStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                         enemy hp={'99'} shield={'1'} />
                                     <FlexGapContainer setWidth={'100%'} space>
+                                        {/* first card is not visible because is the same as Compact card */}
                                         <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                       enemy rank={3} visible={false} icon={icon1} />
                                         <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
@@ -116,6 +132,7 @@ class BattleView extends React.Component {
                                                  setMargin={'0 10px 0 0'} />
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} space>
+                                        {/* first card is not visible because is the same as Compact card */}
                                         <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}
                                                       user rank={1} visible={false} icon={icon1} />
                                         <MiniCardView setTranslateX={this.state.userMiniCardsTranslateX}

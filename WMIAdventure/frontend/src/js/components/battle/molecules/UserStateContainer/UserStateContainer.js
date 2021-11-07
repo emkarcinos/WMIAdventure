@@ -12,6 +12,16 @@ import UserStat from "../../atoms/UserStat";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 
 class UserStateContainer extends React.Component {
+
+    /*
+    props:
+        enemy <- signal that is enemy container
+        user <- signal that is current user container
+        hp <- information about health points
+        shield <- information about shield points
+        setTranslateX <- handle init animation
+     */
+
     render() {
         return (
             <Container setTranslateX={this.props.setTranslateX}>
