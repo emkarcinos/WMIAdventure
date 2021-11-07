@@ -53,9 +53,27 @@ class OutcomeSerializer(serializers.Serializer):
         pass
 
 
+class BuffSerializer(serializers.Serializer):
+    """
+    Serializes information of given Buff instance.
+    """
+
+    buff_type = serializers.IntegerField(
+        help_text="Id of effect to which this buff applies. Can be null if buff applies to all kinds of effects."
+    )
+
+    modifier = serializers.FloatField(required=False)
+
+    # multiplier is not being used now, maybe we will use it in the future
+    # multiplier = serializers.FloatField(required=False)
+
+
 class SimplifiedCardSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="card_info_id")
     level = serializers.IntegerField()
+
+    # Card do not always has buffs
+    buffs = BuffSerializer(many=True, required=False)
 
 
 class SimplifiedDeckSerializer(serializers.Serializer):
@@ -66,6 +84,15 @@ class SimplifiedPlayerSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="player_id")
     stats = StatisticsSerializer()
     deck = SimplifiedDeckSerializer()
+
+
+class BuffedCardSerializer(serializers.Serializer):
+    """
+    Serializes information which tells us which card was buffed.
+    """
+
+    id = serializers.IntegerField(source="card_model.info.id", help_text="Buffed card's id.")
+    level = serializers.IntegerField(source="card_model.level.level", help_text="Buffed card's level.")
 
 
 class UsedEffectSerializer(serializers.Serializer):
@@ -81,6 +108,10 @@ class UsedEffectSerializer(serializers.Serializer):
 
     # Not all effects change stats
     changed_stats = StatisticsSerializer(required=False)
+
+    # Not all effects are buffing other cards
+    buff = BuffSerializer(required=False)
+    buffed_card = BuffedCardSerializer(required=False)
 
 
 class TurnSerializer(serializers.Serializer):
