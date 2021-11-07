@@ -11,10 +11,11 @@ const StatNumber = styled.div`
   color: ${({theme}) => theme.colors.whiteAlmost};
   background-color: ${({theme}) => theme.colors.dark};
   font-family: 'Roboto', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: ${({theme}) => theme.weight.regular};
   z-index: 2;
   position: relative;
+  padding: 1px 0 0 2px;
 `;
 
 export default StatNumber;

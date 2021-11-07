@@ -35,6 +35,12 @@ class BattleView extends React.Component {
         userMiniCardsTranslateX: '100vw',
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
+
+        // states for hp and shield points
+        enemyHp: '0',
+        userHp: '0',
+        enemyShield: '0',
+        userShield: '0',
     }
 
     componentDidUpdate(prevProps) {
@@ -78,12 +84,16 @@ class BattleView extends React.Component {
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2);
 
-        // Mini cards animations in one step
+        /* Mini cards animations in one step,
+        and hp and shield points animation */
         setTimeout(() => {
             this.setState({
                 enemyMiniCardsTranslateX: '0',
-                userMiniCardsTranslateX: '0'
-
+                userMiniCardsTranslateX: '0',
+                enemyHp: '100',
+                userHp: '100',
+                enemyShield: '20',
+                userShield: '20'
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
@@ -100,7 +110,7 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
                                 <ColumnGapContainer gap={'0'}>
                                     <UserStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
-                                                        enemy hp={'99'} shield={'1'} />
+                                                        enemy hp={this.state.enemyHp} shield={this.state.enemyShield} />
                                     <FlexGapContainer setWidth={'100%'} space>
                                         {/* first card is not visible because is the same as Compact card */}
                                         <MiniCardView setTranslateX={this.state.enemyMiniCardsTranslateX}
@@ -149,7 +159,7 @@ class BattleView extends React.Component {
                                                       animationDuration={'0.6'} />
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
-                                                        user hp={'5'} shield={'19'} />
+                                                        user hp={this.state.userHp} shield={this.state.userShield} />
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
