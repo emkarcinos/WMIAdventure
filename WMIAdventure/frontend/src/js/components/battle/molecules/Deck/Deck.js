@@ -4,6 +4,7 @@ import MainDiv from './styled-components/MainDiv';
 import Header from './styled-components/Header';
 import Div from './styled-components/Div';
 import CompactCardView from '../../../global/atoms/CompactCardView';
+import unknownIcon from '../../../../../assets/icons/upload_image_dark.svg';
 import {getCardById} from "../../../../utils/storage/cards/cardStorage";
 
 class Deck extends React.Component {
@@ -28,7 +29,7 @@ class Deck extends React.Component {
                             [cardNumber]: {
                                 name: respCard.name,
                                 level: card.level,
-                                image: respCard.image
+                                image: respCard.image ? respCard.image : unknownIcon
                             }
                         });
                     }

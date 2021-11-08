@@ -17,7 +17,7 @@ import TransBack from '../../../global/organisms/TransBack';
 class PostBattle extends React.Component {
 
     state = {
-        popUpHover: false,
+        popUpHover: false
     }
 
     hoverTrue = () => {
@@ -57,14 +57,14 @@ class PostBattle extends React.Component {
                                 <Decoration win={this.props.win}/>
                                 <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
                                                  displayedUsername={this.props.attacker}/>
-                                <TinyCards cardImages={[]} gap={'10px'}/>
+                                <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                             </Div>
 
                             <Div win={this.opponentWinHandler()}>
                                 <Decoration win={this.opponentWinHandler()}/>
                                 <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
                                                  displayedUsername={this.props.opponent}/>
-                                <TinyCards cardImages={[]} gap={'10px'}/>
+                                <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>
                             </Div>
                         </Article>
                     </PopUp>
@@ -91,14 +91,14 @@ class PostBattle extends React.Component {
                                     <Decoration win={this.props.win}/>
                                     <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'0 0 24px 0'}
                                                      displayedUsername={this.props.attacker} vertical/>
-                                    <TinyCards cardImages={[]} gap={'10px'}/>
+                                    <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                                 </Div>
 
                                 <Div win={this.opponentWinHandler()}>
                                     <Decoration win={this.opponentWinHandler()}/>
                                     <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'0 0 24px 0'}
                                                      displayedUsername={this.props.opponent} vertical/>
-                                    <TinyCards cardImages={[]} gap={'10px'}/>
+                                    <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>
                                 </Div>
                             </FlexGapContainer>
                         </PopUp>

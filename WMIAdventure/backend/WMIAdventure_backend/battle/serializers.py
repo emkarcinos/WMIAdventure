@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from IngameUsers.models import UserDeck, UserProfile
+from IngameUsers.serializers import DeckSerializer, UserDecksSerializer
 from battle.businesslogic.Statistics import Statistics
 
 
@@ -21,6 +23,22 @@ class StatisticsSerializer(serializers.Serializer):
         pass
 
 
+class PlayerDeckField(serializers.Field):
+    def to_internal_value(self, data):
+        pass
+
+    def to_representation(self, value):
+        try:
+            player_profile = UserProfile.objects.get(user_id=value)
+            # We only use one deck for now, so we will just return the first one here.
+            # Appropriate deck should be returned based on whether this player was the attacker or the defender,
+            # but I couldn't do it easily so I just left it like this.
+            # TODO: Change this after adding multiple deck support
+            return UserDecksSerializer(player_profile).data.get('user_decks', None)[0]
+        except (UserProfile.DoesNotExist, IndexError):
+            return None
+
+
 class OutcomePlayerSerializer(serializers.Serializer):
     """
     Serializes player's data - to be used when serializing battle Outcome.
@@ -28,6 +46,7 @@ class OutcomePlayerSerializer(serializers.Serializer):
 
     id = serializers.IntegerField(help_text="Player's id.")
     statistics = StatisticsSerializer(help_text="Player's statistics.")
+    deck = PlayerDeckField(source="id")
 
     def create(self, validated_data):
         pass
