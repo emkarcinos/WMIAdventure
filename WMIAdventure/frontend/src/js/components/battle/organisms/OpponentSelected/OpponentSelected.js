@@ -154,7 +154,9 @@ class OpponentSelected extends React.Component {
                         <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
+                                    attackerDeck={this.state.userDeck}
                                     opponent={this.props.opponent.username}
+                                    opponentDeck={this.state.opponentDeck}
                                     setTranslateY={this.state.postBattlePos}/>
                     </>
                 </Media>
