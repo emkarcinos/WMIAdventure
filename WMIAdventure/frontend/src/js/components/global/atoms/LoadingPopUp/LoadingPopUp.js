@@ -4,7 +4,7 @@ import View from "./styled-components/View";
 import Image from "./styled-components/Image";
 import P from "./styled-components/P";
 import kuceFight from '../../../../../assets/images/kuceBattle.png';
-import {loadingMinimalDuration} from "../../../../utils/globals";
+import {popUpLoadingMinimalDuration} from "../../../../utils/globals";
 
 class LoadingPopUp extends React.Component {
 
@@ -19,7 +19,7 @@ class LoadingPopUp extends React.Component {
                 this.setState({
                     visible: false,
                 });
-            }, loadingMinimalDuration);
+            }, popUpLoadingMinimalDuration);
         } else if((prevProps.visible !== this.props.visible)
             && prevProps.visible === false) {
             this.setState({

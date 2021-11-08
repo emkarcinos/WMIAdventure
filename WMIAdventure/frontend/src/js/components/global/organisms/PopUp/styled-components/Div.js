@@ -14,6 +14,7 @@ const Div = styled.div`
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   transition: opacity 0.3s ease-in-out, transform  0.3s ease-in-out;
   z-index: 5;
+  overflow-x: hidden;
   overflow-y: scroll;
   
   @media (min-width: ${({theme}) => theme.overMobile}px) {

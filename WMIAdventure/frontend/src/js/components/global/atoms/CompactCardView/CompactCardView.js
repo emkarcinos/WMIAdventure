@@ -6,15 +6,24 @@ import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg
 import NameContainer from './styled-components/NameContainer';
 
 class CompactCardView extends React.Component {
+    /*
+    props:
+        setWidth -> set width of main Div
+        setHeight -> set height of main Div
+        setMargin -> set margin of main Div
+        decorationHeight -> set height of top decoration border card view
+        shadow -> signal that component has shadow
+        ownFontSize -> set font size of card name
+        setTranslateX -> handle movement animation
+        cardLevel -> information about card level
+        cardImage -> card icon
+     */
+
     state = {
-        name: ' ',
-        level: 1,
+        cardName: ' ',
+        cardLevel: 1,
         cardImage: null
     }
-
-    isCommon = () => this.state.level === 1;
-    isGold = () => this.state.level === 2;
-    isEpic = () => this.state.level === 3;
 
     cardNameLengthHandler = (cardNameLength) => {
         try {
@@ -27,14 +36,14 @@ class CompactCardView extends React.Component {
     }
 
     setStateFromProps = () => {
-        this.props.cardName ? this.setState({name: this.props.cardName}) : null;
-        this.props.level ? this.setState({level: this.props.level}) : null;
+        this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
+        this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
         this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
     }
 
     propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
         prevProps.cardImage !== this.props.cardImage ||
-        prevProps.level !== this.props.level;
+        prevProps.cardLevel !== this.props.cardLevel;
 
     componentDidMount() {
         this.setStateFromProps();
@@ -47,13 +56,14 @@ class CompactCardView extends React.Component {
 
     render() {
         return (
-            <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight} setMargin={this.props.setMargin}
-                 common={this.isCommon()} gold={this.isGold()} epic={this.isEpic()}
+            <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
+                 setMargin={this.props.setMargin} level={this.props.cardLevel}
+                 setTranslateX={this.props.setTranslateX}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}>
                 <NameContainer>
-                    <Name nameLength={this.cardNameLengthHandler(this.state.name)}
+                    <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>
-                        {this.state.name ? this.state.name : "null"}
+                        {this.state.cardName ? this.state.cardName : "null"}
                     </Name>
                 </ NameContainer>
                 <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}

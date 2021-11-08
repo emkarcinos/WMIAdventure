@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, loadingMinimalDuration, mobile} from '../../../../utils/globals';
+import {desktop, popUpLoadingMinimalDuration, mobile, secondStepAnimationDuration} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -20,15 +20,21 @@ import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import {getCurrentUserDecks, getCurrentUsername} from "../../../../utils/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
+import BattleView from "../BattleView";
 
 class OpponentSelected extends React.Component {
 
     state = {
+        // states uses for mount postBattle
         postBattle: false,
         popUpHover: false,
         postBattlePos: '-100vh',
         postBattleOpacity: '0',
-        userDeck: null
+        userDeck: null,
+
+        // states uses for mount battleView
+        battleView: false,
+        battleViewPos: '-100vh',
     }
 
     componentDidMount() {
@@ -77,7 +83,7 @@ class OpponentSelected extends React.Component {
                 postBattlePos: '0',
                 postBattleOpacity: '1'
             });
-        }, loadingMinimalDuration);
+        }, popUpLoadingMinimalDuration);
     }
 
     quickBattleCloseHandler = () => {
@@ -90,7 +96,35 @@ class OpponentSelected extends React.Component {
             this.setState({
                 postBattle: false,
             });
+        }, secondStepAnimationDuration);
+    }
+
+    // method that run dynamic battle view
+    battleViewRunHandler = () => {
+        this.setState({
+            battleView: true,
+        });
+
+        setTimeout(() => {
+            this.setState({
+                battleViewPos: '0',
+            });
+        }, popUpLoadingMinimalDuration);
+    }
+
+    // method that close dynamic battle view
+    battleViewCloseHandler = () => {
+        this.setState({
+            battleViewPos: '-100vh',
+        });
+
+        setTimeout(() => {
+            this.setState({
+                battleView: false,
+            });
         }, 550);
+
+        this.postBattleOpenHandler();
     }
 
     hoverTrue = () => {
@@ -142,8 +176,8 @@ class OpponentSelected extends React.Component {
                                                         color={theme.colors.yellowyOrangy} icon={xClose}>
                                             Wróć
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon setMargin={'0'} color={theme.colors.purplyPinky}
-                                                        icon={battleIcon}>
+                                        <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                                        color={theme.colors.purplyPinky} icon={battleIcon}>
                                             Walcz
                                         </ButtonWithIcon>
                                     </FlexGapContainer>
@@ -158,7 +192,10 @@ class OpponentSelected extends React.Component {
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
                                     opponent={this.props.opponent.username}
-                                    setTranslateY={this.state.postBattlePos}/>
+                                    setTranslateY={this.state.postBattlePos} />
+                        <BattleView battleView={this.state.battleView}
+                                    closeHandler={this.battleViewCloseHandler}
+                                    setTranslateY={this.state.battleViewPos} />
                     </>
                 </Media>
 

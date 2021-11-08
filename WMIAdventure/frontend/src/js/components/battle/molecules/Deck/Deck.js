@@ -69,19 +69,19 @@ class Deck extends React.Component {
                 </Header>
                 <Div>
                     <FlexGapContainer gap={'10px'} setMargin={'0 0 10px 0'}>
-                        <CompactCardView setWidth={'78px'} setHeight={'126px'} gold setMargin={'0'}
+                        <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                                          setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                                          cardName={this.cardPropertyHandler(1, 'name')}
                                          cardImage={this.cardPropertyHandler(1, 'image')}
                                          cardLevel={this.cardPropertyHandler(1, 'level')}
                                          setIconMarginBottom={'8px'} shadow/>
-                        <CompactCardView setWidth={'78px'} setHeight={'126px'} common setMargin={'0'}
+                        <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                                          setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                                          cardName={this.cardPropertyHandler(2, 'name')}
                                          cardImage={this.cardPropertyHandler(2, 'image')}
                                          cardLevel={this.cardPropertyHandler(2, 'level')}
                                          setIconMarginBottom={'8px'} shadow/>
-                        <CompactCardView setWidth={'78px'} setHeight={'126px'} gold setMargin={'0'}
+                        <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                                          setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                                          cardName={this.cardPropertyHandler(3, 'name')}
                                          cardImage={this.cardPropertyHandler(3, 'image')}
@@ -89,13 +89,13 @@ class Deck extends React.Component {
                                          setIconMarginBottom={'8px'} shadow/>
                     </FlexGapContainer>
                     <FlexGapContainer gap={'10px'} setMargin={'0'}>
-                        <CompactCardView setWidth={'78px'} setHeight={'126px'} common setMargin={'0'}
+                        <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                                          setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                                          cardName={this.cardPropertyHandler(4, 'name')}
                                          cardImage={this.cardPropertyHandler(4, 'image')}
                                          cardLevel={this.cardPropertyHandler(4, 'level')}
                                          setIconMarginBottom={'8px'} shadow/>
-                        <CompactCardView setWidth={'78px'} setHeight={'126px'} epic setMargin={'0'}
+                        <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                                          setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                                          cardName={this.cardPropertyHandler(5, 'name')}
                                          cardImage={this.cardPropertyHandler(5, 'image')}
