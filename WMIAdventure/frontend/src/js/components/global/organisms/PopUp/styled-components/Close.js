@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import closeIcon from '../../../../../../assets/icons/x-close-black.svg';
 
 const Close = styled.button`
+  display: ${({visible}) => visible ? 'block' : 'none'};
   position: absolute;
   border: none;
   background-color: transparent;

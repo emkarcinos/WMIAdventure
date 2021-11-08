@@ -3,7 +3,7 @@ import UserInfo from '../../atoms/UserInfo';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Article from './styled-components/Article';
 import BattleResult from '../../atoms/BattleResult';
-import UserLevel from '../../atoms/UserLevel';
+import UserStatistic from '../../atoms/UserStatistic';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
 import Div from './styled-components/Div';
@@ -33,6 +33,8 @@ class PostBattle extends React.Component {
             this.props.closeHandler();
     }
 
+    opponentWinHandler = () => this.props.win === null ? null : !this.props.win
+
     render() {
         return (
             <>
@@ -48,7 +50,7 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserLevel levelNumber={'25'} setTransform={'16px'}/>
+                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'16'} />
                             </ColumnGapContainer>
 
                             <Div win={this.props.win}>
@@ -58,8 +60,8 @@ class PostBattle extends React.Component {
                                 <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                             </Div>
 
-                            <Div win={!this.props.win}>
-                                <Decoration win={!this.props.win}/>
+                            <Div win={this.opponentWinHandler()}>
+                                <Decoration win={this.opponentWinHandler()}/>
                                 <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
                                                  displayedUsername={this.props.opponent}/>
                                 <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>
@@ -81,7 +83,7 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserLevel levelNumber={'25'} setTransform={'16px'}/>
+                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'60'} />
                             </ColumnGapContainer>
 
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>
@@ -92,8 +94,8 @@ class PostBattle extends React.Component {
                                     <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                                 </Div>
 
-                                <Div win={!this.props.win}>
-                                    <Decoration win={!this.props.win}/>
+                                <Div win={this.opponentWinHandler()}>
+                                    <Decoration win={this.opponentWinHandler()}/>
                                     <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'0 0 24px 0'}
                                                      displayedUsername={this.props.opponent} vertical/>
                                     <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>

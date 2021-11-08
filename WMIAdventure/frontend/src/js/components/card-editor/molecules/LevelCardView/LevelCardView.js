@@ -5,6 +5,13 @@ import Div from './styled-components/Div';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 
 class LevelCardView extends React.Component {
+    levelHandler = () => {
+        if (this.props.common) return 1;
+        if (this.props.gold) return 2;
+        if (this.props.epic) return 3;
+
+    }
+
     render() {
         return (
             <Div show={this.props.show} exist={this.props.exist}>
@@ -18,15 +25,13 @@ class LevelCardView extends React.Component {
                               cardSubject={this.props.cardSubject}
                               cardImage={this.props.cardImage}
                               cardTooltip={this.props.cardTooltip}
-                              description={this.props.description} />
+                              description={this.props.description}/>
                 <P>
                     Kompaktowa
                 </P>
-                <CompactCardView common={this.props.common}
-                                 gold={this.props.gold}
-                                 epic={this.props.epic}
+                <CompactCardView cardLevel={this.levelHandler()}
                                  cardName={this.props.cardName}
-                                 cardImage={this.props.cardImage} />
+                                 cardImage={this.props.cardImage}/>
             </Div>
         );
     }
