@@ -28,15 +28,13 @@ class Battle:
     def start(self):
         while not self.is_finished():
             self.turn()
-        
+
     def turn(self):
         """
         Tasks executed within a single turn.
         """
 
-        self.recorder.record_turn(
-            self.coordinator.next_turn()
-        )
+        self.coordinator.next_turn(self.recorder)
         self.turns_count += 1
 
     def is_finished(self):
