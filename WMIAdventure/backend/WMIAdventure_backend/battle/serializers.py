@@ -76,14 +76,10 @@ class SimplifiedCardSerializer(serializers.Serializer):
     buffs = BuffSerializer(many=True, required=False)
 
 
-class SimplifiedDeckSerializer(serializers.Serializer):
-    cards = SimplifiedCardSerializer(many=True)
-
-
 class SimplifiedPlayerSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="player_id")
     stats = StatisticsSerializer()
-    deck = SimplifiedDeckSerializer()
+    deck = SimplifiedCardSerializer(source="deck.cards", many=True)
 
 
 class BuffedCardSerializer(serializers.Serializer):
