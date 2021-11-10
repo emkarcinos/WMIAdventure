@@ -19,9 +19,10 @@ class MiniCardView extends React.Component {
         return (
             <CardsContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
                             enemy={this.props.enemy} user={this.props.user}
-                            onClick={() => this.props.cardsOrderManipulate(this.props.initCardsOrder)}
-                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}
-                            initCardsOrder={this.props.initCardsOrder}>
+                            onClick={() =>
+                                this.props.userCardsOrderManipulate(this.props.cardsOrder,
+                                    this.props.cardsOrder + 1)}
+                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}>
                 {
                     this.props.enemy ?
                         <>

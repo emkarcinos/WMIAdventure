@@ -52,8 +52,8 @@ class BattleView extends React.Component {
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
-        initCardsOrder : [1, 2, 3, 4, 5],
-        orderPlaceDistance: '58px',
+        cardsOrder : [1, 2, 3, 4, 5],
+        orderPlaceDistance: 58,
     }
 
     componentDidUpdate(prevProps) {
@@ -119,15 +119,35 @@ class BattleView extends React.Component {
         + secondStepAnimationDuration * 3);
     }
 
+    updateCardsOrder = (cardInitOrder, orderToSet) => {
+        let newCardsOrder = this.state.cardsOrder.slice();
+
+        let savePosValue = newCardsOrder[cardInitOrder - 1];
+        newCardsOrder[cardInitOrder - 1] = orderToSet - 1;
+        newCardsOrder[orderToSet - 1] = savePosValue;
+    }
+
     userCardsOrderManipulate = (cardInitOrder, orderToSet) => {
         console.log(cardInitOrder);
         console.log(orderToSet);
 
-        //...
+        let newUserMiniCardsTranslateX = this.state.userMiniCardsTranslateX.slice();
+        newUserMiniCardsTranslateX[cardInitOrder - 1] =
+            `${this.state.orderPlaceDistance * (orderToSet - cardInitOrder)}px`;
+
+        for(let i = 0; i < Math.abs(cardInitOrder - orderToSet); i++) {
+            newUserMiniCardsTranslateX[orderToSet - i - 1] =
+                `${this.state.orderPlaceDistance * (-1)}px`;
+        }
+
+        this.setState({
+            userMiniCardsTranslateX: newUserMiniCardsTranslateX,
+        });
 
         // card(cardInitOrder) set translateX placeDistance * (orderToSet - cardInitOrder)
         // for let i=0; i < (absolute(cardInitOrder-orderToSet) - 1); i++ do
             // card(orderToSet - i) -> set translateX placeDistance * (-1)
+        // update cardsOrder
     }
 
     enemyCardsOrderManipulate = (cardInitOrder, orderToSet) => {
@@ -154,7 +174,7 @@ class BattleView extends React.Component {
                                                 return (
                                                     <MiniCardView key={`enemyCard-${i}`}
                                                                   enemyCardsOrderManipulate={this.enemyCardsOrderManipulate}
-                                                                  initCardsOrder={this.state.initCardsOrder[5 - i]}
+                                                                  cardsOrder={this.state.cardsOrder[5 - i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
@@ -184,7 +204,7 @@ class BattleView extends React.Component {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
                                                                   userCardsOrderManipulate={this.userCardsOrderManipulate}
-                                                                  initCardsOrder={this.state.initCardsOrder[i]}
+                                                                  cardsOrder={this.state.cardsOrder[i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}
                                                                   user cardLevel={this.state.cardLevels[i]}
