@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from "./styled-components/Container";
+import CardsContainer from "./styled-components/CardsContainer";
 import Icon from "./styled-components/Icon";
 import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 import IconContainer from "./styled-components/IconContainer";
@@ -17,9 +17,11 @@ class MiniCardView extends React.Component {
 
     render() {
         return (
-            <Container visible={this.props.visible} setTranslateX={this.props.setTranslateX}
-                       enemy={this.props.enemy} user={this.props.user} level={this.props.cardLevel}
-                       animationDuration={this.props.animationDuration}>
+            <CardsContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
+                            enemy={this.props.enemy} user={this.props.user}
+                            onClick={() => this.props.cardsOrderManipulate(this.props.initCardsOrder)}
+                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}
+                            initCardsOrder={this.props.initCardsOrder}>
                 {
                     this.props.enemy ?
                         <>
@@ -38,7 +40,7 @@ class MiniCardView extends React.Component {
                         </>
                         : ''
                 }
-            </Container>
+            </CardsContainer>
         );
     }
 }

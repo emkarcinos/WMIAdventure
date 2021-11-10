@@ -4,10 +4,8 @@ const Container = styled.div`
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   background-color: ${({theme}) => theme.colors.light2};
-  min-width: 226px;
+  width: 228px;
   height: 136px;
-  width: 60%;
-  max-width: 380px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

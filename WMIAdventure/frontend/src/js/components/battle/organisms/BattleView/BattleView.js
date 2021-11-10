@@ -29,11 +29,11 @@ class BattleView extends React.Component {
         // false -> kuce in the middle not visible, true -> visible
         kuceInBattleVisible: false,
 
-        // states for items animation movement
+        // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
         enemyMiniCardsTranslateX: '-100vw',
-        userMiniCardsTranslateX: '100vw',
+        userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
 
@@ -43,9 +43,17 @@ class BattleView extends React.Component {
         enemyShield: '0',
         userShield: '0',
 
+        // access cards animation during battle
+        battleStarted: false,
+
+        // set translate X to specific card
+        // ... maybe arrays?
+
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
+        initCardsOrder : [1, 2, 3, 4, 5],
+        orderPlaceDistance: '58px',
     }
 
     componentDidUpdate(prevProps) {
@@ -84,7 +92,6 @@ class BattleView extends React.Component {
             this.setState({
                 enemyCompactCardTranslateX: '0',
                 userCompactCardTranslateX: '0',
-
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2);
@@ -94,7 +101,7 @@ class BattleView extends React.Component {
         setTimeout(() => {
             this.setState({
                 enemyMiniCardsTranslateX: '0',
-                userMiniCardsTranslateX: '0',
+                userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
                 enemyHp: '100',
                 userHp: '100',
                 enemyShield: '20',
@@ -102,6 +109,30 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
+
+        // Give access to animations during battle
+        setTimeout(() => {
+            this.setState({
+                battleStarted: true,
+            });
+        },battleInitLoadingDuration
+        + secondStepAnimationDuration * 3);
+    }
+
+    userCardsOrderManipulate = (cardInitOrder, orderToSet) => {
+        console.log(cardInitOrder);
+        console.log(orderToSet);
+
+        //...
+
+        // card(cardInitOrder) set translateX placeDistance * (orderToSet - cardInitOrder)
+        // for let i=0; i < (absolute(cardInitOrder-orderToSet) - 1); i++ do
+            // card(orderToSet - i) -> set translateX placeDistance * (-1)
+    }
+
+    enemyCardsOrderManipulate = (cardInitOrder, orderToSet) => {
+        console.log(cardInitOrder);
+        console.log(orderToSet);
     }
 
     render() {
@@ -116,12 +147,15 @@ class BattleView extends React.Component {
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={this.state.enemyHp} shield={this.state.enemyShield} />
-                                    <FlexGapContainer setWidth={'100%'} space>
+                                    <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* first card is not visible because is the same as Compact card */}
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`enemyCard-${i}`}
+                                                                  enemyCardsOrderManipulate={this.enemyCardsOrderManipulate}
+                                                                  initCardsOrder={this.state.initCardsOrder[5 - i]}
+                                                                  battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
                                                                   visible={!(i===0)} animationDuration={`0.${10 - i}`}
@@ -143,13 +177,16 @@ class BattleView extends React.Component {
                                                  setTranslateX={this.state.userCompactCardTranslateX}
                                                  setMargin={'0 10px 0 0'} />
                                 <ColumnGapContainer gap={'0'}>
-                                    <FlexGapContainer setWidth={'100%'} space>
+                                    <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* first card is not visible because is the same as Compact card */}
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
-                                                                  setTranslateX={this.state.userMiniCardsTranslateX}
+                                                                  userCardsOrderManipulate={this.userCardsOrderManipulate}
+                                                                  initCardsOrder={this.state.initCardsOrder[i]}
+                                                                  battleStarted={this.state.battleStarted}
+                                                                  setTranslateX={this.state.userMiniCardsTranslateX[i]}
                                                                   user cardLevel={this.state.cardLevels[i]}
                                                                   visible={!(i===0)} animationDuration={`0.${10 - i}`}
                                                                   cardImage={this.state.icons[i]}/>
