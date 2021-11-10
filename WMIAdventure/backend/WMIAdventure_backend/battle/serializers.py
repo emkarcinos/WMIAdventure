@@ -109,6 +109,9 @@ class UsedEffectSerializer(serializers.Serializer):
     buff = BuffSerializer(required=False)
     buffed_card = BuffedCardSerializer(required=False)
 
+    # Not all effects are changing order of deck
+    new_deck_order = SimplifiedCardSerializer(many=True, required=False, source="reordered_deck.cards")
+
 
 class TurnSerializer(serializers.Serializer):
     attacker = SimplifiedPlayerSerializer()
