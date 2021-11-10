@@ -119,41 +119,20 @@ class BattleView extends React.Component {
         + secondStepAnimationDuration * 3);
     }
 
-    updateCardsOrder = (cardInitOrder, orderToSet) => {
-        let newCardsOrder = this.state.cardsOrder.slice();
+   // userCardsOrderUpdate(cardsPositions) {
+        // cardsPositions = [1, 2, 3, 4, 5]; // => [0, 0, 0, 0, 0]
+        // pierwsza karta na pierwszym miejscu, druga na drugim itd.
 
-        let savePosValue = newCardsOrder[cardInitOrder - 1];
-        newCardsOrder[cardInitOrder - 1] = orderToSet - 1;
-        newCardsOrder[orderToSet - 1] = savePosValue;
-    }
+        // cardsPositions = [2, 4, 5, 1, 3]; // => [2*58, 0, 2*58, -2*58, -2*58]
+        // druga karta na pierwszym, czwarta na drugim, piąta na trzecim itd.
+        // albo inaczej pierwsza karta na czwartym, druga na pierwszym, trzecia na piątym itd.
 
-    userCardsOrderManipulate = (cardInitOrder, orderToSet) => {
-        console.log(cardInitOrder);
-        console.log(orderToSet);
-
-        let newUserMiniCardsTranslateX = this.state.userMiniCardsTranslateX.slice();
-        newUserMiniCardsTranslateX[cardInitOrder - 1] =
-            `${this.state.orderPlaceDistance * (orderToSet - cardInitOrder)}px`;
-
-        for(let i = 0; i < Math.abs(cardInitOrder - orderToSet); i++) {
-            newUserMiniCardsTranslateX[orderToSet - i - 1] =
-                `${this.state.orderPlaceDistance * (-1)}px`;
-        }
-
-        this.setState({
-            userMiniCardsTranslateX: newUserMiniCardsTranslateX,
-        });
-
-        // card(cardInitOrder) set translateX placeDistance * (orderToSet - cardInitOrder)
-        // for let i=0; i < (absolute(cardInitOrder-orderToSet) - 1); i++ do
-            // card(orderToSet - i) -> set translateX placeDistance * (-1)
-        // update cardsOrder
-    }
-
-    enemyCardsOrderManipulate = (cardInitOrder, orderToSet) => {
-        console.log(cardInitOrder);
-        console.log(orderToSet);
-    }
+        // jedynka moze sie przesuwac 58, 2*58, 3*58
+        // dwójka moze sie przesuwac 58, 2*58, 3*58
+        // trójka moze sie przesuwac -58, 58, 2*58
+        // czwórka moze sie przesuwac -2*58, -58, 58
+        // piątka moze sie przesuwac -3*58, -2*58, -58
+  //  }
 
     render() {
         return (
@@ -173,7 +152,6 @@ class BattleView extends React.Component {
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`enemyCard-${i}`}
-                                                                  enemyCardsOrderManipulate={this.enemyCardsOrderManipulate}
                                                                   cardsOrder={this.state.cardsOrder[5 - i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
@@ -203,7 +181,6 @@ class BattleView extends React.Component {
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
-                                                                  userCardsOrderManipulate={this.userCardsOrderManipulate}
                                                                   cardsOrder={this.state.cardsOrder[i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}
