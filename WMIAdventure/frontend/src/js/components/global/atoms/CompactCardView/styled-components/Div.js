@@ -9,8 +9,16 @@ function colorHandler(level, theme) {
         return theme.colors.purplyPinky;
 }
 
+function visibleHandle(cardsOrder) {
+    if(cardsOrder) {
+        if(cardsOrder === 1)
+            return 'flex';
+        else return 'none';
+    } else return 'flex';
+}
+
 const Div = styled.div`
-  display: flex;
+  display: ${({cardsOrder}) => visibleHandle(cardsOrder)};
   flex-direction: column;
   align-items: center;
   justify-content: space-between;

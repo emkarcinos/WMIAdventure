@@ -59,7 +59,8 @@ class CompactCardView extends React.Component {
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
                  setTranslateX={this.props.setTranslateX}
-                 decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}>
+                 decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
+                 cardsOrder={this.props.cardsOrder} setOpacity={this.props.setOpacity}>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>

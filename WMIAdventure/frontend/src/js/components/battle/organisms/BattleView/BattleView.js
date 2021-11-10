@@ -43,18 +43,15 @@ class BattleView extends React.Component {
         enemyShield: '0',
         userShield: '0',
 
-        // access cards animation during battle
-        battleStarted: false,
-
-        // set translate X to specific card
-        // ... maybe arrays?
+        // opacity of compact card view elements
+        enemyCompactCardOpacity: '1',
+        userCompactCardOpacity: '1',
 
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
         cardsUserOrder : [1, 2, 3, 4, 5],
         cardsEnemyOrder : [1, 2, 3, 4, 5],
-        orderPlaceDistance: 58,
     }
 
     componentDidUpdate(prevProps) {
@@ -110,26 +107,42 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
+    }
 
-        // Give access to animations during battle
+    enemyCompactOpacityAnimation = () => {
+        this.setState({
+           enemyCompactCardOpacity: '0'
+        });
+
         setTimeout(() => {
             this.setState({
-                battleStarted: true,
+                enemyCompactCardOpacity: '1'
             });
-        },battleInitLoadingDuration
-        + secondStepAnimationDuration * 3);
+        }, secondStepAnimationDuration*2);
+    }
+
+    userCompactOpacityAnimation = () => {
+        this.setState({
+            userCompactCardOpacity: '0'
+        });
+
+        setTimeout(() => {
+            this.setState({
+                userCompactCardOpacity: '1'
+            });
+        }, secondStepAnimationDuration*2);
     }
 
     changeCardsEnemyOrder = () => {
         this.setState({
             cardsEnemyOrder: [3, 2, 1, 5, 4]
-        });
+        }, this.enemyCompactOpacityAnimation);
     }
 
     changeCardsUserOrder = () => {
         this.setState({
             cardsUserOrder: [5, 4, 2, 3, 1]
-        });
+        }, this.userCompactOpacityAnimation);
     }
 
     render() {
@@ -152,7 +165,6 @@ class BattleView extends React.Component {
                                                     <MiniCardView key={`enemyCard-${i}`}
                                                                   changeCardsOrder={this.changeCardsEnemyOrder}
                                                                   cardsOrder={this.state.cardsEnemyOrder[i]}
-                                                                  battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
                                                                   animationDuration={`0.${9 - i}`}
@@ -162,17 +174,35 @@ class BattleView extends React.Component {
                                         )}
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
-                                <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                                                 setTranslateX={this.state.enemyCompactCardTranslateX}
-                                                 setMargin={'0 0 0 10px'} />
+                                {[...Array(5)].map(
+                                    (e,i) => {
+                                        return (
+                                            <CompactCardView key={`enemyCompactCard-${i}`}
+                                                             setOpacity={this.state.enemyCompactCardOpacity}
+                                                             cardsOrder={this.state.cardsEnemyOrder[i]}
+                                                             cardImage={this.state.icons[i]} cardName={'Karta 1'}
+                                                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                                                             setTranslateX={this.state.enemyCompactCardTranslateX}
+                                                             setMargin={'0 0 0 10px'} />
+                                        );
+                                    }
+                                )}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
-                                <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} cardLevel={1} setHeight={'200px'}
-                                                 setTranslateX={this.state.userCompactCardTranslateX}
-                                                 setMargin={'0 10px 0 0'} />
+                                {[...Array(5)].map(
+                                    (e,i) => {
+                                        return (
+                                            <CompactCardView key={`userCompactCard-${i}`}
+                                                             cardsOrder={this.state.cardsUserOrder[i]}
+                                                             setOpacity={this.state.userCompactCardOpacity}
+                                                             cardImage={this.state.icons[i]} cardName={'Karta 1'}
+                                                             setWidth={'124px'} cardLevel={2} setHeight={'200px'}
+                                                             setTranslateX={this.state.userCompactCardTranslateX}
+                                                             setMargin={'0 10px 0 0'} />
+                                        );
+                                    }
+                                )}
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* first card is not visible because is the same as Compact card */}
@@ -182,7 +212,6 @@ class BattleView extends React.Component {
                                                     <MiniCardView key={`userCard-${i}`}
                                                                   changeCardsOrder={this.changeCardsUserOrder}
                                                                   cardsOrder={this.state.cardsUserOrder[i]}
-                                                                  battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}
                                                                   user cardLevel={this.state.cardLevels[i]}
                                                                   animationDuration={`0.${9 - i}`}

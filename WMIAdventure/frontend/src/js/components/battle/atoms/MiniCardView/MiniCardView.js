@@ -21,6 +21,14 @@ class MiniCardView extends React.Component {
         cardsOrder: this.props.cardsOrder,
     }
 
+    showNewCardsOrder = () => {
+        setTimeout(() => {
+            this.setState({
+                miniCardOpacity: '1'
+            });
+        }, 100)
+    }
+
     componentDidUpdate(prevProps) {
         if(prevProps.cardsOrder && (prevProps.cardsOrder !== this.props.cardsOrder)) {
             this.setState({
@@ -31,14 +39,8 @@ class MiniCardView extends React.Component {
                 let newCardsOrder = this.props.cardsOrder;
                 this.setState({
                     cardsOrder: newCardsOrder
-                });
+                }, this.showNewCardsOrder);
             }, secondStepAnimationDuration);
-
-            setTimeout(() => {
-                this.setState({
-                    miniCardOpacity: '1'
-                });
-            }, secondStepAnimationDuration + 100);
         }
     }
 
