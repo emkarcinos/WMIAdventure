@@ -21,8 +21,10 @@ const CardsContainer = styled.div`
   display: ${({visible}) => visible ? 'flex' : 'none'};
   flex-direction: column;
   justify-content: flex-end;
-  transition: transform ${({animationDuration}) => animationDuration ? animationDuration : '0.5'}s ease-in-out;
+  order: ${({cardsOrder}) => cardsOrder};
+  transition: transform ${({animationDuration}) => animationDuration ? animationDuration : '0.5'}s, opacity 0.5s ease-in-out;
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
+  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
 `;
 
 export default CardsContainer;

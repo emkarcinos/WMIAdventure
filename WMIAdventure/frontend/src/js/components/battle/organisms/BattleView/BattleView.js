@@ -119,20 +119,11 @@ class BattleView extends React.Component {
         + secondStepAnimationDuration * 3);
     }
 
-   // userCardsOrderUpdate(cardsPositions) {
-        // cardsPositions = [1, 2, 3, 4, 5]; // => [0, 0, 0, 0, 0]
-        // pierwsza karta na pierwszym miejscu, druga na drugim itd.
-
-        // cardsPositions = [2, 4, 5, 1, 3]; // => [2*58, 0, 2*58, -2*58, -2*58]
-        // druga karta na pierwszym, czwarta na drugim, piąta na trzecim itd.
-        // albo inaczej pierwsza karta na czwartym, druga na pierwszym, trzecia na piątym itd.
-
-        // jedynka moze sie przesuwac 58, 2*58, 3*58
-        // dwójka moze sie przesuwac 58, 2*58, 3*58
-        // trójka moze sie przesuwac -58, 58, 2*58
-        // czwórka moze sie przesuwac -2*58, -58, 58
-        // piątka moze sie przesuwac -3*58, -2*58, -58
-  //  }
+    changeCardsOrder = () => {
+        this.setState({
+            cardsOrder: [5, 4, 2, 3, 1]
+        })
+    }
 
     render() {
         return (
@@ -181,6 +172,7 @@ class BattleView extends React.Component {
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
+                                                                  changeCardsOrder={this.changeCardsOrder}
                                                                   cardsOrder={this.state.cardsOrder[i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}

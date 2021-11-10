@@ -3,6 +3,7 @@ import CardsContainer from "./styled-components/CardsContainer";
 import Icon from "./styled-components/Icon";
 import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 import IconContainer from "./styled-components/IconContainer";
+import {secondStepAnimationDuration} from "../../../../utils/globals";
 
 class MiniCardView extends React.Component {
     /*
@@ -15,11 +16,39 @@ class MiniCardView extends React.Component {
         cardImage -> card icon
      */
 
+    state = {
+        miniCardOpacity: '1',
+        cardsOrder: 0,
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.cardsOrder && (prevProps.cardsOrder !== this.props.cardsOrder)) {
+            this.setState({
+               miniCardOpacity: '0'
+            });
+
+            setTimeout(() => {
+                let newCardsOrder = this.props.cardsOrder;
+                this.setState({
+                    cardsOrder: newCardsOrder
+                });
+            }, secondStepAnimationDuration);
+
+            setTimeout(() => {
+                this.setState({
+                    miniCardOpacity: '1'
+                });
+            }, secondStepAnimationDuration + 100);
+        }
+    }
+
     render() {
         return (
             <CardsContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
-                            enemy={this.props.enemy} user={this.props.user}
-                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}>
+                            setOpacity={this.state.miniCardOpacity} enemy={this.props.enemy}
+                            user={this.props.user} cardsOrder={this.state.cardsOrder}
+                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}
+                            onClick={() => this.props.changeCardsOrder()}>
                 {
                     this.props.enemy ?
                         <>
