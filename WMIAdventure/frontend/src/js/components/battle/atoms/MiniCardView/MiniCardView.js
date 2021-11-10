@@ -18,7 +18,7 @@ class MiniCardView extends React.Component {
 
     state = {
         miniCardOpacity: '1',
-        cardsOrder: 0,
+        cardsOrder: this.props.cardsOrder,
     }
 
     componentDidUpdate(prevProps) {

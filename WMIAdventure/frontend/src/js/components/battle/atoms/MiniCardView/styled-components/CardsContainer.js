@@ -18,7 +18,7 @@ const CardsContainer = styled.div`
   background-color: ${({level, theme}) => handleColor(level, theme)};
   width: 54px;
   height: 64px;
-  display: ${({visible}) => visible ? 'flex' : 'none'};
+  display: ${({cardsOrder}) => (cardsOrder === 1) ? 'none' : 'flex'};
   flex-direction: column;
   justify-content: flex-end;
   order: ${({cardsOrder}) => cardsOrder};

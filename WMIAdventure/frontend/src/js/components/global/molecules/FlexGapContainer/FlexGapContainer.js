@@ -5,7 +5,7 @@ class FlexGapContainer extends React.Component {
     render() {
         return (
             <Container setMargin={this.props.setMargin} gap={this.props.gap} space={this.props.space}
-                       setWidth={this.props.setWidth} setHeight={this.props.setHeight}>
+                       setWidth={this.props.setWidth} setHeight={this.props.setHeight} reverse={this.props.reverse}>
                 {this.props.children}
             </Container>
         );

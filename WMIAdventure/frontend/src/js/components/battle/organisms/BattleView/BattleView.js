@@ -52,7 +52,8 @@ class BattleView extends React.Component {
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
-        cardsOrder : [1, 2, 3, 4, 5],
+        cardsUserOrder : [1, 2, 3, 4, 5],
+        cardsEnemyOrder : [1, 2, 3, 4, 5],
         orderPlaceDistance: 58,
     }
 
@@ -119,10 +120,16 @@ class BattleView extends React.Component {
         + secondStepAnimationDuration * 3);
     }
 
-    changeCardsOrder = () => {
+    changeCardsEnemyOrder = () => {
         this.setState({
-            cardsOrder: [5, 4, 2, 3, 1]
-        })
+            cardsEnemyOrder: [3, 2, 1, 5, 4]
+        });
+    }
+
+    changeCardsUserOrder = () => {
+        this.setState({
+            cardsUserOrder: [5, 4, 2, 3, 1]
+        });
     }
 
     render() {
@@ -137,18 +144,19 @@ class BattleView extends React.Component {
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={this.state.enemyHp} shield={this.state.enemyShield} />
-                                    <FlexGapContainer setWidth={'100%'} gap={'4px'}>
+                                    <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* first card is not visible because is the same as Compact card */}
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`enemyCard-${i}`}
-                                                                  cardsOrder={this.state.cardsOrder[5 - i]}
+                                                                  changeCardsOrder={this.changeCardsEnemyOrder}
+                                                                  cardsOrder={this.state.cardsEnemyOrder[i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
-                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
-                                                                  cardImage={this.state.icons[5 - i]}/>
+                                                                  animationDuration={`0.${9 - i}`}
+                                                                  cardImage={this.state.icons[i]}/>
                                                 );
                                             }
                                         )}
@@ -172,12 +180,12 @@ class BattleView extends React.Component {
                                             (e,i) => {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
-                                                                  changeCardsOrder={this.changeCardsOrder}
-                                                                  cardsOrder={this.state.cardsOrder[i]}
+                                                                  changeCardsOrder={this.changeCardsUserOrder}
+                                                                  cardsOrder={this.state.cardsUserOrder[i]}
                                                                   battleStarted={this.state.battleStarted}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}
                                                                   user cardLevel={this.state.cardLevels[i]}
-                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
+                                                                  animationDuration={`0.${9 - i}`}
                                                                   cardImage={this.state.icons[i]}/>
                                                 );
                                             }
