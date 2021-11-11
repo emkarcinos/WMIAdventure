@@ -54,25 +54,6 @@ class TurnsQueueTestCase(TestCase):
         actual_player = self.queue.queue[-1]
         self.assertIs(actual_player, expected_player)
 
-    def test_perform_turns_of_stopped_players(self):
-        """
-        In this test we test whether player2 is being put at the front of the queue.
-        Normally player1 should be at the front of queue, but we mark him as stopped.
-        """
-
-        self.player1.turns_stopped = 3  # Stop player1
-        """
-        Assert that player1 is at the front of queue before calling _perform_turns_of_stopped_players
-        """
-        self.assertIs(self.player1, self.queue.queue[0])
-
-        self.queue._perform_turns_of_stopped_players()
-
-        expected_player = self.player2
-        actual_player = self.queue.queue[0]
-
-        self.assertIs(actual_player, expected_player)  # Assert that now player2 is at the front of queue
-
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()

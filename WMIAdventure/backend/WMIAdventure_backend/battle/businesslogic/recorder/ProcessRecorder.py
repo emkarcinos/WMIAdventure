@@ -36,18 +36,20 @@ class ProcessRecorder:
         self.current_turn = Turn(attacker, defender, current_player)
         self.turns.append(self.current_turn)
 
-    def record_card_usage(self, used_card: BattleCard):
+    def record_card_usage(self, used_card: Optional[BattleCard]):
         """
         Records which card was executed in this turn.
 
         This method should be called right after determining which card player will execute.
 
-        :param used_card:
+        :param used_card: Used card or None if in this turn card wasn't used.
         :raises AssertionError: If trying to record card usage, when turn start wasn't recorded. See: record_turn_start
         """
 
         assert self.current_turn is not None, "There is no current turn."
-        self.current_turn.record_card_usage(used_card)
+
+        if used_card is not None:
+            self.current_turn.record_card_usage(used_card)
 
     def record_effect_usage(self, used_effect: EffectImpact):
         """

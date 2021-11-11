@@ -1,3 +1,5 @@
+from typing import Optional
+
 from battle.businesslogic.effects.Effect import Effect
 from .BattleCard import BattleCard
 from .Deck import Deck
@@ -27,11 +29,18 @@ class Player:
     def get_hp(self) -> int:
         return self.statistics.hp
 
-    def use_card(self) -> tuple[BattleCard, list[Effect]]:
+    def use_card(self) -> tuple[Optional[BattleCard], list[Effect]]:
         """
         Uses card which is first in deck to use and then places that card at the end of the deck.
-        @return: Proper card and it's list of effects to be executed by battle simulation .
+
+        :return: Proper card and it's list of effects to be executed by battle simulation OR None and empty list
+        if Player is stopped.
         """
+
+        # If stopped, then do not use card
+        if self.turns_stopped > 0:
+            self.turns_stopped -= 1
+            return None, []
 
         card = self.deck.get_card()
         return card, card.use()
