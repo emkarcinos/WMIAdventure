@@ -122,34 +122,46 @@ class BattleView extends React.Component {
         });
     }
 
-    getMiniCards = (enemy, i) => {
+    getMiniCards = (enemy) => {
         return (
-            <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                          changeCardsOrder={
-                              enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
-                          }
-                          cardIndexInDeck={
-                              enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
-                          }
-                          setTranslateX={
-                              enemy ? this.state.enemyMiniCardsTranslateX[i] : this.state.userMiniCardsTranslateX[i]
-                          }
-                          enemy={enemy} user={!enemy}
-                          cardLevel={this.state.cardLevels[i]}
-                          animationDuration={`0.${9 - i}`}
-                          cardImage={this.state.icons[i]}/>
+            [...Array(5)].map(
+            (e,i) => {
+                return (
+                    <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
+                                  changeCardsOrder={
+                                      enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
+                                  }
+                                  cardIndexInDeck={
+                                      enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
+                                  }
+                                  setTranslateX={
+                                      enemy ? this.state.enemyMiniCardsTranslateX[i]
+                                          : this.state.userMiniCardsTranslateX[i]
+                                  }
+                                  enemy={enemy} user={!enemy}
+                                  cardLevel={this.state.cardLevels[i]}
+                                  animationDuration={`0.${9 - i}`}
+                                  cardImage={this.state.icons[i]}/>
+                );
+            })
         );
     }
 
-    getCompactCards = (enemy, i) => {
+    getCompactCards = (enemy) => {
         return (
-            <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
-                             cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]}
-                             cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
-                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                             setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
-                                 : this.state.userCompactCardTranslateX}
-                             setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+            [...Array(5)].map(
+            (e,i) => {
+                return (
+                    <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                                     cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
+                                         : this.state.cardsUserOrder[i]}
+                                     cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
+                                     setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                                     setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
+                                         : this.state.userCompactCardTranslateX}
+                                     setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+                );
+            })
         );
     }
 
@@ -168,45 +180,21 @@ class BattleView extends React.Component {
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
                                         First card is not visible because is the same as Compact card */}
-                                        {[...Array(5)].map(
-                                            (e,i) => {
-                                                return (
-                                                    this.getMiniCards(true, i)
-                                                );
-                                            }
-                                        )}
+                                        {this.getMiniCards(true)}
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
                                 {/* Enemy Compact Card! Particular Compact Card is visible if order === 1 */}
-                                {[...Array(5)].map(
-                                    (e,i) => {
-                                        return (
-                                            this.getCompactCards(true, i)
-                                        );
-                                    }
-                                )}
+                                {this.getCompactCards(true)}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
-                                {[...Array(5)].map(
-                                    (e,i) => {
-                                        return (
-                                            this.getCompactCards(false, i)
-                                        );
-                                    }
-                                )}
+                                {this.getCompactCards(false)}
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* User MiniCards!
                                         First card is not visible because is the same as Compact card */}
-                                        {[...Array(5)].map(
-                                            (e,i) => {
-                                                return (
-                                                    this.getMiniCards(false, i)
-                                                );
-                                            }
-                                        )}
+                                        {this.getMiniCards(false)}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
                                                         hp={this.state.userHp} shield={this.state.userShield} />
