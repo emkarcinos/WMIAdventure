@@ -32,7 +32,7 @@ class BattleView extends React.Component {
         // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
-        enemyMiniCardsTranslateX: '-100vw',
+        enemyMiniCardsTranslateX: ['-100vw', '-100vw', '-100vw', '-100vw', '-100vw'],
         userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
@@ -95,7 +95,7 @@ class BattleView extends React.Component {
         and hp and shield points animation */
         setTimeout(() => {
             this.setState({
-                enemyMiniCardsTranslateX: '0',
+                enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
                 userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
                 enemyHp: '100',
                 userHp: '100',
@@ -122,6 +122,37 @@ class BattleView extends React.Component {
         });
     }
 
+    getMiniCards = (enemy, i) => {
+        return (
+            <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
+                          changeCardsOrder={
+                              enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
+                          }
+                          cardIndexInDeck={
+                              enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
+                          }
+                          setTranslateX={
+                              enemy ? this.state.enemyMiniCardsTranslateX[i] : this.state.userMiniCardsTranslateX[i]
+                          }
+                          enemy={enemy} user={!enemy}
+                          cardLevel={this.state.cardLevels[i]}
+                          animationDuration={`0.${9 - i}`}
+                          cardImage={this.state.icons[i]}/>
+        );
+    }
+
+    getCompactCards = (enemy, i) => {
+        return (
+            <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                             cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]}
+                             cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
+                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                             setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
+                                 : this.state.userCompactCardTranslateX}
+                             setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+        );
+    }
+
     render() {
         return (
             <>
@@ -140,13 +171,7 @@ class BattleView extends React.Component {
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
-                                                    <MiniCardView key={`enemyCard-${i}`}
-                                                                  changeCardsOrder={this.changeCardsEnemyOrder}
-                                                                  cardIndexInDeck={this.state.cardsEnemyOrder[i]}
-                                                                  setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                                  enemy cardLevel={this.state.cardLevels[i]}
-                                                                  animationDuration={`0.${9 - i}`}
-                                                                  cardImage={this.state.icons[i]}/>
+                                                    this.getMiniCards(true, i)
                                                 );
                                             }
                                         )}
@@ -156,12 +181,7 @@ class BattleView extends React.Component {
                                 {[...Array(5)].map(
                                     (e,i) => {
                                         return (
-                                            <CompactCardView key={`enemyCompactCard-${i}`}
-                                                             cardIndexInDeck={this.state.cardsEnemyOrder[i]}
-                                                             cardImage={this.state.icons[i]} cardName={'Karta 1'}
-                                                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                                                             setTranslateX={this.state.enemyCompactCardTranslateX}
-                                                             setMargin={'0 0 0 10px'} />
+                                            this.getCompactCards(true, i)
                                         );
                                     }
                                 )}
@@ -172,12 +192,7 @@ class BattleView extends React.Component {
                                 {[...Array(5)].map(
                                     (e,i) => {
                                         return (
-                                            <CompactCardView key={`userCompactCard-${i}`}
-                                                             cardIndexInDeck={this.state.cardsUserOrder[i]}
-                                                             cardImage={this.state.icons[i]} cardName={'Karta 1'}
-                                                             setWidth={'124px'} cardLevel={2} setHeight={'200px'}
-                                                             setTranslateX={this.state.userCompactCardTranslateX}
-                                                             setMargin={'0 10px 0 0'} />
+                                            this.getCompactCards(false, i)
                                         );
                                     }
                                 )}
@@ -188,13 +203,7 @@ class BattleView extends React.Component {
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
-                                                    <MiniCardView key={`userCard-${i}`}
-                                                                  changeCardsOrder={this.changeCardsUserOrder}
-                                                                  cardIndexInDeck={this.state.cardsUserOrder[i]}
-                                                                  setTranslateX={this.state.userMiniCardsTranslateX[i]}
-                                                                  user cardLevel={this.state.cardLevels[i]}
-                                                                  animationDuration={`0.${9 - i}`}
-                                                                  cardImage={this.state.icons[i]}/>
+                                                    this.getMiniCards(false, i)
                                                 );
                                             }
                                         )}
