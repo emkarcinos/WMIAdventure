@@ -56,24 +56,9 @@ class MiniCardView extends React.Component {
                             user={this.props.user} cardIndexInDeck={this.state.cardIndexInDeck}
                             level={this.props.cardLevel} animationDuration={this.props.animationDuration}
                             onClick={() => this.props.changeCardsOrder()}>
-                {
-                    this.props.enemy ?
-                        <>
-                            <IconContainer enemy>
-                                <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
-                            </IconContainer>
-                        </>
-                        : ''
-                }
-                {
-                    this.props.user ?
-                        <>
-                            <IconContainer>
-                                <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
-                            </IconContainer>
-                        </>
-                        : ''
-                }
+                <IconContainer enemy={this.props.enemy}>
+                    <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                </IconContainer>
             </CardsContainer>
         );
     }
