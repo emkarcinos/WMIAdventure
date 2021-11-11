@@ -4,6 +4,7 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
+import {secondStepAnimationDuration} from "../../../../utils/globals";
 
 class CompactCardView extends React.Component {
     /*
@@ -22,7 +23,9 @@ class CompactCardView extends React.Component {
     state = {
         cardName: ' ',
         cardLevel: 1,
-        cardImage: null
+        cardImage: null,
+        compactCardOpacity: '1',
+        cardsOrder: this.props.cardsOrder,
     }
 
     cardNameLengthHandler = (cardNameLength) => {
@@ -49,9 +52,30 @@ class CompactCardView extends React.Component {
         this.setStateFromProps();
     }
 
+    showNewCardsOrder = () => {
+        setTimeout(() => {
+            this.setState({
+                compactCardOpacity: '1'
+            });
+        }, 100);
+    }
+
     componentDidUpdate(prevProps) {
         if(this.propsChanged(prevProps))
             this.setStateFromProps();
+        else if(prevProps.cardsOrder
+            && (prevProps.cardsOrder !== this.props.cardsOrder)) {
+            this.setState({
+                compactCardOpacity: '0'
+            });
+
+            setTimeout(() => {
+                let newCardsOrder = this.props.cardsOrder;
+                this.setState({
+                    cardsOrder: newCardsOrder
+                }, this.showNewCardsOrder);
+            }, secondStepAnimationDuration);
+        }
     }
 
     render() {
@@ -60,7 +84,7 @@ class CompactCardView extends React.Component {
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
                  setTranslateX={this.props.setTranslateX}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
-                 cardsOrder={this.props.cardsOrder} setOpacity={this.props.setOpacity}>
+                 cardsOrder={this.state.cardsOrder} setOpacity={this.state.compactCardOpacity}>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>

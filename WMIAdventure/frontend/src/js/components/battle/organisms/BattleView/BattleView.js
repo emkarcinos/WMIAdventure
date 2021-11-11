@@ -43,10 +43,6 @@ class BattleView extends React.Component {
         enemyShield: '0',
         userShield: '0',
 
-        // opacity of compact card view elements
-        enemyCompactCardOpacity: '1',
-        userCompactCardOpacity: '1',
-
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
@@ -178,7 +174,6 @@ class BattleView extends React.Component {
                                     (e,i) => {
                                         return (
                                             <CompactCardView key={`enemyCompactCard-${i}`}
-                                                             setOpacity={this.state.enemyCompactCardOpacity}
                                                              cardsOrder={this.state.cardsEnemyOrder[i]}
                                                              cardImage={this.state.icons[i]} cardName={'Karta 1'}
                                                              setWidth={'124px'} cardLevel={3} setHeight={'200px'}
@@ -195,7 +190,6 @@ class BattleView extends React.Component {
                                         return (
                                             <CompactCardView key={`userCompactCard-${i}`}
                                                              cardsOrder={this.state.cardsUserOrder[i]}
-                                                             setOpacity={this.state.userCompactCardOpacity}
                                                              cardImage={this.state.icons[i]} cardName={'Karta 1'}
                                                              setWidth={'124px'} cardLevel={2} setHeight={'200px'}
                                                              setTranslateX={this.state.userCompactCardTranslateX}

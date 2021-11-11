@@ -32,8 +32,8 @@ const Div = styled.div`
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
   box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
-  
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s, opacity 0.5s ease-in-out;
+  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
