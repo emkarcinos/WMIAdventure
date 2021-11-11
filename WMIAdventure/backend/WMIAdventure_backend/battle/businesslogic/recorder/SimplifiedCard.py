@@ -9,5 +9,10 @@ class SimplifiedCard:
         if buffs:
             self.buffs = buffs
 
+        # When turns_blocked == 0 we do not want to include this field in serialization
+        # TODO: Maybe there's a better solution to this problem, maybe in serializer itself
+        if battle_card.turns_blocked > 0:
+            self.turns_blocked = battle_card.turns_blocked
+
     def __str__(self):
         return f"Simplified Card id: {self.card_info_id} lvl: {self.level}"

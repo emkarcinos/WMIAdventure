@@ -75,6 +75,9 @@ class SimplifiedCardSerializer(serializers.Serializer):
     # Card do not always has buffs
     buffs = BuffSerializer(many=True, required=False)
 
+    # Card can sometimes be blocked
+    turns_blocked = serializers.IntegerField(required=False)
+
 
 class SimplifiedPlayerSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="player_id")
@@ -83,9 +86,9 @@ class SimplifiedPlayerSerializer(serializers.Serializer):
     turns_stopped = serializers.IntegerField(required=False)
 
 
-class BuffedCardSerializer(serializers.Serializer):
+class BasicCardSerializer(serializers.Serializer):
     """
-    Serializes information which tells us which card was buffed.
+    Serializes information which identifies card.
     """
 
     id = serializers.IntegerField(source="card_model.info.id", help_text="Buffed card's id.")
@@ -108,13 +111,17 @@ class UsedEffectSerializer(serializers.Serializer):
 
     # Not all effects are buffing other cards
     buff = BuffSerializer(required=False)
-    buffed_card = BuffedCardSerializer(required=False)
+    buffed_card = BasicCardSerializer(required=False)
 
     # Not all effects are changing order of deck
     new_deck_order = SimplifiedCardSerializer(many=True, required=False, source="reordered_deck.cards")
 
     # Not all effects stop player
     turns_stopped = serializers.IntegerField(required=False)
+
+    # Not all effects block other cards
+    turns_blocked = serializers.IntegerField(required=False)
+    blocked_card = BasicCardSerializer(required=False)
 
 
 class TurnSerializer(serializers.Serializer):
