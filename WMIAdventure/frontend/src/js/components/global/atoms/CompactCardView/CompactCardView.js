@@ -18,6 +18,8 @@ class CompactCardView extends React.Component {
         setTranslateX -> handle movement animation
         cardLevel -> information about card level
         cardImage -> card icon
+        cardsOrder -> to show particular card in BattleView and hide the rest
+        setOpacity -> to handle opacity animation in BattleView
      */
 
     state = {
@@ -53,6 +55,7 @@ class CompactCardView extends React.Component {
     }
 
     showNewCardsOrder = () => {
+        // shows new ordered cards
         setTimeout(() => {
             this.setState({
                 compactCardOpacity: '1'
@@ -65,6 +68,7 @@ class CompactCardView extends React.Component {
             this.setStateFromProps();
         else if(prevProps.cardsOrder
             && (prevProps.cardsOrder !== this.props.cardsOrder)) {
+            // fade animation, and update orders, when cardsOrder did change
             this.setState({
                 compactCardOpacity: '0'
             });

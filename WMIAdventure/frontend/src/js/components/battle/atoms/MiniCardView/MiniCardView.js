@@ -14,6 +14,8 @@ class MiniCardView extends React.Component {
         cardLevel -> information about card level
         visible -> handle visibility of card
         cardImage -> card icon
+        cardsOrder -> to show particular card in BattleView and hide the rest
+        setOpacity -> to handle opacity animation in BattleView
      */
 
     state = {
@@ -22,6 +24,7 @@ class MiniCardView extends React.Component {
     }
 
     showNewCardsOrder = () => {
+        // shows new ordered cards
         setTimeout(() => {
             this.setState({
                 miniCardOpacity: '1'
@@ -30,7 +33,9 @@ class MiniCardView extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.cardsOrder && (prevProps.cardsOrder !== this.props.cardsOrder)) {
+        // fade animation, and update orders, when cardsOrder did change
+        if(prevProps.cardsOrder &&
+            (prevProps.cardsOrder !== this.props.cardsOrder)) {
             this.setState({
                miniCardOpacity: '0'
             });
