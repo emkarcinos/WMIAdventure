@@ -20,7 +20,7 @@ class MiniCardView extends React.Component {
 
     state = {
         miniCardOpacity: '1',
-        cardsOrder: this.props.cardsOrder,
+        cardIndexInDeck: this.props.cardIndexInDeck,
     }
 
     showNewCardsOrder = () => {
@@ -34,16 +34,16 @@ class MiniCardView extends React.Component {
 
     componentDidUpdate(prevProps) {
         // fade animation, and update orders, when cardsOrder did change
-        if(prevProps.cardsOrder &&
-            (prevProps.cardsOrder !== this.props.cardsOrder)) {
+        if(prevProps.cardIndexInDeck &&
+            (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
             this.setState({
                miniCardOpacity: '0'
             });
 
             setTimeout(() => {
-                let newCardsOrder = this.props.cardsOrder;
+                let newCardIndexInDeck = this.props.cardIndexInDeck;
                 this.setState({
-                    cardsOrder: newCardsOrder
+                    cardIndexInDeck: newCardIndexInDeck
                 }, this.showNewCardsOrder);
             }, secondStepAnimationDuration);
         }
@@ -53,7 +53,7 @@ class MiniCardView extends React.Component {
         return (
             <CardsContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
                             setOpacity={this.state.miniCardOpacity} enemy={this.props.enemy}
-                            user={this.props.user} cardsOrder={this.state.cardsOrder}
+                            user={this.props.user} cardIndexInDeck={this.state.cardIndexInDeck}
                             level={this.props.cardLevel} animationDuration={this.props.animationDuration}
                             onClick={() => this.props.changeCardsOrder()}>
                 {

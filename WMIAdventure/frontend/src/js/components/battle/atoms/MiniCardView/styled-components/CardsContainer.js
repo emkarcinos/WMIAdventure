@@ -18,10 +18,10 @@ const CardsContainer = styled.div`
   background-color: ${({level, theme}) => handleColor(level, theme)};
   width: 54px;
   height: 64px;
-  display: ${({cardsOrder}) => (cardsOrder === 1) ? 'none' : 'flex'};
+  display: ${({cardIndexInDeck}) => (cardIndexInDeck === 1) ? 'none' : 'flex'};
   flex-direction: column;
   justify-content: flex-end;
-  order: ${({cardsOrder}) => cardsOrder};
+  order: ${({cardIndexInDeck}) => cardIndexInDeck};
   transition: transform ${({animationDuration}) => animationDuration ? animationDuration : '0.5'}s, opacity 0.5s ease-in-out;
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};

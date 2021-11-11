@@ -27,7 +27,7 @@ class CompactCardView extends React.Component {
         cardLevel: 1,
         cardImage: null,
         compactCardOpacity: '1',
-        cardsOrder: this.props.cardsOrder,
+        cardIndexInDeck: this.props.cardIndexInDeck,
     }
 
     cardNameLengthHandler = (cardNameLength) => {
@@ -66,17 +66,17 @@ class CompactCardView extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.propsChanged(prevProps))
             this.setStateFromProps();
-        else if(prevProps.cardsOrder
-            && (prevProps.cardsOrder !== this.props.cardsOrder)) {
+        else if(prevProps.cardIndexInDeck
+            && (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
             // fade animation, and update orders, when cardsOrder did change
             this.setState({
                 compactCardOpacity: '0'
             });
 
             setTimeout(() => {
-                let newCardsOrder = this.props.cardsOrder;
+                let newCardIndexInDeck = this.props.cardIndexInDeck;
                 this.setState({
-                    cardsOrder: newCardsOrder
+                    cardIndexInDeck: newCardIndexInDeck
                 }, this.showNewCardsOrder);
             }, secondStepAnimationDuration);
         }
@@ -88,7 +88,7 @@ class CompactCardView extends React.Component {
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
                  setTranslateX={this.props.setTranslateX}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
-                 cardsOrder={this.state.cardsOrder} setOpacity={this.state.compactCardOpacity}>
+                 cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>

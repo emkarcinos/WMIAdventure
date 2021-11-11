@@ -110,7 +110,7 @@ class BattleView extends React.Component {
     changeCardsEnemyOrder = () => {
         this.setState({
             cardsEnemyOrder: [3, 2, 1, 5, 4]
-            // this means: third card on first place, second on second, first on third and so on
+            // this means: first card on third place, second on second, third on first and so on
         });
     }
 
@@ -118,7 +118,7 @@ class BattleView extends React.Component {
     changeCardsUserOrder = () => {
         this.setState({
             cardsUserOrder: [5, 4, 2, 3, 1]
-            // this means: fifth card on first place, fourth on second, second on third and so on
+            // this means: first card on fifth place, second on fourth, third on second and so on
         });
     }
 
@@ -142,7 +142,7 @@ class BattleView extends React.Component {
                                                 return (
                                                     <MiniCardView key={`enemyCard-${i}`}
                                                                   changeCardsOrder={this.changeCardsEnemyOrder}
-                                                                  cardsOrder={this.state.cardsEnemyOrder[i]}
+                                                                  cardIndexInDeck={this.state.cardsEnemyOrder[i]}
                                                                   setTranslateX={this.state.enemyMiniCardsTranslateX}
                                                                   enemy cardLevel={this.state.cardLevels[i]}
                                                                   animationDuration={`0.${9 - i}`}
@@ -157,7 +157,7 @@ class BattleView extends React.Component {
                                     (e,i) => {
                                         return (
                                             <CompactCardView key={`enemyCompactCard-${i}`}
-                                                             cardsOrder={this.state.cardsEnemyOrder[i]}
+                                                             cardIndexInDeck={this.state.cardsEnemyOrder[i]}
                                                              cardImage={this.state.icons[i]} cardName={'Karta 1'}
                                                              setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                                              setTranslateX={this.state.enemyCompactCardTranslateX}
@@ -173,7 +173,7 @@ class BattleView extends React.Component {
                                     (e,i) => {
                                         return (
                                             <CompactCardView key={`userCompactCard-${i}`}
-                                                             cardsOrder={this.state.cardsUserOrder[i]}
+                                                             cardIndexInDeck={this.state.cardsUserOrder[i]}
                                                              cardImage={this.state.icons[i]} cardName={'Karta 1'}
                                                              setWidth={'124px'} cardLevel={2} setHeight={'200px'}
                                                              setTranslateX={this.state.userCompactCardTranslateX}
@@ -190,7 +190,7 @@ class BattleView extends React.Component {
                                                 return (
                                                     <MiniCardView key={`userCard-${i}`}
                                                                   changeCardsOrder={this.changeCardsUserOrder}
-                                                                  cardsOrder={this.state.cardsUserOrder[i]}
+                                                                  cardIndexInDeck={this.state.cardsUserOrder[i]}
                                                                   setTranslateX={this.state.userMiniCardsTranslateX[i]}
                                                                   user cardLevel={this.state.cardLevels[i]}
                                                                   animationDuration={`0.${9 - i}`}
