@@ -80,6 +80,7 @@ class SimplifiedPlayerSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="player_id")
     stats = StatisticsSerializer()
     deck = SimplifiedCardSerializer(source="deck.cards", many=True)
+    turns_stopped = serializers.IntegerField(required=False)
 
 
 class BuffedCardSerializer(serializers.Serializer):
@@ -111,6 +112,9 @@ class UsedEffectSerializer(serializers.Serializer):
 
     # Not all effects are changing order of deck
     new_deck_order = SimplifiedCardSerializer(many=True, required=False, source="reordered_deck.cards")
+
+    # Not all effects stop player
+    turns_stopped = serializers.IntegerField(required=False)
 
 
 class TurnSerializer(serializers.Serializer):

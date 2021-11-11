@@ -1,4 +1,5 @@
 from battle.businesslogic.effects.Effect import Effect
+from battle.businesslogic.recorder.effects_impacts.PlayerStoppedEffectImpact import PlayerStoppedEffectImpact
 from cards.models import CardLevelEffects
 
 
@@ -27,6 +28,7 @@ class StopPlayerEffect(Effect):
 
         super().on_activation(target, turns_queue)
         target.turns_stopped += self.turns_stopped
+        return PlayerStoppedEffectImpact(self.effect_model.card_effect.id, target.id, self.turns_stopped)
         
     def description(self) -> str:
         return f"Zatrzymuje {self.target.label}a na {self.turns_stopped} turę"

@@ -18,6 +18,11 @@ class SimplifiedPlayer:
         self.player_id = player.id
         self.stats = copy(player.statistics)
 
+        # When turns_stopped == 0 we do not want to include this field in serialization
+        # TODO: Maybe there's a better solution to this problem, maybe in serializer itself
+        if player.turns_stopped > 0:
+            self.turns_stopped = player.turns_stopped
+
         # Create simplified player's deck
         self.deck = SimplifiedDeck(player.deck)
 
