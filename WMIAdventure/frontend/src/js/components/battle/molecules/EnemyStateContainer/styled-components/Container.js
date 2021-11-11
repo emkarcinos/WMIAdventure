@@ -4,10 +4,8 @@ const Container = styled.div`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   background-color: ${({theme}) => theme.colors.light2};
-  min-width: 226px;
+  width: 228px;
   height: 136px;
-  width: 60%;
-  max-width: 380px;
   
   transition: transform 0.5s ease-in-out;
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});

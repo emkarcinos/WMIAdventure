@@ -29,11 +29,11 @@ class BattleView extends React.Component {
         // false -> kuce in the middle not visible, true -> visible
         kuceInBattleVisible: false,
 
-        // states for items animation movement
+        // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
-        enemyMiniCardsTranslateX: '-100vw',
-        userMiniCardsTranslateX: '100vw',
+        enemyMiniCardsTranslateX: ['-100vw', '-100vw', '-100vw', '-100vw', '-100vw'],
+        userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
 
@@ -46,6 +46,9 @@ class BattleView extends React.Component {
         // prototype data
         cardLevels : [3, 3, 2, 1, 1],
         icons : [icon1, icon2, icon3, icon4, icon5],
+        // states to handle cards orders, pass to CompactCardView and MiniCardView as props
+        cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
+        cardsEnemyOrder : [1, 2, 3, 4, 5],
     }
 
     componentDidUpdate(prevProps) {
@@ -84,7 +87,6 @@ class BattleView extends React.Component {
             this.setState({
                 enemyCompactCardTranslateX: '0',
                 userCompactCardTranslateX: '0',
-
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2);
@@ -93,8 +95,8 @@ class BattleView extends React.Component {
         and hp and shield points animation */
         setTimeout(() => {
             this.setState({
-                enemyMiniCardsTranslateX: '0',
-                userMiniCardsTranslateX: '0',
+                enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
+                userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
                 enemyHp: '100',
                 userHp: '100',
                 enemyShield: '20',
@@ -102,6 +104,53 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
+    }
+
+    // prototype function, runs if we click on mini enemy cards
+    changeCardsEnemyOrder = () => {
+        this.setState({
+            cardsEnemyOrder: [3, 2, 1, 5, 4]
+            // this means: first card on third place, second on second, third on first and so on
+        });
+    }
+
+    // prototype function, runs if we click on mini user cards
+    changeCardsUserOrder = () => {
+        this.setState({
+            cardsUserOrder: [5, 4, 2, 3, 1]
+            // this means: first card on fifth place, second on fourth, third on second and so on
+        });
+    }
+
+    getMiniCards = (enemy, i) => {
+        return (
+            <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
+                          changeCardsOrder={
+                              enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
+                          }
+                          cardIndexInDeck={
+                              enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
+                          }
+                          setTranslateX={
+                              enemy ? this.state.enemyMiniCardsTranslateX[i] : this.state.userMiniCardsTranslateX[i]
+                          }
+                          enemy={enemy} user={!enemy}
+                          cardLevel={this.state.cardLevels[i]}
+                          animationDuration={`0.${9 - i}`}
+                          cardImage={this.state.icons[i]}/>
+        );
+    }
+
+    getCompactCards = (enemy, i) => {
+        return (
+            <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                             cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]}
+                             cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
+                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                             setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
+                                 : this.state.userCompactCardTranslateX}
+                             setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+        );
     }
 
     render() {
@@ -116,43 +165,45 @@ class BattleView extends React.Component {
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={this.state.enemyHp} shield={this.state.enemyShield} />
-                                    <FlexGapContainer setWidth={'100%'} space>
-                                        {/* first card is not visible because is the same as Compact card */}
+                                    <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
+                                        {/* Enemy MiniCards!
+                                        First card is not visible because is the same as Compact card */}
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
-                                                    <MiniCardView key={`enemyCard-${i}`}
-                                                                  setTranslateX={this.state.enemyMiniCardsTranslateX}
-                                                                  enemy cardLevel={this.state.cardLevels[i]}
-                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
-                                                                  cardImage={this.state.icons[5 - i]}/>
+                                                    this.getMiniCards(true, i)
                                                 );
                                             }
                                         )}
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
-                                <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                                                 setTranslateX={this.state.enemyCompactCardTranslateX}
-                                                 setMargin={'0 0 0 10px'} />
+                                {/* Enemy Compact Card! Particular Compact Card is visible if order === 1 */}
+                                {[...Array(5)].map(
+                                    (e,i) => {
+                                        return (
+                                            this.getCompactCards(true, i)
+                                        );
+                                    }
+                                )}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible} />
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
-                                <CompactCardView cardImage={icon1} cardName={'Karta 1'}
-                                                 setWidth={'124px'} cardLevel={1} setHeight={'200px'}
-                                                 setTranslateX={this.state.userCompactCardTranslateX}
-                                                 setMargin={'0 10px 0 0'} />
+                                {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
+                                {[...Array(5)].map(
+                                    (e,i) => {
+                                        return (
+                                            this.getCompactCards(false, i)
+                                        );
+                                    }
+                                )}
                                 <ColumnGapContainer gap={'0'}>
-                                    <FlexGapContainer setWidth={'100%'} space>
-                                        {/* first card is not visible because is the same as Compact card */}
+                                    <FlexGapContainer setWidth={'100%'} gap={'4px'}>
+                                        {/* User MiniCards!
+                                        First card is not visible because is the same as Compact card */}
                                         {[...Array(5)].map(
                                             (e,i) => {
                                                 return (
-                                                    <MiniCardView key={`userCard-${i}`}
-                                                                  setTranslateX={this.state.userMiniCardsTranslateX}
-                                                                  user cardLevel={this.state.cardLevels[i]}
-                                                                  visible={!(i===0)} animationDuration={`0.${10 - i}`}
-                                                                  cardImage={this.state.icons[i]}/>
+                                                    this.getMiniCards(false, i)
                                                 );
                                             }
                                         )}

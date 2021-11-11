@@ -10,7 +10,7 @@ function handleColor(level, theme) {
     else return theme.colors.greenyBluey;
 }
 
-const Container = styled.div`
+const CardsContainer = styled.div`
   border-top-left-radius: ${({user}) => user ? '16px' : '0'};
   border-top-right-radius: ${({user}) => user ? '16px' : '0'};
   border-bottom-left-radius: ${({enemy}) => enemy ? '16px' : '0'};
@@ -18,12 +18,13 @@ const Container = styled.div`
   background-color: ${({level, theme}) => handleColor(level, theme)};
   width: 54px;
   height: 64px;
-  display: ${({visible}) => visible ? 'flex' : 'none'};
+  display: ${({cardIndexInDeck}) => (cardIndexInDeck === 1) ? 'none' : 'flex'};
   flex-direction: column;
-  align-items: center;
   justify-content: flex-end;
-  transition: transform ${({animationDuration}) => animationDuration ? animationDuration : '0.5'}s ease-in-out;
+  order: ${({cardIndexInDeck}) => cardIndexInDeck};
+  transition: transform ${({animationDuration}) => animationDuration ? animationDuration : '0.5'}s, opacity 0.5s ease-in-out;
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
+  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
 `;
 
-export default Container;
+export default CardsContainer;

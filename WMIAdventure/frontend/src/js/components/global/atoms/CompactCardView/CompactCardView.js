@@ -4,6 +4,7 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
+import {secondStepAnimationDuration} from "../../../../utils/globals";
 
 class CompactCardView extends React.Component {
     /*
@@ -17,12 +18,16 @@ class CompactCardView extends React.Component {
         setTranslateX -> handle movement animation
         cardLevel -> information about card level
         cardImage -> card icon
+        cardsOrder -> to show particular card in BattleView and hide the rest
+        setOpacity -> to handle opacity animation in BattleView
      */
 
     state = {
         cardName: ' ',
         cardLevel: 1,
-        cardImage: null
+        cardImage: null,
+        compactCardOpacity: '1',
+        cardIndexInDeck: this.props.cardIndexInDeck,
     }
 
     cardNameLengthHandler = (cardNameLength) => {
@@ -49,9 +54,32 @@ class CompactCardView extends React.Component {
         this.setStateFromProps();
     }
 
+    showNewCardsOrder = () => {
+        // shows new ordered cards
+        setTimeout(() => {
+            this.setState({
+                compactCardOpacity: '1'
+            });
+        }, 100);
+    }
+
     componentDidUpdate(prevProps) {
         if(this.propsChanged(prevProps))
             this.setStateFromProps();
+        else if(prevProps.cardIndexInDeck
+            && (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
+            // fade animation, and update orders, when cardsOrder did change
+            this.setState({
+                compactCardOpacity: '0'
+            });
+
+            setTimeout(() => {
+                let newCardIndexInDeck = this.props.cardIndexInDeck;
+                this.setState({
+                    cardIndexInDeck: newCardIndexInDeck
+                }, this.showNewCardsOrder);
+            }, secondStepAnimationDuration);
+        }
     }
 
     render() {
@@ -59,7 +87,8 @@ class CompactCardView extends React.Component {
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
                  setTranslateX={this.props.setTranslateX}
-                 decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}>
+                 decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
+                 cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>
