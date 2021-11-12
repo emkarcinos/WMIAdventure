@@ -15,7 +15,8 @@ class CompactCardView extends React.Component {
         decorationHeight -> set height of top decoration border card view
         shadow -> signal that component has shadow
         ownFontSize -> set font size of card name
-        setTranslateX -> handle movement animation
+        setTranslateX -> handle horizontal movement animation (X)
+        setTranslateY -> handle vertical movement animation (Y)
         cardLevel -> information about card level
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest
@@ -86,7 +87,7 @@ class CompactCardView extends React.Component {
         return (
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
-                 setTranslateX={this.props.setTranslateX}
+                 setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
                  cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}>
                 <NameContainer>

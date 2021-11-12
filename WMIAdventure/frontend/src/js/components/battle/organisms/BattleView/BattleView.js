@@ -39,6 +39,9 @@ class BattleView extends React.Component {
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
 
+        enemyCompactCardTranslateY: '0',
+        userCompactCardTranslateY: '0',
+
         // states for hp and shield points
         enemyHp: '0',
         userHp: '0',
@@ -171,6 +174,8 @@ class BattleView extends React.Component {
                                      setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                      setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                          : this.state.userCompactCardTranslateX}
+                                     setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
+                                         : this.state.userCompactCardTranslateY}
                                      setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
                 );
             })
@@ -194,6 +199,7 @@ class BattleView extends React.Component {
 
         // hide full card process
         setTimeout(() => {
+            this.compactCardAction();
             newUserCardAction = this.state.userFullCardAction;
             newUserCardAction.translateY = '100vh';
             newUserCardAction.opacity = '0';
@@ -208,6 +214,15 @@ class BattleView extends React.Component {
             }, secondStepAnimationDuration);
         }, battleInitLoadingDuration +
             secondStepAnimationDuration * 3);
+    }
+
+    compactCardAction = () => {
+        this.setState({
+            kuceInBattleVisible: false,
+            userCompactCardTranslateX: '100%',
+            userCompactCardTranslateY: 'calc(-50vh + 50% + 24px)'
+            // half screen - (half card + half navbar)
+        })
     }
 
     render() {
