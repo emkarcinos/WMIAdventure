@@ -31,7 +31,7 @@ class CardProperties extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.levelsListFromCard.length === this.props.levelsListFromCard) return;
+        if (prevProps.levelsListFromCard.length === this.props.levelsListFromCard.length) return;
         setTimeout(() => {
             if (!this.state.startEdit) {
                 let levelsList = this.props.levelsListFromCard;
