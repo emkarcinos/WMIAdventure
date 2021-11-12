@@ -15,6 +15,8 @@ import icon3 from '../../../../../assets/images/icon3.png';
 import icon4 from '../../../../../assets/images/icon4.png';
 import icon5 from '../../../../../assets/images/icon5.png';
 import EnemyStateContainer from "../../molecules/EnemyStateContainer";
+import TransBackground from "./styled-components/TransBackground";
+import FullCardView from "../../../global/atoms/FullCardView";
 
 class BattleView extends React.Component {
 
@@ -49,6 +51,9 @@ class BattleView extends React.Component {
         // states to handle cards orders, pass to CompactCardView and MiniCardView as props
         cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
         cardsEnemyOrder : [1, 2, 3, 4, 5],
+        userCardAction: {
+            run: false,
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -58,11 +63,11 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
-            this.itemsAnimationInit();
+            this.itemsAnimationInit(this.battleAction);
         }
     }
 
-    itemsAnimationInit = () => {
+    itemsAnimationInit = (callback) => {
         // Users containers show first
         setTimeout(() => {
             this.setState({
@@ -104,6 +109,11 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
+
+        setTimeout(() => {
+            callback();
+        }, battleInitLoadingDuration
+            + secondStepAnimationDuration * 4);
     }
 
     // prototype function, runs if we click on mini enemy cards
@@ -119,6 +129,14 @@ class BattleView extends React.Component {
         this.setState({
             cardsUserOrder: [5, 4, 2, 3, 1]
             // this means: first card on fifth place, second on fourth, third on second and so on
+        });
+    }
+
+    battleAction = () => {
+        let newUserCardAction = this.state.userCardAction;
+        newUserCardAction.run = true;
+        this.setState({
+            userCardAction: newUserCardAction
         });
     }
 
@@ -201,6 +219,14 @@ class BattleView extends React.Component {
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
+                        <TransBackground visible={this.state.userCardAction.run}>
+                            <FullCardView cardName={'Test'}
+                                          cardSubject={'przykładzik'}
+                                          cardImage={icon1}
+                                          cardTooltip={'niech wszystko działa'}
+                                          description={'ta karta narazie nic nie robi'}
+                                          common />
+                        </TransBackground>
                     </PopUp>
                 </Media>
 
