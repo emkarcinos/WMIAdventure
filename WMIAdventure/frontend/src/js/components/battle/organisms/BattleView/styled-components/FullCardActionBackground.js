@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TransBackground = styled.div`
+const FullCardActionBackground = styled.div`
   display: ${({visible}) => visible ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
@@ -8,8 +8,11 @@ const TransBackground = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 48px);
+  transition: opacity 0.5s ease-in-out;
+  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
   background-color: ${({theme}) => theme.colors.transBack};
+  overflow: hidden;
 `;
 
-export default TransBackground;
+export default FullCardActionBackground;

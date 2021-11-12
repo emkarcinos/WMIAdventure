@@ -15,7 +15,7 @@ import icon3 from '../../../../../assets/images/icon3.png';
 import icon4 from '../../../../../assets/images/icon4.png';
 import icon5 from '../../../../../assets/images/icon5.png';
 import EnemyStateContainer from "../../molecules/EnemyStateContainer";
-import TransBackground from "./styled-components/TransBackground";
+import FullCardActionBackground from "./styled-components/FullCardActionBackground";
 import FullCardView from "../../../global/atoms/FullCardView";
 
 class BattleView extends React.Component {
@@ -51,8 +51,10 @@ class BattleView extends React.Component {
         // states to handle cards orders, pass to CompactCardView and MiniCardView as props
         cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
         cardsEnemyOrder : [1, 2, 3, 4, 5],
-        userCardAction: {
+        userFullCardAction: {
             run: false,
+            opacity: '0',
+            translateY: '100vh',
         }
     }
 
@@ -63,7 +65,7 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
-            this.itemsAnimationInit(this.battleAction);
+            this.itemsAnimationInit(this.fullCardAction);
         }
     }
 
@@ -132,14 +134,6 @@ class BattleView extends React.Component {
         });
     }
 
-    battleAction = () => {
-        let newUserCardAction = this.state.userCardAction;
-        newUserCardAction.run = true;
-        this.setState({
-            userCardAction: newUserCardAction
-        });
-    }
-
     getMiniCards = (enemy) => {
         return (
             [...Array(5)].map(
@@ -183,6 +177,39 @@ class BattleView extends React.Component {
         );
     }
 
+    fullCardAction = () => {
+        // show full card process
+        let newUserCardAction = this.state.userFullCardAction;
+        newUserCardAction.run = true;
+        this.setState({
+            userCardAction: newUserCardAction
+        });
+        newUserCardAction.translateY = '0';
+        newUserCardAction.opacity = '1';
+        setTimeout(() => {
+            this.setState({
+                userCardAction: newUserCardAction
+            });
+        }, 100);
+
+        // hide full card process
+        setTimeout(() => {
+            newUserCardAction = this.state.userFullCardAction;
+            newUserCardAction.translateY = '100vh';
+            newUserCardAction.opacity = '0';
+            this.setState({
+                userCardAction: newUserCardAction
+            });
+            newUserCardAction.run = false;
+            setTimeout(() => {
+                this.setState({
+                    userCardAction: newUserCardAction
+                });
+            }, secondStepAnimationDuration);
+        }, battleInitLoadingDuration +
+            secondStepAnimationDuration * 3);
+    }
+
     render() {
         return (
             <>
@@ -219,14 +246,13 @@ class BattleView extends React.Component {
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
-                        <TransBackground visible={this.state.userCardAction.run}>
-                            <FullCardView cardName={'Test'}
-                                          cardSubject={'przykładzik'}
-                                          cardImage={icon1}
-                                          cardTooltip={'niech wszystko działa'}
-                                          description={'ta karta narazie nic nie robi'}
-                                          common />
-                        </TransBackground>
+                        <FullCardActionBackground visible={this.state.userFullCardAction.run}
+                                                  setOpacity={this.state.userFullCardAction.opacity}>
+                            <FullCardView cardName={'Test'} cardSubject={'przykładzik'}
+                                          cardImage={icon1} cardTooltip={'niech wszystko działa'}
+                                          description={'ta karta narazie nic nie robi'} common
+                                          setTranslateY={this.state.userFullCardAction.translateY} />
+                        </FullCardActionBackground>
                     </PopUp>
                 </Media>
 

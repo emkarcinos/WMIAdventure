@@ -22,6 +22,9 @@ const Article = styled.article`
   position: relative;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
+  
+  transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
+  transition: transform 0.5s ease-in-out;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 300px;
