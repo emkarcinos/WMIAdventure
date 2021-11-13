@@ -93,3 +93,7 @@ class BattleCard:
                     buffs.append(buff)
 
         return buffs
+
+    @property
+    def doubled(self):
+        return self.card_duplicated_buff is not None

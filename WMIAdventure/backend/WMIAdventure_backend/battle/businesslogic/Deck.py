@@ -43,6 +43,12 @@ class Deck:
         @return: Card which should be used in battle in current turn.
         """
 
+        # If next card is doubled, then do not put it at back, just return it, so that
+        # duplicate is used, and original will be used in next turn.
+        next_card = self.lookup()
+        if next_card.doubled:
+            return next_card
+
         return self._dequeue_card()
 
     def lookup(self, index=0) -> BattleCard:
