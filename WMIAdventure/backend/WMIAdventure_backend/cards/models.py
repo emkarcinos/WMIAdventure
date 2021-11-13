@@ -133,6 +133,9 @@ class CardInfo(base_card_info_factory('cards/images/')):
             models.UniqueConstraint(fields=['name'], name='unique_CardInfo_name')
         ]
 
+    def __str__(self):
+        return f"Card Info < id:{self.id} name:{self.name} >"
+
 
 def base_card_factory(related_card_info_class: type):
     """
@@ -181,6 +184,9 @@ class Card(base_card_factory(CardInfo)):
 
     See: BaseCard which is inner class in base_card_factory function.
     """
+
+    def __str__(self):
+        return f"Card < id:{self.id} level:{self.level} info:{self.info.id} >"
 
     pass
 
@@ -234,6 +240,9 @@ class CardLevelEffects(base_card_level_effects_factory(Card)):
 
     See: BaseCardLevelEffects which is inner class in base_card_level_effects_factory function.
     """
+
+    def __str__(self):
+        return f"CardLevelEffects < Card: {self.card.id} Effect: {self.card_effect} >"
 
     pass
 
