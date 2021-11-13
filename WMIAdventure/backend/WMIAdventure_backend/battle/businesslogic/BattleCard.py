@@ -1,15 +1,17 @@
-from typing import List
+from typing import List, Optional
 
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card
 from .Buff import Buff
+from .buffs.CardDuplicatedBuff import CardDuplicatedBuff
 
 
 class BattleCard:
     """
 
     """
+    card_duplicated_buff: Optional[CardDuplicatedBuff]
 
     def __init__(self, card_model: Card):
         """
@@ -25,9 +27,24 @@ class BattleCard:
             self.effects.append(effects_factory.create(effect_model))
 
         self.turns_blocked = 0
+        self.card_duplicated_buff = None
 
     def __str__(self):
         return f"Card info id {self.card_model.info.id} lvl: {self.card_model.level.level}"
+
+    def _duplicate_being_used(self):
+        """
+        Handles using duplicate of this card.
+
+        Returns effects without buffs (because duplicated card can't have buffs)
+        and marks original card as not duplicated (because duplicate was used)
+
+        :return: Effects without buffs to be used in battle simulation.
+        """
+
+        effects_without_buffs = self.card_duplicated_buff.activate()
+        self.card_duplicated_buff = None
+        return effects_without_buffs
 
     def use(self) -> List[Effect]:
         """
@@ -40,6 +57,9 @@ class BattleCard:
         if self.turns_blocked > 0:
             self.turns_blocked -= 1
             return []  # If card is blocked it should be executed without effects.
+
+        if self.card_duplicated_buff:
+            return self._duplicate_being_used()
 
         return self.effects
 
