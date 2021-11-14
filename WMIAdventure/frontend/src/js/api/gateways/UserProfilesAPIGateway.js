@@ -6,8 +6,9 @@ import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = async () => {
+    const pageSize = 1000;
     let users = [];
-    let resp = await RequestSender.get(UserProfilesEndpoints.main + '?pagesize=1000')
+    let resp = await RequestSender.get(UserProfilesEndpoints.main + `?pagesize=${pageSize}`)
         .then(resp => resp.json());
     users.push.apply(users, resp.results);
     while (resp.next !== null) {
