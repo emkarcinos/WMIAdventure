@@ -52,13 +52,15 @@ class BattleCard:
         @return: List of effects to be executed by battle simulator.
         """
 
-        self._update_effects()
+        # When duplicate is being used we shouldn't update effects of the original card.
+        if not self.doubled:
+            self._update_effects()
 
         if self.turns_blocked > 0:
             self.turns_blocked -= 1
             return []  # If card is blocked it should be executed without effects.
 
-        if self.card_duplicated_buff:
+        if self.doubled:
             return self._duplicate_being_used()
 
         return self.effects
