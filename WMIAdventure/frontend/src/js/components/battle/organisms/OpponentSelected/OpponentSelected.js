@@ -21,6 +21,7 @@ import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import {getCurrentUserDecks, getCurrentUsername} from "../../../../storage/user/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
+import GenericPopup from "../../../global/atoms/GenericPopup";
 
 class OpponentSelected extends React.Component {
 
@@ -35,6 +36,10 @@ class OpponentSelected extends React.Component {
         // states uses for mount battleView
         battleView: false,
         battleViewPos: '-100vh',
+        error: {
+            visible: false,
+            message: '',
+        },
     }
 
     componentDidMount() {
@@ -49,6 +54,61 @@ class OpponentSelected extends React.Component {
             });
     }
 
+    handleBattleErrors = (resp) => {
+        switch (resp.status) {
+            case 401:
+                this.setState({
+                    error: {
+                        visible: true,
+                        message: "Nie jesteś zalogowany!"
+                    }
+                });
+                break;
+            case 404:
+                this.setState({
+                    error: {
+                        visible: true,
+                        message: "Niekompletna talia kart!"
+                    }
+                })
+                break;
+            case 500:
+                this.setState({
+                    error: {
+                        visible: true,
+                        message: "Błąd serwera! Spróbuj ponownie później."
+                    }
+                })
+                break;
+            default:
+                this.setState({
+                    error: {
+                        visible: true,
+                        message: "Nieznany błąd. Spróbuj ponownie później."
+                    }
+                })
+        }
+    }
+
+    errors = () => {
+        const close = (event) => {
+            event.preventDefault();
+            this.setState({
+                error: {
+                    visible: false,
+                    // Transition remembers component's message
+                    message: this.state.error.message
+                }
+            })
+        }
+
+        return (
+            <GenericPopup header={"Błąd!"} text={this.state.error.message} buttonText={"OK"}
+                          show={this.state.error.visible}
+                          onClickHandler={close}/>
+        )
+    }
+
     quickBattleRunHandler = () => {
         this.props.closeUserPreviewHandler();
         this.props.kuceStartFight();
@@ -60,6 +120,9 @@ class OpponentSelected extends React.Component {
                             this.postBattle(data);
                             this.postBattleOpenHandler();
                         })
+                } else {
+                    this.handleBattleErrors(response);
+                    this.props.kuceStopFight();
                 }
             });
     }
@@ -199,6 +262,8 @@ class OpponentSelected extends React.Component {
                         <BattleView battleView={this.state.battleView}
                                     closeHandler={this.battleViewCloseHandler}
                                     setTranslateY={this.state.battleViewPos}/>
+
+                        {this.errors()}
                     </>
                 </Media>
 
@@ -259,6 +324,7 @@ class OpponentSelected extends React.Component {
                                     opponentDeck={this.state.opponentDeck}
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
+                        {this.errors()}
                     </>
                 </Media>
             </>
