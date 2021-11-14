@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, popUpLoadingMinimalDuration, mobile, secondStepAnimationDuration} from '../../../../utils/globals';
+import {desktop, mobile, popUpLoadingMinimalDuration, secondStepAnimationDuration} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -18,7 +18,7 @@ import PostBattle from '../PostBattle';
 import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import {getCurrentUserDecks, getCurrentUsername} from "../../../../utils/userData";
+import {getCurrentUserDecks, getCurrentUsername} from "../../../../storage/user/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 
@@ -198,7 +198,7 @@ class OpponentSelected extends React.Component {
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView battleView={this.state.battleView}
                                     closeHandler={this.battleViewCloseHandler}
-                                    setTranslateY={this.state.battleViewPos} />
+                                    setTranslateY={this.state.battleViewPos}/>
                     </>
                 </Media>
 

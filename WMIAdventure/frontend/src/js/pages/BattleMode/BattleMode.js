@@ -19,7 +19,7 @@ import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
-import {getCurrentUserId, getCurrentUsername} from "../../utils/userData";
+import {getCurrentUserId, getCurrentUsername} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 
 class BattleMode extends React.Component {
@@ -195,7 +195,7 @@ class BattleMode extends React.Component {
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
                                   kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
-                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'} />
+                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'}/>
             </>
         );
     }

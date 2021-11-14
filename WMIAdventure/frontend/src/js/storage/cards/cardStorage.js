@@ -1,6 +1,6 @@
-import {cardKey} from "../../localStorageKeys";
-import CardsAPIGateway from "../../../api/gateways/CardsAPIGateway";
-import {getWithSetCallback} from "../../cache";
+import {cardKey} from "../localStorageKeys";
+import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
+import {getWithSetCallback} from "../cache/cache";
 
 export const getCardById = async (id) => {
     const callback = async () => {

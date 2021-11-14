@@ -6,8 +6,8 @@ import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGap
 import UserInfo from '../../atoms/UserInfo';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 import Container from './styled-components/Container';
-import {getCardById} from "../../../../utils/storage/cards/cardStorage";
-import {getUsersDecks} from "../../../../utils/userData";
+import {getCardById} from "../../../../storage/cards/cardStorage";
+import {getUsersDecks} from "../../../../storage/user/userData";
 
 class TinyProfileDesktop extends React.Component {
     placeholderCard = {
