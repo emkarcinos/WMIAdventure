@@ -19,6 +19,7 @@ import FullCardActionBackground from "./styled-components/FullCardActionBackgrou
 import FullCardView from "../../../global/atoms/FullCardView";
 import EffectIconsContainer from "./styled-components/EffectIconsContainer";
 import EffectIcon from "../../atoms/EffectIcon";
+import {getCurrentUserId} from "../../../../utils/userData";
 
 class BattleView extends React.Component {
 
@@ -36,8 +37,10 @@ class BattleView extends React.Component {
         // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
+
         enemyMiniCardsTranslateX: ['-100vw', '-100vw', '-100vw', '-100vw', '-100vw'],
         userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
+
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
 
@@ -50,24 +53,102 @@ class BattleView extends React.Component {
         enemyShield: '0',
         userShield: '0',
 
-        // prototype data
-        cardLevels : [3, 3, 2, 1, 1],
-        icons : [icon1, icon2, icon3, icon4, icon5],
         // states to handle cards orders, pass to CompactCardView and MiniCardView as props
-        cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
         cardsEnemyOrder : [1, 2, 3, 4, 5],
-        userFullCardAction: {
-            run: false,
-            opacity: '0',
-            translateY: '100vh',
-        },
+        cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
+
+        // full cards action
         enemyFullCardAction: {
             run: false,
             opacity: '0',
             translateY: '-100vh',
         },
-        userEffectsIcons: [],
-        enemyEffectsIcons: [],
+        userFullCardAction: {
+            run: false,
+            opacity: '0',
+            translateY: '100vh',
+        },
+
+        // effect icons action movement
+        enemyEffectsAction: {
+            run: false,
+            translateX: ['0', '0', '0'],
+            translateY: ['0', '0', '0'],
+            opacity: '0'
+        },
+
+        userEffectsAction: {
+            run: false,
+            translateX: ['0', '0', '0'],
+            translateY: ['0', '0', '0'],
+            opacity: '0'
+        },
+
+        // used effects prototype data
+        enemyUsedEffects: [ // player 2
+            {
+                id: 1, // damage
+                target_player: 1,
+                power: 42,
+                changed_stats: {
+                    hp: 58,
+                    armour: 0
+                }
+            },
+            {
+                id: 3, // random change cards order
+                target_player: 1
+            },
+            {
+                id: 4, // one turn stop
+                target_player: 1
+            },
+            {
+                id: 2, // shield
+                target_player: 2
+            },
+            {
+                id: 5, // double card run
+                target_player: 2
+            }
+        ],
+
+        userUsedEffects: [ // player 1
+            {
+                id: 1, // damage
+                target_player: 2,
+                power: 22,
+                changed_stats: {
+                    hp: 78,
+                    armour: 0
+                },
+            },
+            {
+                id: 7, // block next card
+                target_player: 2,
+            },
+            {
+                id: 6, // heal
+                target_player: 1
+            },
+            {
+                id: 8, // increase next card power
+                target_player: 1
+            },
+            {
+                id: 10, // increase next card damage
+                target_player: 1
+            }
+        ], // id of effects in this array
+
+        // other prototype data
+        cardLevels : [3, 3, 2, 1, 1],
+        cardIcons : [icon1, icon2, icon3, icon4, icon5],
+    }
+
+    componentDidMount() {
+        getCurrentUserId()
+            .then(id => this.setState({user: id}))
     }
 
     componentDidUpdate(prevProps) {
@@ -165,7 +246,7 @@ class BattleView extends React.Component {
                                   enemy={enemy} user={!enemy}
                                   cardLevel={this.state.cardLevels[i]}
                                   animationDuration={`0.${9 - i}`}
-                                  cardImage={this.state.icons[i]}/>
+                                  cardImage={this.state.cardIcons[i]}/>
                 );
             })
         );
@@ -179,7 +260,7 @@ class BattleView extends React.Component {
                     <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                      cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                          : this.state.cardsUserOrder[i]}
-                                     cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
+                                     cardImage={this.state.cardIcons[i]} cardName={`Karta ${i+1}`}
                                      setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                      setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                          : this.state.userCompactCardTranslateX}
@@ -234,6 +315,51 @@ class BattleView extends React.Component {
         })
     }
 
+    countUsedEffectsSelfTarget = () => {
+        const currentUserId = this.state.user;
+        let selfTarget = 0;
+        for (let i=0; i<this.state.userUsedEffects.length; i++) {
+            if(this.state.userUsedEffects[i].target_player === currentUserId)
+                selfTarget = selfTarget + 1;
+        }
+        return selfTarget;
+    }
+
+    countUsedEffectsEnemyTarget = () => {
+        const enemyId = this.props.enemy;
+        let enemyTarget = 0;
+        for (let i=0; i<this.state.userUsedEffects.length; i++) {
+            if(this.state.userUsedEffects[i].target_player === enemyId)
+                enemyTarget = enemyTarget + 1;
+        }
+        return enemyId;
+    }
+
+    usedEffectsIteration = () => {
+        const user = this.state.user;
+        return (
+            this.state.userUsedEffects.map((effect) => {
+                return (
+                    <EffectIcon key={`effectIcon-${effect.id}`}
+                                visible={this.state.userEffectsAction.run}
+                                value={effect.power}
+                                setTranslateX={
+                                    (effect.target_player === user)
+                                        ? this.state.userEffectsAction.translateX
+                                        : this.state.enemyEffectsAction.translateX}
+                                setTranslateY={
+                                    (effect.target_player === user)
+                                        ? this.state.userEffectsAction.translateY
+                                        : this.state.enemyEffectsAction.translateY} />
+                );
+            })
+        );
+    }
+
+    effectsAction = () => {
+        // TODO: implement this function and call after fullCardAction
+    }
+
     render() {
         return (
             <>
@@ -277,10 +403,8 @@ class BattleView extends React.Component {
                                           description={'ta karta narazie nic nie robi'} common
                                           setTranslateY={this.state.userFullCardAction.translateY} />
                         </FullCardActionBackground>
-                        <EffectIconsContainer visible>
-                            <EffectIcon visible />
-                            <EffectIcon visible />
-                            <EffectIcon visible />
+                        <EffectIconsContainer>
+                            {this.usedEffectsIteration()}
                         </EffectIconsContainer>
                     </PopUp>
                 </Media>
