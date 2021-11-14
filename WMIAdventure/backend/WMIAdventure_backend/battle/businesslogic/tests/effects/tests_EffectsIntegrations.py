@@ -5,6 +5,8 @@ from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from battle.businesslogic.tests.Creator import Creator
+from battle.businesslogic.tests.factories import create_player_with_deck
+from cards.factories import create_card_with_effect
 from cards.models import Card, CardLevelEffects, CardEffect
 
 
@@ -41,53 +43,93 @@ class EffectsIntegrationsTestCase(TestCase):
         self.player2 = Player(self.u2.id, Deck(self.d2))
 
     def test_damage_buff(self):
+        """
+        **Scenario:**
+
+        - Card dealing damage is buffed.
+        - This card is used.
+
+        ---
+
+        **Expected result:**
+
+        - Buff should be assigned and should affect dealt damage.
+        """
+
         dmg_pow = 10
         buff_pow = 5
-        dmg_card = BattleCard(Card())
-        dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                   power=dmg_pow))
-        buff_card = BattleCard(Card())
-        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER_DMG,
-                                                       target=CardLevelEffects.Target.PLAYER,
-                                                       power=buff_pow))
-        self.player1.deck.temp_cards_queue.append(buff_card)
-        self.player1.deck.temp_cards_queue.append(dmg_card)
+
+        dmg_card_model = create_card_with_effect(
+            CardEffect.EffectId.DMG,
+            power=dmg_pow,
+            range_=0
+        )
+
+        buff_card_model = create_card_with_effect(
+            CardEffect.EffectId.EMPOWER_DMG,
+            power=buff_pow,
+            range_=0,
+            target=CardLevelEffects.Target.PLAYER
+        )
+
+        player1, deck = create_player_with_deck(
+            card1=buff_card_model,
+            card2=dmg_card_model
+        )
+
+        buff_card, dmg_card = deck.lookup(0), deck.lookup(1)
 
         # Buffing next card
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, self.player2)
 
         # Check whether the buff got assigned properly
         self.assertGreater(len(dmg_card.effects[0].buffs), 0)
         # Activating damage effect
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, self.player2)
 
         expected_hp_remaining = self.player2.statistics.MAX_HP - (dmg_pow + buff_pow)
         self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
 
     def test_buff_wrong_type(self):
-        # Restoring player2 hp to max
-        self.player2.statistics.hp = self.player2.statistics.MAX_HP
+
+        # Player 1 cards
 
         dmg_pow = 10
         buff_pow = 5
-        dmg_card = BattleCard(Card())
-        dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                      power=dmg_pow))
-        buff_card = BattleCard(Card())
-        buff_card.effects.insert(1, self.create_effect(CardEffect.EffectId.EMPOWER_HEAL,
-                                                       target=CardLevelEffects.Target.PLAYER,
-                                                       power=buff_pow))
-        self.player1.deck.temp_cards_queue.append(buff_card)
-        self.player1.deck.temp_cards_queue.append(dmg_card)
+
+        dmg_card_model = create_card_with_effect(
+            CardEffect.EffectId.DMG,
+            power=dmg_pow,
+            range_=0
+        )
+
+        buff_card_model = create_card_with_effect(
+            CardEffect.EffectId.EMPOWER_HEAL,
+            power=buff_pow,
+            range_=0,
+            target=CardLevelEffects.Target.PLAYER
+        )
+
+        player1, deck = create_player_with_deck(
+            card1=buff_card_model,
+            card2=dmg_card_model
+        )
+
+        # Restoring player2 hp to max
+        self.player2.statistics.hp = self.player2.statistics.MAX_HP
 
         # Buffing next card
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, self.player2)
 
         # Activating damage effect
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, self.player2)
 
         expected_hp_remaining = self.player2.statistics.MAX_HP - dmg_pow
         self.assertEqual(self.player2.get_hp(), expected_hp_remaining)
+
+        # Delete test data
+        dmg_card_model.delete()
+        buff_card_model.delete()
 
     def test_buff_next_card_and_randomize(self):
         """
@@ -120,68 +162,98 @@ class EffectsIntegrationsTestCase(TestCase):
 
     def test_buff_and_block_card_use(self):
         """
-        Tests scenario: Player 1 buff their next card - Player 2 blocks the next Player 1 card - Blocked execution
+        Test scenario: Player 1 buffs his next card - Player 2 blocks the next Player 1 card - Blocked execution
         - Check what happens with skipped card - The card should no longer have a buff, as one turn has passed.
         """
-        buff_card = BattleCard(Card())
-        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER,
-                                                       target=CardLevelEffects.Target.PLAYER,
-                                                       power=20.0))
-        self.player1.deck.temp_cards_queue.append(buff_card)
 
-        block_card = BattleCard(Card())
-        block_card.effects.insert(0, self.create_effect(CardEffect.EffectId.BLOCK,
-                                                        target=CardLevelEffects.Target.OPPONENT))
-        self.player2.deck.temp_cards_queue.append(block_card)
+        # Player 1 cards
+        buff_card_model = create_card_with_effect(
+            CardEffect.EffectId.EMPOWER,
+            power=20,
+            range_=0,
+            target=CardLevelEffects.Target.PLAYER
+        )
 
-        buffed_damage_card = BattleCard(Card())
-        buffed_damage_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                target=CardLevelEffects.Target.OPPONENT,
-                                                                power=10.0))
-        self.player1.deck.temp_cards_queue.append(buffed_damage_card)
+        buffed_damage_card_model = create_card_with_effect(
+            CardEffect.EffectId.DMG,
+            power=10,
+            range_=0,
+            target=CardLevelEffects.Target.OPPONENT
+        )
 
-        self.activate_card(self.player1, self.player2)
-        self.activate_card(self.player2, self.player1)
+        player1, deck_p1 = create_player_with_deck(
+            card1=buff_card_model,
+            card2=buffed_damage_card_model
+        )
+
+        # Player 2 cards
+        block_card_model = create_card_with_effect(
+            CardEffect.EffectId.BLOCK,
+            target=CardLevelEffects.Target.OPPONENT
+        )
+
+        player2, deck_p2 = create_player_with_deck(
+            card1=block_card_model
+        )
+
+        self.activate_card(player1, player2)
+        self.activate_card(player2, player1)
         # This activation activates blocked card
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, player2)
         # Effect in next activation should not be buffed
-        effect = self.player1.use_card()[1][0]
+        effect = player1.use_card()[1][0]
         self.assertEqual(len(effect.buffs), 0)
 
     def test_buff_does_not_get_duplicated_on_double_card(self):
         """
         Test scenario: Player 1 buffs his next card, Player 2 applies double use effect on P1's card.
-        Player 1 card should execute two times: once with buff, second time without it.
+        Player 1 card should execute two times: first without buff, second time with it.
         """
-        buff_card = BattleCard(Card())
-        buff_card.effects.insert(0, self.create_effect(CardEffect.EffectId.EMPOWER,
-                                                       target=CardLevelEffects.Target.PLAYER,
-                                                       power=20.0))
-        self.player1.deck.temp_cards_queue.append(buff_card)
 
-        double_exec_card = BattleCard(Card())
-        double_exec_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DOUBLEACTION,
-                                                        target=CardLevelEffects.Target.OPPONENT))
-        self.player2.deck.temp_cards_queue.append(double_exec_card)
+        # Player 1 cards
+        buff_card_model = create_card_with_effect(
+            CardEffect.EffectId.EMPOWER,
+            power=20,
+            range_=0,
+            target=CardLevelEffects.Target.PLAYER
+        )
 
-        # This card will get executed twice
-        buffed_damage_card = BattleCard(Card())
-        buffed_damage_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                target=CardLevelEffects.Target.OPPONENT,
-                                                                power=10.0))
+        buffed_damage_card_model = create_card_with_effect(
+            CardEffect.EffectId.DMG,
+            power=10,
+            range_=0,
+            target=CardLevelEffects.Target.OPPONENT
+        )
 
-        self.player1.deck.temp_cards_queue.append(buffed_damage_card)
+        player1, deck_p1 = create_player_with_deck(
+            card1=buff_card_model,
+            card2=buffed_damage_card_model
+        )
+
+        # Player 2 cards
+
+        double_exec_card_model = create_card_with_effect(
+            CardEffect.EffectId.DOUBLEACTION,
+            target=CardLevelEffects.Target.OPPONENT
+        )
+
+        player2, deck_p2 = create_player_with_deck(
+            card1=double_exec_card_model
+        )
 
         # Buff next card
-        self.activate_card(self.player1, self.player2)
+        self.activate_card(player1, player2)
 
-        # Make P1's card execute two times
-        self.activate_card(self.player2, self.player1)
-        # This activation should be buffed
-        self.activate_card(self.player1, self.player2)
-        # This one should not
-        effect = self.player1.use_card()[1][0]
+        # Duplicate P1's next card
+        self.activate_card(player2, player1)
+
+        # Activate P1's next card - there should be no buffs, as duplicate is used first
+        effect = player1.use_card()[1][0]
         self.assertEqual(len(effect.buffs), 0)
+
+        # Activate P1's next card second time - there should be buffs, as duplicate was used first
+        effect = player1.use_card()[1][0]
+        self.assertGreater(len(effect.buffs), 0)
 
     def test_block_and_skip(self):
         """
@@ -191,8 +263,8 @@ class EffectsIntegrationsTestCase(TestCase):
         self.skipTest("This test fails, but its OK")
         block_card = BattleCard(Card())
         block_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                target=CardLevelEffects.Target.OPPONENT,
-                                                                power=10.0))
+                                                        target=CardLevelEffects.Target.OPPONENT,
+                                                        power=10.0))
 
         self.player1.deck.temp_cards_queue.append(block_card)
 
@@ -205,15 +277,15 @@ class EffectsIntegrationsTestCase(TestCase):
         # This one will be skipped
         heal_card = BattleCard(Card())
         heal_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                           target=CardLevelEffects.Target.PLAYER,
-                                                                           power=100.0))
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=100.0))
         self.player2.deck.temp_cards_queue.append(heal_card)
 
         # This one should get blocked
         dmg_card = BattleCard(Card())
         dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                           target=CardLevelEffects.Target.OPPONENT,
-                                                                           power=100.0))
+                                                      target=CardLevelEffects.Target.OPPONENT,
+                                                      power=100.0))
         self.player2.deck.temp_cards_queue.append(dmg_card)
 
         # Block next P2 card
@@ -227,6 +299,79 @@ class EffectsIntegrationsTestCase(TestCase):
         # Player should remain unharmed, because the damage card should get blocked.
         self.assertEqual(self.player2.get_hp(), hp_before_activation)
 
+    def test_two_times_execute_effect_and_skip_card_effect(self):
+        """
+        **Scenario:**
+
+        - Player's 1 is executing card with TwoTimesExecuteEffect which targets Player's 2 next card.
+        - Player's 1 is executing card with SkipCardEffect which targets Player's 2 recently duplicated card.
+        - Player 2 is using card 4 times.
+        - Player 2 is using card 2 more times to execute card duplicate and card original.
+
+        ---
+
+        **Expected result:**
+
+        - Skipped card is still duplicated.
+        """
+
+        # Player 1 data
+        two_times_execute_effect_card_model = create_card_with_effect(
+            CardEffect.EffectId.DOUBLEACTION
+        )
+
+        skip_card_effect_card_model = create_card_with_effect(
+            CardEffect.EffectId.SKIP
+        )
+
+        player1, _ = create_player_with_deck(
+            card1=two_times_execute_effect_card_model,
+            card2=skip_card_effect_card_model
+        )
+
+        # Player 2 data
+        player2, deck_p2 = create_player_with_deck()
+
+        # Retrieve card that should be doubled after Player 1 uses card.
+        doubled_card = deck_p2.lookup()
+
+        # Player 1 uses card with TwoTimesExecuteEffect
+        self.activate_card(player1, player2)
+
+        # Assert appropriate card is doubled
+        self.assertIsNotNone(doubled_card.card_duplicated_buff)
+
+        # Player 1 uses card with SkipCardEffect
+        self.activate_card(player1, player2)
+
+        # Assert doubled card is at the end of the deck and still doubled
+        card_at_the_end = deck_p2.lookup(4)
+        self.assertIs(card_at_the_end, doubled_card)
+        self.assertIsNotNone(card_at_the_end.card_duplicated_buff)
+
+        # Player 2 is using card 4 times
+        for i in range(4):
+            player2.use_card()
+
+        # Player 2 is using card 2 more times - this times duplicate and original card should be used
+        # Assert appropriate card is at the top of the deck
+        next_card = deck_p2.lookup()
+        self.assertIs(next_card, doubled_card)
+
+        # Before using card assert it is still duplicated
+        self.assertIsNotNone(next_card.card_duplicated_buff)
+
+        # Use duplicate
+        player2.use_card()
+
+        # Assert card is no longer duplicated
+        self.assertIsNone(doubled_card.card_duplicated_buff)
+
+        # Use original card
+        used_card, _ = player2.use_card()
+
+        # Assert that after duplicate was used original card was still at the top of the deck
+        self.assertIs(used_card, doubled_card)
 
     @classmethod
     def tearDownClass(cls) -> None:
