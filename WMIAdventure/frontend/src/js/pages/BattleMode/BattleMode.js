@@ -5,7 +5,6 @@ import NavBar from '../../components/prototype/organisms/NavBar';
 import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
-import UserProfilesAPIGateway from '../../api/gateways/UserProfilesAPIGateway';
 import Search from '../../components/global/atoms/Search';
 import SwipeProfile from '../../components/battle/organisms/SwipeProfile';
 import SearchContainer from './styled-components/SearchContainer';
@@ -21,6 +20,7 @@ import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
 import {getCurrentUserId, getCurrentUsername} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
+import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
 
 class BattleMode extends React.Component {
 
@@ -43,7 +43,7 @@ class BattleMode extends React.Component {
     }
 
     componentDidMount() {
-        UserProfilesAPIGateway.getAllBasicUsersInfo()
+        getAllUserProfiles()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
         getCurrentUserId()
