@@ -263,8 +263,8 @@ class EffectsIntegrationsTestCase(TestCase):
         self.skipTest("This test fails, but its OK")
         block_card = BattleCard(Card())
         block_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                target=CardLevelEffects.Target.OPPONENT,
-                                                                power=10.0))
+                                                        target=CardLevelEffects.Target.OPPONENT,
+                                                        power=10.0))
 
         self.player1.deck.temp_cards_queue.append(block_card)
 
@@ -277,15 +277,15 @@ class EffectsIntegrationsTestCase(TestCase):
         # This one will be skipped
         heal_card = BattleCard(Card())
         heal_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                           target=CardLevelEffects.Target.PLAYER,
-                                                                           power=100.0))
+                                                       target=CardLevelEffects.Target.PLAYER,
+                                                       power=100.0))
         self.player2.deck.temp_cards_queue.append(heal_card)
 
         # This one should get blocked
         dmg_card = BattleCard(Card())
         dmg_card.effects.insert(0, self.create_effect(CardEffect.EffectId.DMG,
-                                                                           target=CardLevelEffects.Target.OPPONENT,
-                                                                           power=100.0))
+                                                      target=CardLevelEffects.Target.OPPONENT,
+                                                      power=100.0))
         self.player2.deck.temp_cards_queue.append(dmg_card)
 
         # Block next P2 card
@@ -299,6 +299,79 @@ class EffectsIntegrationsTestCase(TestCase):
         # Player should remain unharmed, because the damage card should get blocked.
         self.assertEqual(self.player2.get_hp(), hp_before_activation)
 
+    def test_two_times_execute_effect_and_skip_card_effect(self):
+        """
+        **Scenario:**
+
+        - Player's 1 is executing card with TwoTimesExecuteEffect which targets Player's 2 next card.
+        - Player's 1 is executing card with SkipCardEffect which targets Player's 2 recently duplicated card.
+        - Player 2 is using card 4 times.
+        - Player 2 is using card 2 more times to execute card duplicate and card original.
+
+        ---
+
+        **Expected result:**
+
+        - Skipped card is still duplicated.
+        """
+
+        # Player 1 data
+        two_times_execute_effect_card_model = create_card_with_effect(
+            CardEffect.EffectId.DOUBLEACTION
+        )
+
+        skip_card_effect_card_model = create_card_with_effect(
+            CardEffect.EffectId.SKIP
+        )
+
+        player1, _ = create_player_with_deck(
+            card1=two_times_execute_effect_card_model,
+            card2=skip_card_effect_card_model
+        )
+
+        # Player 2 data
+        player2, deck_p2 = create_player_with_deck()
+
+        # Retrieve card that should be doubled after Player 1 uses card.
+        doubled_card = deck_p2.lookup()
+
+        # Player 1 uses card with TwoTimesExecuteEffect
+        self.activate_card(player1, player2)
+
+        # Assert appropriate card is doubled
+        self.assertIsNotNone(doubled_card.card_duplicated_buff)
+
+        # Player 1 uses card with SkipCardEffect
+        self.activate_card(player1, player2)
+
+        # Assert doubled card is at the end of the deck and still doubled
+        card_at_the_end = deck_p2.lookup(4)
+        self.assertIs(card_at_the_end, doubled_card)
+        self.assertIsNotNone(card_at_the_end.card_duplicated_buff)
+
+        # Player 2 is using card 4 times
+        for i in range(4):
+            player2.use_card()
+
+        # Player 2 is using card 2 more times - this times duplicate and original card should be used
+        # Assert appropriate card is at the top of the deck
+        next_card = deck_p2.lookup()
+        self.assertIs(next_card, doubled_card)
+
+        # Before using card assert it is still duplicated
+        self.assertIsNotNone(next_card.card_duplicated_buff)
+
+        # Use duplicate
+        player2.use_card()
+
+        # Assert card is no longer duplicated
+        self.assertIsNone(doubled_card.card_duplicated_buff)
+
+        # Use original card
+        used_card, _ = player2.use_card()
+
+        # Assert that after duplicate was used original card was still at the top of the deck
+        self.assertIs(used_card, doubled_card)
 
     @classmethod
     def tearDownClass(cls) -> None:
