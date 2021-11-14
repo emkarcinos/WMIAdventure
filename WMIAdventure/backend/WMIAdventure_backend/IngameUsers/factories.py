@@ -1,3 +1,4 @@
+import random
 from typing import Optional
 
 import factory
@@ -20,7 +21,8 @@ class UserProfileFactory(DjangoModelFactory):
         model = 'IngameUsers.UserProfile'
 
     displayedUsername = factory.Faker('user_name')
-    semester = factory.Faker('random_element', elements=Semester.objects.all())
+
+    semester = factory.LazyAttribute(lambda obj: random.choice(Semester.objects.all()))
 
     user = factory.SubFactory(UserFactory)
 

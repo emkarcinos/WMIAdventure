@@ -1,3 +1,5 @@
+import random
+
 import factory
 from factory.django import DjangoModelFactory
 
@@ -28,8 +30,8 @@ class CardFactory(DjangoModelFactory):
     info = factory.SubFactory(CardInfoFactory)
     effects_description = "effects desc"
 
-    level = factory.Faker('random_element', elements=CardLevel.objects.all())
     next_level_cost = factory.Faker('random_int', max=100)
+    level = factory.LazyAttribute(lambda obj: random.choice(CardLevel.objects.all()))
 
 
 class CardLevelEffectsFactory(DjangoModelFactory):
@@ -42,7 +44,7 @@ class CardLevelEffectsFactory(DjangoModelFactory):
     class Meta:
         model = "cards.CardLevelEffects"
 
-    card_effect = CardEffect.objects.get(id=CardEffect.EffectId.DMG)
+    card_effect = factory.LazyAttribute(lambda obj: CardEffect.objects.get(id=CardEffect.EffectId.DMG))
 
     target = factory.Faker('random_element', elements=CardLevelEffects.Target)
 
