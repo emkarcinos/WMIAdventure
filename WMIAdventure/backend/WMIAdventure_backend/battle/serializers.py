@@ -68,15 +68,21 @@ class BuffSerializer(serializers.Serializer):
     # multiplier = serializers.FloatField(required=False)
 
 
-class SimplifiedCardSerializer(serializers.Serializer):
+class BaseSimplifiedCardSerializer(serializers.Serializer):
     id = serializers.IntegerField(source="card_info_id")
     level = serializers.IntegerField()
 
+
+class SimplifiedCardSerializer(BaseSimplifiedCardSerializer):
     # Card do not always has buffs
     buffs = BuffSerializer(many=True, required=False)
 
     # Card can sometimes be blocked
     turns_blocked = serializers.IntegerField(required=False)
+
+    # Card can sometimes be doubled
+    doubled = serializers.BooleanField(required=False)
+    duplicate = BaseSimplifiedCardSerializer(required=False)
 
 
 class SimplifiedPlayerSerializer(serializers.Serializer):
@@ -123,12 +129,15 @@ class UsedEffectSerializer(serializers.Serializer):
     turns_blocked = serializers.IntegerField(required=False)
     blocked_card = BasicCardSerializer(required=False)
 
+    # Some effects cause cards to be doubled
+    doubled_card = BasicCardSerializer(required=False)
+
 
 class TurnSerializer(serializers.Serializer):
     attacker = SimplifiedPlayerSerializer()
     defender = SimplifiedPlayerSerializer()
     card_executor = serializers.IntegerField(source="card_executor_id")
-    used_card = SimplifiedCardSerializer()
+    used_card = BaseSimplifiedCardSerializer()
     used_effects = UsedEffectSerializer(many=True)
 
 

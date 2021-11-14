@@ -1,4 +1,4 @@
-from battle.businesslogic.recorder.SimplifiedCard import SimplifiedCard
+from battle.businesslogic.recorder.simplified_cards.SimplifiedCard import SimplifiedCard
 
 
 class SimplifiedDeck:

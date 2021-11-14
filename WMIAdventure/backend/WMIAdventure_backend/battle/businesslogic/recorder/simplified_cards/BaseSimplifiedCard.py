@@ -1,0 +1,4 @@
+class BaseSimplifiedCard:
+    def __init__(self, battle_card):
+        self.card_info_id = battle_card.card_model.info.id
+        self.level = battle_card.card_model.level.level
