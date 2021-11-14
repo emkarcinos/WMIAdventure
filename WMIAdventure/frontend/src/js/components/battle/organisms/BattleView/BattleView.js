@@ -17,6 +17,8 @@ import icon5 from '../../../../../assets/images/icon5.png';
 import EnemyStateContainer from "../../molecules/EnemyStateContainer";
 import FullCardActionBackground from "./styled-components/FullCardActionBackground";
 import FullCardView from "../../../global/atoms/FullCardView";
+import EffectIconsContainer from "./styled-components/EffectIconsContainer";
+import EffectIcon from "../../atoms/EffectIcon";
 
 class BattleView extends React.Component {
 
@@ -58,7 +60,14 @@ class BattleView extends React.Component {
             run: false,
             opacity: '0',
             translateY: '100vh',
-        }
+        },
+        enemyFullCardAction: {
+            run: false,
+            opacity: '0',
+            translateY: '-100vh',
+        },
+        userEffectsIcons: [],
+        enemyEffectsIcons: [],
     }
 
     componentDidUpdate(prevProps) {
@@ -268,6 +277,11 @@ class BattleView extends React.Component {
                                           description={'ta karta narazie nic nie robi'} common
                                           setTranslateY={this.state.userFullCardAction.translateY} />
                         </FullCardActionBackground>
+                        <EffectIconsContainer visible>
+                            <EffectIcon visible />
+                            <EffectIcon visible />
+                            <EffectIcon visible />
+                        </EffectIconsContainer>
                     </PopUp>
                 </Media>
 
