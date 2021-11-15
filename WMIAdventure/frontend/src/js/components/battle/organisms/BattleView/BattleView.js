@@ -69,20 +69,21 @@ class BattleView extends React.Component {
             translateY: '100vh',
         },
 
-        // effect icons action movement
-        effectsTargetToEnemyAction: {
+        // effect icons mount movement
+        effectsTargetToEnemyMount: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            scale: ['1', '1', '1'],
             opacity: ['0', '0', '0']
         },
 
-        effectsTargetToUserAction: {
+        effectsTargetToUserMount: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            scale: ['1', '1', '1'],
             opacity: ['0', '0', '0']
         },
+
+        // effect icons action animation with scale
+        effectsActionScale: ['1', '1', '1', '1', '1'],
 
         // used effects prototype data
         enemyUsedEffects: [ // player 2
@@ -117,32 +118,32 @@ class BattleView extends React.Component {
             {
                 id: 1, // damage
                 target_player: 2,
-                power: 22,
+                power: 1,
                 changed_stats: {
                     hp: 78,
                     armour: 0
                 },
             },
             {
-                id: 7, // block next card
-                target_player: 2,
-                power: 22,
-            },
-            {
-                id: 6, // heal
-                target_player: 1,
-                power: 22,
-            },
-            {
                 id: 8, // increase next card power
-                target_player: 2,
-                power: 22,
+                target_player: 1,
+                power: 2,
             },
             {
                 id: 10, // increase next card damage
+                target_player: 2,
+                power: 3,
+            },
+            {
+                id: 7, // block next card
                 target_player: 1,
-                power: 22,
-            }
+                power: 4,
+            },
+            {
+                id: 6, // heal
+                target_player: 2,
+                power: 5,
+            },
         ], // id of effects in this array
 
         // other prototype data
@@ -232,28 +233,24 @@ class BattleView extends React.Component {
         let userOpacityIndex = 0; let enemyOpacityIndex = 0;
         let userXIndex = 0; let enemyXIndex = 0;
         let userYIndex = 0; let enemyYIndex = 0;
-        let userScaleIndex = 0; let enemyScaleIndex = 0;
         return (
-            this.state.userUsedEffects.map((effect) => {
+            this.state.userUsedEffects.map((effect, index) => {
                 return (
                     <EffectIcon key={`effectIcon-${effect.id}`}
                                 value={effect.power}
                                 setOpacity={
                                     (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserAction.opacity[userOpacityIndex++]
-                                        : this.state.effectsTargetToEnemyAction.opacity[enemyOpacityIndex++]}
+                                        ? this.state.effectsTargetToUserMount.opacity[userOpacityIndex++]
+                                        : this.state.effectsTargetToEnemyMount.opacity[enemyOpacityIndex++]}
                                 setTranslateX={
                                     (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserAction.translateX[userXIndex++]
-                                        : this.state.effectsTargetToEnemyAction.translateX[enemyXIndex++]}
+                                        ? this.state.effectsTargetToUserMount.translateX[userXIndex++]
+                                        : this.state.effectsTargetToEnemyMount.translateX[enemyXIndex++]}
                                 setTranslateY={
                                     (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserAction.translateY[userYIndex++]
-                                        : this.state.effectsTargetToEnemyAction.translateY[enemyYIndex++]}
-                                setScale={
-                                    (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserAction.scale[userScaleIndex++]
-                                        : this.state.effectsTargetToEnemyAction.scale[enemyScaleIndex++]}
+                                        ? this.state.effectsTargetToUserMount.translateY[userYIndex++]
+                                        : this.state.effectsTargetToEnemyMount.translateY[enemyYIndex++]}
+                                setScale={this.state.effectsActionScale[index]}
                     />
                 );
             })
@@ -359,17 +356,17 @@ class BattleView extends React.Component {
         const effect = this.state.userUsedEffects;
         let userTarget = (effect[index].target_player === this.state.user);
         let newEffectsAction = userTarget ?
-            this.state.effectsTargetToUserAction
-            : this.state.effectsTargetToEnemyAction;
+            this.state.effectsTargetToUserMount
+            : this.state.effectsTargetToEnemyMount;
 
         newEffectsAction.opacity[actionIndex] = opacity;
         newEffectsAction.translateX[actionIndex] = effect[index].power ? translateXPowerCase : translateX;
         newEffectsAction.translateY[actionIndex] = translateY;
 
         userTarget ? this.setState({
-            effectsTargetToUserAction : newEffectsAction
+            effectsTargetToUserMount : newEffectsAction
         }) : this.setState({
-            effectsTargetToEnemyAction : newEffectsAction
+            effectsTargetToEnemyMount : newEffectsAction
         });
     }
 
@@ -382,7 +379,6 @@ class BattleView extends React.Component {
                 ++userTarget;
             else ++enemyTarget;
         }
-        console.log(userTarget);
         if(user) return userTarget;
         else return enemyTarget;
     }
@@ -398,6 +394,10 @@ class BattleView extends React.Component {
                     if(user) {
                         setTimeout(() => {
                             this.effectsMount(false);
+                        }, secondStepAnimationDuration * 2);
+                    } else {
+                        setTimeout(() => {
+                            this.effectsActions();
                         }, secondStepAnimationDuration * 2);
                     }
                 }
@@ -421,6 +421,10 @@ class BattleView extends React.Component {
                         if(user) {
                             setTimeout(() => {
                                 this.effectsMount(false);
+                            }, secondStepAnimationDuration * 2);
+                        } else {
+                            setTimeout(() => {
+                                this.effectsActions();
                             }, secondStepAnimationDuration * 2);
                         }
                     },secondStepAnimationDuration * 2);
@@ -453,10 +457,34 @@ class BattleView extends React.Component {
                             setTimeout(() => {
                                 this.effectsMount(false);
                             }, secondStepAnimationDuration * 2);
+                        } else {
+                            setTimeout(() => {
+                                this.effectsActions();
+                            }, secondStepAnimationDuration * 2);
                         }
                     }, secondStepAnimationDuration * 4);
                 }
             })
+        }
+    }
+
+    effectsActions = (index= 0) => {
+        if(index < this.state.userUsedEffects.length) {
+            let newEffectsActionScale = this.state.effectsActionScale.slice();
+            newEffectsActionScale[index] = '1.25';
+            this.setState({
+                effectsActionScale: newEffectsActionScale
+            });
+            setTimeout(() => {
+                newEffectsActionScale[index] = '1';
+                this.setState({
+                    effectsActionScale: newEffectsActionScale
+                });
+                // TODO: here function doing particular effect for example damage, change card order etc.
+                setTimeout(() => {
+                    this.effectsActions(index + 1);
+                }, secondStepAnimationDuration * 2)
+            }, secondStepAnimationDuration * 2);
         }
     }
 
