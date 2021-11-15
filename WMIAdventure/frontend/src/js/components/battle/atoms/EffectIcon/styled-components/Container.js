@@ -11,7 +11,7 @@ function handleBorder(type, theme) {
 }
 
 const Container = styled.div`
-  display: ${({visible}) => visible ? 'flex' : 'none'};
+  display: flex;
   border: 1px solid ${({type, theme}) => handleBorder(type, theme)};
   border-radius: 124px;
   justify-content: center;
@@ -20,9 +20,11 @@ const Container = styled.div`
   padding: 4px 10px;
   top: 50%;
   left: 50%;
-  transition: transform 0.3s, opacity 0.2s ease-in-out;
+  background-color: ${({theme}) => theme.colors.light2};
+  transition: transform 0.5s, opacity 0.4s ease-in-out;
   transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'}, 
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'}) scale(${({setScale}) => setScale ? setScale : '1'});
+  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
 `;
 
 export default Container;

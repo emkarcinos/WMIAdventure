@@ -7,7 +7,8 @@ import imgPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 class EffectIcon extends React.Component {
     render() {
         return (
-            <Container type={this.props.type} visible={this.props.visible}
+            <Container type={this.props.type}
+                       setOpacity={this.props.setOpacity}
                        setTranslateX={this.props.setTranslateX}
                        setTranslateY={this.props.setTranslateY}>
                 <Icon src={this.props.icon ? this.props.icon : imgPlaceholder} />

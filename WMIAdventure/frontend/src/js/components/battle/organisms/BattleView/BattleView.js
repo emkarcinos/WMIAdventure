@@ -70,18 +70,16 @@ class BattleView extends React.Component {
         },
 
         // effect icons action movement
-        enemyEffectsAction: {
-            run: false,
+        effectsTargetToEnemyAction: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            opacity: '0'
+            opacity: ['0', '0', '0']
         },
 
-        userEffectsAction: {
-            run: false,
+        effectsTargetToUserAction: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            opacity: '0'
+            opacity: ['0', '0', '0']
         },
 
         // used effects prototype data
@@ -127,18 +125,18 @@ class BattleView extends React.Component {
                 id: 7, // block next card
                 target_player: 2,
             },
-            {
-                id: 6, // heal
-                target_player: 1
-            },
-            {
-                id: 8, // increase next card power
-                target_player: 1
-            },
-            {
-                id: 10, // increase next card damage
-                target_player: 1
-            }
+            // {
+            //     id: 6, // heal
+            //     target_player: 1
+            // },
+            // {
+            //     id: 8, // increase next card power
+            //     target_player: 1
+            // },
+            // {
+            //     id: 10, // increase next card damage
+            //     target_player: 1
+            // }
         ], // id of effects in this array
 
         // other prototype data
@@ -160,6 +158,98 @@ class BattleView extends React.Component {
             });
             this.itemsAnimationInit(this.fullCardAction);
         }
+    }
+
+
+    // prototype function, runs if we click on mini enemy cards
+    changeCardsEnemyOrder = () => {
+        this.setState({
+            cardsEnemyOrder: [3, 2, 1, 5, 4]
+            // this means: first card on third place, second on second, third on first and so on
+        });
+    }
+
+    // prototype function, runs if we click on mini user cards
+    changeCardsUserOrder = () => {
+        this.setState({
+            cardsUserOrder: [5, 4, 2, 3, 1]
+            // this means: first card on fifth place, second on fourth, third on second and so on
+        });
+    }
+
+    getMiniCards = (enemy) => {
+        return (
+            [...Array(5)].map(
+                (e,i) => {
+                    return (
+                        <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
+                                      changeCardsOrder={
+                                          enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
+                                      }
+                                      cardIndexInDeck={
+                                          enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
+                                      }
+                                      setTranslateX={
+                                          enemy ? this.state.enemyMiniCardsTranslateX[i]
+                                              : this.state.userMiniCardsTranslateX[i]
+                                      }
+                                      enemy={enemy} user={!enemy}
+                                      cardLevel={this.state.cardLevels[i]}
+                                      animationDuration={`0.${9 - i}`}
+                                      cardImage={this.state.cardIcons[i]}/>
+                    );
+                })
+        );
+    }
+
+    getCompactCards = (enemy) => {
+        return (
+            [...Array(5)].map(
+                (e,i) => {
+                    return (
+                        <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                                         cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
+                                             : this.state.cardsUserOrder[i]}
+                                         cardImage={this.state.cardIcons[i]} cardName={`Karta ${i+1}`}
+                                         setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                                         setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
+                                             : this.state.userCompactCardTranslateX}
+                                         setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
+                                             : this.state.userCompactCardTranslateY}
+                                         setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+                    );
+                })
+        );
+    }
+
+    usedEffectsIteration = () => {
+        const user = this.state.user;
+        let userOpacityIndex = 0;
+        let enemyOpacityIndex = 0;
+        let userXIndex = 0;
+        let userYIndex = 0;
+        let enemyXIndex = 0;
+        let enemyYIndex = 0;
+        return (
+            this.state.userUsedEffects.map((effect) => {
+                return (
+                    <EffectIcon key={`effectIcon-${effect.id}`}
+                                value={effect.power}
+                                setOpacity={
+                                    (effect.target_player === user)
+                                        ? this.state.effectsTargetToUserAction.opacity[userOpacityIndex++]
+                                        : this.state.effectsTargetToEnemyAction.opacity[enemyOpacityIndex++]}
+                                setTranslateX={
+                                    (effect.target_player === user)
+                                        ? this.state.effectsTargetToUserAction.translateX[userXIndex++]
+                                        : this.state.effectsTargetToEnemyAction.translateX[enemyXIndex++]}
+                                setTranslateY={
+                                    (effect.target_player === user)
+                                        ? this.state.effectsTargetToUserAction.translateY[userYIndex++]
+                                        : this.state.effectsTargetToEnemyAction.translateY[enemyYIndex++]} />
+                );
+            })
+        );
     }
 
     itemsAnimationInit = (callback) => {
@@ -211,95 +301,34 @@ class BattleView extends React.Component {
             + secondStepAnimationDuration * 4);
     }
 
-    // prototype function, runs if we click on mini enemy cards
-    changeCardsEnemyOrder = () => {
-        this.setState({
-            cardsEnemyOrder: [3, 2, 1, 5, 4]
-            // this means: first card on third place, second on second, third on first and so on
-        });
-    }
-
-    // prototype function, runs if we click on mini user cards
-    changeCardsUserOrder = () => {
-        this.setState({
-            cardsUserOrder: [5, 4, 2, 3, 1]
-            // this means: first card on fifth place, second on fourth, third on second and so on
-        });
-    }
-
-    getMiniCards = (enemy) => {
-        return (
-            [...Array(5)].map(
-            (e,i) => {
-                return (
-                    <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                                  changeCardsOrder={
-                                      enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
-                                  }
-                                  cardIndexInDeck={
-                                      enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
-                                  }
-                                  setTranslateX={
-                                      enemy ? this.state.enemyMiniCardsTranslateX[i]
-                                          : this.state.userMiniCardsTranslateX[i]
-                                  }
-                                  enemy={enemy} user={!enemy}
-                                  cardLevel={this.state.cardLevels[i]}
-                                  animationDuration={`0.${9 - i}`}
-                                  cardImage={this.state.cardIcons[i]}/>
-                );
-            })
-        );
-    }
-
-    getCompactCards = (enemy) => {
-        return (
-            [...Array(5)].map(
-            (e,i) => {
-                return (
-                    <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
-                                     cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
-                                         : this.state.cardsUserOrder[i]}
-                                     cardImage={this.state.cardIcons[i]} cardName={`Karta ${i+1}`}
-                                     setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                                     setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
-                                         : this.state.userCompactCardTranslateX}
-                                     setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
-                                         : this.state.userCompactCardTranslateY}
-                                     setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
-                );
-            })
-        );
-    }
-
     fullCardAction = () => {
         // show full card process
-        let newUserCardAction = this.state.userFullCardAction;
-        newUserCardAction.run = true;
+        let newUserFullCardAction = this.state.userFullCardAction;
+        newUserFullCardAction.run = true;
         this.setState({
-            userCardAction: newUserCardAction
+            userFullCardAction: newUserFullCardAction
         });
-        newUserCardAction.translateY = '0';
-        newUserCardAction.opacity = '1';
+        newUserFullCardAction.translateY = '0';
+        newUserFullCardAction.opacity = '1';
         setTimeout(() => {
             this.setState({
-                userCardAction: newUserCardAction
+                userFullCardAction: newUserFullCardAction
             });
         }, 100);
 
         // hide full card process
         setTimeout(() => {
             this.compactCardAction();
-            newUserCardAction = this.state.userFullCardAction;
-            newUserCardAction.translateY = '100vh';
-            newUserCardAction.opacity = '0';
+            newUserFullCardAction = this.state.userFullCardAction;
+            newUserFullCardAction.translateY = '100vh';
+            newUserFullCardAction.opacity = '0';
             this.setState({
-                userCardAction: newUserCardAction
+                userFullCardAction: newUserFullCardAction
             });
-            newUserCardAction.run = false;
+            newUserFullCardAction.run = false;
             setTimeout(() => {
                 this.setState({
-                    userCardAction: newUserCardAction
+                    userFullCardAction: newUserFullCardAction
                 });
             }, secondStepAnimationDuration);
         }, battleInitLoadingDuration +
@@ -312,52 +341,56 @@ class BattleView extends React.Component {
             userCompactCardTranslateX: '100%',
             userCompactCardTranslateY: 'calc(-50vh + 50% + 24px)'
             // half screen - (half card + half navbar)
-        })
+        });
+        setTimeout(() => {
+            this.userEffectsAction();
+        }, secondStepAnimationDuration * 3);
     }
 
-    countUsedEffectsSelfTarget = () => {
-        const currentUserId = this.state.user;
-        let selfTarget = 0;
-        for (let i=0; i<this.state.userUsedEffects.length; i++) {
-            if(this.state.userUsedEffects[i].target_player === currentUserId)
-                selfTarget = selfTarget + 1;
+    userEffectsAction = () => {
+        const effect = this.state.userUsedEffects;
+        let userTarget = (effect.target_player === this.state.user);
+        let newEffectsAction = userTarget ?
+            this.state.effectsTargetToUserAction
+            : this.state.effectsTargetToEnemyAction;
+
+        if (this.state.userUsedEffects.length === 1) {
+            setTimeout(() => {
+                newEffectsAction.opacity[0] = '1';
+                newEffectsAction.translateX[0] = effect[0].power ? '-15%' : '0';
+                newEffectsAction.translateY[0] = '-144px';
+                userTarget ? this.setState({
+                    effectsTargetToUserAction : newEffectsAction
+                }) : this.setState({
+                    effectsTargetToEnemyAction : newEffectsAction
+                });
+            }, secondStepAnimationDuration)
+        } else if(this.state.userUsedEffects.length === 2) {
+            setTimeout(() => {
+                newEffectsAction.opacity[0] = '1';
+                newEffectsAction.translateX[0] = effect[0].power ? '-70%' : '-100%';
+                newEffectsAction.translateY[0] = '-144px';
+                userTarget ? this.setState({
+                    effectsTargetToUserAction : newEffectsAction
+                }) : this.setState({
+                    effectsTargetToEnemyAction : newEffectsAction
+                });
+
+                setTimeout(() => {
+                    newEffectsAction.opacity[1] = '1';
+                    newEffectsAction.translateX[1] = effect[1].power ? '50%' : '100%';
+                    newEffectsAction.translateY[1] = '-144px';
+                    userTarget ? this.setState({
+                        effectsTargetToUserAction : newEffectsAction
+                    }) : this.setState({
+                        effectsTargetToEnemyAction : newEffectsAction
+                    });
+                },secondStepAnimationDuration*2)
+            }, secondStepAnimationDuration);
+
+        } else if(this.state.userUsedEffects.length === 3) {
+            console.log('elo elo');
         }
-        return selfTarget;
-    }
-
-    countUsedEffectsEnemyTarget = () => {
-        const enemyId = this.props.enemy;
-        let enemyTarget = 0;
-        for (let i=0; i<this.state.userUsedEffects.length; i++) {
-            if(this.state.userUsedEffects[i].target_player === enemyId)
-                enemyTarget = enemyTarget + 1;
-        }
-        return enemyId;
-    }
-
-    usedEffectsIteration = () => {
-        const user = this.state.user;
-        return (
-            this.state.userUsedEffects.map((effect) => {
-                return (
-                    <EffectIcon key={`effectIcon-${effect.id}`}
-                                visible={this.state.userEffectsAction.run}
-                                value={effect.power}
-                                setTranslateX={
-                                    (effect.target_player === user)
-                                        ? this.state.userEffectsAction.translateX
-                                        : this.state.enemyEffectsAction.translateX}
-                                setTranslateY={
-                                    (effect.target_player === user)
-                                        ? this.state.userEffectsAction.translateY
-                                        : this.state.enemyEffectsAction.translateY} />
-                );
-            })
-        );
-    }
-
-    effectsAction = () => {
-        // TODO: implement this function and call after fullCardAction
     }
 
     render() {
