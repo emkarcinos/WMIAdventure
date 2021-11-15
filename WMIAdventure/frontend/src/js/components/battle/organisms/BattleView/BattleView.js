@@ -115,7 +115,6 @@ class BattleView extends React.Component {
             {
                 id: 1, // damage
                 target_player: 2,
-                power: 22,
                 changed_stats: {
                     hp: 78,
                     armour: 0
@@ -125,18 +124,18 @@ class BattleView extends React.Component {
                 id: 7, // block next card
                 target_player: 2,
             },
-            // {
-            //     id: 6, // heal
-            //     target_player: 1
-            // },
-            // {
-            //     id: 8, // increase next card power
-            //     target_player: 1
-            // },
-            // {
-            //     id: 10, // increase next card damage
-            //     target_player: 1
-            // }
+            {
+                id: 6, // heal
+                target_player: 2,
+            },
+            {
+                id: 8, // increase next card power
+                target_player: 1
+            },
+            {
+                id: 10, // increase next card damage
+                target_player: 1
+            }
         ], // id of effects in this array
 
         // other prototype data
@@ -159,7 +158,6 @@ class BattleView extends React.Component {
             this.itemsAnimationInit(this.fullCardAction);
         }
     }
-
 
     // prototype function, runs if we click on mini enemy cards
     changeCardsEnemyOrder = () => {
@@ -224,12 +222,9 @@ class BattleView extends React.Component {
 
     usedEffectsIteration = () => {
         const user = this.state.user;
-        let userOpacityIndex = 0;
-        let enemyOpacityIndex = 0;
-        let userXIndex = 0;
-        let userYIndex = 0;
-        let enemyXIndex = 0;
-        let enemyYIndex = 0;
+        let userOpacityIndex = 0; let enemyOpacityIndex = 0;
+        let userXIndex = 0; let userYIndex = 0;
+        let enemyXIndex = 0; let enemyYIndex = 0;
         return (
             this.state.userUsedEffects.map((effect) => {
                 return (
@@ -347,49 +342,67 @@ class BattleView extends React.Component {
         }, secondStepAnimationDuration * 3);
     }
 
-    userEffectsAction = () => {
+    setEffectAction = (index, opacity, translateXPowerCase, translateX, translateY) => {
         const effect = this.state.userUsedEffects;
         let userTarget = (effect.target_player === this.state.user);
         let newEffectsAction = userTarget ?
             this.state.effectsTargetToUserAction
             : this.state.effectsTargetToEnemyAction;
 
-        if (this.state.userUsedEffects.length === 1) {
-            setTimeout(() => {
-                newEffectsAction.opacity[0] = '1';
-                newEffectsAction.translateX[0] = effect[0].power ? '-15%' : '0';
-                newEffectsAction.translateY[0] = '-144px';
-                userTarget ? this.setState({
-                    effectsTargetToUserAction : newEffectsAction
-                }) : this.setState({
-                    effectsTargetToEnemyAction : newEffectsAction
-                });
-            }, secondStepAnimationDuration)
-        } else if(this.state.userUsedEffects.length === 2) {
-            setTimeout(() => {
-                newEffectsAction.opacity[0] = '1';
-                newEffectsAction.translateX[0] = effect[0].power ? '-70%' : '-100%';
-                newEffectsAction.translateY[0] = '-144px';
-                userTarget ? this.setState({
-                    effectsTargetToUserAction : newEffectsAction
-                }) : this.setState({
-                    effectsTargetToEnemyAction : newEffectsAction
-                });
+        newEffectsAction.opacity[index] = opacity;
+        newEffectsAction.translateX[index] = effect[index].power ? translateXPowerCase : translateX;
+        newEffectsAction.translateY[index] = translateY;
 
+        userTarget ? this.setState({
+            effectsTargetToUserAction : newEffectsAction
+        }) : this.setState({
+            effectsTargetToEnemyAction : newEffectsAction
+        });
+    }
+
+    getCountUsedEffectsChosenTarget = (user) => {
+        const currentUserId = this.state.user;
+        let userTarget = 1;
+        let enemyTarget = 1;
+        for (let i=0; i<this.state.userUsedEffects.length; i++) {
+            if(this.state.userUsedEffects[i].target_player === currentUserId)
+                ++userTarget;
+            else ++enemyTarget;
+        }
+        console.log(userTarget);
+        if(user)
+            return userTarget;
+        else return enemyTarget;
+    }
+
+    userEffectsAction = () => {
+        if (this.getCountUsedEffectsChosenTarget(true) === 1) {
+            this.setEffectAction(
+                0, '1', '-15%', '0', '-144px'
+            );
+        } else if(this.getCountUsedEffectsChosenTarget(true) === 2) {
+            this.setEffectAction(
+                0, '1', '-70%', '-100%', '-144px'
+            );
+            setTimeout(() => {
+                this.setEffectAction(
+                    1, '1', '50%', '100%', '-144px'
+                );
+            },secondStepAnimationDuration*2);
+        } else if(this.getCountUsedEffectsChosenTarget(true) === 3) {
+            this.setEffectAction(
+                0, '1', '-130%', '-120%', '-144px'
+            );
+            setTimeout(() => {
+                this.setEffectAction(
+                    1, '1', '-15%', '20%', '-144px'
+                );
                 setTimeout(() => {
-                    newEffectsAction.opacity[1] = '1';
-                    newEffectsAction.translateX[1] = effect[1].power ? '50%' : '100%';
-                    newEffectsAction.translateY[1] = '-144px';
-                    userTarget ? this.setState({
-                        effectsTargetToUserAction : newEffectsAction
-                    }) : this.setState({
-                        effectsTargetToEnemyAction : newEffectsAction
-                    });
-                },secondStepAnimationDuration*2)
-            }, secondStepAnimationDuration);
-
-        } else if(this.state.userUsedEffects.length === 3) {
-            console.log('elo elo');
+                    this.setEffectAction(
+                        2, '1', '100%', '160%', '-144px'
+                    );
+                },secondStepAnimationDuration*2);
+            },secondStepAnimationDuration*2);
         }
     }
 
