@@ -8,6 +8,7 @@ class EffectIcon extends React.Component {
     render() {
         return (
             <Container type={this.props.type}
+                       setScale={this.props.setScale}
                        setOpacity={this.props.setOpacity}
                        setTranslateX={this.props.setTranslateX}
                        setTranslateY={this.props.setTranslateY}>

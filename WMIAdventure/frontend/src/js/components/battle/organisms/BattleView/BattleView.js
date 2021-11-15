@@ -73,12 +73,14 @@ class BattleView extends React.Component {
         effectsTargetToEnemyAction: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
+            scale: ['1', '1', '1'],
             opacity: ['0', '0', '0']
         },
 
         effectsTargetToUserAction: {
             translateX: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
+            scale: ['1', '1', '1'],
             opacity: ['0', '0', '0']
         },
 
@@ -228,8 +230,9 @@ class BattleView extends React.Component {
     usedEffectsIteration = () => {
         const user = this.state.user;
         let userOpacityIndex = 0; let enemyOpacityIndex = 0;
-        let userXIndex = 0; let userYIndex = 0;
-        let enemyXIndex = 0; let enemyYIndex = 0;
+        let userXIndex = 0; let enemyXIndex = 0;
+        let userYIndex = 0; let enemyYIndex = 0;
+        let userScaleIndex = 0; let enemyScaleIndex = 0;
         return (
             this.state.userUsedEffects.map((effect) => {
                 return (
@@ -246,7 +249,12 @@ class BattleView extends React.Component {
                                 setTranslateY={
                                     (effect.target_player === user)
                                         ? this.state.effectsTargetToUserAction.translateY[userYIndex++]
-                                        : this.state.effectsTargetToEnemyAction.translateY[enemyYIndex++]} />
+                                        : this.state.effectsTargetToEnemyAction.translateY[enemyYIndex++]}
+                                setScale={
+                                    (effect.target_player === user)
+                                        ? this.state.effectsTargetToUserAction.scale[userScaleIndex++]
+                                        : this.state.effectsTargetToEnemyAction.scale[enemyScaleIndex++]}
+                    />
                 );
             })
         );
@@ -343,7 +351,7 @@ class BattleView extends React.Component {
             // half screen - (half card + half navbar)
         });
         setTimeout(() => {
-            this.userEffectsAction();
+            this.effectsMount(true);
         }, secondStepAnimationDuration * 3);
     }
 
@@ -379,113 +387,73 @@ class BattleView extends React.Component {
         else return enemyTarget;
     }
 
-    userEffectsAction = () => {
-        if (this.getCountUsedEffectsChosenTarget(true) === 1) {
+    effectsMount = (user) => {
+        if (this.getCountUsedEffectsChosenTarget(user) === 1) {
             this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player === this.state.user) {
+                if((effect.target_player === this.state.user) === user) {
                     this.setEffectAction(
-                        index, 0, '1', '-15%', '0', '-144px'
+                        index, 0, '1', '-15%', '0',
+                        (user ? '-144px' : '124px')
                     );
-                    setTimeout(() => {
-                        this.enemyEffectsAction();
-                    }, secondStepAnimationDuration*2);
-                }
-            });
-        } else if(this.getCountUsedEffectsChosenTarget(true) === 2) {
-            let userTargetMeeting = 0;
-            this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player === this.state.user && userTargetMeeting === 0) {
-                    userTargetMeeting++;
-                    this.setEffectAction(
-                        index, 0, '1', '-70%', '-100%', '-144px'
-                    );
-                } else if(effect.target_player === this.state.user && userTargetMeeting === 1) {
-                    userTargetMeeting++;
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index, 1, '1', '50%', '100%', '-144px'
-                        );
+                    if(user) {
                         setTimeout(() => {
-                            this.enemyEffectsAction();
-                        }, secondStepAnimationDuration*2);
-                    },secondStepAnimationDuration*2);
+                            this.effectsMount(false);
+                        }, secondStepAnimationDuration * 2);
+                    }
                 }
             });
-        } else if(this.getCountUsedEffectsChosenTarget(true) === 3) {
+        } else if(this.getCountUsedEffectsChosenTarget(user) === 2) {
             let userTargetMeeting = 0;
             this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player === this.state.user && userTargetMeeting === 0) {
+                if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 0) {
                     userTargetMeeting++;
                     this.setEffectAction(
-                        index,0, '1', '-130%', '-120%', '-144px'
+                        index, 0, '1', '-70%', '-100%',
+                        (user ? '-144px' : '124px')
                     );
-                } else if(effect.target_player === this.state.user && userTargetMeeting === 1) {
+                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 1) {
                     userTargetMeeting++;
                     setTimeout(() => {
                         this.setEffectAction(
-                            index,1, '1', '-15%', '20%', '-144px'
+                            index, 1, '1', '50%', '100%',
+                            (user ? '-144px' : '124px')
+                        );
+                        if(user) {
+                            setTimeout(() => {
+                                this.effectsMount(false);
+                            }, secondStepAnimationDuration * 2);
+                        }
+                    },secondStepAnimationDuration * 2);
+                }
+            });
+        } else if(this.getCountUsedEffectsChosenTarget(user) === 3) {
+            let userTargetMeeting = 0;
+            this.state.userUsedEffects.map((effect, index) => {
+                if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 0) {
+                    userTargetMeeting++;
+                    this.setEffectAction(
+                        index,0, '1', '-130%', '-120%',
+                        (user ? '-144px' : '124px')
+                    );
+                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 1) {
+                    userTargetMeeting++;
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index,1, '1', '-15%', '20%',
+                            (user ? '-144px' : '124px')
                         );
                     }, secondStepAnimationDuration * 2)
-                } else if(effect.target_player === this.state.user && userTargetMeeting === 2) {
+                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 2) {
                     setTimeout(() => {
                         this.setEffectAction(
-                            index, 2, '1', '100%', '160%', '-144px'
+                            index, 2, '1', '100%', '160%',
+                            (user ? '-144px' : '124px')
                         );
-                        setTimeout(() => {
-                            this.enemyEffectsAction();
-                        }, secondStepAnimationDuration*2);
-                    }, secondStepAnimationDuration * 4);
-                }
-            })
-        }
-    }
-
-    enemyEffectsAction = () => {
-        if (this.getCountUsedEffectsChosenTarget(false) === 1) {
-            this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player !== this.state.user) {
-                    this.setEffectAction(
-                        index, 0, '1', '-15%', '0', '124px'
-                    );
-                }
-            });
-        } else if(this.getCountUsedEffectsChosenTarget(false) === 2) {
-            let userTargetMeeting = 0;
-            this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player !== this.state.user && userTargetMeeting === 0) {
-                    userTargetMeeting++;
-                    this.setEffectAction(
-                        index, 0, '1', '-70%', '-100%', '124px'
-                    );
-                } else if(effect.target_player !== this.state.user && userTargetMeeting === 1) {
-                    userTargetMeeting++;
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index, 1, '1', '50%', '100%', '124px'
-                        );
-                    },secondStepAnimationDuration*2);
-                }
-            });
-        } else if(this.getCountUsedEffectsChosenTarget(false) === 3) {
-            let userTargetMeeting = 0;
-            this.state.userUsedEffects.map((effect, index) => {
-                if(effect.target_player !== this.state.user && userTargetMeeting === 0) {
-                    userTargetMeeting++;
-                    this.setEffectAction(
-                        index,0, '1', '-130%', '-120%', '124px'
-                    );
-                } else if(effect.target_player !== this.state.user && userTargetMeeting === 1) {
-                    userTargetMeeting++;
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index,1, '1', '-15%', '20%', '124px'
-                        );
-                    }, secondStepAnimationDuration * 2)
-                } else if(effect.target_player !== this.state.user && userTargetMeeting === 2) {
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index, 2, '1', '100%', '160%', '124px'
-                        );
+                        if(user) {
+                            setTimeout(() => {
+                                this.effectsMount(false);
+                            }, secondStepAnimationDuration * 2);
+                        }
                     }, secondStepAnimationDuration * 4);
                 }
             })
