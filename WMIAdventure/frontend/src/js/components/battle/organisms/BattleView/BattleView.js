@@ -115,6 +115,7 @@ class BattleView extends React.Component {
             {
                 id: 1, // damage
                 target_player: 2,
+                power: 22,
                 changed_stats: {
                     hp: 78,
                     armour: 0
@@ -123,18 +124,22 @@ class BattleView extends React.Component {
             {
                 id: 7, // block next card
                 target_player: 2,
+                power: 22,
             },
             {
                 id: 6, // heal
-                target_player: 2,
+                target_player: 1,
+                power: 22,
             },
             {
                 id: 8, // increase next card power
-                target_player: 1
+                target_player: 2,
+                power: 22,
             },
             {
                 id: 10, // increase next card damage
-                target_player: 1
+                target_player: 1,
+                power: 22,
             }
         ], // id of effects in this array
 
@@ -342,16 +347,16 @@ class BattleView extends React.Component {
         }, secondStepAnimationDuration * 3);
     }
 
-    setEffectAction = (index, opacity, translateXPowerCase, translateX, translateY) => {
+    setEffectAction = (index, actionIndex, opacity, translateXPowerCase, translateX, translateY) => {
         const effect = this.state.userUsedEffects;
-        let userTarget = (effect.target_player === this.state.user);
+        let userTarget = (effect[index].target_player === this.state.user);
         let newEffectsAction = userTarget ?
             this.state.effectsTargetToUserAction
             : this.state.effectsTargetToEnemyAction;
 
-        newEffectsAction.opacity[index] = opacity;
-        newEffectsAction.translateX[index] = effect[index].power ? translateXPowerCase : translateX;
-        newEffectsAction.translateY[index] = translateY;
+        newEffectsAction.opacity[actionIndex] = opacity;
+        newEffectsAction.translateX[actionIndex] = effect[index].power ? translateXPowerCase : translateX;
+        newEffectsAction.translateY[actionIndex] = translateY;
 
         userTarget ? this.setState({
             effectsTargetToUserAction : newEffectsAction
@@ -362,47 +367,128 @@ class BattleView extends React.Component {
 
     getCountUsedEffectsChosenTarget = (user) => {
         const currentUserId = this.state.user;
-        let userTarget = 1;
-        let enemyTarget = 1;
+        let userTarget = 0;
+        let enemyTarget = 0;
         for (let i=0; i<this.state.userUsedEffects.length; i++) {
             if(this.state.userUsedEffects[i].target_player === currentUserId)
                 ++userTarget;
             else ++enemyTarget;
         }
         console.log(userTarget);
-        if(user)
-            return userTarget;
+        if(user) return userTarget;
         else return enemyTarget;
     }
 
     userEffectsAction = () => {
         if (this.getCountUsedEffectsChosenTarget(true) === 1) {
-            this.setEffectAction(
-                0, '1', '-15%', '0', '-144px'
-            );
-        } else if(this.getCountUsedEffectsChosenTarget(true) === 2) {
-            this.setEffectAction(
-                0, '1', '-70%', '-100%', '-144px'
-            );
-            setTimeout(() => {
-                this.setEffectAction(
-                    1, '1', '50%', '100%', '-144px'
-                );
-            },secondStepAnimationDuration*2);
-        } else if(this.getCountUsedEffectsChosenTarget(true) === 3) {
-            this.setEffectAction(
-                0, '1', '-130%', '-120%', '-144px'
-            );
-            setTimeout(() => {
-                this.setEffectAction(
-                    1, '1', '-15%', '20%', '-144px'
-                );
-                setTimeout(() => {
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player === this.state.user) {
                     this.setEffectAction(
-                        2, '1', '100%', '160%', '-144px'
+                        index, 0, '1', '-15%', '0', '-144px'
                     );
-                },secondStepAnimationDuration*2);
-            },secondStepAnimationDuration*2);
+                    setTimeout(() => {
+                        this.enemyEffectsAction();
+                    }, secondStepAnimationDuration*2);
+                }
+            });
+        } else if(this.getCountUsedEffectsChosenTarget(true) === 2) {
+            let userTargetMeeting = 0;
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player === this.state.user && userTargetMeeting === 0) {
+                    userTargetMeeting++;
+                    this.setEffectAction(
+                        index, 0, '1', '-70%', '-100%', '-144px'
+                    );
+                } else if(effect.target_player === this.state.user && userTargetMeeting === 1) {
+                    userTargetMeeting++;
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index, 1, '1', '50%', '100%', '-144px'
+                        );
+                        setTimeout(() => {
+                            this.enemyEffectsAction();
+                        }, secondStepAnimationDuration*2);
+                    },secondStepAnimationDuration*2);
+                }
+            });
+        } else if(this.getCountUsedEffectsChosenTarget(true) === 3) {
+            let userTargetMeeting = 0;
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player === this.state.user && userTargetMeeting === 0) {
+                    userTargetMeeting++;
+                    this.setEffectAction(
+                        index,0, '1', '-130%', '-120%', '-144px'
+                    );
+                } else if(effect.target_player === this.state.user && userTargetMeeting === 1) {
+                    userTargetMeeting++;
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index,1, '1', '-15%', '20%', '-144px'
+                        );
+                    }, secondStepAnimationDuration * 2)
+                } else if(effect.target_player === this.state.user && userTargetMeeting === 2) {
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index, 2, '1', '100%', '160%', '-144px'
+                        );
+                        setTimeout(() => {
+                            this.enemyEffectsAction();
+                        }, secondStepAnimationDuration*2);
+                    }, secondStepAnimationDuration * 4);
+                }
+            })
+        }
+    }
+
+    enemyEffectsAction = () => {
+        if (this.getCountUsedEffectsChosenTarget(false) === 1) {
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player !== this.state.user) {
+                    this.setEffectAction(
+                        index, 0, '1', '-15%', '0', '124px'
+                    );
+                }
+            });
+        } else if(this.getCountUsedEffectsChosenTarget(false) === 2) {
+            let userTargetMeeting = 0;
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player !== this.state.user && userTargetMeeting === 0) {
+                    userTargetMeeting++;
+                    this.setEffectAction(
+                        index, 0, '1', '-70%', '-100%', '124px'
+                    );
+                } else if(effect.target_player !== this.state.user && userTargetMeeting === 1) {
+                    userTargetMeeting++;
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index, 1, '1', '50%', '100%', '124px'
+                        );
+                    },secondStepAnimationDuration*2);
+                }
+            });
+        } else if(this.getCountUsedEffectsChosenTarget(false) === 3) {
+            let userTargetMeeting = 0;
+            this.state.userUsedEffects.map((effect, index) => {
+                if(effect.target_player !== this.state.user && userTargetMeeting === 0) {
+                    userTargetMeeting++;
+                    this.setEffectAction(
+                        index,0, '1', '-130%', '-120%', '124px'
+                    );
+                } else if(effect.target_player !== this.state.user && userTargetMeeting === 1) {
+                    userTargetMeeting++;
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index,1, '1', '-15%', '20%', '124px'
+                        );
+                    }, secondStepAnimationDuration * 2)
+                } else if(effect.target_player !== this.state.user && userTargetMeeting === 2) {
+                    setTimeout(() => {
+                        this.setEffectAction(
+                            index, 2, '1', '100%', '160%', '124px'
+                        );
+                    }, secondStepAnimationDuration * 4);
+                }
+            })
         }
     }
 
