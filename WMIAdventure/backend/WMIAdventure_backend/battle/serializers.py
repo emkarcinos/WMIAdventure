@@ -146,6 +146,9 @@ class BattleSerializer(serializers.Serializer):
     Serializes Battle.
     """
 
+    attacker = SimplifiedPlayerSerializer(source="recorder.attacker")
+    defender = SimplifiedPlayerSerializer(source="recorder.defender")
+
     turns = TurnSerializer(source="recorder.turns", many=True)
 
     outcome = OutcomeSerializer()

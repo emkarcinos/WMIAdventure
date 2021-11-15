@@ -2,6 +2,7 @@ from typing import Union, Optional
 
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Player import Player
+from battle.businesslogic.recorder.SimplifiedPlayer import SimplifiedPlayer
 from battle.businesslogic.recorder.Turn import Turn
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
 
@@ -10,14 +11,19 @@ class ProcessRecorder:
     """
     Registers every turn that has happened in a single Battle.
     """
+    defender: SimplifiedPlayer
+    attacker: SimplifiedPlayer
     current_turn: Optional[Turn]
     turns: list[Turn]
     winner: Union[Player, None]
 
-    def __init__(self):
+    def __init__(self, attacker: Player, defender: Player):
         self.turns = []
         self.winner = None
         self.current_turn = None
+
+        self.attacker = SimplifiedPlayer(attacker)
+        self.defender = SimplifiedPlayer(defender)
 
     def record_turn_start(self, attacker: Player, defender: Player, current_player: Player):
         """

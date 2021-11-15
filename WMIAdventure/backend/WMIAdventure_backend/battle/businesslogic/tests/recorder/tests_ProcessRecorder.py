@@ -15,7 +15,7 @@ class ProcessRecorderTestCase(TestCase):
         cls.defender = PlayerFactory.get_instance().create(defender, is_attacker=False)
 
     def test_creation(self):
-        recorder = ProcessRecorder()
+        recorder = ProcessRecorder(self.attacker, self.defender)
         self.assertIs(recorder.get_winner(), None)
         self.assertEqual(recorder.get_turns(), [])
 
