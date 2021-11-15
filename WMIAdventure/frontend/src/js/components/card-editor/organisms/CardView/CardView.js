@@ -9,6 +9,14 @@ import Media from 'react-media';
 import DesktopContainer from './styled-components/DesktopContainer';
 import CardsAPIGateway from '../../../../api/gateways/CardsAPIGateway';
 import {mobile} from '../../../../utils/globals';
+import {Transition} from "react-transition-group";
+import FadeInContainer from "../../molecules/SendCardPopup/styled-components/FadeInContainer";
+
+const timeout = {
+    appear: 50,
+    enter: 50,
+    exit: 500
+};
 
 class CardView extends React.Component {
 
@@ -43,7 +51,7 @@ class CardView extends React.Component {
      */
     getDescriptions = () => {
         for (let i = 0; i < 3; i++) {
-            if(this.props.cardEffects[i].length !== 0) {
+            if (this.props.cardEffects[i].length !== 0) {
                 CardsAPIGateway.getEffectsDescription(this.props.cardEffects[i])
                     .then(data => this.setNewDescription(i, data))
                     .catch(err => console.log(err))
@@ -52,12 +60,12 @@ class CardView extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.show !== this.props.show) {
-            if(this.props.cardEffects[2].length !== 0)
+        if (prevProps.show !== this.props.show) {
+            if (this.props.cardEffects[2].length !== 0)
                 this.setState({activeEpic: true, activeGold: false, activeCommon: false});
-            if(this.props.cardEffects[1].length !== 0)
+            if (this.props.cardEffects[1].length !== 0)
                 this.setState({activeEpic: false, activeGold: true, activeCommon: false});
-            if(this.props.cardEffects[0].length !== 0)
+            if (this.props.cardEffects[0].length !== 0)
                 this.setState({activeEpic: false, activeGold: false, activeCommon: true});
 
             this.getDescriptions();
@@ -65,17 +73,17 @@ class CardView extends React.Component {
     }
 
     setCommonToActive = () => {
-        if(this.props.cardEffects[0].length !== 0)
+        if (this.props.cardEffects[0].length !== 0)
             this.setState({activeEpic: false, activeGold: false, activeCommon: true});
     }
 
     setGoldToActive = () => {
-        if(this.props.cardEffects[1].length !== 0)
+        if (this.props.cardEffects[1].length !== 0)
             this.setState({activeEpic: false, activeGold: true, activeCommon: false});
     }
 
     setEpicToActive = () => {
-        if(this.props.cardEffects[2].length !== 0)
+        if (this.props.cardEffects[2].length !== 0)
             this.setState({activeEpic: true, activeGold: false, activeCommon: false});
     }
 
@@ -87,56 +95,63 @@ class CardView extends React.Component {
 
     render() {
         return (
-            <Section show={this.props.show}>
-                <H2>
-                    Podgląd
-                </H2>
-                <DesktopContainer>
-                    <LevelCardView common
-                                   show={this.state.activeCommon}
-                                   exist={this.props.cardEffects[0].length !== 0}
-                                   cardName={this.props.cardName}
-                                   cardSubject={this.props.cardSubject}
-                                   cardImage={this.props.cardImage}
-                                   cardTooltip={this.props.cardTooltip}
-                                   description={this.state.descriptions[0]} />
-                    <LevelCardView gold
-                                   show={this.state.activeGold}
-                                   exist={this.props.cardEffects[1].length !== 0}
-                                   cardName={this.props.cardName}
-                                   cardSubject={this.props.cardSubject}
-                                   cardImage={this.props.cardImage}
-                                   cardTooltip={this.props.cardTooltip}
-                                   description={this.state.descriptions[1]} />
-                    <LevelCardView epic
-                                   show={this.state.activeEpic}
-                                   exist={this.props.cardEffects[2].length !== 0}
-                                   cardName={this.props.cardName}
-                                   cardSubject={this.props.cardSubject}
-                                   cardImage={this.props.cardImage}
-                                   cardTooltip={this.props.cardTooltip}
-                                   description={this.state.descriptions[2]} />
-                    <Media query={mobile}>
-                        <MobileLevelsMenu>
-                            <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
-                                    access={this.props.cardEffects[0].length !== 0}>
-                                Typowy
-                            </Button>
-                            <Button activeGold={this.state.activeGold} onClick={this.setGoldToActive}
-                                    access={this.props.cardEffects[1].length !== 0}>
-                                Złoty
-                            </Button>
-                            <Button activeEpic={this.state.activeEpic} onClick={this.setEpicToActive}
-                                    access={this.props.cardEffects[2].length !== 0}>
-                                Epicki
-                            </Button>
-                        </MobileLevelsMenu>
-                    </Media>
-                    <Close onClick={this.closeCardViewHandler}>
-                        {/*close icon*/}
-                    </Close>
-                </DesktopContainer>
-            </Section>
+
+            <Transition in={this.props.show} timeout={timeout}>
+                {state =>
+                    <FadeInContainer transitionState={state}>
+                        <Section show={state}>
+                            <H2>
+                                Podgląd
+                            </H2>
+                            <DesktopContainer>
+                                <LevelCardView common
+                                               show={this.state.activeCommon}
+                                               exist={this.props.cardEffects[0].length !== 0}
+                                               cardName={this.props.cardName}
+                                               cardSubject={this.props.cardSubject}
+                                               cardImage={this.props.cardImage}
+                                               cardTooltip={this.props.cardTooltip}
+                                               description={this.state.descriptions[0]}/>
+                                <LevelCardView gold
+                                               show={this.state.activeGold}
+                                               exist={this.props.cardEffects[1].length !== 0}
+                                               cardName={this.props.cardName}
+                                               cardSubject={this.props.cardSubject}
+                                               cardImage={this.props.cardImage}
+                                               cardTooltip={this.props.cardTooltip}
+                                               description={this.state.descriptions[1]}/>
+                                <LevelCardView epic
+                                               show={this.state.activeEpic}
+                                               exist={this.props.cardEffects[2].length !== 0}
+                                               cardName={this.props.cardName}
+                                               cardSubject={this.props.cardSubject}
+                                               cardImage={this.props.cardImage}
+                                               cardTooltip={this.props.cardTooltip}
+                                               description={this.state.descriptions[2]}/>
+                                <Media query={mobile}>
+                                    <MobileLevelsMenu>
+                                        <Button activeCommon={this.state.activeCommon} onClick={this.setCommonToActive}
+                                                access={this.props.cardEffects[0].length !== 0}>
+                                            Typowy
+                                        </Button>
+                                        <Button activeGold={this.state.activeGold} onClick={this.setGoldToActive}
+                                                access={this.props.cardEffects[1].length !== 0}>
+                                            Złoty
+                                        </Button>
+                                        <Button activeEpic={this.state.activeEpic} onClick={this.setEpicToActive}
+                                                access={this.props.cardEffects[2].length !== 0}>
+                                            Epicki
+                                        </Button>
+                                    </MobileLevelsMenu>
+                                </Media>
+                                <Close onClick={this.closeCardViewHandler}>
+                                    {/*close icon*/}
+                                </Close>
+                            </DesktopContainer>
+                        </Section>
+                    </FadeInContainer>
+                }
+            </Transition>
         );
     }
 }
