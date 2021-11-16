@@ -1,4 +1,3 @@
-from battle.businesslogic.recorder.SimplifiedDeck import SimplifiedDeck
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
 
 
@@ -10,4 +9,5 @@ class DeckOrderChangedEffectImpact(EffectImpact):
 
     def __init__(self, effect_id: int, target_player_id: int, target_deck):
         super().__init__(effect_id, target_player_id)
-        self.reordered_deck = SimplifiedDeck(target_deck)
+        self.reordered_deck = (battle_card.card_model.info.id for battle_card in list(target_deck.cards_queue))
+        """Reordered deck contains ids of cards"""
