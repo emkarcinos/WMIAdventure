@@ -104,6 +104,7 @@ class BattleView extends React.Component {
         // other prototype data
         cardLevels : [3, 3, 2, 1, 1],
         cardIcons : [icon1, icon2, icon3, icon4, icon5],
+        prototypeIterationsCount: 0,
     }
 
     componentDidMount() {
@@ -360,31 +361,46 @@ class BattleView extends React.Component {
             }, nextStepAnimationDuration);
         } else {
             setTimeout(() => {
-                user ? this.effectsHide() : '';
+                user ? this.effectsHide(true) : this.effectsHide(false);
             }, nextStepAnimationDuration);
         }
     }
 
-    effectsHide = () => {
+    effectsHide = (user) => {
         this.setNewStateAttributes(
-            this.state.userTargetSelfEffects, 'userTargetSelfEffects',
+            user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
+            user ? 'userTargetSelfEffects' : 'enemyTargetUserEffects',
             {opacity: '0', scale: '0', translateY: '0'});
         this.setNewStateAttributes(
-            this.state.userTargetEnemyEffects, 'userTargetSelfEffects',
+            user ? this.state.userTargetEnemyEffects : this.state.enemyTargetSelfEffects,
+            user ? 'userTargetEnemyEffects' : 'enemyTargetSelfEffects',
             {opacity: '0', scale: '0', translateY: '0'});
         setTimeout(() => {
-            this.compactCardBack();
+            user ? this.compactCardBack(true) : this.compactCardBack(false);
         }, nextStepAnimationDuration);
     }
 
-    compactCardBack = () => {
-        this.setState({
-            kuceInBattleVisible: true,
-            userCompactCardTranslateX: '0',
-            userCompactCardTranslateY: '0'
-        });
-        setTimeout(() => {
-            this.fullCardAction(false);
+    compactCardBack = (user) => {
+        if(user) {
+            this.setState({
+                kuceInBattleVisible: true,
+                userCompactCardTranslateX: '0',
+                userCompactCardTranslateY: '0'
+            });
+        } else {
+            this.setState({
+                kuceInBattleVisible: true,
+                enemyCompactCardTranslateX: '0',
+                enemyCompactCardTranslateY: '0'
+            });
+        } setTimeout(() => {
+            let newIterationsCount = this.state.prototypeIterationsCount;
+            newIterationsCount = newIterationsCount + 1;
+            this.setState({
+                prototypeIterationsCount: newIterationsCount
+            });
+            if(this.state.prototypeIterationsCount < 2)
+                this.fullCardAction(false);
         }, nextStepAnimationDuration * 3);
     }
 
