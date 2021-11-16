@@ -16,15 +16,10 @@ const Container = styled.div`
   border-radius: 124px;
   justify-content: center;
   align-items: center;
-  position: absolute;
   padding: 4px 10px;
-  top: 50%;
-  left: 50%;
   background-color: ${({theme}) => theme.colors.light2};
-  transition: transform 0.5s, opacity 0.4s ease-in-out;
-  transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'}, 
-  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'}) scale(${({setScale}) => setScale ? setScale : '1'});
-  opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
+  transition: transform 0.5s;
+  transform: scale(${({setScale}) => setScale ? setScale : '1'});
 `;
 
 export default Container;

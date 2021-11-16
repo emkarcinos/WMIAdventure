@@ -20,6 +20,7 @@ import FullCardView from "../../../global/atoms/FullCardView";
 import EffectIconsContainer from "./styled-components/EffectIconsContainer";
 import EffectIcon from "../../atoms/EffectIcon";
 import {getCurrentUserId} from "../../../../utils/userData";
+import CenterDiv from "./styled-components/CenterDiv";
 
 class BattleView extends React.Component {
 
@@ -126,13 +127,11 @@ class BattleView extends React.Component {
             },
             {
                 id: 8, // increase next card power
-                target_player: 1,
-                power: 2,
+                target_player: 2,
             },
             {
                 id: 10, // increase next card damage
                 target_player: 2,
-                power: 3,
             },
             {
                 id: 7, // block next card
@@ -141,8 +140,7 @@ class BattleView extends React.Component {
             },
             {
                 id: 6, // heal
-                target_player: 2,
-                power: 5,
+                target_player: 1,
             },
         ], // id of effects in this array
 
@@ -228,31 +226,18 @@ class BattleView extends React.Component {
         );
     }
 
-    usedEffectsIteration = () => {
+    effectsTargetIteration = (userTarget) => {
         const user = this.state.user;
-        let userOpacityIndex = 0; let enemyOpacityIndex = 0;
-        let userXIndex = 0; let enemyXIndex = 0;
-        let userYIndex = 0; let enemyYIndex = 0;
         return (
             this.state.userUsedEffects.map((effect, index) => {
-                return (
-                    <EffectIcon key={`effectIcon-${effect.id}`}
-                                value={effect.power}
-                                setOpacity={
-                                    (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserMount.opacity[userOpacityIndex++]
-                                        : this.state.effectsTargetToEnemyMount.opacity[enemyOpacityIndex++]}
-                                setTranslateX={
-                                    (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserMount.translateX[userXIndex++]
-                                        : this.state.effectsTargetToEnemyMount.translateX[enemyXIndex++]}
-                                setTranslateY={
-                                    (effect.target_player === user)
-                                        ? this.state.effectsTargetToUserMount.translateY[userYIndex++]
-                                        : this.state.effectsTargetToEnemyMount.translateY[enemyYIndex++]}
-                                setScale={this.state.effectsActionScale[index]}
-                    />
-                );
+                if(userTarget === (effect.target_player === user)) {
+                    return (
+                        <EffectIcon key={`effectIcon-${effect.id}`}
+                                    value={effect.power}
+                                    setScale={this.state.effectsActionScale[index]}
+                        />
+                    );
+                }
             })
         );
     }
@@ -348,7 +333,7 @@ class BattleView extends React.Component {
             // half screen - (half card + half navbar)
         });
         setTimeout(() => {
-            this.effectsMount(true);
+            this.effectsMount();
         }, secondStepAnimationDuration * 3);
     }
 
@@ -383,89 +368,9 @@ class BattleView extends React.Component {
         else return enemyTarget;
     }
 
-    effectsMount = (user) => {
-        if (this.getCountUsedEffectsChosenTarget(user) === 1) {
-            this.state.userUsedEffects.map((effect, index) => {
-                if((effect.target_player === this.state.user) === user) {
-                    this.setEffectAction(
-                        index, 0, '1', '-15%', '0',
-                        (user ? '-144px' : '124px')
-                    );
-                    if(user) {
-                        setTimeout(() => {
-                            this.effectsMount(false);
-                        }, secondStepAnimationDuration * 2);
-                    } else {
-                        setTimeout(() => {
-                            this.effectsActions();
-                        }, secondStepAnimationDuration * 2);
-                    }
-                }
-            });
-        } else if(this.getCountUsedEffectsChosenTarget(user) === 2) {
-            let userTargetMeeting = 0;
-            this.state.userUsedEffects.map((effect, index) => {
-                if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 0) {
-                    userTargetMeeting++;
-                    this.setEffectAction(
-                        index, 0, '1', '-70%', '-100%',
-                        (user ? '-144px' : '124px')
-                    );
-                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 1) {
-                    userTargetMeeting++;
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index, 1, '1', '50%', '100%',
-                            (user ? '-144px' : '124px')
-                        );
-                        if(user) {
-                            setTimeout(() => {
-                                this.effectsMount(false);
-                            }, secondStepAnimationDuration * 2);
-                        } else {
-                            setTimeout(() => {
-                                this.effectsActions();
-                            }, secondStepAnimationDuration * 2);
-                        }
-                    },secondStepAnimationDuration * 2);
-                }
-            });
-        } else if(this.getCountUsedEffectsChosenTarget(user) === 3) {
-            let userTargetMeeting = 0;
-            this.state.userUsedEffects.map((effect, index) => {
-                if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 0) {
-                    userTargetMeeting++;
-                    this.setEffectAction(
-                        index,0, '1', '-130%', '-120%',
-                        (user ? '-144px' : '124px')
-                    );
-                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 1) {
-                    userTargetMeeting++;
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index,1, '1', '-15%', '20%',
-                            (user ? '-144px' : '124px')
-                        );
-                    }, secondStepAnimationDuration * 2)
-                } else if(((effect.target_player === this.state.user) === user) && userTargetMeeting === 2) {
-                    setTimeout(() => {
-                        this.setEffectAction(
-                            index, 2, '1', '100%', '160%',
-                            (user ? '-144px' : '124px')
-                        );
-                        if(user) {
-                            setTimeout(() => {
-                                this.effectsMount(false);
-                            }, secondStepAnimationDuration * 2);
-                        } else {
-                            setTimeout(() => {
-                                this.effectsActions();
-                            }, secondStepAnimationDuration * 2);
-                        }
-                    }, secondStepAnimationDuration * 4);
-                }
-            })
-        }
+    effectsMount = () => {
+        // TODO: effects mount
+        console.log("TODO: effects mount");
     }
 
     effectsActions = (index= 0) => {
@@ -531,9 +436,16 @@ class BattleView extends React.Component {
                                           description={'ta karta narazie nic nie robi'} common
                                           setTranslateY={this.state.userFullCardAction.translateY} />
                         </FullCardActionBackground>
-                        <EffectIconsContainer>
-                            {this.usedEffectsIteration()}
-                        </EffectIconsContainer>
+                        <CenterDiv>
+                            <EffectIconsContainer>
+                                {this.effectsTargetIteration(true)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer>
+                                {this.effectsTargetIteration(false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
                     </PopUp>
                 </Media>
 
