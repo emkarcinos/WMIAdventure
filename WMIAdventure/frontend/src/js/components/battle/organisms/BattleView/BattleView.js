@@ -108,7 +108,7 @@ class BattleView extends React.Component {
         }
     }
 
-    getNewStateAttributes(state, attributes) {
+    setNewStateAttributes(state, property, attributes) {
         if((state.visible !== undefined) && (attributes.visible !== undefined))
             state.visible = attributes.visible;
         if((state.opacity !== undefined) && (attributes.opacity !== undefined))
@@ -117,7 +117,9 @@ class BattleView extends React.Component {
             state.scale = attributes.scale;
         if((state.translateY !== undefined) && (attributes.translateY !== undefined))
             state.translateY = attributes.translateY;
-        return state;
+        this.setState({
+           [property]: state
+        });
     }
 
     // prototype function, runs if we click on mini enemy cards
@@ -258,29 +260,21 @@ class BattleView extends React.Component {
 
     fullCardAction = () => {
         // show full card process
-        this.setState({
-            userFullCardAction: this.getNewStateAttributes(this.state.userFullCardAction, {visible: true})
-        });
+        this.setNewStateAttributes(
+            this.state.userFullCardAction, 'userFullCardAction', {visible: true});
         setTimeout(() => {
-            this.setState({
-                userFullCardAction:
-                    this.getNewStateAttributes(
-                        this.state.userFullCardAction, {opacity: '1', translateY: '0'})
-            });
+            this.setNewStateAttributes(
+                this.state.userFullCardAction,  'userFullCardAction',{opacity: '1', translateY: '0'})
         }, 100);
         // hide full card process
         setTimeout(() => {
             this.compactCardAction();
-            this.setState({
-                userFullCardAction:
-                    this.getNewStateAttributes(
-                        this.state.userFullCardAction, {opacity: '0', translateY: '100vh'})
-            });
+            this.setNewStateAttributes(
+                this.state.userFullCardAction, 'userFullCardAction',
+                {opacity: '0', translateY: '100vh'});
             setTimeout(() => {
-                this.setState({
-                    userFullCardAction:
-                        this.getNewStateAttributes(this.state.userFullCardAction, {visible: false})
-                });
+                this.setNewStateAttributes(
+                    this.state.userFullCardAction, 'userFullCardAction',  {visible: false});
             }, nextStepAnimationDuration);
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
@@ -298,16 +292,12 @@ class BattleView extends React.Component {
     }
 
     effectsMount = () => {
-        this.setState({
-            userTargetEffectsStyles:
-                this.getNewStateAttributes(
-                    this.state.userTargetEffectsStyles, {opacity: '1', scale: '1', translateY: '128px'})
-        });
-        this.setState({
-            enemyTargetEffectsStyles:
-                this.getNewStateAttributes(
-                    this.state.enemyTargetEffectsStyles, {opacity: '1', scale: '1', translateY: '-128px'})
-        });
+        this.setNewStateAttributes(
+            this.state.userTargetEffectsStyles, 'userTargetEffectsStyles',
+            {opacity: '1', scale: '1', translateY: '128px'});
+        this.setNewStateAttributes(
+            this.state.enemyTargetEffectsStyles, 'enemyTargetEffectsStyles',
+            {opacity: '1', scale: '1', translateY: '-128px'});
         setTimeout(() => {
             this.effectsActions();
         }, nextStepAnimationDuration * 3);
@@ -330,7 +320,34 @@ class BattleView extends React.Component {
                     this.effectsActions(index + 1);
                 }, nextStepAnimationDuration)
             }, nextStepAnimationDuration);
+        } else {
+            setTimeout(() => {
+                this.effectsHide();
+            }, nextStepAnimationDuration);
         }
+    }
+
+    effectsHide = () => {
+        this.setNewStateAttributes(
+            this.state.userTargetEffectsStyles, 'userTargetEffectsStyles',
+            {opacity: '0', scale: '0', translateY: '0'});
+        this.setNewStateAttributes(
+            this.state.enemyTargetEffectsStyles, 'userTargetEffectsStyles',
+            {opacity: '0', scale: '0', translateY: '0'});
+        setTimeout(() => {
+            this.compactCardBack();
+        }, nextStepAnimationDuration);
+    }
+
+    compactCardBack = () => {
+        this.setState({
+            kuceInBattleVisible: true,
+            userCompactCardTranslateX: '0',
+            userCompactCardTranslateY: '0'
+        });
+        setTimeout(() => {
+            console.log("Twoja kolei przeciwniku!");
+        }, nextStepAnimationDuration * 3);
     }
 
     render() {
