@@ -1,6 +1,6 @@
 from random import uniform
 
-from battle.businesslogic.buffs.Buff import Buff
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 
 
 class Calculator:
@@ -12,7 +12,7 @@ class Calculator:
             Calculator.instance = Calculator()
         return Calculator.instance
 
-    def calculate_effect_power(self, power, power_range, buffs: list[Buff]):
+    def calculate_effect_power(self, power, power_range, buffs: list[ModifierBuff]):
         """
         Calculates effect's power.
         @param power: Effect's base power.
@@ -88,7 +88,7 @@ class Calculator:
             (positive_m1 + positive_m2 + ...) * (negative_m1 * negative_m2 * ...) 
         
         """
-        buff: Buff
+        buff: ModifierBuff
         for buff in buffs:
             if buff.multiplier >= 1:
                 positive_multipliers += buff.multiplier - 1

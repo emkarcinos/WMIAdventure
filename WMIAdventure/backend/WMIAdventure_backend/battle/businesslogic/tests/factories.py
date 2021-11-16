@@ -6,14 +6,14 @@ from IngameUsers.factories import create_user_profile_with_deck
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
-from battle.businesslogic.buffs.Buff import Buff
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardEffect, CardLevelEffects, CardLevel
 
 
 class BuffFactory(factory.Factory):
     class Meta:
-        model = Buff
+        model = ModifierBuff
 
     multiplier = 1
     modifier = factory.Faker('random_int', min=1, max=20)

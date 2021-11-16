@@ -1,6 +1,6 @@
 from battle.businesslogic.buffs.CardDuplicatedBuff import CardDuplicatedBuff
 from battle.businesslogic.effects.Effect import Effect
-from battle.businesslogic.recorder.effects_impacts.TwoTimesExecutedEffectImpact import TwoTimesExecutedEffectImpact
+from battle.businesslogic.recorder.effects_impacts.CardBuffedEffectImpact import CardBuffedEffectImpact
 
 
 class TwoTimesExecuteEffect(Effect):
@@ -13,7 +13,8 @@ class TwoTimesExecuteEffect(Effect):
     def on_activation(self, target, turns_queue):
         card_to_duplicate = target.deck.lookup()
         card_to_duplicate.card_duplicated_buff = CardDuplicatedBuff(card_to_duplicate.effects)
-        return TwoTimesExecutedEffectImpact(self.effect_model.card_effect.id, target.id, card_to_duplicate)
+        return CardBuffedEffectImpact(self.effect_model.card_effect.id, target.id,
+                                      card_to_duplicate.card_duplicated_buff, card_to_duplicate)
 
     def description(self) -> str:
         return f"Następna karta {self.target.label}a wykona się dwukrotnie"

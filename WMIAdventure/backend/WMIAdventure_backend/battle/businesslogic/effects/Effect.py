@@ -1,6 +1,6 @@
 from copy import copy
 
-from battle.businesslogic.buffs.Buff import Buff
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardLevelEffects
@@ -24,7 +24,7 @@ class Effect:
         self.power = effect_model.power
         self.range = effect_model.range
 
-        self.buffs: list[Buff]
+        self.buffs: list[ModifierBuff]
         self.buffs = []
 
     def on_activation(self, target, turns_queue) -> EffectImpact:
@@ -75,15 +75,15 @@ class Effect:
             effect_target = card_owner
         return effect_target
 
-    def add_buff(self, buff: Buff):
+    def add_buff(self, buff: ModifierBuff):
         """
         Add a new buff to the Effect.
         """
 
         """
-        Copy of buff is appended. If buff was not copied then the same Buff object
+        Copy of buff is appended. If buff was not copied then the same ModifierBuff object
         would be updated multiple times by multiple Effect objects in one turn.
-        (Multiple Effect instances would have reference to the same Buff object)
+        (Multiple Effect instances would have reference to the same ModifierBuff object)
         """
         self.buffs.append(copy(buff))
 

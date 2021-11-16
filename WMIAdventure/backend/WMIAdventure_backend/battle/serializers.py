@@ -139,9 +139,6 @@ class UsedEffectSerializer(serializers.Serializer):
     turns_blocked = serializers.IntegerField(required=False)
     blocked_card = serializers.IntegerField(source="blocked_card.card_model.info.id", required=False)
 
-    # Some effects cause cards to be doubled
-    doubled_card = serializers.IntegerField(source="doubled_card.card_model.info.id", required=False)
-
 
 class TurnSerializer(serializers.Serializer):
     attacker = TurnPlayerSerializer()

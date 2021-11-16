@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from battle.businesslogic.buffs.Buff import Buff
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card
@@ -69,10 +69,10 @@ class BattleCard:
         for effect in self.effects:
             effect.update()
 
-    def assign_buff(self, buff: Buff):
+    def assign_buff(self, buff: ModifierBuff):
         """
         This method assigns a buff to this card's appropriate effects.
-        @param: buff - Buff instance
+        @param: buff - ModifierBuff instance
         """
         for effect in self.effects:
             # We check if any of the effects is of the type specified in the buff_type
