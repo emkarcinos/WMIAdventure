@@ -1,9 +1,7 @@
-from battle.businesslogic.recorder.simplified_cards.BaseSimplifiedCard import BaseSimplifiedCard
-
-
-class SimplifiedCard(BaseSimplifiedCard):
+class SimplifiedCard:
     def __init__(self, battle_card):
-        super().__init__(battle_card)
+        self.card_info_id = battle_card.card_model.info.id
+        self.level = battle_card.card_model.level.level
 
         buffs = self._get_all_buffs_from_card(battle_card)
 
@@ -25,6 +23,6 @@ class SimplifiedCard(BaseSimplifiedCard):
         if battle_card.card_duplicated_buff:
             buffs.append(battle_card.card_duplicated_buff)
 
-        buffs.append(battle_card.get_buffs())
+        buffs.extend(battle_card.get_buffs())
 
         return buffs

@@ -1,7 +1,7 @@
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Player import Player
+from battle.businesslogic.recorder.SimplifiedCard import SimplifiedCard
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
-from battle.businesslogic.recorder.simplified_cards.SimplifiedCard import SimplifiedCard
 from battle.businesslogic.recorder.simplified_players.TurnPlayer import TurnPlayer
 
 

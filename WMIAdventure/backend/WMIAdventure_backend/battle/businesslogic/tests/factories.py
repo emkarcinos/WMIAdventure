@@ -89,3 +89,13 @@ def create_battle_card_with_effect(
     )
 
     return BattleCard(card_model)
+
+
+def create_battle_card():
+    """
+    Creates basic battle card which deals dmg to opponent.
+
+    :return: Created BattleCard.
+    """
+
+    return create_battle_card_with_effect(CardEffect.EffectId.DMG)
