@@ -22,6 +22,7 @@ import EffectIcon from "../../atoms/EffectIcon";
 import {getCurrentUserId} from "../../../../utils/userData";
 import CenterDiv from "./styled-components/CenterDiv";
 import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
+import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 
 class BattleView extends React.Component {
 
@@ -71,14 +72,27 @@ class BattleView extends React.Component {
             translateY: '100vh',
         },
 
-        // effect icons mount movement
-        enemyTargetEffectsStyles: {
+        // effect icons mount movement belongs to user
+        userTargetEnemyEffects: {
             opacity: '0',
             scale: '0',
             translateY: '0',
         },
 
-        userTargetEffectsStyles: {
+        userTargetSelfEffects: {
+            opacity: '0',
+            scale: '0',
+            translateY: '0',
+        },
+
+        // effect icons mount movement belongs to enemy
+        enemyTargetUserEffects: {
+            opacity: '0',
+            scale: '0',
+            translateY: '0',
+        },
+
+        enemyTargetSelfEffects: {
             opacity: '0',
             scale: '0',
             translateY: '0',
@@ -183,20 +197,26 @@ class BattleView extends React.Component {
         );
     }
 
-    countTargetEffects(userTarget) { // to set correct EffectsIconsContainer gap
+    countTargetEffects(userEffects, userTarget) { // to set correct EffectsIconsContainer gap
+        let effects;
+        if(userEffects) effects = userUsedEffects;
+        else effects = enemyUsedEffects;
         let enemyCount = 0;
         let userCount = 0;
-        for(let i=0; i<userUsedEffects.length; i++) {
-            if(userUsedEffects[i].target_player === this.state.user) userCount++;
+        for(let i=0; i<effects.length; i++) {
+            if(effects[i].target_player === this.state.user) userCount++;
             else enemyCount++
         }
         if(userTarget) return userCount;
         else return enemyCount;
     }
 
-    effectsTargetIteration = (userTarget) => {
+    effectsTargetIteration = (userEffects, userTarget) => {
+        let effects;
+        if(userEffects) effects = userUsedEffects;
+        else effects = enemyUsedEffects;
         return (
-            userUsedEffects.map((effect, index) => {
+            effects.map((effect, index) => {
                 if(userTarget === (effect.target_player === this.state.user)) {
                     return (
                         <EffectIcon key={`effectIcon-${effect.id}`}
@@ -289,35 +309,40 @@ class BattleView extends React.Component {
         if(user) {
             this.setState({
                 kuceInBattleVisible: false,
-                userCompactCardTranslateX: '100%',
+                userCompactCardTranslateX: 'calc(100% - 5px)',
                 userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
             });
         } else {
             this.setState({
                 kuceInBattleVisible: false,
-                enemyCompactCardTranslateX: '-100%',
+                enemyCompactCardTranslateX: 'calc(-100% + 5px)',
                 enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
             });
         }
         setTimeout(() => {
-            user ? this.effectsMount() : '';
+            user ? this.effectsMount(true) : this.effectsMount(false);
         }, nextStepAnimationDuration * 2);
     }
 
-    effectsMount = () => {
+    effectsMount = (user) => {
         this.setNewStateAttributes(
-            this.state.userTargetEffectsStyles, 'userTargetEffectsStyles',
+            user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
+            user ? 'userTargetSelfEffects' : 'enemyTargetUserEffects',
             {opacity: '1', scale: '1', translateY: '128px'});
         this.setNewStateAttributes(
-            this.state.enemyTargetEffectsStyles, 'enemyTargetEffectsStyles',
+            user ? this.state.userTargetEnemyEffects : this.state.enemyTargetSelfEffects,
+            user ? 'userTargetEnemyEffects' : 'enemyTargetSelfEffects',
             {opacity: '1', scale: '1', translateY: '-128px'});
         setTimeout(() => {
-            this.effectsActions();
+            user ? this.effectsActions(true) :  this.effectsActions(false);
         }, nextStepAnimationDuration * 3);
     }
 
-    effectsActions = (index= 0) => {
-        if(index < userUsedEffects.length) {
+    effectsActions = (user, index= 0) => {
+        let effects;
+        if(user) effects = userUsedEffects;
+        else effects = enemyUsedEffects;
+        if(index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
             this.setState({
@@ -328,24 +353,24 @@ class BattleView extends React.Component {
                 this.setState({
                     effectsActionScale: newEffectsActionScale
                 });
-                // TODO: here function doing particular effect for example damage, change card order etc.
+                // TODO: here function doing particular effect for example damage, change card-order etc.
                 setTimeout(() => {
-                    this.effectsActions(index + 1);
+                    this.effectsActions(user, index + 1);
                 }, nextStepAnimationDuration)
             }, nextStepAnimationDuration);
         } else {
             setTimeout(() => {
-                this.effectsHide();
+                user ? this.effectsHide() : '';
             }, nextStepAnimationDuration);
         }
     }
 
     effectsHide = () => {
         this.setNewStateAttributes(
-            this.state.userTargetEffectsStyles, 'userTargetEffectsStyles',
+            this.state.userTargetSelfEffects, 'userTargetSelfEffects',
             {opacity: '0', scale: '0', translateY: '0'});
         this.setNewStateAttributes(
-            this.state.enemyTargetEffectsStyles, 'userTargetEffectsStyles',
+            this.state.userTargetEnemyEffects, 'userTargetSelfEffects',
             {opacity: '0', scale: '0', translateY: '0'});
         setTimeout(() => {
             this.compactCardBack();
@@ -359,7 +384,6 @@ class BattleView extends React.Component {
             userCompactCardTranslateY: '0'
         });
         setTimeout(() => {
-            console.log("Twoja kolei przeciwniku!");
             this.fullCardAction(false);
         }, nextStepAnimationDuration * 3);
     }
@@ -416,20 +440,38 @@ class BattleView extends React.Component {
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(true)}
-                                setOpacity={this.state.userTargetEffectsStyles.opacity}
-                                setScale={this.state.userTargetEffectsStyles.scale}
-                                setTranslateY={this.state.userTargetEffectsStyles.translateY}>
-                                {this.effectsTargetIteration(true)}
+                                childrenCount={this.countTargetEffects(true, true)}
+                                setOpacity={this.state.userTargetSelfEffects.opacity}
+                                setScale={this.state.userTargetSelfEffects.scale}
+                                setTranslateY={this.state.userTargetSelfEffects.translateY}>
+                                {this.effectsTargetIteration(true, true)}
                             </EffectIconsContainer>
                         </CenterDiv>
                         <CenterDiv>
                             <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(false)}
-                                setOpacity={this.state.enemyTargetEffectsStyles.opacity}
-                                setScale={this.state.enemyTargetEffectsStyles.scale}
-                                setTranslateY={this.state.enemyTargetEffectsStyles.translateY}>
-                                {this.effectsTargetIteration(false)}
+                                childrenCount={this.countTargetEffects(true, false)}
+                                setOpacity={this.state.userTargetEnemyEffects.opacity}
+                                setScale={this.state.userTargetEnemyEffects.scale}
+                                setTranslateY={this.state.userTargetEnemyEffects.translateY}>
+                                {this.effectsTargetIteration(true, false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(false, false)}
+                                setOpacity={this.state.enemyTargetSelfEffects.opacity}
+                                setScale={this.state.enemyTargetSelfEffects.scale}
+                                setTranslateY={this.state.enemyTargetSelfEffects.translateY}>
+                                {this.effectsTargetIteration(false, false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(false, true)}
+                                setOpacity={this.state.enemyTargetUserEffects.opacity}
+                                setScale={this.state.enemyTargetUserEffects.scale}
+                                setTranslateY={this.state.enemyTargetUserEffects.translateY}>
+                                {this.effectsTargetIteration(false, true)}
                             </EffectIconsContainer>
                         </CenterDiv>
                     </PopUp>
