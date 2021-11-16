@@ -19,9 +19,9 @@ import CardView from '../CardView';
 class CardsCreator extends React.Component {
     state = {
         cardId: undefined,
-        cardName: null,
-        cardSubject: null,
-        cardTooltip: null,
+        cardName: '',
+        cardSubject: '',
+        cardTooltip: '',
         cardImage: null,
 
         /**
@@ -76,13 +76,13 @@ class CardsCreator extends React.Component {
      * @param event
      */
     sendCardToApi = (event) => {
-       event.preventDefault();
+        event.preventDefault();
 
-       let basicCardData = new BasicCardData(this.state.cardName, this.state.cardSubject, this.state.cardTooltip, this.state.cardImage);
-       let wholeCardData = new WholeCardData(basicCardData, this.state.effectsToSend, this.state.levelCostValues);
-       ProposedContentAPIGateway.sendProposedCard(wholeCardData, this.state.comment, this.cardSubmissionSuccessHandler,
-           this.cardSubmissionFailedHandler)
-           .catch(err => console.log(err));
+        let basicCardData = new BasicCardData(this.state.cardName, this.state.cardSubject, this.state.cardTooltip, this.state.cardImage);
+        let wholeCardData = new WholeCardData(basicCardData, this.state.effectsToSend, this.state.levelCostValues);
+        ProposedContentAPIGateway.sendProposedCard(wholeCardData, this.state.comment, this.cardSubmissionSuccessHandler,
+            this.cardSubmissionFailedHandler)
+            .catch(err => console.log(err));
     }
 
     componentDidMount() {
@@ -158,7 +158,9 @@ class CardsCreator extends React.Component {
      */
     levelCostClearHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        levels.forEach((rank) => {newList[rank - 1] = undefined});
+        levels.forEach((rank) => {
+            newList[rank - 1] = undefined
+        });
         this.setState({levelCostValues: newList});
     }
 
@@ -168,7 +170,9 @@ class CardsCreator extends React.Component {
      */
     levelCostResetHandler = (levels) => {
         let newList = this.state.levelCostValues.slice();
-        levels.forEach((rank) => {newList[rank - 1] = 1});
+        levels.forEach((rank) => {
+            newList[rank - 1] = 1
+        });
         this.setState({levelCostValues: newList});
     }
 
@@ -197,7 +201,9 @@ class CardsCreator extends React.Component {
         newEffectsToSend[level - 1] = [];
         newChosenEffectsFromCard[level - 1] = [];
 
-        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => { return l !== level });
+        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => {
+            return l !== level
+        });
 
         this.setState({
             effectsToSend: newEffectsToSend,
@@ -289,7 +295,7 @@ class CardsCreator extends React.Component {
 
     showCardViewHandler = (event) => {
         event.preventDefault();
-        if(this.state.effectsToSend[0].length !== 0 ||
+        if (this.state.effectsToSend[0].length !== 0 ||
             this.state.effectsToSend[1].length !== 0 ||
             this.state.effectsToSend[2].length !== 0)
             this.setState({showCardView: true});
@@ -368,7 +374,7 @@ class CardsCreator extends React.Component {
                           cardSubject={this.state.cardSubject}
                           cardTooltip={this.state.cardTooltip}
                           cardImage={this.state.cardImageURLPreview}
-                          cardEffects={this.state.effectsToSend} />
+                          cardEffects={this.state.effectsToSend}/>
             </>
         );
     }
