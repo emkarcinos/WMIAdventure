@@ -52,6 +52,16 @@ def create_player_with_deck(
     return Player(user_p.user.id, deck), deck
 
 
+def create_player() -> Player:
+    """
+    Creates player, his deck will consist of default dmg dealing cards.
+    :return: Created player.
+    """
+
+    player, _ = create_player_with_deck()
+    return player
+
+
 def create_battle_card_with_effect(
         effect_id: CardEffect.EffectId,
         target: CardLevelEffects.Target = CardLevelEffects.Target.PLAYER,

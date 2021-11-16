@@ -12,7 +12,7 @@ class TurnPlayer(BaseSimplifiedPlayer):
     def __init__(self, player: Player):
         super().__init__(player)
 
-        self.deck = (battle_card.card_model.info.id for battle_card in list(player.deck.cards_queue))
+        self.deck = tuple(battle_card.card_model.info.id for battle_card in list(player.deck.cards_queue))
 
         # When turns_stopped == 0 we do not want to include this field in serialization
         # TODO: Maybe there's a better solution to this problem, maybe in serializer itself

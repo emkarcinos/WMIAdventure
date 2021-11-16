@@ -16,8 +16,8 @@ class TurnTestCase(TestCase):
     def test_creation(self):
         turn = Turn(attacker=self.attacker,
                     defender=self.defender, card_executor=self.attacker)
-        self.assertEquals(turn.get_attacker().player_id, self.attacker.id)
-        self.assertEquals(turn.get_defender().player_id, self.defender.id)
+        self.assertEquals(turn.get_attacker().id, self.attacker.id)
+        self.assertEquals(turn.get_defender().id, self.defender.id)
         self.assertEquals(turn.card_executor_id, self.attacker.id)
 
     @classmethod
