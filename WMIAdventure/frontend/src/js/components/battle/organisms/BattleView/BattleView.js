@@ -291,34 +291,38 @@ class BattleView extends React.Component {
             + secondStepAnimationDuration * 4);
     }
 
+    getNewStateStyles(state, visible=null, opacity=null, scale=null, translateY=null) {
+        if((state.run !== undefined) && (visible !== null)) state.run = visible;
+        if((state.opacity !== undefined) && (opacity !== null)) state.opacity = opacity;
+        if((state.scale !== undefined) && (scale !== null)) state.scale = scale;
+        if((state.translateY !== undefined) && (translateY !== null)) state.translateY = translateY;
+        return state;
+    }
+
     fullCardAction = () => {
         // show full card process
-        let newUserFullCardAction = this.state.userFullCardAction;
-        newUserFullCardAction.run = true;
         this.setState({
-            userFullCardAction: newUserFullCardAction
+            userFullCardAction: this.getNewStateStyles(this.state.userFullCardAction, true)
         });
-        newUserFullCardAction.translateY = '0';
-        newUserFullCardAction.opacity = '1';
         setTimeout(() => {
             this.setState({
-                userFullCardAction: newUserFullCardAction
+                userFullCardAction:
+                    this.getNewStateStyles(
+                        this.state.userFullCardAction, null, '1', null, '0')
             });
         }, 100);
-
         // hide full card process
         setTimeout(() => {
             this.compactCardAction();
-            newUserFullCardAction = this.state.userFullCardAction;
-            newUserFullCardAction.translateY = '100vh';
-            newUserFullCardAction.opacity = '0';
             this.setState({
-                userFullCardAction: newUserFullCardAction
+                userFullCardAction:
+                    this.getNewStateStyles(
+                        this.state.userFullCardAction, null, '0', null, '100vh')
             });
-            newUserFullCardAction.run = false;
             setTimeout(() => {
                 this.setState({
-                    userFullCardAction: newUserFullCardAction
+                    userFullCardAction:
+                        this.getNewStateStyles(this.state.userFullCardAction, false)
                 });
             }, secondStepAnimationDuration);
         }, battleInitLoadingDuration +
@@ -338,22 +342,16 @@ class BattleView extends React.Component {
     }
 
     effectsMount = () => {
-        let newUserTargetEffectsStyles = this.state.userTargetEffectsStyles;
-        newUserTargetEffectsStyles.opacity = '1';
-        newUserTargetEffectsStyles.scale = '1';
-        newUserTargetEffectsStyles.translateY = '128px';
         this.setState({
-            userTargetEffectsStyles: newUserTargetEffectsStyles
+            userTargetEffectsStyles:
+                this.getNewStateStyles(
+                    this.state.userTargetEffectsStyles, null, '1', '1', '128px')
         });
-
-        let newEnemyTargetEffectsStyles = this.state.enemyTargetEffectsStyles;
-        newEnemyTargetEffectsStyles.opacity = '1';
-        newEnemyTargetEffectsStyles.scale = '1';
-        newEnemyTargetEffectsStyles.translateY = '-128px';
         this.setState({
-            enemyTargetEffectsStyles: newEnemyTargetEffectsStyles
+            enemyTargetEffectsStyles:
+                this.getNewStateStyles(
+                    this.state.enemyTargetEffectsStyles, null, '1', '1', '-128px')
         });
-
         setTimeout(() => {
             this.effectsActions();
         }, secondStepAnimationDuration * 3);
