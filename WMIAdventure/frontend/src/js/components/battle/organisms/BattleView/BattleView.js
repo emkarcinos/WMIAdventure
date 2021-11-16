@@ -71,16 +71,16 @@ class BattleView extends React.Component {
         },
 
         // effect icons mount movement
-        effectsTargetToEnemyMount: {
-            translateX: ['0', '0', '0'],
+        enemyTargetEffectsStyles: {
+            opacity: ['0', '0', '0'],
+            scale: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            opacity: ['0', '0', '0']
         },
 
-        effectsTargetToUserMount: {
-            translateX: ['0', '0', '0'],
+        userTargetEffectsStyles: {
+            opacity: ['0', '0', '0'],
+            scale: ['0', '0', '0'],
             translateY: ['0', '0', '0'],
-            opacity: ['0', '0', '0']
         },
 
         // effect icons action animation with scale
@@ -329,7 +329,7 @@ class BattleView extends React.Component {
         this.setState({
             kuceInBattleVisible: false,
             userCompactCardTranslateX: '100%',
-            userCompactCardTranslateY: 'calc(-50vh + 50% + 24px)'
+            userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
             // half screen - (half card + half navbar)
         });
         setTimeout(() => {
@@ -337,40 +337,26 @@ class BattleView extends React.Component {
         }, secondStepAnimationDuration * 3);
     }
 
-    setEffectAction = (index, actionIndex, opacity, translateXPowerCase, translateX, translateY) => {
-        const effect = this.state.userUsedEffects;
-        let userTarget = (effect[index].target_player === this.state.user);
-        let newEffectsAction = userTarget ?
-            this.state.effectsTargetToUserMount
-            : this.state.effectsTargetToEnemyMount;
-
-        newEffectsAction.opacity[actionIndex] = opacity;
-        newEffectsAction.translateX[actionIndex] = effect[index].power ? translateXPowerCase : translateX;
-        newEffectsAction.translateY[actionIndex] = translateY;
-
-        userTarget ? this.setState({
-            effectsTargetToUserMount : newEffectsAction
-        }) : this.setState({
-            effectsTargetToEnemyMount : newEffectsAction
-        });
-    }
-
-    getCountUsedEffectsChosenTarget = (user) => {
-        const currentUserId = this.state.user;
-        let userTarget = 0;
-        let enemyTarget = 0;
-        for (let i=0; i<this.state.userUsedEffects.length; i++) {
-            if(this.state.userUsedEffects[i].target_player === currentUserId)
-                ++userTarget;
-            else ++enemyTarget;
-        }
-        if(user) return userTarget;
-        else return enemyTarget;
-    }
-
     effectsMount = () => {
-        // TODO: effects mount
-        console.log("TODO: effects mount");
+        let newUserTargetEffectsStyles = this.state.userTargetEffectsStyles;
+        newUserTargetEffectsStyles.opacity = '1';
+        newUserTargetEffectsStyles.scale = '1';
+        newUserTargetEffectsStyles.translateY = '128px';
+        this.setState({
+            userTargetEffectsStyles: newUserTargetEffectsStyles
+        });
+
+        let newEnemyTargetEffectsStyles = this.state.enemyTargetEffectsStyles;
+        newEnemyTargetEffectsStyles.opacity = '1';
+        newEnemyTargetEffectsStyles.scale = '1';
+        newEnemyTargetEffectsStyles.translateY = '-128px';
+        this.setState({
+            enemyTargetEffectsStyles: newEnemyTargetEffectsStyles
+        });
+
+        setTimeout(() => {
+            this.effectsActions();
+        }, secondStepAnimationDuration * 3);
     }
 
     effectsActions = (index= 0) => {
@@ -437,12 +423,18 @@ class BattleView extends React.Component {
                                           setTranslateY={this.state.userFullCardAction.translateY} />
                         </FullCardActionBackground>
                         <CenterDiv>
-                            <EffectIconsContainer>
+                            <EffectIconsContainer
+                                setOpacity={this.state.userTargetEffectsStyles.opacity}
+                                setScale={this.state.userTargetEffectsStyles.scale}
+                                setTranslateY={this.state.userTargetEffectsStyles.translateY}>
                                 {this.effectsTargetIteration(true)}
                             </EffectIconsContainer>
                         </CenterDiv>
                         <CenterDiv>
-                            <EffectIconsContainer>
+                            <EffectIconsContainer
+                                setOpacity={this.state.enemyTargetEffectsStyles.opacity}
+                                setScale={this.state.enemyTargetEffectsStyles.scale}
+                                setTranslateY={this.state.enemyTargetEffectsStyles.translateY}>
                                 {this.effectsTargetIteration(false)}
                             </EffectIconsContainer>
                         </CenterDiv>

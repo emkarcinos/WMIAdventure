@@ -17,6 +17,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4px 10px;
+  margin: 0 10px;
   background-color: ${({theme}) => theme.colors.light2};
   transition: transform 0.5s;
   transform: scale(${({setScale}) => setScale ? setScale : '1'});
