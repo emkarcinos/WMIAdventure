@@ -123,6 +123,7 @@ class BattleView extends React.Component {
         }
     }
 
+    // helper function to set property states
     setNewStateAttributes(state, property, attributes) {
         if((state.visible !== undefined) && (attributes.visible !== undefined))
             state.visible = attributes.visible;
@@ -153,6 +154,7 @@ class BattleView extends React.Component {
         });
     }
 
+    // get proper mini cards to DOM
     getMiniCards = (enemy) => {
         return (
             [...Array(5)].map(
@@ -178,6 +180,7 @@ class BattleView extends React.Component {
         );
     }
 
+    // get proper compact cards to DOM
     getCompactCards = (enemy) => {
         return (
             [...Array(5)].map(
@@ -212,6 +215,7 @@ class BattleView extends React.Component {
         else return enemyCount;
     }
 
+    // get property effects to card and show in DOM
     effectsTargetIteration = (userEffects, userTarget) => {
         let effects;
         if(userEffects) effects = userUsedEffects;
@@ -230,6 +234,7 @@ class BattleView extends React.Component {
         );
     }
 
+    // init elements animation
     itemsAnimationInit = () => {
         // Users containers show first
         setTimeout(() => {
@@ -279,6 +284,7 @@ class BattleView extends React.Component {
             + nextStepAnimationDuration * 4);
     }
 
+    // show USER or ENEMY full card view
     fullCardAction = (user) => {
         // show full card process
         this.setNewStateAttributes(
@@ -306,6 +312,7 @@ class BattleView extends React.Component {
             nextStepAnimationDuration * 3);
     }
 
+    // push forward USER or ENEMY compact card
     compactCardAction = (user) => {
         if(user) {
             this.setState({
@@ -325,6 +332,7 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 2);
     }
 
+    // shows USER or ENEMY effect icons
     effectsMount = (user) => {
         this.setNewStateAttributes(
             user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
@@ -339,6 +347,7 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 3);
     }
 
+    // scale USER or ENEMY effect icons to signal effect action
     effectsActions = (user, index= 0) => {
         let effects;
         if(user) effects = userUsedEffects;
@@ -366,6 +375,7 @@ class BattleView extends React.Component {
         }
     }
 
+    // hide USER or ENEMY effect icons
     effectsHide = (user) => {
         this.setNewStateAttributes(
             user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
@@ -380,6 +390,7 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration);
     }
 
+    // back USER or ENEMY compact card to init position
     compactCardBack = (user) => {
         if(user) {
             this.setState({
