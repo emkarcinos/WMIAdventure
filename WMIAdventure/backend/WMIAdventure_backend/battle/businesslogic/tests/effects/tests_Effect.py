@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Player import Player
+from battle.businesslogic.buffs.Buff import Buff
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.tests.Creator import Creator
 from cards.models import Card

@@ -1,6 +1,6 @@
 from random import uniform
 
-from .Buff import Buff
+from battle.businesslogic.buffs.Buff import Buff
 
 
 class Calculator:

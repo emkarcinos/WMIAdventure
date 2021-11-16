@@ -4,9 +4,9 @@ import factory
 
 from IngameUsers.factories import create_user_profile_with_deck
 from battle.businesslogic.BattleCard import BattleCard
-from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
+from battle.businesslogic.buffs.Buff import Buff
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardEffect, CardLevelEffects, CardLevel
 

@@ -1,5 +1,5 @@
-from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Calculator import Calculator
+from battle.businesslogic.buffs.Buff import Buff
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.recorder.effects_impacts.CardBuffedEffectImpact import CardBuffedEffectImpact
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription

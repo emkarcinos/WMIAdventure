@@ -1,4 +1,4 @@
-from battle.businesslogic.Buff import Buff
+from battle.businesslogic.buffs.Buff import Buff
 from battle.businesslogic.effects.EmpowerCardEffect import EmpowerCardEffect
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardEffect

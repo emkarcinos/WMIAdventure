@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from battle.businesslogic.Buff import Buff
+from battle.businesslogic.buffs.Buff import Buff
 
 
 class CardBuffTestCase(TestCase):

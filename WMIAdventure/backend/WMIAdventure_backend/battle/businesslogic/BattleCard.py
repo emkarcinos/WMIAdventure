@@ -1,9 +1,9 @@
 from typing import List, Optional
 
+from battle.businesslogic.buffs.Buff import Buff
 from battle.businesslogic.effects.Effect import Effect
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.models import Card
-from .Buff import Buff
 from .buffs.CardDuplicatedBuff import CardDuplicatedBuff
 
 

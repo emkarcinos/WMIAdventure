@@ -1,6 +1,6 @@
 from copy import copy
 
-from battle.businesslogic.Buff import Buff
+from battle.businesslogic.buffs.Buff import Buff
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardLevelEffects

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
+from battle.businesslogic.buffs.Buff import Buff
 from .Creator import Creator
-from ..Buff import Buff
 from ..Calculator import Calculator
 from ..Deck import Deck
 from ..Player import Player
