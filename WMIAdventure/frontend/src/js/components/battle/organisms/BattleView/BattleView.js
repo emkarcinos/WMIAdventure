@@ -271,7 +271,7 @@ class BattleView extends React.Component {
         }, 100);
         // hide full card process
         setTimeout(() => {
-            user ? this.compactCardAction() : '';
+            user ? this.compactCardAction(true) : this.compactCardAction(false);
             this.setNewStateAttributes(
                 user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
                 user ? 'userFullCardAction' : 'enemyFullCardAction',
@@ -285,14 +285,22 @@ class BattleView extends React.Component {
             nextStepAnimationDuration * 3);
     }
 
-    compactCardAction = () => {
-        this.setState({
-            kuceInBattleVisible: false,
-            userCompactCardTranslateX: '100%',
-            userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
-        });
+    compactCardAction = (user) => {
+        if(user) {
+            this.setState({
+                kuceInBattleVisible: false,
+                userCompactCardTranslateX: '100%',
+                userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
+            });
+        } else {
+            this.setState({
+                kuceInBattleVisible: false,
+                enemyCompactCardTranslateX: '-100%',
+                enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
+            });
+        }
         setTimeout(() => {
-            this.effectsMount();
+            user ? this.effectsMount() : '';
         }, nextStepAnimationDuration * 2);
     }
 
