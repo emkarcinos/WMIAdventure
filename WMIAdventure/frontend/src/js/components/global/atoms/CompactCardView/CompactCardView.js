@@ -4,7 +4,7 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
-import {secondStepAnimationDuration} from "../../../../utils/globals";
+import {nextStepAnimationDuration} from "../../../../utils/globals";
 
 class CompactCardView extends React.Component {
     /*
@@ -79,7 +79,7 @@ class CompactCardView extends React.Component {
                 this.setState({
                     cardIndexInDeck: newCardIndexInDeck
                 }, this.showNewCardsOrder);
-            }, secondStepAnimationDuration);
+            }, nextStepAnimationDuration);
         }
     }
 

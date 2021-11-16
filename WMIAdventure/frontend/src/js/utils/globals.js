@@ -7,7 +7,7 @@ const maxCardTooltip = 80;
 
 const popUpLoadingMinimalDuration = 500;
 const battleInitLoadingDuration = 800;
-const secondStepAnimationDuration = 550;
+const nextStepAnimationDuration = 550;
 
 export {
     mobile, desktop,
@@ -15,5 +15,5 @@ export {
 
     popUpLoadingMinimalDuration,
     battleInitLoadingDuration,
-    secondStepAnimationDuration
+    nextStepAnimationDuration
 };

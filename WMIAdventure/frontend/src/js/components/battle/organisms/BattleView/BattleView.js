@@ -1,5 +1,5 @@
 import React from 'react';
-import {battleInitLoadingDuration, secondStepAnimationDuration, desktop, mobile} from "../../../../utils/globals";
+import {battleInitLoadingDuration, nextStepAnimationDuration, desktop, mobile} from "../../../../utils/globals";
 import Media from "react-media";
 import PopUp from "../../../global/organisms/PopUp";
 import MainContainer from "./styled-components/MainContainer";
@@ -225,7 +225,7 @@ class BattleView extends React.Component {
                 userCompactCardTranslateX: '-6vw',
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration);
+            + nextStepAnimationDuration);
 
         // Second step of Compact cards animation
         setTimeout(() => {
@@ -234,7 +234,7 @@ class BattleView extends React.Component {
                 userCompactCardTranslateX: '0',
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration * 2);
+            + nextStepAnimationDuration * 2);
 
         // Mini cards animations in one step, and hp and shield points animation
         setTimeout(() => {
@@ -247,13 +247,13 @@ class BattleView extends React.Component {
                 userShield: '20'
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration * 2 + 100);
+            + nextStepAnimationDuration * 2 + 100);
 
         // full card action call
         setTimeout(() => {
             this.fullCardAction();
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration * 4);
+            + nextStepAnimationDuration * 4);
     }
 
     fullCardAction = () => {
@@ -281,9 +281,9 @@ class BattleView extends React.Component {
                     userFullCardAction:
                         this.getNewStateAttributes(this.state.userFullCardAction, {visible: false})
                 });
-            }, secondStepAnimationDuration);
+            }, nextStepAnimationDuration);
         }, battleInitLoadingDuration +
-            secondStepAnimationDuration * 3);
+            nextStepAnimationDuration * 3);
     }
 
     compactCardAction = () => {
@@ -294,7 +294,7 @@ class BattleView extends React.Component {
         });
         setTimeout(() => {
             this.effectsMount();
-        }, secondStepAnimationDuration * 3);
+        }, nextStepAnimationDuration * 2);
     }
 
     effectsMount = () => {
@@ -310,7 +310,7 @@ class BattleView extends React.Component {
         });
         setTimeout(() => {
             this.effectsActions();
-        }, secondStepAnimationDuration * 3);
+        }, nextStepAnimationDuration * 3);
     }
 
     effectsActions = (index= 0) => {
@@ -328,8 +328,8 @@ class BattleView extends React.Component {
                 // TODO: here function doing particular effect for example damage, change card order etc.
                 setTimeout(() => {
                     this.effectsActions(index + 1);
-                }, secondStepAnimationDuration * 2)
-            }, secondStepAnimationDuration * 2);
+                }, nextStepAnimationDuration)
+            }, nextStepAnimationDuration);
         }
     }
 
