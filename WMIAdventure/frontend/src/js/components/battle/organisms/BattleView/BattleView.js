@@ -101,7 +101,7 @@ class BattleView extends React.Component {
         // effect icons action animation with scale
         effectsActionScale: ['1', '1', '1', '1', '1'],
 
-        // other prototype data
+        // other prototype data, will be remove when true data comes perhaps
         cardLevels : [3, 3, 2, 1, 1],
         cardIcons : [icon1, icon2, icon3, icon4, icon5],
         prototypeIterationsCount: 0,

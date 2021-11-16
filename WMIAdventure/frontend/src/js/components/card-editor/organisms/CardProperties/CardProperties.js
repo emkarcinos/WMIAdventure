@@ -30,16 +30,17 @@ class CardProperties extends React.Component {
         startEdit: false,
     }
 
-    componentDidUpdate(nextProps) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.levelsListFromCard.length === this.props.levelsListFromCard.length) return;
         setTimeout(() => {
-            if(!this.state.startEdit) {
-                let levelsList = nextProps.levelsListFromCard;
-                for(let i=0; i<levelsList.length; i++) {
-                    if(levelsList[i] === 1)
+            if (!this.state.startEdit) {
+                let levelsList = this.props.levelsListFromCard;
+                for (let i = 0; i < levelsList.length; i++) {
+                    if (levelsList[i] === 1)
                         this.setState({createCommonLevel: true});
-                    if(levelsList[i] === 2)
+                    if (levelsList[i] === 2)
                         this.setState({createGoldLevel: true});
-                    if(levelsList[i] === 3)
+                    if (levelsList[i] === 3)
                         this.setState({createEpicLevel: true});
                 }
 
@@ -72,14 +73,14 @@ class CardProperties extends React.Component {
 
         // If common level was created
         if (createdLevel === 1) {
-            if (this.state.createGoldLevel || this.state.createEpicLevel){
+            if (this.state.createGoldLevel || this.state.createEpicLevel) {
                 levelsToReset.push(1);
             }
         }
 
         // If gold level was created
         else if (createdLevel === 2) {
-            if (this.state.createCommonLevel){
+            if (this.state.createCommonLevel) {
                 levelsToReset.push(1);
             }
             if (this.state.createEpicLevel) {
@@ -89,10 +90,9 @@ class CardProperties extends React.Component {
 
         // If epic level was created
         else if (createdLevel === 3) {
-            if(this.state.createGoldLevel){
+            if (this.state.createGoldLevel) {
                 levelsToReset.push(2);
-            }
-            else if(this.state.createCommonLevel){
+            } else if (this.state.createCommonLevel) {
                 levelsToReset.push(1);
             }
         }
@@ -109,17 +109,16 @@ class CardProperties extends React.Component {
 
         // If gold level was removed
         if (removedLevel === 2) {
-            if (!this.state.createEpicLevel){
+            if (!this.state.createEpicLevel) {
                 levelsToClear.push(1);
             }
         }
 
         // If epic level was removed
         else if (removedLevel === 3) {
-            if(this.state.createGoldLevel){
+            if (this.state.createGoldLevel) {
                 levelsToClear.push(2);
-            }
-            else if(this.state.createCommonLevel){
+            } else if (this.state.createCommonLevel) {
                 levelsToClear.push(1);
             }
         }
@@ -134,12 +133,10 @@ class CardProperties extends React.Component {
     setStateAfterLevelCreation = (level) => {
         if (level === 1) {
             this.setState({createCommonLevel: true});
-        }
-        else if (level === 2) {
+        } else if (level === 2) {
             this.setState({createGoldLevel: true});
-        }
-        else if (level === 3) {
-            this.setState({createEpicLevel : true});
+        } else if (level === 3) {
+            this.setState({createEpicLevel: true});
         }
         this.setState({activeCardRank: level});
     }
@@ -210,7 +207,7 @@ class CardProperties extends React.Component {
         let t = this;
         return function (event) {
             event.preventDefault();
-            t.setState( {showEffectChoose: true, effectChooseForCardRank: cardRank})
+            t.setState({showEffectChoose: true, effectChooseForCardRank: cardRank})
         }
     }
 
@@ -222,7 +219,7 @@ class CardProperties extends React.Component {
     chosenEffectsHandler = (event, rank, effect) => {
         event.preventDefault();
         let newList = this.state.chosenEffects.slice();
-        if(!newList[rank - 1].includes(effect))
+        if (!newList[rank - 1].includes(effect))
             newList[rank - 1].push(effect);
         this.setState({chosenEffects: newList});
         this.hideEffectChooseHandler(event);
@@ -267,10 +264,9 @@ class CardProperties extends React.Component {
      * @returns {boolean}
      */
     existsHigherLevel = (cardLevel) => {
-        if (cardLevel === 1){
+        if (cardLevel === 1) {
             return this.state.createGoldLevel || this.state.createEpicLevel;
-        }
-        else if (cardLevel === 2) {
+        } else if (cardLevel === 2) {
             return this.state.createEpicLevel;
         }
 
@@ -282,7 +278,7 @@ class CardProperties extends React.Component {
             <>
                 <LevelChoose show={this.state.showLevelChoose}
                              hideLevelChooseHandler={this.hideLevelChooseHandler}
-                             createLevelHandler = {this.createLevelHandler}
+                             createLevelHandler={this.createLevelHandler}
                              commonLevelChosen={this.state.createCommonLevel}
                              goldLevelChosen={this.state.createGoldLevel}
                              epicLevelChosen={this.state.createEpicLevel}/>
@@ -292,21 +288,22 @@ class CardProperties extends React.Component {
                     cardRank={this.state.effectChooseForCardRank}
                     effectsFromApi={this.props.effectsFromApi}
                     chosenEffects={this.state.chosenEffects}
-                    chosenEffectsHandler={this.chosenEffectsHandler} />
+                    chosenEffectsHandler={this.chosenEffectsHandler}/>
                 {/* Mobile sized screens */}
                 <Media query={mobile}>
                     <Fieldset activeCardRank={this.state.activeCardRank}>
                         <DivScroll rank={this.state.activeCardRank}>
-                            <CostInputs cardRank={this.existsHigherLevel(this.state.activeCardRank) ? this.state.activeCardRank : 0}
-                                        levelCostValues={this.props.levelCostValues}
-                                        levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                            <CostInputs
+                                cardRank={this.existsHigherLevel(this.state.activeCardRank) ? this.state.activeCardRank : 0}
+                                levelCostValues={this.props.levelCostValues}
+                                levelCostValuesHandler={this.props.levelCostValuesHandler}/>
                             <EffectsInputsList
                                 cardRank={this.state.activeCardRank}
                                 showEffectChooseHandler={this.showEffectChooseHandler}
                                 chosenEffects={this.state.chosenEffects}
                                 removeChosenEffectHandler={this.removeChosenEffectHandler}
                                 effectsToSendHandler={this.effectsToSendHandler}
-                                effectsToSend={this.state.effectsToSend} />
+                                effectsToSend={this.state.effectsToSend}/>
                         </DivScroll>
                         <DivLevel activeCardRank={this.state.activeCardRank}>
                             <P>
@@ -350,14 +347,14 @@ class CardProperties extends React.Component {
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createGoldLevel || this.state.createEpicLevel ? 1 : 0}
                                             levelCostValues={this.props.levelCostValues}
-                                            levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                                            levelCostValuesHandler={this.props.levelCostValuesHandler}/>
                                 <EffectsInputsList
                                     cardRank={this.state.createCommonLevel ? 1 : 0}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
                                     effectsToSendHandler={this.effectsToSendHandler}
-                                    effectsToSend={this.state.effectsToSend} />
+                                    effectsToSend={this.state.effectsToSend}/>
                             </DivScroll>
                         </Fieldset>
                         <Fieldset create={this.state.createGoldLevel} createGold={this.state.createGoldLevel}>
@@ -370,14 +367,14 @@ class CardProperties extends React.Component {
                             <DivScroll>
                                 <CostInputs cardRank={this.state.createEpicLevel ? 2 : 0}
                                             levelCostValues={this.props.levelCostValues}
-                                            levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                                            levelCostValuesHandler={this.props.levelCostValuesHandler}/>
                                 <EffectsInputsList
                                     cardRank={this.state.createGoldLevel ? 2 : 0}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
                                     effectsToSendHandler={this.effectsToSendHandler}
-                                    effectsToSend={this.state.effectsToSend} />
+                                    effectsToSend={this.state.effectsToSend}/>
                             </DivScroll>
                         </Fieldset>
                         <Fieldset create={this.state.createEpicLevel} createEpic={this.state.createEpicLevel}>
@@ -390,14 +387,14 @@ class CardProperties extends React.Component {
                             <DivScroll>
                                 <CostInputs cardRank={0}
                                             levelCostValues={this.props.levelCostValues}
-                                            levelCostValuesHandler={this.props.levelCostValuesHandler} />
+                                            levelCostValuesHandler={this.props.levelCostValuesHandler}/>
                                 <EffectsInputsList
                                     cardRank={this.state.createEpicLevel ? 3 : 0}
                                     showEffectChooseHandler={this.showEffectChooseHandler}
                                     chosenEffects={this.state.chosenEffects}
                                     removeChosenEffectHandler={this.removeChosenEffectHandler}
                                     effectsToSendHandler={this.effectsToSendHandler}
-                                    effectsToSend={this.state.effectsToSend} />
+                                    effectsToSend={this.state.effectsToSend}/>
                             </DivScroll>
                         </Fieldset>
                         <Button onClick={this.showLevelChooseHandler}
