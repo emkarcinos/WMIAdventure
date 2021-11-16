@@ -15,7 +15,7 @@ class EffectIcon extends React.Component {
                 <Icon src={this.props.icon ? this.props.icon : imgPlaceholder} />
                 {
                     this.props.value ?
-                        <Value>
+                        <Value value={this.props.value}>
                             {this.props.value}
                         </Value>
                         : ''

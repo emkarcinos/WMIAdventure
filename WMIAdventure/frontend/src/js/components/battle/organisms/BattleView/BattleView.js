@@ -61,27 +61,27 @@ class BattleView extends React.Component {
 
         // full cards action
         enemyFullCardAction: {
-            run: false,
+            visible: false,
             opacity: '0',
             translateY: '-100vh',
         },
         userFullCardAction: {
-            run: false,
+            visible: false,
             opacity: '0',
             translateY: '100vh',
         },
 
         // effect icons mount movement
         enemyTargetEffectsStyles: {
-            opacity: ['0', '0', '0'],
-            scale: ['0', '0', '0'],
-            translateY: ['0', '0', '0'],
+            opacity: '0',
+            scale: '0',
+            translateY: '0',
         },
 
         userTargetEffectsStyles: {
-            opacity: ['0', '0', '0'],
-            scale: ['0', '0', '0'],
-            translateY: ['0', '0', '0'],
+            opacity: '0',
+            scale: '0',
+            translateY: '0',
         },
 
         // effect icons action animation with scale
@@ -106,6 +106,18 @@ class BattleView extends React.Component {
             });
             this.itemsAnimationInit();
         }
+    }
+
+    getNewStateAttributes(state, attributes) {
+        if((state.visible !== undefined) && (attributes.visible !== undefined))
+            state.visible = attributes.visible;
+        if((state.opacity !== undefined) && (attributes.opacity !== undefined))
+            state.opacity = attributes.opacity;
+        if((state.scale !== undefined) && (attributes.scale !== undefined))
+            state.scale = attributes.scale;
+        if((state.translateY !== undefined) && (attributes.translateY !== undefined))
+            state.translateY = attributes.translateY;
+        return state;
     }
 
     // prototype function, runs if we click on mini enemy cards
@@ -167,6 +179,17 @@ class BattleView extends React.Component {
                     );
                 })
         );
+    }
+
+    countTargetEffects(userTarget) { // to set correct EffectsIconsContainer gap
+        let enemyCount = 0;
+        let userCount = 0;
+        for(let i=0; i<userUsedEffects.length; i++) {
+            if(userUsedEffects[i].target_player === this.state.user) userCount++;
+            else enemyCount++
+        }
+        if(userTarget) return userCount;
+        else return enemyCount;
     }
 
     effectsTargetIteration = (userTarget) => {
@@ -233,24 +256,16 @@ class BattleView extends React.Component {
             + secondStepAnimationDuration * 4);
     }
 
-    getNewStateStyles(state, visible=null, opacity=null, scale=null, translateY=null) {
-        if((state.run !== undefined) && (visible !== null)) state.run = visible;
-        if((state.opacity !== undefined) && (opacity !== null)) state.opacity = opacity;
-        if((state.scale !== undefined) && (scale !== null)) state.scale = scale;
-        if((state.translateY !== undefined) && (translateY !== null)) state.translateY = translateY;
-        return state;
-    }
-
     fullCardAction = () => {
         // show full card process
         this.setState({
-            userFullCardAction: this.getNewStateStyles(this.state.userFullCardAction, true)
+            userFullCardAction: this.getNewStateAttributes(this.state.userFullCardAction, {visible: true})
         });
         setTimeout(() => {
             this.setState({
                 userFullCardAction:
-                    this.getNewStateStyles(
-                        this.state.userFullCardAction, null, '1', null, '0')
+                    this.getNewStateAttributes(
+                        this.state.userFullCardAction, {opacity: '1', translateY: '0'})
             });
         }, 100);
         // hide full card process
@@ -258,13 +273,13 @@ class BattleView extends React.Component {
             this.compactCardAction();
             this.setState({
                 userFullCardAction:
-                    this.getNewStateStyles(
-                        this.state.userFullCardAction, null, '0', null, '100vh')
+                    this.getNewStateAttributes(
+                        this.state.userFullCardAction, {opacity: '0', translateY: '100vh'})
             });
             setTimeout(() => {
                 this.setState({
                     userFullCardAction:
-                        this.getNewStateStyles(this.state.userFullCardAction, false)
+                        this.getNewStateAttributes(this.state.userFullCardAction, {visible: false})
                 });
             }, secondStepAnimationDuration);
         }, battleInitLoadingDuration +
@@ -285,13 +300,13 @@ class BattleView extends React.Component {
     effectsMount = () => {
         this.setState({
             userTargetEffectsStyles:
-                this.getNewStateStyles(
-                    this.state.userTargetEffectsStyles, null, '1', '1', '128px')
+                this.getNewStateAttributes(
+                    this.state.userTargetEffectsStyles, {opacity: '1', scale: '1', translateY: '128px'})
         });
         this.setState({
             enemyTargetEffectsStyles:
-                this.getNewStateStyles(
-                    this.state.enemyTargetEffectsStyles, null, '1', '1', '-128px')
+                this.getNewStateAttributes(
+                    this.state.enemyTargetEffectsStyles, {opacity: '1', scale: '1', translateY: '-128px'})
         });
         setTimeout(() => {
             this.effectsActions();
@@ -354,7 +369,7 @@ class BattleView extends React.Component {
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
-                        <FullCardActionBackground visible={this.state.userFullCardAction.run}
+                        <FullCardActionBackground visible={this.state.userFullCardAction.visible}
                                                   setOpacity={this.state.userFullCardAction.opacity}>
                             <FullCardView cardName={'Test'} cardSubject={'przykładzik'}
                                           cardImage={icon1} cardTooltip={'niech wszystko działa'}
@@ -363,6 +378,7 @@ class BattleView extends React.Component {
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(true)}
                                 setOpacity={this.state.userTargetEffectsStyles.opacity}
                                 setScale={this.state.userTargetEffectsStyles.scale}
                                 setTranslateY={this.state.userTargetEffectsStyles.translateY}>
@@ -371,6 +387,7 @@ class BattleView extends React.Component {
                         </CenterDiv>
                         <CenterDiv>
                             <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(false)}
                                 setOpacity={this.state.enemyTargetEffectsStyles.opacity}
                                 setScale={this.state.enemyTargetEffectsStyles.scale}
                                 setTranslateY={this.state.enemyTargetEffectsStyles.translateY}>
