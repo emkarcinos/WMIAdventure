@@ -253,28 +253,33 @@ class BattleView extends React.Component {
 
         // full card action call
         setTimeout(() => {
-            this.fullCardAction();
+            this.fullCardAction(true);
         }, battleInitLoadingDuration
             + nextStepAnimationDuration * 4);
     }
 
-    fullCardAction = () => {
+    fullCardAction = (user) => {
         // show full card process
         this.setNewStateAttributes(
-            this.state.userFullCardAction, 'userFullCardAction', {visible: true});
+            user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
+            user ? 'userFullCardAction' : 'enemyFullCardAction', {visible: true});
         setTimeout(() => {
             this.setNewStateAttributes(
-                this.state.userFullCardAction,  'userFullCardAction',{opacity: '1', translateY: '0'})
+                user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
+                user ? 'userFullCardAction' : 'enemyFullCardAction',
+                {opacity: '1', translateY: '0'});
         }, 100);
         // hide full card process
         setTimeout(() => {
-            this.compactCardAction();
+            user ? this.compactCardAction() : '';
             this.setNewStateAttributes(
-                this.state.userFullCardAction, 'userFullCardAction',
-                {opacity: '0', translateY: '100vh'});
+                user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
+                user ? 'userFullCardAction' : 'enemyFullCardAction',
+                user ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
             setTimeout(() => {
                 this.setNewStateAttributes(
-                    this.state.userFullCardAction, 'userFullCardAction',  {visible: false});
+                    user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
+                    user ? 'userFullCardAction' : 'enemyFullCardAction', {visible: false});
             }, nextStepAnimationDuration);
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
@@ -347,6 +352,7 @@ class BattleView extends React.Component {
         });
         setTimeout(() => {
             console.log("Twoja kolei przeciwniku!");
+            this.fullCardAction(false);
         }, nextStepAnimationDuration * 3);
     }
 
@@ -388,10 +394,17 @@ class BattleView extends React.Component {
                         </MainContainer>
                         <FullCardActionBackground visible={this.state.userFullCardAction.visible}
                                                   setOpacity={this.state.userFullCardAction.opacity}>
-                            <FullCardView cardName={'Test'} cardSubject={'przykładzik'}
+                            <FullCardView cardName={'Test User'} cardSubject={'przykładzik'}
                                           cardImage={icon1} cardTooltip={'niech wszystko działa'}
-                                          description={'ta karta narazie nic nie robi'} common
+                                          description={'ta karta póki co nic nie robi'} common
                                           setTranslateY={this.state.userFullCardAction.translateY} />
+                        </FullCardActionBackground>
+                        <FullCardActionBackground visible={this.state.enemyFullCardAction.visible}
+                                                  setOpacity={this.state.enemyFullCardAction.opacity}>
+                            <FullCardView cardName={'Test Enemy'} cardSubject={'przykładzik2'}
+                                          cardImage={icon1} cardTooltip={'wszystko działa'}
+                                          description={'ta karta na razie nic nie robi'} common
+                                          setTranslateY={this.state.enemyFullCardAction.translateY} />
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
