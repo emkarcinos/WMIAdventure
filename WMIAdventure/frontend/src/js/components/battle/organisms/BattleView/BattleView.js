@@ -21,6 +21,7 @@ import EffectIconsContainer from "./styled-components/EffectIconsContainer";
 import EffectIcon from "../../atoms/EffectIcon";
 import {getCurrentUserId} from "../../../../utils/userData";
 import CenterDiv from "./styled-components/CenterDiv";
+import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
 
 class BattleView extends React.Component {
 
@@ -86,64 +87,6 @@ class BattleView extends React.Component {
         // effect icons action animation with scale
         effectsActionScale: ['1', '1', '1', '1', '1'],
 
-        // used effects prototype data
-        enemyUsedEffects: [ // player 2
-            {
-                id: 1, // damage
-                target_player: 1,
-                power: 42,
-                changed_stats: {
-                    hp: 58,
-                    armour: 0
-                }
-            },
-            {
-                id: 3, // random change cards order
-                target_player: 1
-            },
-            {
-                id: 4, // one turn stop
-                target_player: 1
-            },
-            {
-                id: 2, // shield
-                target_player: 2
-            },
-            {
-                id: 5, // double card run
-                target_player: 2
-            }
-        ],
-
-        userUsedEffects: [ // player 1
-            {
-                id: 1, // damage
-                target_player: 2,
-                power: 1,
-                changed_stats: {
-                    hp: 78,
-                    armour: 0
-                },
-            },
-            {
-                id: 8, // increase next card power
-                target_player: 2,
-            },
-            {
-                id: 10, // increase next card damage
-                target_player: 2,
-            },
-            {
-                id: 7, // block next card
-                target_player: 1,
-                power: 4,
-            },
-            {
-                id: 6, // heal
-                target_player: 1,
-            },
-        ], // id of effects in this array
-
         // other prototype data
         cardLevels : [3, 3, 2, 1, 1],
         cardIcons : [icon1, icon2, icon3, icon4, icon5],
@@ -161,7 +104,7 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
-            this.itemsAnimationInit(this.fullCardAction);
+            this.itemsAnimationInit();
         }
     }
 
@@ -227,10 +170,9 @@ class BattleView extends React.Component {
     }
 
     effectsTargetIteration = (userTarget) => {
-        const user = this.state.user;
         return (
-            this.state.userUsedEffects.map((effect, index) => {
-                if(userTarget === (effect.target_player === user)) {
+            userUsedEffects.map((effect, index) => {
+                if(userTarget === (effect.target_player === this.state.user)) {
                     return (
                         <EffectIcon key={`effectIcon-${effect.id}`}
                                     value={effect.power}
@@ -242,7 +184,7 @@ class BattleView extends React.Component {
         );
     }
 
-    itemsAnimationInit = (callback) => {
+    itemsAnimationInit = () => {
         // Users containers show first
         setTimeout(() => {
             this.setState({
@@ -271,8 +213,7 @@ class BattleView extends React.Component {
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2);
 
-        /* Mini cards animations in one step,
-        and hp and shield points animation */
+        // Mini cards animations in one step, and hp and shield points animation
         setTimeout(() => {
             this.setState({
                 enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
@@ -285,8 +226,9 @@ class BattleView extends React.Component {
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 2 + 100);
 
+        // full card action call
         setTimeout(() => {
-            callback();
+            this.fullCardAction();
         }, battleInitLoadingDuration
             + secondStepAnimationDuration * 4);
     }
@@ -334,7 +276,6 @@ class BattleView extends React.Component {
             kuceInBattleVisible: false,
             userCompactCardTranslateX: '100%',
             userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
-            // half screen - (half card + half navbar)
         });
         setTimeout(() => {
             this.effectsMount();
@@ -358,7 +299,7 @@ class BattleView extends React.Component {
     }
 
     effectsActions = (index= 0) => {
-        if(index < this.state.userUsedEffects.length) {
+        if(index < userUsedEffects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
             this.setState({
