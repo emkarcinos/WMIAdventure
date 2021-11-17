@@ -296,28 +296,40 @@ class BattleView extends React.Component {
         });
     }
 
-    // show USER or ENEMY full card view
-    fullCardAction = (user) => {
-        // show full card process
+    showFullCardProcess(user) {
         this.setNewStateAttributes(
             this.state.fullCardAction, 'fullCardAction',
             user ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
+
         setTimeout(() => {
             this.setNewStateAttributes(
                 this.state.fullCardAction, 'fullCardAction', {opacity: '1', translateY: '0'});
         }, 100);
-        // hide full card process
+    }
+
+    slideBackFullCardCallingCompactCardAction(user) {
         setTimeout(() => {
             user ? this.compactCardAction(true) : this.compactCardAction(false);
             this.setNewStateAttributes(
                 this.state.fullCardAction, 'fullCardAction',
                 user ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
-            setTimeout(() => {
-                this.setNewStateAttributes(
-                    this.state.fullCardAction, 'fullCardAction', {visible: false});
-            }, nextStepAnimationDuration);
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
+    }
+    
+    hideFullCardBackground() {
+        setTimeout(() => {
+            this.setNewStateAttributes(
+                this.state.fullCardAction, 'fullCardAction', {visible: false});
+        }, battleInitLoadingDuration +
+            nextStepAnimationDuration * 4);
+    }
+
+    // show USER or ENEMY full card view
+    fullCardAction = (user) => {
+        this.showFullCardProcess(user);
+        this.slideBackFullCardCallingCompactCardAction(user);
+        this.hideFullCardBackground();
     }
 
     // push forward USER or ENEMY compact card
