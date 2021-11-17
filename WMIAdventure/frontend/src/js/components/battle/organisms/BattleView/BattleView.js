@@ -67,6 +67,7 @@ class BattleView extends React.Component {
             translateY: '100vh',
         },
 
+        // define where effects icons container should move
         effectsTarget: {
             user: {
                 opacity: '0',
@@ -107,6 +108,85 @@ class BattleView extends React.Component {
         }
     }
 
+    stateContainersShotAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyStateContainerTranslateX: '8vw',
+                userStateContainerTranslateX: '-8vw'
+            });
+        }, battleInitLoadingDuration);
+    }
+
+    compactCardsShotAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyCompactCardTranslateX: '6vw',
+                userCompactCardTranslateX: '-6vw',
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration);
+    }
+
+    stateContainersRetractionAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyStateContainerTranslateX: '0',
+                userStateContainerTranslateX: '0',
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration);
+    }
+
+    compactCardsRetractionAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyCompactCardTranslateX: '0',
+                userCompactCardTranslateX: '0',
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 2);
+    }
+
+    miniCardsInitAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
+                userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 2 + 100);
+    }
+
+    userStatsInitAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyHp: '100',
+                userHp: '100',
+                enemyShield: '20',
+                userShield: '20'
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 2 + 100);
+    }
+
+    fullCardActionCall() {
+        setTimeout(() => {
+            this.fullCardAction(true);
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 4);
+    }
+
+    // init elements animation and call full card action
+    itemsAnimationInit = () => {
+        this.stateContainersShotAnimation();
+        this.compactCardsShotAnimation();
+        this.compactCardsRetractionAnimation();
+        this.stateContainersRetractionAnimation();
+        this.miniCardsInitAnimation();
+        this.userStatsInitAnimation();
+        this.fullCardActionCall();
+    }
+
     // helper function to set property states
     setNewStateAttributes(state, property, attributes) {
         if ((state.visible !== undefined) && (attributes.visible !== undefined))
@@ -120,6 +200,21 @@ class BattleView extends React.Component {
         this.setState({
             [property]: state
         });
+    }
+
+    // to set correct EffectsIconsContainer gap
+    countTargetEffects(battleIterations, userTarget) {
+        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
+        let enemyCount = 0;
+        let userCount = 0;
+        for (const effect of effects) {
+            if (effect.target_player === this.state.user) userCount++;
+            else enemyCount++
+        }
+        if (userTarget)
+            return userCount;
+        else
+            return enemyCount;
     }
 
     // prototype function, runs if we click on mini enemy cards
@@ -185,20 +280,6 @@ class BattleView extends React.Component {
         );
     }
 
-    countTargetEffects(battleIterations, userTarget) { // to set correct EffectsIconsContainer gap
-        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
-        let enemyCount = 0;
-        let userCount = 0;
-        for (const effect of effects) {
-            if (effect.target_player === this.state.user) userCount++;
-            else enemyCount++
-        }
-        if (userTarget)
-            return userCount;
-        else
-            return enemyCount;
-    }
-
     // get property effects to card and show in DOM
     effectsTargetIteration = (battleIterations, userTarget) => {
         const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
@@ -213,56 +294,6 @@ class BattleView extends React.Component {
                 );
             }
         });
-    }
-
-    // init elements animation
-    itemsAnimationInit = () => {
-        // Users containers show first
-        setTimeout(() => {
-            this.setState({
-                enemyStateContainerTranslateX: '8vw',
-                userStateContainerTranslateX: '-8vw'
-            });
-        }, battleInitLoadingDuration);
-
-        // Second step of users containers animation and first of Compact cards
-        setTimeout(() => {
-            this.setState({
-                enemyStateContainerTranslateX: '0',
-                userStateContainerTranslateX: '0',
-                enemyCompactCardTranslateX: '6vw',
-                userCompactCardTranslateX: '-6vw',
-            });
-        }, battleInitLoadingDuration
-            + nextStepAnimationDuration);
-
-        // Second step of Compact cards animation
-        setTimeout(() => {
-            this.setState({
-                enemyCompactCardTranslateX: '0',
-                userCompactCardTranslateX: '0',
-            });
-        }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 2);
-
-        // Mini cards animations in one step, and hp and shield points animation
-        setTimeout(() => {
-            this.setState({
-                enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
-                userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
-                enemyHp: '100',
-                userHp: '100',
-                enemyShield: '20',
-                userShield: '20'
-            });
-        }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 2 + 100);
-
-        // full card action call
-        setTimeout(() => {
-            this.fullCardAction(true);
-        }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 4);
     }
 
     // show USER or ENEMY full card view
