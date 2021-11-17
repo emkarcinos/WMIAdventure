@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, mobile, popUpLoadingMinimalDuration, secondStepAnimationDuration} from '../../../../utils/globals';
+import {desktop, popUpLoadingMinimalDuration, mobile, nextStepAnimationDuration} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -160,7 +160,7 @@ class OpponentSelected extends React.Component {
             this.setState({
                 postBattle: false,
             });
-        }, secondStepAnimationDuration);
+        }, nextStepAnimationDuration);
     }
 
     // method that run dynamic battle view

@@ -9,6 +9,18 @@ import upload_image_dark from "../../../../../assets/icons/upload_image_dark.svg
 
 class FullCardView extends React.Component {
 
+    /*
+    props:
+        common <- signal that card is common (lvl 1)
+        gold <- signal that card is gold (lvl 2)
+        epic <- signal that card is epic (lvl 3)
+        cardName <- card name
+        cardSubject <- card subject
+        cardImage <- card icon
+        cardTooltip <- funny card genesis
+        description <- describe of card effects
+     */
+
     cardNameLengthHandler = (cardNameLength) => {
         try {
             if(cardNameLength.length)
@@ -21,7 +33,8 @@ class FullCardView extends React.Component {
 
     render() {
         return (
-            <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}>
+            <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}
+                     setTranslateY={this.props.setTranslateY}>
                 <H3 common={this.props.common} gold={this.props.gold} epic={this.props.epic}
                     nameLength={this.cardNameLengthHandler(this.props.cardName)}>
                     {this.props.cardName ? this.props.cardName : "null"}

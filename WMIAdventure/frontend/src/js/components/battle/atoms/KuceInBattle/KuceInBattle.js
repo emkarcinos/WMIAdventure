@@ -3,7 +3,7 @@ import kuce from '../../../../../assets/images/kuceBattle.png';
 import Img from "./styled-components/Img";
 import {
     battleInitLoadingDuration,
-    secondStepAnimationDuration,
+    nextStepAnimationDuration,
 } from "../../../../utils/globals";
 
 class KuceInBattle extends React.Component {
@@ -41,7 +41,7 @@ class KuceInBattle extends React.Component {
             this.setState({
                 setScale: '1',
             });
-        }, battleInitLoadingDuration + secondStepAnimationDuration);
+        }, battleInitLoadingDuration + nextStepAnimationDuration);
     }
 
     // hide kuce animation

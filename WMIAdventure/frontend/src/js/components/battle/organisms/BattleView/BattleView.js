@@ -1,5 +1,5 @@
 import React from 'react';
-import {battleInitLoadingDuration, secondStepAnimationDuration, desktop, mobile} from "../../../../utils/globals";
+import {battleInitLoadingDuration, desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from "react-media";
 import PopUp from "../../../global/organisms/PopUp";
 import MainContainer from "./styled-components/MainContainer";
@@ -15,6 +15,14 @@ import icon3 from '../../../../../assets/images/icon3.png';
 import icon4 from '../../../../../assets/images/icon4.png';
 import icon5 from '../../../../../assets/images/icon5.png';
 import EnemyStateContainer from "../../molecules/EnemyStateContainer";
+import FullCardActionBackground from "./styled-components/FullCardActionBackground";
+import FullCardView from "../../../global/atoms/FullCardView";
+import EffectIconsContainer from "./styled-components/EffectIconsContainer";
+import EffectIcon from "../../atoms/EffectIcon";
+import {getCurrentUserId} from "../../../../utils/userData";
+import CenterDiv from "./styled-components/CenterDiv";
+import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
+import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 
 class BattleView extends React.Component {
 
@@ -32,10 +40,15 @@ class BattleView extends React.Component {
         // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
+
         enemyMiniCardsTranslateX: ['-100vw', '-100vw', '-100vw', '-100vw', '-100vw'],
         userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
+
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
+
+        enemyCompactCardTranslateY: '0',
+        userCompactCardTranslateY: '0',
 
         // states for hp and shield points
         enemyHp: '0',
@@ -43,17 +56,50 @@ class BattleView extends React.Component {
         enemyShield: '0',
         userShield: '0',
 
-        // prototype data
-        cardLevels : [3, 3, 2, 1, 1],
-        icons : [icon1, icon2, icon3, icon4, icon5],
         // states to handle cards orders, pass to CompactCardView and MiniCardView as props
-        cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
-        cardsEnemyOrder : [1, 2, 3, 4, 5],
+        cardsEnemyOrder: [1, 2, 3, 4, 5],
+        cardsUserOrder: [1, 2, 3, 4, 5], // this means: first card on first place and so on
+
+        // full card action
+        fullCardAction: {
+            visible: false,
+            opacity: '0',
+            translateY: '100vh',
+        },
+
+        // define where effects icons container should move
+        effectsTarget: {
+            user: {
+                opacity: '0',
+                scale: '0',
+                translateY: '0',
+            },
+            enemy: {
+                opacity: '0',
+                scale: '0',
+                translateY: '0',
+            }
+        },
+
+        // effect icons action animation with scale
+        effectsActionScale: ['1', '1', '1', '1', '1'],
+
+        // other prototype data, will be remove when true data comes perhaps
+        cards: [
+            {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
+            {level: 1, icon: icon4}, {level: 1, icon: icon5}
+        ],
+        prototypeIterationsCount: 0,
+    }
+
+    componentDidMount() {
+        getCurrentUserId()
+            .then(id => this.setState({user: id}))
     }
 
     componentDidUpdate(prevProps) {
         // to init animations when BattleView component will mount
-        if((prevProps.battleView !== this.props.battleView)
+        if ((prevProps.battleView !== this.props.battleView)
             && this.props.battleView === true) {
             this.setState({
                 kuceInBattleVisible: true,
@@ -62,48 +108,113 @@ class BattleView extends React.Component {
         }
     }
 
-    itemsAnimationInit = () => {
-        // Users containers show first
+    stateContainersShotAnimation() {
         setTimeout(() => {
             this.setState({
                 enemyStateContainerTranslateX: '8vw',
                 userStateContainerTranslateX: '-8vw'
             });
         }, battleInitLoadingDuration);
+    }
 
-        // Second step of users containers animation and first of Compact cards
+    compactCardsShotAnimation() {
         setTimeout(() => {
             this.setState({
-                enemyStateContainerTranslateX: '0',
-                userStateContainerTranslateX: '0',
                 enemyCompactCardTranslateX: '6vw',
                 userCompactCardTranslateX: '-6vw',
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration);
+            + nextStepAnimationDuration);
+    }
 
-        // Second step of Compact cards animation
+    stateContainersRetractionAnimation() {
+        setTimeout(() => {
+            this.setState({
+                enemyStateContainerTranslateX: '0',
+                userStateContainerTranslateX: '0',
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration);
+    }
+
+    compactCardsRetractionAnimation() {
         setTimeout(() => {
             this.setState({
                 enemyCompactCardTranslateX: '0',
                 userCompactCardTranslateX: '0',
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration * 2);
+            + nextStepAnimationDuration * 2);
+    }
 
-        /* Mini cards animations in one step,
-        and hp and shield points animation */
+    miniCardsInitAnimation() {
         setTimeout(() => {
             this.setState({
                 enemyMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
                 userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 2 + 100);
+    }
+
+    userStatsInitAnimation() {
+        setTimeout(() => {
+            this.setState({
                 enemyHp: '100',
                 userHp: '100',
                 enemyShield: '20',
                 userShield: '20'
             });
         }, battleInitLoadingDuration
-            + secondStepAnimationDuration * 2 + 100);
+            + nextStepAnimationDuration * 2 + 100);
+    }
+
+    firstFullCardActionCall() {
+        setTimeout(() => {
+            this.fullCardAction(true);
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 4);
+    }
+
+    // init elements animation and call full card action
+    itemsAnimationInit = () => {
+        this.stateContainersShotAnimation();
+        this.compactCardsShotAnimation();
+        this.compactCardsRetractionAnimation();
+        this.stateContainersRetractionAnimation();
+        this.miniCardsInitAnimation();
+        this.userStatsInitAnimation();
+        this.firstFullCardActionCall();
+    }
+
+    // helper function to set property states
+    setNewStateAttributes(state, property, attributes) {
+        if ((state.visible !== undefined) && (attributes.visible !== undefined))
+            state.visible = attributes.visible;
+        if ((state.opacity !== undefined) && (attributes.opacity !== undefined))
+            state.opacity = attributes.opacity;
+        if ((state.scale !== undefined) && (attributes.scale !== undefined))
+            state.scale = attributes.scale;
+        if ((state.translateY !== undefined) && (attributes.translateY !== undefined))
+            state.translateY = attributes.translateY;
+        this.setState({
+            [property]: state
+        });
+    }
+
+    // to set correct EffectsIconsContainer gap
+    countTargetEffects(battleIterations, userTarget) {
+        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
+        let enemyCount = 0;
+        let userCount = 0;
+        for (const effect of effects) {
+            if (effect.target_player === this.state.user) userCount++;
+            else enemyCount++
+        }
+        if (userTarget)
+            return userCount;
+        else
+            return enemyCount;
     }
 
     // prototype function, runs if we click on mini enemy cards
@@ -122,35 +233,234 @@ class BattleView extends React.Component {
         });
     }
 
-    getMiniCards = (enemy, i) => {
+    // get proper mini cards to DOM
+    getMiniCards = (enemy) => {
         return (
-            <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                          changeCardsOrder={
-                              enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
-                          }
-                          cardIndexInDeck={
-                              enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
-                          }
-                          setTranslateX={
-                              enemy ? this.state.enemyMiniCardsTranslateX[i] : this.state.userMiniCardsTranslateX[i]
-                          }
-                          enemy={enemy} user={!enemy}
-                          cardLevel={this.state.cardLevels[i]}
-                          animationDuration={`0.${9 - i}`}
-                          cardImage={this.state.icons[i]}/>
+            [...Array(5)].map(
+                (e, i) => {
+                    return (
+                        <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
+                                      changeCardsOrder={
+                                          enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
+                                      }
+                                      cardIndexInDeck={
+                                          enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
+                                      }
+                                      setTranslateX={
+                                          enemy ? this.state.enemyMiniCardsTranslateX[i]
+                                              : this.state.userMiniCardsTranslateX[i]
+                                      }
+                                      enemy={enemy} user={!enemy}
+                                      cardLevel={this.state.cards[i].level}
+                                      animationDuration={`0.${9 - i}`}
+                                      cardImage={this.state.cards[i].icon}/>
+                    );
+                })
         );
     }
 
-    getCompactCards = (enemy, i) => {
+    // get proper compact cards to DOM
+    getCompactCards = (enemy) => {
         return (
-            <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
-                             cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]}
-                             cardImage={this.state.icons[i]} cardName={`Karta ${i+1}`}
-                             setWidth={'124px'} cardLevel={3} setHeight={'200px'}
-                             setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
-                                 : this.state.userCompactCardTranslateX}
-                             setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+            [...Array(5)].map(
+                (e, i) => {
+                    return (
+                        <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                                         cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
+                                             : this.state.cardsUserOrder[i]}
+                                         cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
+                                         setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                                         setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
+                                             : this.state.userCompactCardTranslateX}
+                                         setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
+                                             : this.state.userCompactCardTranslateY}
+                                         setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'}/>
+                    );
+                })
         );
+    }
+
+    // get property effects to card and show in DOM
+    effectsTargetIteration = (battleIterations, userTarget) => {
+        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
+        // console.log(`User: ${this.state.user}`); TODO: some browsers see user as null
+        return effects.map((effect, index) => {
+            if (userTarget === (effect.target_player === this.state.user)) {
+                return (
+                    <EffectIcon key={`effectIcon-${effect.id}`}
+                                value={effect.power}
+                                setScale={this.state.effectsActionScale[index]}
+                    />
+                );
+            }
+        });
+    }
+
+    showFullCardProcess(userTurn) {
+        this.setNewStateAttributes(
+            this.state.fullCardAction, 'fullCardAction',
+            userTurn ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
+
+        setTimeout(() => {
+            this.setNewStateAttributes(
+                this.state.fullCardAction, 'fullCardAction', {opacity: '1', translateY: '0'});
+        }, 100);
+    }
+
+    slideBackFullCardCallingCompactCardAction(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.compactCardAction(true) : this.compactCardAction(false);
+            this.setNewStateAttributes(
+                this.state.fullCardAction, 'fullCardAction',
+                userTurn ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
+        }, battleInitLoadingDuration +
+            nextStepAnimationDuration * 3);
+    }
+
+    hideFullCardBackground() {
+        setTimeout(() => {
+            this.setNewStateAttributes(
+                this.state.fullCardAction, 'fullCardAction', {visible: false});
+        }, battleInitLoadingDuration +
+            nextStepAnimationDuration * 4);
+    }
+
+    // show USER or ENEMY full card view
+    fullCardAction = (userTurn) => {
+        this.showFullCardProcess(userTurn);
+        this.slideBackFullCardCallingCompactCardAction(userTurn);
+        this.hideFullCardBackground();
+    }
+
+    effectsMountCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.effectsMount(true) : this.effectsMount(false);
+        }, nextStepAnimationDuration * 2);
+    }
+
+    // push forward USER or ENEMY compact card
+    compactCardAction = (userTurn) => {
+        this.setState({
+            kuceInBattleVisible: false,
+        });
+        if (userTurn) {
+            this.setState({
+                userCompactCardTranslateX: 'calc(100% - 5px)',
+                userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
+            });
+        } else {
+            this.setState({
+                enemyCompactCardTranslateX: 'calc(-100% + 5px)',
+                enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
+            });
+        }
+        this.effectsMountCall(userTurn);
+    }
+
+    effectsActionCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.effectsActions(true) : this.effectsActions(false);
+        }, nextStepAnimationDuration * 3);
+    }
+
+    // shows USER or ENEMY effect icons
+    effectsMount = (userTurn) => {
+        this.setNewStateAttributes(
+            this.state.effectsTarget.user, 'effectsTarget.user',
+            {opacity: '1', scale: '1', translateY: '128px'});
+        this.setNewStateAttributes(
+            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
+            {opacity: '1', scale: '1', translateY: '-128px'});
+        this.effectsActionCall(userTurn);
+    }
+
+    effectIconCastEffect(newEffectsActionScale, index) {
+        setTimeout(() => {
+            newEffectsActionScale[index] = '1';
+            this.setState({
+                effectsActionScale: newEffectsActionScale
+            });
+            // TODO: here call function doing particular effect for example damage, change card-order etc.
+        }, nextStepAnimationDuration);
+    }
+
+    callNextEffectIconAction(userTurn, index) {
+        setTimeout(() => {
+            this.effectsActions(userTurn, index + 1);
+        }, nextStepAnimationDuration * 2);
+    }
+
+    effectsHideCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.effectsHide(true) : this.effectsHide(false);
+        }, nextStepAnimationDuration);
+    }
+
+    // scale USER or ENEMY effect icons to signal effect action
+    effectsActions = (userTurn, index = 0) => {
+        const effects = userTurn ? userUsedEffects : enemyUsedEffects;
+        if (index < effects.length) {
+            let newEffectsActionScale = this.state.effectsActionScale.slice();
+            newEffectsActionScale[index] = '1.25';
+            this.setState({
+                effectsActionScale: newEffectsActionScale
+            });
+            this.effectIconCastEffect(newEffectsActionScale, index);
+            this.callNextEffectIconAction(userTurn, index);
+        } else {
+            this.effectsHideCall(userTurn);
+        }
+    }
+
+    compactCardBackCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.compactCardBack(true) : this.compactCardBack(false);
+        }, nextStepAnimationDuration);
+    }
+
+    // hide USER or ENEMY effect icons
+    effectsHide = (userTurn) => {
+        this.setNewStateAttributes(
+            this.state.effectsTarget.user, 'effectsTarget.user',
+            {opacity: '0', scale: '0', translateY: '0'});
+        this.setNewStateAttributes(
+            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
+            {opacity: '0', scale: '0', translateY: '0'});
+        this.compactCardBackCall(userTurn);
+    }
+
+    callNextCardSequence() {
+        setTimeout(() => {
+            let newIterationsCount = this.state.prototypeIterationsCount;
+            newIterationsCount = newIterationsCount + 1;
+            this.setState({
+                prototypeIterationsCount: newIterationsCount
+            });
+            // to prevent from infinitive loop
+            if (newIterationsCount < 2) {
+                const userTurn = newIterationsCount % 2 === 0;
+                this.fullCardAction(userTurn);
+            }
+        }, nextStepAnimationDuration * 3);
+    }
+
+    // back USER or ENEMY compact card to init position
+    compactCardBack = (userTurn) => {
+        this.setState({
+            kuceInBattleVisible: true,
+        });
+        if (userTurn) {
+            this.setState({
+                userCompactCardTranslateX: '0',
+                userCompactCardTranslateY: '0'
+            });
+        } else {
+            this.setState({
+                enemyCompactCardTranslateX: '0',
+                enemyCompactCardTranslateY: '0'
+            });
+        }
+        this.callNextCardSequence();
     }
 
     render() {
@@ -164,55 +474,56 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
-                                                         hp={this.state.enemyHp} shield={this.state.enemyShield} />
+                                                         hp={this.state.enemyHp} shield={this.state.enemyShield}/>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
                                         First card is not visible because is the same as Compact card */}
-                                        {[...Array(5)].map(
-                                            (e,i) => {
-                                                return (
-                                                    this.getMiniCards(true, i)
-                                                );
-                                            }
-                                        )}
+                                        {this.getMiniCards(true)}
                                     </FlexGapContainer>
                                 </ColumnGapContainer>
                                 {/* Enemy Compact Card! Particular Compact Card is visible if order === 1 */}
-                                {[...Array(5)].map(
-                                    (e,i) => {
-                                        return (
-                                            this.getCompactCards(true, i)
-                                        );
-                                    }
-                                )}
+                                {this.getCompactCards(true)}
                             </FlexGapContainer>
-                            <KuceInBattle visible={this.state.kuceInBattleVisible} />
+                            <KuceInBattle visible={this.state.kuceInBattleVisible}/>
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
-                                {[...Array(5)].map(
-                                    (e,i) => {
-                                        return (
-                                            this.getCompactCards(false, i)
-                                        );
-                                    }
-                                )}
+                                {this.getCompactCards(false)}
                                 <ColumnGapContainer gap={'0'}>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* User MiniCards!
                                         First card is not visible because is the same as Compact card */}
-                                        {[...Array(5)].map(
-                                            (e,i) => {
-                                                return (
-                                                    this.getMiniCards(false, i)
-                                                );
-                                            }
-                                        )}
+                                        {this.getMiniCards(false)}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
-                                                        hp={this.state.userHp} shield={this.state.userShield} />
+                                                        hp={this.state.userHp} shield={this.state.userShield}/>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
+                        <FullCardActionBackground visible={this.state.fullCardAction.visible}
+                                                  setOpacity={this.state.fullCardAction.opacity}>
+                            <FullCardView cardName={'Pełny Opis Test'} cardSubject={'przykładzik'}
+                                          cardImage={icon1} cardTooltip={'niech wszystko działa'}
+                                          description={'ta karta póki co nic nie robi'} common
+                                          setTranslateY={this.state.fullCardAction.translateY}/>
+                        </FullCardActionBackground>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(this.state.prototypeIterationsCount, true)}
+                                setOpacity={this.state.effectsTarget.user.opacity}
+                                setScale={this.state.effectsTarget.user.scale}
+                                setTranslateY={this.state.effectsTarget.user.translateY}>
+                                {this.effectsTargetIteration(this.state.prototypeIterationsCount, true)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(this.state.prototypeIterationsCount, false)}
+                                setOpacity={this.state.effectsTarget.enemy.opacity}
+                                setScale={this.state.effectsTarget.enemy.scale}
+                                setTranslateY={this.state.effectsTarget.enemy.translateY}>
+                                {this.effectsTargetIteration(this.state.prototypeIterationsCount, false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
                     </PopUp>
                 </Media>
 
