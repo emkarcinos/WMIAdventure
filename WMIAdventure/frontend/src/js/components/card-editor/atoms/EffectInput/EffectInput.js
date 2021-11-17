@@ -16,8 +16,8 @@ class EffectInput extends React.Component {
 
         card_effect: undefined,
         target: undefined,
-        power: null,
-        range: null,
+        power: 0,
+        range: 0,
     }
 
     componentDidMount() {
@@ -30,11 +30,10 @@ class EffectInput extends React.Component {
 
         if (effectAttributes.length > 0) {
             try {
-                if(effectAttributes[0].target === 1) {
+                if (effectAttributes[0].target === 1) {
                     this.setState({checkedPlayer: true, checkedEnemy: false});
                     this.setState({target: 1});
-                }
-                else if(effectAttributes[0].target === 2) {
+                } else if (effectAttributes[0].target === 2) {
                     this.setState({checkedPlayer: false, checkedEnemy: true});
                     this.setState({target: 2});
                 }
@@ -55,9 +54,9 @@ class EffectInput extends React.Component {
     }
 
     checkedTargetHandler = (event) => {
-        if(event.target.checked && event.target.value === '1') {
-           this.setState({checkedPlayer: true, checkedEnemy: false});
-        } else if(event.target.checked && event.target.value === '2') {
+        if (event.target.checked && event.target.value === '1') {
+            this.setState({checkedPlayer: true, checkedEnemy: false});
+        } else if (event.target.checked && event.target.value === '2') {
             this.setState({checkedPlayer: false, checkedEnemy: true});
         }
 

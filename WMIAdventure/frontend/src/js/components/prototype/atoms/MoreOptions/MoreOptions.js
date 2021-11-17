@@ -19,7 +19,7 @@ class MoreOptions extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.listHover)
+        if (!this.state.listHover)
             this.props.hideMoreOptionsHandler(event);
     }
 
@@ -30,7 +30,8 @@ class MoreOptions extends React.Component {
                     <Paragraph border>
                         Dźwięki&nbsp;&nbsp;&nbsp;&nbsp;Wł.
                     </Paragraph>
-                    <Paragraph href='https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=&template=bug_report.md&title='>
+                    <Paragraph
+                        href='https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=&template=bug_report.md&title='>
                         Zgłoś błąd
                     </Paragraph>
                     <Paragraph border>
@@ -42,7 +43,7 @@ class MoreOptions extends React.Component {
                     <Paragraph as={Link} to={'/cards-creator-start'}>
                         Edytor Kart
                     </Paragraph>
-                    <Paragraph as={Link} border to={'/answer-creator'}>
+                    <Paragraph as={Link} border={1} to={'/answer-creator'}>
                         Edytor Quizu
                     </Paragraph>
                     <Paragraph last>
