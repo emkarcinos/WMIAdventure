@@ -102,8 +102,10 @@ class BattleView extends React.Component {
         effectsActionScale: ['1', '1', '1', '1', '1'],
 
         // other prototype data, will be remove when true data comes perhaps
-        cardLevels: [3, 3, 2, 1, 1],
-        cardIcons: [icon1, icon2, icon3, icon4, icon5],
+        cards: [
+            {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
+            {level: 1, icon: icon4}, {level: 1, icon: icon5}
+        ],
         prototypeIterationsCount: 0,
     }
 
@@ -172,9 +174,9 @@ class BattleView extends React.Component {
                                               : this.state.userMiniCardsTranslateX[i]
                                       }
                                       enemy={enemy} user={!enemy}
-                                      cardLevel={this.state.cardLevels[i]}
+                                      cardLevel={this.state.cards[i].level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={this.state.cardIcons[i]}/>
+                                      cardImage={this.state.cards[i].icon}/>
                     );
                 })
         );
@@ -189,7 +191,7 @@ class BattleView extends React.Component {
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                              : this.state.cardsUserOrder[i]}
-                                         cardImage={this.state.cardIcons[i]} cardName={`Karta ${i + 1}`}
+                                         cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
                                          setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
