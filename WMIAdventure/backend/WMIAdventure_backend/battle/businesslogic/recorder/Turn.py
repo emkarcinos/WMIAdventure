@@ -1,8 +1,8 @@
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Player import Player
-from battle.businesslogic.recorder.SimplifiedPlayer import SimplifiedPlayer
+from battle.businesslogic.recorder.SimplifiedCard import SimplifiedCard
 from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
-from battle.businesslogic.recorder.simplified_cards.SimplifiedCard import SimplifiedCard
+from battle.businesslogic.recorder.simplified_players.TurnPlayer import TurnPlayer
 
 
 class Turn:
@@ -17,8 +17,8 @@ class Turn:
     """
 
     def __init__(self, attacker: Player, defender: Player, card_executor: Player):
-        self.attacker = SimplifiedPlayer(attacker)
-        self.defender = SimplifiedPlayer(defender)
+        self.attacker = TurnPlayer(attacker)
+        self.defender = TurnPlayer(defender)
         self.card_executor_id = card_executor.id
         self.used_card = None
         self.used_effects = []
@@ -42,13 +42,13 @@ class Turn:
 
         self.used_effects.append(used_effect)
 
-    def get_attacker(self) -> SimplifiedPlayer:
+    def get_attacker(self) -> TurnPlayer:
         """
         Returns attacker Player object.
         """
         return self.attacker
 
-    def get_defender(self) -> SimplifiedPlayer:
+    def get_defender(self) -> TurnPlayer:
         """
         Returns defender Player object.
         """

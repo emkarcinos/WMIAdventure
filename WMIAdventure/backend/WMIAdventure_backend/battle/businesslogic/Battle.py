@@ -22,7 +22,7 @@ class Battle:
         self.outcome = Outcome(attacker=self.attacker,
                                defender=self.defender)
 
-        self.recorder = ProcessRecorder()
+        self.recorder = ProcessRecorder(self.attacker, self.defender)
         self.turns_count = 0
 
     def start(self):

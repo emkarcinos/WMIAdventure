@@ -4,16 +4,16 @@ import factory
 
 from IngameUsers.factories import create_user_profile_with_deck
 from battle.businesslogic.BattleCard import BattleCard
-from battle.businesslogic.Buff import Buff
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardEffect, CardLevelEffects, CardLevel
 
 
 class BuffFactory(factory.Factory):
     class Meta:
-        model = Buff
+        model = ModifierBuff
 
     multiplier = 1
     modifier = factory.Faker('random_int', min=1, max=20)
@@ -52,6 +52,16 @@ def create_player_with_deck(
     return Player(user_p.user.id, deck), deck
 
 
+def create_player() -> Player:
+    """
+    Creates player, his deck will consist of default dmg dealing cards.
+    :return: Created player.
+    """
+
+    player, _ = create_player_with_deck()
+    return player
+
+
 def create_battle_card_with_effect(
         effect_id: CardEffect.EffectId,
         target: CardLevelEffects.Target = CardLevelEffects.Target.PLAYER,
@@ -79,3 +89,13 @@ def create_battle_card_with_effect(
     )
 
     return BattleCard(card_model)
+
+
+def create_battle_card():
+    """
+    Creates basic battle card which deals dmg to opponent.
+
+    :return: Created BattleCard.
+    """
+
+    return create_battle_card_with_effect(CardEffect.EffectId.DMG)

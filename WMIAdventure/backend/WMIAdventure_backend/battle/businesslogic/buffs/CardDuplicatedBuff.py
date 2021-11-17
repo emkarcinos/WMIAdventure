@@ -1,9 +1,11 @@
 from copy import copy
 
+from battle.businesslogic.buffs.BaseBuff import BaseBuff
 from battle.businesslogic.effects.Effect import Effect
+from cards.models import CardEffect
 
 
-class CardDuplicatedBuff:
+class CardDuplicatedBuff(BaseBuff):
     """
     Purpose of this class is being attached to card, when duplicating it.
 
@@ -16,6 +18,7 @@ class CardDuplicatedBuff:
     card_effects: list[Effect]
 
     def __init__(self, card_effects):
+        super().__init__(buff_type=CardEffect.EffectId.DOUBLEACTION)
         self.card_effects = card_effects
 
     def activate(self):

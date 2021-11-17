@@ -1,7 +1,7 @@
 from unittest import TestCase
 
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 from .Creator import Creator
-from ..Buff import Buff
 from ..Calculator import Calculator
 from ..Deck import Deck
 from ..Player import Player
@@ -112,7 +112,7 @@ class CalculatorTestCase(TestCase):
 
         for multiplier in self.positive_multipliers + self.negative_multipliers:
             buffs.append(
-                Buff(multiplier=multiplier, modifier=self.modifier)
+                ModifierBuff(multiplier=multiplier, modifier=self.modifier)
             )
 
         return buffs

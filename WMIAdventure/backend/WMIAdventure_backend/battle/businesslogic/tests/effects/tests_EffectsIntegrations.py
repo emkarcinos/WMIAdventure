@@ -53,7 +53,7 @@ class EffectsIntegrationsTestCase(TestCase):
 
         **Expected result:**
 
-        - Buff should be assigned and should affect dealt damage.
+        - ModifierBuff should be assigned and should affect dealt damage.
         """
 
         dmg_pow = 10

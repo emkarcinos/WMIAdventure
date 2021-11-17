@@ -68,37 +68,46 @@ class BuffSerializer(serializers.Serializer):
     # multiplier = serializers.FloatField(required=False)
 
 
-class BaseSimplifiedCardSerializer(serializers.Serializer):
+# Card Serializers
+
+
+class BattleStartCardSerializer(serializers.Serializer):
+    """
+    Used when serializing full info about player's deck. (card's id and level)
+    """
+
     id = serializers.IntegerField(source="card_info_id")
     level = serializers.IntegerField()
 
 
-class SimplifiedCardSerializer(BaseSimplifiedCardSerializer):
-    # Card do not always has buffs
-    buffs = BuffSerializer(many=True, required=False)
+# Player Serializers
 
-    # Card can sometimes be blocked
-    turns_blocked = serializers.IntegerField(required=False)
+class BaseSimplifiedPlayerSerializer(serializers.Serializer):
+    """
+    Base for all SimplifiedPlayer serializers.
+    """
 
-    # Card can sometimes be doubled
-    doubled = serializers.BooleanField(required=False)
-    duplicate = BaseSimplifiedCardSerializer(required=False)
-
-
-class SimplifiedPlayerSerializer(serializers.Serializer):
-    id = serializers.IntegerField(source="player_id")
     stats = StatisticsSerializer()
-    deck = SimplifiedCardSerializer(source="deck.cards", many=True)
+
+
+class BattleStartPlayerSerializer(BaseSimplifiedPlayerSerializer):
+    """
+    Used when serializing full info about player before battle start. (details like player's id and full info about deck)
+    """
+
+    id = serializers.IntegerField()
+    deck = BattleStartCardSerializer(source="deck.cards", many=True)
+
+
+class TurnPlayerSerializer(BaseSimplifiedPlayerSerializer):
+    """
+    Used when serializing only part of player's data and also some of his state during concrete turn.
+    """
+
+    deck = serializers.ListField(serializers.IntegerField())
+    """Deck of only cards ids"""
+
     turns_stopped = serializers.IntegerField(required=False)
-
-
-class BasicCardSerializer(serializers.Serializer):
-    """
-    Serializes information which identifies card.
-    """
-
-    id = serializers.IntegerField(source="card_model.info.id", help_text="Buffed card's id.")
-    level = serializers.IntegerField(source="card_model.level.level", help_text="Buffed card's level.")
 
 
 class UsedEffectSerializer(serializers.Serializer):
@@ -117,27 +126,25 @@ class UsedEffectSerializer(serializers.Serializer):
 
     # Not all effects are buffing other cards
     buff = BuffSerializer(required=False)
-    buffed_card = BasicCardSerializer(required=False)
+    buffed_card = serializers.IntegerField(source="buffed_card.card_model.info.id", required=False)
 
     # Not all effects are changing order of deck
-    new_deck_order = SimplifiedCardSerializer(many=True, required=False, source="reordered_deck.cards")
+    new_deck_order = serializers.ListField(serializers.IntegerField(), required=False, source="reordered_deck")
+    """List of cards ids"""
 
     # Not all effects stop player
     turns_stopped = serializers.IntegerField(required=False)
 
     # Not all effects block other cards
     turns_blocked = serializers.IntegerField(required=False)
-    blocked_card = BasicCardSerializer(required=False)
-
-    # Some effects cause cards to be doubled
-    doubled_card = BasicCardSerializer(required=False)
+    blocked_card = serializers.IntegerField(source="blocked_card.card_model.info.id", required=False)
 
 
 class TurnSerializer(serializers.Serializer):
-    attacker = SimplifiedPlayerSerializer()
-    defender = SimplifiedPlayerSerializer()
+    attacker = TurnPlayerSerializer()
+    defender = TurnPlayerSerializer()
     card_executor = serializers.IntegerField(source="card_executor_id")
-    used_card = BaseSimplifiedCardSerializer()
+    used_card = serializers.IntegerField(source="used_card.card_info_id", allow_null=True)
     used_effects = UsedEffectSerializer(many=True)
 
 
@@ -145,6 +152,9 @@ class BattleSerializer(serializers.Serializer):
     """
     Serializes Battle.
     """
+
+    attacker = BattleStartPlayerSerializer(source="recorder.attacker")
+    defender = BattleStartPlayerSerializer(source="recorder.defender")
 
     turns = TurnSerializer(source="recorder.turns", many=True)
 
