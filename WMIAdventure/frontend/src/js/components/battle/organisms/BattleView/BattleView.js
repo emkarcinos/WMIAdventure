@@ -60,13 +60,8 @@ class BattleView extends React.Component {
         cardsEnemyOrder: [1, 2, 3, 4, 5],
         cardsUserOrder: [1, 2, 3, 4, 5], // this means: first card on first place and so on
 
-        // full cards action
-        enemyFullCardAction: {
-            visible: false,
-            opacity: '0',
-            translateY: '-100vh',
-        },
-        userFullCardAction: {
+        // full card action
+        fullCardAction: {
             visible: false,
             opacity: '0',
             translateY: '100vh',
@@ -287,25 +282,21 @@ class BattleView extends React.Component {
     fullCardAction = (user) => {
         // show full card process
         this.setNewStateAttributes(
-            user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
-            user ? 'userFullCardAction' : 'enemyFullCardAction', {visible: true});
+            this.state.fullCardAction, 'fullCardAction',
+            user ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
         setTimeout(() => {
             this.setNewStateAttributes(
-                user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
-                user ? 'userFullCardAction' : 'enemyFullCardAction',
-                {opacity: '1', translateY: '0'});
+                this.state.fullCardAction, 'fullCardAction', {opacity: '1', translateY: '0'});
         }, 100);
         // hide full card process
         setTimeout(() => {
             user ? this.compactCardAction(true) : this.compactCardAction(false);
             this.setNewStateAttributes(
-                user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
-                user ? 'userFullCardAction' : 'enemyFullCardAction',
+                this.state.fullCardAction, 'fullCardAction',
                 user ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
             setTimeout(() => {
                 this.setNewStateAttributes(
-                    user ? this.state.userFullCardAction : this.state.enemyFullCardAction,
-                    user ? 'userFullCardAction' : 'enemyFullCardAction', {visible: false});
+                    this.state.fullCardAction, 'fullCardAction', {visible: false});
             }, nextStepAnimationDuration);
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
@@ -451,19 +442,12 @@ class BattleView extends React.Component {
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
-                        <FullCardActionBackground visible={this.state.userFullCardAction.visible}
-                                                  setOpacity={this.state.userFullCardAction.opacity}>
-                            <FullCardView cardName={'Test User'} cardSubject={'przykładzik'}
+                        <FullCardActionBackground visible={this.state.fullCardAction.visible}
+                                                  setOpacity={this.state.fullCardAction.opacity}>
+                            <FullCardView cardName={'Pełny Opis Test'} cardSubject={'przykładzik'}
                                           cardImage={icon1} cardTooltip={'niech wszystko działa'}
                                           description={'ta karta póki co nic nie robi'} common
-                                          setTranslateY={this.state.userFullCardAction.translateY}/>
-                        </FullCardActionBackground>
-                        <FullCardActionBackground visible={this.state.enemyFullCardAction.visible}
-                                                  setOpacity={this.state.enemyFullCardAction.opacity}>
-                            <FullCardView cardName={'Test Enemy'} cardSubject={'przykładzik2'}
-                                          cardImage={icon1} cardTooltip={'wszystko działa'}
-                                          description={'ta karta na razie nic nie robi'} common
-                                          setTranslateY={this.state.enemyFullCardAction.translateY}/>
+                                          setTranslateY={this.state.fullCardAction.translateY}/>
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
