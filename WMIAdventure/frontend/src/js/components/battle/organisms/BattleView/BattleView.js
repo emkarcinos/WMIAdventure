@@ -1,5 +1,5 @@
 import React from 'react';
-import {battleInitLoadingDuration, nextStepAnimationDuration, desktop, mobile} from "../../../../utils/globals";
+import {battleInitLoadingDuration, desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from "react-media";
 import PopUp from "../../../global/organisms/PopUp";
 import MainContainer from "./styled-components/MainContainer";
@@ -57,8 +57,8 @@ class BattleView extends React.Component {
         userShield: '0',
 
         // states to handle cards orders, pass to CompactCardView and MiniCardView as props
-        cardsEnemyOrder : [1, 2, 3, 4, 5],
-        cardsUserOrder : [1, 2, 3, 4, 5], // this means: first card on first place and so on
+        cardsEnemyOrder: [1, 2, 3, 4, 5],
+        cardsUserOrder: [1, 2, 3, 4, 5], // this means: first card on first place and so on
 
         // full cards action
         enemyFullCardAction: {
@@ -102,8 +102,8 @@ class BattleView extends React.Component {
         effectsActionScale: ['1', '1', '1', '1', '1'],
 
         // other prototype data, will be remove when true data comes perhaps
-        cardLevels : [3, 3, 2, 1, 1],
-        cardIcons : [icon1, icon2, icon3, icon4, icon5],
+        cardLevels: [3, 3, 2, 1, 1],
+        cardIcons: [icon1, icon2, icon3, icon4, icon5],
         prototypeIterationsCount: 0,
     }
 
@@ -114,7 +114,7 @@ class BattleView extends React.Component {
 
     componentDidUpdate(prevProps) {
         // to init animations when BattleView component will mount
-        if((prevProps.battleView !== this.props.battleView)
+        if ((prevProps.battleView !== this.props.battleView)
             && this.props.battleView === true) {
             this.setState({
                 kuceInBattleVisible: true,
@@ -125,16 +125,16 @@ class BattleView extends React.Component {
 
     // helper function to set property states
     setNewStateAttributes(state, property, attributes) {
-        if((state.visible !== undefined) && (attributes.visible !== undefined))
+        if ((state.visible !== undefined) && (attributes.visible !== undefined))
             state.visible = attributes.visible;
-        if((state.opacity !== undefined) && (attributes.opacity !== undefined))
+        if ((state.opacity !== undefined) && (attributes.opacity !== undefined))
             state.opacity = attributes.opacity;
-        if((state.scale !== undefined) && (attributes.scale !== undefined))
+        if ((state.scale !== undefined) && (attributes.scale !== undefined))
             state.scale = attributes.scale;
-        if((state.translateY !== undefined) && (attributes.translateY !== undefined))
+        if ((state.translateY !== undefined) && (attributes.translateY !== undefined))
             state.translateY = attributes.translateY;
         this.setState({
-           [property]: state
+            [property]: state
         });
     }
 
@@ -158,7 +158,7 @@ class BattleView extends React.Component {
     getMiniCards = (enemy) => {
         return (
             [...Array(5)].map(
-                (e,i) => {
+                (e, i) => {
                     return (
                         <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
                                       changeCardsOrder={
@@ -184,54 +184,51 @@ class BattleView extends React.Component {
     getCompactCards = (enemy) => {
         return (
             [...Array(5)].map(
-                (e,i) => {
+                (e, i) => {
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                              : this.state.cardsUserOrder[i]}
-                                         cardImage={this.state.cardIcons[i]} cardName={`Karta ${i+1}`}
+                                         cardImage={this.state.cardIcons[i]} cardName={`Karta ${i + 1}`}
                                          setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
-                                         setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'} />
+                                         setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'}/>
                     );
                 })
         );
     }
 
     countTargetEffects(userEffects, userTarget) { // to set correct EffectsIconsContainer gap
-        let effects;
-        if(userEffects) effects = userUsedEffects;
-        else effects = enemyUsedEffects;
+        const effects = userEffects ? userUsedEffects : enemyUsedEffects;
         let enemyCount = 0;
         let userCount = 0;
-        for(let i=0; i<effects.length; i++) {
-            if(effects[i].target_player === this.state.user) userCount++;
+        for (const effect of effects) {
+            if (effect.target_player === this.state.user) userCount++;
             else enemyCount++
         }
-        if(userTarget) return userCount;
-        else return enemyCount;
+        if (userTarget)
+            return userCount;
+        else
+            return enemyCount;
     }
 
     // get property effects to card and show in DOM
     effectsTargetIteration = (userEffects, userTarget) => {
-        let effects;
-        if(userEffects) effects = userUsedEffects;
-        else effects = enemyUsedEffects;
-        return (
-            effects.map((effect, index) => {
-                if(userTarget === (effect.target_player === this.state.user)) {
-                    return (
-                        <EffectIcon key={`effectIcon-${effect.id}`}
-                                    value={effect.power}
-                                    setScale={this.state.effectsActionScale[index]}
-                        />
-                    );
-                }
-            })
-        );
+        const effects = userEffects ? userUsedEffects : enemyUsedEffects;
+        // console.log(`User: ${this.state.user}`); TODO: some browsers see user as null
+        return effects.map((effect, index) => {
+            if (userTarget === (effect.target_player === this.state.user)) {
+                return (
+                    <EffectIcon key={`effectIcon-${effect.id}`}
+                                value={effect.power}
+                                setScale={this.state.effectsActionScale[index]}
+                    />
+                );
+            }
+        });
     }
 
     // init elements animation
@@ -314,15 +311,16 @@ class BattleView extends React.Component {
 
     // push forward USER or ENEMY compact card
     compactCardAction = (user) => {
-        if(user) {
+        this.setState({
+            kuceInBattleVisible: false,
+        });
+        if (user) {
             this.setState({
-                kuceInBattleVisible: false,
                 userCompactCardTranslateX: 'calc(100% - 5px)',
                 userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
             });
         } else {
             this.setState({
-                kuceInBattleVisible: false,
                 enemyCompactCardTranslateX: 'calc(-100% + 5px)',
                 enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
             });
@@ -343,16 +341,14 @@ class BattleView extends React.Component {
             user ? 'userTargetEnemyEffects' : 'enemyTargetSelfEffects',
             {opacity: '1', scale: '1', translateY: '-128px'});
         setTimeout(() => {
-            user ? this.effectsActions(true) :  this.effectsActions(false);
+            user ? this.effectsActions(true) : this.effectsActions(false);
         }, nextStepAnimationDuration * 3);
     }
 
     // scale USER or ENEMY effect icons to signal effect action
-    effectsActions = (user, index= 0) => {
-        let effects;
-        if(user) effects = userUsedEffects;
-        else effects = enemyUsedEffects;
-        if(index < effects.length) {
+    effectsActions = (user, index = 0) => {
+        const effects = user ? userUsedEffects : enemyUsedEffects;
+        if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
             this.setState({
@@ -392,25 +388,27 @@ class BattleView extends React.Component {
 
     // back USER or ENEMY compact card to init position
     compactCardBack = (user) => {
-        if(user) {
+        this.setState({
+            kuceInBattleVisible: true,
+        });
+        if (user) {
             this.setState({
-                kuceInBattleVisible: true,
                 userCompactCardTranslateX: '0',
                 userCompactCardTranslateY: '0'
             });
         } else {
             this.setState({
-                kuceInBattleVisible: true,
                 enemyCompactCardTranslateX: '0',
                 enemyCompactCardTranslateY: '0'
             });
-        } setTimeout(() => {
+        }
+        setTimeout(() => {
             let newIterationsCount = this.state.prototypeIterationsCount;
             newIterationsCount = newIterationsCount + 1;
             this.setState({
                 prototypeIterationsCount: newIterationsCount
             });
-            if(this.state.prototypeIterationsCount < 2)
+            if (this.state.prototypeIterationsCount < 2)
                 this.fullCardAction(false);
         }, nextStepAnimationDuration * 3);
     }
@@ -426,7 +424,7 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
-                                                         hp={this.state.enemyHp} shield={this.state.enemyShield} />
+                                                         hp={this.state.enemyHp} shield={this.state.enemyShield}/>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
                                         First card is not visible because is the same as Compact card */}
@@ -436,7 +434,7 @@ class BattleView extends React.Component {
                                 {/* Enemy Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(true)}
                             </FlexGapContainer>
-                            <KuceInBattle visible={this.state.kuceInBattleVisible} />
+                            <KuceInBattle visible={this.state.kuceInBattleVisible}/>
                             <FlexGapContainer setMargin={'0 0 10px 0'}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
@@ -447,7 +445,7 @@ class BattleView extends React.Component {
                                         {this.getMiniCards(false)}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
-                                                        hp={this.state.userHp} shield={this.state.userShield} />
+                                                        hp={this.state.userHp} shield={this.state.userShield}/>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -456,14 +454,14 @@ class BattleView extends React.Component {
                             <FullCardView cardName={'Test User'} cardSubject={'przykładzik'}
                                           cardImage={icon1} cardTooltip={'niech wszystko działa'}
                                           description={'ta karta póki co nic nie robi'} common
-                                          setTranslateY={this.state.userFullCardAction.translateY} />
+                                          setTranslateY={this.state.userFullCardAction.translateY}/>
                         </FullCardActionBackground>
                         <FullCardActionBackground visible={this.state.enemyFullCardAction.visible}
                                                   setOpacity={this.state.enemyFullCardAction.opacity}>
                             <FullCardView cardName={'Test Enemy'} cardSubject={'przykładzik2'}
                                           cardImage={icon1} cardTooltip={'wszystko działa'}
                                           description={'ta karta na razie nic nie robi'} common
-                                          setTranslateY={this.state.enemyFullCardAction.translateY} />
+                                          setTranslateY={this.state.enemyFullCardAction.translateY}/>
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer

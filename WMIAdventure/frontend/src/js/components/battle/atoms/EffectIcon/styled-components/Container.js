@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 function handleBorder(type, theme) {
-  if(type === 'heal')
-    return theme.colors.greenyBluey;
-  else if(type === 'shield')
-    return theme.colors.purplyPinky;
-  else if(type === 'damage')
-    return theme.colors.red;
-  else return theme.colors.yellowyOrangy;
+    switch (type) {
+        case 'heal':
+            return theme.colors.greenyBluey;
+        case 'shield':
+            return theme.colors.purplyPinky;
+        case 'damage':
+            return theme.colors.red;
+        default:
+            return theme.colors.yellowyOrangy;
+    }
 }
 
 const Container = styled.div`
