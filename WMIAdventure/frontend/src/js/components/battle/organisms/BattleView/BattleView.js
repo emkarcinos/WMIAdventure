@@ -67,30 +67,17 @@ class BattleView extends React.Component {
             translateY: '100vh',
         },
 
-        // effect icons mount movement belongs to user
-        userTargetEnemyEffects: {
-            opacity: '0',
-            scale: '0',
-            translateY: '0',
-        },
-
-        userTargetSelfEffects: {
-            opacity: '0',
-            scale: '0',
-            translateY: '0',
-        },
-
-        // effect icons mount movement belongs to enemy
-        enemyTargetUserEffects: {
-            opacity: '0',
-            scale: '0',
-            translateY: '0',
-        },
-
-        enemyTargetSelfEffects: {
-            opacity: '0',
-            scale: '0',
-            translateY: '0',
+        effectsTarget: {
+            user: {
+                opacity: '0',
+                scale: '0',
+                translateY: '0',
+            },
+            enemy: {
+                opacity: '0',
+                scale: '0',
+                translateY: '0',
+            }
         },
 
         // effect icons action animation with scale
@@ -198,8 +185,8 @@ class BattleView extends React.Component {
         );
     }
 
-    countTargetEffects(userEffects, userTarget) { // to set correct EffectsIconsContainer gap
-        const effects = userEffects ? userUsedEffects : enemyUsedEffects;
+    countTargetEffects(battleIterations, userTarget) { // to set correct EffectsIconsContainer gap
+        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
         let enemyCount = 0;
         let userCount = 0;
         for (const effect of effects) {
@@ -213,8 +200,8 @@ class BattleView extends React.Component {
     }
 
     // get property effects to card and show in DOM
-    effectsTargetIteration = (userEffects, userTarget) => {
-        const effects = userEffects ? userUsedEffects : enemyUsedEffects;
+    effectsTargetIteration = (battleIterations, userTarget) => {
+        const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
         // console.log(`User: ${this.state.user}`); TODO: some browsers see user as null
         return effects.map((effect, index) => {
             if (userTarget === (effect.target_player === this.state.user)) {
@@ -326,12 +313,10 @@ class BattleView extends React.Component {
     // shows USER or ENEMY effect icons
     effectsMount = (user) => {
         this.setNewStateAttributes(
-            user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
-            user ? 'userTargetSelfEffects' : 'enemyTargetUserEffects',
+            this.state.effectsTarget.user, 'effectsTarget.user',
             {opacity: '1', scale: '1', translateY: '128px'});
         this.setNewStateAttributes(
-            user ? this.state.userTargetEnemyEffects : this.state.enemyTargetSelfEffects,
-            user ? 'userTargetEnemyEffects' : 'enemyTargetSelfEffects',
+            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
             {opacity: '1', scale: '1', translateY: '-128px'});
         setTimeout(() => {
             user ? this.effectsActions(true) : this.effectsActions(false);
@@ -367,12 +352,10 @@ class BattleView extends React.Component {
     // hide USER or ENEMY effect icons
     effectsHide = (user) => {
         this.setNewStateAttributes(
-            user ? this.state.userTargetSelfEffects : this.state.enemyTargetUserEffects,
-            user ? 'userTargetSelfEffects' : 'enemyTargetUserEffects',
+            this.state.effectsTarget.user, 'effectsTarget.user',
             {opacity: '0', scale: '0', translateY: '0'});
         this.setNewStateAttributes(
-            user ? this.state.userTargetEnemyEffects : this.state.enemyTargetSelfEffects,
-            user ? 'userTargetEnemyEffects' : 'enemyTargetSelfEffects',
+            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
             {opacity: '0', scale: '0', translateY: '0'});
         setTimeout(() => {
             user ? this.compactCardBack(true) : this.compactCardBack(false);
@@ -451,38 +434,20 @@ class BattleView extends React.Component {
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(true, true)}
-                                setOpacity={this.state.userTargetSelfEffects.opacity}
-                                setScale={this.state.userTargetSelfEffects.scale}
-                                setTranslateY={this.state.userTargetSelfEffects.translateY}>
-                                {this.effectsTargetIteration(true, true)}
+                                childrenCount={this.countTargetEffects(this.state.prototypeIterationsCount, true)}
+                                setOpacity={this.state.effectsTarget.user.opacity}
+                                setScale={this.state.effectsTarget.user.scale}
+                                setTranslateY={this.state.effectsTarget.user.translateY}>
+                                {this.effectsTargetIteration(this.state.prototypeIterationsCount, true)}
                             </EffectIconsContainer>
                         </CenterDiv>
                         <CenterDiv>
                             <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(true, false)}
-                                setOpacity={this.state.userTargetEnemyEffects.opacity}
-                                setScale={this.state.userTargetEnemyEffects.scale}
-                                setTranslateY={this.state.userTargetEnemyEffects.translateY}>
-                                {this.effectsTargetIteration(true, false)}
-                            </EffectIconsContainer>
-                        </CenterDiv>
-                        <CenterDiv>
-                            <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(false, false)}
-                                setOpacity={this.state.enemyTargetSelfEffects.opacity}
-                                setScale={this.state.enemyTargetSelfEffects.scale}
-                                setTranslateY={this.state.enemyTargetSelfEffects.translateY}>
-                                {this.effectsTargetIteration(false, false)}
-                            </EffectIconsContainer>
-                        </CenterDiv>
-                        <CenterDiv>
-                            <EffectIconsContainer
-                                childrenCount={this.countTargetEffects(false, true)}
-                                setOpacity={this.state.enemyTargetUserEffects.opacity}
-                                setScale={this.state.enemyTargetUserEffects.scale}
-                                setTranslateY={this.state.enemyTargetUserEffects.translateY}>
-                                {this.effectsTargetIteration(false, true)}
+                                childrenCount={this.countTargetEffects(this.state.prototypeIterationsCount, false)}
+                                setOpacity={this.state.effectsTarget.enemy.opacity}
+                                setScale={this.state.effectsTarget.enemy.scale}
+                                setTranslateY={this.state.effectsTarget.enemy.translateY}>
+                                {this.effectsTargetIteration(this.state.prototypeIterationsCount, false)}
                             </EffectIconsContainer>
                         </CenterDiv>
                     </PopUp>
