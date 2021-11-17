@@ -1,3 +1,5 @@
+from typing import Optional
+
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Player import Player
 from battle.businesslogic.recorder.SimplifiedCard import SimplifiedCard
@@ -15,6 +17,7 @@ class Turn:
     Stores array of used cards.
     Each used card object holds information about what effect was used and what impact this effect caused.
     """
+    used_card: Optional[SimplifiedCard]
 
     def __init__(self, attacker: Player, defender: Player, card_executor: Player):
         self.attacker = TurnPlayer(attacker)
@@ -38,8 +41,10 @@ class Turn:
         """
         Every effect usage in turn should be recorded using this method.
         :param used_effect:
+        :raises AssertionError: If trying to record effect usage when there was no card usage recorded.
         """
 
+        assert self.used_card is not None, "Card usage not recorded."
         self.used_effects.append(used_effect)
 
     def get_attacker(self) -> TurnPlayer:

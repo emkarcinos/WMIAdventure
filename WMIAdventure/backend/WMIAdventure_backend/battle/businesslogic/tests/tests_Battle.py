@@ -16,7 +16,9 @@ class BattleTestCase(TestCase):
         battle = Battle(self.user_profile_model1, self.user_profile_model2)
 
         self.assertIsNotNone(battle.coordinator)
+        self.assertIsNotNone(battle.recorder)
         self.assertIsNotNone(battle.outcome)
+        self.assertEquals(battle.turns_count, 0)
         self.assertIsNone(battle.outcome.get_winner())
 
     def test_recorder_integration(self):

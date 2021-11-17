@@ -64,7 +64,8 @@ class ProcessRecorder:
         This method should be called right after activating effect.
 
         :param used_effect:
-        :raises AssertionError: If trying to record card usage, when turn start wasn't recorded. See: record_turn_start
+        :raises AssertionError: If trying to record effect usage, when turn start wasn't recorded or when card usage
+        wasn't recorded. See: record_turn_start, record_card_usage
         """
 
         assert self.current_turn is not None, "There is no current turn."
