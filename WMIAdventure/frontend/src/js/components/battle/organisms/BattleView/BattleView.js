@@ -169,7 +169,7 @@ class BattleView extends React.Component {
             + nextStepAnimationDuration * 2 + 100);
     }
 
-    fullCardActionCall() {
+    firstFullCardActionCall() {
         setTimeout(() => {
             this.fullCardAction(true);
         }, battleInitLoadingDuration
@@ -184,7 +184,7 @@ class BattleView extends React.Component {
         this.stateContainersRetractionAnimation();
         this.miniCardsInitAnimation();
         this.userStatsInitAnimation();
-        this.fullCardActionCall();
+        this.firstFullCardActionCall();
     }
 
     // helper function to set property states
@@ -296,10 +296,10 @@ class BattleView extends React.Component {
         });
     }
 
-    showFullCardProcess(user) {
+    showFullCardProcess(userTurn) {
         this.setNewStateAttributes(
             this.state.fullCardAction, 'fullCardAction',
-            user ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
+            userTurn ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
 
         setTimeout(() => {
             this.setNewStateAttributes(
@@ -307,16 +307,16 @@ class BattleView extends React.Component {
         }, 100);
     }
 
-    slideBackFullCardCallingCompactCardAction(user) {
+    slideBackFullCardCallingCompactCardAction(userTurn) {
         setTimeout(() => {
-            user ? this.compactCardAction(true) : this.compactCardAction(false);
+            userTurn ? this.compactCardAction(true) : this.compactCardAction(false);
             this.setNewStateAttributes(
                 this.state.fullCardAction, 'fullCardAction',
-                user ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
+                userTurn ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
-    
+
     hideFullCardBackground() {
         setTimeout(() => {
             this.setNewStateAttributes(
@@ -326,18 +326,24 @@ class BattleView extends React.Component {
     }
 
     // show USER or ENEMY full card view
-    fullCardAction = (user) => {
-        this.showFullCardProcess(user);
-        this.slideBackFullCardCallingCompactCardAction(user);
+    fullCardAction = (userTurn) => {
+        this.showFullCardProcess(userTurn);
+        this.slideBackFullCardCallingCompactCardAction(userTurn);
         this.hideFullCardBackground();
     }
 
+    effectsMountCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.effectsMount(true) : this.effectsMount(false);
+        }, nextStepAnimationDuration * 2);
+    }
+
     // push forward USER or ENEMY compact card
-    compactCardAction = (user) => {
+    compactCardAction = (userTurn) => {
         this.setState({
             kuceInBattleVisible: false,
         });
-        if (user) {
+        if (userTurn) {
             this.setState({
                 userCompactCardTranslateX: 'calc(100% - 5px)',
                 userCompactCardTranslateY: 'calc(-50vh + 50% + 34px)'
@@ -348,69 +354,102 @@ class BattleView extends React.Component {
                 enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
             });
         }
+        this.effectsMountCall(userTurn);
+    }
+
+    effectsActionCall(userTurn) {
         setTimeout(() => {
-            user ? this.effectsMount(true) : this.effectsMount(false);
-        }, nextStepAnimationDuration * 2);
+            userTurn ? this.effectsActions(true) : this.effectsActions(false);
+        }, nextStepAnimationDuration * 3);
     }
 
     // shows USER or ENEMY effect icons
-    effectsMount = (user) => {
+    effectsMount = (userTurn) => {
         this.setNewStateAttributes(
             this.state.effectsTarget.user, 'effectsTarget.user',
             {opacity: '1', scale: '1', translateY: '128px'});
         this.setNewStateAttributes(
             this.state.effectsTarget.enemy, 'effectsTarget.enemy',
             {opacity: '1', scale: '1', translateY: '-128px'});
+        this.effectsActionCall(userTurn);
+    }
+
+    effectIconCastEffect(newEffectsActionScale, index) {
         setTimeout(() => {
-            user ? this.effectsActions(true) : this.effectsActions(false);
-        }, nextStepAnimationDuration * 3);
+            newEffectsActionScale[index] = '1';
+            this.setState({
+                effectsActionScale: newEffectsActionScale
+            });
+            // TODO: here call function doing particular effect for example damage, change card-order etc.
+        }, nextStepAnimationDuration);
+    }
+
+    callNextEffectIconAction(userTurn, index) {
+        setTimeout(() => {
+            this.effectsActions(userTurn, index + 1);
+        }, nextStepAnimationDuration * 2);
+    }
+
+    effectsHideCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.effectsHide(true) : this.effectsHide(false);
+        }, nextStepAnimationDuration);
     }
 
     // scale USER or ENEMY effect icons to signal effect action
-    effectsActions = (user, index = 0) => {
-        const effects = user ? userUsedEffects : enemyUsedEffects;
+    effectsActions = (userTurn, index = 0) => {
+        const effects = userTurn ? userUsedEffects : enemyUsedEffects;
         if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
             this.setState({
                 effectsActionScale: newEffectsActionScale
             });
-            setTimeout(() => {
-                newEffectsActionScale[index] = '1';
-                this.setState({
-                    effectsActionScale: newEffectsActionScale
-                });
-                // TODO: here function doing particular effect for example damage, change card-order etc.
-                setTimeout(() => {
-                    this.effectsActions(user, index + 1);
-                }, nextStepAnimationDuration)
-            }, nextStepAnimationDuration);
+            this.effectIconCastEffect(newEffectsActionScale, index);
+            this.callNextEffectIconAction(userTurn, index);
         } else {
-            setTimeout(() => {
-                user ? this.effectsHide(true) : this.effectsHide(false);
-            }, nextStepAnimationDuration);
+            this.effectsHideCall(userTurn);
         }
     }
 
+    compactCardBackCall(userTurn) {
+        setTimeout(() => {
+            userTurn ? this.compactCardBack(true) : this.compactCardBack(false);
+        }, nextStepAnimationDuration);
+    }
+
     // hide USER or ENEMY effect icons
-    effectsHide = (user) => {
+    effectsHide = (userTurn) => {
         this.setNewStateAttributes(
             this.state.effectsTarget.user, 'effectsTarget.user',
             {opacity: '0', scale: '0', translateY: '0'});
         this.setNewStateAttributes(
             this.state.effectsTarget.enemy, 'effectsTarget.enemy',
             {opacity: '0', scale: '0', translateY: '0'});
+        this.compactCardBackCall(userTurn);
+    }
+
+    callNextCardSequence() {
         setTimeout(() => {
-            user ? this.compactCardBack(true) : this.compactCardBack(false);
-        }, nextStepAnimationDuration);
+            let newIterationsCount = this.state.prototypeIterationsCount;
+            newIterationsCount = newIterationsCount + 1;
+            this.setState({
+                prototypeIterationsCount: newIterationsCount
+            });
+            // to prevent from infinitive loop
+            if (newIterationsCount < 2) {
+                const userTurn = newIterationsCount % 2 === 0;
+                this.fullCardAction(userTurn);
+            }
+        }, nextStepAnimationDuration * 3);
     }
 
     // back USER or ENEMY compact card to init position
-    compactCardBack = (user) => {
+    compactCardBack = (userTurn) => {
         this.setState({
             kuceInBattleVisible: true,
         });
-        if (user) {
+        if (userTurn) {
             this.setState({
                 userCompactCardTranslateX: '0',
                 userCompactCardTranslateY: '0'
@@ -421,15 +460,7 @@ class BattleView extends React.Component {
                 enemyCompactCardTranslateY: '0'
             });
         }
-        setTimeout(() => {
-            let newIterationsCount = this.state.prototypeIterationsCount;
-            newIterationsCount = newIterationsCount + 1;
-            this.setState({
-                prototypeIterationsCount: newIterationsCount
-            });
-            if (this.state.prototypeIterationsCount < 2)
-                this.fullCardAction(false);
-        }, nextStepAnimationDuration * 3);
+        this.callNextCardSequence();
     }
 
     render() {
