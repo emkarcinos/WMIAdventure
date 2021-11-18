@@ -14,7 +14,7 @@ export class Turn {
 
     constructor(turnData, user, enemy) {
         this.executorId = turnData.card_executor;
-        this.usedCardId = turnData.used_effects;
+        this.usedCardId = turnData.used_card;
         this.usedEffects = turnData.used_effects;
         this.user = user;
         this.enemy = enemy;
@@ -25,17 +25,12 @@ export class Turn {
      * @return {null | {}} null if there are no more effects
      */
     getNextEffect() {
-        if (this.currentlyExecutingEffectIdx >= this.currentlyExecutingEffectIdx) {
+        if (this.currentlyExecutingEffectIdx >= this.usedEffects.length) {
             this.onTurnEnd();
             return null;
         }
 
-        const effect = this.usedEffects[this.currentlyExecutingEffectIdx];
-        return {
-            id: effect.id,
-            targetId: effect.target_player,
-            power: effect.power
-        }
+        return this.usedEffects[this.currentlyExecutingEffectIdx];
     }
 
     /**
@@ -48,9 +43,10 @@ export class Turn {
         if (!effect)
             return;
 
-        const target = this.user ? (effect.target_player === this.user.id) : this.enemy;
+        const target = (effect.target_player === this.user.id) ? this.user : this.enemy;
 
         applyEffectToTarget(target, effect);
+        this.currentlyExecutingEffectIdx++;
     }
 
     /**
@@ -59,7 +55,7 @@ export class Turn {
      * removing the buffs and decrementing stopped turns counter.
      */
     onTurnEnd() {
-        const executor = this.user ? (this.executorId === this.user.id) : this.enemy;
+        const executor = (this.executorId === this.user.id) ? this.user : this.enemy;
         executor.onTurnEnd();
     }
 }

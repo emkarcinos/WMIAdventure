@@ -27,7 +27,7 @@ export class Battle {
         if (this.currentTurn >= this.turnsData.length)
             return null;
 
-        const turn = new Turn(this.turnsData[this.currentTurn]);
+        const turn = new Turn(this.turnsData[this.currentTurn], this.user, this.enemy);
         this.currentTurn++;
         return turn;
     }
