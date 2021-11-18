@@ -5,7 +5,6 @@ import NavBar from '../../components/prototype/organisms/NavBar';
 import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
-import UserProfilesAPIGateway from '../../api/gateways/UserProfilesAPIGateway';
 import Search from '../../components/global/atoms/Search';
 import SwipeProfile from '../../components/battle/organisms/SwipeProfile';
 import SearchContainer from './styled-components/SearchContainer';
@@ -19,8 +18,9 @@ import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
-import {getCurrentUserId, getCurrentUsername} from "../../utils/userData";
+import {getCurrentUserId, getCurrentUsername} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
+import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
 
 class BattleMode extends React.Component {
 
@@ -43,7 +43,7 @@ class BattleMode extends React.Component {
     }
 
     componentDidMount() {
-        UserProfilesAPIGateway.getAllBasicUsersInfo()
+        getAllUserProfiles()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
         getCurrentUserId()
@@ -135,7 +135,7 @@ class BattleMode extends React.Component {
                                         handleSearch={this.handleSearch}/>
                             </SearchContainer>
                             <Ul scrollVisible={this.state.scrollVisible}>
-                                {this.state.users.results ? this.state.users.results.map((elem) => {
+                                {this.state.users ? this.state.users.map((elem) => {
                                     return (
                                         <UserListItem key={elem.user}
                                                       access={!(elem.user === this.state.loggedInUserId)}
@@ -170,7 +170,7 @@ class BattleMode extends React.Component {
                                             handleSearch={this.handleSearch}/>
                                 </SearchContainer>
                                 <Ul scrollVisible={this.state.scrollVisible}>
-                                    {this.state.users.results ? this.state.users.results.map((elem) => {
+                                    {this.state.users ? this.state.users.map((elem) => {
                                         return (
                                             <UserListItem key={elem.user}
                                                           access={!(elem.user === this.state.loggedInUserId)}
@@ -195,7 +195,7 @@ class BattleMode extends React.Component {
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
                                   kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
-                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'} />
+                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'}/>
             </>
         );
     }

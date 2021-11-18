@@ -1,7 +1,7 @@
 import RequestSender from "../RequestSender";
 import UserEndpoints from "../endpoints/UserEndpoints";
 import Cookies from "../Cookies";
-import {isLoggedIn, purgeUserData} from "../../utils/userData"
+import {isLoggedIn, purgeUserData} from "../../storage/user/userData"
 
 const headers = {
     'Accept': 'application/json',
@@ -31,7 +31,7 @@ const logout = () => {
 
 export const whoAmI = async () => {
     const response = await RequestSender.get(UserEndpoints.whoAmI);
-    if(response.ok)
+    if (response.ok)
         return await response.json();
 
     return null

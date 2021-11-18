@@ -1,8 +1,9 @@
-import {userDataKeys} from "./localStorageKeys";
-import Cookies from "../api/Cookies";
-import {getWithSetCallback, invalidateItem} from "./cache";
-import UserProfilesAPIGateway from "../api/gateways/UserProfilesAPIGateway";
-import {whoAmI} from "../api/gateways/UsersAPIGateway";
+import {userDataKeys} from "../localStorageKeys";
+import Cookies from "../../api/Cookies";
+import {getWithSetCallback, invalidateItem} from "../cache/cache";
+import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
+import {whoAmI} from "../../api/gateways/UsersAPIGateway";
+
 export const isLoggedIn = async () => {
     return !!await getCurrentUsername();
 }
@@ -12,14 +13,14 @@ export const hasSessionCookie = () => {
 }
 
 export const getCurrentUsername = async () => {
-    if(!hasSessionCookie()) {
+    if (!hasSessionCookie()) {
         invalidateItem(userDataKeys.username);
         return null;
     }
 
     const backendCallback = async () => {
         const who = await whoAmI();
-        if(who){
+        if (who) {
             return who.username;
         }
         return null;
@@ -30,7 +31,7 @@ export const getCurrentUsername = async () => {
 export const getCurrentUserId = async () => {
     const backendCallback = async () => {
         const who = await whoAmI();
-        if(who)
+        if (who)
             return who.id;
         return null;
     }
@@ -40,7 +41,7 @@ export const getCurrentUserId = async () => {
 export const getUsersDecks = async (userId) => {
     const backendCall = async () => {
         const resp = await UserProfilesAPIGateway.getUserDecks(userId);
-        if(resp.ok){
+        if (resp.ok) {
             const data = await resp.json();
             return data.user_decks;
         }

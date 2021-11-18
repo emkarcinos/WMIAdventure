@@ -11,7 +11,7 @@ import Deck from '../../molecules/Deck';
 import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
-import {getUsersDecks} from "../../../../utils/userData";
+import {getUsersDecks} from "../../../../storage/user/userData";
 
 class SwipeProfile extends React.Component {
 

@@ -18,7 +18,7 @@ import PostBattle from '../PostBattle';
 import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import {getCurrentUserDecks, getCurrentUsername} from "../../../../utils/userData";
+import {getCurrentUserDecks, getCurrentUsername} from "../../../../storage/user/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";

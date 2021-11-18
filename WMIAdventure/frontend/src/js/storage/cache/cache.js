@@ -5,10 +5,11 @@
  */
 export const getWithSetCallback = async (key, setCallback) => {
     const cachedItem = get(key);
-    if(cachedItem)
+    if (cachedItem)
         return cachedItem
 
     const data = await setCallback();
+    if (data === null || data === undefined) return data;
     return set(key, data);
 }
 
@@ -18,7 +19,7 @@ export const getWithSetCallback = async (key, setCallback) => {
  */
 export const get = (key) => {
     const cachedItem = sessionStorage.getItem(key);
-    if(cachedItem)
+    if (cachedItem)
         return JSON.parse(cachedItem)
     return null
 }
@@ -29,7 +30,7 @@ export const get = (key) => {
  * @param obj
  */
 export const set = (key, obj) => {
-    if(obj){
+    if (obj) {
         const val = JSON.stringify(obj)
         sessionStorage.setItem(key, val);
         return obj;

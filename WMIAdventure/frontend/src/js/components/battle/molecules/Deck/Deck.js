@@ -5,7 +5,7 @@ import Header from './styled-components/Header';
 import Div from './styled-components/Div';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 import unknownIcon from '../../../../../assets/icons/upload_image_dark.svg';
-import {getCardById} from "../../../../utils/storage/cards/cardStorage";
+import {getCardById} from "../../../../storage/cards/cardStorage";
 
 class Deck extends React.Component {
 
