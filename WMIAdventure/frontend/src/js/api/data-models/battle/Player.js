@@ -1,14 +1,16 @@
 import {cardFromData} from "./Card";
+import {Deck} from "./Deck";
 
 export class Player {
     id = 0;
     stats = {};
-    deck = [];
+    /** @type Deck */
+    deck = undefined;
 
     constructor(id, stats, deck) {
         this.id = id;
         this.stats = stats;
-        this.deck = deck;
+        this.deck = new Deck(deck);
     }
 }
 

@@ -32,9 +32,8 @@ test("Example player creation", () => {
 test("Example deck creation", () => {
     const player = playerFromData(examplePlayerWithDeck);
 
-    expect(player.deck.length).toBe(examplePlayerWithDeck.deck.length);
     for (let idx = 0; idx < examplePlayerWithDeck.deck.length; idx++) {
-        expect(player.deck[idx].id).toBe(examplePlayerWithDeck.deck[idx].id);
-        expect(player.deck[idx].level).toBe(examplePlayerWithDeck.deck[idx].level);
+        expect(player.deck.cards[idx].id).toBe(examplePlayerWithDeck.deck[idx].id);
+        expect(player.deck.cards[idx].level).toBe(examplePlayerWithDeck.deck[idx].level);
     }
 })
