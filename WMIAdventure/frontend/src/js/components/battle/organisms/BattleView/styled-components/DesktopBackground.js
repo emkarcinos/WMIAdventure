@@ -5,10 +5,10 @@ const DesktopBackground = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 48px;
+  top: 64px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 64px);
   background-color: ${({theme}) => theme.colors.greenyBluey};
   transition: transform 0.5s ease-in-out;
   transform: scale(${({setScale}) => setScale ? setScale : '1'});

@@ -333,8 +333,7 @@ class OpponentSelected extends React.Component {
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
                                     closeHandler={this.battleViewCloseHandler}
-                                    setScale={this.state.battleView.scale}
-                                    setTranslateY={this.state.battleView.translateY}/>
+                                    setScale={this.state.battleView.scale}/>
                         {this.errors()}
                     </>
                 </Media>

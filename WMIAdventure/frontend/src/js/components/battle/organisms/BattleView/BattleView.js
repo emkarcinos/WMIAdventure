@@ -281,6 +281,19 @@ class BattleView extends React.Component {
         );
     }
 
+    getCompactCardsDesktop = (enemy) => {
+        return (
+            [...Array(5)].map(
+                (e, i) => {
+                    return (
+                        <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                                         cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
+                                         setWidth={'124px'} cardLevel={3} setHeight={'200px'} setMargin={'0'}/>
+                    );
+                })
+        );
+    }
+
     // get property effects to card and show in DOM
     effectsTargetIteration = (battleIterations, userTarget) => {
         const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
@@ -529,7 +542,18 @@ class BattleView extends React.Component {
 
                 <Media query={desktop}>
                     <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
-
+                        <PopUp setMaxHeight={'954px'} setMaxWidth={'1092px'} visible={this.props.visible}
+                               setWidth={'100%'} setHeight={'calc(100% - 12px)'} disableClose>
+                            <FlexGapContainer gap={'10px'}>
+                                <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}/>
+                                {this.getCompactCardsDesktop(true)}
+                            </FlexGapContainer>
+                            <KuceInBattle visible={true}/>
+                            <FlexGapContainer gap={'10px'}>
+                                {this.getCompactCardsDesktop(false)}
+                                <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}/>
+                            </FlexGapContainer>
+                        </PopUp>
                     </DesktopBackground>
                 </Media>
             </>
