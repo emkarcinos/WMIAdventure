@@ -16,12 +16,16 @@ const exampleData1 = {
             armour: 2.2
         },
         deck: [],
+    },
+    outcome: {
+        winner: 10
     }
 }
 
 test("Create Battle", () => {
     const battle = battleFromData(exampleData1);
     expect(battle.user.id).toBe(exampleData1.attacker.id);
+    expect(battle.winnerId).toBe(exampleData1.outcome.winner);
 })
 
 test("Test nextTurn returns correct turns", () => {
