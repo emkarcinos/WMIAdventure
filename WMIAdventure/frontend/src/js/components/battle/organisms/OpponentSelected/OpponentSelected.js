@@ -10,7 +10,7 @@ import battleIcon from '../../../../../assets/images/battleIcon.png';
 import fastIcon from '../../../../../assets/icons/fast.svg';
 import Media from 'react-media';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import {desktop, popUpLoadingMinimalDuration, mobile, nextStepAnimationDuration} from '../../../../utils/globals';
+import {desktop, mobile, nextStepAnimationDuration, popUpLoadingMinimalDuration} from '../../../../utils/globals';
 import GridContainer from './styled-components/GridContainer';
 import FlexEndContainer from './styled-components/FlexEndContainer';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
@@ -131,13 +131,13 @@ class OpponentSelected extends React.Component {
         this.props.kuceStopFight();
         this.setState({
             postBattle: true,
-            opponentDeck: data.defender.deck
+            opponentDeck: data.outcome.defender.deck
         });
-        if (data.winner === null) {
+        if (data.outcome.winner === null) {
             this.setState({win: null})
             return
         }
-        data.winner === data.attacker.id ?
+        data.outcome.winner === data.attacker.id ?
             this.setState({win: true}) : this.setState({win: false});
     }
 
