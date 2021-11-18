@@ -1,6 +1,7 @@
 from copy import copy
 
-from battle.businesslogic.Buff import Buff
+from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
+from battle.businesslogic.recorder.effects_impacts.EffectImpact import EffectImpact
 from cards.businesslogic.description_generator.PowerDescription import PowerDescription
 from cards.models import CardLevelEffects
 
@@ -23,33 +24,41 @@ class Effect:
         self.power = effect_model.power
         self.range = effect_model.range
 
-        self.buffs: list[Buff]
+        self.buffs: list[ModifierBuff]
         self.buffs = []
 
-    def on_activation(self, target, turns_queue):
+    def on_activation(self, target, turns_queue) -> EffectImpact:
         """
         Effect logic abstract method.
         One should override it and write the logic here.
+
+        Overridden method should return concrete instance of EffectImpact.
+
         @param target: Target affected by this effect - BattlePlayer instance
         @param turns_queue: TurnsQueue instance.
+        @return: EffectImpact instance
         """
-        pass
+
+        return EffectImpact(self.effect_model.card_effect.id, target.id)
 
     def activate(self,
                  card_owner,
                  other_player,
-                 turns_queue):
+                 turns_queue) -> EffectImpact:
         """
         Triggers the effect.
         It essentially calls on_activation method that should be overridden to one's liking.
+
         @param card_owner: BattlePlayer instance.
         @param other_player: BattlePlayer instance.
         @param turns_queue: Queue of players' turns, can be changed by some effects.
-        @return:
+
+        @return: EffectImpact which stores information about used effect, who was target and what changes activation
+        of this effect caused.
         """
 
         selected_target = self.choose_target(card_owner, other_player)
-        self.on_activation(selected_target, turns_queue)
+        return self.on_activation(selected_target, turns_queue)
 
     def choose_target(self, card_owner, other_player):
         """
@@ -66,15 +75,15 @@ class Effect:
             effect_target = card_owner
         return effect_target
 
-    def add_buff(self, buff: Buff):
+    def add_buff(self, buff: ModifierBuff):
         """
         Add a new buff to the Effect.
         """
 
         """
-        Copy of buff is appended. If buff was not copied then the same Buff object
+        Copy of buff is appended. If buff was not copied then the same ModifierBuff object
         would be updated multiple times by multiple Effect objects in one turn.
-        (Multiple Effect instances would have reference to the same Buff object)
+        (Multiple Effect instances would have reference to the same ModifierBuff object)
         """
         self.buffs.append(copy(buff))
 

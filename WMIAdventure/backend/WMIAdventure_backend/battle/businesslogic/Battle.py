@@ -22,28 +22,19 @@ class Battle:
         self.outcome = Outcome(attacker=self.attacker,
                                defender=self.defender)
 
-        self.recorder = ProcessRecorder()
+        self.recorder = ProcessRecorder(self.attacker, self.defender)
         self.turns_count = 0
 
     def start(self):
-        self.set_up_battle()
         while not self.is_finished():
             self.turn()
-            
-    def set_up_battle(self):
-        """
-        Tasks executed before starting the battle.
-        """
-        
-        # We record initial battle state (0th turn)
-        self.recorder.record_turn(self.attacker, self.defender)
-        
+
     def turn(self):
         """
         Tasks executed within a single turn.
         """
-        self.coordinator.next_turn()
-        self.recorder.record_turn(self.attacker, self.defender)
+
+        self.coordinator.next_turn(self.recorder)
         self.turns_count += 1
 
     def is_finished(self):

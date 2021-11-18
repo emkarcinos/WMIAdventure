@@ -1,5 +1,7 @@
-from battle.businesslogic.effects.Effect import Effect
 import random
+
+from battle.businesslogic.effects.Effect import Effect
+from battle.businesslogic.recorder.effects_impacts.DeckOrderChangedEffectImpact import DeckOrderChangedEffectImpact
 
 
 class RandomizeDeckEffect(Effect):
@@ -22,6 +24,8 @@ class RandomizeDeckEffect(Effect):
         cards_in_new_order = tuple([deck.lookup(ind) for ind in new_cards_order])
 
         deck.create_cards_queue(cards_in_new_order)
+
+        return DeckOrderChangedEffectImpact(self.effect_model.card_effect.id, target.id, deck)
 
     def description(self) -> str:
         return f"Zamienia losowo kolejność kart {self.target.label}a"
