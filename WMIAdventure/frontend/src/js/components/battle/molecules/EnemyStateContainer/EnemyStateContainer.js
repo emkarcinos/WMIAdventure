@@ -24,19 +24,19 @@ class EnemyStateContainer extends React.Component {
         return (
             <Container setTranslateX={this.props.setTranslateX}>
                 <NickDiv user>
-                    <Avatar src={this.props.image ? this.props.image : kuc1} />
+                    <Avatar src={this.props.image ? this.props.image : kuc1}/>
                     <Nick>
-                        skromnoscpotega
+                        {this.props.username}
                     </Nick>
                 </NickDiv>
                 <ColumnGapContainer gap={'8px'}>
                     <FlexGapContainer gap={'16px'}>
-                        <Icon src={health} />
-                        <UserStatistic type={'hp'} statisticNumber={this.props.hp} />
+                        <Icon src={health}/>
+                        <UserStatistic type={'hp'} statisticNumber={this.props.hp}/>
                     </FlexGapContainer>
                     <FlexGapContainer gap={'16px'}>
-                        <Icon src={shield} />
-                        <UserStatistic type={'shield'} statisticNumber={this.props.shield} />
+                        <Icon src={shield}/>
+                        <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
                     </FlexGapContainer>
                 </ColumnGapContainer>
             </Container>

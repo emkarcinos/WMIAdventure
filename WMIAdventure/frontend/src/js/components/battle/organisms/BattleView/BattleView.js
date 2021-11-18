@@ -25,6 +25,7 @@ import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 import {getCurrentUserId} from "../../../../storage/user/userData";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
 import {getCardById} from "../../../../storage/cards/cardStorage";
+import {getUserById} from "../../../../storage/profiles/userProfileList";
 
 class BattleView extends React.Component {
 
@@ -39,6 +40,8 @@ class BattleView extends React.Component {
         // false -> kuce in the middle not visible, true -> visible
         kuceInBattleVisible: false,
 
+        enemyUsername: '',
+        attackerUsername: '',
         // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
@@ -96,6 +99,8 @@ class BattleView extends React.Component {
             {level: 1, icon: icon4}, {level: 1, icon: icon5}
         ],
         prototypeIterationsCount: 0,
+
+        isUsersTurn: true,
     }
     /** @type Battle */
     battle = undefined;
@@ -113,9 +118,17 @@ class BattleView extends React.Component {
                 kuceInBattleVisible: true,
             });
             this.battle = battleFromData(this.props.battleData);
+            this.loadUsernames();
             this.loadCards()
                 .then(() => this.itemsAnimationInit());
         }
+    }
+
+    loadUsernames = async () => {
+        getUserById(this.battle.user.id)
+            .then(data => this.setState({attackerUsername: data.displayedUsername}));
+        getUserById(this.battle.enemy.id)
+            .then(data => this.setState({enemyUsername: data.displayedUsername}));
     }
 
     loadCards = async () => {
@@ -208,7 +221,7 @@ class BattleView extends React.Component {
 
     firstFullCardActionCall() {
         setTimeout(() => {
-            this.fullCardAction(true);
+            this.fullCardAction();
         }, battleInitLoadingDuration
             + nextStepAnimationDuration * 4);
     }
@@ -334,10 +347,10 @@ class BattleView extends React.Component {
         });
     }
 
-    showFullCardProcess(userTurn) {
+    showFullCardProcess() {
         this.setNewStateAttributes(
             this.state.fullCardAction, 'fullCardAction',
-            userTurn ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
+            this.state.isUsersTurn ? {visible: true, translateY: '100vh'} : {visible: true, translateY: '-100vh'});
 
         setTimeout(() => {
             this.setNewStateAttributes(
@@ -345,12 +358,12 @@ class BattleView extends React.Component {
         }, 100);
     }
 
-    slideBackFullCardCallingCompactCardAction(userTurn) {
+    slideBackFullCardCallingCompactCardAction() {
         setTimeout(() => {
-            userTurn ? this.compactCardAction(true) : this.compactCardAction(false);
+            this.state.isUsersTurn ? this.compactCardAction(true) : this.compactCardAction(false);
             this.setNewStateAttributes(
                 this.state.fullCardAction, 'fullCardAction',
-                userTurn ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
+                this.state.isUsersTurn ? {opacity: '0', translateY: '100vh'} : {opacity: '0', translateY: '-100vh'});
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
@@ -364,9 +377,9 @@ class BattleView extends React.Component {
     }
 
     // show USER or ENEMY full card view
-    fullCardAction = (userTurn) => {
-        this.showFullCardProcess(userTurn);
-        this.slideBackFullCardCallingCompactCardAction(userTurn);
+    fullCardAction = () => {
+        this.showFullCardProcess();
+        this.slideBackFullCardCallingCompactCardAction();
         this.hideFullCardBackground();
     }
 
@@ -501,6 +514,15 @@ class BattleView extends React.Component {
         this.callNextCardSequence();
     }
 
+    getCurrentFullCard = () => {
+        return (
+            <FullCardView cardName={'Pełny Opis Test'} cardSubject={'przykładzik'}
+                          cardImage={icon1} cardTooltip={'niech wszystko działa'}
+                          description={'ta karta póki co nic nie robi'} common
+                          setTranslateY={this.state.fullCardAction.translateY}/>
+        )
+    }
+
     render() {
         return (
             <>
@@ -512,7 +534,9 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
-                                                         hp={this.state.enemyHp} shield={this.state.enemyShield}/>
+                                                         hp={this.state.enemyHp} shield={this.state.enemyShield}
+                                                         username={this.state.enemyUsername}
+                                    />
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
                                         First card is not visible because is the same as Compact card */}
@@ -533,16 +557,14 @@ class BattleView extends React.Component {
                                         {this.getMiniCards(false)}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
-                                                        hp={this.state.userHp} shield={this.state.userShield}/>
+                                                        hp={this.state.userHp} shield={this.state.userShield}
+                                                        username={this.state.attackerUsername}/>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
                         <FullCardActionBackground visible={this.state.fullCardAction.visible}
                                                   setOpacity={this.state.fullCardAction.opacity}>
-                            <FullCardView cardName={'Pełny Opis Test'} cardSubject={'przykładzik'}
-                                          cardImage={icon1} cardTooltip={'niech wszystko działa'}
-                                          description={'ta karta póki co nic nie robi'} common
-                                          setTranslateY={this.state.fullCardAction.translateY}/>
+                            {this.getCurrentFullCard()}
                         </FullCardActionBackground>
                         <CenterDiv>
                             <EffectIconsContainer
