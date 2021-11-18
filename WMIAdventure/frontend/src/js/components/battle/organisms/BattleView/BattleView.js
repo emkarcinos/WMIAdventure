@@ -23,6 +23,8 @@ import CenterDiv from "./styled-components/CenterDiv";
 import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
 import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 import {getCurrentUserId} from "../../../../storage/user/userData";
+import {battleFromData} from "../../../../api/data-models/battle/Battle";
+import {getCardById} from "../../../../storage/cards/cardStorage";
 
 class BattleView extends React.Component {
 
@@ -85,12 +87,18 @@ class BattleView extends React.Component {
         effectsActionScale: ['1', '1', '1', '1', '1'],
 
         // other prototype data, will be remove when true data comes perhaps
-        cards: [
+        userCards: [
+            {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
+            {level: 1, icon: icon4}, {level: 1, icon: icon5}
+        ],
+        enemyCards: [
             {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
             {level: 1, icon: icon4}, {level: 1, icon: icon5}
         ],
         prototypeIterationsCount: 0,
     }
+    /** @type Battle */
+    battle = undefined;
 
     componentDidMount() {
         getCurrentUserId()
@@ -104,8 +112,37 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
-            this.itemsAnimationInit();
+            this.battle = battleFromData(this.props.battleData);
+            this.loadCards()
+                .then(() => this.itemsAnimationInit());
         }
+    }
+
+    loadCards = async () => {
+        const loadedAttackerCards = [];
+        const loadedDefenderCards = [];
+        for (const card of this.battle.user.deck.cards)
+            loadedAttackerCards.push(await getCardById(card.id))
+        for (const card of this.battle.enemy.deck.cards)
+            loadedDefenderCards.push(await getCardById(card.id))
+        this.setState({
+            enemyCards: [
+                {...loadedDefenderCards[0], level: this.battle.enemy.deck.cards[0].level},
+                {...loadedDefenderCards[1], level: this.battle.enemy.deck.cards[1].level},
+                {...loadedDefenderCards[2], level: this.battle.enemy.deck.cards[2].level},
+                {...loadedDefenderCards[3], level: this.battle.enemy.deck.cards[3].level},
+                {...loadedDefenderCards[4], level: this.battle.enemy.deck.cards[4].level},
+            ]
+        });
+        this.setState({
+            userCards: [
+                {...loadedAttackerCards[0], level: this.battle.user.deck.cards[0].level},
+                {...loadedAttackerCards[1], level: this.battle.user.deck.cards[1].level},
+                {...loadedAttackerCards[2], level: this.battle.user.deck.cards[2].level},
+                {...loadedAttackerCards[3], level: this.battle.user.deck.cards[3].level},
+                {...loadedAttackerCards[4], level: this.battle.user.deck.cards[4].level},
+            ]
+        });
     }
 
     stateContainersShotAnimation() {
@@ -251,9 +288,9 @@ class BattleView extends React.Component {
                                               : this.state.userMiniCardsTranslateX[i]
                                       }
                                       enemy={enemy} user={!enemy}
-                                      cardLevel={this.state.cards[i].level}
+                                      cardLevel={enemy ? this.state.enemyCards[i].level : this.state.userCards[i].level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={this.state.cards[i].icon}/>
+                                      cardImage={enemy ? this.state.enemyCards[i].image : this.state.userCards[i].image}/>
                     );
                 })
         );
@@ -268,7 +305,8 @@ class BattleView extends React.Component {
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                              : this.state.cardsUserOrder[i]}
-                                         cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
+                                         cardImage={enemy ? this.state.enemyCards[i].image : this.state.userCards[i].image}
+                                         cardName={`Karta ${i + 1}`}
                                          setWidth={'124px'} cardLevel={3} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
