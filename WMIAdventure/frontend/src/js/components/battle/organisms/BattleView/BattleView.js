@@ -23,6 +23,7 @@ import {getCurrentUserId} from "../../../../utils/userData";
 import CenterDiv from "./styled-components/CenterDiv";
 import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
 import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
+import DesktopBackground from "./styled-components/DesktopBackground";
 
 class BattleView extends React.Component {
 
@@ -99,8 +100,8 @@ class BattleView extends React.Component {
 
     componentDidUpdate(prevProps) {
         // to init animations when BattleView component will mount
-        if ((prevProps.battleView !== this.props.battleView)
-            && this.props.battleView === true) {
+        if ((prevProps.visible !== this.props.visible)
+            && this.props.visible === true) {
             this.setState({
                 kuceInBattleVisible: true,
             });
@@ -467,8 +468,7 @@ class BattleView extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <PopUp visible={this.props.battleView} disableClose
-                           closeHandler={this.props.closeHandler}
+                    <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
                             <FlexGapContainer setMargin={'10px 0 0 0'}>
@@ -528,7 +528,9 @@ class BattleView extends React.Component {
                 </Media>
 
                 <Media query={desktop}>
-                    desktop not implemented yet
+                    <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
+
+                    </DesktopBackground>
                 </Media>
             </>
         );
