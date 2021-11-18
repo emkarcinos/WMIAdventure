@@ -319,8 +319,9 @@ class BattleView extends React.Component {
                                          cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                              : this.state.cardsUserOrder[i]}
                                          cardImage={enemy ? this.state.enemyCards[i].image : this.state.userCards[i].image}
-                                         cardName={`Karta ${i + 1}`}
-                                         setWidth={'124px'} cardLevel={3} setHeight={'200px'}
+                                         cardName={enemy ? this.state.enemyCards[i].name : this.state.userCards[i].name}
+                                         cardLevel={enemy ? this.state.enemyCards[i].level : this.state.userCards[i].level}
+                                         setWidth={'124px'} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
@@ -515,12 +516,35 @@ class BattleView extends React.Component {
     }
 
     getCurrentFullCard = () => {
-        return (
-            <FullCardView cardName={'Pełny Opis Test'} cardSubject={'przykładzik'}
-                          cardImage={icon1} cardTooltip={'niech wszystko działa'}
-                          description={'ta karta póki co nic nie robi'} common
-                          setTranslateY={this.state.fullCardAction.translateY}/>
-        )
+        const card = this.state.isUsersTurn ? this.state.userCards[0] : this.state.enemyCards[0];
+        let description = '';
+        if (card.levels !== undefined)
+            description = card.levels.filter(item => item.level === card.level)[0].effects_description;
+
+        // I had to do it this way because of the way props are in FullCardView
+        if (card.level === 1) {
+            return (
+                <FullCardView cardName={card.name} cardSubject={card.subject}
+                              cardImage={card.image} cardTooltip={card.tooltip}
+                              description={description} common
+                              setTranslateY={this.state.fullCardAction.translateY}/>
+            )
+        } else if (card.level === 2) {
+            return (
+                <FullCardView cardName={card.name} cardSubject={card.subject}
+                              cardImage={card.image} cardTooltip={card.tooltip}
+                              description={description} gold
+                              setTranslateY={this.state.fullCardAction.translateY}/>
+            )
+        } else {
+            return (
+                <FullCardView cardName={card.name} cardSubject={card.subject}
+                              cardImage={card.image} cardTooltip={card.tooltip}
+                              description={description} epic
+                              setTranslateY={this.state.fullCardAction.translateY}/>
+            )
+        }
+
     }
 
     render() {
