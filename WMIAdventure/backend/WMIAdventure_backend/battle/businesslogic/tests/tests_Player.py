@@ -36,6 +36,36 @@ class PlayerTestCase(TestCase):
 
         self.assertEqual(actual_hp, expected_hp)
 
+    def test_use_card_when_stopped(self):
+        """
+        **Scenario:**
+
+        - Player exists and is stopped.
+
+        - Player uses card.
+
+        ---
+
+        **Expected result:**
+
+        - Card was not used, the same card is at the top of the deck.
+        """
+
+        player = self.battle_player
+        player.turns_stopped = 1
+
+        # Save which card was at the top of the deck before using card
+        card_at_deck_top = player.deck.lookup()
+
+        # Use card
+        used_card, used_effects = player.use_card()
+
+        # Assert card was not used and the same card is still at the top of the deck
+        self.assertIsNone(used_card)
+        self.assertEquals(len(used_effects), 0)
+
+        self.assertIs(player.deck.lookup(), card_at_deck_top)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.creator.perform_deletion()
