@@ -69,7 +69,13 @@ class EffectData:
     power: int
     id: CardEffect.EffectId
 
-    def __init__(self, id_, power, range_, target=CardLevelEffects.Target.OPPONENT):
+    def __init__(
+            self,
+            id_: CardEffect.EffectId,
+            power: int,
+            range_: float,
+            target: CardLevelEffects.Target = CardLevelEffects.Target.OPPONENT
+    ):
         self.id = id_
         self.power = power
         self.range = range_

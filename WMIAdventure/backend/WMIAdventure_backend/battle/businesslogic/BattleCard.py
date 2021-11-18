@@ -87,12 +87,14 @@ class BattleCard:
         """
 
         buffs = []
+        retrieved_buff_types = []
 
-        # TODO: Test if duplicates are not appended to buffs array
         for effect in self.effects:
-            for buff in effect.buffs:
-                if buff not in buffs:
-                    buffs.append(buff)
+            if effect.effect_model.card_effect.id not in retrieved_buff_types:
+                retrieved_buff_types.append(effect.effect_model.card_effect.id)
+                for buff in effect.buffs:
+                    if buff not in buffs:
+                        buffs.append(buff)
 
         return buffs
 

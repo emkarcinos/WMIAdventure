@@ -7,7 +7,10 @@ from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
 from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
-from cards.factories import create_card_with_effect
+from battle.businesslogic.effects.Effect import Effect
+from battle.businesslogic.effects.EffectFactory import EffectFactory
+from cards.factories import create_card_with_effect, CardLevelEffectsFactory, CardFactory, EffectData, \
+    create_card_with_effects
 from cards.models import Card, CardEffect, CardLevelEffects, CardLevel
 
 
@@ -62,6 +65,17 @@ def create_player() -> Player:
     return player
 
 
+def create_battle_card_with_effects(effects_data: list[EffectData]) -> BattleCard:
+    """
+    Creates BattleCard with effects that you want it to have.
+    :param effects_data: Data about each effect.
+    :return: Created BattleCard.
+    """
+
+    card_model = create_card_with_effects(effects_data)
+    return BattleCard(card_model)
+
+
 def create_battle_card_with_effect(
         effect_id: CardEffect.EffectId,
         target: CardLevelEffects.Target = CardLevelEffects.Target.PLAYER,
@@ -99,3 +113,32 @@ def create_battle_card():
     """
 
     return create_battle_card_with_effect(CardEffect.EffectId.DMG)
+
+
+def create_effect(
+        effect_id: CardEffect.EffectId = CardEffect.EffectId.DMG,
+        target: CardLevelEffects.Target = CardLevelEffects.Target.OPPONENT,
+        power: int = 10,
+        range_: float = 5
+) -> Effect:
+    """
+    Creates effect with given data, or creates default effect dealing dmg to opponent if no was data provided.
+    :param effect_id:
+    :param target:
+    :param power:
+    :param range_:
+    :return: Created effect.
+    """
+
+    effect_factory = EffectFactory.get_instance()
+
+    card = CardFactory()
+    effect_model = CardLevelEffectsFactory(
+        card=card,
+        card_effect=CardEffect.objects.get(pk=effect_id),
+        target=target,
+        power=power,
+        range=range_
+    )
+
+    return effect_factory.create(effect_model)

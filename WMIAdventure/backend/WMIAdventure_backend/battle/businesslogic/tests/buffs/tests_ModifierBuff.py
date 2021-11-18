@@ -3,7 +3,7 @@ from unittest import TestCase
 from battle.businesslogic.buffs.ModifierBuff import ModifierBuff
 
 
-class CardBuffTestCase(TestCase):
+class ModifierBuffTestCase(TestCase):
 
     def test_buff_delayed_activation(self):
         delay = 2
