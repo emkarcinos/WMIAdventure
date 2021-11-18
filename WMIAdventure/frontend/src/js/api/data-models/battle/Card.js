@@ -2,6 +2,7 @@ export class Card {
     id = undefined;
     level = undefined;
     buffs = [];
+    stoppedTurns = 0;
 
     constructor(id, level) {
         this.id = id;

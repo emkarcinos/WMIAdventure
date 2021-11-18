@@ -6,6 +6,7 @@ export class Player {
     stats = {};
     /** @type Deck */
     deck = undefined;
+    stoppedTurns = 0;
 
     constructor(id, stats, deck) {
         this.id = id;
