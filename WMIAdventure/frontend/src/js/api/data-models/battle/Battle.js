@@ -1,5 +1,5 @@
 import {playerFromData} from "./Player";
-import {Turn} from "./test/Turn";
+import {Turn} from "./Turn";
 
 /**
  Battle class transforms backend data into an actual battle process accessed via helper methods.

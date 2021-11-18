@@ -49,4 +49,8 @@ export class Deck {
         this.cards = newDeck;
     }
 
+    onTurnEnd() {
+        for (const card of this.cards)
+            card.onTurnEnd();
+    }
 }

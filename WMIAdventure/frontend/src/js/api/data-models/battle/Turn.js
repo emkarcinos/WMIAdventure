@@ -1,3 +1,5 @@
+import {applyEffectToTarget} from "./EffectHelper";
+
 export class Turn {
     executorId = undefined;
     usedCardId = undefined;
@@ -18,14 +20,15 @@ export class Turn {
         this.enemy = enemy;
     }
 
-
     /**
      * Returns the effect that will get executed with advance() method.
-     * @return {null | effect} null if there are no more effects
+     * @return {null | {}} null if there are no more effects
      */
     getNextEffect() {
-        if (this.currentlyExecutingEffectIdx >= this.currentlyExecutingEffectIdx)
+        if (this.currentlyExecutingEffectIdx >= this.currentlyExecutingEffectIdx) {
+            this.onTurnEnd();
             return null;
+        }
 
         const effect = this.usedEffects[this.currentlyExecutingEffectIdx];
         return {
@@ -47,21 +50,17 @@ export class Turn {
 
         const target = this.user ? (effect.target_player === this.user.id) : this.enemy;
 
-        this.updateStats(target, effect.changed_stats);
-
+        applyEffectToTarget(target, effect);
     }
 
-    updateStats(target, newStats) {
-        if (newStats === undefined) return;
-
-        target.stats = {
-            hp: newStats.hp,
-            armour: newStats.armour
-        }
+    /**
+     * After a turn has ended we need to do some cleanup.
+     * We only call cleanup for a player that was the executor as this does things like
+     * removing the buffs and decrementing stopped turns counter.
+     */
+    onTurnEnd() {
+        const executor = this.user ? (this.executorId === this.user.id) : this.enemy;
+        executor.onTurnEnd();
     }
-
-    updateDeckOrder(target, newDeckOrder) {
-    }
-
 }
 

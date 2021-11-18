@@ -37,3 +37,17 @@ test("Example deck creation", () => {
         expect(player.deck.cards[idx].level).toBe(examplePlayerWithDeck.deck[idx].level);
     }
 })
+
+test('Should not decrement stoppedTurns below zero', () => {
+    const player = playerFromData(examplePlayerWithDeck);
+    player.stoppedTurns = 2
+
+    player.onTurnEnd();
+    expect(player.stoppedTurns).toBe(1);
+
+    player.onTurnEnd();
+    expect(player.stoppedTurns).toBe(0);
+
+    player.onTurnEnd();
+    expect(player.stoppedTurns).toBe(0);
+})

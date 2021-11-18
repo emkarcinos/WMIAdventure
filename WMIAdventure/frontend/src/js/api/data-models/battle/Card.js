@@ -9,6 +9,12 @@ export class Card {
         this.level = level;
     }
 
+    onTurnEnd() {
+        if (this.stoppedTurns > 0)
+            this.stoppedTurns--;
+        this.buffs = [];
+    }
+
 }
 
 export const cardFromData = (data) => {

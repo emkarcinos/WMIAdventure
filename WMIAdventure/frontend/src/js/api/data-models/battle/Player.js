@@ -13,6 +13,12 @@ export class Player {
         this.stats = stats;
         this.deck = new Deck(deck);
     }
+
+    onTurnEnd() {
+        if (this.stoppedTurns > 0)
+            this.stoppedTurns--;
+        this.deck.onTurnEnd();
+    }
 }
 
 export const playerFromData = (data) => {
