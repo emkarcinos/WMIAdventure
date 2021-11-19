@@ -7,6 +7,11 @@ const Img = styled.img`
   width: 166px;
   height: 182px;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 246px;
+    height: 270px;
+  }
 `;
 
 export default Img;

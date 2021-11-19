@@ -47,7 +47,7 @@ class EnemyStateContainer extends React.Component {
                 </Media>
 
                 <Media query={desktop}>
-                    <Container setTranslateX={this.props.setTranslateX}>
+                    <Container setTranslateY={this.props.setTranslateY}>
                         <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>
                             <Avatar src={this.props.image ? this.props.image : kuc1}/>
                             <ColumnGapContainer gap={'8px'}>

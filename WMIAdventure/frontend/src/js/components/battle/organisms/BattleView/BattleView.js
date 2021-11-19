@@ -39,17 +39,18 @@ class BattleView extends React.Component {
         kuceInBattleVisible: false,
 
         // states for items initial animation movement
-        enemyCompactCardTranslateX: '-100vw',
-        userCompactCardTranslateX: '100vw',
+        enemyCompactCardTranslateX: this.props.desktop ? '0' : '-100vw',
+        userCompactCardTranslateX: this.props.desktop ? '0' : '100vw',
+        enemyCompactCardTranslateY: this.props.desktop ? '-25vh' : '0',
+        userCompactCardTranslateY: this.props.desktop ? '25vh' : '0',
 
         enemyMiniCardsTranslateX: ['-100vw', '-100vw', '-100vw', '-100vw', '-100vw'],
         userMiniCardsTranslateX: ['100vw', '100vw', '100vw', '100vw', '100vw'],
 
         enemyStateContainerTranslateX: '-100vw',
         userStateContainerTranslateX: '100vw',
-
-        enemyCompactCardTranslateY: '0',
-        userCompactCardTranslateY: '0',
+        enemyStateContainerTranslateY: '-25vh',
+        userStateContainerTranslateY: '25vh',
 
         // states for hp and shield points
         enemyHp: '0',
@@ -101,12 +102,8 @@ class BattleView extends React.Component {
     componentDidUpdate(prevProps) {
         // to init animations when BattleView component will mount
         if ((prevProps.visible !== this.props.visible)
-            && this.props.visible === true) {
-            this.setState({
-                kuceInBattleVisible: true,
-            });
-            this.itemsAnimationInit();
-        }
+            && this.props.visible === true)
+            (this.props.desktop) ? this.desktopItemsAnimationInit() : this.itemsAnimationInit();
     }
 
     stateContainersShotAnimation() {
@@ -158,7 +155,7 @@ class BattleView extends React.Component {
             + nextStepAnimationDuration * 2 + 100);
     }
 
-    userStatsInitAnimation() {
+    usersStatsInitAnimation() {
         setTimeout(() => {
             this.setState({
                 enemyHp: '100',
@@ -177,15 +174,48 @@ class BattleView extends React.Component {
             + nextStepAnimationDuration * 4);
     }
 
-    // init elements animation and call full card action
+    // init elements animation for mobile and call full card action
     itemsAnimationInit = () => {
+        this.setState({
+            kuceInBattleVisible: true,
+        });
         this.stateContainersShotAnimation();
         this.compactCardsShotAnimation();
         this.compactCardsRetractionAnimation();
         this.stateContainersRetractionAnimation();
         this.miniCardsInitAnimation();
-        this.userStatsInitAnimation();
+        this.usersStatsInitAnimation();
         this.firstFullCardActionCall();
+    }
+
+    showStatesContainersVertical() {
+        setTimeout(() => {
+            this.setState({
+                enemyStateContainerTranslateY: '0',
+                userStateContainerTranslateY: '0'
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration);
+    }
+
+    showCompactCardsVertical() {
+        setTimeout(() => {
+            this.setState({
+                enemyCompactCardTranslateY: '0',
+                userCompactCardTranslateY: '0'
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration + 100);
+    }
+
+    // init elements animation for desktop
+    desktopItemsAnimationInit = () => {
+        this.setState({
+            kuceInBattleVisible: true,
+        });
+        this.showStatesContainersVertical();
+        this.showCompactCardsVertical();
+        this.usersStatsInitAnimation();
     }
 
     // helper function to set property states
@@ -262,11 +292,17 @@ class BattleView extends React.Component {
 
     // get proper compact cards to DOM
     getCompactCards = (enemy) => {
+        let handleMargin = '0'
+        if (this.props.desktop) handleMargin = '0';
+        else if (enemy)
+            return '0 0 0 10px';
+        else handleMargin = '0 10px 0 0';
         return (
             [...Array(5)].map(
                 (e, i) => {
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
+                                         battleOnDesktop={this.props.desktop}
                                          cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
                                              : this.state.cardsUserOrder[i]}
                                          cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
@@ -275,20 +311,7 @@ class BattleView extends React.Component {
                                              : this.state.userCompactCardTranslateX}
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
-                                         setMargin={enemy ? '0 0 0 10px' : '0 10px 0 0'}/>
-                    );
-                })
-        );
-    }
-
-    getCompactCardsDesktop = (enemy) => {
-        return (
-            [...Array(5)].map(
-                (e, i) => {
-                    return (
-                        <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
-                                         cardImage={this.state.cards[i].icon} cardName={`Karta ${i + 1}`}
-                                         setWidth={'124px'} cardLevel={3} setHeight={'200px'} setMargin={'0'}/>
+                                         setMargin={handleMargin}/>
                     );
                 })
         );
@@ -543,15 +566,22 @@ class BattleView extends React.Component {
                 <Media query={desktop}>
                     <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
                         <PopUp setMaxHeight={'954px'} setMaxWidth={'1092px'} visible={this.props.visible}
-                               setWidth={'100%'} setHeight={'calc(100% - 12px)'} disableClose>
-                            <FlexGapContainer gap={'10px'}>
-                                <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}/>
-                                {this.getCompactCardsDesktop(true)}
+                               setWidth={'100%'} setHeight={'calc(100% - 12px)'} setAlignment={'space-between'}
+                               disableClose>
+                            <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
+                                <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}
+                                                     setTranslateY={this.state.enemyStateContainerTranslateY}/>
+                                <FlexGapContainer gap={'10px'} reverse>
+                                    {this.getCompactCards(true)}
+                                </FlexGapContainer>
                             </FlexGapContainer>
-                            <KuceInBattle visible={true}/>
-                            <FlexGapContainer gap={'10px'}>
-                                {this.getCompactCardsDesktop(false)}
-                                <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}/>
+                            <KuceInBattle visible={this.state.kuceInBattleVisible}/>
+                            <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
+                                <FlexGapContainer gap={'10px'}>
+                                    {this.getCompactCards(false)}
+                                </FlexGapContainer>
+                                <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}
+                                                    setTranslateY={this.state.userStateContainerTranslateY}/>
                             </FlexGapContainer>
                         </PopUp>
                     </DesktopBackground>

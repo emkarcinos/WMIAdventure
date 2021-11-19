@@ -9,8 +9,8 @@ function colorHandler(level, theme) {
         return theme.colors.purplyPinky;
 }
 
-function visibleHandle(cardIndexInDeck) {
-    if (cardIndexInDeck) {
+function visibleHandle(cardIndexInDeck, battleOnDesktop) {
+    if (cardIndexInDeck && !battleOnDesktop) {
         if (cardIndexInDeck === 1)
             return 'flex';
         else return 'none';
@@ -18,7 +18,7 @@ function visibleHandle(cardIndexInDeck) {
 }
 
 const Div = styled.div`
-  display: ${({cardIndexInDeck}) => visibleHandle(cardIndexInDeck)};
+  display: ${({cardIndexInDeck, battleOnDesktop}) => visibleHandle(cardIndexInDeck, battleOnDesktop)};
   flex-direction: column;
   align-items: center;
   justify-content: space-between;

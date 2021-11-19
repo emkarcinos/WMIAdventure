@@ -24,7 +24,7 @@ const Div = styled.div`
     height: ${({setHeight}) => setHeight ? setHeight : '454px'};
     max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'auto'};
     max-height: ${({setMaxHeight}) => setMaxHeight ? setMaxHeight : '100%'};
-    justify-content: center;
+    justify-content: ${({setAlignment}) => setAlignment ? setAlignment : 'center'};
     -ms-overflow-style: none; /* IE 10+ */
     scrollbar-width: none;
     ::-webkit-scrollbar {

@@ -52,7 +52,6 @@ class BattleMode extends React.Component {
             .then(name => name ? this.setState({loggedInUsername: name}) : null);
     }
 
-
     runUserPreviewHandler = (username, userId) => {
         this.setState({
             userPreviewRun: true,
@@ -195,7 +194,7 @@ class BattleMode extends React.Component {
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
                                   kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
-                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'} />
+                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'}/>
             </>
         );
     }

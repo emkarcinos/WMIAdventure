@@ -47,7 +47,7 @@ class UserStateContainer extends React.Component {
                 </Media>
 
                 <Media query={desktop}>
-                    <Container setTranslateX={this.props.setTranslateX}>
+                    <Container setTranslateY={this.props.setTranslateY}>
                         <NickDiv>
                             <Nick>
                                 skromnoscpotega
