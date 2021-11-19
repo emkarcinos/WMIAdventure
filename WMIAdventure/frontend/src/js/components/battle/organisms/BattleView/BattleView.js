@@ -9,11 +9,6 @@ import UserStateContainer from "../../molecules/UserStateContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import MiniCardView from "../../atoms/MiniCardView";
-import icon1 from '../../../../../assets/images/icon1.png';
-import icon2 from '../../../../../assets/images/icon2.png';
-import icon3 from '../../../../../assets/images/icon3.png';
-import icon4 from '../../../../../assets/images/icon4.png';
-import icon5 from '../../../../../assets/images/icon5.png';
 import EnemyStateContainer from "../../molecules/EnemyStateContainer";
 import FullCardActionBackground from "./styled-components/FullCardActionBackground";
 import FullCardView from "../../../global/atoms/FullCardView";
@@ -24,8 +19,6 @@ import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
 import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 import {getCurrentUserId} from "../../../../storage/user/userData";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
-import {getCardById} from "../../../../storage/cards/cardStorage";
-import {getUserById} from "../../../../storage/profiles/userProfileList";
 
 class BattleView extends React.Component {
 
@@ -40,8 +33,6 @@ class BattleView extends React.Component {
         // false -> kuce in the middle not visible, true -> visible
         kuceInBattleVisible: false,
 
-        enemyUsername: '',
-        attackerUsername: '',
         // states for items initial animation movement
         enemyCompactCardTranslateX: '-100vw',
         userCompactCardTranslateX: '100vw',
@@ -54,16 +45,6 @@ class BattleView extends React.Component {
 
         enemyCompactCardTranslateY: '0',
         userCompactCardTranslateY: '0',
-
-        // states for hp and shield points
-        enemyHp: '0',
-        userHp: '0',
-        enemyShield: '0',
-        userShield: '0',
-
-        // states to handle cards orders, pass to CompactCardView and MiniCardView as props
-        cardsEnemyOrder: [1, 2, 3, 4, 5],
-        cardsUserOrder: [1, 2, 3, 4, 5], // this means: first card on first place and so on
 
         // full card action
         fullCardAction: {
@@ -88,19 +69,11 @@ class BattleView extends React.Component {
 
         // effect icons action animation with scale
         effectsActionScale: ['1', '1', '1', '1', '1'],
-
-        // other prototype data, will be remove when true data comes perhaps
-        userCards: [
-            {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
-            {level: 1, icon: icon4}, {level: 1, icon: icon5}
-        ],
-        enemyCards: [
-            {level: 3, icon: icon1}, {level: 3, icon: icon2}, {level: 2, icon: icon3},
-            {level: 1, icon: icon4}, {level: 1, icon: icon5}
-        ],
         prototypeIterationsCount: 0,
 
         isUsersTurn: true,
+        /** @type Battle */
+        battle: undefined,
     }
     /** @type Battle */
     battle = undefined;
@@ -118,44 +91,10 @@ class BattleView extends React.Component {
                 kuceInBattleVisible: true,
             });
             this.battle = battleFromData(this.props.battleData);
-            this.loadUsernames();
-            this.loadCards()
-                .then(() => this.itemsAnimationInit());
+            this.setState({battle: this.battle});
+            this.battle.fetchNonVitalDataAsynchronously(); // Runs in the background
+            this.itemsAnimationInit();
         }
-    }
-
-    loadUsernames = async () => {
-        getUserById(this.battle.user.id)
-            .then(data => this.setState({attackerUsername: data.displayedUsername}));
-        getUserById(this.battle.enemy.id)
-            .then(data => this.setState({enemyUsername: data.displayedUsername}));
-    }
-
-    loadCards = async () => {
-        const loadedAttackerCards = [];
-        const loadedDefenderCards = [];
-        for (const card of this.battle.user.deck.cards)
-            loadedAttackerCards.push(await getCardById(card.id))
-        for (const card of this.battle.enemy.deck.cards)
-            loadedDefenderCards.push(await getCardById(card.id))
-        this.setState({
-            enemyCards: [
-                {...loadedDefenderCards[0], level: this.battle.enemy.deck.cards[0].level},
-                {...loadedDefenderCards[1], level: this.battle.enemy.deck.cards[1].level},
-                {...loadedDefenderCards[2], level: this.battle.enemy.deck.cards[2].level},
-                {...loadedDefenderCards[3], level: this.battle.enemy.deck.cards[3].level},
-                {...loadedDefenderCards[4], level: this.battle.enemy.deck.cards[4].level},
-            ]
-        });
-        this.setState({
-            userCards: [
-                {...loadedAttackerCards[0], level: this.battle.user.deck.cards[0].level},
-                {...loadedAttackerCards[1], level: this.battle.user.deck.cards[1].level},
-                {...loadedAttackerCards[2], level: this.battle.user.deck.cards[2].level},
-                {...loadedAttackerCards[3], level: this.battle.user.deck.cards[3].level},
-                {...loadedAttackerCards[4], level: this.battle.user.deck.cards[4].level},
-            ]
-        });
     }
 
     stateContainersShotAnimation() {
@@ -254,6 +193,7 @@ class BattleView extends React.Component {
 
     // to set correct EffectsIconsContainer gap
     countTargetEffects(battleIterations, userTarget) {
+        //TODO: integrate with battle object
         const effects = (battleIterations % 2 === 0) ? userUsedEffects : enemyUsedEffects;
         let enemyCount = 0;
         let userCount = 0;
@@ -267,22 +207,6 @@ class BattleView extends React.Component {
             return enemyCount;
     }
 
-    // prototype function, runs if we click on mini enemy cards
-    changeCardsEnemyOrder = () => {
-        this.setState({
-            cardsEnemyOrder: [3, 2, 1, 5, 4]
-            // this means: first card on third place, second on second, third on first and so on
-        });
-    }
-
-    // prototype function, runs if we click on mini user cards
-    changeCardsUserOrder = () => {
-        this.setState({
-            cardsUserOrder: [5, 4, 2, 3, 1]
-            // this means: first card on fifth place, second on fourth, third on second and so on
-        });
-    }
-
     // get proper mini cards to DOM
     getMiniCards = (enemy) => {
         return (
@@ -290,20 +214,15 @@ class BattleView extends React.Component {
                 (e, i) => {
                     return (
                         <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                                      changeCardsOrder={
-                                          enemy ? this.changeCardsEnemyOrder : this.changeCardsUserOrder
-                                      }
-                                      cardIndexInDeck={
-                                          enemy ? this.state.cardsEnemyOrder[i] : this.state.cardsUserOrder[i]
-                                      }
+                                      cardIndexInDeck={this.state.battle.getCardAtIdx(enemy, i).initialPosition}
                                       setTranslateX={
                                           enemy ? this.state.enemyMiniCardsTranslateX[i]
                                               : this.state.userMiniCardsTranslateX[i]
                                       }
                                       enemy={enemy} user={!enemy}
-                                      cardLevel={enemy ? this.state.enemyCards[i].level : this.state.userCards[i].level}
+                                      cardLevel={this.state.battle.getCardAtIdx(enemy, i).level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={enemy ? this.state.enemyCards[i].image : this.state.userCards[i].image}/>
+                                      cardImage={this.state.battle.getCardAtIdx(enemy, i).image}/>
                     );
                 })
         );
@@ -316,11 +235,10 @@ class BattleView extends React.Component {
                 (e, i) => {
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
-                                         cardIndexInDeck={enemy ? this.state.cardsEnemyOrder[i]
-                                             : this.state.cardsUserOrder[i]}
-                                         cardImage={enemy ? this.state.enemyCards[i].image : this.state.userCards[i].image}
-                                         cardName={enemy ? this.state.enemyCards[i].name : this.state.userCards[i].name}
-                                         cardLevel={enemy ? this.state.enemyCards[i].level : this.state.userCards[i].level}
+                                         cardIndexInDeck={this.state.battle.getCardAtIdx(enemy, i).initialPosition}
+                                         cardImage={this.state.battle.getCardAtIdx(enemy, i).image}
+                                         cardName={this.state.battle.getCardAtIdx(enemy, i).name}
+                                         cardLevel={this.state.battle.getCardAtIdx(enemy, i).level}
                                          setWidth={'124px'} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
@@ -516,31 +434,28 @@ class BattleView extends React.Component {
     }
 
     getCurrentFullCard = () => {
-        const card = this.state.isUsersTurn ? this.state.userCards[0] : this.state.enemyCards[0];
-        let description = '';
-        if (card.levels !== undefined)
-            description = card.levels.filter(item => item.level === card.level)[0].effects_description;
+        const card = this.battle.getCardOnTop();
 
         // I had to do it this way because of the way props are in FullCardView
         if (card.level === 1) {
             return (
                 <FullCardView cardName={card.name} cardSubject={card.subject}
                               cardImage={card.image} cardTooltip={card.tooltip}
-                              description={description} common
+                              description={card.description} common
                               setTranslateY={this.state.fullCardAction.translateY}/>
             )
         } else if (card.level === 2) {
             return (
                 <FullCardView cardName={card.name} cardSubject={card.subject}
                               cardImage={card.image} cardTooltip={card.tooltip}
-                              description={description} gold
+                              description={card.description} gold
                               setTranslateY={this.state.fullCardAction.translateY}/>
             )
         } else {
             return (
                 <FullCardView cardName={card.name} cardSubject={card.subject}
                               cardImage={card.image} cardTooltip={card.tooltip}
-                              description={description} epic
+                              description={card.description} epic
                               setTranslateY={this.state.fullCardAction.translateY}/>
             )
         }
@@ -548,6 +463,7 @@ class BattleView extends React.Component {
     }
 
     render() {
+        if (this.state.battle === undefined) return (<></>);
         return (
             <>
                 <Media query={mobile}>
@@ -559,7 +475,7 @@ class BattleView extends React.Component {
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={this.state.enemyHp} shield={this.state.enemyShield}
-                                                         username={this.state.enemyUsername}
+                                                         username={this.state.battle.enemy.username}
                                     />
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
@@ -582,7 +498,7 @@ class BattleView extends React.Component {
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
                                                         hp={this.state.userHp} shield={this.state.userShield}
-                                                        username={this.state.attackerUsername}/>
+                                                        username={this.state.battle.user.username}/>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>

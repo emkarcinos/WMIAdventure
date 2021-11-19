@@ -1,6 +1,7 @@
 import {playerFromData} from "./Player";
 import {Turn} from "./Turn";
 import {getCardById} from "../../../storage/cards/cardStorage";
+import {getUserById} from "../../../storage/profiles/userProfileList";
 
 /**
  Battle class transforms backend data into an actual battle process accessed via helper methods.
@@ -44,12 +45,23 @@ export class Battle {
      * Will not throw if there are errors.
      */
     fetchNonVitalDataAsynchronously() {
-        const fetchFunction = getCardById;
         for (const userCard of this.user.deck.cards)
-            userCard.fetchFieldsFromBackend(fetchFunction);
+            userCard.fetchFieldsFromBackend(getCardById);
         for (const enemyCard of this.enemy.deck.cards)
-            enemyCard.fetchFieldsFromBackend(fetchFunction);
+            enemyCard.fetchFieldsFromBackend(getCardById);
+
+        this.user.fetchUserDataFromBackend(getUserById);
+        this.enemy.fetchUserDataFromBackend(getUserById);
     }
+
+    getCardAtIdx(isEnemy, idx) {
+        return isEnemy ? this.enemy.deck.cards[idx] : this.user.deck.cards[idx];
+    }
+
+    getCardOnTop() {
+        return this.isUsersTurn ? this.user.deck.lookupCardOnTop() : this.enemy.deck.lookupCardOnTop();
+    }
+
 }
 
 export const battleFromData = (data) => {
