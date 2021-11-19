@@ -14,6 +14,7 @@ const Container = styled.div`
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
+    justify-content: flex-start;
     width: 334px;
     height: 200px;
   }

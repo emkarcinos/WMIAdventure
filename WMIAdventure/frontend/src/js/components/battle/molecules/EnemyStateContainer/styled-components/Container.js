@@ -12,6 +12,10 @@ const Container = styled.div`
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 334px;
     height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 0 0 16px 16px;
   }
 `;
 
