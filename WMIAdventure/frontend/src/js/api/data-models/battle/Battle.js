@@ -19,9 +19,11 @@ export class Battle {
 
     // Static data about the battle from backend
     turnsData = [];
-    currentTurn = 0;
+    currentTurnNum = 0;
     isUsersTurn = true;
     winnerId = undefined;
+    /** @type Turn */
+    currentTurn = undefined;
 
     constructor(user, enemy, turns, winnerId) {
         this.user = user;
@@ -31,13 +33,16 @@ export class Battle {
     }
 
     nextTurn() {
-        if (this.currentTurn >= this.turnsData.length)
+        if (this.currentTurnNum >= this.turnsData.length)
             return null;
 
-        const turn = new Turn(this.turnsData[this.currentTurn], this.user, this.enemy);
+        this.user.deck.reorder(this.turnsData[this.currentTurnNum].attacker.deck);
+        this.enemy.deck.reorder(this.turnsData[this.currentTurnNum].defender.deck);
+        const turn = new Turn(this.turnsData[this.currentTurnNum], this.user, this.enemy);
         this.isUsersTurn = (turn.executorId === this.user.id);
-        this.currentTurn++;
-        return turn;
+        this.currentTurnNum++;
+        this.currentTurn = turn;
+        return this.currentTurn;
     }
 
     /**
