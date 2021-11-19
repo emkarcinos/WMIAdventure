@@ -3,8 +3,12 @@ export class Deck {
     cards = [];
 
     constructor(cards) {
-        for (const card of cards)
+        let initialPosition = 1;
+        for (const card of cards) {
+            card.initialPosition = initialPosition;
             this.cards.push(card);
+            initialPosition++;
+        }
     }
 
     lookupCardOnTop() {
@@ -20,6 +24,15 @@ export class Deck {
      */
     lookupCardById(id) {
         return this.cards.filter(card => card.id === id)[0];
+    }
+
+    /**
+     * Returns a card by its position in deck
+     * @param pos: {int}
+     * @return {Card}
+     */
+    lookupCardByPos(pos) {
+        return this.cards.filter(card => card.initialPosition === pos)[0];
     }
 
     /**

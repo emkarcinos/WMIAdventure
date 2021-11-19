@@ -55,3 +55,25 @@ test('Should lookupById return correct card', () => {
     expect(lookupCardId3.id).toBe(card3.id);
     expect(lookupCardId1.id).toBe(card1.id);
 })
+
+test('Should assign initial positions correctly', () => {
+    const cards = [card1, card2, card3]; // ids: 1,2,3
+    const deck = new Deck(cards);
+    const cardPos1 = deck.cards[0].initialPosition;
+    const cardPos2 = deck.cards[1].initialPosition;
+    const cardPos3 = deck.cards[2].initialPosition;
+    expect(cardPos1).toBe(1);
+    expect(cardPos2).toBe(2);
+    expect(cardPos3).toBe(3);
+})
+
+test('Should return card by position correctly', () => {
+    const cards = [card1, card2, card3]; // ids: 1,2,3
+    const deck = new Deck(cards);
+    const lookupCardPos3 = deck.lookupCardByPos(3);
+    const lookupCardPos2 = deck.lookupCardByPos(2);
+    const lookupCardPos1 = deck.lookupCardByPos(1);
+    expect(lookupCardPos1.id).toBe(card1.id);
+    expect(lookupCardPos2.id).toBe(card2.id);
+    expect(lookupCardPos3.id).toBe(card3.id);
+})
