@@ -7,6 +7,7 @@ export class Player {
     /** @type Deck */
     deck = undefined;
     stoppedTurns = 0;
+    username = '';
 
     constructor(id, stats, deck) {
         this.id = id;
@@ -18,6 +19,11 @@ export class Player {
         if (this.stoppedTurns > 0)
             this.stoppedTurns--;
         this.deck.onTurnEnd();
+    }
+
+    async fetchUserDataFromBackend(backendCall) {
+        const data = await backendCall(this.id)
+        this.username = data.displayedUsername;
     }
 }
 

@@ -51,3 +51,14 @@ test('Should not decrement stoppedTurns below zero', () => {
     player.onTurnEnd();
     expect(player.stoppedTurns).toBe(0);
 })
+
+test('Should fetch and extra data correctly', async () => {
+    const mockBackendResponse = {
+        displayedUsername: "abie"
+    }
+    const player = playerFromData(examplePlayerData);
+    const mockCallback = jest.fn(() => mockBackendResponse);
+    await player.fetchUserDataFromBackend(mockCallback);
+    expect(player.username).toBe(mockBackendResponse.displayedUsername);
+
+})
