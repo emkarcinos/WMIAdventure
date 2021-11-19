@@ -5,10 +5,20 @@ import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
  * Returns list of all users with their basic information.
  * @returns {Promise<*>} Array of basic user info objects.
  */
-const getAllBasicUsersInfo = () => {
-    return RequestSender.get(UserProfilesEndpoints.main + '?pagesize=1000&page=1').then(response => response.json());
+const getAllBasicUsersInfo = async () => {
+    const pageSize = 1000;
+    let users = [];
+    let resp = await RequestSender.get(UserProfilesEndpoints.main + `?pagesize=${pageSize}`)
+        .then(resp => resp.json());
+    users.push.apply(users, resp.results);
+    while (resp.next !== null) {
+        resp = await RequestSender.get(resp.next)
+            .then(resp => resp.json());
+        users.push.apply(users, resp.results);
+    }
+    console.log(users);
+    return users;
 }
-
 /**
  * Gets given user's decks from API.
  * @param userId

@@ -1,18 +1,21 @@
-class Buff:
+from battle.businesslogic.buffs.BaseBuff import BaseBuff
 
-    def __init__(self,
-                 multiplier=1.0,
-                 modifier=0.0,
-                 active_turns=1,
-                 activation_delay_turns=0):
+
+class ModifierBuff(BaseBuff):
+
+    def __init__(self, buff_type=None, multiplier=1.0, modifier=0.0, active_turns=1, activation_delay_turns=0):
         """
         Creates a buff.
-        Buffs can have an expiration date, and they can activate themselves after specified amount of turns.
+        ModifierBuffs can have an expiration date, and they can activate themselves after specified amount of turns.
+
+        @param buff_type: Id of effect that this buff applies to. Can be None if buff applies to all kinds of effects.
         @param multiplier: A factor by which the statistic will get multiplied
         @param modifier: An amount which will get added to the statistic value
         @param active_turns: Number of turns this buff will last
         @param activation_delay_turns: Number of turns before this buff activates.
         """
+
+        super().__init__(buff_type)
         self.multiplier = multiplier
         self.modifier = modifier
         self.turns_remaining = active_turns + 1

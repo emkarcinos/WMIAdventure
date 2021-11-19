@@ -19,11 +19,11 @@ import FullCardActionBackground from "./styled-components/FullCardActionBackgrou
 import FullCardView from "../../../global/atoms/FullCardView";
 import EffectIconsContainer from "./styled-components/EffectIconsContainer";
 import EffectIcon from "../../atoms/EffectIcon";
-import {getCurrentUserId} from "../../../../utils/userData";
 import CenterDiv from "./styled-components/CenterDiv";
 import userUsedEffects from "../../../../utils/prototypeData/userUsedEffects";
 import enemyUsedEffects from "../../../../utils/prototypeData/enemyUsedEffects";
 import DesktopBackground from "./styled-components/DesktopBackground";
+import {getCurrentUserId} from "../../../../storage/user/userData";
 
 class BattleView extends React.Component {
 
@@ -310,7 +310,7 @@ class BattleView extends React.Component {
         let handleMargin = '0'
         if (this.props.desktop) handleMargin = '0';
         else if (enemy)
-            return '0 0 0 10px';
+            handleMargin = '0 0 0 10px';
         else handleMargin = '0 10px 0 0';
         return (
             [...Array(5)].map(

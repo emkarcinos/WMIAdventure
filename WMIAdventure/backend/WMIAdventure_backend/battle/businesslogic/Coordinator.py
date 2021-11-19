@@ -1,5 +1,6 @@
 from .Player import Player
 from .TurnsQueue import TurnsQueue
+from .recorder.ProcessRecorder import ProcessRecorder
 
 
 class Coordinator:
@@ -17,10 +18,15 @@ class Coordinator:
         # Effect activation requires a target player as an argument, so we calculate this here.
         return self.defender if player is self.attacker else self.attacker
 
-    def next_turn(self) -> None:
+    def next_turn(self, recorder: ProcessRecorder) -> None:
         current_player = self.turnsQueue.turn()
+        recorder.record_turn_start(self.attacker, self.defender, current_player)
 
-        used_effects = current_player.use_card()
+        used_card, used_effects = current_player.use_card()
+        recorder.record_card_usage(used_card)
+
         for effect in used_effects:
-            effect.activate(current_player, self.get_players_opponent(current_player), self.turnsQueue)
+            effect_impact = effect.activate(current_player, self.get_players_opponent(current_player), self.turnsQueue)
+            recorder.record_effect_usage(effect_impact)
 
+        recorder.record_turn_end()

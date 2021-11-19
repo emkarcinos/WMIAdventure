@@ -4,8 +4,12 @@ const userDataKeys = {
     userDecks: 'userDecks',
 };
 
+const userProfileKeys = {
+    profileList: 'user-profile-list',
+}
+
 const cardKey = (id) => {
     return `card${id}`;
 }
 
-export {userDataKeys, cardKey};
+export {userDataKeys, userProfileKeys, cardKey};

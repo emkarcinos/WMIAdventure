@@ -1,5 +1,4 @@
 from collections import deque
-from typing import Union
 
 from IngameUsers.models import Deck as DeckModel
 from .BattleCard import BattleCard
@@ -14,10 +13,6 @@ class Deck:
         """
 
         self.cards_queue = deque()
-        # This queue actually takes priority over cards_queue - it needs to be emptied before the actual cards_queue
-        # can kick in.
-        # Its use is to keep track of any cards that may execute multiple times without disrupting the deck.
-        self.temp_cards_queue = deque()
 
         self.create_cards_queue((BattleCard(deck_model.card1.card), BattleCard(deck_model.card2.card),
                                  BattleCard(deck_model.card3.card), BattleCard(deck_model.card4.card),
@@ -34,19 +29,6 @@ class Deck:
         for card in ordered_cards:
             self.cards_queue.append(card)
 
-    def _get_card_from_temp_queue(self, lookup_only=False) -> Union[BattleCard, None]:
-        """
-        Returns a card from temp queue. If there are no cards there, returns none.
-        @param lookup_only: If set to true, the method won't pop the element from the queue.
-        """
-        if len(self.temp_cards_queue) == 0:
-            return None
-
-        if lookup_only:
-            return self.temp_cards_queue[0]
-
-        return self.temp_cards_queue.popleft()
-
     def _dequeue_card(self) -> BattleCard:
         """
         Dequeues the card, enqueues it to the back of the queue and returns it for you.
@@ -60,12 +42,14 @@ class Deck:
         Retrieves first card from queue and appends it at the end.
         @return: Card which should be used in battle in current turn.
         """
-        card = self._get_card_from_temp_queue()
 
-        if card is None:
-            card = self._dequeue_card()
+        # If next card is doubled, then do not put it at back, just return it, so that
+        # duplicate is used, and original will be used in next turn.
+        next_card = self.lookup()
+        if next_card.doubled:
+            return next_card
 
-        return card
+        return self._dequeue_card()
 
     def lookup(self, index=0) -> BattleCard:
         """
@@ -76,12 +60,7 @@ class Deck:
             raise IndexError(f"Card index out of bounds. Deck ranges from 0 to {self.size() - 1}."
                              f"You specified {index}")
 
-        card = self._get_card_from_temp_queue(lookup_only=True)
-
-        if card is None:
-            card = self.cards_queue[index]
-
-        return card
+        return self.cards_queue[index]
 
     def size(self) -> int:
         """
@@ -89,4 +68,4 @@ class Deck:
         @return: How many cards are in deck + temp deck.
         """
 
-        return len(self.cards_queue) + len(self.temp_cards_queue)
+        return len(self.cards_queue)

@@ -1,10 +1,10 @@
-from copy import copy
 from typing import List
 from unittest import TestCase
 
 from .Creator import Creator
 from ..BattleCard import BattleCard
 from ..Deck import Deck
+from ..buffs.CardDuplicatedBuff import CardDuplicatedBuff
 
 
 class DeckTestCase(TestCase):
@@ -47,34 +47,38 @@ class DeckTestCase(TestCase):
         # Assert card is inserted at the back of the cards queue when you retrieve it.
         self.assertIs(card, list(self.attacker_battle_deck.cards_queue)[-1])
 
-    def test_temp_deck_lookup(self):
+    def test_get_card_which_is_duplicated(self):
+        """
+        **Scenario:**
+
+        - Deck exists, card at the front of Deck is doubled.
+
+        - We get card from deck.
+
+        ---
+
+        **Expected result:**
+
+        - Card which was at the front of the deck before we retrieved it is still there, because it was duplicated
+        when we retrieved it.
+        """
+
         deck = self.attacker_battle_deck
-        # We get a card from the middle of the deck
-        card4 = self.attacker_battle_deck.lookup(4)
-        # And we add it to temp_cards_queue
-        deck.temp_cards_queue.append(card4)
 
-        # If all went OK, we should get the previously appended card from the deck at front of the deck..
+        # Make card at the front of the deck doubled
+        card_at_front = deck.lookup()
+        card_at_front.card_duplicated_buff = CardDuplicatedBuff(card_at_front.effects)
 
-        returned_card = deck.lookup()
-        self.assertIs(returned_card, card4)
+        # Get card from deck
+        retrieved_card = deck.get_card()
 
-    def test_temp_deck_get(self):
-        deck = copy(self.attacker_battle_deck)
-        card4 = deck.lookup(4)
-        deck.temp_cards_queue.append(card4)
-
-        returned_card = deck.get_card()
-        self.assertIs(returned_card, card4)
+        # Assert that retrieved card is still at the top of the deck
+        self.assertIs(retrieved_card, deck.lookup())
 
     def test_size(self):
         deck = self.attacker_battle_deck
         expected_size = 5
         self.assertEqual(deck.size(), expected_size)
-
-        expected_size_after_alteration = expected_size + 1
-        deck.temp_cards_queue.append(deck.lookup())
-        self.assertEqual(deck.size(), expected_size_after_alteration)
 
     @classmethod
     def tearDownClass(cls) -> None:
