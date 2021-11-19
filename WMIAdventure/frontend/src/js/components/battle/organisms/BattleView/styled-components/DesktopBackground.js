@@ -12,6 +12,7 @@ const DesktopBackground = styled.div`
   background-color: ${({theme}) => theme.colors.greenyBluey};
   transition: transform 0.5s ease-in-out;
   transform: scale(${({setScale}) => setScale ? setScale : '1'});
+  overflow: hidden;
 `;
 
 export default DesktopBackground;

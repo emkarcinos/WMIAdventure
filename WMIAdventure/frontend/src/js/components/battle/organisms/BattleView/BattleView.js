@@ -92,6 +92,10 @@ class BattleView extends React.Component {
             {level: 1, icon: icon4}, {level: 1, icon: icon5}
         ],
         prototypeIterationsCount: 0,
+
+        // desktop background elements
+        backgroundElemBeforePosX: '0',
+        backgroundElemAfterPosX: '0',
     }
 
     componentDidMount() {
@@ -208,6 +212,16 @@ class BattleView extends React.Component {
             + nextStepAnimationDuration + 100);
     }
 
+    showPseudoBackgroundElements() {
+        setTimeout(() => {
+            this.setState({
+                backgroundElemBeforePosX: '-100%',
+                backgroundElemAfterPosX: '100%',
+            });
+        }, battleInitLoadingDuration
+            + nextStepAnimationDuration * 3);
+    }
+
     // init elements animation for desktop
     desktopItemsAnimationInit = () => {
         this.setState({
@@ -216,6 +230,7 @@ class BattleView extends React.Component {
         this.showStatesContainersVertical();
         this.showCompactCardsVertical();
         this.usersStatsInitAnimation();
+        this.showPseudoBackgroundElements();
     }
 
     // helper function to set property states
@@ -565,25 +580,28 @@ class BattleView extends React.Component {
 
                 <Media query={desktop}>
                     <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
-                        <PopUp setMaxHeight={'954px'} setMaxWidth={'1092px'} visible={this.props.visible}
-                               setWidth={'100%'} setHeight={'calc(100% - 12px)'} setAlignment={'space-between'}
-                               disableClose>
-                            <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
-                                <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}
-                                                     setTranslateY={this.state.enemyStateContainerTranslateY}/>
-                                <FlexGapContainer gap={'10px'} reverse>
-                                    {this.getCompactCards(true)}
+                        <MainContainer setBeforeTranslateX={this.state.backgroundElemBeforePosX}
+                                       setAfterTranslateY={this.state.backgroundElemAfterPosX}>
+                            <PopUp visible={this.props.visible} disableClose
+                                   setWidth={'100%'} setHeight={'100%'}
+                                   setAlignment={'space-between'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
+                                    <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}
+                                                         setTranslateY={this.state.enemyStateContainerTranslateY}/>
+                                    <FlexGapContainer gap={'10px'} reverse>
+                                        {this.getCompactCards(true)}
+                                    </FlexGapContainer>
                                 </FlexGapContainer>
-                            </FlexGapContainer>
-                            <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                            <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
-                                <FlexGapContainer gap={'10px'}>
-                                    {this.getCompactCards(false)}
+                                <KuceInBattle visible={this.state.kuceInBattleVisible}/>
+                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
+                                    <FlexGapContainer gap={'10px'}>
+                                        {this.getCompactCards(false)}
+                                    </FlexGapContainer>
+                                    <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}
+                                                        setTranslateY={this.state.userStateContainerTranslateY}/>
                                 </FlexGapContainer>
-                                <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}
-                                                    setTranslateY={this.state.userStateContainerTranslateY}/>
-                            </FlexGapContainer>
-                        </PopUp>
+                            </PopUp>
+                        </MainContainer>
                     </DesktopBackground>
                 </Media>
             </>
