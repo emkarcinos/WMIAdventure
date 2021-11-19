@@ -19,6 +19,7 @@ export class Battle {
     // Static data about the battle from backend
     turnsData = [];
     currentTurn = 0;
+    isUsersTurn = true;
     winnerId = undefined;
 
     constructor(user, enemy, turns, winnerId) {
@@ -33,6 +34,7 @@ export class Battle {
             return null;
 
         const turn = new Turn(this.turnsData[this.currentTurn], this.user, this.enemy);
+        this.isUsersTurn = (turn.executorId === this.user.id);
         this.currentTurn++;
         return turn;
     }

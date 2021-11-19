@@ -40,3 +40,26 @@ test("Test nextTurn returns correct turns", () => {
     expect(turn2.executorId).toBe(turns[1].card_executor);
     expect(turn3).toBe(null);
 })
+
+test("Should isUsersTurn get assigned correctly", () => {
+    const exampleTurnData = [{
+        card_executor: exampleData1.attacker.id,
+        used_card: 3,
+        used_effects: [
+            {
+                id: 1,
+                target_player: exampleData1.defender.id,
+                power: 37.87219609052145,
+                changed_stats: {
+                    hp: 62.12780390947855,
+                    armour: 0.0
+                }
+            },
+        ],
+    }]
+    let data = exampleData1;
+    data.turns = exampleTurnData;
+    const battle = battleFromData(data);
+    battle.nextTurn();
+    expect(battle.isUsersTurn).toBeTruthy();
+})
