@@ -340,7 +340,7 @@ class OpponentSelected extends React.Component {
                                                     color={theme.colors.yellowyOrangy} icon={xClose}>
                                         Wróć
                                     </ButtonWithIcon>
-                                    <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                    <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
                                                     color={theme.colors.purplyPinky} icon={battleIcon}>
                                         Walcz
                                     </ButtonWithIcon>
@@ -360,6 +360,7 @@ class OpponentSelected extends React.Component {
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
+                                    battleData={this.state.battleData}
                                     closeHandler={this.battleViewCloseHandler}
                                     setScale={this.state.battleView.scale}
                                     desktop={true}/>

@@ -79,8 +79,6 @@ class BattleView extends React.Component {
         backgroundElemBeforePosX: '0',
         backgroundElemAfterPosX: '0',
     }
-    /** @type Battle */
-    battle = undefined;
 
     componentDidMount() {
         getCurrentUserId()
@@ -94,10 +92,10 @@ class BattleView extends React.Component {
             this.setState({
                 kuceInBattleVisible: true,
             });
-            this.battle = battleFromData(this.props.battleData);
-            this.setState({battle: this.battle});
-            this.battle.fetchNonVitalDataAsynchronously(); // Runs in the background
-            this.battle.nextTurn();
+            const battle = battleFromData(this.props.battleData);
+            this.setState({battle: battle});
+            battle.fetchNonVitalDataAsynchronously(); // Runs in the background
+            battle.nextTurn();
             (this.props.desktop) ? this.desktopItemsAnimationInit() : this.itemsAnimationInit();
         }
     }
@@ -410,7 +408,7 @@ class BattleView extends React.Component {
             this.setState({
                 effectsActionScale: newEffectsActionScale
             });
-            this.battle.currentTurn.advance();
+            this.state.battle.currentTurn.advance();
             // TODO: here call function doing particular effect for example damage, change card-order etc.
         }, nextStepAnimationDuration);
     }
@@ -429,7 +427,7 @@ class BattleView extends React.Component {
 
     // scale USER or ENEMY effect icons to signal effect action
     effectsActions = (userTurn, index = 0) => {
-        const effects = this.battle.currentTurn.usedEffects;
+        const effects = this.state.battle.currentTurn.usedEffects;
         if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
@@ -463,7 +461,7 @@ class BattleView extends React.Component {
 
     callNextCardSequence() {
         setTimeout(() => {
-            const userTurn = this.battle.isUsersTurn;
+            const userTurn = this.state.battle.isUsersTurn;
             this.fullCardAction(userTurn);
         }, nextStepAnimationDuration * 3);
     }
@@ -492,7 +490,7 @@ class BattleView extends React.Component {
     }
 
     getCurrentFullCard = () => {
-        const card = this.battle.getCardOnTop();
+        const card = this.state.battle.getCardOnTop();
 
         // I had to do it this way because of the way props are in FullCardView
         if (card.level === 1) {
@@ -594,8 +592,11 @@ class BattleView extends React.Component {
                                    setWidth={'100%'} setHeight={'100%'}
                                    setAlignment={'space-between'}>
                                 <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
-                                    <EnemyStateContainer hp={this.state.enemyHp} shield={this.state.enemyShield}
-                                                         setTranslateY={this.state.enemyStateContainerTranslateY}/>
+                                    <EnemyStateContainer setTranslateY={this.state.enemyStateContainerTranslateY}
+                                                         hp={parseInt(this.state.battle.enemy.stats.hp)}
+                                                         shield={parseInt(this.state.battle.enemy.stats.armour)}
+                                                         username={this.state.battle.enemy.username}
+                                    />
                                     <FlexGapContainer gap={'10px'} reverse>
                                         {this.getCompactCards(true)}
                                     </FlexGapContainer>
@@ -605,8 +606,10 @@ class BattleView extends React.Component {
                                     <FlexGapContainer gap={'10px'}>
                                         {this.getCompactCards(false)}
                                     </FlexGapContainer>
-                                    <UserStateContainer hp={this.state.userHp} shield={this.state.userShield}
-                                                        setTranslateY={this.state.userStateContainerTranslateY}/>
+                                    <UserStateContainer setTranslateY={this.state.userStateContainerTranslateY}
+                                                        hp={parseInt(this.state.battle.user.stats.hp)}
+                                                        shield={parseInt(this.state.battle.user.stats.armour)}
+                                                        username={this.state.battle.user.username}/>
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
