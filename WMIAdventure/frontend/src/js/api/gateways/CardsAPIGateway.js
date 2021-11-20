@@ -48,6 +48,10 @@ class CardsAPIGateway {
     static getCardById(id) {
         return RequestSender.get(CardsEndpoints.byId(id))
     }
+
+    static getEffectById(id) {
+        return RequestSender.get(CardsEndpoints.effectById(id));
+    }
 }
 
 export default CardsAPIGateway;
