@@ -9,16 +9,16 @@ function colorHandler(level, theme) {
         return theme.colors.purplyPinky;
 }
 
-function visibleHandle(cardIndexInDeck) {
-    if(cardIndexInDeck) {
-        if(cardIndexInDeck === 1)
+function visibleHandle(cardIndexInDeck, battleOnDesktop) {
+    if (cardIndexInDeck && !battleOnDesktop) {
+        if (cardIndexInDeck === 1)
             return 'flex';
         else return 'none';
     } else return 'flex';
 }
 
 const Div = styled.div`
-  display: ${({cardIndexInDeck}) => visibleHandle(cardIndexInDeck)};
+  display: ${({cardIndexInDeck, battleOnDesktop}) => visibleHandle(cardIndexInDeck, battleOnDesktop)};
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -31,16 +31,16 @@ const Div = styled.div`
   padding-top: 18px;
   overflow-y: hidden;
   font-family: 'Roboto', sans-serif;
-  box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
+  box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'none'};
   transition: transform 0.5s, opacity 0.5s ease-in-out;
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
-  transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'}, 
+  transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'},
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: ${({setWidth}) => setWidth ? setWidth : '144px'};
     height: ${({setHeight}) => setHeight ? setHeight : '220px'};
-    box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'nome'};
+    box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'none'};
     margin: ${({setMargin}) => setMargin ? setMargin : '0 0 60px 0'};
   }
 

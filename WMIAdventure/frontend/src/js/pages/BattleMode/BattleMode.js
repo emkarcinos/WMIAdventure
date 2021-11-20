@@ -52,7 +52,6 @@ class BattleMode extends React.Component {
             .then(name => name ? this.setState({loggedInUsername: name}) : null);
     }
 
-
     runUserPreviewHandler = (username, userId) => {
         this.setState({
             userPreviewRun: true,
@@ -117,6 +116,25 @@ class BattleMode extends React.Component {
         });
     }
 
+    userListItemsRender = () => {
+        return (
+            <Ul scrollVisible={this.state.scrollVisible}>
+                {this.state.users ? this.state.users.map((elem) => {
+                    return (
+                        <UserListItem key={elem.user}
+                                      access={!(elem.user === this.state.loggedInUserId)}
+                                      displayedUsername={elem.displayedUsername}
+                                      searchInput={this.state.searchInput}
+                                      term={elem.semester} level={elem.user * 4}
+                                      runUserPreviewHandler={() => this.runUserPreviewHandler(
+                                          elem.displayedUsername,
+                                          elem.user)}/>
+                    );
+                }) : ''}
+            </Ul>
+        );
+    }
+
     render() {
         return (
             <>
@@ -134,20 +152,7 @@ class BattleMode extends React.Component {
                                 <Search searchInput={this.state.searchInput}
                                         handleSearch={this.handleSearch}/>
                             </SearchContainer>
-                            <Ul scrollVisible={this.state.scrollVisible}>
-                                {this.state.users ? this.state.users.map((elem) => {
-                                    return (
-                                        <UserListItem key={elem.user}
-                                                      access={!(elem.user === this.state.loggedInUserId)}
-                                                      displayedUsername={elem.displayedUsername}
-                                                      searchInput={this.state.searchInput}
-                                                      term={elem.semester} level={elem.user * 4}
-                                                      runUserPreviewHandler={() => this.runUserPreviewHandler(
-                                                          elem.displayedUsername,
-                                                          elem.user)}/>
-                                    );
-                                }) : ''}
-                            </Ul>
+                            {this.userListItemsRender()}
                             <SwipeProfile userId={this.state.loggedInUserId} username={this.state.loggedInUsername}
                                           hideScroll={this.hideScroll} showScroll={this.showScroll}/>
                         </>
@@ -169,20 +174,7 @@ class BattleMode extends React.Component {
                                     <Search searchInput={this.state.searchInput}
                                             handleSearch={this.handleSearch}/>
                                 </SearchContainer>
-                                <Ul scrollVisible={this.state.scrollVisible}>
-                                    {this.state.users ? this.state.users.map((elem) => {
-                                        return (
-                                            <UserListItem key={elem.user}
-                                                          access={!(elem.user === this.state.loggedInUserId)}
-                                                          displayedUsername={elem.displayedUsername}
-                                                          searchInput={this.state.searchInput}
-                                                          term={elem.semester} level={elem.user * 4}
-                                                          runUserPreviewHandler={() => this.runUserPreviewHandler(
-                                                              elem.displayedUsername,
-                                                              elem.user)}/>
-                                        );
-                                    }) : ''}
-                                </Ul>
+                                {this.userListItemsRender()}
                             </DesktopLeft>
                         </>
                     </Media>
