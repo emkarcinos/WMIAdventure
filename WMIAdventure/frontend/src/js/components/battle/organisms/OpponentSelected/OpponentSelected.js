@@ -35,8 +35,12 @@ class OpponentSelected extends React.Component {
         userDeck: null,
 
         // states uses for mount battleView
-        battleView: false,
-        battleViewPos: '-100vh',
+        battleView: {
+            visible: false,
+            translateY: '-100vh',
+            scale: '0',
+        },
+
         error: {
             visible: false,
             message: '',
@@ -190,14 +194,16 @@ class OpponentSelected extends React.Component {
     }
     // method that run dynamic battle view
     battleViewRunHandler = () => {
+        this.props.closeUserPreviewHandler();
+
         this.props.kuceStopFight();
         this.setState({
-            battleView: true,
+            battleView: {visible: true, translateY: '-100vh', scale: '0'},
         });
 
         setTimeout(() => {
             this.setState({
-                battleViewPos: '0',
+                battleView: {visible: true, translateY: '0', scale: '1'},
             });
         }, popUpLoadingMinimalDuration);
     }
@@ -205,12 +211,12 @@ class OpponentSelected extends React.Component {
     // method that close dynamic battle view
     battleViewCloseHandler = () => {
         this.setState({
-            battleViewPos: '-100vh',
+            battleView: {visible: true, translateY: '-100vh', scale: '0'},
         });
 
         setTimeout(() => {
             this.setState({
-                battleView: false,
+                battleView: {visible: false, translateY: '-100vh', scale: '0'},
             });
         }, 550);
 
@@ -285,10 +291,11 @@ class OpponentSelected extends React.Component {
                                     opponent={this.props.opponent.username}
                                     opponentDeck={this.state.opponentDeck}
                                     setTranslateY={this.state.postBattlePos}/>
-                        <BattleView battleView={this.state.battleView}
+                        <BattleView visible={this.state.battleView.visible}
                                     battleData={this.state.battleData}
                                     closeHandler={this.battleViewCloseHandler}
-                                    setTranslateY={this.state.battleViewPos}/>
+                                    setTranslateY={this.state.battleView.translateY}
+                                    desktop={false}/>
 
                         {this.errors()}
                     </>
@@ -333,7 +340,8 @@ class OpponentSelected extends React.Component {
                                                     color={theme.colors.yellowyOrangy} icon={xClose}>
                                         Wróć
                                     </ButtonWithIcon>
-                                    <ButtonWithIcon setMargin={'0'} color={theme.colors.purplyPinky} icon={battleIcon}>
+                                    <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                                    color={theme.colors.purplyPinky} icon={battleIcon}>
                                         Walcz
                                     </ButtonWithIcon>
                                     <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
@@ -351,6 +359,10 @@ class OpponentSelected extends React.Component {
                                     opponentDeck={this.state.opponentDeck}
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
+                        <BattleView visible={this.state.battleView.visible}
+                                    closeHandler={this.battleViewCloseHandler}
+                                    setScale={this.state.battleView.scale}
+                                    desktop={true}/>
                         {this.errors()}
                     </>
                 </Media>

@@ -12,21 +12,19 @@ const Div = styled.div`
   height: calc(100vh - 48px);
   width: 100%;
   background-color: ${({theme}) => theme.colors.whiteAlmost};
-  transition: opacity 0.3s ease-in-out, transform  0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   z-index: 5;
   overflow-x: hidden;
   overflow-y: scroll;
-  
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     position: static;
     border-radius: 20px;
-
     width: ${({setWidth}) => setWidth ? setWidth : '924px'};
     height: ${({setHeight}) => setHeight ? setHeight : '454px'};
-    max-height: 100%;
-    
-    justify-content: center;
-
+    max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'auto'};
+    max-height: ${({setMaxHeight}) => setMaxHeight ? setMaxHeight : '100%'};
+    justify-content: ${({setAlignment}) => setAlignment ? setAlignment : 'center'};
     -ms-overflow-style: none; /* IE 10+ */
     scrollbar-width: none;
     ::-webkit-scrollbar {

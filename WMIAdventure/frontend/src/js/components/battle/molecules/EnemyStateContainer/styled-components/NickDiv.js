@@ -10,6 +10,11 @@ const NickDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 0 12px 0;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    border-radius: 0 0 16px 16px;
+    margin: 0;
+  }
 `;
 
 export default NickDiv;
