@@ -67,8 +67,8 @@ export class Deck {
         this.cards = newDeck;
     }
 
-    onTurnEnd() {
-        for (const card of this.cards)
-            card.onTurnEnd();
+    onTurnEnd(executedCardId) {
+        const card = this.cards.filter(card => card.id === executedCardId)[0];
+        card.onTurnEnd();
     }
 }

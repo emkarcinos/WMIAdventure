@@ -26,7 +26,7 @@ export class Turn {
      */
     getNextEffect() {
         if (this.currentlyExecutingEffectIdx >= this.usedEffects.length) {
-            this.onTurnEnd();
+            this.onTurnEnd(this.usedCardId);
             return null;
         }
 
@@ -56,7 +56,7 @@ export class Turn {
      */
     onTurnEnd() {
         const executor = (this.executorId === this.user.id) ? this.user : this.enemy;
-        executor.onTurnEnd();
+        executor.onTurnEnd(this.usedCardId);
     }
 }
 
