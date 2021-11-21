@@ -90,7 +90,8 @@ class CompactCardView extends React.Component {
                  battleOnDesktop={this.props.battleOnDesktop ? this.props.battleOnDesktop : false}
                  setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
-                 cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}>
+                 cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}
+                 setScale={this.props.setScale}>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>

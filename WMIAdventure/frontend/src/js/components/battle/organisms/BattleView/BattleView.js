@@ -78,6 +78,13 @@ class BattleView extends React.Component {
         // desktop background elements
         backgroundElemBeforePosX: '0',
         backgroundElemAfterPosX: '0',
+
+        // desktop compact card action
+        compactCardOnTopScale: {
+            user: '1',
+            enemy: '1',
+            middle: '0'
+        }
     }
 
     componentDidMount() {
@@ -293,6 +300,8 @@ class BattleView extends React.Component {
                     const cardIdx = enemy ?
                         this.state.battle.enemy.deck.getCardIdxById(card.id) + 1 :
                         this.state.battle.user.deck.getCardIdxById(card.id) + 1;
+                    const compactCardOnTopScale = enemy ? this.state.compactCardOnTopScale.enemy :
+                        this.state.compactCardOnTopScale.user;
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          battleOnDesktop={this.props.desktop}
@@ -305,7 +314,8 @@ class BattleView extends React.Component {
                                              : this.state.userCompactCardTranslateX}
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
-                                         setMargin={handleMargin}/>
+                                         setMargin={handleMargin}
+                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}/>
                     );
                 })
         );
@@ -389,7 +399,17 @@ class BattleView extends React.Component {
     }
 
     compactCardActionDesktop = (userTurn) => {
-        console.log(userTurn);
+        setTimeout(() => {
+            if (userTurn) {
+                this.setState({
+                    compactCardOnTopScale: {user: '0', enemy: '1', middle: '1'},
+                });
+            } else {
+                this.setState({
+                    compactCardOnTopScale: {user: '1', enemy: '0', middle: '1'},
+                });
+            }
+        }, nextStepAnimationDuration);
     }
 
     // push forward USER or ENEMY compact card
@@ -495,6 +515,13 @@ class BattleView extends React.Component {
         this.setState({
             kuceInBattleVisible: true,
         });
+
+        if (this.props.desktop) {
+            this.setState({
+                compactCardOnTopScale: {user: '1', enemy: '1', middle: '0'},
+            });
+        }
+
         if (userTurn) {
             this.setState({
                 userCompactCardTranslateX: '0',
@@ -636,6 +663,31 @@ class BattleView extends React.Component {
                                                   setOpacity={this.state.fullCardAction.opacity}>
                             {this.getCurrentFullCard()}
                         </FullCardActionBackground>
+                        <CenterDiv>
+                            <CompactCardView cardName={this.state.battle.getCardOnTop().name}
+                                             cardLevel={this.state.battle.getCardOnTop().level}
+                                             cardImage={this.state.battle.getCardOnTop().image}
+                                             setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
+                                             setScale={this.state.compactCardOnTopScale.middle}/>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(true)}
+                                setOpacity={this.state.effectsTarget.user.opacity}
+                                setScale={this.state.effectsTarget.user.scale}
+                                setTranslateY={this.state.effectsTarget.user.translateY}>
+                                {this.effectsTargetIteration(true)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(false)}
+                                setOpacity={this.state.effectsTarget.enemy.opacity}
+                                setScale={this.state.effectsTarget.enemy.scale}
+                                setTranslateY={this.state.effectsTarget.enemy.translateY}>
+                                {this.effectsTargetIteration(false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
                     </DesktopBackground>
                 </Media>
             </>
