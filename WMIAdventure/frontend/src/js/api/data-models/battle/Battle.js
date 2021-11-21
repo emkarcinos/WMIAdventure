@@ -59,8 +59,8 @@ export class Battle {
         this.enemy.fetchUserDataFromBackend(getUserById);
     }
 
-    getCardAtIdx(isEnemy, idx) {
-        return isEnemy ? this.enemy.deck.cards[idx] : this.user.deck.cards[idx];
+    getCardByInitialPos(isEnemy, pos) {
+        return isEnemy ? this.enemy.deck.lookupCardByPos(pos) : this.user.deck.lookupCardByPos(pos);
     }
 
     getCardOnTop() {

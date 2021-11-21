@@ -258,17 +258,21 @@ class BattleView extends React.Component {
         return (
             [...Array(5)].map(
                 (e, i) => {
+                    const card = this.state.battle.getCardByInitialPos(enemy, i + 1);
+                    const cardIdx = enemy ?
+                        this.state.battle.enemy.deck.getCardIdxById(card.id) + 1 :
+                        this.state.battle.user.deck.getCardIdxById(card.id) + 1;
                     return (
                         <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                                      cardIndexInDeck={this.state.battle.getCardAtIdx(enemy, i).initialPosition}
+                                      cardIndexInDeck={cardIdx}
                                       setTranslateX={
                                           enemy ? this.state.enemyMiniCardsTranslateX[i]
                                               : this.state.userMiniCardsTranslateX[i]
                                       }
                                       enemy={enemy} user={!enemy}
-                                      cardLevel={this.state.battle.getCardAtIdx(enemy, i).level}
+                                      cardLevel={card.level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={this.state.battle.getCardAtIdx(enemy, i).image}/>
+                                      cardImage={card.image}/>
                     );
                 })
         );
@@ -284,13 +288,17 @@ class BattleView extends React.Component {
         return (
             [...Array(5)].map(
                 (e, i) => {
+                    const card = this.state.battle.getCardByInitialPos(enemy, i + 1);
+                    const cardIdx = enemy ?
+                        this.state.battle.enemy.deck.getCardIdxById(card.id) + 1 :
+                        this.state.battle.user.deck.getCardIdxById(card.id) + 1;
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          battleOnDesktop={this.props.desktop}
-                                         cardIndexInDeck={this.state.battle.getCardAtIdx(enemy, i).initialPosition}
-                                         cardImage={this.state.battle.getCardAtIdx(enemy, i).image}
-                                         cardName={this.state.battle.getCardAtIdx(enemy, i).name}
-                                         cardLevel={this.state.battle.getCardAtIdx(enemy, i).level}
+                                         cardIndexInDeck={cardIdx}
+                                         cardImage={card.image}
+                                         cardName={card.name}
+                                         cardLevel={card.level}
                                          setWidth={'124px'} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}

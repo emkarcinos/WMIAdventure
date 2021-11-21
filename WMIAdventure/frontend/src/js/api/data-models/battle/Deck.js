@@ -35,6 +35,11 @@ export class Deck {
         return this.cards.filter(card => card.initialPosition === pos)[0];
     }
 
+    getCardIdxById(id) {
+        const card = this.cards.filter(card => card.id === id)[0];
+        return this.cards.indexOf(card);
+    }
+
     /**
      * Returns a card that was on top of the deck and enqueues it back.
      * @returns Card
