@@ -15,6 +15,7 @@ import CardDescribePreview from '../../atoms/CardDescribePreview';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
+import {getAllEffects} from "../../../../storage/effects/effectStorage";
 
 class CardsCreator extends React.Component {
     state = {
@@ -96,7 +97,7 @@ class CardsCreator extends React.Component {
                 .then(data => this.setState({cardsFromApi: data}))
                 .catch(error => console.log(error));
         }
-        CardsAPIGateway.getAllEffects()
+        getAllEffects()
             .then(data => this.setState({effectsFromApi: data}))
             .catch(error => console.log(error));
     }

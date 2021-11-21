@@ -16,4 +16,12 @@ const profileKey = (id) => {
     return `profile${id}`;
 }
 
-export {userDataKeys, userProfileKeys, cardKey, profileKey};
+const effectKeys = {
+    /**
+     * Array containing ids of all effects.
+     */
+    effectsIds: 'effects-ids',
+    effectKey: (id) => { return `effect${id}`; }
+}
+
+export {userDataKeys, userProfileKeys, cardKey, effectKeys, profileKey};
