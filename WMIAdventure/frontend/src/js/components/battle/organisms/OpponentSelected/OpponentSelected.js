@@ -22,6 +22,7 @@ import {getCurrentUserDecks, getCurrentUsername} from "../../../../storage/user/
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
+import {getCardById} from "../../../../storage/cards/cardStorage";
 
 class OpponentSelected extends React.Component {
 
@@ -167,10 +168,35 @@ class OpponentSelected extends React.Component {
         }, nextStepAnimationDuration);
     }
 
+    cacheEnemyCards = async (battleData) => {
+        for (const card of battleData.defender.deck) {
+            await getCardById(card.id); // We just make sure those are cached
+        }
+    }
+
+    onFightButton = () => {
+        this.props.closeUserPreviewHandler();
+        this.props.kuceStartFight();
+        fightWithUser(this.props.opponent.id)
+            .then(response => {
+                if (response.ok) {
+                    response.json()
+                        .then(data => {
+                            this.setState({battleData: data})
+                            this.cacheEnemyCards(data).then(() =>
+                                this.battleViewRunHandler());
+                        })
+                } else {
+                    this.handleBattleErrors(response);
+                    this.props.kuceStopFight();
+                }
+            });
+    }
     // method that run dynamic battle view
     battleViewRunHandler = () => {
         this.props.closeUserPreviewHandler();
 
+        this.props.kuceStopFight();
         this.setState({
             battleView: {visible: true, translateY: '-100vh', scale: '0'},
         });
@@ -246,7 +272,7 @@ class OpponentSelected extends React.Component {
                                                         color={theme.colors.yellowyOrangy} icon={xClose}>
                                             Wróć
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                        <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
                                                         color={theme.colors.purplyPinky} icon={battleIcon}>
                                             Walcz
                                         </ButtonWithIcon>
@@ -266,6 +292,7 @@ class OpponentSelected extends React.Component {
                                     opponentDeck={this.state.opponentDeck}
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
+                                    battleData={this.state.battleData}
                                     closeHandler={this.battleViewCloseHandler}
                                     setTranslateY={this.state.battleView.translateY}
                                     desktop={false}/>
@@ -313,7 +340,7 @@ class OpponentSelected extends React.Component {
                                                     color={theme.colors.yellowyOrangy} icon={xClose}>
                                         Wróć
                                     </ButtonWithIcon>
-                                    <ButtonWithIcon setMargin={'0'} handler={this.battleViewRunHandler}
+                                    <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
                                                     color={theme.colors.purplyPinky} icon={battleIcon}>
                                         Walcz
                                     </ButtonWithIcon>
@@ -333,6 +360,7 @@ class OpponentSelected extends React.Component {
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
+                                    battleData={this.state.battleData}
                                     closeHandler={this.battleViewCloseHandler}
                                     setScale={this.state.battleView.scale}
                                     desktop={true}/>

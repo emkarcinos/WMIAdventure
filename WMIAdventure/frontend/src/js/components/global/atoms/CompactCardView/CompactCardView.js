@@ -67,7 +67,7 @@ class CompactCardView extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.propsChanged(prevProps))
             this.setStateFromProps();
-        else if (prevProps.cardIndexInDeck
+        if (prevProps.cardIndexInDeck
             && (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
             // fade animation, and update orders, when cardsOrder did change
             this.setState({

@@ -5,7 +5,8 @@ import API_URL from "./API_URL";
  */
 class UserProfilesEndpoints {
     static main = API_URL + 'user-profiles/';
-    static userDecks = (userId) => {return `${UserProfilesEndpoints.main}${userId}/decks/`};
+    static userDecks = (userId) => `${UserProfilesEndpoints.main}${userId}/decks/`;
+    static userById = (userId) => `${UserProfilesEndpoints.main}${userId}/`;
 }
 
 export default UserProfilesEndpoints;

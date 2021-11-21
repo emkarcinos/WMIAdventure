@@ -30,7 +30,7 @@ class EnemyStateContainer extends React.Component {
                         <NickDiv>
                             <Avatar src={this.props.image ? this.props.image : kuc1}/>
                             <Nick>
-                                skromnoscpotega
+                                {this.props.username}
                             </Nick>
                         </NickDiv>
                         <ColumnGapContainer gap={'8px'}>
@@ -63,7 +63,7 @@ class EnemyStateContainer extends React.Component {
                         </FlexGapContainer>
                         <NickDiv>
                             <Nick>
-                                skromnoscpotega
+                                {this.props.username}
                             </Nick>
                         </NickDiv>
                     </Container>

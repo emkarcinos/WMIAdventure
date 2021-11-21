@@ -40,7 +40,7 @@ class UserStateContainer extends React.Component {
                         <NickDiv>
                             <Avatar src={this.props.image ? this.props.image : kuc1}/>
                             <Nick>
-                                skromnoscpotega
+                                {this.props.username}
                             </Nick>
                         </NickDiv>
                     </Container>
@@ -50,7 +50,7 @@ class UserStateContainer extends React.Component {
                     <Container setTranslateY={this.props.setTranslateY}>
                         <NickDiv>
                             <Nick>
-                                skromnoscpotega
+                                {this.props.username}
                             </Nick>
                         </NickDiv>
                         <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>

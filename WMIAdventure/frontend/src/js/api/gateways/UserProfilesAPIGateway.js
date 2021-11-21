@@ -28,4 +28,8 @@ const getUserDecks = (userId) => {
     return RequestSender.get(UserProfilesEndpoints.userDecks(userId));
 }
 
-export default {getAllBasicUsersInfo, getUserDecks};
+const getUserById = (userId) => {
+    return RequestSender.get(UserProfilesEndpoints.userById(userId));
+}
+
+export default {getAllBasicUsersInfo, getUserDecks, getUserById};
