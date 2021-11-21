@@ -9,6 +9,7 @@ class CardsEndpoints {
     static descriptions = CardsEndpoints.main + 'descriptions/';
     static levels = CardsEndpoints.main + 'card-level/';
     static byId = (id) => CardsEndpoints.main + id + '/';
+    static effectById = (id) => CardsEndpoints.effects + id + '/';
 
     static proposedCards = `${API_URL}proposed-content/cards/`
 }
