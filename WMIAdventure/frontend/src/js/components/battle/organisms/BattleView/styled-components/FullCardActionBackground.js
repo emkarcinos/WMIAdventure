@@ -13,6 +13,7 @@ const FullCardActionBackground = styled.div`
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
   background-color: ${({theme}) => theme.colors.transBack};
   overflow: hidden;
+  z-index: 10;
 `;
 
 export default FullCardActionBackground;

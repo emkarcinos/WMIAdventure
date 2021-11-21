@@ -221,6 +221,7 @@ class BattleView extends React.Component {
         this.showCompactCardsVertical();
         this.usersStatsInitAnimation();
         this.showPseudoBackgroundElements();
+        this.firstFullCardActionCall();
     }
 
     // helper function to set property states
@@ -373,11 +374,7 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 2);
     }
 
-    // push forward USER or ENEMY compact card
-    compactCardAction = (userTurn) => {
-        this.setState({
-            kuceInBattleVisible: false,
-        });
+    compactCardActionMobile = (userTurn) => {
         if (userTurn) {
             this.setState({
                 userCompactCardTranslateX: 'calc(100% - 5px)',
@@ -389,6 +386,18 @@ class BattleView extends React.Component {
                 enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
             });
         }
+    }
+
+    compactCardActionDesktop = (userTurn) => {
+        console.log(userTurn);
+    }
+
+    // push forward USER or ENEMY compact card
+    compactCardAction = (userTurn) => {
+        this.setState({
+            kuceInBattleVisible: false,
+        });
+        this.props.desktop ? this.compactCardActionDesktop(userTurn) : this.compactCardActionMobile(userTurn);
         this.effectsMountCall(userTurn);
     }
 
@@ -623,6 +632,10 @@ class BattleView extends React.Component {
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
+                        <FullCardActionBackground visible={this.state.fullCardAction.visible}
+                                                  setOpacity={this.state.fullCardAction.opacity}>
+                            {this.getCurrentFullCard()}
+                        </FullCardActionBackground>
                     </DesktopBackground>
                 </Media>
             </>
