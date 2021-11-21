@@ -453,6 +453,14 @@ class BattleView extends React.Component {
         setTimeout(() => {
             userTurn ? this.compactCardBack(true) : this.compactCardBack(false);
         }, nextStepAnimationDuration);
+
+        if (this.state.battle.nextTurn())
+            setTimeout(() => {
+                this.callNextCardSequence();
+            }, nextStepAnimationDuration)
+        else {
+            //Battle has ended, do stuff here to display the outcome
+        }
     }
 
     // hide USER or ENEMY effect icons
@@ -488,11 +496,6 @@ class BattleView extends React.Component {
                 enemyCompactCardTranslateX: '0',
                 enemyCompactCardTranslateY: '0'
             });
-        }
-        if (this.state.battle.nextTurn())
-            this.callNextCardSequence();
-        else {
-            //Battle has ended, do stuff here to display the outcome
         }
     }
 
