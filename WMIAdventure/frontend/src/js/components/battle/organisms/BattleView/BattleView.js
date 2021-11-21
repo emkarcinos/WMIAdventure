@@ -260,7 +260,8 @@ class BattleView extends React.Component {
                 (e, i) => {
                     return (
                         <MiniCardView key={enemy ? `enemyCard-${i}` : `userCard-${i}`}
-                                      cardIndexInDeck={this.state.battle.getCardAtIdx(enemy, i).initialPosition}
+                                      cardIndexInDeck={enemy ? this.state.battle.enemy.deck.cards[i].initialPosition :
+                                          this.state.battle.user.deck.cards[i].initialPosition}
                                       setTranslateX={
                                           enemy ? this.state.enemyMiniCardsTranslateX[i]
                                               : this.state.userMiniCardsTranslateX[i]
@@ -408,9 +409,10 @@ class BattleView extends React.Component {
             this.setState({
                 effectsActionScale: newEffectsActionScale
             });
-            this.state.battle.currentTurn.advance();
-            // TODO: here call function doing particular effect for example damage, change card-order etc.
         }, nextStepAnimationDuration);
+
+        this.state.battle.currentTurn.advance();
+        // TODO: here call function doing particular effect for example damage, change card-order etc.
     }
 
     callNextEffectIconAction(userTurn, index) {
@@ -435,7 +437,6 @@ class BattleView extends React.Component {
                 effectsActionScale: newEffectsActionScale
             });
             this.effectIconCastEffect(newEffectsActionScale, index);
-            this.state.battle.currentTurn.advance();
             this.callNextEffectIconAction(userTurn, index);
         } else {
             this.effectsHideCall(userTurn);
