@@ -456,12 +456,6 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 2);
     }
 
-    effectsHideCall(userTurn) {
-        setTimeout(() => {
-            userTurn ? this.effectsHide(true) : this.effectsHide(false);
-        }, nextStepAnimationDuration);
-    }
-
     // scale USER or ENEMY effect icons to signal effect action
     effectsActions = (userTurn, index = 0) => {
         const effects = this.state.battle.currentTurn.usedEffects;
@@ -474,33 +468,35 @@ class BattleView extends React.Component {
             this.effectIconCastEffect(newEffectsActionScale, index);
             this.callNextEffectIconAction(userTurn, index);
         } else {
-            this.effectsHideCall(userTurn);
+            this.effectsHide();
         }
     }
 
-    compactCardBackCall(userTurn) {
+    compactCardBackCall() {
         setTimeout(() => {
-            userTurn ? this.compactCardBack(true) : this.compactCardBack(false);
+            this.compactCardBack();
         }, nextStepAnimationDuration);
 
         if (this.state.battle.nextTurn())
             setTimeout(() => {
                 this.callNextCardSequence();
-            }, nextStepAnimationDuration)
+            }, nextStepAnimationDuration);
         else {
             //Battle has ended, do stuff here to display the outcome
         }
     }
 
     // hide USER or ENEMY effect icons
-    effectsHide = (userTurn) => {
-        this.setNewStateAttributes(
-            this.state.effectsTarget.user, 'effectsTarget.user',
-            {opacity: '0', scale: '0', translateY: '0'});
-        this.setNewStateAttributes(
-            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
-            {opacity: '0', scale: '0', translateY: '0'});
-        this.compactCardBackCall(userTurn);
+    effectsHide = () => {
+        setTimeout(() => {
+            this.setNewStateAttributes(
+                this.state.effectsTarget.user, 'effectsTarget.user',
+                {opacity: '0', scale: '0', translateY: '0'});
+            this.setNewStateAttributes(
+                this.state.effectsTarget.enemy, 'effectsTarget.enemy',
+                {opacity: '0', scale: '0', translateY: '0'});
+            this.compactCardBackCall();
+        }, nextStepAnimationDuration);
     }
 
     callNextCardSequence() {
@@ -511,7 +507,7 @@ class BattleView extends React.Component {
     }
 
     // back USER or ENEMY compact card to init position
-    compactCardBack = (userTurn) => {
+    compactCardBack = () => {
         this.setState({
             kuceInBattleVisible: true,
         });
@@ -520,15 +516,10 @@ class BattleView extends React.Component {
             this.setState({
                 compactCardOnTopScale: {user: '1', enemy: '1', middle: '0'},
             });
-        }
-
-        if (userTurn) {
-            this.setState({
-                userCompactCardTranslateX: '0',
-                userCompactCardTranslateY: '0'
-            });
         } else {
             this.setState({
+                userCompactCardTranslateX: '0',
+                userCompactCardTranslateY: '0',
                 enemyCompactCardTranslateX: '0',
                 enemyCompactCardTranslateY: '0'
             });
