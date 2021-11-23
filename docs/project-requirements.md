@@ -260,24 +260,24 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 - Talia Kart (US. 1.1.13, 1.4.2 - 1.4.5, 1.4.7, 1.1.15)
 - Profil Użytkownika (US. 1.4.1, 1.1.5)
 - UI/UX (US 1.1.1, 1.1.3, 1.1.7, 1.1.16, 1.7.1)
-- Podstawowy Balans Battle (US 1.1.12)
 
 ## Oczekiwane
-- Walki z bossami w trybie adventure (US 1.2.1, 1.2.3, 1.2.9 - 1.2.11)
-- Samouczek w formie krótkiej historii
-- Zdobywanie kart (US 1.2.6, 1.2.12)
-- Edytor Adventure w formie tworzenia bossów i tekstów prowadzących do walki (US 2.1.4, 2.1.6)
+- Podstawowy Balans Battle (US 1.1.12)
 - Integracja z USOS (US 2.1.4)
-
+- Walki z bossami w trybie adventure (US 1.2.1, 1.2.3, 1.2.9 - 1.2.11)
+- Samouczek dla nowych użytkowników
+- Edytor Adventure w formie tworzenia bossów i tekstów prowadzących do walki (US 2.1.4)
 
 ## Planowane
-- Historie tekstowe w Adventure z prostymi elementami graficznymi (US 1.2.2, 1.2.7)
-- Edytori historii uzupełniony o funkcje z punktu wyżej (US 2.2.8, 2.2.9)
-- Podstawowe Rankingi (US 1.3.2 - 1.3.5, 1.3.7, 1.1.6, 1.1.14)
+- Zdobywanie kart (US 1.2.6, 1.2.12)
+- Edytor Adventure uzupełiony o dostosowywanie zdobywanych kart przy historii (US 2.1.6)
 - System punktów umożliwiający ulepszanie kart (US 1.4.7, 1.4.8)
-- Historia Pojedynków (US 1.1.11)
 - Balans Battle (US 1.1.17 - 1.1.18)
 - Dwie talie kart (US 1.4.10)
+
+## Dawid
+- Historia Pojedynków (US 1.1.11)
+- Podstawowe Rankingi (US 1.3.2 - 1.3.5, 1.3.7, 1.1.6, 1.1.14)
 
 # Organizacja pracy zespołu
 
