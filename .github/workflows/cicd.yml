@@ -33,16 +33,15 @@ jobs:
       max-parallel: 4
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/cache@v2
+    - uses: actions/setup-node@v2
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: WMIAdventure/frontend/package-lock.json
     - name: Install JS dependencies
       run: |
         cd ./WMIAdventure/frontend
-        npm install
+        npm install 
     - name: Test
       run: |
         cd ./WMIAdventure/frontend

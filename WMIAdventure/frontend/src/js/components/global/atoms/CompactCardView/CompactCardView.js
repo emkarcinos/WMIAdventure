@@ -33,7 +33,7 @@ class CompactCardView extends React.Component {
 
     cardNameLengthHandler = (cardNameLength) => {
         try {
-            if(cardNameLength.length)
+            if (cardNameLength.length)
                 return cardNameLength.length;
             return 0;
         } catch (e) {
@@ -65,9 +65,9 @@ class CompactCardView extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.propsChanged(prevProps))
+        if (this.propsChanged(prevProps))
             this.setStateFromProps();
-        else if(prevProps.cardIndexInDeck
+        else if (prevProps.cardIndexInDeck
             && (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
             // fade animation, and update orders, when cardsOrder did change
             this.setState({
@@ -87,6 +87,7 @@ class CompactCardView extends React.Component {
         return (
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
                  setMargin={this.props.setMargin} level={this.props.cardLevel}
+                 battleOnDesktop={this.props.battleOnDesktop ? this.props.battleOnDesktop : false}
                  setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
                  cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}>
@@ -98,7 +99,7 @@ class CompactCardView extends React.Component {
                 </ NameContainer>
                 <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}
                      setIconMarginBottom={this.props.setIconMarginBottom} alt="Image for card."
-                     src={this.state.cardImage ? this.state.cardImage : upload_image_dark} />
+                     src={this.state.cardImage ? this.state.cardImage : upload_image_dark}/>
             </Div>
         );
     }

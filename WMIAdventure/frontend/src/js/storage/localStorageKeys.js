@@ -12,4 +12,12 @@ const cardKey = (id) => {
     return `card${id}`;
 }
 
-export {userDataKeys, userProfileKeys, cardKey};
+const effectKeys = {
+    /**
+     * Array containing ids of all effects.
+     */
+    effectsIds: 'effects-ids',
+    effectKey: (id) => { return `effect${id}`; }
+}
+
+export {userDataKeys, userProfileKeys, cardKey, effectKeys};

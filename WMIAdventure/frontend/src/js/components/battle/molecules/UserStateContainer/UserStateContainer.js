@@ -10,6 +10,8 @@ import health from '../../../../../assets/icons/health.svg';
 import shield from '../../../../../assets/icons/shield.svg'
 import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
+import {desktop, mobile} from "../../../../utils/globals";
+import Media from "react-media";
 
 class UserStateContainer extends React.Component {
 
@@ -22,24 +24,52 @@ class UserStateContainer extends React.Component {
 
     render() {
         return (
-            <Container setTranslateX={this.props.setTranslateX}>
-                <ColumnGapContainer gap={'8px'}>
-                    <FlexGapContainer gap={'16px'}>
-                        <Icon src={shield} />
-                        <UserStatistic type={'shield'} statisticNumber={this.props.shield} />
-                    </FlexGapContainer>
-                    <FlexGapContainer gap={'16px'}>
-                        <Icon src={health} />
-                        <UserStatistic type={'hp'} statisticNumber={this.props.hp} />
-                    </FlexGapContainer>
-                </ColumnGapContainer>
-                <NickDiv user>
-                    <Avatar src={this.props.image ? this.props.image : kuc1} />
-                    <Nick>
-                        skromnoscpotega
-                    </Nick>
-                </NickDiv>
-            </Container>
+            <>
+                <Media query={mobile}>
+                    <Container setTranslateX={this.props.setTranslateX}>
+                        <ColumnGapContainer gap={'8px'}>
+                            <FlexGapContainer gap={'16px'}>
+                                <Icon src={shield}/>
+                                <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
+                            </FlexGapContainer>
+                            <FlexGapContainer gap={'16px'}>
+                                <Icon src={health}/>
+                                <UserStatistic type={'hp'} statisticNumber={this.props.hp}/>
+                            </FlexGapContainer>
+                        </ColumnGapContainer>
+                        <NickDiv>
+                            <Avatar src={this.props.image ? this.props.image : kuc1}/>
+                            <Nick>
+                                skromnoscpotega
+                            </Nick>
+                        </NickDiv>
+                    </Container>
+                </Media>
+
+                <Media query={desktop}>
+                    <Container setTranslateY={this.props.setTranslateY}>
+                        <NickDiv>
+                            <Nick>
+                                skromnoscpotega
+                            </Nick>
+                        </NickDiv>
+                        <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>
+                            <ColumnGapContainer gap={'8px'}>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
+                                    <Icon src={shield}/>
+                                </FlexGapContainer>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic type={'hp'} statisticNumber={this.props.hp}/>
+                                    <Icon src={health}/>
+                                </FlexGapContainer>
+                            </ColumnGapContainer>
+                            <Avatar src={this.props.image ? this.props.image : kuc1}/>
+                        </FlexGapContainer>
+                    </Container>
+                </Media>
+            </>
+
         );
     }
 }
