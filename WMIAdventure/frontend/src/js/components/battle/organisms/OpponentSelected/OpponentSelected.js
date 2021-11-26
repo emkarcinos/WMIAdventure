@@ -293,6 +293,8 @@ class OpponentSelected extends React.Component {
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
                                     battleData={this.state.battleData}
+                                    runPostBattle={this.postBattle}
+                                    showPostBattle={this.postBattleOpenHandler}
                                     closeHandler={this.battleViewCloseHandler}
                                     setTranslateY={this.state.battleView.translateY}
                                     desktop={false}/>
@@ -361,6 +363,8 @@ class OpponentSelected extends React.Component {
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
                                     battleData={this.state.battleData}
+                                    runPostBattle={this.postBattle}
+                                    showPostBattle={this.postBattleOpenHandler}
                                     closeHandler={this.battleViewCloseHandler}
                                     setScale={this.state.battleView.scale}
                                     desktop={true}/>

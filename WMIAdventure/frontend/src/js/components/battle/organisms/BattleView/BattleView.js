@@ -459,6 +459,8 @@ class BattleView extends React.Component {
                 this.callNextCardSequence();
             }, nextStepAnimationDuration)
         else {
+            this.showBattleOutcome();
+            this.showPostBattle();
             //Battle has ended, do stuff here to display the outcome
         }
     }
@@ -514,7 +516,16 @@ class BattleView extends React.Component {
                           setTranslateY={this.state.fullCardAction.translateY}/>
         )
     }
-    
+
+    showBattleOutcome = () => {
+        this.props.closeHandler();
+        this.props.runPostBattle(this.props.battleData);
+    }
+
+    showPostBattle = () => {
+        this.props.showPostBattle();
+    }
+
     render() {
         if (this.state.battle === undefined) return (<></>);
         return (
