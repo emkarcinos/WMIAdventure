@@ -400,15 +400,9 @@ class BattleView extends React.Component {
 
     compactCardActionDesktop = (userTurn) => {
         setTimeout(() => {
-            if (userTurn) {
-                this.setState({
-                    compactCardOnTopScale: {user: '0', enemy: '1', middle: '1'},
-                });
-            } else {
-                this.setState({
-                    compactCardOnTopScale: {user: '1', enemy: '0', middle: '1'},
-                });
-            }
+            this.setState({
+                compactCardOnTopScale: {user: `${Number(userTurn)}`, enemy: `${Number(!userTurn)}`, middle: '1'}
+            });
         }, nextStepAnimationDuration);
     }
 
