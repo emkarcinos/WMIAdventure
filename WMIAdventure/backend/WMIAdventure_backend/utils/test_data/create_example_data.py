@@ -1,7 +1,3 @@
-import os
-
-from django.core.files import File
-
 from IngameUsers.models import UserProfile, UserCard, Deck, UserDeck
 from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 
@@ -22,10 +18,13 @@ def get_or_create_example_card(name, tooltip, subject) -> Card:
                                          level=level)
     effect = CardEffect.objects.get(pk=CardEffect.EffectId.DMG)
     CardLevelEffects.objects.get_or_create(card=card,
-                                           card_effect=effect,
-                                           target=CardLevelEffects.Target(1),
-                                           power=15,
-                                           range=2)
+                                           defaults={
+                                               'card_effect': effect,
+                                               'target': CardLevelEffects.Target(1),
+                                               'power': 15,
+                                               'range': 2
+                                           }
+                                           )
 
     return card
 
