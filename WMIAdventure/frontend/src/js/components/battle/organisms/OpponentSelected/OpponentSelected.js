@@ -116,7 +116,7 @@ class OpponentSelected extends React.Component {
 
     quickBattleRunHandler = () => {
         this.props.closeUserPreviewHandler();
-        this.props.kuceStartFight();
+        this.props.kuceStartFight('Szybka Walka');
         fightWithUser(this.props.opponent.id)
             .then(response => {
                 if (response.ok) {
@@ -176,7 +176,7 @@ class OpponentSelected extends React.Component {
 
     onFightButton = () => {
         this.props.closeUserPreviewHandler();
-        this.props.kuceStartFight();
+        this.props.kuceStartFight('Walka');
         fightWithUser(this.props.opponent.id)
             .then(response => {
                 if (response.ok) {
