@@ -33,7 +33,7 @@ class Calculator:
         @param power_range: Value which defines range [-power_range, power_range].
         @return: Calculated effect's power without buffs influence.
         """
-        return int(power + uniform(-1, 1) * power_range)
+        return round(power + uniform(-1, 1) * power_range)
 
     def _calculate_buffs_influence(self, effect_power, buffs) -> int:
         """
@@ -49,7 +49,7 @@ class Calculator:
         multipliers_influence = self._calculate_multipliers_influence(buffs)
         modifiers_influence = self._calculate_modifiers_influence(buffs)
 
-        return int(effect_power * multipliers_influence + modifiers_influence)
+        return round(effect_power * multipliers_influence + modifiers_influence)
 
     def _calculate_modifiers_influence(self, buffs) -> int:
         """
