@@ -39,6 +39,7 @@ class BattleMode extends React.Component {
         userPreviewOpacity: '0',
         scrollVisible: true,
         fightLoading: false,
+        fightLoadingText: '',
         selectedUser: {}
     }
 
@@ -104,9 +105,10 @@ class BattleMode extends React.Component {
         this.setState({searchInput: keyValue});
     }
 
-    kuceStartFight = () => {
+    kuceStartFight = (text) => {
         this.setState({
             fightLoading: true,
+            fightLoadingText: text
         });
     }
 
@@ -187,7 +189,7 @@ class BattleMode extends React.Component {
                                   runUserPreviewHandler={this.runUserPreviewHandler}
                                   closeUserPreviewHandler={this.closeUserPreviewHandler}
                                   kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
-                <LoadingPopUp visible={this.state.fightLoading} view={'Szybka walka'}/>
+                <LoadingPopUp visible={this.state.fightLoading} view={this.state.fightLoadingText}/>
             </>
         );
     }

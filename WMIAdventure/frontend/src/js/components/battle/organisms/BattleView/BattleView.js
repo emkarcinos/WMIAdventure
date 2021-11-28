@@ -472,6 +472,8 @@ class BattleView extends React.Component {
             if (this.state.battle.nextTurn())
                 this.callNextCardSequence();
             else {
+                this.showBattleOutcome();
+                this.showPostBattle();
                 //Battle has ended, do stuff here to display the outcome
             }
         }, nextStepAnimationDuration);
@@ -519,30 +521,27 @@ class BattleView extends React.Component {
 
     getCurrentFullCard = () => {
         const card = this.state.battle.getCardOnTop();
-
-        // I had to do it this way because of the way props are in FullCardView
-        if (card.level === 1) {
-            return (
-                <FullCardView cardName={card.name} cardSubject={card.subject}
-                              cardImage={card.image} cardTooltip={card.tooltip}
-                              description={card.description} common
-                              setTranslateY={this.state.fullCardAction.translateY}/>
-            )
-        } else if (card.level === 2) {
-            return (
-                <FullCardView cardName={card.name} cardSubject={card.subject}
-                              cardImage={card.image} cardTooltip={card.tooltip}
-                              description={card.description} gold
-                              setTranslateY={this.state.fullCardAction.translateY}/>
-            )
-        } else {
-            return (
-                <FullCardView cardName={card.name} cardSubject={card.subject}
-                              cardImage={card.image} cardTooltip={card.tooltip}
-                              description={card.description} epic
-                              setTranslateY={this.state.fullCardAction.translateY}/>
-            )
+        const levels = {
+            common: card.level === 1,
+            gold: card.level === 2,
+            epic: card.level === 3,
         }
+        return (
+            <FullCardView cardName={card.name} cardSubject={card.subject}
+                          cardImage={card.image} cardTooltip={card.tooltip}
+                          description={card.description} common={levels.common}
+                          gold={levels.gold} epic={levels.epic}
+                          setTranslateY={this.state.fullCardAction.translateY}/>
+        );
+    }
+
+    showBattleOutcome = () => {
+        this.props.closeHandler();
+        this.props.runPostBattle(this.props.battleData);
+    }
+
+    showPostBattle = () => {
+        this.props.showPostBattle();
     }
 
     render() {

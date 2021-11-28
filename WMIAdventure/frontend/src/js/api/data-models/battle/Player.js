@@ -15,10 +15,10 @@ export class Player {
         this.deck = new Deck(deck);
     }
 
-    onTurnEnd() {
+    onTurnEnd(usedCardId) {
         if (this.stoppedTurns > 0)
             this.stoppedTurns--;
-        this.deck.onTurnEnd();
+        this.deck.onTurnEnd(usedCardId);
     }
 
     async fetchUserDataFromBackend(backendCall) {

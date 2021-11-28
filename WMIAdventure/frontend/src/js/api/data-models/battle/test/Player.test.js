@@ -42,13 +42,13 @@ test('Should not decrement stoppedTurns below zero', () => {
     const player = playerFromData(examplePlayerWithDeck);
     player.stoppedTurns = 2
 
-    player.onTurnEnd();
+    player.onTurnEnd(5);
     expect(player.stoppedTurns).toBe(1);
 
-    player.onTurnEnd();
+    player.onTurnEnd(5);
     expect(player.stoppedTurns).toBe(0);
 
-    player.onTurnEnd();
+    player.onTurnEnd(5);
     expect(player.stoppedTurns).toBe(0);
 })
 
