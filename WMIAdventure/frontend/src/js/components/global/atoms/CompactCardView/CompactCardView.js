@@ -4,7 +4,7 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
-import {nextStepAnimationDuration} from "../../../../utils/globals";
+import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
 
 class CompactCardView extends React.Component {
     /*
@@ -41,15 +41,28 @@ class CompactCardView extends React.Component {
         }
     }
 
+    /**
+     * Handles being blocked by setting appropriate opacity.
+     * @param blocked If this card is blocked or not.
+     */
+    cardBlockedHandler = (blocked) => {
+        if (blocked) {
+            this.setState({compactCardOpacity: blockedCardOpacity});
+        }
+    }
+
     setStateFromProps = () => {
         this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
         this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
         this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
+        this.cardBlockedHandler(this.props.blocked);
     }
 
-    propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
+    propsChanged = (prevProps) =>
+        prevProps.cardName !== this.props.cardName ||
         prevProps.cardImage !== this.props.cardImage ||
-        prevProps.cardLevel !== this.props.cardLevel;
+        prevProps.cardLevel !== this.props.cardLevel ||
+        prevProps.blocked   !== this.props.blocked;
 
     componentDidMount() {
         this.setStateFromProps();

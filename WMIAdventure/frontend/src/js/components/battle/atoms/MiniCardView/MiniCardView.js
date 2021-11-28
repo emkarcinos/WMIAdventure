@@ -3,7 +3,7 @@ import CardsContainer from "./styled-components/CardsContainer";
 import Icon from "./styled-components/Icon";
 import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 import IconContainer from "./styled-components/IconContainer";
-import {nextStepAnimationDuration} from "../../../../utils/globals";
+import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
 
 class MiniCardView extends React.Component {
     /*
@@ -26,8 +26,10 @@ class MiniCardView extends React.Component {
     showNewCardsOrder = () => {
         // shows new ordered cards
         setTimeout(() => {
+            // If card is blocked then display it as blocked by setting appropriate opacity
+            const opacity = this.props.blocked ? blockedCardOpacity : '1';
             this.setState({
-                miniCardOpacity: '1'
+                miniCardOpacity: opacity
             });
         }, 100)
     }

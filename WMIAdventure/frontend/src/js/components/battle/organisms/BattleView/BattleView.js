@@ -287,7 +287,9 @@ class BattleView extends React.Component {
                                       enemy={enemy} user={!enemy}
                                       cardLevel={card.level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={card.image}/>
+                                      cardImage={card.image}
+                                      blocked={card.stoppedTurns > 0}
+                        />
                     );
                 })
         );
@@ -316,6 +318,7 @@ class BattleView extends React.Component {
                                          cardImage={card.image}
                                          cardName={card.name}
                                          cardLevel={card.level}
+                                         blocked={card.stoppedTurns > 0}
                                          setWidth={'124px'} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
@@ -479,8 +482,11 @@ class BattleView extends React.Component {
             case 1:
                 this.visualizeDamageEffect(effect.target_player);
                 break;
+            case 7:
+                this.visualizeBlockCardEffect(effect.target_player);
+                break;
             default:
-                console.log("unidentified effect");
+                console.log(`unidentified effect: ${effect.id}`);
                 break;
         }
     }
@@ -500,6 +506,19 @@ class BattleView extends React.Component {
                 effectFrameOpacity: {type: 'damage', user: '0', enemy: '0'}
             });
         }, nextStepAnimationDuration);
+    }
+
+    /**
+     * After some card is blocked then it has property `stoppedTurns` with value > 0.
+     *
+     * This function refreshes compact cards so that blocked compact card can display itself as blocked.
+     *
+     * See `getCompactCards` and `CompactCardView` (prop `blocked`)
+     * @param target
+     */
+    visualizeBlockCardEffect = (target) => {
+        const enemyIsTarget = target === this.state.enemy;
+        this.getCompactCards(enemyIsTarget);
     }
 
     compactCardBackCall() {
