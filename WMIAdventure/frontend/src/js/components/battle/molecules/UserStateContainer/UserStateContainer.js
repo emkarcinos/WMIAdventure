@@ -12,6 +12,7 @@ import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import {desktop, mobile} from "../../../../utils/globals";
 import Media from "react-media";
+import DamageBorder from "./styled-components/DamageBorder";
 
 class UserStateContainer extends React.Component {
 
@@ -28,6 +29,7 @@ class UserStateContainer extends React.Component {
                 <Media query={mobile}>
                     <Container setTranslateX={this.props.setTranslateX}>
                         <ColumnGapContainer gap={'8px'}>
+                            <DamageBorder setOpacity={this.props.damageBorderOpacity}></DamageBorder>
                             <FlexGapContainer gap={'16px'}>
                                 <Icon src={shield}/>
                                 <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>

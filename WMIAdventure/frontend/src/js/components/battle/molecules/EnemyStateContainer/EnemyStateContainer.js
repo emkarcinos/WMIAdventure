@@ -12,6 +12,7 @@ import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
+import DamageBorder from "./styled-components/DamageBorder";
 
 class EnemyStateContainer extends React.Component {
 
@@ -34,6 +35,7 @@ class EnemyStateContainer extends React.Component {
                             </Nick>
                         </NickDiv>
                         <ColumnGapContainer gap={'8px'}>
+                            <DamageBorder setOpacity={this.props.damageBorderOpacity}></DamageBorder>
                             <FlexGapContainer gap={'16px'}>
                                 <Icon src={health}/>
                                 <UserStatistic type={'hp'} statisticNumber={this.props.hp}/>
