@@ -14,7 +14,9 @@ import {
     trueDamageEffectId
 } from "../../../../api/data-models/battle/EffectIds";
 
-export const visualizeEffect = (executedEffect) => {
+// TODO: remove this eslint disable later
+// eslint-disable-next-line no-unused-vars
+export const visualizeEffect = (executedEffect, component) => {
     switch (executedEffect.id) {
         case damageEffectId:
             break;

@@ -443,7 +443,7 @@ class BattleView extends React.Component {
 
         const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
-        visualizeEffect(usedEffect);
+        visualizeEffect(usedEffect, this);
     }
 
     callNextEffectIconAction(userTurn, index) {
