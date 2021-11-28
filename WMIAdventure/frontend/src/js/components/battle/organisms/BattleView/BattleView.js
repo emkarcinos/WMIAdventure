@@ -440,8 +440,10 @@ class BattleView extends React.Component {
             });
         }, nextStepAnimationDuration);
 
+        const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
         // TODO: here call function doing particular effect for example damage, change card-order etc.
+        // executeEffect(usedEffect);
     }
 
     callNextEffectIconAction(userTurn, index) {
