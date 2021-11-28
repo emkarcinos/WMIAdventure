@@ -12,7 +12,7 @@ import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import {desktop, mobile} from "../../../../utils/globals";
 import Media from "react-media";
-import DamageBorder from "./styled-components/DamageBorder";
+import EffectFrame from "./styled-components/EffectFrame";
 
 class UserStateContainer extends React.Component {
 
@@ -29,7 +29,8 @@ class UserStateContainer extends React.Component {
                 <Media query={mobile}>
                     <Container setTranslateX={this.props.setTranslateX}>
                         <ColumnGapContainer gap={'8px'}>
-                            <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
+                            <EffectFrame setOpacity={this.props.effectFrameOpacity}
+                                         type={this.props.frameOpacityType}/>
                             <FlexGapContainer gap={'16px'}>
                                 <Icon src={shield}/>
                                 <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
@@ -57,7 +58,8 @@ class UserStateContainer extends React.Component {
                         </NickDiv>
                         <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>
                             <ColumnGapContainer gap={'8px'}>
-                                <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
+                                <EffectFrame setOpacity={this.props.effectFrameOpacity}
+                                             type={this.props.frameOpacityType}/>
                                 <FlexGapContainer gap={'16px'}>
                                     <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
                                     <Icon src={shield}/>

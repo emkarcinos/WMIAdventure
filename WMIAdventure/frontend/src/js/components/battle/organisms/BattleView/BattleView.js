@@ -86,8 +86,9 @@ class BattleView extends React.Component {
             middle: '0'
         },
 
-        // damage effect
-        damageBorderOpacity: {
+        // type: (0: nothing) (1: damage) (2: heal) (3: shield)
+        effectFrameOpacity: {
+            type: 'nothing',
             user: '0',
             enemy: '0'
         }
@@ -95,7 +96,7 @@ class BattleView extends React.Component {
 
     componentDidMount() {
         getCurrentUserId()
-            .then(id => this.setState({user: id}))
+            .then(id => this.setState({user: id}));
     }
 
     componentDidUpdate(prevProps) {
@@ -460,7 +461,6 @@ class BattleView extends React.Component {
     // scale USER or ENEMY effect icons to signal effect action
     effectsActions = (userTurn, index = 0) => {
         const effects = this.state.battle.currentTurn.usedEffects;
-        console.log(effects);
         if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
@@ -486,19 +486,18 @@ class BattleView extends React.Component {
     }
 
     visualizeDamageEffect = (target) => {
-        console.log(`damage effect: ${target}, user: ${this.state.user}`);
         if (target === this.state.user) {
             this.setState({
-                damageBorderOpacity: {user: '0.5', enemy: '0'}
+                effectFrameOpacity: {type: 'damage', user: '0.5', enemy: '0'}
             });
         } else {
             this.setState({
-                damageBorderOpacity: {user: '0', enemy: '0.5'}
+                effectFrameOpacity: {type: 'damage', user: '0', enemy: '0.5'}
             });
         }
         setTimeout(() => {
             this.setState({
-                damageBorderOpacity: {user: '0', enemy: '0'}
+                effectFrameOpacity: {type: 'damage', user: '0', enemy: '0'}
             });
         }, nextStepAnimationDuration);
     }
@@ -595,7 +594,8 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
-                                                         damageBorderOpacity={this.state.damageBorderOpacity.enemy}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
@@ -620,7 +620,9 @@ class BattleView extends React.Component {
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
                                                         username={this.state.battle.user.username}
-                                                        damageBorderOpacity={this.state.damageBorderOpacity.user}/>
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}
+                                    />
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -661,7 +663,8 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
-                                                         damageBorderOpacity={this.state.damageBorderOpacity.enemy}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer gap={'10px'} reverse>
                                         {this.getCompactCards(true)}
@@ -676,7 +679,8 @@ class BattleView extends React.Component {
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
                                                         username={this.state.battle.user.username}
-                                                        damageBorderOpacity={this.state.damageBorderOpacity.user}/>
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}/>
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>

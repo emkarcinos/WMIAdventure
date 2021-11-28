@@ -12,7 +12,7 @@ import UserStatistic from "../../atoms/UserStatistic";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
-import DamageBorder from "./styled-components/DamageBorder";
+import EffectFrame from "./styled-components/EffectFrame";
 
 class EnemyStateContainer extends React.Component {
 
@@ -35,7 +35,8 @@ class EnemyStateContainer extends React.Component {
                             </Nick>
                         </NickDiv>
                         <ColumnGapContainer gap={'8px'}>
-                            <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
+                            <EffectFrame setOpacity={this.props.effectFrameOpacity}
+                                         type={this.props.frameOpacityType}/>
                             <FlexGapContainer gap={'16px'}>
                                 <Icon src={health}/>
                                 <UserStatistic type={'hp'} statisticNumber={this.props.hp}/>
@@ -53,7 +54,8 @@ class EnemyStateContainer extends React.Component {
                         <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>
                             <Avatar src={this.props.image ? this.props.image : kuc1}/>
                             <ColumnGapContainer gap={'8px'}>
-                                <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
+                                <EffectFrame setOpacity={this.props.effectFrameOpacity}
+                                             type={this.props.frameOpacityType}/>
                                 <FlexGapContainer gap={'16px'}>
                                     <Icon src={shield}/>
                                     <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
