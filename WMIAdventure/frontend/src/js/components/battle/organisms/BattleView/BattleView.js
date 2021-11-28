@@ -319,6 +319,7 @@ class BattleView extends React.Component {
                     <EffectIcon key={`effectIcon-${effect.id}`}
                                 value={parseInt(effect.power)}
                                 setScale={this.state.effectsActionScale[index]}
+                                effectId={effect.id}
                     />
                 );
             }
