@@ -33,6 +33,9 @@ export class Battle {
     }
 
     nextTurn() {
+        if (this.currentTurn)
+            this.currentTurn.onTurnEnd()
+
         if (this.currentTurnNum >= this.turnsData.length)
             return null;
 
