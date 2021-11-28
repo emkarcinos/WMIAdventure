@@ -29,7 +29,7 @@ class UserStateContainer extends React.Component {
                 <Media query={mobile}>
                     <Container setTranslateX={this.props.setTranslateX}>
                         <ColumnGapContainer gap={'8px'}>
-                            <DamageBorder setOpacity={this.props.damageBorderOpacity}></DamageBorder>
+                            <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
                             <FlexGapContainer gap={'16px'}>
                                 <Icon src={shield}/>
                                 <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
@@ -57,6 +57,7 @@ class UserStateContainer extends React.Component {
                         </NickDiv>
                         <FlexGapContainer gap={'24px'} setMargin={'auto 0'}>
                             <ColumnGapContainer gap={'8px'}>
+                                <DamageBorder setOpacity={this.props.damageBorderOpacity}/>
                                 <FlexGapContainer gap={'16px'}>
                                     <UserStatistic type={'shield'} statisticNumber={this.props.shield}/>
                                     <Icon src={shield}/>

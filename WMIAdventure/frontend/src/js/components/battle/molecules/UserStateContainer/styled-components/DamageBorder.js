@@ -13,6 +13,10 @@ const DamageBorder = styled.div`
   z-index: -1;
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    border-radius: 16px 16px 0 0;
+  }
 `;
 
 export default DamageBorder;

@@ -663,6 +663,7 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         damageBorderOpacity={this.state.damageBorderOpacity.enemy}
                                     />
                                     <FlexGapContainer gap={'10px'} reverse>
                                         {this.getCompactCards(true)}
@@ -676,7 +677,8 @@ class BattleView extends React.Component {
                                     <UserStateContainer setTranslateY={this.state.userStateContainerTranslateY}
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
-                                                        username={this.state.battle.user.username}/>
+                                                        username={this.state.battle.user.username}
+                                                        damageBorderOpacity={this.state.damageBorderOpacity.user}/>
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
