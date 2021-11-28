@@ -67,16 +67,6 @@ test('Should getNextEffect return null when no effects are remaining', () => {
     expect(effect).toBeNull();
 });
 
-test('Should onTurnEnd get called after getNextEffect returning null', () => {
-    const user = playerFromData(attacker);
-    user.stoppedTurns = 5;
-    const enemy = playerFromData(defender);
-    const turn = new Turn({used_card: 3, used_effects: [], card_executor: user.id}, user, enemy);
-    const effect = turn.getNextEffect();
-    expect(effect).toBeNull();
-    expect(user.stoppedTurns).toBe(4);
-});
-
 test('Should advance apply one effect to target', () => {
     const user = playerFromData(attacker);
     const enemy = playerFromData(defender);
