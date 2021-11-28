@@ -67,10 +67,10 @@ class CalculatorTestCase(TestCase):
 
     def test_calculate_buffs_influence(self):
 
-        expected_power = \
-            self.base_power * \
-            self.instance._calculate_multipliers_influence(self.buffs) + \
-            self.instance._calculate_modifiers_influence(self.buffs)
+        expected_power = round(
+            self.base_power *
+            self.instance._calculate_multipliers_influence(self.buffs) +
+            self.instance._calculate_modifiers_influence(self.buffs))
 
         actual_power = self.instance._calculate_buffs_influence(self.base_power, self.buffs)
 
@@ -84,18 +84,18 @@ class CalculatorTestCase(TestCase):
             actual_value = self.instance.calculate_effect_power(self.base_power, self.power_range, self.buffs)
             self.assertGreaterEqual(actual_value, expected_min_value)
             self.assertLessEqual(actual_value, expected_max_value)
-            
+
     def test_negative_fix(self):
         import random
-        
+
         # This seed returns a negative power inside the calculator.
         random.seed(241241)
-        
+
         # Calculated effect power of this ranges should never drop below zero.
         power = 1
         range = 10
         val = self.instance.calculate_effect_power(power, range, [])
-        
+
         self.assertEqual(0, val)
 
     @classmethod
