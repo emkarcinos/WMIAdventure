@@ -68,6 +68,9 @@ export class Deck {
     }
 
     onTurnEnd(executedCardId) {
+        // Can happen if the card was blocked
+        if (!executedCardId)
+            return;
         const card = this.cards.filter(card => card.id === executedCardId)[0];
         card.onTurnEnd();
     }
