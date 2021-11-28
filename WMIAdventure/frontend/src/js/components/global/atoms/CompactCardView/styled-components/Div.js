@@ -35,7 +35,8 @@ const Div = styled.div`
   transition: transform 0.5s, opacity 0.5s ease-in-out;
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
   transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'},
-  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
+  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'}) scale(${({setScale}) => setScale ? setScale : '1'});
+  order: ${({cardIndexInDeck, battleOnDesktop}) => (cardIndexInDeck && battleOnDesktop) ? cardIndexInDeck : '0'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: ${({setWidth}) => setWidth ? setWidth : '144px'};

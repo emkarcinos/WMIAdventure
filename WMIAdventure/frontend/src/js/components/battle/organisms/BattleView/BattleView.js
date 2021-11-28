@@ -78,6 +78,13 @@ class BattleView extends React.Component {
         // desktop background elements
         backgroundElemBeforePosX: '0',
         backgroundElemAfterPosX: '0',
+
+        // desktop compact card action
+        compactCardOnTopScale: {
+            user: '1',
+            enemy: '1',
+            middle: '0'
+        }
     }
 
     componentDidMount() {
@@ -221,6 +228,7 @@ class BattleView extends React.Component {
         this.showCompactCardsVertical();
         this.usersStatsInitAnimation();
         this.showPseudoBackgroundElements();
+        this.firstFullCardActionCall();
     }
 
     // helper function to set property states
@@ -292,6 +300,8 @@ class BattleView extends React.Component {
                     const cardIdx = enemy ?
                         this.state.battle.enemy.deck.getCardIdxById(card.id) + 1 :
                         this.state.battle.user.deck.getCardIdxById(card.id) + 1;
+                    const compactCardOnTopScale = enemy ? this.state.compactCardOnTopScale.enemy :
+                        this.state.compactCardOnTopScale.user;
                     return (
                         <CompactCardView key={enemy ? `enemyCompactCard-${i}` : `userCompactCard-${i}`}
                                          battleOnDesktop={this.props.desktop}
@@ -304,7 +314,8 @@ class BattleView extends React.Component {
                                              : this.state.userCompactCardTranslateX}
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
-                                         setMargin={handleMargin}/>
+                                         setMargin={handleMargin}
+                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}/>
                     );
                 })
         );
@@ -373,11 +384,7 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 2);
     }
 
-    // push forward USER or ENEMY compact card
-    compactCardAction = (userTurn) => {
-        this.setState({
-            kuceInBattleVisible: false,
-        });
+    compactCardActionMobile = (userTurn) => {
         if (userTurn) {
             this.setState({
                 userCompactCardTranslateX: 'calc(100% - 5px)',
@@ -389,6 +396,22 @@ class BattleView extends React.Component {
                 enemyCompactCardTranslateY: 'calc(50vh - 50% - 34px)'
             });
         }
+    }
+
+    compactCardActionDesktop = (userTurn) => {
+        setTimeout(() => {
+            this.setState({
+                compactCardOnTopScale: {user: `${Number(!userTurn)}`, enemy: `${Number(userTurn)}`, middle: '1'}
+            });
+        }, nextStepAnimationDuration);
+    }
+
+    // push forward USER or ENEMY compact card
+    compactCardAction = (userTurn) => {
+        this.setState({
+            kuceInBattleVisible: false,
+        });
+        this.props.desktop ? this.compactCardActionDesktop(userTurn) : this.compactCardActionMobile(userTurn);
         this.effectsMountCall(userTurn);
     }
 
@@ -427,12 +450,6 @@ class BattleView extends React.Component {
         }, nextStepAnimationDuration * 2);
     }
 
-    effectsHideCall(userTurn) {
-        setTimeout(() => {
-            userTurn ? this.effectsHide(true) : this.effectsHide(false);
-        }, nextStepAnimationDuration);
-    }
-
     // scale USER or ENEMY effect icons to signal effect action
     effectsActions = (userTurn, index = 0) => {
         const effects = this.state.battle.currentTurn.usedEffects;
@@ -445,35 +462,34 @@ class BattleView extends React.Component {
             this.effectIconCastEffect(newEffectsActionScale, index);
             this.callNextEffectIconAction(userTurn, index);
         } else {
-            this.effectsHideCall(userTurn);
+            this.effectsHide();
         }
     }
 
-    compactCardBackCall(userTurn) {
+    compactCardBackCall() {
         setTimeout(() => {
-            userTurn ? this.compactCardBack(true) : this.compactCardBack(false);
-        }, nextStepAnimationDuration);
-
-        if (this.state.battle.nextTurn())
-            setTimeout(() => {
+            this.compactCardBack();
+            if (this.state.battle.nextTurn())
                 this.callNextCardSequence();
-            }, nextStepAnimationDuration)
-        else {
-            this.showBattleOutcome();
-            this.showPostBattle();
-            //Battle has ended, do stuff here to display the outcome
-        }
+            else {
+                this.showBattleOutcome();
+                this.showPostBattle();
+                //Battle has ended, do stuff here to display the outcome
+            }
+        }, nextStepAnimationDuration);
     }
 
     // hide USER or ENEMY effect icons
-    effectsHide = (userTurn) => {
-        this.setNewStateAttributes(
-            this.state.effectsTarget.user, 'effectsTarget.user',
-            {opacity: '0', scale: '0', translateY: '0'});
-        this.setNewStateAttributes(
-            this.state.effectsTarget.enemy, 'effectsTarget.enemy',
-            {opacity: '0', scale: '0', translateY: '0'});
-        this.compactCardBackCall(userTurn);
+    effectsHide = () => {
+        setTimeout(() => {
+            this.setNewStateAttributes(
+                this.state.effectsTarget.user, 'effectsTarget.user',
+                {opacity: '0', scale: '0', translateY: '0'});
+            this.setNewStateAttributes(
+                this.state.effectsTarget.enemy, 'effectsTarget.enemy',
+                {opacity: '0', scale: '0', translateY: '0'});
+            this.compactCardBackCall();
+        }, nextStepAnimationDuration);
     }
 
     callNextCardSequence() {
@@ -484,17 +500,19 @@ class BattleView extends React.Component {
     }
 
     // back USER or ENEMY compact card to init position
-    compactCardBack = (userTurn) => {
+    compactCardBack = () => {
         this.setState({
             kuceInBattleVisible: true,
         });
-        if (userTurn) {
+
+        if (this.props.desktop) {
             this.setState({
-                userCompactCardTranslateX: '0',
-                userCompactCardTranslateY: '0'
+                compactCardOnTopScale: {user: '1', enemy: '1', middle: '0'},
             });
         } else {
             this.setState({
+                userCompactCardTranslateX: '0',
+                userCompactCardTranslateY: '0',
                 enemyCompactCardTranslateX: '0',
                 enemyCompactCardTranslateY: '0'
             });
@@ -514,7 +532,7 @@ class BattleView extends React.Component {
                           description={card.description} common={levels.common}
                           gold={levels.gold} epic={levels.epic}
                           setTranslateY={this.state.fullCardAction.translateY}/>
-        )
+        );
     }
 
     showBattleOutcome = () => {
@@ -621,6 +639,35 @@ class BattleView extends React.Component {
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
+                        <FullCardActionBackground visible={this.state.fullCardAction.visible}
+                                                  setOpacity={this.state.fullCardAction.opacity}>
+                            {this.getCurrentFullCard()}
+                        </FullCardActionBackground>
+                        <CenterDiv>
+                            <CompactCardView cardName={this.state.battle.getCardOnTop().name}
+                                             cardLevel={this.state.battle.getCardOnTop().level}
+                                             cardImage={this.state.battle.getCardOnTop().image}
+                                             setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
+                                             setScale={this.state.compactCardOnTopScale.middle}/>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(true)}
+                                setOpacity={this.state.effectsTarget.user.opacity}
+                                setScale={this.state.effectsTarget.user.scale}
+                                setTranslateY={this.state.effectsTarget.user.translateY}>
+                                {this.effectsTargetIteration(true)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
+                        <CenterDiv>
+                            <EffectIconsContainer
+                                childrenCount={this.countTargetEffects(false)}
+                                setOpacity={this.state.effectsTarget.enemy.opacity}
+                                setScale={this.state.effectsTarget.enemy.scale}
+                                setTranslateY={this.state.effectsTarget.enemy.translateY}>
+                                {this.effectsTargetIteration(false)}
+                            </EffectIconsContainer>
+                        </CenterDiv>
                     </DesktopBackground>
                 </Media>
             </>
