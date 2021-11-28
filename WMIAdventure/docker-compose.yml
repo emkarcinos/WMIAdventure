@@ -3,7 +3,7 @@ version: '3.2'
 services:
     django-migrate:
         image: wmiadventure.azurecr.io/wmiadventure:v1
-         logging:
+        logging:
           options:
             max-size: "10m"
             max-file: "3"
