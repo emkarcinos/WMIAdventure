@@ -2,10 +2,10 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from utils.permissions import IsAbleToEdit
 from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
 from .models import CardEffect
 from .models import CardLevel, CardInfo
-from utils.permissions import IsAbleToEdit
 from .serializers import CardEffectSerializer
 from .serializers import CardLevelSerializer, WholeCardSerializer
 
@@ -30,15 +30,43 @@ class CardLevelDetail(generics.RetrieveAPIView):
     serializer_class = CardLevelSerializer
 
 
-class CardEffectList(APIView):
+def _image_path_dirty_fix(image_path):
+    """
+    TODO: This code shouldn't exist, better solution must be found in the future.
+    This code replaces 'download' with 'get' in image path, so that this image can be viewed instead of downloaded.
+
+    :param image_path: Image path to fix.
+    :return: Fixed image path.
+    """
+
+    if image_path:
+        image_path = image_path.replace('download', 'get', 1)
+    return image_path
+
+
+class CardEffectList(generics.ListAPIView):
     """
     List all effects.
     """
 
+    queryset = CardEffect.objects.all()
+    serializer_class = CardEffectSerializer
+
+    def _effects_icons_path_dirty_fix(self, response):
+        """
+        TODO: This code shouldn't exist, better solution must be found in the future.
+        Fixes path for all icons, so that each icon can be viewed instead of downloaded.
+
+        :param response: Response which contains data about effects.
+        """
+
+        for effect_data in response.data:
+            effect_data['icon'] = _image_path_dirty_fix(effect_data['icon'])
+
     def get(self, request, *args, **kwargs):
-        cardEffects = CardEffect.objects.all()
-        serializer = CardEffectSerializer(cardEffects, many=True)
-        return Response(serializer.data)
+        response = super().get(request, *args, **kwargs)
+        self._effects_icons_path_dirty_fix(response.data)
+        return response
 
 
 class CardEffectObjectView(generics.RetrieveUpdateAPIView):
@@ -51,12 +79,37 @@ class CardEffectObjectView(generics.RetrieveUpdateAPIView):
     queryset = CardEffect.objects.all()
     serializer_class = CardEffectSerializer
 
+    def _effect_icon_path_dirty_fix(self, response):
+        """
+        TODO: This code shouldn't exist, better solution must be found in the future.
+        Fixes icon path, so that icon can be viewed instead of downloaded.
+
+        :param response: Response which contains data about effect.
+        """
+
+        response.data['icon'] = _image_path_dirty_fix(response.data['icon'])
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        self._effect_icon_path_dirty_fix(response)
+        return response
+
 
 class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = CardInfo.objects.all()
     serializer_class = WholeCardSerializer
 
     permission_classes = [IsAbleToEdit]
+
+    def _image_path_dirty_fix(self, response):
+        """
+        TODO: This code shouldn't exist, better solution must be found in the future.
+        Fixes image path, so that image can be viewed instead of downloaded.
+
+        :param response: Response which contains information about card.
+        """
+
+        response.data['image'] = _image_path_dirty_fix(response.data['image'])
 
     def get(self, request, *args, **kwargs):
         # This disasterous piece of code is caused by the way external library for handling data uploads works.
@@ -67,9 +120,7 @@ class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
         # viewing, not downloading.
         # I couldn't find any other way other than messing with the library itself, so here's a dirty fix
         response = super().get(request, *args, **kwargs)
-        image_path = response.data.get('image')
-        if image_path:
-            response.data['image'] = image_path.replace('download', 'get', 1)
+        self._image_path_dirty_fix(response)
         return response
 
 
