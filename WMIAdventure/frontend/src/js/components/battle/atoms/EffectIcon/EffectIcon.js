@@ -10,12 +10,9 @@ class EffectIcon extends React.Component {
         icon: null
     }
 
-    retrieveIcon = () => {
-        getEffectById(this.props.effectId).then(
-            effectData => {
-                this.setState({icon: effectData.icon});
-            }
-        )
+    retrieveIcon = async () => {
+        const effectData = await getEffectById(this.props.effectId);
+        this.setState({icon: effectData.icon});
     }
 
     componentDidMount() {
