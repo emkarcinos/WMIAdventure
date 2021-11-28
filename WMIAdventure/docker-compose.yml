@@ -3,6 +3,10 @@ version: '3.2'
 services:
     django-migrate:
         image: wmiadventure.azurecr.io/wmiadventure:v1
+        logging:
+          options:
+            max-size: "10m"
+            max-file: "3"
         build: ./backend
         command: python manage.py migrate
         volumes:
@@ -21,6 +25,10 @@ services:
     
     wmiadventure-frontend:
         image: wmiadventure.azurecr.io/frontend:v1
+        logging:
+          options:
+            max-size: "10m"
+            max-file: "3"
         build: ./frontend
         entrypoint: npm start PORT=80
         environment:

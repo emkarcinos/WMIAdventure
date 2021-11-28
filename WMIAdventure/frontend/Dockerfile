@@ -1,5 +1,5 @@
 ### Installs dependencies
-FROM node:15 as builder
+FROM node:16-alpine3.12 as builder
 
 WORKDIR /frontend
 ADD ./package*.json ./
@@ -7,7 +7,7 @@ ADD ./package*.json ./
 RUN npm install
 
 ### Copy installed dependencies with node ownership
-FROM node:15
+FROM node:16-alpine3.12
 COPY --from=builder --chown=node /frontend /frontend
 
 # From build arg
