@@ -67,7 +67,7 @@ class CalculatorTestCase(TestCase):
 
     def test_calculate_buffs_influence(self):
 
-        expected_power = int(
+        expected_power = round(
             self.base_power *
             self.instance._calculate_multipliers_influence(self.buffs) +
             self.instance._calculate_modifiers_influence(self.buffs))

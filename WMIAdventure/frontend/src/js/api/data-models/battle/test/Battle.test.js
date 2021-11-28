@@ -35,7 +35,7 @@ const exampleDataWithTurns = {
                 deck: [1]
             },
             card_executor: exampleData1.attacker.id,
-            used_card: 3,
+            used_card: 1,
             used_effects: [
                 {
                     id: 1,
@@ -58,7 +58,7 @@ const exampleDataWithTurns = {
                 deck: [1]
             },
             card_executor: exampleData1.defender.id,
-            used_card: 3,
+            used_card: 1,
             used_effects: [
                 {
                     id: 1,

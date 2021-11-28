@@ -26,7 +26,6 @@ export class Turn {
      */
     getNextEffect() {
         if (this.currentlyExecutingEffectIdx >= this.usedEffects.length) {
-            this.onTurnEnd(this.usedCardId);
             return null;
         }
 
