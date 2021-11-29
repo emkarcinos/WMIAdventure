@@ -63,4 +63,5 @@ export const visualizeEffect = (executedEffect, component) => {
 const visualizeBlockCardEffect = (target, component) => {
     const enemyIsTarget = target === component.state.enemy;
     component.getCompactCards(enemyIsTarget);
+    component.getMiniCards(enemyIsTarget);
 }

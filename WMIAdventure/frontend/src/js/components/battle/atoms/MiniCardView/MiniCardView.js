@@ -49,6 +49,13 @@ class MiniCardView extends React.Component {
                 }, this.showNewCardsOrder);
             }, nextStepAnimationDuration);
         }
+        // If card is blocked this turn then set proper opacity
+        if (prevProps.blocked !== this.props.blocked) {
+            const opacity = this.props.blocked ? blockedCardOpacity : '1';
+            this.setState({
+                miniCardOpacity: opacity
+            });
+        }
     }
 
     render() {

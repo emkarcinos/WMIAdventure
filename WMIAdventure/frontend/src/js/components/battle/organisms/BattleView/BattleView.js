@@ -508,10 +508,21 @@ class BattleView extends React.Component {
     callNextCardSequence() {
         setTimeout(() => {
             const userTurn = this.state.battle.isUsersTurn;
-            if (this.state.battle.currentTurn.usedCardId)
-                this.fullCardAction(userTurn);
-            else
-                this.compactCardBackCall()
+            const usedCardId = this.state.battle.currentTurn.usedCardId;
+
+            if (usedCardId) {
+                const cardExecutorDeck = userTurn ? this.state.battle.user.deck : this.state.battle.enemy.deck;
+                const usedCard = cardExecutorDeck.lookupCardById(usedCardId);
+
+                // If used card is stopped then don't play animation of using this stopped card.
+                if (usedCard.stoppedTurns > 0)
+                    this.compactCardBackCall();
+                else
+                    this.fullCardAction(userTurn);
+            }
+            else {
+                this.compactCardBackCall();
+            }
 
         }, nextStepAnimationDuration * 3);
     }
@@ -683,7 +694,9 @@ class BattleView extends React.Component {
                                              cardLevel={this.state.battle.getCardOnTop().level}
                                              cardImage={this.state.battle.getCardOnTop().image}
                                              setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
-                                             setScale={this.state.compactCardOnTopScale.middle}/>
+                                             setScale={this.state.compactCardOnTopScale.middle}
+                                             blocked={this.state.battle.getCardOnTop().stoppedTurns > 0}
+                            />
                         </CenterDiv>
                         <CenterDiv>
                             <EffectIconsContainer

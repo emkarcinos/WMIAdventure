@@ -42,27 +42,24 @@ class CompactCardView extends React.Component {
     }
 
     /**
-     * Handles being blocked by setting appropriate opacity.
+     * Sets appropriate opacity. (checks if card is blocked or not)
      * @param blocked If this card is blocked or not.
      */
-    cardBlockedHandler = (blocked) => {
-        if (blocked) {
-            this.setState({compactCardOpacity: blockedCardOpacity});
-        }
+    setAppropriateOpacity = (blocked) => {
+        const opacity = blocked ? blockedCardOpacity : '1';
+        this.setState({compactCardOpacity: opacity});
     }
 
     setStateFromProps = () => {
         this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
         this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
         this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
-        this.cardBlockedHandler(this.props.blocked);
     }
 
     propsChanged = (prevProps) =>
         prevProps.cardName !== this.props.cardName ||
         prevProps.cardImage !== this.props.cardImage ||
-        prevProps.cardLevel !== this.props.cardLevel ||
-        prevProps.blocked   !== this.props.blocked;
+        prevProps.cardLevel !== this.props.cardLevel;
 
     componentDidMount() {
         this.setStateFromProps();
@@ -71,9 +68,7 @@ class CompactCardView extends React.Component {
     showNewCardsOrder = () => {
         // shows new ordered cards
         setTimeout(() => {
-            this.setState({
-                compactCardOpacity: '1'
-            });
+            this.setAppropriateOpacity(this.props.blocked)
         }, 100);
     }
 
@@ -93,6 +88,9 @@ class CompactCardView extends React.Component {
                     cardIndexInDeck: newCardIndexInDeck
                 }, this.showNewCardsOrder);
             }, nextStepAnimationDuration);
+        }
+        if (prevProps.blocked !== this.props.blocked) {
+            this.setAppropriateOpacity(this.props.blocked);
         }
     }
 
