@@ -13,6 +13,7 @@ import {
     stopForOneTurnEffectId,
     trueDamageEffectId
 } from "../../../../api/data-models/battle/EffectIds";
+import {nextStepAnimationDuration} from "../../../../utils/globals";
 
 /**
  * Visualizes given effect.
@@ -22,10 +23,13 @@ import {
 export const visualizeEffect = (executedEffect, component) => {
     switch (executedEffect.id) {
         case damageEffectId:
+            visualizeStatusEffect(executedEffect.target_player, 'damage', component);
             break;
         case trueDamageEffectId:
+            visualizeStatusEffect(executedEffect.target_player, 'true-damage', component);
             break;
         case shieldEffectId:
+            visualizeStatusEffect(executedEffect.target_player, 'shield', component);
             break;
         case randomizeDeckEffectId:
             break;
@@ -34,6 +38,7 @@ export const visualizeEffect = (executedEffect, component) => {
         case buffExecuteTwoTimesEffectId:
             break;
         case healEffectId:
+            visualizeStatusEffect(executedEffect.target_player, 'heal', component);
             break;
         case blockNextCardEffectId:
             visualizeBlockCardEffect(executedEffect.target_player, component);
@@ -64,4 +69,21 @@ const visualizeBlockCardEffect = (target, component) => {
     const enemyIsTarget = target === component.state.enemy;
     component.getCompactCards(enemyIsTarget);
     component.getMiniCards(enemyIsTarget);
+}
+
+const visualizeStatusEffect = (target, effectType, component) => {
+    if (target === component.state.user) {
+        component.setState({
+            effectFrameOpacity: {type: `${effectType}`, user: '0.5', enemy: '0'}
+        });
+    } else {
+        component.setState({
+            effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0.5'}
+        });
+    }
+    setTimeout(() => {
+        component.setState({
+            effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0'}
+        });
+    }, nextStepAnimationDuration);
 }

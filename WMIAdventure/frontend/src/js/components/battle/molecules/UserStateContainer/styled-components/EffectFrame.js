@@ -4,6 +4,8 @@ function backColorHandle(theme, type) {
     switch (type) {
         case 'damage':
             return theme.colors.red;
+        case 'true-damage':
+            return theme.colors.red;
         case 'heal':
             return theme.colors.greenyBluey;
         case 'shield':
