@@ -18,6 +18,7 @@ import CenterDiv from "./styled-components/CenterDiv";
 import {getCurrentUserId} from "../../../../storage/user/userData";
 import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
+import {visualizeEffect} from "./effectsVisualizing";
 
 class BattleView extends React.Component {
 
@@ -441,8 +442,9 @@ class BattleView extends React.Component {
             });
         }, nextStepAnimationDuration);
 
+        const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
-        // TODO: here call function doing particular effect for example damage, change card-order etc.
+        visualizeEffect(usedEffect, this);
     }
 
     callNextEffectIconAction(userTurn, index) {
@@ -496,7 +498,11 @@ class BattleView extends React.Component {
     callNextCardSequence() {
         setTimeout(() => {
             const userTurn = this.state.battle.isUsersTurn;
-            this.fullCardAction(userTurn);
+            if (this.state.battle.currentTurn.usedCardId)
+                this.fullCardAction(userTurn);
+            else
+                this.compactCardBackCall()
+
         }, nextStepAnimationDuration * 3);
     }
 
@@ -545,6 +551,13 @@ class BattleView extends React.Component {
         this.props.showPostBattle();
     }
 
+    playersOpacityHandler = (isEnemy) => {
+        const stoppedOpacity = '50%'
+        const stoppedTurns = isEnemy ? this.state.battle.enemy.stoppedTurns : this.state.battle.user.stoppedTurns;
+
+        return stoppedTurns ? stoppedOpacity : '100%';
+    }
+
     render() {
         if (this.state.battle === undefined) return (<></>);
         return (
@@ -553,7 +566,7 @@ class BattleView extends React.Component {
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
-                            <FlexGapContainer setMargin={'10px 0 0 0'}>
+                            <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
@@ -570,7 +583,7 @@ class BattleView extends React.Component {
                                 {this.getCompactCards(true)}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                            <FlexGapContainer setMargin={'0 0 10px 0'}>
+                            <FlexGapContainer setMargin={'0 0 10px 0'} opacity={this.playersOpacityHandler(false)}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
                                 <ColumnGapContainer gap={'0'}>
@@ -618,7 +631,8 @@ class BattleView extends React.Component {
                             <PopUp visible={this.props.visible} disableClose
                                    setWidth={'100%'} setHeight={'100%'}
                                    setAlignment={'space-between'}>
-                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}
+                                                  opacity={this.playersOpacityHandler(true)}>
                                     <EnemyStateContainer setTranslateY={this.state.enemyStateContainerTranslateY}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
@@ -629,7 +643,8 @@ class BattleView extends React.Component {
                                     </FlexGapContainer>
                                 </FlexGapContainer>
                                 <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}
+                                                  opacity={this.playersOpacityHandler(false)}>
                                     <FlexGapContainer gap={'10px'}>
                                         {this.getCompactCards(false)}
                                     </FlexGapContainer>

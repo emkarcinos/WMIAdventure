@@ -16,7 +16,7 @@ export class Player {
     }
 
     onTurnEnd(usedCardId) {
-        if (this.stoppedTurns > 0)
+        if (!usedCardId && this.stoppedTurns > 0)
             this.stoppedTurns--;
         this.deck.onTurnEnd(usedCardId);
     }
