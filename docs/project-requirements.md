@@ -268,7 +268,6 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 - Samouczek dla nowych użytkowników
 - Edytor Adventure w formie tworzenia bossów i tekstów prowadzących do walki (US 2.1.4)
 
-
 ## Planowane
 - Zdobywanie kart (US 1.2.6, 1.2.12)
 - Edytor Adventure uzupełiony o dostosowywanie zdobywanych kart przy historii (US 2.1.6)

@@ -18,6 +18,7 @@ import CenterDiv from "./styled-components/CenterDiv";
 import {getCurrentUserId} from "../../../../storage/user/userData";
 import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
+import {visualizeEffect} from "./effectsVisualizing";
 
 class BattleView extends React.Component {
 
@@ -337,6 +338,7 @@ class BattleView extends React.Component {
                     <EffectIcon key={`effectIcon-${effect.id}`}
                                 value={parseInt(effect.power)}
                                 setScale={this.state.effectsActionScale[index]}
+                                effectId={effect.id}
                     />
                 );
             }
@@ -448,8 +450,9 @@ class BattleView extends React.Component {
             });
         }, nextStepAnimationDuration);
 
+        const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
-        // TODO: here call function doing particular effect for example damage, change card-order etc.
+        visualizeEffect(usedEffect, this);
     }
 
     callNextEffectIconAction(userTurn, index) {
