@@ -19,6 +19,7 @@ import {
 export const visualizeEffect = (executedEffect, component) => {
     switch (executedEffect.id) {
         case damageEffectId:
+            component.visualizeDamageEffect(executedEffect.target_player);
             break;
         case trueDamageEffectId:
             break;

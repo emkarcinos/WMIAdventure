@@ -441,8 +441,7 @@ class BattleView extends React.Component {
         this.effectsActionCall(userTurn);
     }
 
-    effectIconCastEffect(newEffectsActionScale, index, effect) {
-        this.visualizeEffects(effect);
+    effectIconCastEffect(newEffectsActionScale, index) {
         setTimeout(() => {
             newEffectsActionScale[index] = '1';
             this.setState({
@@ -474,17 +473,6 @@ class BattleView extends React.Component {
             this.callNextEffectIconAction(userTurn, index);
         } else {
             this.effectsHide();
-        }
-    }
-
-    visualizeEffects = (effect) => {
-        switch (effect.id) {
-            case 1:
-                this.visualizeDamageEffect(effect.target_player);
-                break;
-            default:
-                console.log("unidentified effect");
-                break;
         }
     }
 
