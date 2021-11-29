@@ -547,6 +547,13 @@ class BattleView extends React.Component {
         this.props.showPostBattle();
     }
 
+    playersOpacityHandler = (isEnemy) => {
+        const stoppedOpacity = '50%'
+        const stoppedTurns = isEnemy ? this.state.battle.enemy.stoppedTurns : this.state.battle.user.stoppedTurns;
+
+        return stoppedTurns ? stoppedOpacity : '100%';
+    }
+
     render() {
         if (this.state.battle === undefined) return (<></>);
         return (
@@ -555,7 +562,7 @@ class BattleView extends React.Component {
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
-                            <FlexGapContainer setMargin={'10px 0 0 0'}>
+                            <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
@@ -572,7 +579,7 @@ class BattleView extends React.Component {
                                 {this.getCompactCards(true)}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                            <FlexGapContainer setMargin={'0 0 10px 0'}>
+                            <FlexGapContainer setMargin={'0 0 10px 0'} opacity={this.playersOpacityHandler(false)}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
                                 <ColumnGapContainer gap={'0'}>
