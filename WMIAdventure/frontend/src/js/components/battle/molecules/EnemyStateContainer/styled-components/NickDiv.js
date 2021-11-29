@@ -9,7 +9,7 @@ const NickDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     border-radius: 0 0 16px 16px;

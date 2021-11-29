@@ -85,12 +85,19 @@ class BattleView extends React.Component {
             user: '1',
             enemy: '1',
             middle: '0'
+        },
+
+        // type: (0: nothing) (1: damage) (2: heal) (3: shield)
+        effectFrameOpacity: {
+            type: 'nothing',
+            user: '0',
+            enemy: '0'
         }
     }
 
     componentDidMount() {
         getCurrentUserId()
-            .then(id => this.setState({user: id}))
+            .then(id => this.setState({user: id}));
     }
 
     componentDidUpdate(prevProps) {
@@ -462,7 +469,7 @@ class BattleView extends React.Component {
             this.setState({
                 effectsActionScale: newEffectsActionScale
             });
-            this.effectIconCastEffect(newEffectsActionScale, index);
+            this.effectIconCastEffect(newEffectsActionScale, index, effects[index]);
             this.callNextEffectIconAction(userTurn, index);
         } else {
             this.effectsHide();
@@ -572,6 +579,8 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
@@ -595,7 +604,10 @@ class BattleView extends React.Component {
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
-                                                        username={this.state.battle.user.username}/>
+                                                        username={this.state.battle.user.username}
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}
+                                    />
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -637,6 +649,8 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer gap={'10px'} reverse>
                                         {this.getCompactCards(true)}
@@ -651,7 +665,9 @@ class BattleView extends React.Component {
                                     <UserStateContainer setTranslateY={this.state.userStateContainerTranslateY}
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
-                                                        username={this.state.battle.user.username}/>
+                                                        username={this.state.battle.user.username}
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}/>
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
