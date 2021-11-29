@@ -9,6 +9,8 @@ const Container = styled.div`
   margin: ${({setMargin}) => setMargin ? setMargin : '0'};
   width: ${({setWidth}) => setWidth ? setWidth : 'auto'};
   height: ${({setHeight}) => setHeight ? setHeight : 'auto'};
+  opacity: ${({opacity}) => opacity ? opacity : '100%'};
+  transition: opacity 0.5s ease-in-out;
 `;
 
 export default Container;

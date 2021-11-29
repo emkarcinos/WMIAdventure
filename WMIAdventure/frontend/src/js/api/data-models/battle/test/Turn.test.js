@@ -40,6 +40,22 @@ const exampleTurnData = {
     ],
 }
 
+const exampleTurnDataWithBuff = {
+    card_executor: attacker.id,
+    used_card: 3,
+    used_effects: [
+        {
+            id: 8,
+            target_player: attacker.id,
+            buff: {
+                buff_type: null,
+                modifier: 1.1519924929048808
+            },
+            buffed_card: 3
+        },
+    ],
+}
+
 
 test('Should create turn object correctly', () => {
     const user = playerFromData(attacker);
@@ -90,4 +106,11 @@ test('Should consecutive advance calls affect target with multiple effects', () 
     expect(enemy.deck.cards[4].id).toBe(exampleTurnData.used_effects[1].new_deck_order[4]);
 });
 
+test('Should handle buff modifiers as power', () => {
+    const user = playerFromData(attacker);
+    const enemy = playerFromData(defender);
+    const turn = new Turn(exampleTurnDataWithBuff, user, enemy);
+    expect(turn.usedEffects[0].power).toBe(exampleTurnDataWithBuff.used_effects[0].buff.modifier);
+
+});
 
