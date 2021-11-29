@@ -476,23 +476,6 @@ class BattleView extends React.Component {
         }
     }
 
-    visualizeStatusEffect = (target, effectType) => {
-        if (target === this.state.user) {
-            this.setState({
-                effectFrameOpacity: {type: `${effectType}`, user: '0.5', enemy: '0'}
-            });
-        } else {
-            this.setState({
-                effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0.5'}
-            });
-        }
-        setTimeout(() => {
-            this.setState({
-                effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0'}
-            });
-        }, nextStepAnimationDuration);
-    }
-
     compactCardBackCall() {
         setTimeout(() => {
             this.compactCardBack();
