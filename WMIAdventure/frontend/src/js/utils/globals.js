@@ -9,11 +9,14 @@ const popUpLoadingMinimalDuration = 500;
 const battleInitLoadingDuration = 800;
 const nextStepAnimationDuration = 550;
 
+const blockedCardOpacity = '0.3';
+
 export {
     mobile, desktop,
     maxCardName, maxCardSubject, maxCardTooltip,
 
     popUpLoadingMinimalDuration,
     battleInitLoadingDuration,
-    nextStepAnimationDuration
+    nextStepAnimationDuration,
+    blockedCardOpacity
 };
