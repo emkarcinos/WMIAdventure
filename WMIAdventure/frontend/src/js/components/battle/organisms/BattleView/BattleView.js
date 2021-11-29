@@ -498,7 +498,11 @@ class BattleView extends React.Component {
     callNextCardSequence() {
         setTimeout(() => {
             const userTurn = this.state.battle.isUsersTurn;
-            this.fullCardAction(userTurn);
+            if (this.state.battle.currentTurn.usedCardId)
+                this.fullCardAction(userTurn);
+            else
+                this.compactCardBackCall()
+
         }, nextStepAnimationDuration * 3);
     }
 
