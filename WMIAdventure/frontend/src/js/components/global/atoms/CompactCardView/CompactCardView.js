@@ -89,7 +89,8 @@ class CompactCardView extends React.Component {
                 }, this.showNewCardsOrder);
             }, nextStepAnimationDuration);
         }
-        if (prevProps.blocked !== this.props.blocked) {
+        // If card changed it's blocked state and deck order wasn't changed then set proper opacity
+        else if (prevProps.blocked !== this.props.blocked) {
             this.setAppropriateOpacity(this.props.blocked);
         }
     }
