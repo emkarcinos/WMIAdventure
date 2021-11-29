@@ -19,11 +19,12 @@ import {
 export const visualizeEffect = (executedEffect, component) => {
     switch (executedEffect.id) {
         case damageEffectId:
-            component.visualizeDamageEffect(executedEffect.target_player);
+            component.visualizeStatusEffect(executedEffect.target_player, 'damage');
             break;
         case trueDamageEffectId:
             break;
         case shieldEffectId:
+            component.visualizeStatusEffect(executedEffect.target_player, 'shield');
             break;
         case randomizeDeckEffectId:
             break;
@@ -32,6 +33,7 @@ export const visualizeEffect = (executedEffect, component) => {
         case buffExecuteTwoTimesEffectId:
             break;
         case healEffectId:
+            component.visualizeStatusEffect(executedEffect.target_player, 'heal');
             break;
         case blockNextCardEffectId:
             break;

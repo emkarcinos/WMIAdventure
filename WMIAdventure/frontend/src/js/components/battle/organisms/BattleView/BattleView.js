@@ -476,19 +476,19 @@ class BattleView extends React.Component {
         }
     }
 
-    visualizeDamageEffect = (target) => {
+    visualizeStatusEffect = (target, effectType) => {
         if (target === this.state.user) {
             this.setState({
-                effectFrameOpacity: {type: 'damage', user: '0.5', enemy: '0'}
+                effectFrameOpacity: {type: `${effectType}`, user: '0.5', enemy: '0'}
             });
         } else {
             this.setState({
-                effectFrameOpacity: {type: 'damage', user: '0', enemy: '0.5'}
+                effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0.5'}
             });
         }
         setTimeout(() => {
             this.setState({
-                effectFrameOpacity: {type: 'damage', user: '0', enemy: '0'}
+                effectFrameOpacity: {type: `${effectType}`, user: '0', enemy: '0'}
             });
         }, nextStepAnimationDuration);
     }
