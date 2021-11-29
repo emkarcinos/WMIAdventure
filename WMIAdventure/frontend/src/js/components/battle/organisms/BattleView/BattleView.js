@@ -631,7 +631,8 @@ class BattleView extends React.Component {
                             <PopUp visible={this.props.visible} disableClose
                                    setWidth={'100%'} setHeight={'100%'}
                                    setAlignment={'space-between'}>
-                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}
+                                                  opacity={this.playersOpacityHandler(true)}>
                                     <EnemyStateContainer setTranslateY={this.state.enemyStateContainerTranslateY}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
@@ -642,7 +643,8 @@ class BattleView extends React.Component {
                                     </FlexGapContainer>
                                 </FlexGapContainer>
                                 <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}
+                                                  opacity={this.playersOpacityHandler(false)}>
                                     <FlexGapContainer gap={'10px'}>
                                         {this.getCompactCards(false)}
                                     </FlexGapContainer>
