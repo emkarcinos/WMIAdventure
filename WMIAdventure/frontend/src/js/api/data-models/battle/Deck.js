@@ -72,6 +72,8 @@ export class Deck {
         if (!executedCardId)
             return;
         const card = this.cards.filter(card => card.id === executedCardId)[0];
+        if (!card)
+            return;
         card.onTurnEnd();
     }
 }

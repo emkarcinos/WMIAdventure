@@ -4,7 +4,7 @@ import Name from './styled-components/Name';
 import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
-import {nextStepAnimationDuration} from "../../../../utils/globals";
+import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
 
 class CompactCardView extends React.Component {
     /*
@@ -41,13 +41,23 @@ class CompactCardView extends React.Component {
         }
     }
 
+    /**
+     * Sets appropriate opacity. (checks if card is blocked or not)
+     * @param blocked If this card is blocked or not.
+     */
+    setAppropriateOpacity = (blocked) => {
+        const opacity = blocked ? blockedCardOpacity : '1';
+        this.setState({compactCardOpacity: opacity});
+    }
+
     setStateFromProps = () => {
         this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
         this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
         this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
     }
 
-    propsChanged = (prevProps) => prevProps.cardName !== this.props.cardName ||
+    propsChanged = (prevProps) =>
+        prevProps.cardName !== this.props.cardName ||
         prevProps.cardImage !== this.props.cardImage ||
         prevProps.cardLevel !== this.props.cardLevel;
 
@@ -58,9 +68,7 @@ class CompactCardView extends React.Component {
     showNewCardsOrder = () => {
         // shows new ordered cards
         setTimeout(() => {
-            this.setState({
-                compactCardOpacity: '1'
-            });
+            this.setAppropriateOpacity(this.props.blocked)
         }, 100);
     }
 
@@ -80,6 +88,10 @@ class CompactCardView extends React.Component {
                     cardIndexInDeck: newCardIndexInDeck
                 }, this.showNewCardsOrder);
             }, nextStepAnimationDuration);
+        }
+        // If card changed it's blocked state and deck order wasn't changed then set proper opacity
+        else if (prevProps.blocked !== this.props.blocked) {
+            this.setAppropriateOpacity(this.props.blocked);
         }
     }
 

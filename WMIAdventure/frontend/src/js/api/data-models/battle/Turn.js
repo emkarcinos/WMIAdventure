@@ -18,6 +18,7 @@ export class Turn {
         this.usedEffects = turnData.used_effects;
         this.user = user;
         this.enemy = enemy;
+        this.swapModifiersForPower();
     }
 
     /**
@@ -46,6 +47,17 @@ export class Turn {
 
         applyEffectToTarget(target, effect);
         this.currentlyExecutingEffectIdx++;
+    }
+
+    swapModifiersForPower() {
+        for (let effect of this.usedEffects) {
+            if (effect.power)
+                continue;
+
+            if (effect.buff)
+                effect.power = effect.buff.modifier;
+        }
+        return this.usedEffects;
     }
 
     /**

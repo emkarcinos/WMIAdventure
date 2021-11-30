@@ -18,6 +18,7 @@ import CenterDiv from "./styled-components/CenterDiv";
 import {getCurrentUserId} from "../../../../storage/user/userData";
 import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
+import {visualizeEffect} from "./effectsVisualizing";
 
 class BattleView extends React.Component {
 
@@ -84,12 +85,19 @@ class BattleView extends React.Component {
             user: '1',
             enemy: '1',
             middle: '0'
+        },
+
+        // type: (0: nothing) (1: damage) (2: heal) (3: shield)
+        effectFrameOpacity: {
+            type: 'nothing',
+            user: '0',
+            enemy: '0'
         }
     }
 
     componentDidMount() {
         getCurrentUserId()
-            .then(id => this.setState({user: id}))
+            .then(id => this.setState({user: id}));
     }
 
     componentDidUpdate(prevProps) {
@@ -280,7 +288,9 @@ class BattleView extends React.Component {
                                       enemy={enemy} user={!enemy}
                                       cardLevel={card.level}
                                       animationDuration={`0.${9 - i}`}
-                                      cardImage={card.image}/>
+                                      cardImage={card.image}
+                                      blocked={card.stoppedTurns > 0}
+                        />
                     );
                 })
         );
@@ -309,6 +319,7 @@ class BattleView extends React.Component {
                                          cardImage={card.image}
                                          cardName={card.name}
                                          cardLevel={card.level}
+                                         blocked={card.stoppedTurns > 0}
                                          setWidth={'124px'} setHeight={'200px'}
                                          setTranslateX={enemy ? this.state.enemyCompactCardTranslateX
                                              : this.state.userCompactCardTranslateX}
@@ -441,8 +452,9 @@ class BattleView extends React.Component {
             });
         }, nextStepAnimationDuration);
 
+        const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
-        // TODO: here call function doing particular effect for example damage, change card-order etc.
+        visualizeEffect(usedEffect, this);
     }
 
     callNextEffectIconAction(userTurn, index) {
@@ -496,7 +508,22 @@ class BattleView extends React.Component {
     callNextCardSequence() {
         setTimeout(() => {
             const userTurn = this.state.battle.isUsersTurn;
-            this.fullCardAction(userTurn);
+            const usedCardId = this.state.battle.currentTurn.usedCardId;
+
+            if (usedCardId) {
+                const cardExecutorDeck = userTurn ? this.state.battle.user.deck : this.state.battle.enemy.deck;
+                const usedCard = cardExecutorDeck.lookupCardById(usedCardId);
+
+                // If used card is stopped then don't play animation of using this stopped card.
+                if (usedCard.stoppedTurns > 0)
+                    this.compactCardBackCall();
+                else
+                    this.fullCardAction(userTurn);
+            }
+            else {
+                this.compactCardBackCall();
+            }
+
         }, nextStepAnimationDuration * 3);
     }
 
@@ -545,6 +572,13 @@ class BattleView extends React.Component {
         this.props.showPostBattle();
     }
 
+    playersOpacityHandler = (isEnemy) => {
+        const stoppedOpacity = '50%'
+        const stoppedTurns = isEnemy ? this.state.battle.enemy.stoppedTurns : this.state.battle.user.stoppedTurns;
+
+        return stoppedTurns ? stoppedOpacity : '100%';
+    }
+
     render() {
         if (this.state.battle === undefined) return (<></>);
         return (
@@ -553,12 +587,14 @@ class BattleView extends React.Component {
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
-                            <FlexGapContainer setMargin={'10px 0 0 0'}>
+                            <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'} reverse>
                                         {/* Enemy MiniCards!
@@ -570,7 +606,7 @@ class BattleView extends React.Component {
                                 {this.getCompactCards(true)}
                             </FlexGapContainer>
                             <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                            <FlexGapContainer setMargin={'0 0 10px 0'}>
+                            <FlexGapContainer setMargin={'0 0 10px 0'} opacity={this.playersOpacityHandler(false)}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
                                 <ColumnGapContainer gap={'0'}>
@@ -582,7 +618,10 @@ class BattleView extends React.Component {
                                     <UserStateContainer setTranslateX={this.state.userStateContainerTranslateX}
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
-                                                        username={this.state.battle.user.username}/>
+                                                        username={this.state.battle.user.username}
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}
+                                    />
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -618,25 +657,31 @@ class BattleView extends React.Component {
                             <PopUp visible={this.props.visible} disableClose
                                    setWidth={'100%'} setHeight={'100%'}
                                    setAlignment={'space-between'}>
-                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'32px 0 0 0'}
+                                                  opacity={this.playersOpacityHandler(true)}>
                                     <EnemyStateContainer setTranslateY={this.state.enemyStateContainerTranslateY}
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         effectFrameOpacity={this.state.effectFrameOpacity.enemy}
+                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
                                     <FlexGapContainer gap={'10px'} reverse>
                                         {this.getCompactCards(true)}
                                     </FlexGapContainer>
                                 </FlexGapContainer>
                                 <KuceInBattle visible={this.state.kuceInBattleVisible}/>
-                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}>
+                                <FlexGapContainer gap={'10px'} setMargin={'0 0 32px 0'}
+                                                  opacity={this.playersOpacityHandler(false)}>
                                     <FlexGapContainer gap={'10px'}>
                                         {this.getCompactCards(false)}
                                     </FlexGapContainer>
                                     <UserStateContainer setTranslateY={this.state.userStateContainerTranslateY}
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
-                                                        username={this.state.battle.user.username}/>
+                                                        username={this.state.battle.user.username}
+                                                        effectFrameOpacity={this.state.effectFrameOpacity.user}
+                                                        frameOpacityType={this.state.effectFrameOpacity.type}/>
                                 </FlexGapContainer>
                             </PopUp>
                         </MainContainer>
@@ -649,7 +694,9 @@ class BattleView extends React.Component {
                                              cardLevel={this.state.battle.getCardOnTop().level}
                                              cardImage={this.state.battle.getCardOnTop().image}
                                              setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
-                                             setScale={this.state.compactCardOnTopScale.middle}/>
+                                             setScale={this.state.compactCardOnTopScale.middle}
+                                             blocked={this.state.battle.getCardOnTop().stoppedTurns > 0}
+                            />
                         </CenterDiv>
                         <CenterDiv>
                             <EffectIconsContainer

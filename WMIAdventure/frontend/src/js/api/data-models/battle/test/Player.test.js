@@ -42,14 +42,25 @@ test('Should not decrement stoppedTurns below zero', () => {
     const player = playerFromData(examplePlayerWithDeck);
     player.stoppedTurns = 2
 
-    player.onTurnEnd(5);
+    player.onTurnEnd(null);
     expect(player.stoppedTurns).toBe(1);
 
-    player.onTurnEnd(5);
+    player.onTurnEnd(null);
     expect(player.stoppedTurns).toBe(0);
 
-    player.onTurnEnd(5);
+    player.onTurnEnd(null);
     expect(player.stoppedTurns).toBe(0);
+})
+
+test('Should not decrement if a card was executed', () => {
+    const player = playerFromData(examplePlayerWithDeck);
+    player.stoppedTurns = 2
+
+    player.onTurnEnd(6);
+    expect(player.stoppedTurns).toBe(2);
+
+    player.onTurnEnd(6);
+    expect(player.stoppedTurns).toBe(2);
 })
 
 test('Should fetch and extra data correctly', async () => {
