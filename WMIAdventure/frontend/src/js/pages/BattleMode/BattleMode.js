@@ -18,7 +18,7 @@ import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
-import {getCurrentUserId, getCurrentUsername} from "../../storage/user/userData";
+import {getCurrentUserData, getCurrentUserId} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
 
@@ -49,8 +49,8 @@ class BattleMode extends React.Component {
             .catch(error => console.log(error));
         getCurrentUserId()
             .then(id => id ? this.setState({loggedInUserId: id}) : null);
-        getCurrentUsername()
-            .then(name => name ? this.setState({loggedInUsername: name}) : null);
+        getCurrentUserData()
+            .then(data => data ? this.setState({loggedInUsername: data.displayedUsername}) : null);
     }
 
     runUserPreviewHandler = (user) => {
