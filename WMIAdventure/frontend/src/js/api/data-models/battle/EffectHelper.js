@@ -1,6 +1,9 @@
 /**
  * Helper functions responsible for handling different effect based on their IDs.
  */
+
+let idCounter = 0;
+
 import {
     blockNextCardEffectId,
     buffsEffectIds,
@@ -29,6 +32,7 @@ const addBuff = (target, buffedCardId, buff) => {
     if (buffedCardId === undefined || buff === undefined) return;
 
     const targetCard = target.deck.lookupCardById(buffedCardId);
+    buff.id = idCounter++;
     targetCard.buffs.push(buff);
 }
 
