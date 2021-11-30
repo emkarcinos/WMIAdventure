@@ -3,16 +3,17 @@ import Cookies from "../../api/Cookies";
 import {getWithSetCallback, invalidateItem} from "../cache/cache";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 import {whoAmI} from "../../api/gateways/UsersAPIGateway";
+import {getUserById} from "../profiles/userProfileList";
 
 export const isLoggedIn = async () => {
-    return !!await getCurrentUsername();
+    return !!await getCurrentUserId();
 }
 
 export const hasSessionCookie = () => {
     return !!Cookies.getSessionToken();
 }
 
-export const getCurrentUsername = async () => {
+export const getCurrentUserData = async () => {
     if (!hasSessionCookie()) {
         invalidateItem(userDataKeys.username);
         return null;
@@ -21,7 +22,7 @@ export const getCurrentUsername = async () => {
     const backendCallback = async () => {
         const who = await whoAmI();
         if (who) {
-            return who.username;
+            return await getUserById(who.id);
         }
         return null;
     }
@@ -61,4 +62,4 @@ export const purgeUserData = () => {
     for (const [, value] of Object.entries(userDataKeys))
         invalidateItem(value);
 }
-export default {isLoggedIn, getCurrentUsername, hasSessionCookie};
+export default {isLoggedIn, getCurrentUserData, hasSessionCookie};

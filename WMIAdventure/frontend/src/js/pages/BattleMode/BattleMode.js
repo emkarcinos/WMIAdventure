@@ -18,7 +18,7 @@ import kuceBattle from '../../../assets/images/kuceBattle.png';
 import KuceBattleImage from './styled-components/KuceBattleImage';
 import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
-import {getCurrentUserId, getCurrentUsername} from "../../storage/user/userData";
+import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
 
@@ -33,8 +33,12 @@ class BattleMode extends React.Component {
         defenderDecks: [],
 
         userPreviewRun: false,
-        loggedInUserId: 0,
-        loggedInUsername: ' ',
+        loggedInUser: {
+            id: 0,
+            username: '',
+            semester: 1,
+            image: null
+        },
         userPreviewPos: '-100vh',
         userPreviewOpacity: '0',
         scrollVisible: true,
@@ -47,18 +51,24 @@ class BattleMode extends React.Component {
         getAllUserProfiles()
             .then(data => this.setState({users: data}))
             .catch(error => console.log(error));
-        getCurrentUserId()
-            .then(id => id ? this.setState({loggedInUserId: id}) : null);
-        getCurrentUsername()
-            .then(name => name ? this.setState({loggedInUsername: name}) : null);
+        getCurrentUserData()
+            .then(data => data ? this.setState({
+                loggedInUser: {
+                    id: data.user,
+                    username: data.displayedUsername,
+                    semester: data.semester,
+                    image: data.image
+                }
+            }) : null);
     }
 
-    runUserPreviewHandler = (username, userId) => {
+    runUserPreviewHandler = (user) => {
         this.setState({
             userPreviewRun: true,
             selectedUser: {
-                username: username,
-                id: userId
+                username: user.displayedUsername,
+                id: user.user,
+                avatar: user.image
             }
         });
 
@@ -124,13 +134,12 @@ class BattleMode extends React.Component {
                 {this.state.users ? this.state.users.map((elem) => {
                     return (
                         <UserListItem key={elem.user}
-                                      access={!(elem.user === this.state.loggedInUserId)}
+                                      access={!(elem.user === this.state.loggedInUser.id)}
                                       displayedUsername={elem.displayedUsername}
                                       searchInput={this.state.searchInput}
                                       term={elem.semester} level={elem.user * 4}
-                                      runUserPreviewHandler={() => this.runUserPreviewHandler(
-                                          elem.displayedUsername,
-                                          elem.user)}/>
+                                      avatar={elem.image}
+                                      runUserPreviewHandler={() => this.runUserPreviewHandler(elem)}/>
                     );
                 }) : ''}
             </Ul>
@@ -155,7 +164,9 @@ class BattleMode extends React.Component {
                                         handleSearch={this.handleSearch}/>
                             </SearchContainer>
                             {this.userListItemsRender()}
-                            <SwipeProfile userId={this.state.loggedInUserId} username={this.state.loggedInUsername}
+                            <SwipeProfile userId={this.state.loggedInUser.id}
+                                          username={this.state.loggedInUser.username}
+                                          avatar={this.state.loggedInUser.image}
                                           hideScroll={this.hideScroll} showScroll={this.showScroll}/>
                         </>
                     </Media>
@@ -181,7 +192,8 @@ class BattleMode extends React.Component {
                         </>
                     </Media>
                 </Main>
-                <TinyProfileDesktop userId={this.state.loggedInUserId} username={this.state.loggedInUsername}/>
+                <TinyProfileDesktop userId={this.state.loggedInUser.id} username={this.state.loggedInUser.username}
+                                    avatar={this.state.loggedInUser.image}/>
                 <OpponentSelected visible={this.state.userPreviewRun}
                                   opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
