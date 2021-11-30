@@ -3,9 +3,8 @@ from django.db import models
 from django.db.models.functions import Upper
 
 from cards.models import Card
-
-
 # Create your models here.
+from cards.validators import validate_file_size
 
 
 class Semester(models.Model):
@@ -23,6 +22,7 @@ class UserProfile(models.Model):
     Handy information about a given in-app user.
     Stores non-vital data just to make a user appear pretty.
     """
+
     class Meta:
         ordering = [Upper('displayedUsername')]
 
@@ -33,7 +33,12 @@ class UserProfile(models.Model):
         help_text="A reference to Django user model"
     )
     displayedUsername = models.CharField(max_length=50, help_text="Pretty username available to anyone")
-    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, help_text="Semester number.") 
+    image = models.FileField(null=True,
+                             blank=True,
+                             help_text="# Player profile image",
+                             upload_to='IngameUsers.ImageStorage/bytes/filename/mimetype',
+                             validators=[validate_file_size])
+    semester = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True, help_text="Semester number.")
 
     def __str__(self):
         return self.displayedUsername
@@ -76,3 +81,9 @@ class UserDeck(models.Model):
             models.UniqueConstraint(fields=['deck_number', 'deck', 'user_profile'],
                                     name='user_deck_composite_pk')
         ]
+
+
+class ImageStorage(models.Model):
+    bytes = models.BinaryField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
