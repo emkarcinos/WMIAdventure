@@ -100,10 +100,10 @@ class CompactCardView extends React.Component {
     getBuffs = () => {
         if (this.props.buffs && this.props.buffs.length !== 0) {
             return (
-                this.props.buffs.map(() => {
+                this.props.buffs.map((buff, index) => {
                     return (
-                        <BuffValue key={`${this.state.cardName}-buff-${this.props.buffs.id}`}>
-                            value
+                        <BuffValue key={`${index}-buffType-${buff.type}`}>
+                            +{buff.modifier}
                         </BuffValue>
                     );
                 })

@@ -5,8 +5,9 @@ const BuffsContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
-  left: 50%;
+  width: 100%;
+  top: 2px;
+  left: 0;
 `;
 
 export default BuffsContainer;
