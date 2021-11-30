@@ -21,11 +21,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
         newProfile = models.UserProfile.objects.create(
             user=validated_data['user'],
             displayedUsername=validated_data['displayedUsername'],
-            semester=validated_data['semester']
+            semester=validated_data['semester'],
+            image=validated_data.get('image', None)
         )
 
         newProfile.save()
         return newProfile
+
+    def update(self, instance, validated_data):
+        data_without_semester = {
+            'user': validated_data['user'],
+            'displayedUsername': validated_data['displayedUsername'],
+            'image': validated_data.get('image', None)
+        }
+        return super().update(instance, data_without_semester)
 
 
 class UserCardSerializer(serializers.ModelSerializer):
