@@ -5,6 +5,8 @@ import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
 import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
+import BuffsContainer from "./styled-components/BuffsContainer";
+import BuffValue from "./styled-components/BuffValue";
 
 class CompactCardView extends React.Component {
     /*
@@ -95,6 +97,20 @@ class CompactCardView extends React.Component {
         }
     }
 
+    getBuffs = () => {
+        if (this.props.buffs && this.props.buffs.length !== 0) {
+            return (
+                this.props.buffs.map(() => {
+                    return (
+                        <BuffValue key={`${this.state.cardName}-buff-${this.props.buffs.id}`}>
+                            value
+                        </BuffValue>
+                    );
+                })
+            );
+        }
+    }
+
     render() {
         return (
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
@@ -103,7 +119,10 @@ class CompactCardView extends React.Component {
                  setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
                  cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}
-                 setScale={this.props.setScale}>
+                 setScale={this.props.setScale} hasBuff={this.props.buffs && (this.props.buffs.length !== 0)}>
+                <BuffsContainer>
+                    {this.getBuffs()}
+                </BuffsContainer>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>

@@ -327,7 +327,8 @@ class BattleView extends React.Component {
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
                                          setMargin={handleMargin}
-                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}/>
+                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}
+                                         buffs={card.buffs}/>
                     );
                 })
         );
