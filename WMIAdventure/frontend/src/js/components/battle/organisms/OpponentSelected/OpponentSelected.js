@@ -300,9 +300,9 @@ class OpponentSelected extends React.Component {
                         </PopUp>
                         <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                     closeHandler={this.quickBattleCloseHandler}
-                                    attacker={this.state.caller.id}
+                                    attacker={this.state.caller}
                                     attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent.username}
+                                    opponent={this.props.opponent}
                                     opponentDeck={this.state.opponentDeck}
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
@@ -371,9 +371,9 @@ class OpponentSelected extends React.Component {
                         </TransBack>
                         <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                     closeHandler={this.quickBattleCloseHandler}
-                                    attacker={this.state.caller.id}
+                                    attacker={this.state.caller}
                                     attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent.username}
+                                    opponent={this.props.opponent}
                                     opponentDeck={this.state.opponentDeck}
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
