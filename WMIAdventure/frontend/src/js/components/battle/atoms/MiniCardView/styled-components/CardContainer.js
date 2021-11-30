@@ -1,21 +1,22 @@
 import styled from 'styled-components';
 
 function handleColor(level, theme) {
-    if(level === 1)
+    if (level === 1)
         return theme.colors.greenyBluey;
-    else if(level === 2)
+    else if (level === 2)
         return theme.colors.yellowyOrangy;
-    else if(level === 3)
-        return  theme.colors.purplyPinky;
+    else if (level === 3)
+        return theme.colors.purplyPinky;
     else return theme.colors.greenyBluey;
 }
 
-const CardsContainer = styled.div`
+const CardContainer = styled.div`
   border-top-left-radius: ${({user}) => user ? '16px' : '0'};
   border-top-right-radius: ${({user}) => user ? '16px' : '0'};
   border-bottom-left-radius: ${({enemy}) => enemy ? '16px' : '0'};
   border-bottom-right-radius: ${({enemy}) => enemy ? '16px' : '0'};
   background-color: ${({level, theme}) => handleColor(level, theme)};
+  border: 2px solid ${({hasBuff, level, theme}) => hasBuff ? handleColor(level, theme) : 'none'};
   width: 54px;
   height: 64px;
   display: ${({cardIndexInDeck}) => (cardIndexInDeck === 1) ? 'none' : 'flex'};
@@ -27,4 +28,4 @@ const CardsContainer = styled.div`
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
 `;
 
-export default CardsContainer;
+export default CardContainer;

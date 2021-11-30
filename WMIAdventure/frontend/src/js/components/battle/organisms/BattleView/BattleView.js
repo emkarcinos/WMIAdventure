@@ -289,6 +289,7 @@ class BattleView extends React.Component {
                                       cardLevel={card.level}
                                       animationDuration={`0.${9 - i}`}
                                       cardImage={card.image}
+                                      hasBuff={card.buffs.length !== 0}
                                       blocked={card.stoppedTurns > 0}
                         />
                     );
@@ -519,8 +520,7 @@ class BattleView extends React.Component {
                     this.compactCardBackCall();
                 else
                     this.fullCardAction(userTurn);
-            }
-            else {
+            } else {
                 this.compactCardBackCall();
             }
 
