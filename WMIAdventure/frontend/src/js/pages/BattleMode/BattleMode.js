@@ -53,12 +53,13 @@ class BattleMode extends React.Component {
             .then(name => name ? this.setState({loggedInUsername: name}) : null);
     }
 
-    runUserPreviewHandler = (username, userId) => {
+    runUserPreviewHandler = (user) => {
         this.setState({
             userPreviewRun: true,
             selectedUser: {
-                username: username,
-                id: userId
+                username: user.displayedUsername,
+                id: user.user,
+                avatar: user.image
             }
         });
 
@@ -129,9 +130,7 @@ class BattleMode extends React.Component {
                                       searchInput={this.state.searchInput}
                                       term={elem.semester} level={elem.user * 4}
                                       avatar={elem.image}
-                                      runUserPreviewHandler={() => this.runUserPreviewHandler(
-                                          elem.displayedUsername,
-                                          elem.user)}/>
+                                      runUserPreviewHandler={() => this.runUserPreviewHandler(elem)}/>
                     );
                 }) : ''}
             </Ul>

@@ -256,7 +256,7 @@ class OpponentSelected extends React.Component {
                                     <KuceVs/>
                                     <TinyUserProfile displayedUsername={this.props.opponent.username}
                                                      setMargin={'0 0 24px 0'}
-                                                     term={7} level={39} rank={15} avatar={null}/>
+                                                     term={7} level={39} rank={15} avatar={this.props.opponent.avatar}/>
                                     <FlexGapContainer gap={'40px'}>
                                         <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
@@ -327,7 +327,8 @@ class OpponentSelected extends React.Component {
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile displayedUsername={this.props.opponent.username}
                                                          setMargin={'0'}
-                                                         term={7} level={39} rank={15} avatar={null} vertical/>
+                                                         term={7} level={39} rank={15}
+                                                         avatar={this.props.opponent.avatar} vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
