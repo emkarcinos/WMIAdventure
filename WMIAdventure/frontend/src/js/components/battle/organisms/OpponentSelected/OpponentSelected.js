@@ -55,14 +55,14 @@ class OpponentSelected extends React.Component {
 
     componentDidMount() {
         getCurrentUserData()
-            .then(user => this.setState({
+            .then(user => user ? this.setState({
                 caller: {
                     username: user.displayedUsername,
                     id: user.user,
                     semester: user.semester,
                     avatar: user.image
                 }
-            }))
+            }) : null)
         getCurrentUserDecks()
             .then(resp => {
                 if (resp) {
