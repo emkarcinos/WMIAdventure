@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.fields import ImageField
 
 from cards.models import Card
+from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
 from .models import UserProfile, Deck
 
@@ -9,20 +11,30 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
+    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = models.UserProfile
-        fields = ('user', 'displayedUsername', 'semester')
+        fields = ('user', 'displayedUsername', 'semester', 'image')
 
     def create(self, validated_data):
         newProfile = models.UserProfile.objects.create(
             user=validated_data['user'],
             displayedUsername=validated_data['displayedUsername'],
-            semester=validated_data['semester']
+            semester=validated_data['semester'],
+            image=validated_data.get('image', None)
         )
 
         newProfile.save()
         return newProfile
+
+    def update(self, instance, validated_data):
+        data_without_semester = {
+            'user': validated_data['user'],
+            'displayedUsername': validated_data['displayedUsername'],
+            'image': validated_data.get('image', None)
+        }
+        return super().update(instance, data_without_semester)
 
 
 class UserCardSerializer(serializers.ModelSerializer):

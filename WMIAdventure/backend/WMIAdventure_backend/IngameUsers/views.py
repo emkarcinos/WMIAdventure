@@ -1,13 +1,13 @@
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import RetrieveAPIView, get_object_or_404
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
-from . import serializers
 from . import models
+from . import serializers
 from .models import UserProfile
-from .permissions import IsOwner
+from .permissions import IsOwner, CanEditProfile
 from .serializers import UserDecksSerializer
 
 
@@ -30,12 +30,14 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
     """
     Fetches a user.
     """
+
+    permission_classes = [CanEditProfile]
+
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
 
 
 class UserDeckView(RetrieveAPIView):
-
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwner]
 
