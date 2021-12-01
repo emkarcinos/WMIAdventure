@@ -22,6 +22,8 @@ By mieć możliwość wyciągania danych użytkownika z USOS będziemy musieli u
 
 W procesie uzyskiwania `Access Token'a` ustalamy `scopes`, które określają do jakich zasobów będziemy chcieli mieć dostęp.
 
+Proces ten zostanie opisany szerzej potem, po omówieniu kwestii zarządzania użytkownikami.
+
 ### Czas aktywności `Access Token'a`
 
 `Acces Token` staje się nieważny po dwóch godzinach ALBO jak użytkownik się wyloguje.
@@ -48,5 +50,21 @@ Przy rejestracji, zgodnie z flow OAuth 1.0a, użytkownik w pewnym momencie będz
 
 Gdy zaakceptuje zostania sukcesywnie zarejestrowany, a backend `WMI Adventure` uzyska `Access Token` od systemu USOS, który zapiszemy w bazie danych razem z zarejesteowanym użykownikiem.
 
-### Zarządzanie użytkownikami i Logowanie
+### Zarządzanie użytkownikami
 
+Jeśli chodzi o użytkowników zarządzenie użytkownikami mamy dwie możliwości (**nie mówimy tutaj o profilach użytkowników**, to są dwie różne rzeczy.):
+1. Tworzyć własnych użytkowników.
+2. Nie tworzyć własnych użytkowników i korzystać z faktu, że studenci mają już konta w systemie USOS - korzystać właśnie z użytkowników USOS'owych.
+
+Tworzenie własnych użytkowników wydaje się być lepszą opcją, będziemy mogli już zacząć działać nad jakąś rejestracją, logowaniem itp. bez potrzeby angażowania systemów zewnętrznych co da nam sporą swobodę w działaniu. Jeśli przyjdzie czas na dołożenie USOS'a do naszej aplikacji to nie będzie to ciężkie.
+
+Z kolei gdybyśmy zdecydowali się nie tworzyć własnych użytkowników to nic by to nie wniosło i jedynie by nas ograniczyło. By móc implementować pewne rzeczy to najpierw musielibyśmy się zintegrować z USOS'em.
+
+## Rejestracja i uzyskiwanie `Access Token'a`
+
+`Access Token` uzyskamy, gdy użytkownik pomyślnie się zarejstruje w naszej aplikacji. Rejestracja będzie przebiegać w ten sposób:
+1. Użytkownik wejdzie na stronę rejestracji, gdzie zostanie poproszony o podanie danych, którymi będzie się chciał do nas logować (username, hasło, itp.)
+2. Użytkownik zostanie przekierowany do USOS'a, by się tam zalogował i potwierdził, że jest studentem.
+3. USOS spyta się użytkownik czy chce dać naszej aplikacji dostęp do pewnych jego danych określonych przez nas `scopes`.
+4. Jeśli użytkownik zaakceptuje `scopes`, to na backendzie otrzymamy `Access Token`.
+5. Po otrzymaniu tego tokena stworzymy użytkownika w naszej bazie oraz zapiszemy go razem z otrzymanym `Access Token'em`, który umożliwi wyciąganie danych tego studenta z USOS'a.
