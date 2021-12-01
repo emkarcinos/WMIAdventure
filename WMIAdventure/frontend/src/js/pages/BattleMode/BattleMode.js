@@ -1,7 +1,5 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-
-import NavBar from '../../components/prototype/organisms/NavBar';
 import H2 from './styled-components/H2';
 import Main from './styled-components/Main';
 import Ul from './styled-components/Ul';
@@ -21,8 +19,10 @@ import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDes
 import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
+import Navbar from "../../components/global/molecules/Navbar";
 
 class BattleMode extends React.Component {
+    title = 'Tryb Battle';
 
     state = {
         users: [],
@@ -150,9 +150,9 @@ class BattleMode extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Tryb Battle</title>
+                    <title>{this.title}</title>
                 </Helmet>
-                <NavBar/>
+                <Navbar label={this.title} backLink={'/'}/>
                 <Main>
                     <Media query={mobile}>
                         <>

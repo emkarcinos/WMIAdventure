@@ -9,6 +9,8 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 0 28px;
+  z-index: 13;
+  background-color: ${({theme}) => theme.colors.whiteAlmost}
 `;
 
 export default Nav;
