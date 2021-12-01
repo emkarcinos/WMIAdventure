@@ -5,24 +5,24 @@ import shieldBuff from "../../../../../../assets/icons/shield-buff.svg";
 import healBuff from "../../../../../../assets/icons/heal-buff.svg";
 import doubleUseBuff from '../../../../../../assets/icons/double-use-buff.svg';
 import {
-    buffExecuteTwoTimesEffectId,
-    buffPowerId,
-    damageEffectId,
-    healEffectId,
-    shieldEffectId
-} from "../../../../../api/data-models/battle/EffectIds";
+    damageBuffId,
+    executeTwoTimesBuffId,
+    healBuffId,
+    powerBuffId,
+    shieldBuffId
+} from "../../../../../api/data-models/battle/BuffIds";
 
 function iconHandle(type) {
     switch (type) {
-        case buffPowerId:
+        case powerBuffId:
             return powerBuff;
-        case damageEffectId:
+        case damageBuffId:
             return damageBuff;
-        case shieldEffectId:
+        case shieldBuffId:
             return shieldBuff;
-        case buffExecuteTwoTimesEffectId:
+        case executeTwoTimesBuffId:
             return doubleUseBuff;
-        case healEffectId:
+        case healBuffId:
             return healBuff;
         default:
             return false;

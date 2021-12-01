@@ -3,17 +3,17 @@ import powerBuff from '../../../../../../assets/icons/power-buff.svg';
 import healBuff from '../../../../../../assets/icons/heal-buff.svg';
 import damageBuff from '../../../../../../assets/icons/damage-buff.svg';
 import shieldBuff from '../../../../../../assets/icons/shield-buff.svg';
-import {damageEffectId, healEffectId, shieldEffectId} from "../../../../../api/data-models/battle/EffectIds";
+import {damageBuffId, healBuffId, shieldBuffId} from "../../../../../api/data-models/battle/BuffIds";
 
 function iconHandle(type) {
     switch (type) {
         case null:
             return powerBuff;
-        case damageEffectId:
+        case damageBuffId:
             return damageBuff;
-        case shieldEffectId:
+        case shieldBuffId:
             return shieldBuff;
-        case healEffectId:
+        case healBuffId:
             return healBuff;
         default:
             return false;

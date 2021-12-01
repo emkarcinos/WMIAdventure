@@ -1,23 +1,23 @@
 import styled from 'styled-components';
 import {
-    buffExecuteTwoTimesEffectId,
-    buffPowerId,
-    damageEffectId,
-    healEffectId,
-    shieldEffectId
-} from "../../../../../api/data-models/battle/EffectIds";
+    damageBuffId,
+    executeTwoTimesBuffId,
+    healBuffId,
+    powerBuffId,
+    shieldBuffId
+} from "../../../../../api/data-models/battle/BuffIds";
 
 function colorHandle(theme, type) {
     switch (type) {
-        case buffPowerId:
+        case powerBuffId:
             return theme.colors.red;
-        case damageEffectId:
+        case damageBuffId:
             return theme.colors.red;
-        case shieldEffectId:
+        case shieldBuffId:
             return theme.colors.purplyPinky;
-        case buffExecuteTwoTimesEffectId:
+        case executeTwoTimesBuffId:
             return theme.colors.yellowyOrangy;
-        case healEffectId:
+        case healBuffId:
             return theme.colors.greenyBluey;
         default:
             return theme.colors.purplyPinky;
