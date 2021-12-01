@@ -25,6 +25,8 @@ export const stopForOneTurnEffectId = 4;
 export const blockNextCardEffectId = 7;
 export const skipNextCardEffectId = 9;
 
+export const buffPowerId = null;
+
 export default {
     statusAffectingEffectIds,
     buffsEffectIds,

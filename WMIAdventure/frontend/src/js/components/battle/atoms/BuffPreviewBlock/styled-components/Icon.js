@@ -4,18 +4,25 @@ import damageBuff from "../../../../../../assets/icons/damage-buff.svg";
 import shieldBuff from "../../../../../../assets/icons/shield-buff.svg";
 import healBuff from "../../../../../../assets/icons/heal-buff.svg";
 import doubleUseBuff from '../../../../../../assets/icons/double-use-buff.svg';
+import {
+    buffExecuteTwoTimesEffectId,
+    buffPowerId,
+    damageEffectId,
+    healEffectId,
+    shieldEffectId
+} from "../../../../../api/data-models/battle/EffectIds";
 
 function iconHandle(type) {
     switch (type) {
-        case null:
+        case buffPowerId:
             return powerBuff;
-        case 1:
+        case damageEffectId:
             return damageBuff;
-        case 2:
+        case shieldEffectId:
             return shieldBuff;
-        case 5:
+        case buffExecuteTwoTimesEffectId:
             return doubleUseBuff;
-        case 6:
+        case healEffectId:
             return healBuff;
         default:
             return false;
@@ -23,7 +30,7 @@ function iconHandle(type) {
 }
 
 const Icon = styled.div`
-  width: ${({type}) => (type === null) ? '12px' : '32px'};
+  width: 32px;
   height: 32px;
   margin: 5px 0;
   background-size: contain;

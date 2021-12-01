@@ -3,16 +3,17 @@ import powerBuff from '../../../../../../assets/icons/power-buff.svg';
 import healBuff from '../../../../../../assets/icons/heal-buff.svg';
 import damageBuff from '../../../../../../assets/icons/damage-buff.svg';
 import shieldBuff from '../../../../../../assets/icons/shield-buff.svg';
+import {damageEffectId, healEffectId, shieldEffectId} from "../../../../../api/data-models/battle/EffectIds";
 
 function iconHandle(type) {
     switch (type) {
         case null:
             return powerBuff;
-        case 1:
+        case damageEffectId:
             return damageBuff;
-        case 2:
+        case shieldEffectId:
             return shieldBuff;
-        case 6:
+        case healEffectId:
             return healBuff;
         default:
             return false;
@@ -39,17 +40,16 @@ const BuffValue = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-right: ${({type}) => (type === 5) ? '4px' : '0'};
 
   &:after {
     content: ${({type}) => (type === 5) ? 'none' : `''`};
     display: ${({type}) => (type === 5) ? 'none' : 'flex'};
-    margin: 0 0 0 2px;
+    margin: 0 0 2px 2px;
     width: ${({buffsCount}) => iconSizeHandle(buffsCount)};
     height: ${({buffsCount}) => iconSizeHandle(buffsCount)};
     background-repeat: no-repeat;
-    background-position: left;
-    background-size: contain;
+    background-position: center;
+    background-size: cover;
     background-image: ${({type}) => iconHandle(type) ? `url(${iconHandle(type)})` : 'none'};
   }
 `;
