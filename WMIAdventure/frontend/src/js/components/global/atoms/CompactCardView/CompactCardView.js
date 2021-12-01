@@ -7,6 +7,7 @@ import NameContainer from './styled-components/NameContainer';
 import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
 import BuffsContainer from "./styled-components/BuffsContainer";
 import BuffValue from "./styled-components/BuffValue";
+import {buffModifierHandle} from "../../../battle/organisms/BattleView/effectsVisualizing";
 
 class CompactCardView extends React.Component {
     /*
@@ -97,23 +98,14 @@ class CompactCardView extends React.Component {
         }
     }
 
-    buffModifierHandle(modifier) {
-        if (modifier > 0)
-            return `+${modifier}`;
-        else if (modifier === 0)
-            return '0';
-        else
-            return `-${modifier}`;
-    }
-
     getBuffs = () => {
         if (this.props.buffs && this.props.buffs.length !== 0) {
             return (
                 this.props.buffs.map((buff) => {
                     return (
-                        <BuffValue key={`buff-${buff.id}`}
+                        <BuffValue key={`buff-${buff.id}-compactCardView`}
                                    type={buff.buff_type} buffsCount={this.props.buffs.length}>
-                            {(buff.buff_type === 5) ? '2X' : this.buffModifierHandle(buff.modifier)}
+                            {(buff.buff_type === 5) ? '2X' : buffModifierHandle(buff.modifier)}
                         </BuffValue>
                     );
                 })

@@ -92,7 +92,7 @@ class BattleView extends React.Component {
             type: 'nothing',
             user: '0',
             enemy: '0'
-        }
+        },
     }
 
     componentDidMount() {
@@ -560,7 +560,8 @@ class BattleView extends React.Component {
                           cardImage={card.image} cardTooltip={card.tooltip}
                           description={card.description} common={levels.common}
                           gold={levels.gold} epic={levels.epic}
-                          setTranslateY={this.state.fullCardAction.translateY}/>
+                          setTranslateY={this.state.fullCardAction.translateY}
+                          buffs={card.buffs}/>
         );
     }
 

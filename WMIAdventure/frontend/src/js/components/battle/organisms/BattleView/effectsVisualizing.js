@@ -87,3 +87,16 @@ const visualizeStatusEffect = (target, effectType, component) => {
         });
     }, nextStepAnimationDuration);
 }
+
+const buffModifierHandle = (modifier) => {
+    if (modifier > 0)
+        return `+${modifier}`;
+    else if (modifier === 0)
+        return '0';
+    else if (modifier === undefined)
+        return '2x';
+    else
+        return `-${modifier}`;
+}
+
+export {buffModifierHandle};

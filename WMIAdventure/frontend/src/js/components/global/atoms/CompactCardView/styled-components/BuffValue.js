@@ -34,6 +34,7 @@ function iconSizeHandle(buffsCount) {
 const BuffValue = styled.div`
   font-size: ${({buffsCount}) => fontSizeHandle(buffsCount)};
   color: ${({theme}) => theme.colors.light2};
+  font-family: 'Roboto', sans-serif;
   font-weight: ${({theme}) => theme.weight.regular};
   display: flex;
   justify-content: center;

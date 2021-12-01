@@ -20,10 +20,11 @@ const Article = styled.article`
   margin-bottom: 14px;
   border-radius: 24px;
   position: relative;
-  overflow-y: hidden;
+  overflow: ${({hasBuff}) => hasBuff ? 'visible' : 'hidden'};
   font-family: 'Roboto', sans-serif;
-  
-  transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
+
+  transform: translate(${({hasBuff}) => hasBuff ? '-32px' : '0'},
+  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   transition: transform 0.5s ease-in-out;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
