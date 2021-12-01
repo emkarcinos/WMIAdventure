@@ -9,7 +9,7 @@ import TitleSection from '../../components/card-editor/atoms/TitleSection';
 import CardsImage from '../../components/card-editor/atoms/CardsImage/CardsImage';
 import CreatorOption from '../../components/card-editor/atoms/CreatorOption';
 import {desktop, mobile} from '../../utils/globals';
-import Navbar from "../../components/global/molecules/Navbar";
+import Navbar from "../../components/global/atoms/Navbar";
 
 class CardsCreatorStart extends React.Component {
     render() {

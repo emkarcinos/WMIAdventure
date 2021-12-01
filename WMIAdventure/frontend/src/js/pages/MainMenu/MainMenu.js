@@ -6,7 +6,7 @@ import adventureImg from '../../../assets/images/adventure-image.png';
 import battleImg from '../../../assets/images/battle-image.png';
 import rankingImg from '../../../assets/images/ranking-image.png';
 import StyledWrapper from './StyledWrapper';
-import Navbar from "../../components/global/molecules/Navbar";
+import Navbar from "../../components/global/atoms/Navbar";
 
 
 function MainMenu() {

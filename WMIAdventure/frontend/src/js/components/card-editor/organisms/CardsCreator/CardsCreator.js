@@ -15,7 +15,7 @@ import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
 import {getAllEffects} from "../../../../storage/effects/effectStorage";
-import Navbar from "../../../global/molecules/Navbar";
+import Navbar from "../../../global/atoms/Navbar";
 
 class CardsCreator extends React.Component {
     state = {

@@ -19,7 +19,7 @@ import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDes
 import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
-import Navbar from "../../components/global/molecules/Navbar";
+import Navbar from "../../components/global/atoms/Navbar";
 
 class BattleMode extends React.Component {
     title = 'Tryb Battle';
