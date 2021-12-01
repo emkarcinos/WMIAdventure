@@ -6,8 +6,10 @@ const BuffsContainer = styled.div`
   align-items: center;
   position: absolute;
   width: 100%;
-  top: 2px;
+  height: 20px;
+  top: 0;
   left: 0;
+  gap: 4px;
 `;
 
 export default BuffsContainer;

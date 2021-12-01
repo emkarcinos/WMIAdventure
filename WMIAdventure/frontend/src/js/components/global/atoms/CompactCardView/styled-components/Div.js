@@ -29,7 +29,7 @@ const Div = styled.div`
   position: relative;
   margin: ${({setMargin}) => setMargin ? setMargin : '0 0 60px 0'};
   padding-top: 18px;
-  overflow-y: hidden;
+  overflow: hidden;
   font-family: 'Roboto', sans-serif;
   box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'none'};
   transition: transform 0.5s, opacity 0.5s ease-in-out;

@@ -97,13 +97,23 @@ class CompactCardView extends React.Component {
         }
     }
 
+    buffModifierHandle(modifier) {
+        if (modifier > 0)
+            return `+${modifier}`;
+        else if (modifier === 0)
+            return '0';
+        else
+            return `-${modifier}`;
+    }
+
     getBuffs = () => {
         if (this.props.buffs && this.props.buffs.length !== 0) {
             return (
-                this.props.buffs.map((buff, index) => {
+                this.props.buffs.map((buff) => {
                     return (
-                        <BuffValue key={`${index}-buffType-${buff.type}`}>
-                            +{buff.modifier}
+                        <BuffValue key={`buff-${buff.id}`}
+                                   type={buff.buff_type} buffsCount={this.props.buffs.length}>
+                            {(buff.buff_type === 5) ? '2X' : this.buffModifierHandle(buff.modifier)}
                         </BuffValue>
                     );
                 })
