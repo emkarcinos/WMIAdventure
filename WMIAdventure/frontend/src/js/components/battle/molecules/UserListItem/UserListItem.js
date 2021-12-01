@@ -24,7 +24,7 @@ class UserListItem extends React.Component {
                 this.props.runUserPreviewHandler : this.notAccessToFightMessage}
                   displayedUsername={this.props.displayedUsername}
                   searchInput={this.props.searchInput}>
-                <AvatarContainer access={this.props.access}>
+                <AvatarContainer access={this.props.access} avatar={this.props.avatar}>
                     {this.props.avatar ? <Avatar access={this.props.access} src={this.props.avatar} alt=""/> : ''}
                 </AvatarContainer>
                 <Div>
@@ -33,14 +33,14 @@ class UserListItem extends React.Component {
                     </Login>
                     <LabelsContainer>
                         <UserLabel setMargin={'0 10px 0 0'} icon={termIcon}
-                                   term={this.props.term} number={this.props.term} />
-                        <UserLabel setMargin={'0 10px 0 0'}  icon={levelIcon}
-                                   level={this.props.level} number={this.props.level} />
+                                   term={this.props.term} number={this.props.term}/>
+                        <UserLabel setMargin={'0 10px 0 0'} icon={levelIcon}
+                                   level={this.props.level} number={this.props.level}/>
                         <UserLabel setMargin={'0'} icon={rankIcon}
-                                   rank={'2'} number={'2'} />
+                                   rank={'2'} number={'2'}/>
                     </LabelsContainer>
                 </Div>
-                <BattleIcon access={this.props.access} src={battleIcon} />
+                <BattleIcon access={this.props.access} src={battleIcon}/>
             </Item>
         );
     }

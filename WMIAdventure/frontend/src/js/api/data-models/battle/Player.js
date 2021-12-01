@@ -8,6 +8,7 @@ export class Player {
     deck = undefined;
     stoppedTurns = 0;
     username = '';
+    image = null;
 
     constructor(id, stats, deck) {
         this.id = id;
@@ -24,6 +25,7 @@ export class Player {
     async fetchUserDataFromBackend(backendCall) {
         const data = await backendCall(this.id)
         this.username = data.displayedUsername;
+        this.image = data.image;
     }
 }
 
