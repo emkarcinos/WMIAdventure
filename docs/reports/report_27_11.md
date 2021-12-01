@@ -16,7 +16,11 @@
 
 ## Opinia klienta po prezentacji
 
-Opinia klienta była bardzo pozytywna. Klient za pierwszy razem zrozumiał konwencję projektu oraz mechanikę walki.
+- według klienta kolorystyka i design są przyjemne 
+- w walce karty za szybko leciały, ciężko było przeczytać co robi dana karta
+- podobało się to, że nie tylko efekty kart mają znaczenie, ale też kolejność kart
+- pomysł na bossy nawiązujące do prowadzących na uczelni też został odebrany pozytywnie
+- klient za pierwszym razem zrozumiał konwencję projektu oraz mechanikę walki, nie trzeba było przedstawiać procesu walki jeszcze raz
 
 ## Zadane pytania i uzyskane odpowiedzi
 

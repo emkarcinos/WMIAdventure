@@ -595,6 +595,7 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         image={this.state.battle.enemy.image}
                                                          effectFrameOpacity={this.state.effectFrameOpacity.enemy}
                                                          frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
@@ -621,6 +622,7 @@ class BattleView extends React.Component {
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
                                                         username={this.state.battle.user.username}
+                                                        image={this.state.battle.user.image}
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
@@ -665,6 +667,7 @@ class BattleView extends React.Component {
                                                          hp={parseInt(this.state.battle.enemy.stats.hp)}
                                                          shield={parseInt(this.state.battle.enemy.stats.armour)}
                                                          username={this.state.battle.enemy.username}
+                                                         image={this.state.battle.enemy.image}
                                                          effectFrameOpacity={this.state.effectFrameOpacity.enemy}
                                                          frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
@@ -682,6 +685,7 @@ class BattleView extends React.Component {
                                                         hp={parseInt(this.state.battle.user.stats.hp)}
                                                         shield={parseInt(this.state.battle.user.stats.armour)}
                                                         username={this.state.battle.user.username}
+                                                        image={this.state.battle.user.image}
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}/>
                                 </FlexGapContainer>

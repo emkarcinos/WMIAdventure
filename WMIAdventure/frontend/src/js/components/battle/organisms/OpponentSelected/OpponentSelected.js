@@ -18,7 +18,7 @@ import PostBattle from '../PostBattle';
 import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import {getCurrentUserDecks, getCurrentUsername} from "../../../../storage/user/userData";
+import {getCurrentUserData, getCurrentUserDecks} from "../../../../storage/user/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
@@ -45,11 +45,24 @@ class OpponentSelected extends React.Component {
             visible: false,
             message: '',
         },
+        caller: {
+            username: '',
+            id: 0,
+            semester: 1,
+            avatar: null
+        }
     }
 
     componentDidMount() {
-        getCurrentUsername()
-            .then(user => this.setState({caller: user}))
+        getCurrentUserData()
+            .then(user => user ? this.setState({
+                caller: {
+                    username: user.displayedUsername,
+                    id: user.user,
+                    semester: user.semester,
+                    avatar: user.image
+                }
+            }) : null)
         getCurrentUserDecks()
             .then(resp => {
                 if (resp) {
@@ -251,12 +264,13 @@ class OpponentSelected extends React.Component {
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                         <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                     </FlexGapContainer>
-                                    <TinyUserProfile displayedUsername={this.state.caller} setMargin={'24px 0 0 0'}
-                                                     term={7} level={50} rank={2} avatar={null}/>
+                                    <TinyUserProfile displayedUsername={this.state.caller.username}
+                                                     setMargin={'24px 0 0 0'}
+                                                     term={7} level={50} rank={2} avatar={this.state.caller.avatar}/>
                                     <KuceVs/>
                                     <TinyUserProfile displayedUsername={this.props.opponent.username}
                                                      setMargin={'0 0 24px 0'}
-                                                     term={7} level={39} rank={15} avatar={null}/>
+                                                     term={7} level={39} rank={15} avatar={this.props.opponent.avatar}/>
                                     <FlexGapContainer gap={'40px'}>
                                         <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
@@ -288,7 +302,7 @@ class OpponentSelected extends React.Component {
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
                                     attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent.username}
+                                    opponent={this.props.opponent}
                                     opponentDeck={this.state.opponentDeck}
                                     setTranslateY={this.state.postBattlePos}/>
                         <BattleView visible={this.state.battleView.visible}
@@ -314,8 +328,9 @@ class OpponentSelected extends React.Component {
                                    hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 0 0 26px'}>
-                                        <TinyUserProfile displayedUsername={this.state.caller} setMargin={'0'}
-                                                         term={7} level={39} rank={15} avatar={null} vertical/>
+                                        <TinyUserProfile displayedUsername={this.state.caller.username} setMargin={'0'}
+                                                         term={7} level={39} rank={15} avatar={this.state.caller.avatar}
+                                                         vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
@@ -327,7 +342,8 @@ class OpponentSelected extends React.Component {
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile displayedUsername={this.props.opponent.username}
                                                          setMargin={'0'}
-                                                         term={7} level={39} rank={15} avatar={null} vertical/>
+                                                         term={7} level={39} rank={15}
+                                                         avatar={this.props.opponent.avatar} vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
@@ -357,7 +373,7 @@ class OpponentSelected extends React.Component {
                                     closeHandler={this.quickBattleCloseHandler}
                                     attacker={this.state.caller}
                                     attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent.username}
+                                    opponent={this.props.opponent}
                                     opponentDeck={this.state.opponentDeck}
                                     setOpacity={this.state.postBattleOpacity}
                                     setTranslateY={this.state.postBattlePos}/>
