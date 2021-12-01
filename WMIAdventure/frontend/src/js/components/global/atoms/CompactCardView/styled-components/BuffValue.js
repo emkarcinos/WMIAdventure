@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import powerBuff from '../../../../../../assets/icons/power-buff.svg';
 import healBuff from '../../../../../../assets/icons/heal-buff.svg';
 import damageBuff from '../../../../../../assets/icons/damage-buff.svg';
@@ -32,6 +32,15 @@ function iconSizeHandle(buffsCount) {
     return '12px';
 }
 
+const initAnim = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 const BuffValue = styled.div`
   font-size: ${({buffsCount}) => fontSizeHandle(buffsCount)};
   color: ${({theme}) => theme.colors.light2};
@@ -40,6 +49,7 @@ const BuffValue = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: ${initAnim} 0.3s ease-in-out 0s 1;
 
   &:after {
     content: ${({type}) => (type === 5) ? 'none' : `''`};
