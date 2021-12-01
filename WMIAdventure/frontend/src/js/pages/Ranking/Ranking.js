@@ -1,7 +1,7 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import StyledWrapper from './StyledWrapper';
-import NavBar from '../../components/prototype/organisms/NavBar';
+import Navbar from "../../components/global/atoms/Navbar";
 
 function Ranking() {
     return (
@@ -10,7 +10,7 @@ function Ranking() {
                 <title>Ranking użytkowników</title>
             </Helmet>
             <StyledWrapper>
-                <NavBar />
+                <Navbar backLink={'/'}/>
                 <p>
                     Ranking View - not implemented yet.
                 </p>
