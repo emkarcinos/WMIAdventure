@@ -16,6 +16,7 @@ class MiniCardView extends React.Component {
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest
         setOpacity -> to handle opacity animation in BattleView
+        hasBuff -> tells if mini card has buff to handle border
      */
 
     state = {

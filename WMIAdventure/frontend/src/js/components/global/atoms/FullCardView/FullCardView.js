@@ -21,6 +21,7 @@ class FullCardView extends React.Component {
         cardImage <- card icon
         cardTooltip <- funny card genesis
         description <- describe of card effects
+        buffs -> to handle buff elements if card has buffs
      */
 
     cardNameLengthHandler = (cardNameLength) => {

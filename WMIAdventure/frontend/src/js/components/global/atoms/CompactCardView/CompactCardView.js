@@ -24,6 +24,7 @@ class CompactCardView extends React.Component {
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest
         setOpacity -> to handle opacity animation in BattleView
+        buffs -> to handle buff elements if card has buffs
      */
 
     state = {

@@ -4,6 +4,12 @@ import Icon from "./styled-components/Icon";
 import Modifier from "./styled-components/Modifier";
 import {buffModifierHandle} from "../../organisms/BattleView/effectsVisualizing";
 
+/*
+props:
+    type -> define buff type to handle background color and icon
+    modifier -> value of buff effect
+ */
+
 class BuffPreviewBlock extends React.Component {
     render() {
         return (
