@@ -20,17 +20,16 @@ class Navbar extends React.Component {
 
     }
 
+
     mobileNavbar = () => {
         return (
             <Nav>
                 <Div>
-                    <Back as={Link} to={this.props.backLink}/>
+                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> : 'WMI'}
                     {this.props.label}
                 </Div>
                 <Div>
-                    <Link to={'/'}>
-                        <NavButton image={homeIcon}/>
-                    </Link>
+                    <NavButton as={Link} to={'/'} image={homeIcon}/>
                     <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
                 </Div>
             </Nav>
