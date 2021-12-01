@@ -702,6 +702,7 @@ class BattleView extends React.Component {
                                              setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
                                              setScale={this.state.compactCardOnTopScale.middle}
                                              blocked={this.state.battle.getCardOnTop().stoppedTurns > 0}
+                                             buffs={this.state.battle.getCardOnTop().buffs}
                             />
                         </CenterDiv>
                         <CenterDiv>
