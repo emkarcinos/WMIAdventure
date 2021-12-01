@@ -24,20 +24,21 @@ class TinyUserProfile extends React.Component {
                     <FlexGapContainer gap={this.props.vertical ? '24px' : '6px'}>
                         <UserLabel term={this.props.term}
                                    icon={termIcon} number={this.props.term}
-                                   setMargin={'0'} />
+                                   setMargin={'0'}/>
                         <UserLabel level={this.props.level} number={this.props.level}
-                                   icon={levelIcon} setMargin={'0'} />
+                                   icon={levelIcon} setMargin={'0'}/>
                         <UserLabel rank={this.props.rank} number={this.props.rank}
-                                   icon={rankIcon} setMargin={'0'} />
+                                   icon={rankIcon} setMargin={'0'}/>
                     </FlexGapContainer>
                     <Media query={desktop}>
                         {this.props.vertical ? '' :
-                            <UserStatistic statisticNumber={'20'} type={'level'} currentLvlValue={'40'} setMargin={'14px 0 0 0'} />}
+                            <UserStatistic statisticNumber={'20'} type={'level'} currentLvlValue={'40'}
+                                           setMargin={'14px 0 0 0'}/>}
                     </Media>
                 </ContentContainer>
-                <ImageContainer vertical={this.props.vertical}>
+                <ImageContainer vertical={this.props.vertical} avatar={this.props.avatar}>
                     {this.props.avatar ? <Avatar src={this.props.avatar}
-                                                 vertical={this.props.vertical} alt="" /> : ''}
+                                                 vertical={this.props.vertical} alt=""/> : ''}
                 </ImageContainer>
             </Article>
         );
