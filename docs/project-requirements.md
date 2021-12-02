@@ -3,7 +3,8 @@
 ## Autorzy: Dawid Korybalski, Mateusz Tylka, Michał Czekański, Marcin Kostrzewski
 
 ## Data: 01/04/2021
-Ostatnia modyfikacja: 01/04/2021 18:19 - Stworzenie dokumentu na bazie szablonu
+Modyfikacja: 01/04/2021 18:19 - Stworzenie dokumentu na bazie szablonu
+Ostatnia modyfikacja: 02/12/2021 - Aktualizacja dokumentu w oparciu o nowe Kryteria akceptacji projektu dla II semestru prac
 
 # Elementy składowe projektu
 
@@ -18,27 +19,18 @@ Ostatnia modyfikacja: 01/04/2021 18:19 - Stworzenie dokumentu na bazie szablonu
 - Informacje o strukturze programistycznej projektu na GitHub Wiki (30.05.2021)
 - Zawartość stworzona w Edytorze Kart (20.06.2021)
 - Otwarta dokumentacja do Trybu Battle i Edytora Historii na Github Wiki (30.06.2021)
-- Raporty z testów użyteczności modułów (30.06.2021):
-    * Edytor Kart (30.06.2021)
-    * Tryb Battle (30.06.2021)
+
 ## Semestr II
 
 ### Elementy programistyczne
-- Aplikacja webowa (PWA) we frameworku React (20.11.2021)
 - Serwer backendowy Django (25.12.2021)
 - Baza danych PostgreSQL (25.12.2021)
 
 ### Elementy nieprogramistyczne
-- Otwarta dokumentacja do całości systemu dostępna w Github Wiki (30.01.2022)
-- Zawartość stworzona w Edytorze Historii i Pytań (30.01.2022)
-- Raporty z testów użyteczności modułów (30.01.2022):
-    * Edytor Historii (30.10.2021)
-    * Tryb Adventure (30.10.2021)
-    * Edytor Pytań (20.01.2022)
-    * Minigry (20.01.2022)
-    * Całość Aplikacji (30.01.2022)
-- Samouczek dla użytkownika aplikacji (20.12.2021)
-- Landing page projektu (20.01.2022)
+- Otwarta dokumentacja do całości systemu dostępna w Github Wiki (14.01.2022)
+- Samouczek dla użytkownika aplikacji (08.01.2021)
+- Raporty z testów użyteczności z całości aplikacji (09.01.2022)
+- Landing page projektu (13.12.2021)
 
 # Granice projektu
 
@@ -212,27 +204,23 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 # Lista wymagań niefunkcjonalnych
 
 1. Aplikacja powinna w pełni działać na urządzeniach mobilnych.
-2. Integracja z systemem USOS.
-3. Aplikacja powinna być na tyle wydajna, że 100 osób może użytkować z niej na raz.
-4. 60% kodu pokryta testami jednostkowymi.
-5. Każdy przyrost powinien być poddawany testom użytecznościowym przez grupę odbiorców.
-6. Po każdym przyroście powinna być przeprowadzana ankieta na grupie odbiorców testującej system.
-7. System ma umożliwiać administracji weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
-8. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
-9. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
+2. Aplikacja powinna być na tyle wydajna, że 100 osób może użytkować z niej na raz.
+3. 60% kodu pokryta testami jednostkowymi.
+4. Każdy przyrost powinien być poddawany testom użytecznościowym przez grupę odbiorców.
+5. Po każdym przyroście powinna być przeprowadzana ankieta na grupie odbiorców testującej system.
+6. System ma umożliwiać administracji weryfikację treści pod kątem ich poprawności np. politycznej, moralnej, nie powinny nikogo oczerniać.
+7. Projekt powinien mieć odpowiednią dokumentację, jako projekt *Open Source*.
+8. Projekt powinien być tak napisany, że może być udostępniony jako *Open Source*.
 
 # Mierzalne wskaźniki wdrożeniowe
 
 - System zostanie zasilony treściami stworzonymi przez studentów i członków projektu:
-    * 60 Kart
-    * 100 Pytań do Quizów
-    * 50 Historii Adventure
+    * 35 Kart
 - Gałąź testowa systemu zostanie udostępniona pod domeną (http://wmiadventure.westeurope.cloudapp.azure.com) i będzie reagowała na wszystkie zmiany na tej gałęzi.
 - Gałąź produkcyjna systemu zostanie udostępniona pod domeną (wmi-adventure.pl).
-- W systemie zostanie utworzonych 70 kont użytkowników.
+- W systemie zostanie utworzonych 35 kont użytkowników.
 - W testach użyteczności całej aplikacji przez studentów system uzyska ocenę ogólną 7.5/10
-- Studenci przeprowadzą 25 walk w trybie Battle.
-- 50% historii Adventure zostanie stworzonych przez studentów.
+- Studenci przeprowadzą 35 walk w trybie Battle.
 
 # Kryteria akceptacji projektu dla I semestru prac
 
@@ -314,10 +302,12 @@ Dawid dysponuje ograniczoną ilością czasu ze względów prywatnych.
 ### Frontend (HTML, CSS, React)
 - Dawid Korybalski
 - Mateusz Tylka
+- Michał Czekański
+- Marcin Kostrzewski
 
 ## Repozytorium kodu
 
-Kod i historia zmian organizowana jest przez Git. Repozytorium online znajduje się na [GitHubie](https://github.com/emkarcinos/WMIAdventure) i na tą chwilę jego widoczność jest niepubliczna.
+Kod i historia zmian organizowana jest przez Git. Repozytorium online znajduje się na [GitHubie](https://github.com/emkarcinos/WMIAdventure).
 ## Metodyka pracy
 Zespół implementuje nieco zmienioną wersję metodyki **Scrum**. Dostosowaliśmy go do mniej codziennej pracy.
 
@@ -335,10 +325,9 @@ Każdy sprint będzie trwał dwa tygodnie, zakończony retrospektywą na ostatni
 
 Podczas Daily omawiamy pracę wykonaną podczas realizacji zadań zabranych po poprzednim Daily; omówienie naszych sukcesów, problemów, przedstawieniem naszych planów na następne dni.
 
-Wyróżniamy trzy spotkania Daily o określonych godzinach:
-- Poniedziałek godz. 19:00
+Wyróżniamy dwa spotkania Daily o określonych godzinach:
+- Poniedziałek godz. 20:00
 - Czwartek godz. 20:00
-- Sobota godz. 12:00
 
 Poza daily dodatkowo będziemy spotykać się online całością lub częścią zespołu na wspólną pracę.
 
@@ -416,37 +405,35 @@ Niektóre elementy systemu mogą mieć skomplikowną strukturę i szeroką logik
 # Kamienie milowe
 
 ## Tryb Battle
-Planowana data zrealizowania: 10.12.2021
+Planowana data zrealizowania: 27.12.2021
 
 Skład z terminami ukończenia:
 - Edytor Kart - narzędzie do tworzenia / edytowania kart (12.10.2021)
 - Funkcje Kart - co mogą robić karty (15.05.2021 / 29.05.2021)
 - Zawartość: Stworzenie 20 kart (29.05.2021)
 - Symulacja Pojedynku - walka między dwoma graczami (05.11.2021)
-- Talia kart u gracza - możliwość wyboru kart do walki spośród wszystkich dostępnych (03.12.2021)
-- Interfejs całego trybu (12.11.2021)
-- Upublicznienie Edytora Kart do testów przez studentów (05.11.2021)
-- Upublicznienie całego trybu do testów przez studentów (10.12.2021)
+- Talia kart u gracza - możliwość wyboru kart do walki spośród wszystkich dostępnych (27.12.2021)
+- Interfejs całego trybu (27.12.2021)
+- Upublicznienie Edytora Kart do testów przez studentów (01.11.2021)
+- Upublicznienie całego trybu do testów przez studentów (27.12.2021)
 
 ## Tryb Adventure
-Planowana data zrealizowania: 24.12.2021
+Planowana data zrealizowania: 24.01.2022
 
 Skład:
-- Edytor Historii - narzędzie do tworzenia / edytowania historii (24.12.2021)
-- Zawartość: 20 Historii / Bossów (03.01.2022)
-- Interfejs całego trybu (24.12.2021)
-- Zdobywanie kart (12.01.2022)
+- Edytor Historii - narzędzie do tworzenia / edytowania historii (24.01.2022)
+- Zawartość: 20 Historii / Bossów (24.01.2022)
+- Interfejs całego trybu (24.01.2021)
 
 ## Integracja z USOS
-Planowana data zrealizowania: 03.12.2021
+Planowana data zrealizowania: 10.01.2022
 
 Skład:
-- Zarządzanie kontami użytkowników (03.12.2021)
-- Połączenie konta USOS z kontem w aplikacji (03.12.2021)
-- Dostępność historii w zależności od przedmiotów studenta  (24.12.2021)
+- Połączenie konta USOS z kontem w aplikacji (05.01.2021)
+- Dane studentów pobierane z USOS mają wpływ na stan gracza w aplikacji.  (10.01.2021)
 
 ## Panel Administratora
-Planowana data zrealizowania: 24.12.2021
+Planowana data zrealizowania: 10.01.2022
 
 Skład:
-- Administracja treściami zgłaszanymi przez Twórców (24.12.2021)
+- Administracja treściami zgłaszanymi przez Twórców (10.01.2022)
