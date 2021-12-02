@@ -3,10 +3,10 @@ import MenubarEntry from "../../atoms/MenubarEntry";
 import Div from "./styled-components/Div";
 import ContentContainer from "./styled-components/ContentContainer";
 import List from "./styled-components/List";
-import Back from "../../../prototype/molecules/BattleResult/styled-components/Back";
 import TinyUserProfile from "../../../battle/molecules/TinyUserProfile";
 import TransparentBack from "../../../prototype/atoms/NavMenu/styled-components/TransparentBack";
 import {Transition} from "react-transition-group";
+import Back from "./styled-components/Back";
 
 /* Transition timeout values */
 const timeout = {
