@@ -5,7 +5,7 @@ import Navigation from './Navigation';
 const StyledNavBar = styled.header`
   background-color: ${({theme}) => theme.colors.lightGray};
   width: 100%;
-  height: 48px;
+  height: 56px;
   position: fixed;
   top: 0;
   left: 0;

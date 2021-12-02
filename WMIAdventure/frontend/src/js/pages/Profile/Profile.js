@@ -1,7 +1,8 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import StyledWrapper from './StyledWrapper';
 import NavBar from '../../components/prototype/organisms/NavBar';
+import MainContainer from "./styled-componets/MainContainer";
+import User from "../../components/profile/atoms/User";
 
 function Profile() {
     return (
@@ -9,12 +10,10 @@ function Profile() {
             <Helmet>
                 <title>Profil użytkownika</title>
             </Helmet>
-            <StyledWrapper>
-                <NavBar />
-                <p>
-                    Profile view - not implemented yet.
-                </p>
-            </StyledWrapper>
+            <MainContainer>
+                <NavBar/>
+                <User/>
+            </MainContainer>
         </>
     );
 }
