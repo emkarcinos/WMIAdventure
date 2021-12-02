@@ -1,5 +1,4 @@
 import React from "react";
-import MenubarEntry from "../../atoms/MenubarEntry";
 import Div from "./styled-components/Div";
 import ContentContainer from "./styled-components/ContentContainer";
 import List from "./styled-components/List";
@@ -8,6 +7,13 @@ import TransparentBack from "../../../prototype/atoms/NavMenu/styled-components/
 import {Transition} from "react-transition-group";
 import Back from "./styled-components/Back";
 import Line from "./styled-components/Line";
+import MenubarEntry from "./styled-components/MenubarEntry";
+import battleIcon from '../../../../../assets/images/battleIconMedium.png'
+import homeIcon from '../../../../../assets/images/home.png'
+import cardIcon from '../../../../../assets/images/cardIcon.png'
+import bugIcon from '../../../../../assets/images/bug.png'
+import githubIcon from '../../../../../assets/images/github.png'
+import logoutIcon from '../../../../../assets/images/logout.png'
 
 /* Transition timeout values */
 const timeout = {
@@ -39,16 +45,16 @@ class Menubar extends React.Component {
                         <List>
 
                             <Back onClick={this.props.closeHandler}/>
-                            <MenubarEntry>Entry 1</MenubarEntry>
-                            <MenubarEntry>Entry 2</MenubarEntry>
-                            <MenubarEntry>Entry 3</MenubarEntry>
+                            <MenubarEntry image={homeIcon}>Strona Główna</MenubarEntry>
+                            <MenubarEntry image={battleIcon}>Tryb Battle</MenubarEntry>
+                            <MenubarEntry image={cardIcon}>Edytor Kart</MenubarEntry>
                             <Line/>
-                            <MenubarEntry>Entry 2</MenubarEntry>
-                            <MenubarEntry>Entry 3</MenubarEntry>
+                            <MenubarEntry image={bugIcon}>Zgłoś błąd</MenubarEntry>
+                            <MenubarEntry image={githubIcon}>GitHub</MenubarEntry>
                         </List>
 
                         <List>
-                            <MenubarEntry>Logout</MenubarEntry>
+                            <MenubarEntry image={logoutIcon}>Wyloguj</MenubarEntry>
                             <Line/>
                             <TinyUserProfile displayedUsername={'test'}/>
                         </List>
