@@ -14,6 +14,8 @@ import cardIcon from '../../../../../assets/images/cardIcon.png'
 import bugIcon from '../../../../../assets/images/bug.png'
 import githubIcon from '../../../../../assets/images/github.png'
 import logoutIcon from '../../../../../assets/images/logout.png'
+import Link from "../../atoms/Navbar/styled-components/Link";
+import Href from "../../atoms/Navbar/styled-components/Href";
 
 /* Transition timeout values */
 const timeout = {
@@ -45,12 +47,21 @@ class Menubar extends React.Component {
                         <List>
 
                             <Back onClick={this.props.closeHandler}/>
-                            <MenubarEntry image={homeIcon}>Strona Główna</MenubarEntry>
-                            <MenubarEntry image={battleIcon}>Tryb Battle</MenubarEntry>
-                            <MenubarEntry image={cardIcon}>Edytor Kart</MenubarEntry>
+                            <MenubarEntry as={Link} to={'/'} image={homeIcon}>Strona Główna</MenubarEntry>
+                            <MenubarEntry as={Link} href={'/battle'} image={battleIcon}>Tryb Battle</MenubarEntry>
+                            <MenubarEntry as={Link} to={'/cards-creator-start'} image={cardIcon}>Edytor
+                                Kart</MenubarEntry>
                             <Line/>
-                            <MenubarEntry image={bugIcon}>Zgłoś błąd</MenubarEntry>
-                            <MenubarEntry image={githubIcon}>GitHub</MenubarEntry>
+                            <MenubarEntry
+                                as={Href}
+                                href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}
+                                target={'_blank'} rel={'noopener noreferrer'}
+                                image={bugIcon}>Zgłoś błąd</MenubarEntry>
+                            <MenubarEntry
+                                as={Href}
+                                href={'https://github.com/emkarcinos/WMIAdventure'}
+                                target={'_blank'} rel={'noopener noreferrer'}
+                                image={githubIcon}>GitHub</MenubarEntry>
                         </List>
 
                         <List>
