@@ -8,6 +8,7 @@ import Back from "./styled-components/Back";
 import Div from "./styled-components/Div";
 import NavButton from "./styled-components/NavButton";
 import Link from "./styled-components/Link";
+import Menubar from "../../molecules/Menubar";
 
 /**
  * Props:
@@ -16,8 +17,16 @@ import Link from "./styled-components/Link";
  */
 class Navbar extends React.Component {
 
-    showMenuHandler = () => {
+    state = {
+        menuActive: false,
+    }
 
+    showMenuHandler = () => {
+        this.setState({menuActive: !this.state.menuActive})
+    }
+
+    closeHandler = () => {
+        this.setState({menuActive: false})
     }
 
 
@@ -44,7 +53,7 @@ class Navbar extends React.Component {
                 <Link to={'/'}>
                     WMI
                 </Link>
-                <NavButton onClick={this.showNavHandler} image={menuIcon}/>
+                <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );
     }
@@ -59,6 +68,8 @@ class Navbar extends React.Component {
                 <Media query={desktop}>
                     {this.desktopNavbar()}
                 </Media>
+
+                <Menubar show={this.state.menuActive} closeHandler={this.closeHandler}/>
             </>);
     }
 }
