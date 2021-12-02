@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import back from '../../../../../../assets/icons/x-close-black.svg'
+import back from '../../../../../../assets/icons/cross-big.svg'
 
 const Back = styled.button`
   border: none;
