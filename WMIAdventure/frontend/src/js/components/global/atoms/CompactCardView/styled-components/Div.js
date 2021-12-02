@@ -25,11 +25,11 @@ const Div = styled.div`
   width: ${({setWidth}) => setWidth ? setWidth : '114px'};
   height: ${({setHeight}) => setHeight ? setHeight : '182px'};
   background-color: ${({theme}) => theme.colors.light2};
-  border-radius: 8px;
+  border-radius: 18px 18px 8px 8px;
   position: relative;
   margin: ${({setMargin}) => setMargin ? setMargin : '0 0 60px 0'};
   padding-top: 18px;
-  overflow-y: hidden;
+  overflow: hidden;
   font-family: 'Roboto', sans-serif;
   box-shadow: ${({shadow}) => shadow ? '0 4px 4px rgba(0, 0, 0, 0.1)' : 'none'};
   transition: transform 0.5s, opacity 0.5s ease-in-out;
@@ -37,6 +37,7 @@ const Div = styled.div`
   transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'},
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'}) scale(${({setScale}) => setScale ? setScale : '1'});
   order: ${({cardIndexInDeck, battleOnDesktop}) => (cardIndexInDeck && battleOnDesktop) ? cardIndexInDeck : '0'};
+  border: 2px solid ${({hasBuff, level, theme}) => hasBuff ? colorHandler(level, theme) : 'none'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: ${({setWidth}) => setWidth ? setWidth : '144px'};
@@ -47,7 +48,9 @@ const Div = styled.div`
 
   &:before {
     content: '';
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 0;
     left: 0;

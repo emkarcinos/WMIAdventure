@@ -120,3 +120,12 @@ test('Should apply block next card effect more than once', () => {
     const affectedCard = player.deck.lookupCardById(blockNextCardEffect.blocked_card);
     expect(affectedCard.stoppedTurns).toBe(blockNextCardEffect.turns_blocked * 2);
 });
+
+test('Should apply ids to buffs incrementally', () => {
+    const player = playerFromData(examplePlayerWithDeck);
+    applyEffectToTarget(player, buffApplyingCardEffect);
+    const firstBuffId = player.deck.lookupCardById(buffApplyingCardEffect.buffed_card).buffs[0].id;
+    applyEffectToTarget(player, buffApplyingCardEffect);
+    const secondBuffId = player.deck.lookupCardById(buffApplyingCardEffect.buffed_card).buffs[1].id;
+    expect(firstBuffId).toBe(secondBuffId - 1);
+})

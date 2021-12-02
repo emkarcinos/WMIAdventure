@@ -1,5 +1,5 @@
 import React from 'react';
-import CardsContainer from "./styled-components/CardsContainer";
+import CardContainer from "./styled-components/CardContainer";
 import Icon from "./styled-components/Icon";
 import iconPlaceholder from '../../../../../assets/icons/upload_image_dark.svg';
 import IconContainer from "./styled-components/IconContainer";
@@ -16,6 +16,7 @@ class MiniCardView extends React.Component {
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest
         setOpacity -> to handle opacity animation in BattleView
+        hasBuff -> tells if mini card has buff to handle border
      */
 
     state = {
@@ -36,10 +37,10 @@ class MiniCardView extends React.Component {
 
     componentDidUpdate(prevProps) {
         // fade animation, and update orders, when cardsOrder did change
-        if(prevProps.cardIndexInDeck &&
+        if (prevProps.cardIndexInDeck &&
             (prevProps.cardIndexInDeck !== this.props.cardIndexInDeck)) {
             this.setState({
-               miniCardOpacity: '0'
+                miniCardOpacity: '0'
             });
 
             setTimeout(() => {
@@ -60,15 +61,15 @@ class MiniCardView extends React.Component {
 
     render() {
         return (
-            <CardsContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
-                            setOpacity={this.state.miniCardOpacity} enemy={this.props.enemy}
-                            user={this.props.user} cardIndexInDeck={this.state.cardIndexInDeck}
-                            level={this.props.cardLevel} animationDuration={this.props.animationDuration}
-                            onClick={() => this.props.changeCardsOrder()}>
+            <CardContainer visible={this.props.visible} setTranslateX={this.props.setTranslateX}
+                           setOpacity={this.state.miniCardOpacity} enemy={this.props.enemy}
+                           user={this.props.user} cardIndexInDeck={this.state.cardIndexInDeck}
+                           level={this.props.cardLevel} animationDuration={this.props.animationDuration}
+                           hasBuff={this.props.hasBuff}>
                 <IconContainer enemy={this.props.enemy}>
-                    <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder} />
+                    <Icon src={this.props.cardImage ? this.props.cardImage : iconPlaceholder}/>
                 </IconContainer>
-            </CardsContainer>
+            </CardContainer>
         );
     }
 }

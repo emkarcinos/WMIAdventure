@@ -92,7 +92,7 @@ class BattleView extends React.Component {
             type: 'nothing',
             user: '0',
             enemy: '0'
-        }
+        },
     }
 
     componentDidMount() {
@@ -289,6 +289,7 @@ class BattleView extends React.Component {
                                       cardLevel={card.level}
                                       animationDuration={`0.${9 - i}`}
                                       cardImage={card.image}
+                                      hasBuff={card.buffs.length !== 0}
                                       blocked={card.stoppedTurns > 0}
                         />
                     );
@@ -326,7 +327,8 @@ class BattleView extends React.Component {
                                          setTranslateY={enemy ? this.state.enemyCompactCardTranslateY
                                              : this.state.userCompactCardTranslateY}
                                          setMargin={handleMargin}
-                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}/>
+                                         setScale={(cardIdx === 1) ? compactCardOnTopScale : '1'}
+                                         buffs={card.buffs}/>
                     );
                 })
         );
@@ -558,7 +560,8 @@ class BattleView extends React.Component {
                           cardImage={card.image} cardTooltip={card.tooltip}
                           description={card.description} common={levels.common}
                           gold={levels.gold} epic={levels.epic}
-                          setTranslateY={this.state.fullCardAction.translateY}/>
+                          setTranslateY={this.state.fullCardAction.translateY}
+                          buffs={card.buffs}/>
         );
     }
 
@@ -699,6 +702,7 @@ class BattleView extends React.Component {
                                              setWidth={'124px'} setHeight={'200px'} setMargin={'0'}
                                              setScale={this.state.compactCardOnTopScale.middle}
                                              blocked={this.state.battle.getCardOnTop().stoppedTurns > 0}
+                                             buffs={this.state.battle.getCardOnTop().buffs}
                             />
                         </CenterDiv>
                         <CenterDiv>

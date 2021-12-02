@@ -5,6 +5,9 @@ import Img from './styled-components/Img';
 import upload_image_dark from '../../../../../assets/icons/upload_image_dark.svg';
 import NameContainer from './styled-components/NameContainer';
 import {blockedCardOpacity, nextStepAnimationDuration} from "../../../../utils/globals";
+import BuffsContainer from "./styled-components/BuffsContainer";
+import BuffValue from "./styled-components/BuffValue";
+import {buffModifierHandle} from "../../../battle/organisms/BattleView/effectsVisualizing";
 
 class CompactCardView extends React.Component {
     /*
@@ -21,6 +24,7 @@ class CompactCardView extends React.Component {
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest
         setOpacity -> to handle opacity animation in BattleView
+        buffs -> to handle buff elements if card has buffs
      */
 
     state = {
@@ -95,6 +99,21 @@ class CompactCardView extends React.Component {
         }
     }
 
+    getBuffs = () => {
+        if (this.props.buffs && this.props.buffs.length !== 0) {
+            return (
+                this.props.buffs.map((buff) => {
+                    return (
+                        <BuffValue key={`buff-${buff.id}-compactCardView`}
+                                   type={buff.buff_type} buffsCount={this.props.buffs.length}>
+                            {(buff.buff_type === 5) ? '2X' : buffModifierHandle(buff.modifier)}
+                        </BuffValue>
+                    );
+                })
+            );
+        }
+    }
+
     render() {
         return (
             <Div setWidth={this.props.setWidth} setHeight={this.props.setHeight}
@@ -103,7 +122,10 @@ class CompactCardView extends React.Component {
                  setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
                  cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}
-                 setScale={this.props.setScale}>
+                 setScale={this.props.setScale} hasBuff={this.props.buffs && (this.props.buffs.length !== 0)}>
+                <BuffsContainer>
+                    {this.getBuffs()}
+                </BuffsContainer>
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>
