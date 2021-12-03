@@ -1,7 +1,7 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import NavBar from '../../components/prototype/organisms/NavBar';
+import {Helmet} from 'react-helmet';
 import StyledWrapper from './StyledWrapper';
+import Navbar from "../../components/global/atoms/Navbar";
 
 function AdventureMode() {
     return (
@@ -10,10 +10,10 @@ function AdventureMode() {
                 <title>Tryb Adventure</title>
             </Helmet>
             <StyledWrapper>
-                <NavBar />
-                    <p>
-                        Adventure Mode View - not implemented yet.
-                    </p>
+                <Navbar backLink={'/'}/>
+                <p>
+                    Adventure Mode View - not implemented yet.
+                </p>
             </StyledWrapper>
         </>
     );

@@ -5,11 +5,11 @@ import Main from './styled-components/Main';
 import FlexStyle from './styled-components/FlexStyle';
 import FlexWrapWrap from './styled-components/FlexWrapWrap';
 import Media from 'react-media';
-import NavHeader from '../../components/prototype/molecules/NavHeader';
 import TitleSection from '../../components/card-editor/atoms/TitleSection';
 import CardsImage from '../../components/card-editor/atoms/CardsImage/CardsImage';
 import CreatorOption from '../../components/card-editor/atoms/CreatorOption';
 import {desktop, mobile} from '../../utils/globals';
+import Navbar from "../../components/global/atoms/Navbar";
 
 class CardsCreatorStart extends React.Component {
     render() {
@@ -19,12 +19,13 @@ class CardsCreatorStart extends React.Component {
                 <Helmet>
                     <title> Narzędzie kreatora kart WMI Adventure </title>
                 </Helmet>
+
+                <Navbar backLink={'/'} label='Kreator Kart'/>
                 <Media query={mobile}>
                     <Wrapper>
-                        <NavHeader backLink={'/'} label='Kreator Kart'/>
                         <Main>
-                            <TitleSection />
-                            <CardsImage />
+                            <TitleSection/>
+                            <CardsImage/>
                             <CreatorOption text='Nowa Karta' link='/cards-creator-create'/>
                             <CreatorOption text='Edycja Karty' link='/cards-creator-edit'/>
                         </Main>
@@ -33,19 +34,18 @@ class CardsCreatorStart extends React.Component {
 
                 <Media query={desktop}>
                     <Wrapper>
-                        <NavHeader backLink={'/'} label='Kreator Kart'/>
                         <Main>
-                            <CardsImage />
+                            <CardsImage/>
                             <FlexStyle>
                                 <div>
-                                    <TitleSection />
+                                    <TitleSection/>
                                 </div>
                                 <FlexWrapWrap>
                                     <CreatorOption text='Nowa Karta' link='/cards-creator-create'/>
                                     <CreatorOption text='Edycja Karty' link='/cards-creator-edit'/>
                                 </FlexWrapWrap>
                             </FlexStyle>
-                            <CardsImage />
+                            <CardsImage/>
                         </Main>
                     </Wrapper>
                 </Media>
