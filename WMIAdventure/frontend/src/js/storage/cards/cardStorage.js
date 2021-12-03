@@ -1,16 +1,34 @@
 import {cardKey, cardsKey} from "../localStorageKeys";
 import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
-import {getWithSetCallback} from "../cache/cache";
+import {get, getWithSetCallback} from "../cache/cache";
 
 export const getCardById = async (id) => {
+    const cachedCard = getCardByIdFromCache(id);
+    if (cachedCard)
+        return cachedCard;
     const callback = async () => {
         const response = await CardsAPIGateway.getCardById(id);
         return await response.json();
     }
 
-    const cardData = await getWithSetCallback(cardKey(id), callback);
-    // TODO: Cache images
-    return cardData;
+    return await getWithSetCallback(cardKey(id), callback);
+}
+
+/**
+ * Attempt to get a card from cache.
+ * If no card is found in the cache returns null.
+ * @param id
+ * @returns {Promise<null|*>}
+ */
+const getCardByIdFromCache = async (id) => {
+    const allCards = get(cardsKey);
+    if (!allCards)
+        return null;
+
+    const cardFromCache = allCards.filter(card => card.id === id)[0];
+    if (!cardFromCache)
+        return null;
+    return cardFromCache;
 }
 
 export const getCardsFromDeck = async (deck) => {
