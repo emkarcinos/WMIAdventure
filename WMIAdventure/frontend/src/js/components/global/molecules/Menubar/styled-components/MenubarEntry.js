@@ -21,6 +21,12 @@ const MenubarEntry = styled(Button)`
     width: 28px;
     height: 28px;
   }
+
+  transition: transform 0.05s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 
 export default MenubarEntry;
