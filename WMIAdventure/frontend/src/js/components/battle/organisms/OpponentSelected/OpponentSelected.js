@@ -1,6 +1,5 @@
 import React from 'react';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
-import UserInfo from '../../atoms/UserInfo';
 import KuceVs from '../../atoms/KuceVs/KuceVs';
 import TinyCards from '../../atoms/TinyCards/TinyCards';
 import ButtonWithIcon from '../../atoms/ButtonWithIcon';
@@ -23,6 +22,7 @@ import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
+import UserInfo from "../../../global/atoms/UserInfo";
 
 class OpponentSelected extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
 import StyledWrapper from "./StyledWrapper";
-import NavBar from "../../components/prototype/organisms/NavBar";
 import UserRegistration from "../../components/auth/organisms/UserRegistration/UserRegistration";
+import Navbar from "../../components/global/atoms/Navbar";
 
 function UserRegistrationPage() {
     return (
@@ -11,8 +11,8 @@ function UserRegistrationPage() {
                 <title>Zarejestruj się</title>
             </Helmet>
             <StyledWrapper>
-                <NavBar />
-                <UserRegistration />
+                <Navbar/>
+                <UserRegistration/>
             </StyledWrapper>
         </>
     )

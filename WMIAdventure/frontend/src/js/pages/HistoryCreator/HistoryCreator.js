@@ -1,7 +1,7 @@
 import React from 'react';
 import {Helmet} from 'react-helmet'
 import StyledWrapper from './StyledWrapper';
-import NavBar from '../../components/prototype/organisms/NavBar';
+import Navbar from "../../components/global/atoms/Navbar";
 
 function HistoryCreator() {
     return (
@@ -10,7 +10,7 @@ function HistoryCreator() {
                 <title>Kreator historii WMI Adventure</title>
             </Helmet>
             <StyledWrapper>
-                <NavBar />
+                <Navbar/>
                 <p>
                     History Creator View - not implemented yet.
                 </p>

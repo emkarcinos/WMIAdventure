@@ -7,6 +7,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   background-color: ${({theme}) => theme.colors.greenyBluey};
+  padding: 0 26px;
 `;
 
 export default MainContainer;

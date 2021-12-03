@@ -3,11 +3,11 @@ import Div from './styled-components/Div';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
-import UserInfo from '../../atoms/UserInfo';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 import Container from './styled-components/Container';
 import {getCardById} from "../../../../storage/cards/cardStorage";
 import {getUsersDecks} from "../../../../storage/user/userData";
+import UserInfo from "../../../global/atoms/UserInfo";
 
 class TinyProfileDesktop extends React.Component {
     placeholderCard = {

@@ -1,5 +1,4 @@
 import React from 'react';
-import UserInfo from '../../atoms/UserInfo';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Article from './styled-components/Article';
 import BattleResult from '../../atoms/BattleResult';
@@ -13,6 +12,7 @@ import PopUp from '../../../global/organisms/PopUp';
 import Media from 'react-media';
 import {desktop, mobile} from '../../../../utils/globals';
 import TransBack from '../../../global/organisms/TransBack';
+import UserInfo from "../../../global/atoms/UserInfo";
 
 class PostBattle extends React.Component {
 

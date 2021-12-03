@@ -11,7 +11,7 @@ const TransparentBack = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  
+
   flex-direction: column;
   justify-content: start;
   align-items: center;
@@ -19,7 +19,7 @@ const TransparentBack = styled.div`
   background-color: ${({theme}) => theme.colors.transBack};
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 20;
 
   opacity: 0;
   transition: opacity 0.5s ease;
