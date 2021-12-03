@@ -24,7 +24,7 @@ class CardsCreator extends React.Component {
         cardSubject: '',
         cardTooltip: '',
         cardImage: null,
-
+        editorOpened: false,
         /**
          * If user uploads image, then cardImage is file object and can't be used to preview uploaded image, so this variable exists.
          */
@@ -90,7 +90,7 @@ class CardsCreator extends React.Component {
         if (this.props.creatorType === 'edit')
             this.setState({headerLabel: 'Edytowanie karty', showCardChoose: true});
         else if (this.props.creatorType === 'create')
-            this.setState({headerLabel: 'Nowa karta', showCardChoose: false});
+            this.setState({headerLabel: 'Nowa karta', showCardChoose: false, editorOpened: true});
 
         if (this.props.creatorType === 'edit') {
             CardsAPIGateway.getAllCards()
@@ -227,6 +227,7 @@ class CardsCreator extends React.Component {
             cardTooltip: tooltip,
             cardImage: image,
             cardImageURLPreview: image,
+            editorOpened: true
         });
 
         this.setLevelsListFromCard(levels);
@@ -367,7 +368,7 @@ class CardsCreator extends React.Component {
                 <Wrapper>
                     <Navbar backLink={'/cards-creator-start'} label={this.state.headerLabel}/>
                     <Main>
-                        {this.state.cardId ? this.renderEditPage() : null}
+                        {this.state.editorOpened ? this.renderEditPage() : null}
                     </Main>
                 </Wrapper>
                 <SendCardPopup show={this.state.showSendCardPopup}
