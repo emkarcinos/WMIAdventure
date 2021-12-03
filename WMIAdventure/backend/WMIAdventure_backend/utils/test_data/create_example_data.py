@@ -14,17 +14,18 @@ def get_or_create_example_card(name, tooltip, subject) -> Card:
     )
 
     level = CardLevel.objects.get(pk=CardLevel.Level.COMMON)
-    card, _ = Card.objects.get_or_create(info=info,
-                                         level=level)
+    card, was_created = Card.objects.get_or_create(info=info,
+                                                   level=level)
+    if not was_created:
+        return card
+
     effect = CardEffect.objects.get(pk=CardEffect.EffectId.DMG)
-    CardLevelEffects.objects.get_or_create(card=card,
-                                           defaults={
-                                               'card_effect': effect,
-                                               'target': CardLevelEffects.Target(1),
-                                               'power': 15,
-                                               'range': 2
-                                           }
-                                           )
+    CardLevelEffects.objects.create(card=card,
+                                    card_effect=effect,
+                                    target=CardLevelEffects.Target(1),
+                                    power=15,
+                                    range=2
+                                    )
 
     return card
 
