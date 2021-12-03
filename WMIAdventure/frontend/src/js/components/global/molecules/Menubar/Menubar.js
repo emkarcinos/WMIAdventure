@@ -119,7 +119,7 @@ class Menubar extends React.Component {
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}
                                 target={'_blank'} rel={'noopener noreferrer'}
-                                image={bugIcon}>Zgłoś błąd</MenubarEntry>
+                                image={bugIcon}>Zgłoś sugestię</MenubarEntry>
                             <MenubarEntry
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure'}
