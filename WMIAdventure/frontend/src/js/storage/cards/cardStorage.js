@@ -1,4 +1,4 @@
-import {cardKey} from "../localStorageKeys";
+import {cardKey, cardsKey} from "../localStorageKeys";
 import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
 import {getWithSetCallback} from "../cache/cache";
 
@@ -21,4 +21,13 @@ export const getCardsFromDeck = async (deck) => {
     const card5 = getCardById(deck.card5.id);
     return [card1, card2, card3, card4, card5];
 }
+
+export const getAllCards = async () => {
+    const callback = async () => {
+        return await CardsAPIGateway.getAllCards();
+    }
+
+    return await getWithSetCallback(cardsKey, callback);
+}
+
 export default {getCardById, getCardsFromDeck};

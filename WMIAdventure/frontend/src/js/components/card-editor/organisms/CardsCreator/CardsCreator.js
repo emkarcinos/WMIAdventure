@@ -7,7 +7,6 @@ import Button from './styled-components/Button';
 import BasicCardData from '../../../../api/data-models/cards/BasicCardData';
 import WholeCardData from '../../../../api/data-models/cards/WholeCardData';
 import ProposedContentAPIGateway from '../../../../api/gateways/proposed-content/ProposedContentAPIGateway';
-import CardsAPIGateway from '../../../../api/gateways/CardsAPIGateway';
 import SendCardPopup, {timeout as SendCardPopupTimeout} from '../../molecules/SendCardPopup/SendCardPopup';
 import CardChoose from '../../molecules/CardChoose';
 import CardDescribePreview from '../../atoms/CardDescribePreview';
@@ -16,6 +15,7 @@ import CardProperties from '../CardProperties';
 import CardView from '../CardView';
 import {getAllEffects} from "../../../../storage/effects/effectStorage";
 import Navbar from "../../../global/atoms/Navbar";
+import {getAllCards} from "../../../../storage/cards/cardStorage";
 
 class CardsCreator extends React.Component {
     state = {
@@ -93,7 +93,7 @@ class CardsCreator extends React.Component {
             this.setState({headerLabel: 'Nowa karta', showCardChoose: false});
 
         if (this.props.creatorType === 'edit') {
-            CardsAPIGateway.getAllCards()
+            getAllCards()
                 .then(data => this.setState({cardsFromApi: data}))
                 .catch(error => console.log(error));
         }
@@ -351,8 +351,8 @@ class CardsCreator extends React.Component {
                                     Edytuj inną
                                 </Button>
                                 <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                                    this.state.effectsToSend[1].length !== 0 ||
-                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                                this.state.effectsToSend[1].length !== 0 ||
+                                this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                                     Podgląd
                                 </Button>
                                 <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
