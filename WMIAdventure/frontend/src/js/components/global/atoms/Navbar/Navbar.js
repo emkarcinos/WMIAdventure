@@ -29,6 +29,10 @@ class Navbar extends React.Component {
         this.setState({menuActive: false})
     }
 
+    openHandler = () => {
+        this.setState({menuActive: true})
+    }
+
 
     mobileNavbar = () => {
         return (
@@ -53,7 +57,7 @@ class Navbar extends React.Component {
                 <Link to={'/'}>
                     WMI
                 </Link>
-                <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
+                <NavButton onMouseEnter={this.openHandler} onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );
     }

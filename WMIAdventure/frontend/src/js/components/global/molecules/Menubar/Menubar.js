@@ -96,8 +96,12 @@ class Menubar extends React.Component {
             <>
                 <Transition in={this.props.show} timeout={timeout}>
                     {state => (
-                        <TransparentBack onClick={this.props.closeHandler} transitionState={state}>
-
+                        <TransparentBack
+                            onMouseOver={() => {
+                                (state === 'entered') ? this.props.closeHandler() : null
+                            }}
+                            onClick={this.props.closeHandler}
+                            transitionState={state}>
                         </TransparentBack>
                     )}
                 </Transition>
