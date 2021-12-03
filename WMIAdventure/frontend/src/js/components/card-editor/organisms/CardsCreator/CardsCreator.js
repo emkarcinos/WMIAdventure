@@ -307,6 +307,56 @@ class CardsCreator extends React.Component {
         this.setState({showCardView: false});
     }
 
+    renderEditPage() {
+        return (
+            <>
+                <CardDescribePreview cardName={this.state.cardName}
+                                     cardSubject={this.state.cardSubject}
+                                     cardTooltip={this.state.cardTooltip}
+                                     showDescribeInputsHandler={this.showDescribeInputsHandler}
+                                     cardImage={this.state.cardImageURLPreview}
+                />
+                <Form>
+                    <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
+                                        onCardImageChange={this.onCardImageChange}
+                                        show={this.state.showDescribeInputs}
+                                        hideDescribeInputsHandler={this.hideDescribeInputsHandler}
+                                        cardName={this.state.cardName}
+                                        cardSubject={this.state.cardSubject}
+                                        cardTooltip={this.state.cardTooltip}
+                                        cardImage={this.state.cardImageURLPreview}
+                    />
+                    <CardProperties creatorType={this.props.creatorType}
+                                    levelCostValues={this.state.levelCostValues}
+                                    levelsListFromCard={this.state.levelsListFromCard}
+                                    effectsFromApi={this.state.effectsFromApi}
+                                    chosenEffectsFromCard={this.state.chosenEffectsFromCard}
+                                    effectsToSend={this.state.effectsToSend}
+                                    levelCostValuesHandler={this.levelCostValuesHandler}
+                                    levelCostClearHandler={this.levelCostClearHandler}
+                                    levelCostResetHandler={this.levelCostResetHandler}
+                                    removeLevelHandler={this.removeLevelHandler}
+                                    setEffectsToSendHandler={this.setEffectsToSendHandler}
+                                    levelCreatedHandler={this.levelCreatedHandler}
+                    />
+                    <Div>
+                        <Button onClick={this.refreshPage} access show={this.props.creatorType}>
+                            Edytuj inną
+                        </Button>
+                        <Button show access={this.state.effectsToSend[0].length !== 0 ||
+                        this.state.effectsToSend[1].length !== 0 ||
+                        this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                            Podgląd
+                        </Button>
+                        <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
+                            Wyślij
+                        </Button>
+                    </Div>
+                </Form>
+            </>
+        )
+    }
+
     render() {
         return (
             <>
@@ -317,49 +367,7 @@ class CardsCreator extends React.Component {
                 <Wrapper>
                     <Navbar backLink={'/cards-creator-start'} label={this.state.headerLabel}/>
                     <Main>
-                        <CardDescribePreview cardName={this.state.cardName}
-                                             cardSubject={this.state.cardSubject}
-                                             cardTooltip={this.state.cardTooltip}
-                                             showDescribeInputsHandler={this.showDescribeInputsHandler}
-                                             cardImage={this.state.cardImageURLPreview}
-                        />
-                        <Form>
-                            <CardDescribeInputs updateDescribePreview={this.updateDescribePreview}
-                                                onCardImageChange={this.onCardImageChange}
-                                                show={this.state.showDescribeInputs}
-                                                hideDescribeInputsHandler={this.hideDescribeInputsHandler}
-                                                cardName={this.state.cardName}
-                                                cardSubject={this.state.cardSubject}
-                                                cardTooltip={this.state.cardTooltip}
-                                                cardImage={this.state.cardImageURLPreview}
-                            />
-                            <CardProperties creatorType={this.props.creatorType}
-                                            levelCostValues={this.state.levelCostValues}
-                                            levelsListFromCard={this.state.levelsListFromCard}
-                                            effectsFromApi={this.state.effectsFromApi}
-                                            chosenEffectsFromCard={this.state.chosenEffectsFromCard}
-                                            effectsToSend={this.state.effectsToSend}
-                                            levelCostValuesHandler={this.levelCostValuesHandler}
-                                            levelCostClearHandler={this.levelCostClearHandler}
-                                            levelCostResetHandler={this.levelCostResetHandler}
-                                            removeLevelHandler={this.removeLevelHandler}
-                                            setEffectsToSendHandler={this.setEffectsToSendHandler}
-                                            levelCreatedHandler={this.levelCreatedHandler}
-                            />
-                            <Div>
-                                <Button onClick={this.refreshPage} access show={this.props.creatorType}>
-                                    Edytuj inną
-                                </Button>
-                                <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                                    this.state.effectsToSend[1].length !== 0 ||
-                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
-                                    Podgląd
-                                </Button>
-                                <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
-                                    Wyślij
-                                </Button>
-                            </Div>
-                        </Form>
+                        {this.state.cardId ? this.renderEditPage() : null}
                     </Main>
                 </Wrapper>
                 <SendCardPopup show={this.state.showSendCardPopup}

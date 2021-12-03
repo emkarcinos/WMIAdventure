@@ -2,7 +2,7 @@ import React from 'react';
 import TransparentBack from './styled-components/TransparentBack';
 import Ul from './styled-components/Ul';
 import Card from '../../atoms/Card';
-import { Transition } from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 import Search from '../../../global/atoms/Search';
 
 /* Transition timeout values */
@@ -27,7 +27,7 @@ class CardChoose extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.listHover) {
+        if (!this.state.listHover) {
             this.props.hideCardChooseHandler(event);
             setTimeout(() => {
                 this.setState({searchInput: ''});
@@ -44,10 +44,10 @@ class CardChoose extends React.Component {
         return (
             <Transition in={this.props.showCardChoose} timeout={timeout}>
                 {state => (
-                    <TransparentBack transitionState={state} onClick={this.handleHiding}>
+                    <TransparentBack transitionState={state}>
                         <Ul onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}>
-                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch} />
+                            <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                             {
                                 this.props.cardsFromAPI.map((card) => {
                                     return (
@@ -58,7 +58,7 @@ class CardChoose extends React.Component {
                                                   image={card.image}
                                                   searchInput={this.state.searchInput}
                                                   levels={card.levels}
-                                                  chosenCardHandler={this.props.chosenCardHandler} />
+                                                  chosenCardHandler={this.props.chosenCardHandler}/>
                                         </React.Fragment>
                                     );
                                 })
