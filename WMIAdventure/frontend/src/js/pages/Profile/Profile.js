@@ -11,6 +11,7 @@ import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
 import Line from "./styled-componets/Line";
+import MiniCard from "../../components/profile/atoms/MiniCard";
 
 class Profile extends React.Component {
 
@@ -61,6 +62,7 @@ class Profile extends React.Component {
                                 <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
                             </ColumnGapContainer>
                             <Line/>
+                            <MiniCard borderDown/>
                             {/*twoja talia*/}
                         </ColumnGapContainer>
                         {/*edit deck & profil block*/}
