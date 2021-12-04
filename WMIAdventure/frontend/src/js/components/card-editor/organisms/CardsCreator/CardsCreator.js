@@ -14,7 +14,6 @@ import CardDescribePreview from '../../atoms/CardDescribePreview';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
-import {getAllEffects} from "../../../../storage/effects/effectStorage";
 import Navbar from "../../../global/atoms/Navbar";
 
 class CardsCreator extends React.Component {
@@ -97,7 +96,7 @@ class CardsCreator extends React.Component {
                 .then(data => this.setState({cardsFromApi: data}))
                 .catch(error => console.log(error));
         }
-        getAllEffects()
+        CardsAPIGateway.getAllEffects()
             .then(data => this.setState({effectsFromApi: data}))
             .catch(error => console.log(error));
     }
@@ -351,8 +350,8 @@ class CardsCreator extends React.Component {
                                     Edytuj inną
                                 </Button>
                                 <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                                    this.state.effectsToSend[1].length !== 0 ||
-                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                                this.state.effectsToSend[1].length !== 0 ||
+                                this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                                     Podgląd
                                 </Button>
                                 <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
