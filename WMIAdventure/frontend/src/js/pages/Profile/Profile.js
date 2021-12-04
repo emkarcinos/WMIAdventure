@@ -46,7 +46,6 @@ class Profile extends React.Component {
     async getDeck() {
         const data = await getCurrentUserDecks();
         const userSpecificCards = await cardsFromDeckData(data);
-        console.log(userSpecificCards);
         this.setState({fullCards: userSpecificCards});
     }
 
