@@ -7,15 +7,14 @@ import Button from './styled-components/Button';
 import BasicCardData from '../../../../api/data-models/cards/BasicCardData';
 import WholeCardData from '../../../../api/data-models/cards/WholeCardData';
 import ProposedContentAPIGateway from '../../../../api/gateways/proposed-content/ProposedContentAPIGateway';
-import CardsAPIGateway from '../../../../api/gateways/CardsAPIGateway';
 import SendCardPopup, {timeout as SendCardPopupTimeout} from '../../molecules/SendCardPopup/SendCardPopup';
 import CardChoose from '../../molecules/CardChoose';
 import CardDescribePreview from '../../atoms/CardDescribePreview';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
-import {getAllEffects} from "../../../../storage/effects/effectStorage";
 import Navbar from "../../../global/atoms/Navbar";
+import {getAllCards} from "../../../../storage/cards/cardStorage";
 
 class CardsCreator extends React.Component {
     state = {
@@ -93,11 +92,11 @@ class CardsCreator extends React.Component {
             this.setState({headerLabel: 'Nowa karta', showCardChoose: false, editorOpened: true});
 
         if (this.props.creatorType === 'edit') {
-            CardsAPIGateway.getAllCards()
+            getAllCards()
                 .then(data => this.setState({cardsFromApi: data}))
                 .catch(error => console.log(error));
         }
-        getAllEffects()
+        CardsAPIGateway.getAllEffects()
             .then(data => this.setState({effectsFromApi: data}))
             .catch(error => console.log(error));
     }
@@ -369,6 +368,7 @@ class CardsCreator extends React.Component {
                     <Navbar backLink={'/cards-creator-start'} label={this.state.headerLabel}/>
                     <Main>
                         {this.state.editorOpened ? this.renderEditPage() : null}
+
                     </Main>
                 </Wrapper>
                 <SendCardPopup show={this.state.showSendCardPopup}
