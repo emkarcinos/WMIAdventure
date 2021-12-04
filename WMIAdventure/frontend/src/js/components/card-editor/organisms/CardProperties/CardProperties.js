@@ -30,26 +30,26 @@ class CardProperties extends React.Component {
         startEdit: false,
     }
 
+    setStateFromProps = (props) => {
+        const levelsList = props.levelsListFromCard;
+        this.setState({
+            createCommonLevel: levelsList.indexOf(1) !== -1,
+            createGoldLevel: levelsList.indexOf(2) !== -1,
+            createEpicLevel: levelsList.indexOf(3) !== -1,
+            chosenEffects: props.chosenEffectsFromCard,
+            effectsToSend: props.effectsToSend
+        });
+    }
+
+    componentDidMount() {
+        this.setStateFromProps(this.props);
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.levelsListFromCard.length === this.props.levelsListFromCard.length) return;
         setTimeout(() => {
             if (!this.state.startEdit) {
-                let levelsList = this.props.levelsListFromCard;
-                for (let i = 0; i < levelsList.length; i++) {
-                    if (levelsList[i] === 1)
-                        this.setState({createCommonLevel: true});
-                    if (levelsList[i] === 2)
-                        this.setState({createGoldLevel: true});
-                    if (levelsList[i] === 3)
-                        this.setState({createEpicLevel: true});
-                }
-
-                setTimeout(() => {
-                    this.setState({
-                        chosenEffects: this.props.chosenEffectsFromCard,
-                        effectsToSend: this.props.effectsToSend
-                    });
-                }, 10);
+                this.setStateFromProps(this.props);
             }
         }, 10);
     }

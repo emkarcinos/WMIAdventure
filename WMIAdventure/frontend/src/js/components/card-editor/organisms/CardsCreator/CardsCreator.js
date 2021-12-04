@@ -13,7 +13,7 @@ import CardDescribePreview from '../../atoms/CardDescribePreview';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
-import Navbar from "../../../global/atoms/Navbar";
+import Navbar from "../../../global/molecules/Navbar";
 import {getAllCards} from "../../../../storage/cards/cardStorage";
 import CardsAPIGateway from "../../../../api/gateways/CardsAPIGateway";
 
@@ -247,10 +247,14 @@ class CardsCreator extends React.Component {
     setLevelCostValuesFromCard = (levels) => {
         let newCostList = this.state.levelCostValues.slice();
         try {
-            if (levels[0].next_level_cost)
-                newCostList[levels[0].level - 1] = levels[0].next_level_cost;
-            if (levels[1].next_level_cost)
-                newCostList[levels[1].level - 1] = levels[1].next_level_cost;
+            if (levels.length >= 1) {
+                if (levels[0].next_level_cost)
+                    newCostList[levels[0].level - 1] = levels[0].next_level_cost;
+            }
+            if (levels.length >= 2) {
+                if (levels[1].next_level_cost)
+                    newCostList[levels[1].level - 1] = levels[1].next_level_cost;
+            }
             this.setState({levelCostValues: newCostList});
         } catch (error) {
             console.log(error);
