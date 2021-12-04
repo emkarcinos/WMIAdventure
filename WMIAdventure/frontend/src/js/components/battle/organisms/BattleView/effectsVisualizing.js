@@ -21,6 +21,8 @@ import {nextStepAnimationDuration} from "../../../../utils/globals";
  * @param component {BattleView}
  */
 export const visualizeEffect = (executedEffect, component) => {
+    if (!executedEffect)
+        return;
     switch (executedEffect.id) {
         case damageEffectId:
             visualizeStatusEffect(executedEffect.target_player, 'damage', component);
