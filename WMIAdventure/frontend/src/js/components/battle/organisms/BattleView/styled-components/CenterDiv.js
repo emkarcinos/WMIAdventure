@@ -9,7 +9,7 @@ const CenterDiv = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: ${({setZindex}) => setZindex ? setZindex : '10'};
 `;
 
 export default CenterDiv;
