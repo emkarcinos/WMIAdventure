@@ -11,11 +11,12 @@ import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
 import Line from "./styled-componets/Line";
-import MyDeck from "../../components/profile/atoms/MyDeck";
 import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
 import pensil from '../../../assets/icons/pencil.svg';
 import editProfil from '../../../assets/icons/editProfil.svg';
+import MyDeck from "../../components/profile/atoms/MyDeck";
+import {cardsFromDeckData} from "../../api/data-models/battle/Card";
 
 class Profile extends React.Component {
 
@@ -27,7 +28,7 @@ class Profile extends React.Component {
             image: undefined,
         },
 
-        userDeck: undefined
+        fullCards: []
     }
 
     async getUserData() {
@@ -44,9 +45,9 @@ class Profile extends React.Component {
 
     async getDeck() {
         const data = await getCurrentUserDecks();
-        this.setState({
-            userDeck: data[0]
-        });
+        const userSpecificCards = await cardsFromDeckData(data);
+        console.log(userSpecificCards);
+        this.setState({fullCards: userSpecificCards});
     }
 
     componentDidMount() {
@@ -80,7 +81,7 @@ class Profile extends React.Component {
                                 <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
                             </ColumnGapContainer>
                             <Line/>
-                            <MyDeck/>
+                            {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
                         </ColumnGapContainer>
                         <ColumnGapContainer gap={'10px'}>
                             <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
