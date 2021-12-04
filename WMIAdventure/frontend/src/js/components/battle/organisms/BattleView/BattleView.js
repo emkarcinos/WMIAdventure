@@ -22,7 +22,6 @@ import {visualizeEffect} from "./effectsVisualizing";
 import TransBack from "../../../global/organisms/TransBack";
 import ButtonWithIcon from "../../atoms/ButtonWithIcon";
 import theme from "../../../../utils/theme";
-import FloatingDiv from "./styled-components/FloatingDiv";
 
 class BattleView extends React.Component {
 
@@ -634,10 +633,6 @@ class BattleView extends React.Component {
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
-                            <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
-                                       customZIndex={'200'}>
-
-                            </TransBack>
                             <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
@@ -775,10 +770,10 @@ class BattleView extends React.Component {
                             </EffectIconsContainer>
                         </CenterDiv>
 
-                        <FloatingDiv>
-                            <ButtonWithIcon handler={this.flipAutoplay}
+                        <CenterDiv setZindex={'500'} onClick={this.onNextButtonPress}>
+                            <ButtonWithIcon handler={this.flipAutoplay} setMargin={'0 0 0 900px'}
                                             color={this.state.autoplayEnabled ? theme.colors.purplyPinky : theme.colors.dark}>Autoplay</ButtonWithIcon>
-                        </FloatingDiv>
+                        </CenterDiv>
                     </DesktopBackground>
                 </Media>
             </>
