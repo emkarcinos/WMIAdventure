@@ -6,7 +6,9 @@ class TransBack extends React.Component {
         return (
             <Div visible={this.props.visible}
                  setOpacity={this.props.setOpacity}
-                 onClick={this.props.closeHandler}>
+                 onClick={this.props.closeHandler}
+                 customZIndex={this.props.customZIndex}
+            >
                 {this.props.children}
             </Div>
         );

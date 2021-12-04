@@ -11,6 +11,7 @@ const Div = styled.div`
   left: 0;
   height: calc(100vh - 48px);
   width: 100%;
+  z-index: ${({customZIndex}) => customZIndex ? customZIndex : 'auto'};
   background-color: ${({theme}) => theme.colors.darkTrans};
 `;
 

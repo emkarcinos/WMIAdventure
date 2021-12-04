@@ -19,6 +19,7 @@ import {getCurrentUserId} from "../../../../storage/user/userData";
 import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
 import {visualizeEffect} from "./effectsVisualizing";
+import TransBack from "../../../global/organisms/TransBack";
 
 class BattleView extends React.Component {
 
@@ -92,6 +93,9 @@ class BattleView extends React.Component {
             type: 'nothing',
             user: '0',
             enemy: '0'
+        },
+
+        nextStepCallback: () => {
         },
     }
 
@@ -174,6 +178,14 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + nextStepAnimationDuration * 2 + 100);
+    }
+
+    onNextButtonPress = () => {
+        this.state ? this.state.nextStepCallback() : null;
+        this.setState({
+            nextStepCallback: () => {
+            }
+        })
     }
 
     firstFullCardActionCall() {
@@ -366,13 +378,20 @@ class BattleView extends React.Component {
 
     slideBackFullCardCallingCompactCardAction() {
         setTimeout(() => {
-            this.state.battle.isUsersTurn ? this.compactCardAction(true) : this.compactCardAction(false);
-            this.setNewStateAttributes(
-                this.state.fullCardAction, 'fullCardAction',
-                this.state.battle.isUsersTurn ? {opacity: '0', translateY: '100vh'} : {
-                    opacity: '0',
-                    translateY: '-100vh'
-                });
+            const call = () => {
+
+                this.state.battle.isUsersTurn ? this.compactCardAction(true) : this.compactCardAction(false);
+                this.setNewStateAttributes(
+                    this.state.fullCardAction, 'fullCardAction',
+                    this.state.battle.isUsersTurn ? {opacity: '0', translateY: '100vh'} : {
+                        opacity: '0',
+                        translateY: '-100vh'
+                    });
+
+                this.hideFullCardBackground();
+            }
+
+            this.setState({nextStepCallback: call});
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
@@ -389,7 +408,6 @@ class BattleView extends React.Component {
     fullCardAction = () => {
         this.showFullCardProcess();
         this.slideBackFullCardCallingCompactCardAction();
-        this.hideFullCardBackground();
     }
 
     effectsMountCall(userTurn) {
@@ -589,6 +607,8 @@ class BattleView extends React.Component {
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
+                            <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
+                                       customZIndex={'200'}/>
                             <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
@@ -656,6 +676,8 @@ class BattleView extends React.Component {
 
                 <Media query={desktop}>
                     <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
+                        <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
+                                   customZIndex={'200'}/>
                         <MainContainer setBeforeTranslateX={this.state.backgroundElemBeforePosX}
                                        setAfterTranslateY={this.state.backgroundElemAfterPosX}>
                             <PopUp visible={this.props.visible} disableClose
