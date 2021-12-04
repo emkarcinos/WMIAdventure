@@ -94,7 +94,7 @@ class BattleView extends React.Component {
             user: '0',
             enemy: '0'
         },
-
+        autoplayEnabled: true,
         nextStepCallback: () => {
         },
     }
@@ -181,7 +181,10 @@ class BattleView extends React.Component {
     }
 
     onNextButtonPress = () => {
-        this.state ? this.state.nextStepCallback() : null;
+        if (this.state.autoplayEnabled)
+            return;
+
+        this.state.nextStepCallback()
         this.setState({
             nextStepCallback: () => {
             }
@@ -392,6 +395,7 @@ class BattleView extends React.Component {
             }
 
             this.setState({nextStepCallback: call});
+            this.state.autoplayEnabled ? call() : null;
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
@@ -499,6 +503,8 @@ class BattleView extends React.Component {
             }
 
             this.setState({nextStepCallback: action})
+
+            this.state.autoplayEnabled ? action() : null;
         } else {
             this.effectsHide();
         }
