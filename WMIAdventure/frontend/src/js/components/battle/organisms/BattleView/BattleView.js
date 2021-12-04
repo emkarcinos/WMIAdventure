@@ -489,11 +489,16 @@ class BattleView extends React.Component {
         if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
-            this.setState({
-                effectsActionScale: newEffectsActionScale
-            });
-            this.effectIconCastEffect(newEffectsActionScale, index);
-            this.callNextEffectIconAction(userTurn, index);
+            const action = () => {
+
+                this.setState({
+                    effectsActionScale: newEffectsActionScale
+                });
+                this.effectIconCastEffect(newEffectsActionScale, index);
+                this.callNextEffectIconAction(userTurn, index);
+            }
+
+            this.setState({nextStepCallback: action})
         } else {
             this.effectsHide();
         }
