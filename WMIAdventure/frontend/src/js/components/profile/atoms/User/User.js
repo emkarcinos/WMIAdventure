@@ -9,7 +9,7 @@ class User extends React.Component {
         return (
             <Container>
                 <AvatarContainer>
-                    <Avatar src={this.props.image ? this.state.image : null}
+                    <Avatar src={this.props.image ? this.props.image : null}
                             alt=""/>
                 </AvatarContainer>
                 <Nick>
