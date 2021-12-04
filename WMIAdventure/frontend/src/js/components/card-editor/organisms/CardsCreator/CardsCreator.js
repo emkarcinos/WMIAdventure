@@ -15,6 +15,7 @@ import CardProperties from '../CardProperties';
 import CardView from '../CardView';
 import Navbar from "../../../global/atoms/Navbar";
 import {getAllCards} from "../../../../storage/cards/cardStorage";
+import CardsAPIGateway from "../../../../api/gateways/CardsAPIGateway";
 
 class CardsCreator extends React.Component {
     state = {
