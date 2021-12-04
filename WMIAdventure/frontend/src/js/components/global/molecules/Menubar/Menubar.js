@@ -71,6 +71,7 @@ class Menubar extends React.Component {
         if (this.state.user) {
             return (
                 <>
+                    <MenubarEntry image={userIcon}>Mój profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
                     <TinyUserProfile displayedUsername={this.state.user.username}
