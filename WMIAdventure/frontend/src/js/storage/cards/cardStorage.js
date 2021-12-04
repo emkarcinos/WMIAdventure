@@ -3,7 +3,7 @@ import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
 import {get, getWithSetCallback} from "../cache/cache";
 
 export const getCardById = async (id) => {
-    const cachedCard = getCardByIdFromCache(id);
+    const cachedCard = await getCardByIdFromCache(id);
     if (cachedCard)
         return cachedCard;
     const callback = async () => {
