@@ -126,7 +126,7 @@ class BattleView extends React.Component {
         this.setState({autoplayEnabled: newState})
 
         if (newState)
-            this.state.nextStepCallback();
+            this.state ? this.state.nextStepCallback() : null;
     }
 
     stateContainersShotAnimation() {
