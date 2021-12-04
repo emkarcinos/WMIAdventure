@@ -21,7 +21,7 @@ export const getCardById = async (id) => {
  * @returns {Promise<null|*>}
  */
 const getCardByIdFromCache = async (id) => {
-    const allCards = get(cardsKey);
+    const allCards = await get(cardsKey);
     if (!allCards)
         return null;
 
