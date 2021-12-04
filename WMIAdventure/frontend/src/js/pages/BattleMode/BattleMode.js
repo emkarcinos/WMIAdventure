@@ -44,7 +44,7 @@ class BattleMode extends React.Component {
         scrollVisible: true,
         fightLoading: false,
         fightLoadingText: '',
-        selectedUser: {}
+        selectedUser: null
     }
 
     componentDidMount() {
@@ -146,6 +146,20 @@ class BattleMode extends React.Component {
         );
     }
 
+    renderOponentSelected() {
+        return (
+            <>
+                <OpponentSelected visible={this.state.userPreviewRun}
+                                  opponent={this.state.selectedUser}
+                                  setTranslateY={this.state.userPreviewPos}
+                                  setOpacity={this.state.userPreviewOpacity}
+                                  runUserPreviewHandler={this.runUserPreviewHandler}
+                                  closeUserPreviewHandler={this.closeUserPreviewHandler}
+                                  kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
+            </>
+        )
+    }
+
     render() {
         return (
             <>
@@ -194,13 +208,7 @@ class BattleMode extends React.Component {
                 </Main>
                 <TinyProfileDesktop userId={this.state.loggedInUser.id} username={this.state.loggedInUser.username}
                                     avatar={this.state.loggedInUser.image}/>
-                <OpponentSelected visible={this.state.userPreviewRun}
-                                  opponent={this.state.selectedUser}
-                                  setTranslateY={this.state.userPreviewPos}
-                                  setOpacity={this.state.userPreviewOpacity}
-                                  runUserPreviewHandler={this.runUserPreviewHandler}
-                                  closeUserPreviewHandler={this.closeUserPreviewHandler}
-                                  kuceStartFight={this.kuceStartFight} kuceStopFight={this.kuceStopFight}/>
+                {this.state.selectedUser ? this.renderOponentSelected() : null}
                 <LoadingPopUp visible={this.state.fightLoading} view={this.state.fightLoadingText}/>
             </>
         );
