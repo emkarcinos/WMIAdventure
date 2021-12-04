@@ -3,7 +3,6 @@ import Div from "./styled-components/Div";
 import ContentContainer from "./styled-components/ContentContainer";
 import List from "./styled-components/List";
 import TinyUserProfile from "../../../battle/molecules/TinyUserProfile";
-import TransparentBack from "../../../prototype/atoms/NavMenu/styled-components/TransparentBack";
 import {Transition} from "react-transition-group";
 import Back from "./styled-components/Back";
 import Line from "./styled-components/Line";
@@ -16,10 +15,11 @@ import githubIcon from '../../../../../assets/images/github.png'
 import logoutIcon from '../../../../../assets/images/logout.png'
 import userIcon from '../../../../../assets/icons/user.svg'
 import newUserIcon from '../../../../../assets/icons/newuser.svg'
-import Link from "../../atoms/Navbar/styled-components/Link";
-import Href from "../../atoms/Navbar/styled-components/Href";
+import Link from "../Navbar/styled-components/Link";
+import Href from "../Navbar/styled-components/Href";
 import {getCurrentUserData} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
+import TransparentBack from "./styled-components/TransparentBack";
 
 /* Transition timeout values */
 const timeout = {
@@ -71,6 +71,7 @@ class Menubar extends React.Component {
         if (this.state.user) {
             return (
                 <>
+                    <MenubarEntry as={Link} to={'/profile'} image={userIcon}>Mój profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
                     <TinyUserProfile displayedUsername={this.state.user.username}
@@ -96,9 +97,7 @@ class Menubar extends React.Component {
             <>
                 <Transition in={this.props.show} timeout={timeout}>
                     {state => (
-                        <TransparentBack onClick={this.props.closeHandler} transitionState={state}>
-
-                        </TransparentBack>
+                        <TransparentBack onClick={this.props.closeHandler} transitionState={state}/>
                     )}
                 </Transition>
                 <Div visible={this.props.show}>
@@ -115,7 +114,7 @@ class Menubar extends React.Component {
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}
                                 target={'_blank'} rel={'noopener noreferrer'}
-                                image={bugIcon}>Zgłoś błąd</MenubarEntry>
+                                image={bugIcon}>Zgłoś sugestię</MenubarEntry>
                             <MenubarEntry
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure'}
