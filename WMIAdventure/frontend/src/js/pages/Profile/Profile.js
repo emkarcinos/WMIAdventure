@@ -2,7 +2,7 @@ import React from 'react';
 import {Helmet} from 'react-helmet';
 import MainContainer from "./styled-componets/MainContainer";
 import User from "../../components/profile/atoms/User";
-import {getCurrentUserData} from "../../storage/user/userData";
+import {getCurrentUserData, getCurrentUserDecks} from "../../storage/user/userData";
 import InfoWrapper from "./styled-componets/InfoWrapper";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 import UserLabel from "../../components/global/atoms/UserLabel";
@@ -11,7 +11,11 @@ import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
 import Line from "./styled-componets/Line";
-import MiniCard from "../../components/profile/atoms/MiniCard";
+import MyDeck from "../../components/profile/atoms/MyDeck";
+import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
+import theme from "../../utils/theme";
+import pensil from '../../../assets/icons/pencil.svg';
+import editProfil from '../../../assets/icons/editProfil.svg';
 
 class Profile extends React.Component {
 
@@ -21,19 +25,33 @@ class Profile extends React.Component {
             username: undefined,
             semester: undefined,
             image: undefined,
-        }
+        },
+
+        userDeck: undefined
+    }
+
+    async getUserData() {
+        const data = await getCurrentUserData();
+        this.setState({
+            userData: {
+                username: data.displayedUsername,
+                id: data.user,
+                semester: data.semester,
+                image: data.image
+            },
+        });
+    }
+
+    async getDeck() {
+        const data = await getCurrentUserDecks();
+        this.setState({
+            userDeck: data[0]
+        });
     }
 
     componentDidMount() {
-        getCurrentUserData()
-            .then(user => user ? this.setState({
-                userData: {
-                    username: user.displayedUsername,
-                    id: user.user,
-                    semester: user.semester,
-                    image: user.image
-                }
-            }) : null);
+        this.getUserData();
+        this.getDeck();
     }
 
     render() {
@@ -42,8 +60,8 @@ class Profile extends React.Component {
                 <Helmet>
                     <title>Profil użytkownika</title>
                 </Helmet>
+                <Navbar/>
                 <MainContainer>
-                    <Navbar/>
                     <User username={this.state.userData.username}
                           image={this.state.userData.image}/>
                     <InfoWrapper>
@@ -62,10 +80,16 @@ class Profile extends React.Component {
                                 <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
                             </ColumnGapContainer>
                             <Line/>
-                            <MiniCard borderDown/>
-                            {/*twoja talia*/}
+                            <MyDeck/>
                         </ColumnGapContainer>
-                        {/*edit deck & profil block*/}
+                        <ColumnGapContainer gap={'10px'}>
+                            <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
+                                Edytuj talię
+                            </ButtonWithIcon>
+                            <ButtonWithIcon setWidth={'158px'} icon={editProfil} color={theme.colors.dark}>
+                                Edytuj profil
+                            </ButtonWithIcon>
+                        </ColumnGapContainer>
                     </InfoWrapper>
                 </MainContainer>
             </>

@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 const MainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   min-height: 100vh;
   background-color: ${({theme}) => theme.colors.greenyBluey};
-  padding: 0 26px;
+  padding: 92px 26px 26px;
 `;
 
 export default MainContainer;
