@@ -20,6 +20,9 @@ import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
 import {visualizeEffect} from "./effectsVisualizing";
 import TransBack from "../../../global/organisms/TransBack";
+import ButtonWithIcon from "../../atoms/ButtonWithIcon";
+import theme from "../../../../utils/theme";
+import FloatingDiv from "./styled-components/FloatingDiv";
 
 class BattleView extends React.Component {
 
@@ -119,6 +122,14 @@ class BattleView extends React.Component {
         }
     }
 
+    flipAutoplay = () => {
+        const newState = !this.state.autoplayEnabled
+        this.setState({autoplayEnabled: newState})
+
+        if (newState)
+            this.state.nextStepCallback();
+    }
+
     stateContainersShotAnimation() {
         setTimeout(() => {
             this.setState({
@@ -184,11 +195,7 @@ class BattleView extends React.Component {
         if (this.state.autoplayEnabled)
             return;
 
-        this.state.nextStepCallback()
-        this.setState({
-            nextStepCallback: () => {
-            }
-        })
+        this.state ? this.state.nextStepCallback() : null;
     }
 
     firstFullCardActionCall() {
@@ -392,10 +399,14 @@ class BattleView extends React.Component {
                     });
 
                 this.hideFullCardBackground();
+                this.setState({
+                    nextStepCallback: () => {
+                    }
+                })
             }
 
             this.setState({nextStepCallback: call});
-            this.state.autoplayEnabled ? call() : null;
+            this.state.autoplayEnabled ? this.state.nextStepCallback() : null;
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
@@ -500,6 +511,11 @@ class BattleView extends React.Component {
                 });
                 this.effectIconCastEffect(newEffectsActionScale, index);
                 this.callNextEffectIconAction(userTurn, index);
+
+                this.setState({
+                    nextStepCallback: () => {
+                    }
+                })
             }
 
             this.setState({nextStepCallback: action})
@@ -619,7 +635,9 @@ class BattleView extends React.Component {
                            setTranslateY={this.props.setTranslateY}>
                         <MainContainer>
                             <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
-                                       customZIndex={'200'}/>
+                                       customZIndex={'200'}>
+
+                            </TransBack>
                             <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
                                     <EnemyStateContainer setTranslateX={this.state.enemyStateContainerTranslateX}
@@ -756,6 +774,11 @@ class BattleView extends React.Component {
                                 {this.effectsTargetIteration(false)}
                             </EffectIconsContainer>
                         </CenterDiv>
+
+                        <FloatingDiv>
+                            <ButtonWithIcon handler={this.flipAutoplay}
+                                            color={this.state.autoplayEnabled ? theme.colors.purplyPinky : theme.colors.dark}>Autoplay</ButtonWithIcon>
+                        </FloatingDiv>
                     </DesktopBackground>
                 </Media>
             </>
