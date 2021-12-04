@@ -37,7 +37,7 @@ export const getCardsFromDeck = async (deck) => {
     const card3 = getCardById(deck.card3.id);
     const card4 = getCardById(deck.card4.id);
     const card5 = getCardById(deck.card5.id);
-    return [card1, card2, card3, card4, card5];
+    return await Promise.all([card1, card2, card3, card4, card5]);
 }
 
 export const getAllCards = async () => {

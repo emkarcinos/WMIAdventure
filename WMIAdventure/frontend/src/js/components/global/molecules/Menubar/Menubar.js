@@ -20,6 +20,8 @@ import Href from "../Navbar/styled-components/Href";
 import {getCurrentUserData} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
+import Button from "./styled-components/Button";
+import {Redirect} from "react-router-dom";
 
 /* Transition timeout values */
 const timeout = {
@@ -38,6 +40,7 @@ class Menubar extends React.Component {
 
     state = {
         user: null,
+        willRedirect: false
     }
 
     componentDidMount() {
@@ -63,9 +66,16 @@ class Menubar extends React.Component {
         this.checkIfUserLoggedIn();
         alert("You've been logged out.");
 
-        this.setState({user: null});
+        this.setState({user: null, willRedirect: true});
+
     }
 
+    redirectHandler = () => {
+        if (this.state.willRedirect) {
+            this.setState({willRedirect: false})
+            return (<Redirect to={'/'}/>);
+        }
+    }
 
     getAuthDependantContent = () => {
         if (this.state.user) {
@@ -74,18 +84,21 @@ class Menubar extends React.Component {
                     <MenubarEntry as={Link} to={'/profile'} image={userIcon}>Mój profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
-                    <TinyUserProfile displayedUsername={this.state.user.username}
-                                     avatar={this.state.user.image}
-                                     term={this.state.user.semester}
-                                     level={5}
-                                     rank={1}
-                    />
+                    <Button as={Link} to={'/profile'}>
+                        <TinyUserProfile displayedUsername={this.state.user.username}
+                                         avatar={this.state.user.image}
+                                         term={this.state.user.semester}
+                                         level={5}
+                                         rank={1}
+                        />
+                    </Button>
                 </>
             );
         }
 
         return (
             <>
+                {this.redirectHandler()}
                 <MenubarEntry as={Link} to={'/login'} image={userIcon}>Zaloguj się</MenubarEntry>
                 <MenubarEntry as={Link} to={'/registration'} image={newUserIcon}>Stwórz konto</MenubarEntry>
             </>

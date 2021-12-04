@@ -4,7 +4,6 @@ import TinyDeck from '../../molecules/TinyDeck';
 import Article from './styled-components/Article';
 import Close from './styled-components/Close';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
-import UserInfo from '../../atoms/UserInfo';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import Deck from '../../molecules/Deck';
@@ -12,6 +11,7 @@ import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import {getUsersDecks} from "../../../../storage/user/userData";
+import UserInfo from "../../../global/atoms/UserInfo";
 
 class SwipeProfile extends React.Component {
 

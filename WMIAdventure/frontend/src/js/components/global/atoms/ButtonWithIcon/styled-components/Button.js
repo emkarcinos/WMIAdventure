@@ -7,9 +7,9 @@ const Button = styled.button`
   border: none;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   background-color: ${({theme}) => theme.colors.light2};
+  width: ${({setWidth}) => setWidth ? setWidth : 'auto'};
   height: 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
   z-index: 500;
