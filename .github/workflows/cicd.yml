@@ -62,7 +62,7 @@ jobs:
       run: |
         docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
         cd ./WMIAdventure/
-        docker-compose -f docker-compose-prod.yml --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
+        docker-compose -f docker-compose-prod.yml build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
         docker push ${{ env.ACR_SERVER }}/wmiadventure:v1
         docker push ${{ env.ACR_SERVER }}/frontend:v1
     - name: Pull backend docker image from ACR on server and run using ssh
