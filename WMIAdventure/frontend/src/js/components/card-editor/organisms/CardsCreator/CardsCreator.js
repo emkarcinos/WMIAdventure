@@ -15,7 +15,7 @@ import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
 import {getAllEffects} from "../../../../storage/effects/effectStorage";
-import Navbar from "../../../global/atoms/Navbar";
+import Navbar from "../../../global/molecules/Navbar";
 
 class CardsCreator extends React.Component {
     state = {
@@ -351,8 +351,8 @@ class CardsCreator extends React.Component {
                                     Edytuj inną
                                 </Button>
                                 <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                                    this.state.effectsToSend[1].length !== 0 ||
-                                    this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                                this.state.effectsToSend[1].length !== 0 ||
+                                this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                                     Podgląd
                                 </Button>
                                 <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
