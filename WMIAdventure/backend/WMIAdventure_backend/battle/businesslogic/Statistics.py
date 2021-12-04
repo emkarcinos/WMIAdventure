@@ -18,7 +18,7 @@ class Statistics:
         """
         # Calculate how the damage will impact the armour
         # It can't damage it more that it's current value.
-        armour_damage = max(self.armour, self.armour - amount)
+        armour_damage = min(self.armour, amount)
         self.armour -= armour_damage
 
         # Some of the damage was blocked by the armour, so we subtract it from the damage

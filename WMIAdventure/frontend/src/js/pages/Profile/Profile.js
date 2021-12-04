@@ -6,7 +6,6 @@ import {getCurrentUserData, getCurrentUserDecks} from "../../storage/user/userDa
 import InfoWrapper from "./styled-componets/InfoWrapper";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 import UserLabel from "../../components/global/atoms/UserLabel";
-import Navbar from "../../components/global/atoms/Navbar";
 import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
@@ -17,6 +16,7 @@ import pensil from '../../../assets/icons/pencil.svg';
 import editProfil from '../../../assets/icons/editProfil.svg';
 import MyDeck from "../../components/profile/atoms/MyDeck";
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
+import Navbar from "../../components/global/molecules/Navbar";
 
 class Profile extends React.Component {
 

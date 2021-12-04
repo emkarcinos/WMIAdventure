@@ -8,7 +8,7 @@ import Back from "./styled-components/Back";
 import Div from "./styled-components/Div";
 import NavButton from "./styled-components/NavButton";
 import Link from "./styled-components/Link";
-import Menubar from "../../molecules/Menubar";
+import Menubar from "../Menubar";
 
 /**
  * Props:
