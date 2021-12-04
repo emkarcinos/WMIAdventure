@@ -20,6 +20,7 @@ import Href from "../Navbar/styled-components/Href";
 import {getCurrentUserData} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
+import Button from "./styled-components/Button";
 
 /* Transition timeout values */
 const timeout = {
@@ -74,12 +75,14 @@ class Menubar extends React.Component {
                     <MenubarEntry as={Link} to={'/profile'} image={userIcon}>Mój profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
-                    <TinyUserProfile displayedUsername={this.state.user.username}
-                                     avatar={this.state.user.image}
-                                     term={this.state.user.semester}
-                                     level={5}
-                                     rank={1}
-                    />
+                    <Button as={Link} to={'/profile'}>
+                        <TinyUserProfile displayedUsername={this.state.user.username}
+                                         avatar={this.state.user.image}
+                                         term={this.state.user.semester}
+                                         level={5}
+                                         rank={1}
+                        />
+                    </Button>
                 </>
             );
         }
