@@ -637,6 +637,8 @@ class BattleView extends React.Component {
                 <Media query={mobile}>
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
+                        <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
+                                   customZIndex={'50'}/>
                         <MainContainer>
                             <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
@@ -678,7 +680,8 @@ class BattleView extends React.Component {
                                     <MobileAutoplay onClick={this.flipAutoplay}
                                                     borderColor={this.state.autoplayEnabled ? theme.colors.greenyBluey
                                                         : theme.colors.purplyPinky}>
-                                        <img src={this.state.autoplayEnabled ? playDark : pauseDark}/>
+                                        <img src={this.state.autoplayEnabled ? playDark : pauseDark}
+                                             alt={'play/pause'}/>
                                     </MobileAutoplay>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
