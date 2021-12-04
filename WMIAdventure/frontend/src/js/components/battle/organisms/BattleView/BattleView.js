@@ -20,8 +20,13 @@ import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
 import {visualizeEffect} from "./effectsVisualizing";
 import TransBack from "../../../global/organisms/TransBack";
-import ButtonWithIcon from "../../atoms/ButtonWithIcon";
 import theme from "../../../../utils/theme";
+import play from '../../../../../assets/icons/play.svg';
+import pause from '../../../../../assets/icons/pause.svg';
+import playDark from '../../../../../assets/icons/play-dark.svg';
+import pauseDark from '../../../../../assets/icons/pause-dark.svg';
+import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
+import MobileAutoplay from "./styled-components/MobileAutoplay";
 
 class BattleView extends React.Component {
 
@@ -656,7 +661,7 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'0 0 10px 0'} opacity={this.playersOpacityHandler(false)}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
-                                <ColumnGapContainer gap={'0'}>
+                                <ColumnGapContainer gap={'0'} setRelative>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* User MiniCards!
                                         First card is not visible because is the same as Compact card */}
@@ -670,6 +675,11 @@ class BattleView extends React.Component {
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
+                                    <MobileAutoplay onClick={this.flipAutoplay}
+                                                    borderColor={this.state.autoplayEnabled ? theme.colors.greenyBluey
+                                                        : theme.colors.purplyPinky}>
+                                        <img src={this.state.autoplayEnabled ? playDark : pauseDark}/>
+                                    </MobileAutoplay>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -772,7 +782,10 @@ class BattleView extends React.Component {
 
                         <CenterDiv setZindex={'500'} onClick={this.onNextButtonPress}>
                             <ButtonWithIcon handler={this.flipAutoplay} setMargin={'0 0 0 900px'}
-                                            color={this.state.autoplayEnabled ? theme.colors.purplyPinky : theme.colors.dark}>Autoplay</ButtonWithIcon>
+                                            icon={this.state.autoplayEnabled ? pause : play}
+                                            color={this.state.autoplayEnabled ? theme.colors.greenyBluey
+                                                : theme.colors.purplyPinky}>
+                                Autoplay</ButtonWithIcon>
                         </CenterDiv>
                     </DesktopBackground>
                 </Media>
