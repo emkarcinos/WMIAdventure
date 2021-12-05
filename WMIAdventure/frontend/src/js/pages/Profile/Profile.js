@@ -23,6 +23,7 @@ import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
 import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import DeckHeader from "../../components/profile/atoms/MyDeck/styled-components/DeckHeader";
+import {Redirect} from "react-router-dom";
 
 class Profile extends React.Component {
 
@@ -34,23 +35,31 @@ class Profile extends React.Component {
             image: undefined,
         },
 
+        userNotLoggedIn: false,
         fullCards: []
     }
 
     async getUserData() {
         const data = await getCurrentUserData();
-        this.setState({
-            userData: {
-                username: data.displayedUsername,
-                id: data.user,
-                semester: data.semester,
-                image: data.image
-            },
-        });
+        if (data) {
+            this.setState({
+                userData: {
+                    username: data.displayedUsername,
+                    id: data.user,
+                    semester: data.semester,
+                    image: data.image
+                },
+            });
+        } else {
+            this.setState({userNotLoggedIn: true});
+        }
     }
 
     async getDeck() {
         const data = await getCurrentUserDecks();
+        if (!data)
+            return;
+
         const userSpecificCards = await cardsFromDeckData(data);
         this.setState({fullCards: userSpecificCards});
     }
@@ -61,6 +70,8 @@ class Profile extends React.Component {
     }
 
     render() {
+        if (this.state.userNotLoggedIn)
+            return (<Redirect to={'/'}/>);
         return (
             <>
                 <Helmet>

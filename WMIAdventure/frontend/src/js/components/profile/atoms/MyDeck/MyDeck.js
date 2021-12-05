@@ -6,7 +6,7 @@ import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
 import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
-
+import Header from "./styled-components/Header";
 
 class MyDeck extends React.Component {
 
@@ -52,17 +52,19 @@ class MyDeck extends React.Component {
             <>
                 <Media query={mobile}>
                     <ColumnGapContainer gap={'16px'} setMargin={'4px 0'}>
-                        <DesktopDeckContainer>
-                            <FlexGapContainer gap={'16px'}>
-                                {this.renderCardNumber(1)}
-                                {this.renderCardNumber(2)}
-                                {this.renderCardNumber(3)}
-                            </FlexGapContainer>
-                            <FlexGapContainer gap={'16px'}>
-                                {this.renderCardNumber(4)}
-                                {this.renderCardNumber(5)}
-                            </FlexGapContainer>
-                        </DesktopDeckContainer>
+                        <Header>
+                            Twoja Talia
+                        </Header>
+
+                        <FlexGapContainer gap={'16px'}>
+                            {this.renderCardNumber(1)}
+                            {this.renderCardNumber(2)}
+                            {this.renderCardNumber(3)}
+                        </FlexGapContainer>
+                        <FlexGapContainer gap={'16px'}>
+                            {this.renderCardNumber(4)}
+                            {this.renderCardNumber(5)}
+                        </FlexGapContainer>
                     </ColumnGapContainer>
                 </Media>
 
