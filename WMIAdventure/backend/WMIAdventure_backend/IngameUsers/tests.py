@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 from django.test import TestCase
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, APIClient
 
 from battle.businesslogic.tests.Creator import Creator
 from cards.factories import create_card_with_effect
@@ -281,3 +282,78 @@ class DeckSerializerTestCase(TestCase):
         # Try to update deck with serializer
         serializer = DeckSerializer(instance=self.deck, data=data)
         self.assertRaises(ValidationError, serializer.is_valid, raise_exception=True)
+
+
+class UserDeckViewTestCase(TestCase):
+
+    def setUp(self) -> None:
+        self.user_profile, self.deck = create_user_profile_with_deck()
+
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user_profile.user)
+
+        self.url = f'/api/user-profiles/{self.user_profile.user.id}/decks/{self.deck.userdeck.deck_number}/'
+
+    def test_retrieve(self):
+        response = self.client.get(self.url)
+
+        for i in range(1, 6):
+            card_data = response.data[f'card{i}']
+            card_from_deck = getattr(self.deck, f'card{i}').card
+            self.assertEquals(card_data['id'], card_from_deck.info.id)
+            self.assertEquals(card_data['level'], card_from_deck.level.level)
+
+    def test_update(self):
+        """
+        **Scenario:**
+
+        - We try to update deck with new card, deck owner is owner of this card.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 200, deck is updated properly.
+        """
+
+        # Create data to update deck with new card
+        new_card1 = create_card_with_effect()
+        self.user_profile.user_cards.create(card=new_card1)
+        data = {
+            "card1": {
+                "id": new_card1.info.id, "level": new_card1.level.level
+            },
+            "card2": {
+                "id": self.deck.card2.card.info.id, "level": self.deck.card2.card.level.level
+            },
+            "card3": {
+                "id": self.deck.card3.card.info.id, "level": self.deck.card3.card.level.level
+            },
+            "card4": {
+                "id": self.deck.card4.card.info.id, "level": self.deck.card4.card.level.level
+            },
+            "card5": {
+                "id": self.deck.card5.card.info.id, "level": self.deck.card5.card.level.level
+            }
+        }
+
+        # Make request
+        response = self.client.put(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        # Assert deck is updated
+        self.deck.refresh_from_db()
+        self.assertEqual(new_card1.info, self.deck.card1.card.info)
+        self.assertEqual(new_card1.level, self.deck.card1.card.level)
+
+    def test_update_not_deck_owner(self):
+        # TODO
+        pass
+
+    def test_update_card_does_not_exist(self):
+        # TODO
+        pass
+
+    def test_update_not_card_owner(self):
+        # TODO
+        pass
