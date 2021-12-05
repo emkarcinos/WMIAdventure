@@ -19,6 +19,10 @@ import {cardsFromDeckData} from "../../api/data-models/battle/Card";
 import Navbar from "../../components/global/molecules/Navbar";
 import Media from "react-media";
 import {desktop, mobile} from "../../utils/globals";
+import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
+import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
+import RightDeckContainer from "./styled-componets/RightDeckContainer";
+import DeckHeader from "../../components/profile/atoms/MyDeck/styled-components/DeckHeader";
 
 class Profile extends React.Component {
 
@@ -96,25 +100,41 @@ class Profile extends React.Component {
                         </InfoWrapper>
                     </MainMobileContainer>
                 </Media>
-                <Media query={`${desktop} and (max-width: 1800px)`}>
-                    <div>
-                        <p>desktop 1</p>
-                        <p>desktop 1</p>
-                        <p>desktop 1</p>
-                        <p>desktop 1</p>
-                        <p>desktop 1</p>
-                        <p>desktop 1</p>
-                    </div>
-                </Media>
-                <Media query={'(min-width: 1800px)'}>
-                    <div>
-                        <p>desktop 2</p>
-                        <p>desktop 2</p>
-                        <p>desktop 2</p>
-                        <p>desktop 2</p>
-                        <p>desktop 2</p>
-                        <p>desktop 2</p>
-                    </div>
+                <Media query={desktop}>
+                    <MainDesktopContainer>
+                        <LeftProfileContainer>
+                            <ColumnGapContainer gap={'40px'}>
+                                <User username={this.state.userData.username}
+                                      image={this.state.userData.image}/>
+                                <ColumnGapContainer gap={'30px'}>
+                                    <FlexGapContainer gap={'40px'}>
+                                        <UserLabel term number={this.state.userData.semester}/>
+                                        <UserLabel level number={'50'}/>
+                                        <UserLabel rank number={'2'}/>
+                                    </FlexGapContainer>
+                                    <FlexGapContainer gap={'40px'}>
+                                        <UserInfo label={'Wygrane'} value={'24'}/>
+                                        <UserInfo label={'Przegrane'} value={'24'}/>
+                                        <UserInfo label={'Ratio'} value={'50%'}/>
+                                    </FlexGapContainer>
+                                    <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                </ColumnGapContainer>
+                            </ColumnGapContainer>
+                            <ButtonWithIcon setWidth={'158px'} icon={editProfil}
+                                            color={theme.colors.dark}>
+                                Edytuj profil
+                            </ButtonWithIcon>
+                        </LeftProfileContainer>
+                        <RightDeckContainer>
+                            <DeckHeader>
+                                Twoja talia
+                            </DeckHeader>
+                            {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
+                            <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
+                                Edytuj talię
+                            </ButtonWithIcon>
+                        </RightDeckContainer>
+                    </MainDesktopContainer>
                 </Media>
             </>
         );

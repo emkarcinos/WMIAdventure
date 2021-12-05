@@ -20,6 +20,7 @@ class CompactCardView extends React.Component {
         ownFontSize -> set font size of card name
         setTranslateX -> handle horizontal movement animation (X)
         setTranslateY -> handle vertical movement animation (Y)
+        cardName -> card name info
         cardLevel -> information about card level
         cardImage -> card icon
         cardsOrder -> to show particular card in BattleView and hide the rest

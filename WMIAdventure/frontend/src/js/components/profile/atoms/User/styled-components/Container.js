@@ -5,6 +5,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    flex-direction: column;
+    margin: 0;
+  }
 `;
 
 export default Container;
