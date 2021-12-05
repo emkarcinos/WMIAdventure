@@ -188,8 +188,7 @@ class DeckSerializerTestCase(TestCase):
         - Serialized data is correct.
         """
 
-        serializer = DeckSerializer(instance=self.deck.userdeck)
-        self.assertEquals(serializer.data['deck_number'], self.deck.userdeck.deck_number)
+        serializer = DeckSerializer(instance=self.deck)
         for i in range(1, 6):
             card_data = serializer.data[f'card{i}']
             card_from_deck = getattr(self.deck, f'card{i}').card
