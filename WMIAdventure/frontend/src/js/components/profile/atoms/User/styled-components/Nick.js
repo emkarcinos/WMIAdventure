@@ -8,6 +8,7 @@ const Nick = styled.p`
   margin: 0 0 0 10px;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
+    font-size: 24px;
     color: ${({theme}) => theme.colors.dark};
     margin: 12px 0 0 0;
   }
