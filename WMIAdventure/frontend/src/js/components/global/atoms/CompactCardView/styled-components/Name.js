@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 function nameLengthHandler(nameLength, ownFontSize) {
-    if (ownFontSize)
+    if (ownFontSize && nameLength < 20)
         return ownFontSize;
     if (nameLength < 20) {
         return '20px';
     }
-    return '16px';
+    return '12px';
 }
 
 const Name = styled.p`
