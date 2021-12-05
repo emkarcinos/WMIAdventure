@@ -1,3 +1,5 @@
+import {getCardById} from "../../../storage/cards/cardStorage";
+
 export class Card {
     id = undefined;
     level = undefined;
@@ -36,5 +38,20 @@ export class Card {
 export const cardFromData = (data) => {
     return new Card(data.id, data.level);
 };
+
+export const cardsFromDeckData = async (data) => {
+    const deck = data[0];
+    if (!deck)
+        return null;
+    
+    const cards = [];
+    for (let i = 1; i <= 5; i++) {
+        const card = deck[`card${i}`];
+        const newCard = new Card(card.id, card.level)
+        await newCard.fetchFieldsFromBackend(getCardById);
+        cards.push(newCard);
+    }
+    return cards;
+}
 
 export default {Card, cardFromData}

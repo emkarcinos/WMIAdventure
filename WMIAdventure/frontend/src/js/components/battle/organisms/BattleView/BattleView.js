@@ -19,6 +19,14 @@ import {getCurrentUserId} from "../../../../storage/user/userData";
 import DesktopBackground from "./styled-components/DesktopBackground";
 import {battleFromData} from "../../../../api/data-models/battle/Battle";
 import {visualizeEffect} from "./effectsVisualizing";
+import TransBack from "../../../global/organisms/TransBack";
+import theme from "../../../../utils/theme";
+import play from '../../../../../assets/icons/play.svg';
+import pause from '../../../../../assets/icons/pause.svg';
+import playDark from '../../../../../assets/icons/play-dark.svg';
+import pauseDark from '../../../../../assets/icons/pause-dark.svg';
+import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
+import MobileAutoplay from "./styled-components/MobileAutoplay";
 
 class BattleView extends React.Component {
 
@@ -93,6 +101,9 @@ class BattleView extends React.Component {
             user: '0',
             enemy: '0'
         },
+        autoplayEnabled: true,
+        nextStepCallback: () => {
+        },
     }
 
     componentDidMount() {
@@ -113,6 +124,14 @@ class BattleView extends React.Component {
             battle.nextTurn();
             (this.props.desktop) ? this.desktopItemsAnimationInit() : this.itemsAnimationInit();
         }
+    }
+
+    flipAutoplay = () => {
+        const newState = !this.state.autoplayEnabled
+        this.setState({autoplayEnabled: newState})
+
+        if (newState)
+            this.state ? this.state.nextStepCallback() : null;
     }
 
     stateContainersShotAnimation() {
@@ -174,6 +193,13 @@ class BattleView extends React.Component {
             });
         }, battleInitLoadingDuration
             + nextStepAnimationDuration * 2 + 100);
+    }
+
+    onNextButtonPress = () => {
+        if (this.state.autoplayEnabled)
+            return;
+
+        this.state ? this.state.nextStepCallback() : null;
     }
 
     firstFullCardActionCall() {
@@ -366,13 +392,25 @@ class BattleView extends React.Component {
 
     slideBackFullCardCallingCompactCardAction() {
         setTimeout(() => {
-            this.state.battle.isUsersTurn ? this.compactCardAction(true) : this.compactCardAction(false);
-            this.setNewStateAttributes(
-                this.state.fullCardAction, 'fullCardAction',
-                this.state.battle.isUsersTurn ? {opacity: '0', translateY: '100vh'} : {
-                    opacity: '0',
-                    translateY: '-100vh'
-                });
+            const call = () => {
+
+                this.state.battle.isUsersTurn ? this.compactCardAction(true) : this.compactCardAction(false);
+                this.setNewStateAttributes(
+                    this.state.fullCardAction, 'fullCardAction',
+                    this.state.battle.isUsersTurn ? {opacity: '0', translateY: '100vh'} : {
+                        opacity: '0',
+                        translateY: '-100vh'
+                    });
+
+                this.hideFullCardBackground();
+                this.setState({
+                    nextStepCallback: () => {
+                    }
+                })
+            }
+
+            this.setState({nextStepCallback: call});
+            this.state.autoplayEnabled ? this.state.nextStepCallback() : null;
         }, battleInitLoadingDuration +
             nextStepAnimationDuration * 3);
     }
@@ -389,7 +427,6 @@ class BattleView extends React.Component {
     fullCardAction = () => {
         this.showFullCardProcess();
         this.slideBackFullCardCallingCompactCardAction();
-        this.hideFullCardBackground();
     }
 
     effectsMountCall(userTurn) {
@@ -471,11 +508,23 @@ class BattleView extends React.Component {
         if (index < effects.length) {
             let newEffectsActionScale = this.state.effectsActionScale.slice();
             newEffectsActionScale[index] = '1.25';
-            this.setState({
-                effectsActionScale: newEffectsActionScale
-            });
-            this.effectIconCastEffect(newEffectsActionScale, index);
-            this.callNextEffectIconAction(userTurn, index);
+            const action = () => {
+
+                this.setState({
+                    effectsActionScale: newEffectsActionScale
+                });
+                this.effectIconCastEffect(newEffectsActionScale, index);
+                this.callNextEffectIconAction(userTurn, index);
+
+                this.setState({
+                    nextStepCallback: () => {
+                    }
+                })
+            }
+
+            this.setState({nextStepCallback: action})
+
+            this.state.autoplayEnabled ? action() : null;
         } else {
             this.effectsHide();
         }
@@ -588,6 +637,8 @@ class BattleView extends React.Component {
                 <Media query={mobile}>
                     <PopUp visible={this.props.visible} disableClose
                            setTranslateY={this.props.setTranslateY}>
+                        <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
+                                   customZIndex={'50'}/>
                         <MainContainer>
                             <FlexGapContainer setMargin={'10px 0 0 0'} opacity={this.playersOpacityHandler(true)}>
                                 <ColumnGapContainer gap={'0'}>
@@ -612,7 +663,7 @@ class BattleView extends React.Component {
                             <FlexGapContainer setMargin={'0 0 10px 0'} opacity={this.playersOpacityHandler(false)}>
                                 {/* User Compact Card! Particular Compact Card is visible if order === 1 */}
                                 {this.getCompactCards(false)}
-                                <ColumnGapContainer gap={'0'}>
+                                <ColumnGapContainer gap={'0'} setRelative>
                                     <FlexGapContainer setWidth={'100%'} gap={'4px'}>
                                         {/* User MiniCards!
                                         First card is not visible because is the same as Compact card */}
@@ -626,6 +677,12 @@ class BattleView extends React.Component {
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
+                                    <MobileAutoplay onClick={this.flipAutoplay}
+                                                    borderColor={this.state.autoplayEnabled ? theme.colors.greenyBluey
+                                                        : theme.colors.purplyPinky}>
+                                        <img src={this.state.autoplayEnabled ? playDark : pauseDark}
+                                             alt={'play/pause'}/>
+                                    </MobileAutoplay>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
@@ -656,6 +713,8 @@ class BattleView extends React.Component {
 
                 <Media query={desktop}>
                     <DesktopBackground visible={this.props.visible} setScale={this.props.setScale}>
+                        <TransBack visible={true} closeHandler={this.onNextButtonPress} setOpacity={'0'}
+                                   customZIndex={'200'}/>
                         <MainContainer setBeforeTranslateX={this.state.backgroundElemBeforePosX}
                                        setAfterTranslateY={this.state.backgroundElemAfterPosX}>
                             <PopUp visible={this.props.visible} disableClose
@@ -722,6 +781,14 @@ class BattleView extends React.Component {
                                 setTranslateY={this.state.effectsTarget.enemy.translateY}>
                                 {this.effectsTargetIteration(false)}
                             </EffectIconsContainer>
+                        </CenterDiv>
+
+                        <CenterDiv setZindex={'500'} onClick={this.onNextButtonPress}>
+                            <ButtonWithIcon handler={this.flipAutoplay} setMargin={'0 0 0 900px'}
+                                            icon={this.state.autoplayEnabled ? pause : play}
+                                            color={this.state.autoplayEnabled ? theme.colors.greenyBluey
+                                                : theme.colors.purplyPinky}>
+                                Autoplay</ButtonWithIcon>
                         </CenterDiv>
                     </DesktopBackground>
                 </Media>

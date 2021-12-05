@@ -1,9 +1,7 @@
 import React from 'react';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
-import UserInfo from '../../atoms/UserInfo';
 import KuceVs from '../../atoms/KuceVs/KuceVs';
 import TinyCards from '../../atoms/TinyCards/TinyCards';
-import ButtonWithIcon from '../../atoms/ButtonWithIcon';
 import theme from '../../../../utils/theme';
 import xClose from '../../../../../assets/icons/x-close.svg';
 import battleIcon from '../../../../../assets/images/battleIcon.png';
@@ -23,6 +21,8 @@ import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
+import UserInfo from "../../../global/atoms/UserInfo";
+import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 
 class OpponentSelected extends React.Component {
 
@@ -34,6 +34,7 @@ class OpponentSelected extends React.Component {
         postBattleOpacity: '0',
         userDeck: null,
 
+        isBattleStarting: false,
         // states uses for mount battleView
         battleView: {
             visible: false,
@@ -135,6 +136,7 @@ class OpponentSelected extends React.Component {
                 if (response.ok) {
                     response.json()
                         .then(data => {
+                            this.setState({isBattleStarting: true});
                             this.postBattle(data);
                             this.postBattleOpenHandler();
                         })
@@ -195,6 +197,7 @@ class OpponentSelected extends React.Component {
                 if (response.ok) {
                     response.json()
                         .then(data => {
+                            this.setState({isBattleStarting: true});
                             this.setState({battleData: data})
                             this.cacheEnemyCards(data).then(() =>
                                 this.battleViewRunHandler());
@@ -249,6 +252,49 @@ class OpponentSelected extends React.Component {
             this.props.closeUserPreviewHandler();
     }
 
+    renderBattleView(isDesktop) {
+        if (isDesktop) {
+            return (
+                <>
+                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                closeHandler={this.quickBattleCloseHandler}
+                                attacker={this.state.caller}
+                                attackerDeck={this.state.userDeck}
+                                opponent={this.props.opponent}
+                                opponentDeck={this.state.opponentDeck}
+                                setOpacity={this.state.postBattleOpacity}
+                                setTranslateY={this.state.postBattlePos}/>
+                    <BattleView visible={this.state.battleView.visible}
+                                battleData={this.state.battleData}
+                                runPostBattle={this.postBattle}
+                                showPostBattle={this.postBattleOpenHandler}
+                                closeHandler={this.battleViewCloseHandler}
+                                setScale={this.state.battleView.scale}
+                                desktop={true}/>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                closeHandler={this.quickBattleCloseHandler}
+                                attacker={this.state.caller}
+                                attackerDeck={this.state.userDeck}
+                                opponent={this.props.opponent}
+                                opponentDeck={this.state.opponentDeck}
+                                setTranslateY={this.state.postBattlePos}/>
+                    <BattleView visible={this.state.battleView.visible}
+                                battleData={this.state.battleData}
+                                runPostBattle={this.postBattle}
+                                showPostBattle={this.postBattleOpenHandler}
+                                closeHandler={this.battleViewCloseHandler}
+                                setTranslateY={this.state.battleView.translateY}
+                                desktop={false}/>
+                </>
+            )
+        }
+    }
+
     render() {
         return (
             <>
@@ -298,21 +344,7 @@ class OpponentSelected extends React.Component {
                                 </FlexEndContainer>
                             </GridContainer>
                         </PopUp>
-                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                    closeHandler={this.quickBattleCloseHandler}
-                                    attacker={this.state.caller}
-                                    attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent}
-                                    opponentDeck={this.state.opponentDeck}
-                                    setTranslateY={this.state.postBattlePos}/>
-                        <BattleView visible={this.state.battleView.visible}
-                                    battleData={this.state.battleData}
-                                    runPostBattle={this.postBattle}
-                                    showPostBattle={this.postBattleOpenHandler}
-                                    closeHandler={this.battleViewCloseHandler}
-                                    setTranslateY={this.state.battleView.translateY}
-                                    desktop={false}/>
-
+                        {this.state.isBattleStarting ? this.renderBattleView(false) : null}
                         {this.errors()}
                     </>
                 </Media>
@@ -369,21 +401,7 @@ class OpponentSelected extends React.Component {
                                 </FlexGapContainer>
                             </PopUp>
                         </TransBack>
-                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                    closeHandler={this.quickBattleCloseHandler}
-                                    attacker={this.state.caller}
-                                    attackerDeck={this.state.userDeck}
-                                    opponent={this.props.opponent}
-                                    opponentDeck={this.state.opponentDeck}
-                                    setOpacity={this.state.postBattleOpacity}
-                                    setTranslateY={this.state.postBattlePos}/>
-                        <BattleView visible={this.state.battleView.visible}
-                                    battleData={this.state.battleData}
-                                    runPostBattle={this.postBattle}
-                                    showPostBattle={this.postBattleOpenHandler}
-                                    closeHandler={this.battleViewCloseHandler}
-                                    setScale={this.state.battleView.scale}
-                                    desktop={true}/>
+                        {this.state.isBattleStarting ? this.renderBattleView(true) : null}
                         {this.errors()}
                     </>
                 </Media>

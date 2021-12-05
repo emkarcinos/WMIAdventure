@@ -9,6 +9,7 @@ const Div = styled.div`
   margin: ${({setMargin}) => setMargin ? setMargin : '0'};
   width: ${({setWidth}) => setWidth ? setWidth : 'auto'};
   height: ${({setHeight}) => setHeight ? setHeight : 'auto'};
+  position: ${({setRelative}) => setRelative ? 'relative' : 'static'};
 `;
 
 export default Div;

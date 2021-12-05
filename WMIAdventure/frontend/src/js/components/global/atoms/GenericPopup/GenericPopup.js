@@ -7,9 +7,9 @@ import CenteringContainer from "../../../card-editor/molecules/SendCardPopup/sty
 import PopupContainer from "../../../card-editor/molecules/SendCardPopup/styled-components/PopupContainer";
 import ContentContainer from "../../../card-editor/molecules/SendCardPopup/styled-components/ContentContainer";
 import TransparentBack from "../../../card-editor/molecules/SendCardPopup/styled-components/TransparentBack";
-import ButtonWithIcon from "../../../battle/atoms/ButtonWithIcon";
 import theme from "../../../../utils/theme";
 import xClose from "../../../../../assets/icons/x-close.svg";
+import ButtonWithIcon from "../ButtonWithIcon";
 
 export const timeout = {
     appear: 50,

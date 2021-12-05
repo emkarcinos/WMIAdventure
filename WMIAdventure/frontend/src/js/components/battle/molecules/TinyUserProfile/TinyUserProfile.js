@@ -4,14 +4,11 @@ import ContentContainer from './styled-components/ContentContainer';
 import H2 from './styled-components/H2';
 import ImageContainer from './styled-components/ImageContainer';
 import Avatar from './styled-components/Avatar';
-import UserLabel from '../../atoms/UserLabel';
-import termIcon from '../../../../../assets/images/termIcon.png';
-import levelIcon from '../../../../../assets/icons/levelIcon.svg';
-import rankIcon from '../../../../../assets/images/rankIcon.png';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import {desktop} from '../../../../utils/globals';
 import UserStatistic from '../../atoms/UserStatistic';
+import UserLabel from "../../../global/atoms/UserLabel";
 
 class TinyUserProfile extends React.Component {
     render() {
@@ -23,12 +20,12 @@ class TinyUserProfile extends React.Component {
                     </H2>
                     <FlexGapContainer gap={this.props.vertical ? '24px' : '6px'}>
                         <UserLabel term={this.props.term}
-                                   icon={termIcon} number={this.props.term}
+                                   number={this.props.term}
                                    setMargin={'0'}/>
                         <UserLabel level={this.props.level} number={this.props.level}
-                                   icon={levelIcon} setMargin={'0'}/>
+                                   setMargin={'0'}/>
                         <UserLabel rank={this.props.rank} number={this.props.rank}
-                                   icon={rankIcon} setMargin={'0'}/>
+                                   setMargin={'0'}/>
                     </FlexGapContainer>
                     <Media query={desktop}>
                         {this.props.vertical ? '' :

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import StyledWrapper from './StyledWrapper';
-import Navbar from "../../components/global/atoms/Navbar";
+import Navbar from "../../components/global/molecules/Navbar";
 
 function AdventureMode() {
     return (

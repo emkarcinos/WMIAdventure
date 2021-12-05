@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
+  margin-bottom: 20px;
 `;
 
-export default StyledWrapper;
+export default Container;

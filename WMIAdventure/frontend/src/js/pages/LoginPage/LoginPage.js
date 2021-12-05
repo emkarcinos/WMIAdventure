@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import WholePageDiv from "./styled-components/WholePageDiv";
 import StyledWrapper from "../MainMenu/StyledWrapper";
 import Login from "../../components/auth/organisms/Login";
-import Navbar from "../../components/global/atoms/Navbar";
+import Navbar from "../../components/global/molecules/Navbar";
 
 
 class LoginPage extends React.Component {

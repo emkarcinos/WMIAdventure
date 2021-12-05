@@ -1,7 +1,5 @@
 import random
 
-from django.db.models.signals import post_save
-
 from IngameUsers.models import UserProfile, Semester
 from WMIAdventure_backend import settings
 from users.models import User
