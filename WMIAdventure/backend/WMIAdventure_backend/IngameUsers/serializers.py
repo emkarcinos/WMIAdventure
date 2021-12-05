@@ -1,10 +1,11 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.fields import ImageField
 
 from cards.models import Card
 from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
-from .models import UserProfile, Deck
+from .models import UserProfile, Deck, UserCard
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -63,11 +64,89 @@ class DeckSerializer(serializers.ModelSerializer):
     card3 = UserCardSerializer(source='deck.card3')
     card4 = UserCardSerializer(source='deck.card4')
     card5 = UserCardSerializer(source='deck.card5')
-    deck_number = serializers.IntegerField()
+    deck_number = serializers.IntegerField(required=False)
+
+    def _validate_cards_exist(self, deck_data) -> list[Card]:
+        """
+        Validates that all given cards exist.
+
+        :return: Cards retrieved from database.
+        :raises ValidationError: If one of the cards does not exist.
+        """
+
+        cards = []
+        # TODO: maybe iterate all cards without using i?
+        for i in range(1, 6):
+            card_data = deck_data[f'card{i}']['card']
+            try:
+                card = Card.objects.get(info=card_data['info']['id'], level=card_data['level']['level'])
+                cards.append(card)
+            except Card.DoesNotExist:
+                raise ValidationError("Provided card does not exist.")
+
+        return cards
+
+    def _validate_user_owns_cards(self, instance: Deck, cards: list[Card]):
+        """
+        Validates if owner of deck instance owns all provided cards.
+
+        :param instance: Deck instance.
+        :param cards: Cards to be checked
+        :raises ValidationError: If user doesn't own one of the cards.
+        """
+
+        user_profile = instance.userdeck.user_profile
+        if user_profile.user_cards.filter(card__in=cards).count() != 5:
+            raise ValidationError("User is not owner of all the 5 cards")
+
+    def validate(self, attrs):
+        """
+        Validate if provided cards exist and if updating some deck instance check that user owns all the cards.
+        """
+
+        cards = self._validate_cards_exist(attrs['deck'])
+
+        # If updating some deck instance validate if user owns all given cards
+        if self.instance:
+            self._validate_user_owns_cards(self.instance, cards)
+
+        return attrs
 
     class Meta:
         model = Deck
         fields = ['deck_number', 'card1', 'card2', 'card3', 'card4', 'card5']
+
+    def update(self, instance, validated_data):
+        """
+        Updates deck instance with given validated data.
+
+        :param instance:
+        :param validated_data:
+        :return: Updated deck instance.
+        """
+
+        # Retrieve all cards from database with validated data
+        cards = [
+            Card.objects.get(
+                info=validated_data['deck'][f'card{i}']['card']['info']['id'],
+                level=validated_data['deck'][f'card{i}']['card']['level']['level']
+            )
+            for i in range(1, 6)
+        ]
+
+        # Get UserCards and update deck instance
+        user_cards = [
+            UserCard.objects.get(card=card, user_profile=instance.userdeck.user_profile) for card in cards
+        ]
+
+        instance.card1 = user_cards[0]
+        instance.card2 = user_cards[1]
+        instance.card3 = user_cards[2]
+        instance.card4 = user_cards[3]
+        instance.card5 = user_cards[4]
+        instance.save()
+
+        return instance
 
 
 class UserDecksSerializer(serializers.ModelSerializer):
