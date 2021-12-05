@@ -10,7 +10,7 @@ const Div = styled.div`
   height: calc(100vh - calc(100vh - 100%));
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   transition: transform 0.2s ease-in-out;
-  z-index: 20;
+  z-index: 1000;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 350px;
