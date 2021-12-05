@@ -7,6 +7,7 @@ import {desktop, mobile} from "../../../../utils/globals";
 import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Header from "./styled-components/Header";
+import FullCardView from "../../../global/atoms/FullCardView";
 
 class MyDeck extends React.Component {
 
@@ -47,6 +48,17 @@ class MyDeck extends React.Component {
         );
     }
 
+    renderCardNumberLargeDesktop = (number) => {
+        const card = this.getCardByNumber(number);
+        return (
+            <FullCardView cardName={card.name} cardSubject={card.subject}
+                          cardImage={card.image} cardTooltip={card.tooltip}
+                          description={card.description} setWidth={'258px'} setHeight={'456px'}
+                          common={card.level === 1} gold={card.level === 2} epic={card.level === 3}
+                          setMargin={'0'} shadow/>
+        );
+    }
+
     render() {
         return (
             <>
@@ -68,7 +80,7 @@ class MyDeck extends React.Component {
                     </ColumnGapContainer>
                 </Media>
 
-                <Media query={desktop}>
+                <Media query={`${desktop} and (max-width: 1800px)`}>
                     <DesktopDeckContainer>
                         <ColumnGapContainer gap={'16px'}>
                             <FlexGapContainer gap={'16px'}>
@@ -79,6 +91,20 @@ class MyDeck extends React.Component {
                             <FlexGapContainer gap={'16px'}>
                                 {this.renderCardNumberDesktop(4)}
                                 {this.renderCardNumberDesktop(5)}
+                            </FlexGapContainer>
+                        </ColumnGapContainer>
+                    </DesktopDeckContainer>
+                </Media>
+
+                <Media query={'(min-width: 1800px)'}>
+                    <DesktopDeckContainer>
+                        <ColumnGapContainer gap={'16px'}>
+                            <FlexGapContainer gap={'16px'}>
+                                {this.renderCardNumberLargeDesktop(1)}
+                                {this.renderCardNumberLargeDesktop(2)}
+                                {this.renderCardNumberLargeDesktop(3)}
+                                {this.renderCardNumberLargeDesktop(4)}
+                                {this.renderCardNumberLargeDesktop(5)}
                             </FlexGapContainer>
                         </ColumnGapContainer>
                     </DesktopDeckContainer>

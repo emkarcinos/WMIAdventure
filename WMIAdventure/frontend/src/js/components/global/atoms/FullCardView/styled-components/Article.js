@@ -14,8 +14,8 @@ const Article = styled.article`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 262px;
-  height: 464px;
+  width: ${({setWidth}) => setWidth ? setWidth : '262px'};
+  height: ${({setHeight}) => setHeight ? setHeight : '464px'};
   background-color: ${({theme}) => theme.colors.light2};
   margin-bottom: 14px;
   border-radius: 24px;
@@ -28,8 +28,8 @@ const Article = styled.article`
   transition: transform 0.5s ease-in-out;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    width: 300px;
-    height: 500px;
+    width: ${({setWidth}) => setWidth ? setWidth : '300px'};
+    height: ${({setHeight}) => setHeight ? setHeight : '500px'};
   }
 
   &:before {
