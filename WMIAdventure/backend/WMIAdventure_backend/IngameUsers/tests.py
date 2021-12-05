@@ -9,7 +9,7 @@ from battle.businesslogic.tests.Creator import Creator
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
-from .factories import create_user_profile_with_deck
+from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck
 from .serializers import UserDecksSerializer, DeckSerializer
 
@@ -347,13 +347,58 @@ class UserDeckViewTestCase(TestCase):
         self.assertEqual(new_card1.level, self.deck.card1.card.level)
 
     def test_update_not_deck_owner(self):
-        # TODO
-        pass
+        not_deck_owner = UserProfileFactory()
 
-    def test_update_card_does_not_exist(self):
-        # TODO
-        pass
+        # Create data to update deck with new card
+        new_card1 = create_card_with_effect()
+        not_deck_owner.user_cards.create(card=new_card1)
+        data = {
+            "card1": {
+                "id": new_card1.info.id, "level": new_card1.level.level
+            },
+            "card2": {
+                "id": self.deck.card2.card.info.id, "level": self.deck.card2.card.level.level
+            },
+            "card3": {
+                "id": self.deck.card3.card.info.id, "level": self.deck.card3.card.level.level
+            },
+            "card4": {
+                "id": self.deck.card4.card.info.id, "level": self.deck.card4.card.level.level
+            },
+            "card5": {
+                "id": self.deck.card5.card.info.id, "level": self.deck.card5.card.level.level
+            }
+        }
+
+        self.client.force_authenticate(user=not_deck_owner.user)
+        response = self.client.put(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_update_deck_with_card_which_does_not_exist(self):
+        # Create data to update deck with card that does not exist
+        data = {
+            "card1": {
+                "id": 999, "level": 999
+            },
+            "card2": {
+                "id": self.deck.card2.card.info.id, "level": self.deck.card2.card.level.level
+            },
+            "card3": {
+                "id": self.deck.card3.card.info.id, "level": self.deck.card3.card.level.level
+            },
+            "card4": {
+                "id": self.deck.card4.card.info.id, "level": self.deck.card4.card.level.level
+            },
+            "card5": {
+                "id": self.deck.card5.card.info.id, "level": self.deck.card5.card.level.level
+            }
+        }
+
+        # Make request
+        response = self.client.put(self.url, data=data, format='json')
+        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_not_card_owner(self):
-        # TODO
-        pass
+        # TODO: implement this test when there is some way to gain cards implemented.
+        #  Right now user should own all cards.
+        self.skipTest('Right now user should own all cards.')

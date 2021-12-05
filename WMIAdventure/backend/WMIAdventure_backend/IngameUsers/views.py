@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from cards.models import Card
+from users.models import User
 from . import models
 from . import serializers
 from .models import UserProfile, UserCard
@@ -99,7 +100,7 @@ class UserDeckView(RetrieveUpdateAPIView):
         return deck
 
     def get_queryset(self):
-        user = self.request.user
+        user = get_object_or_404(User.objects.all(), pk=self.kwargs['pk'])
         user_profile = user.userprofile
         return user_profile.user_decks.all()
 
