@@ -1,14 +1,16 @@
+from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 from django.test import TestCase
+from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory
 
 from battle.businesslogic.tests.Creator import Creator
+from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
-from django.contrib.auth import get_user_model
-
+from .factories import create_user_profile_with_deck
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck
-from .serializers import UserDecksSerializer
+from .serializers import UserDecksSerializer, DeckSerializer
 
 
 class UserProfileTestCase(TestCase):
@@ -55,8 +57,8 @@ class UserProfileTestCase(TestCase):
 
         # Make post request to create new UserProfile
         result = factory.post('/api/userprofiles', data={'user': new_user.id,
-                                                          'displayedUsername': new_username,
-                                                          'semester': new_semester}, format='json')
+                                                         'displayedUsername': new_username,
+                                                         'semester': new_semester}, format='json')
         view(result)
 
         # Make GET request to check if newly created UserProfile exists.
@@ -144,7 +146,7 @@ class DeckTestCase(TestCase):
         self.assertRaises(IntegrityError, failing_deck.save)
 
 
-class UserDeckSerializerTestCase(TestCase):
+class UserDecksSerializerTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.creator = Creator()
@@ -166,3 +168,117 @@ class UserDeckSerializerTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.creator.perform_deletion()
+
+
+class DeckSerializerTestCase(TestCase):
+
+    def setUp(self) -> None:
+        self.user_profile, self.deck = create_user_profile_with_deck()
+
+    def test_serialization(self):
+        """
+        **Scenario:**
+
+        - Deck instance exists, we serialize it.
+
+        ---
+
+        **Expected result:**
+
+        - Serialized data is correct.
+        """
+
+        serializer = DeckSerializer(instance=self.deck.userdeck)
+        self.assertEquals(serializer.data['deck_number'], self.deck.userdeck.deck_number)
+        for i in range(1, 6):
+            card_data = serializer.data[f'card{i}']
+            card_from_deck = getattr(self.deck, f'card{i}').card
+            self.assertEquals(card_data['id'], card_from_deck.info.id)
+            self.assertEqual(card_data['level'], card_from_deck.level.level)
+
+    def test_update(self):
+        """
+        **Scenario:**
+
+        - A: We try to update deck with new card, but deck owner is not owner of this card.
+
+        - B: We try to update deck with new card, deck owner is owner of this card.
+
+        ---
+
+        **Expected result:**
+
+        - A: Validation Error is raised, because deck owner is not owner of the card.
+
+        - B: Deck is updated properly.
+        """
+
+        # Create data to update deck with new card
+        new_card1 = create_card_with_effect()
+        data = {
+            "card1": {
+                "id": new_card1.info.id, "level": new_card1.level.level
+            },
+            "card2": {
+                "id": self.deck.card2.card.info.id, "level": self.deck.card2.card.level.level
+            },
+            "card3": {
+                "id": self.deck.card3.card.info.id, "level": self.deck.card3.card.level.level
+            },
+            "card4": {
+                "id": self.deck.card4.card.info.id, "level": self.deck.card4.card.level.level
+            },
+            "card5": {
+                "id": self.deck.card5.card.info.id, "level": self.deck.card5.card.level.level
+            }
+        }
+
+        # Try to update deck with serializer when deck owner is not owner of the card
+        serializer = DeckSerializer(instance=self.deck, data=data)
+        self.assertRaises(ValidationError, serializer.is_valid, raise_exception=True)
+
+        # Make deck owner owner of created card and try to update deck again
+        self.user_profile.user_cards.create(card=new_card1)
+        serializer = DeckSerializer(instance=self.deck, data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        # Assert deck is updated
+        self.deck.refresh_from_db()
+        self.assertEqual(new_card1.info, self.deck.card1.card.info)
+        self.assertEqual(new_card1.level, self.deck.card1.card.level)
+
+    def test_update_with_card_which_does_not_exist(self):
+        """
+        **Scenario:**
+
+        - A: We try to update deck with card that does not exist
+
+        ---
+
+        **Expected result:**
+
+        - A: Validation Error is raised, because card does not exist.
+        """
+
+        data = {
+            "card1": {
+                "id": 999, "level": 999
+            },
+            "card2": {
+                "id": self.deck.card2.card.info.id, "level": self.deck.card2.card.level.level
+            },
+            "card3": {
+                "id": self.deck.card3.card.info.id, "level": self.deck.card3.card.level.level
+            },
+            "card4": {
+                "id": self.deck.card4.card.info.id, "level": self.deck.card4.card.level.level
+            },
+            "card5": {
+                "id": self.deck.card5.card.info.id, "level": self.deck.card5.card.level.level
+            }
+        }
+
+        # Try to update deck with serializer
+        serializer = DeckSerializer(instance=self.deck, data=data)
+        self.assertRaises(ValidationError, serializer.is_valid, raise_exception=True)
