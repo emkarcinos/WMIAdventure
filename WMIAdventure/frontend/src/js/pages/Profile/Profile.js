@@ -12,18 +12,19 @@ import ColumnGapContainer from "../../components/global/molecules/ColumnGapConta
 import Line from "./styled-componets/Line";
 import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
-import pensil from '../../../assets/icons/pencil.svg';
+import pencil from '../../../assets/icons/pencil.svg';
 import editProfil from '../../../assets/icons/editProfil.svg';
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
 import Navbar from "../../components/global/molecules/Navbar";
 import Media from "react-media";
-import {desktop, mobile} from "../../utils/globals";
+import {desktop, mobile, nextStepAnimationDuration} from "../../utils/globals";
 import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
 import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import {Redirect} from "react-router-dom";
 import MyDeck from "../../components/profile/molecules/MyDeck";
 import DeckHeader from "../../components/profile/molecules/MyDeck/styled-components/DeckHeader";
+import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 
 class Profile extends React.Component {
 
@@ -36,7 +37,49 @@ class Profile extends React.Component {
         },
 
         userNotLoggedIn: false,
-        fullCards: []
+        fullCards: [],
+
+        editProfilePopUp: {
+            visible: false,
+            opacity: '0',
+            translateX: '-100vh'
+        }
+    }
+
+    openEditProfilePopUp = () => {
+        this.setState({
+            editProfilePopUp: {
+                visible: true,
+            },
+        });
+
+        setTimeout(() => {
+            this.setState({
+                editProfilePopUp: {
+                    visible: true,
+                    opacity: '1',
+                    translateX: '0'
+                },
+            })
+        }, 5);
+    }
+
+    closeEditProfilePopUp = () => {
+        this.setState({
+            editProfilePopUp: {
+                visible: true,
+                opacity: '0',
+                translateX: '-100vh'
+            },
+        });
+
+        setTimeout(() => {
+            this.setState({
+                editProfilePopUp: {
+                    visible: false,
+                },
+            })
+        }, nextStepAnimationDuration);
     }
 
     async getUserData() {
@@ -79,37 +122,48 @@ class Profile extends React.Component {
                 </Helmet>
                 <Navbar/>
                 <Media query={mobile}>
-                    <MainMobileContainer>
-                        <User username={this.state.userData.username}
-                              image={this.state.userData.image}/>
-                        <InfoWrapper>
-                            <ColumnGapContainer gap={'20px'} setWidth={'100%'}>
-                                <ColumnGapContainer gap={'10px'}>
-                                    <FlexGapContainer gap={'10px'}>
-                                        <UserLabel term number={this.state.userData.semester}/>
-                                        <UserLabel level number={'50'}/>
-                                        <UserLabel rank number={'2'}/>
-                                    </FlexGapContainer>
-                                    <FlexGapContainer gap={'10px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'}/>
-                                        <UserInfo label={'Przegrane'} value={'24'}/>
-                                        <UserInfo label={'Ratio'} value={'50%'}/>
-                                    </FlexGapContainer>
-                                    <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                    <>
+                        <MainMobileContainer>
+                            <User username={this.state.userData.username}
+                                  image={this.state.userData.image}/>
+                            <InfoWrapper>
+                                <ColumnGapContainer gap={'20px'} setWidth={'100%'}>
+                                    <ColumnGapContainer gap={'10px'}>
+                                        <FlexGapContainer gap={'10px'}>
+                                            <UserLabel term number={this.state.userData.semester}/>
+                                            <UserLabel level number={'50'}/>
+                                            <UserLabel rank number={'2'}/>
+                                        </FlexGapContainer>
+                                        <FlexGapContainer gap={'10px'}>
+                                            <UserInfo label={'Wygrane'} value={'24'}/>
+                                            <UserInfo label={'Przegrane'} value={'24'}/>
+                                            <UserInfo label={'Ratio'} value={'50%'}/>
+                                        </FlexGapContainer>
+                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                    </ColumnGapContainer>
+                                    <Line/>
+                                    {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
                                 </ColumnGapContainer>
-                                <Line/>
-                                {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
-                            </ColumnGapContainer>
-                            <ColumnGapContainer gap={'10px'}>
-                                <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
-                                    Edytuj talię
-                                </ButtonWithIcon>
-                                <ButtonWithIcon setWidth={'158px'} icon={editProfil} color={theme.colors.dark}>
-                                    Edytuj profil
-                                </ButtonWithIcon>
-                            </ColumnGapContainer>
-                        </InfoWrapper>
-                    </MainMobileContainer>
+                                <ColumnGapContainer gap={'10px'}>
+                                    <ButtonWithIcon setWidth={'158px'} icon={pencil}
+                                                    color={theme.colors.dark}>
+                                        Edytuj talię
+                                    </ButtonWithIcon>
+                                    <ButtonWithIcon setWidth={'158px'} icon={editProfil}
+                                                    color={theme.colors.dark} handler={this.openEditProfilePopUp}>
+                                        Edytuj profil
+                                    </ButtonWithIcon>
+                                </ColumnGapContainer>
+                            </InfoWrapper>
+                        </MainMobileContainer> {
+                        this.state.editProfilePopUp.visible ? <PopUpProfile
+                            setOpacity={this.state.editProfilePopUp.opacity}
+                            setTranslateX={this.state.editProfilePopUp.translateX}
+                            closeHandler={this.closeEditProfilePopUp}>
+
+                        </PopUpProfile> : null
+                    }
+                    </>
                 </Media>
                 <Media query={desktop}>
                     <MainDesktopContainer>
@@ -141,7 +195,7 @@ class Profile extends React.Component {
                                 Twoja talia
                             </DeckHeader>
                             {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
-                            <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
+                            <ButtonWithIcon setWidth={'158px'} icon={pencil} color={theme.colors.dark}>
                                 Edytuj talię
                             </ButtonWithIcon>
                         </RightDeckContainer>
