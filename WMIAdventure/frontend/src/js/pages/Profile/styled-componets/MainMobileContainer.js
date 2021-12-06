@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MainContainer = styled.div`
+const MainMobileContainer = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
@@ -8,4 +8,4 @@ const MainContainer = styled.div`
   padding: 92px 26px 26px;
 `;
 
-export default MainContainer;
+export default MainMobileContainer;

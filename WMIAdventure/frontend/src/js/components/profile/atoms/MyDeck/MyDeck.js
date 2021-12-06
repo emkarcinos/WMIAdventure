@@ -1,9 +1,13 @@
 import React from 'react';
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
-import Header from "./styled-components/Header";
 import FlexGapContainer from "../../../global/molecules/FlexGapContainer/FlexGapContainer";
 import MiniCard from "../MiniCard";
-
+import Media from "react-media";
+import {desktop, mobile} from "../../../../utils/globals";
+import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
+import CompactCardView from "../../../global/atoms/CompactCardView";
+import Header from "./styled-components/Header";
+import FullCardView from "../../../global/atoms/FullCardView";
 
 class MyDeck extends React.Component {
 
@@ -35,23 +39,77 @@ class MyDeck extends React.Component {
         );
     }
 
+    renderCardNumberDesktop = (number) => {
+        const card = this.getCardByNumber(number);
+        return (
+            <CompactCardView cardName={card.name} setWidth={'126px'}
+                             cardImage={card.image} setHeight={'200px'}
+                             cardLevel={card.level} setMargin={'0'} shadow/>
+        );
+    }
+
+    renderCardNumberLargeDesktop = (number) => {
+        const card = this.getCardByNumber(number);
+        return (
+            <FullCardView cardName={card.name} cardSubject={card.subject}
+                          cardImage={card.image} cardTooltip={card.tooltip}
+                          description={card.description} setWidth={'258px'} setHeight={'456px'}
+                          common={card.level === 1} gold={card.level === 2} epic={card.level === 3}
+                          setMargin={'0'} shadow/>
+        );
+    }
+
     render() {
         return (
-            <ColumnGapContainer gap={'16px'} setMargin={'4px 0'}>
-                <Header>
-                    Twoja Talia
-                </Header>
+            <>
+                <Media query={mobile}>
+                    <ColumnGapContainer gap={'16px'} setMargin={'4px 0'}>
+                        <Header>
+                            Twoja Talia
+                        </Header>
 
-                <FlexGapContainer gap={'16px'}>
-                    {this.renderCardNumber(1)}
-                    {this.renderCardNumber(2)}
-                    {this.renderCardNumber(3)}
-                </FlexGapContainer>
-                <FlexGapContainer gap={'16px'}>
-                    {this.renderCardNumber(4)}
-                    {this.renderCardNumber(5)}
-                </FlexGapContainer>
-            </ColumnGapContainer>
+                        <FlexGapContainer gap={'16px'}>
+                            {this.renderCardNumber(1)}
+                            {this.renderCardNumber(2)}
+                            {this.renderCardNumber(3)}
+                        </FlexGapContainer>
+                        <FlexGapContainer gap={'16px'}>
+                            {this.renderCardNumber(4)}
+                            {this.renderCardNumber(5)}
+                        </FlexGapContainer>
+                    </ColumnGapContainer>
+                </Media>
+
+                <Media query={`${desktop} and (max-width: 1800px)`}>
+                    <DesktopDeckContainer>
+                        <ColumnGapContainer gap={'16px'}>
+                            <FlexGapContainer gap={'16px'}>
+                                {this.renderCardNumberDesktop(1)}
+                                {this.renderCardNumberDesktop(2)}
+                                {this.renderCardNumberDesktop(3)}
+                            </FlexGapContainer>
+                            <FlexGapContainer gap={'16px'}>
+                                {this.renderCardNumberDesktop(4)}
+                                {this.renderCardNumberDesktop(5)}
+                            </FlexGapContainer>
+                        </ColumnGapContainer>
+                    </DesktopDeckContainer>
+                </Media>
+
+                <Media query={'(min-width: 1800px)'}>
+                    <DesktopDeckContainer>
+                        <ColumnGapContainer gap={'16px'}>
+                            <FlexGapContainer gap={'16px'}>
+                                {this.renderCardNumberLargeDesktop(1)}
+                                {this.renderCardNumberLargeDesktop(2)}
+                                {this.renderCardNumberLargeDesktop(3)}
+                                {this.renderCardNumberLargeDesktop(4)}
+                                {this.renderCardNumberLargeDesktop(5)}
+                            </FlexGapContainer>
+                        </ColumnGapContainer>
+                    </DesktopDeckContainer>
+                </Media>
+            </>
         );
     }
 }

@@ -5,6 +5,11 @@ const AvatarContainer = styled.div`
   height: 48px;
   border-radius: 50%;
   background-color: ${({theme}) => theme.colors.yellowyOrangy};
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 86px;
+    height: 86px;
+  }
 `;
 
 export default AvatarContainer;
