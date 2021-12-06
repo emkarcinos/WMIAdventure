@@ -14,10 +14,9 @@ class PowerDescription:
     
     def _remove_trailing_zeros_in_float(self, number: float) -> str:
         text = str(number)
-        text = text.rstrip('0')
-        
-        # We may have a dot remaining to the left.
-        return text.rstrip(r'.')
+        if "." in text:
+            text = text.rstrip('0').rstrip(r'.')
+        return text
 
     def _get_power_range(self, power: float, range: float) -> tuple[float, float]:
         """
