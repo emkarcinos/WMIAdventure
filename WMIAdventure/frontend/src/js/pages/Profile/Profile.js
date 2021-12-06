@@ -14,7 +14,6 @@ import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
 import pensil from '../../../assets/icons/pencil.svg';
 import editProfil from '../../../assets/icons/editProfil.svg';
-import MyDeck from "../../components/profile/atoms/MyDeck";
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
 import Navbar from "../../components/global/molecules/Navbar";
 import Media from "react-media";
@@ -22,8 +21,9 @@ import {desktop, mobile} from "../../utils/globals";
 import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
 import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
-import DeckHeader from "../../components/profile/atoms/MyDeck/styled-components/DeckHeader";
 import {Redirect} from "react-router-dom";
+import MyDeck from "../../components/profile/molecules/MyDeck";
+import DeckHeader from "../../components/profile/molecules/MyDeck/styled-components/DeckHeader";
 
 class Profile extends React.Component {
 
