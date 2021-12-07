@@ -32,7 +32,7 @@ class CardView extends React.Component {
          *
          * index 2 - effects description of epic card level
          */
-        descriptions: [null, null, null]
+        descriptions: ['', '', '']
     }
 
     /**

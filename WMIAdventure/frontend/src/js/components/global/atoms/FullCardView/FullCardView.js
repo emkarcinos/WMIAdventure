@@ -55,17 +55,17 @@ class FullCardView extends React.Component {
                      hasBuff={this.props.buffs && (this.props.buffs.length > 0)}>
                 <H3 common={this.props.common} gold={this.props.gold} epic={this.props.epic}
                     nameLength={this.cardNameLengthHandler(this.props.cardName)}>
-                    {this.props.cardName ? this.props.cardName : "null"}
+                    {this.props.cardName ? this.props.cardName : ""}
                 </H3>
                 <Category>
-                    {this.props.cardSubject ? this.props.cardSubject : "null"}
+                    {this.props.cardSubject ? this.props.cardSubject : ""}
                 </Category>
                 <Img src={this.props.cardImage ? this.props.cardImage : upload_image_dark} alt="Image for card."/>
                 <Tooltip>
-                    {this.props.cardTooltip ? this.props.cardTooltip : "null"}
+                    {this.props.cardTooltip ? this.props.cardTooltip : ""}
                 </Tooltip>
                 <Describe>
-                    {this.props.description ? this.props.description : "null"}
+                    {this.props.description ? this.props.description : ""}
                 </Describe>
                 <BuffsContainer>
                     {this.getBuffsPreview()}
