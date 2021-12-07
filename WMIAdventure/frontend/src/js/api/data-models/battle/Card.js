@@ -43,14 +43,20 @@ export const cardsFromDeckData = async (data) => {
     const deck = data[0];
     if (!deck)
         return null;
-    
+
     const cards = [];
+    const promises = [];
     for (let i = 1; i <= 5; i++) {
         const card = deck[`card${i}`];
         const newCard = new Card(card.id, card.level)
-        await newCard.fetchFieldsFromBackend(getCardById);
+        newCard.name = 'Ładowanie';
+        promises.push(new Promise((resolve) => {
+            newCard.fetchFieldsFromBackend(getCardById)
+                .then(() => resolve());
+        }))
         cards.push(newCard);
     }
+    await Promise.all(promises);
     return cards;
 }
 
