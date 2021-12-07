@@ -19,7 +19,9 @@ class EditProfile extends React.Component {
                 <UserNameInput/>
                 <UserAvatarInput/>
                 <FlexGapContainer gap={'10px'} setMargin={'20px 0'}>
-                    <ButtonWithIcon icon={xClose} color={theme.colors.dark}>
+                    <ButtonWithIcon icon={xClose}
+                                    color={theme.colors.dark}
+                                    handler={this.props.closeHandler}>
                         Wróć
                     </ButtonWithIcon>
                     <ButtonWithIcon icon={pencil}>

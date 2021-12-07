@@ -161,7 +161,7 @@ class Profile extends React.Component {
                             setOpacity={this.state.editProfilePopUp.opacity}
                             setTranslateX={this.state.editProfilePopUp.translateX}
                             closeHandler={this.closeEditProfilePopUp}>
-                            <EditProfile/>
+                            <EditProfile closeHandler={this.closeEditProfilePopUp}/>
                         </PopUpProfile> : null
                     }
                     </>
