@@ -202,8 +202,10 @@ class CardsCreator extends React.Component {
         newEffectsToSend[level - 1] = [];
         newChosenEffectsFromCard[level - 1] = [];
 
-        let newLevelsListFromCard = this.state.levelsListFromCard.filter((l) => {
-            return l !== level
+        let newLevelsListFromCard = this.state.levelsListFromCard.map((l) => {
+            if (l !== level)
+                return [];
+            return l;
         });
 
         this.setState({
