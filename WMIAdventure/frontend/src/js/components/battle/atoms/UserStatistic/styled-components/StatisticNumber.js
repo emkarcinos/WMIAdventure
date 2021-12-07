@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 function handleFontSize(number) {
-    if(number >= 3)
+    if (number >= 3)
         return '14px';
-    else return '16px';
+    else return '18px';
 }
 
 const StatisticNumber = styled.div`
@@ -18,7 +18,7 @@ const StatisticNumber = styled.div`
   background-color: ${({theme}) => theme.colors.dark};
   font-family: 'Roboto', sans-serif;
   font-size: ${({numberLength}) => handleFontSize(numberLength)};
-  font-weight: ${({theme}) => theme.weight.light};
+  font-weight: ${({theme}) => theme.weight.regular};
   z-index: 2;
   position: relative;
   padding: 1px 0 0 2px;
