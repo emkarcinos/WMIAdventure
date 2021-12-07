@@ -2,6 +2,7 @@ import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
 import {get, getWithSetCallback, set} from "../cache/cache";
 import {effectKeys} from "../localStorageKeys";
 
+const cacheEffectsForSeconds = 9999999; // As long as possible
 /**
  * Returns list of all effects.
  * @returns {Promise<[]>}
@@ -15,10 +16,10 @@ export const getAllEffects = async () => {
 
         // We save array of effects ids in storage. Later we can iterate over this array and retrieve individual effects.
         effectsIds = allEffects.map((effect) => effect.id);
-        set(effectKeys.effectsIds, effectsIds);
+        set(effectKeys.effectsIds, effectsIds, cacheEffectsForSeconds);
 
         for (const effect of allEffects) {
-            set(effectKeys.effectKey(effect.id), effect);
+            set(effectKeys.effectKey(effect.id), effect, cacheEffectsForSeconds);
         }
     }
 
@@ -34,8 +35,7 @@ export const getAllEffects = async () => {
 
     if (effectsIds) {
         retrieveEffectsFromStorage();
-    }
-    else {
+    } else {
         await retrieveEffectsFromAPIAndSaveToStorage();
     }
 
