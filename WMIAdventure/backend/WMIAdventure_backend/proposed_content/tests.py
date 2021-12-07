@@ -5,6 +5,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
 from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
+from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
 from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails, AcceptProposedCardView
@@ -1136,3 +1137,78 @@ class AcceptProposedCardViewTestCase(TestCase):
         view = AcceptProposedCardView.as_view()
 
         return accepted_card, proposed_card, proposed_card_data, factory, view, effect_factory, description_generator
+
+    def test_remove_unwanted_levels(self):
+        card_data_before_update = {
+            "name": "test_card3",
+            "subject": None,
+            "image": None,
+            "tooltip": "test_card",
+            "levels": [
+                {
+                    "level": 1,
+                    "next_level_cost": 1,
+                    "effects_description": None,
+                    "effects": [
+                        {
+                            "card_effect": 1,
+                            "target": 2,
+                            "power": 3,
+                            "range": 3.0
+                        }
+                    ]
+                },
+                {
+                    "level": 3,
+                    "next_level_cost": None,
+                    "effects_description": None,
+                    "effects": [
+                        {
+                            "card_effect": 6,
+                            "target": 2,
+                            "power": 20,
+                            "range": 5.0
+                        }
+                    ]
+                }
+            ]
+        }
+
+        serializer = WholeProposedCardSerializer(data=card_data_before_update)
+        if not serializer.is_valid():
+            self.fail(f'Serialization failed: {serializer.errors}')
+
+        card_before = serializer.save()
+        proposed_card = {
+            "name": "test_card3",
+            "subject": None,
+            "image": None,
+            "tooltip": "test_card",
+            "levels": [
+                {
+                    "level": 3,
+                    "next_level_cost": None,
+                    "effects_description": None,
+                    "effects": [
+                        {
+                            "card_effect": 6,
+                            "target": 2,
+                            "power": 20,
+                            "range": 5.0
+                        }
+                    ]
+                }
+            ]
+        }
+
+        expected_levels_count = len(proposed_card.get('levels'))
+        proposed_card_serializer = WholeProposedCardSerializer(data=proposed_card)
+        if not proposed_card_serializer.is_valid():
+            self.fail(f'Serialization failed: {proposed_card_serializer}')
+        accepted_card_serializer = WholeCardSerializer(instance=card_before, data=proposed_card_serializer.data)
+        if not accepted_card_serializer.is_valid():
+            self.fail(f'Serialization failed: {accepted_card_serializer}')
+        card_after_acceptance = accepted_card_serializer.save()
+
+        levels_count = card_after_acceptance.levels.count()
+        self.assertEqual(levels_count, expected_levels_count)
