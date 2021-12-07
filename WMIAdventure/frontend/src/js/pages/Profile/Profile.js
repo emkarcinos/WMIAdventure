@@ -25,6 +25,7 @@ import {Redirect} from "react-router-dom";
 import MyDeck from "../../components/profile/molecules/MyDeck";
 import DeckHeader from "../../components/profile/molecules/MyDeck/styled-components/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
+import EditProfile from "../../components/profile/molecules/EditProfile";
 
 class Profile extends React.Component {
 
@@ -160,7 +161,7 @@ class Profile extends React.Component {
                             setOpacity={this.state.editProfilePopUp.opacity}
                             setTranslateX={this.state.editProfilePopUp.translateX}
                             closeHandler={this.closeEditProfilePopUp}>
-
+                            <EditProfile/>
                         </PopUpProfile> : null
                     }
                     </>

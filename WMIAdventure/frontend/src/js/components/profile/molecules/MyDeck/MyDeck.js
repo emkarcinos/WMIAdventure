@@ -63,7 +63,7 @@ class MyDeck extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <ColumnGapContainer gap={'16px'} setMargin={'4px 0'}>
+                    <ColumnGapContainer as={'section'} gap={'16px'} setMargin={'4px 0'}>
                         <Header>
                             Twoja Talia
                         </Header>
