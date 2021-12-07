@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
@@ -106,27 +107,18 @@ class UserDeckView(RetrieveUpdateAPIView):
 
     def _give_all_not_owned_cards_to_user(self, user_profile, request_data):
         """
-        Gives cards to user if he doesn't own them.
+        Gives all cards to user if he doesn't own them.
 
         TODO: REMOVE THIS IN THE FUTURE. For now all users should have all cards, this method will be removed when
          there will be some way of gaining cards from battle or there will be some other way.
-
-        :raises django.http.Http404: If some of given cards does not exist.
         """
 
-        cards = [
-            get_object_or_404(
-                Card.objects.all(),
-                info=request_data[f'card{i}']['id'],
-                level=request_data[f'card{i}']['level']
-            )
-            for i in range(1, 6)
-        ]
-        for card in cards:
-            UserCard.objects.get_or_create(
-                user_profile=user_profile,
-                card=card
-            )
+        # If user is not owner of all cards then give him all cards
+        if user_profile.user_cards.all().count() != Card.objects.all().count():
+            user_cards_ids = user_profile.user_cards.values_list('card_id', flat=True)
+            not_owned_cards = Card.objects.filter(~Q(pk__in=user_cards_ids))
+            new_user_cards = [UserCard(user_profile=user_profile, card=card) for card in not_owned_cards]
+            UserCard.objects.bulk_create(new_user_cards)
 
     def update(self, request, *args, **kwargs):
         deck_to_update = self.get_object()

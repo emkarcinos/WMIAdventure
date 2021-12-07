@@ -69,14 +69,15 @@ class DeckSerializer(serializers.Serializer):
         """
 
         cards = []
-        # TODO: maybe iterate all cards without using i?
-        for i in range(1, 6):
-            card_data = deck_data[f'card{i}']['card']
+        for deck_card in deck_data.values():
+            card_data = deck_card.get('card', None)
+            if card_data is None:
+                raise ValidationError('Deck data is not valid.')
             try:
                 card = Card.objects.get(info=card_data['info']['id'], level=card_data['level']['level'])
                 cards.append(card)
             except Card.DoesNotExist:
-                raise ValidationError("Provided card does not exist.")
+                raise ValidationError('Provided card does not exist.')
 
         return cards
 

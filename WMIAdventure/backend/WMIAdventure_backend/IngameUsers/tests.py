@@ -396,7 +396,7 @@ class UserDeckViewTestCase(TestCase):
 
         # Make request
         response = self.client.put(self.url, data=data, format='json')
-        self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_update_not_card_owner(self):
         # TODO: implement this test when there is some way to gain cards implemented.
