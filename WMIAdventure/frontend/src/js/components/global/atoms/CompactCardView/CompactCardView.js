@@ -130,7 +130,7 @@ class CompactCardView extends React.Component {
                 <NameContainer>
                     <Name nameLength={this.cardNameLengthHandler(this.state.cardName)}
                           ownFontSize={this.props.ownFontSize}>
-                        {this.state.cardName ? this.state.cardName : "null"}
+                        {this.state.cardName ? this.state.cardName : ""}
                     </Name>
                 </ NameContainer>
                 <Img setIconWidth={this.props.setIconWidth} setIconHeight={this.props.setIconHeight}
