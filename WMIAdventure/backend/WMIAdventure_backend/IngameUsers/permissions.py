@@ -1,13 +1,19 @@
 from rest_framework import permissions
 from rest_framework.permissions import IsAdminUser
 
-from IngameUsers.models import UserProfile
+from IngameUsers.models import UserProfile, Deck
 
 
 class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, profile: UserProfile):
         return profile.user == request.user
+
+
+class IsDeckOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, deck: Deck):
+        return deck.userdeck.user_profile.user == request.user
 
 
 class CanEditProfile(permissions.BasePermission):

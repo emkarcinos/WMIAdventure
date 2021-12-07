@@ -1,10 +1,11 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.fields import ImageField
 
 from cards.models import Card
 from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
-from .models import UserProfile, Deck
+from .models import UserProfile, Deck, UserCard, UserDeck
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -52,12 +53,100 @@ class UserCardSerializer(serializers.ModelSerializer):
         fields = ['id', 'level']
 
 
-class DeckSerializer(serializers.ModelSerializer):
+class DeckSerializer(serializers.Serializer):
+    card1 = UserCardSerializer()
+    card2 = UserCardSerializer()
+    card3 = UserCardSerializer()
+    card4 = UserCardSerializer()
+    card5 = UserCardSerializer()
+
+    def _validate_cards_exist(self, deck_data) -> list[Card]:
+        """
+        Validates that all given cards exist.
+
+        :return: Cards retrieved from database.
+        :raises ValidationError: If one of the cards does not exist.
+        """
+
+        cards = []
+        for deck_card in deck_data.values():
+            card_data = deck_card.get('card', None)
+            if card_data is None:
+                raise ValidationError('Deck data is not valid.')
+            try:
+                card = Card.objects.get(info=card_data['info']['id'], level=card_data['level']['level'])
+                cards.append(card)
+            except Card.DoesNotExist:
+                raise ValidationError('Provided card does not exist.')
+
+        return cards
+
+    def _validate_user_owns_cards(self, instance: Deck, cards: list[Card]):
+        """
+        Validates if owner of deck instance owns all provided cards.
+
+        :param instance: Deck instance.
+        :param cards: Cards to be checked
+        :raises ValidationError: If user doesn't own one of the cards.
+        """
+
+        user_profile = instance.userdeck.user_profile
+        if user_profile.user_cards.filter(card__in=cards).count() != 5:
+            raise ValidationError("User is not owner of all the 5 cards")
+
+    def validate(self, attrs):
+        """
+        Validate if provided cards exist and if updating some deck instance check that user owns all the cards.
+        """
+
+        cards = self._validate_cards_exist(attrs)
+
+        # If updating some deck instance validate if user owns all given cards
+        if self.instance:
+            self._validate_user_owns_cards(self.instance, cards)
+
+        return attrs
+
+    def update(self, instance, validated_data):
+        """
+        Updates deck instance with given validated data.
+
+        :param instance:
+        :param validated_data:
+        :return: Updated deck instance.
+        """
+
+        # Retrieve all cards from database with validated data
+        cards = [
+            Card.objects.get(
+                info=validated_data[f'card{i}']['card']['info']['id'],
+                level=validated_data[f'card{i}']['card']['level']['level']
+            )
+            for i in range(1, 6)
+        ]
+
+        # Get UserCards and update deck instance
+        user_cards = [
+            UserCard.objects.get(card=card, user_profile=instance.userdeck.user_profile) for card in cards
+        ]
+
+        instance.card1 = user_cards[0]
+        instance.card2 = user_cards[1]
+        instance.card3 = user_cards[2]
+        instance.card4 = user_cards[3]
+        instance.card5 = user_cards[4]
+        instance.save()
+
+        return instance
+
+
+class UserDeckSerializer(serializers.ModelSerializer):
     """
     Serializes a deck.
     We store each card separately with an index, because the order of them does matter.
     deck_number is also stored as we need to know whether this is an attacking or defending deck.
     """
+
     card1 = UserCardSerializer(source='deck.card1')
     card2 = UserCardSerializer(source='deck.card2')
     card3 = UserCardSerializer(source='deck.card3')
@@ -66,7 +155,7 @@ class DeckSerializer(serializers.ModelSerializer):
     deck_number = serializers.IntegerField()
 
     class Meta:
-        model = Deck
+        model = UserDeck
         fields = ['deck_number', 'card1', 'card2', 'card3', 'card4', 'card5']
 
 
@@ -74,7 +163,7 @@ class UserDecksSerializer(serializers.ModelSerializer):
     """
     Serializes decks of a given user.
     """
-    user_decks = DeckSerializer(many=True, source='user_decks.all')
+    user_decks = UserDeckSerializer(many=True, source='user_decks.all')
 
     class Meta:
         model = UserProfile

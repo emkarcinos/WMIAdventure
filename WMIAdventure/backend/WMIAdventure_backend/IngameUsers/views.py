@@ -1,14 +1,18 @@
+from django.db.models import Q
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from cards.models import Card
+from users.models import User
 from . import models
 from . import serializers
-from .models import UserProfile
-from .permissions import IsOwner, CanEditProfile
-from .serializers import UserDecksSerializer
+from .models import UserProfile, UserCard
+from .permissions import IsOwner, CanEditProfile, IsDeckOwner
+from .serializers import UserDecksSerializer, DeckSerializer
 
 
 class UserPagination(PageNumberPagination):
@@ -37,7 +41,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.UserProfile.objects.all()
 
 
-class UserDeckView(RetrieveAPIView):
+class UserDecksView(RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwner]
 
@@ -82,3 +86,46 @@ class UserDeckView(RetrieveAPIView):
     """
     serializer_class = UserDecksSerializer
     queryset = UserProfile.objects.all()
+
+
+class UserDeckView(RetrieveUpdateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsDeckOwner]
+
+    serializer_class = DeckSerializer
+    lookup_field = 'deck_number'
+
+    def get_object(self):
+        deck = get_object_or_404(self.get_queryset(), deck_number=self.kwargs['deck_number']).deck
+        self.check_object_permissions(self.request, deck)
+        return deck
+
+    def get_queryset(self):
+        user = get_object_or_404(User.objects.all(), pk=self.kwargs['pk'])
+        user_profile = user.userprofile
+        return user_profile.user_decks.all()
+
+    def _give_all_not_owned_cards_to_user(self, user_profile, request_data):
+        """
+        Gives all cards to user if he doesn't own them.
+
+        TODO: REMOVE THIS IN THE FUTURE. For now all users should have all cards, this method will be removed when
+         there will be some way of gaining cards from battle or there will be some other way.
+        """
+
+        # If user is not owner of all cards then give him all cards
+        if user_profile.user_cards.all().count() != Card.objects.all().count():
+            user_cards_ids = user_profile.user_cards.values_list('card_id', flat=True)
+            not_owned_cards = Card.objects.filter(~Q(pk__in=user_cards_ids))
+            new_user_cards = [UserCard(user_profile=user_profile, card=card) for card in not_owned_cards]
+            UserCard.objects.bulk_create(new_user_cards)
+
+    def update(self, request, *args, **kwargs):
+        deck_to_update = self.get_object()
+        self._give_all_not_owned_cards_to_user(request.user.userprofile,
+                                               request.data)  # TODO: Remove this when gaining cards is implemented
+
+        serializer: DeckSerializer = self.get_serializer(instance=deck_to_update, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
