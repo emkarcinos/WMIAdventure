@@ -2,6 +2,8 @@ import {getWithSetCallback} from "../cache/cache";
 import {profileKey, userProfileKeys} from "../localStorageKeys";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 
+const cacheUsersForSeconds = 300 // 5 minutes;
+
 export const getAllUserProfiles = async () => {
     const callback = async () => {
         try {
@@ -13,7 +15,7 @@ export const getAllUserProfiles = async () => {
         }
     }
 
-    return await getWithSetCallback(userProfileKeys.profileList, callback);
+    return await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
 }
 
 export const getUserById = async (id) => {
@@ -26,5 +28,5 @@ export const getUserById = async (id) => {
             return null
         }
     }
-    return await getWithSetCallback(profileKey(id), callback)
+    return await getWithSetCallback(profileKey(id), callback, cacheUsersForSeconds);
 }

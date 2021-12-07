@@ -2,6 +2,8 @@ import {cardKey, cardsKey} from "../localStorageKeys";
 import CardsAPIGateway from "../../api/gateways/CardsAPIGateway";
 import {get, getWithSetCallback} from "../cache/cache";
 
+const cacheCardsForSeconds = 600; // 10 minutes
+
 export const getCardById = async (id) => {
     const cachedCard = await getCardByIdFromCache(id);
     if (cachedCard)
@@ -11,7 +13,7 @@ export const getCardById = async (id) => {
         return await response.json();
     }
 
-    return await getWithSetCallback(cardKey(id), callback);
+    return await getWithSetCallback(cardKey(id), callback, cacheCardsForSeconds);
 }
 
 /**
@@ -45,7 +47,7 @@ export const getAllCards = async () => {
         return await CardsAPIGateway.getAllCards();
     }
 
-    return await getWithSetCallback(cardsKey, callback);
+    return await getWithSetCallback(cardsKey, callback, cacheCardsForSeconds);
 }
 
 export default {getCardById, getCardsFromDeck};
