@@ -32,6 +32,9 @@ class CardProperties extends React.Component {
 
     setStateFromProps = (props) => {
         const levelsList = props.levelsListFromCard;
+        if (levelsList) {
+            this.setState({activeCardRank: levelsList[0]})
+        }
         this.setState({
             createCommonLevel: levelsList.indexOf(1) !== -1,
             createGoldLevel: levelsList.indexOf(2) !== -1,
