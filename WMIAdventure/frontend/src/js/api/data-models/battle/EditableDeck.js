@@ -17,22 +17,22 @@ export class EditableDeck extends BaseDeck {
         return this.cards[this.currentlyEditingIdx];
     }
 
+
     /**
      * Will false if the card was already in the deck
      * @param editingCard
      * @return {boolean}
      */
-    tryToOverrideCurrentlyEditingCard(editingCard) {
+    tryInsertCardAtPosition(editingCard, position) {
         const isSameAsCurrentlyEditing = this.cards[this.currentlyEditingIdx].id === editingCard.id
-        // Idempotency
-        if (isSameAsCurrentlyEditing)
-            return true;
         const alreadyInDeck = this.cards.filter((card) => card.id === editingCard.id).length > 0;
-        if (alreadyInDeck)
+        if (alreadyInDeck && !isSameAsCurrentlyEditing)
             return false;
 
-        this.cards[this.currentlyEditingIdx] = editingCard;
-        return true;
+        const cardAtEditingPosition = this.cards[this.currentlyEditingIdx];
+        this.cards = this.cards.filter(card => card.id !== cardAtEditingPosition.id);
+        this.cards.splice(position - 1, 0, editingCard);
+        return true
     }
 }
 

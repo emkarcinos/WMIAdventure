@@ -36,6 +36,7 @@ class ChangeDeckCard extends React.Component {
             tooltip: '',
             image: null
         },
+        cardPositionInDeck: 1,
     }
 
     handleSearch = (event) => {
@@ -51,7 +52,11 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
-        this.setState({selectedCard: this.props.deck.getCurrentlyEditingCard()})
+        console.log(this.props);
+        this.setState({
+            selectedCard: this.props.deck.getCurrentlyEditingCard(),
+            cardPositionInDeck: this.props.deck.currentlyEditingIdx + 1
+        })
     }
 
 
@@ -75,7 +80,7 @@ class ChangeDeckCard extends React.Component {
         newCard.subject = selectedCard.subject;
         newCard.tooltip = selectedCard.tooltip;
         newCard.image = selectedCard.image;
-        const didSave = this.props.deck.tryToOverrideCurrentlyEditingCard(newCard);
+        const didSave = this.props.deck.tryInsertCardAtPosition(newCard, this.state.cardPositionInDeck);
         if (!didSave)
             alert("Już jest w decku");
         this.forceUpdate();
@@ -111,12 +116,12 @@ class ChangeDeckCard extends React.Component {
     getInputButton = () => {
         return (
             <InputWithIcon width={'20px'} type={'number'} min={1} max={5} icon={pencilGrey}
-                           default={this.props.deck.currentlyEditingIdx + 1} onChange={this.rearangeDeck}/>
+                           default={this.props.deck.currentlyEditingIdx + 1} onChange={this.onNewCardPosition}/>
         )
     }
 
-    rearangeDeck = (newPosition) => {
-        console.log(newPosition);
+    onNewCardPosition = (newPosition) => {
+        this.setState({cardPositionInDeck: newPosition});
     }
 
     close = () => {
