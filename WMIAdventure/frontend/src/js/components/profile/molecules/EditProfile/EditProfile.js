@@ -10,6 +10,7 @@ import pencil from '../../../../../assets/icons/pencil.svg';
 import xClose from '../../../../../assets/icons/x-close.svg';
 import BasicUserData from "../../../../api/data-models/user/BasicUserData";
 import EditUserProfileAPIGateway from "../../../../api/gateways/user-profile-update/EditUserProfileAPIGateway";
+import {purgeUserData} from "../../../../storage/user/userData";
 
 class EditProfile extends React.Component {
 
@@ -35,11 +36,12 @@ class EditProfile extends React.Component {
     }
 
     userDataUpdateSuccess = () => {
-        console.log("User data update success!");
+        purgeUserData();
+        window.location.reload();
     }
 
     userDataUpdateFail = () => {
-        console.log("User data update fail ;c");
+        alert("Nie udało się dokonać zmiam profilu użytkownika.");
     }
 
     updateUserInApi = () => {

@@ -4,7 +4,6 @@ import RequestSender from "../../RequestSender";
 
 const sendUserNewAvatar = (serverResponse, basicUserData,
                            successHandler, failureHandler) => {
-    console.log("doszło");
     serverResponse.json().then(() => {
         const formData = UserUtils.createFormDataToSendAvatarImage(basicUserData);
         const url = UserProfilesEndpoints.userById(basicUserData.userId);

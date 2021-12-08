@@ -23,7 +23,7 @@ import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import {Redirect} from "react-router-dom";
 import MyDeck from "../../components/profile/molecules/MyDeck";
-import DeckHeader from "../../components/profile/molecules/MyDeck/styled-components/DeckHeader";
+import DeckHeader from "./styled-componets/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 import EditProfile from "../../components/profile/molecules/EditProfile";
 
@@ -150,10 +150,6 @@ class Profile extends React.Component {
                                                     color={theme.colors.dark}>
                                         Edytuj talię
                                     </ButtonWithIcon>
-                                    <ButtonWithIcon setWidth={'158px'} icon={editProfil}
-                                                    color={theme.colors.dark} handler={this.openEditProfilePopUp}>
-                                        Edytuj profil
-                                    </ButtonWithIcon>
                                 </ColumnGapContainer>
                             </InfoWrapper>
                         </MainMobileContainer> {
@@ -199,9 +195,6 @@ class Profile extends React.Component {
                                 Twoja talia
                             </DeckHeader>
                             {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
-                            <ButtonWithIcon setWidth={'158px'} icon={pencil} color={theme.colors.dark}>
-                                Edytuj talię
-                            </ButtonWithIcon>
                         </RightDeckContainer>
                     </MainDesktopContainer>
                 </Media>
