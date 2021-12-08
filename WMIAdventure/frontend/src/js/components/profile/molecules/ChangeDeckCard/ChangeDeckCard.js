@@ -75,7 +75,9 @@ class ChangeDeckCard extends React.Component {
         newCard.subject = selectedCard.subject;
         newCard.tooltip = selectedCard.tooltip;
         newCard.image = selectedCard.image;
-        this.props.deck.overrideCurrentlyEditingCard(newCard);
+        const didSave = this.props.deck.tryToOverrideCurrentlyEditingCard(newCard);
+        if (!didSave)
+            alert("Już jest w decku");
         this.forceUpdate();
     }
 
