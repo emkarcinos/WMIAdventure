@@ -52,7 +52,8 @@ class FullCardView extends React.Component {
             <Article common={this.props.common} gold={this.props.gold} epic={this.props.epic}
                      setTranslateY={this.props.setTranslateY}
                      setWidth={this.props.setWidth} setHeight={this.props.setHeight}
-                     hasBuff={this.props.buffs && (this.props.buffs.length > 0)}>
+                     hasBuff={this.props.buffs && (this.props.buffs.length > 0)}
+                     onClick={this.props.onClick}>
                 <H3 common={this.props.common} gold={this.props.gold} epic={this.props.epic}
                     nameLength={this.cardNameLengthHandler(this.props.cardName)}>
                     {this.props.cardName ? this.props.cardName : ""}
