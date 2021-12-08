@@ -17,7 +17,7 @@ class EditProfile extends React.Component {
     state = {
         newUsername: this.props.username ? this.props.username : '',
         newAvatar: this.props.avatar ? this.props.avatar : '',
-        newAvatarPath: null,
+        newAvatarPath: this.props.avatar ? this.props.avatar : null,
     }
 
     updateUserName = (event) => {
