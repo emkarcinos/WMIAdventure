@@ -13,6 +13,9 @@ import UserInfo from "../../../global/atoms/UserInfo";
 import P from "./styled-components/P";
 import InputWithIcon from "../../../global/atoms/InputWithIcon";
 import pencilGrey from "../../../../../assets/icons/pencil-grey.svg";
+import eye from "../../../../../assets/icons/eye.svg";
+import pencilWhite from "../../../../../assets/icons/pencil.svg"
+import theme from "../../../../utils/theme";
 
 /**
  * Props:
@@ -95,10 +98,10 @@ class ChangeDeckCard extends React.Component {
                             </CompactCardView>
                             <ColumnGapContainer gap={'10px'}>
                                 <UserInfo label={'Pozycja w talii'} value={this.getInputButton()}/>
-                                <ButtonWithIcon>
+                                <ButtonWithIcon icon={eye}>
                                     Podgląd
                                 </ButtonWithIcon>
-                                <ButtonWithIcon>
+                                <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}>
                                     Zapisz
                                 </ButtonWithIcon>
                             </ColumnGapContainer>
