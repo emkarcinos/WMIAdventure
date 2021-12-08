@@ -19,7 +19,8 @@ import theme from "../../../../utils/theme";
 
 /**
  * Props:
- * - parent - parent component that renders this component
+ * - closeHandler
+ * -
  */
 class ChangeDeckCard extends React.Component {
     state = {
@@ -33,7 +34,7 @@ class ChangeDeckCard extends React.Component {
             subject: '',
             tooltip: '',
             image: null
-        }
+        },
     }
 
     handleSearch = (event) => {
@@ -49,7 +50,7 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
-        this.setState({selectedCard: this.props.selectedCard})
+        this.setState({selectedCard: this.props.selectedCard});
     }
 
     onNewCardChoose = (event, id, name, subject, tooltip, image) => {
@@ -72,7 +73,7 @@ class ChangeDeckCard extends React.Component {
                     <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                     <Ul>
                         {
-                            this.state.allCards.map((card) => {
+                            this.props.deck.cards.map((card) => {
                                 return (
                                     <React.Fragment key={`card-${card.id}`}>
                                         <Card id={card.id} name={card.name}

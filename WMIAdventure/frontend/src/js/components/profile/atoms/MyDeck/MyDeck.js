@@ -29,10 +29,10 @@ class MyDeck extends React.Component {
     }
 
     getCardByNumber = (number) => {
-        if (!this.props.cards)
+        if (!this.props.deck.cards)
             return this.nullCard;
 
-        const card = this.props.cards[number - 1];
+        const card = this.props.deck.cards[number - 1];
         if (!card)
             return this.nullCard
 
@@ -46,7 +46,8 @@ class MyDeck extends React.Component {
 
         return (
             <>
-                <ChangeDeckCard selectedCard={this.state.selectedCard} closeHandler={this.closeEditor}/>
+                <ChangeDeckCard selectedCard={this.state.selectedCard} closeHandler={this.closeEditor}
+                                deck={this.props.deck}/>
             </>
         )
     }

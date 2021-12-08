@@ -60,4 +60,8 @@ export const cardsFromDeckData = async (data) => {
     return cards;
 }
 
+export const nullCard = () => {
+    return new Card(0, 1);
+}
+
 export default {Card, cardFromData}

@@ -24,6 +24,7 @@ import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import DeckHeader from "../../components/profile/atoms/MyDeck/styled-components/DeckHeader";
 import {Redirect} from "react-router-dom";
+import {BaseDeck, nullDeck} from "../../api/data-models/battle/BaseDeck";
 
 class Profile extends React.Component {
 
@@ -36,7 +37,7 @@ class Profile extends React.Component {
         },
 
         userNotLoggedIn: false,
-        fullCards: []
+        deck: nullDeck()
     }
 
     async getUserData() {
@@ -61,7 +62,7 @@ class Profile extends React.Component {
             return;
 
         const userSpecificCards = await cardsFromDeckData(data);
-        this.setState({fullCards: userSpecificCards});
+        this.setState({deck: new BaseDeck(userSpecificCards)});
     }
 
     componentDidMount() {
@@ -98,7 +99,7 @@ class Profile extends React.Component {
                                     <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
                                 </ColumnGapContainer>
                                 <Line/>
-                                {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
+                                <MyDeck deck={this.state.deck}/>
                             </ColumnGapContainer>
                             <ColumnGapContainer gap={'10px'}>
                                 <ButtonWithIcon setWidth={'158px'} icon={pensil} color={theme.colors.dark}>
