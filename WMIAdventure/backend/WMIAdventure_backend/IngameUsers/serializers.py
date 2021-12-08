@@ -12,7 +12,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
-    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = models.UserProfile
