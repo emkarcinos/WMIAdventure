@@ -22,6 +22,7 @@ class ChangeDeckCard extends React.Component {
     state = {
         searchInput: '',
         allCards: [],
+        setTranslateY: '100vh'
     }
 
     handleSearch = (event) => {
@@ -36,6 +37,8 @@ class ChangeDeckCard extends React.Component {
 
     componentDidMount() {
         this.fetchCards();
+        setTimeout(() => this.setState({setTranslateY: '0'}), 1);
+
     }
 
     renderCardChoose = () => {
@@ -72,11 +75,17 @@ class ChangeDeckCard extends React.Component {
         )
     }
 
+    close = () => {
+        this.setState({setTranslateY: '100vh'});
+        setTimeout(this.props.closeHandler, 1000);
+    }
+
     render() {
         return (
             <>
                 <PopUp visible={true}
-                       closeHandler={this.props.closeHandler}>
+                       closeHandler={this.close}
+                       setTranslateY={this.state.setTranslateY}>
                     <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
                                         gap={'10px'}>
                         <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
