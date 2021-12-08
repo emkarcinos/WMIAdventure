@@ -110,7 +110,8 @@ class ChangeDeckCard extends React.Component {
 
     getInputButton = () => {
         return (
-            <InputWithIcon width={'20px'} type={'number'} min={'1'} max={'5'} icon={pencilGrey}/>
+            <InputWithIcon width={'20px'} type={'number'} min={'1'} max={'5'} icon={pencilGrey}
+                           default={this.props.deck.currentlyEditingIdx + 1}/>
         )
     }
 

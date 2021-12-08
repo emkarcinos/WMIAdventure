@@ -8,7 +8,8 @@ class InputWithIcon extends React.Component {
     render() {
         return (
             <FlexGapContainer gap={'2px'}>
-                <Input width={this.props.width} type={this.props.type} min={this.props.min} maxLength={this.props.max}/>
+                <Input width={this.props.width} type={this.props.type} min={this.props.min} maxLength={this.props.max}
+                       value={this.props.default}/>
                 <Image src={this.props.icon} alt={'Edit icon'}/>
             < /FlexGapContainer>
         )
