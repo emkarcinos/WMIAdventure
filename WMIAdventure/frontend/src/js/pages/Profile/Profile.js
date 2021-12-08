@@ -12,7 +12,6 @@ import ColumnGapContainer from "../../components/global/molecules/ColumnGapConta
 import Line from "./styled-componets/Line";
 import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
-import pencil from '../../../assets/icons/pencil.svg';
 import editProfil from '../../../assets/icons/editProfil.svg';
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
 import Navbar from "../../components/global/molecules/Navbar";
@@ -146,9 +145,10 @@ class Profile extends React.Component {
                                     {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
                                 </ColumnGapContainer>
                                 <ColumnGapContainer gap={'10px'}>
-                                    <ButtonWithIcon setWidth={'158px'} icon={pencil}
+                                    <ButtonWithIcon setWidth={'158px'} icon={editProfil}
+                                                    handler={this.openEditProfilePopUp}
                                                     color={theme.colors.dark}>
-                                        Edytuj talię
+                                        Edytuj profil
                                     </ButtonWithIcon>
                                 </ColumnGapContainer>
                             </InfoWrapper>
