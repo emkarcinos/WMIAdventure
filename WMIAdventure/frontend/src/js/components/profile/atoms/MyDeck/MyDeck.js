@@ -8,9 +8,9 @@ import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Header from "./styled-components/Header";
 import FullCardView from "../../../global/atoms/FullCardView";
+import ChangeDeckCard from "../../molecules/ChangeDeckCard";
 
 class MyDeck extends React.Component {
-
     nullCard = {
         id: 0,
         level: 1,
@@ -18,6 +18,10 @@ class MyDeck extends React.Component {
         subject: '',
         tooltip: '',
         image: null
+    }
+    state = {
+        editorVisible: true,
+        selectedCard: this.nullCard,
     }
 
     getCardByNumber = (number) => {
@@ -31,11 +35,31 @@ class MyDeck extends React.Component {
         return card
     }
 
+
+    renderEditComponent = () => {
+        if (!this.state.editorVisible)
+            return;
+
+        return (
+            <>
+                <ChangeDeckCard closeHandler={this.closeEditor}/>
+            </>
+        )
+    }
+
+    setEditorVisible = (card) => {
+        this.setState({editorVisible: true, selectedCard: card});
+    }
+
+    closeEditor = () => {
+        this.setState({editorVisible: false});
+    }
     renderCardNumber = (number) => {
         const card = this.getCardByNumber(number);
         const borderDown = (number <= 3);
         return (
-            <MiniCard icon={card.image} level={card.level} borderDown={borderDown}/>
+            <MiniCard icon={card.image} level={card.level} borderDown={borderDown}
+                      onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -44,7 +68,8 @@ class MyDeck extends React.Component {
         return (
             <CompactCardView cardName={card.name} setWidth={'126px'}
                              cardImage={card.image} setHeight={'200px'}
-                             cardLevel={card.level} setMargin={'0'} shadow/>
+                             cardLevel={card.level} setMargin={'0'} shadow
+                             onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -55,7 +80,8 @@ class MyDeck extends React.Component {
                           cardImage={card.image} cardTooltip={card.tooltip}
                           description={card.description} setWidth={'258px'} setHeight={'456px'}
                           common={card.level === 1} gold={card.level === 2} epic={card.level === 3}
-                          setMargin={'0'} shadow/>
+                          setMargin={'0'} shadow
+                          onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -77,6 +103,7 @@ class MyDeck extends React.Component {
                             {this.renderCardNumber(4)}
                             {this.renderCardNumber(5)}
                         </FlexGapContainer>
+                        {this.renderEditComponent()}
                     </ColumnGapContainer>
                 </Media>
 
@@ -93,6 +120,7 @@ class MyDeck extends React.Component {
                                 {this.renderCardNumberDesktop(5)}
                             </FlexGapContainer>
                         </ColumnGapContainer>
+                        {this.renderEditComponent()}
                     </DesktopDeckContainer>
                 </Media>
 
@@ -107,6 +135,7 @@ class MyDeck extends React.Component {
                                 {this.renderCardNumberLargeDesktop(5)}
                             </FlexGapContainer>
                         </ColumnGapContainer>
+                        {this.renderEditComponent()}
                     </DesktopDeckContainer>
                 </Media>
             </>
