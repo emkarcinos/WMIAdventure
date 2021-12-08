@@ -110,9 +110,13 @@ class ChangeDeckCard extends React.Component {
 
     getInputButton = () => {
         return (
-            <InputWithIcon width={'20px'} type={'number'} min={'1'} max={'5'} icon={pencilGrey}
-                           default={this.props.deck.currentlyEditingIdx + 1}/>
+            <InputWithIcon width={'20px'} type={'number'} min={1} max={5} icon={pencilGrey}
+                           default={this.props.deck.currentlyEditingIdx + 1} onChange={this.rearangeDeck}/>
         )
+    }
+
+    rearangeDeck = (newPosition) => {
+        console.log(newPosition);
     }
 
     close = () => {
