@@ -60,7 +60,7 @@ class MyDeck extends React.Component {
     }
     renderCardNumber = (number) => {
         const card = this.getCardByNumber(number);
-        const borderDown = (number <= 3);
+        const borderDown = (number > 3);
         return (
             <MiniCard icon={card.image} level={card.level} borderDown={borderDown}
                       onClick={() => this.setEditorVisible(card)}/>
