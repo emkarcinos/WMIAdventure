@@ -88,7 +88,7 @@ class ChangeDeckCard extends React.Component {
 
     close = () => {
         this.setState({setTranslateY: '100vh'});
-        setTimeout(this.props.closeHandler, 1000);
+        setTimeout(this.props.closeHandler, 300);
     }
 
     render() {
