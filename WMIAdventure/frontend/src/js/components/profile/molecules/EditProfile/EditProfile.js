@@ -8,6 +8,8 @@ import UserAvatarInput from "../../atoms/UserAvatarInput";
 import theme from "../../../../utils/theme";
 import pencil from '../../../../../assets/icons/pencil.svg';
 import xClose from '../../../../../assets/icons/x-close.svg';
+import BasicUserData from "../../../../api/data-models/user/BasicUserData";
+import EditUserProfileAPIGateway from "../../../../api/gateways/user-profile-update/EditUserProfileAPIGateway";
 
 class EditProfile extends React.Component {
 
@@ -24,10 +26,27 @@ class EditProfile extends React.Component {
     }
 
     updateAvatar = (event) => {
-        this.setState({
-            newAvatar: event.target.files[0],
-            newAvatarPath: URL.createObjectURL(event.target.files[0])
-        });
+        if (event.target.files[0]) {
+            this.setState({
+                newAvatar: event.target.files[0],
+                newAvatarPath: URL.createObjectURL(event.target.files[0])
+            });
+        }
+    }
+
+    userDataUpdateSuccess = () => {
+        console.log("User data update success!");
+    }
+
+    userDataUpdateFail = () => {
+        console.log("User data update fail ;c");
+    }
+
+    updateUserInApi = () => {
+        const basicUserData = new BasicUserData(
+            this.props.userId, this.state.newUsername, 2, this.state.newAvatar);
+        EditUserProfileAPIGateway.sendUserNewData(basicUserData, this.userDataUpdateSuccess, this.userDataUpdateFail)
+            .catch(err => console.log(err));
     }
 
     render() {
@@ -46,7 +65,7 @@ class EditProfile extends React.Component {
                                     handler={this.props.closeHandler}>
                         Wróć
                     </ButtonWithIcon>
-                    <ButtonWithIcon icon={pencil}>
+                    <ButtonWithIcon icon={pencil} handler={this.updateUserInApi}>
                         Zapisz
                     </ButtonWithIcon>
                 </FlexGapContainer>
