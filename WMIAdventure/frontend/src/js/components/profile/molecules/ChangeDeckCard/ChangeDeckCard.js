@@ -1,7 +1,6 @@
 import React from "react";
 import PopUp from "../../../global/organisms/PopUp";
 import Search from "../../../global/atoms/Search";
-import Card from "../../../card-editor/atoms/Card";
 import {getAllCards} from "../../../../storage/cards/cardStorage";
 import Ul from "./styled-components/Ul";
 import CardChooseDiv from "./styled-components/CardChooseDiv";
@@ -16,6 +15,8 @@ import pencilGrey from "../../../../../assets/icons/pencil-grey.svg";
 import eye from "../../../../../assets/icons/eye.svg";
 import pencilWhite from "../../../../../assets/icons/pencil.svg"
 import theme from "../../../../utils/theme";
+import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
+import Card from "../../../card-editor/atoms/Card";
 
 /**
  * Props:
@@ -50,20 +51,17 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
-        this.setState({selectedCard: this.props.selectedCard});
     }
 
+
     onNewCardChoose = (event, id, name, subject, tooltip, image) => {
-        this.setState({
-            selectedCard: {
-                id: id,
-                name: name,
-                subject: subject,
-                tooltip: tooltip,
-                image: image,
-                level: 1
-            }
-        })
+        const newCard = new ModelCard(id, 1);
+        newCard.name = name;
+        newCard.subject = subject;
+        newCard.tooltip = tooltip;
+        newCard.image = image;
+        this.props.deck.overrideCurrentlyEditingCard(newCard);
+        this.forceUpdate();
     }
 
     renderCardChoose = () => {
@@ -73,7 +71,7 @@ class ChangeDeckCard extends React.Component {
                     <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                     <Ul>
                         {
-                            this.props.deck.cards.map((card) => {
+                            this.state.allCards.map((card) => {
                                 return (
                                     <React.Fragment key={`card-${card.id}`}>
                                         <Card id={card.id} name={card.name}
@@ -114,9 +112,9 @@ class ChangeDeckCard extends React.Component {
                                         gap={'10px'}>
                         <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
                                           space={true}>
-                            <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
-                                             cardLevel={this.state.selectedCard.level}
-                                             cardImage={this.state.selectedCard.image}>
+                            <CompactCardView setMargin={'0'} cardName={this.props.deck.getCurrentlyEditingCard().name}
+                                             cardLevel={this.props.deck.getCurrentlyEditingCard().level}
+                                             cardImage={this.props.deck.getCurrentlyEditingCard().image}>
 
                             </CompactCardView>
                             <ColumnGapContainer gap={'10px'}>

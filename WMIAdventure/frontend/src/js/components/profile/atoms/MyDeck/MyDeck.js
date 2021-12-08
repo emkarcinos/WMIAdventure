@@ -21,7 +21,6 @@ class MyDeck extends React.Component {
     }
     state = {
         editorVisible: true,
-        selectedCard: this.nullCard,
     }
 
     componentDidMount() {
@@ -53,7 +52,8 @@ class MyDeck extends React.Component {
     }
 
     setEditorVisible = (card) => {
-        this.setState({editorVisible: true, selectedCard: card});
+        this.props.deck.setCurrentlyEditingCard(card);
+        this.setState({editorVisible: true});
     }
 
     closeEditor = () => {

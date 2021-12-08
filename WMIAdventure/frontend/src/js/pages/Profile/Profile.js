@@ -24,7 +24,7 @@ import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import DeckHeader from "../../components/profile/atoms/MyDeck/styled-components/DeckHeader";
 import {Redirect} from "react-router-dom";
-import {BaseDeck, nullDeck} from "../../api/data-models/battle/BaseDeck";
+import {EditableDeck, nullEditableDeck} from "../../api/data-models/battle/EditableDeck";
 
 class Profile extends React.Component {
 
@@ -37,7 +37,7 @@ class Profile extends React.Component {
         },
 
         userNotLoggedIn: false,
-        deck: nullDeck()
+        deck: nullEditableDeck()
     }
 
     async getUserData() {
@@ -62,7 +62,7 @@ class Profile extends React.Component {
             return;
 
         const userSpecificCards = await cardsFromDeckData(data);
-        this.setState({deck: new BaseDeck(userSpecificCards)});
+        this.setState({deck: new EditableDeck(userSpecificCards)});
     }
 
     componentDidMount() {
