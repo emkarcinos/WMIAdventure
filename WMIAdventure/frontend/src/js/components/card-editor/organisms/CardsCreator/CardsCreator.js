@@ -79,7 +79,7 @@ class CardsCreator extends React.Component {
     sendCardToApi = (event) => {
         event.preventDefault();
 
-        let basicCardData = new BasicCardData(this.state.cardName, this.state.cardSubject, this.state.cardTooltip, this.state.cardImage);
+        let basicCardData = new BasicCardData(this.state.cardName, this.state.cardSubject, this.state.cardTooltip, this.state.cardImage, this.state.comment);
         let wholeCardData = new WholeCardData(basicCardData, this.state.effectsToSend, this.state.levelCostValues);
         ProposedContentAPIGateway.sendProposedCard(wholeCardData, this.state.comment, this.cardSubmissionSuccessHandler,
             this.cardSubmissionFailedHandler)
@@ -349,8 +349,8 @@ class CardsCreator extends React.Component {
                             Edytuj inną
                         </Button>
                         <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                        this.state.effectsToSend[1].length !== 0 ||
-                        this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                            this.state.effectsToSend[1].length !== 0 ||
+                            this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                             Podgląd
                         </Button>
                         <Button type='submit' access onClick={this.showSendCardPopupHandler} show>

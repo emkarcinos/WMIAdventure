@@ -8,14 +8,14 @@ class UserStatistic extends React.Component {
         return (
             <MainDiv setMargin={this.props.setMargin} type={this.props.type}>
                 <StatisticNumber type={this.props.type}
-                                 numberLength = {
-                                     this.props.statisticNumber ? this.props.statisticNumber.length : 0
+                                 numberLength={
+                                     this.props.statisticNumber ? this.props.statisticNumber.toString().length : 0
                                  }>
                     {this.props.statisticNumber}
                 </StatisticNumber>
                 <ValueDiv type={this.props.type}
                           currentLvlValue={this.props.currentLvlValue}
-                          statisticNumber={this.props.statisticNumber} />
+                          statisticNumber={this.props.statisticNumber}/>
             </MainDiv>
         );
     }

@@ -12,6 +12,7 @@ const createFormDataToSendCardImage = (basicCardData) => {
     formData.append('name', basicCardData.name);
     formData.append('subject', basicCardData.subject);
     formData.append('tooltip', basicCardData.tooltip);
+    formData.append('comment', basicCardData.comment);
 
     return formData;
 }

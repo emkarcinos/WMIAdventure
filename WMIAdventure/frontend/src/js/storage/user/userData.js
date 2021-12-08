@@ -5,6 +5,8 @@ import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 import {whoAmI} from "../../api/gateways/UsersAPIGateway";
 import {getUserById} from "../profiles/userProfileList";
 
+const cacheUserDataForSeconds = 3600; // One hour
+
 export const isLoggedIn = async () => {
     return !!await getCurrentUserId();
 }
@@ -26,7 +28,7 @@ export const getCurrentUserData = async () => {
         }
         return null;
     }
-    return await getWithSetCallback(userDataKeys.username, backendCallback);
+    return await getWithSetCallback(userDataKeys.username, backendCallback, cacheUserDataForSeconds);
 }
 
 export const getCurrentUserId = async () => {
@@ -36,7 +38,7 @@ export const getCurrentUserId = async () => {
             return who.id;
         return null;
     }
-    return await getWithSetCallback(userDataKeys.id, backendCallback);
+    return await getWithSetCallback(userDataKeys.id, backendCallback, cacheUserDataForSeconds);
 }
 
 export const getUsersDecks = async (userId) => {
@@ -48,7 +50,7 @@ export const getUsersDecks = async (userId) => {
         }
         return null
     }
-    return await getWithSetCallback(userDataKeys.userDecks, backendCall)
+    return await getWithSetCallback(userDataKeys.userDecks, backendCall, cacheUserDataForSeconds);
 }
 
 export const getCurrentUserDecks = async () => {
