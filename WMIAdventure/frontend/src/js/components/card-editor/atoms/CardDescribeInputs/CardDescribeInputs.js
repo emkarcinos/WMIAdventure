@@ -6,7 +6,7 @@ import Div from './styled-components/Div';
 import Input from './styled-components/Input';
 import Label from './styled-components/Label';
 import DivInput from './styled-components/DivInput';
-import { Transition } from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 import ImageInput from "./styled-components/ImageInput";
 import DivImageInput from "./styled-components/DivImageInput";
 import CardImagePreview from "./styled-components/CardImagePreview";
@@ -35,7 +35,7 @@ class CardDescribeInputs extends React.Component {
     }
 
     handleHiding = (event) => {
-        if(!this.state.fieldsetHover)
+        if (!this.state.fieldsetHover)
             this.props.hideDescribeInputsHandler(event);
     }
 
@@ -53,10 +53,10 @@ class CardDescribeInputs extends React.Component {
                                     Nazwa
                                 </Label>
                                 <DivInput>
-                                  <Input id='cardName' name='cardName' type='text' value={this.props.cardName}
-                                         onChange={this.props.updateDescribePreview}
-                                         placeholder={'Nazwa karty'} maxLength={maxCardName}
-                                  />
+                                    <Input id='cardName' name='cardName' type='text' value={this.props.cardName}
+                                           onChange={this.props.updateDescribePreview}
+                                           placeholder={'Nazwa karty'} maxLength={maxCardName}
+                                    />
                                 </DivInput>
                             </Div>
                             <Div>
@@ -64,10 +64,11 @@ class CardDescribeInputs extends React.Component {
                                     Przedmiot
                                 </Label>
                                 <DivInput>
-                                  <Input id='cardSubject' name='cardSubject' type='text' value={this.props.cardSubject}
-                                         onChange={this.props.updateDescribePreview}
-                                         placeholder={'Przedmiot'} maxLength={maxCardSubject}
-                                  />
+                                    <Input id='cardSubject' name='cardSubject' type='text'
+                                           value={this.props.cardSubject}
+                                           onChange={this.props.updateDescribePreview}
+                                           placeholder={'Przedmiot'} maxLength={maxCardSubject}
+                                    />
                                 </DivInput>
                             </Div>
                             <Div>
@@ -75,10 +76,11 @@ class CardDescribeInputs extends React.Component {
                                     Opis
                                 </Label>
                                 <DivInput>
-                                  <Input id='cardTooltip' name='cardTooltip' type='text' value={this.props.cardTooltip}
-                                         onChange={this.props.updateDescribePreview} maxLength={maxCardTooltip}
-                                         placeholder={'Opis Karty'}
-                                  />
+                                    <Input id='cardTooltip' name='cardTooltip' type='text'
+                                           value={this.props.cardTooltip}
+                                           onChange={this.props.updateDescribePreview} maxLength={maxCardTooltip}
+                                           placeholder={'Opis Karty'}
+                                    />
                                 </DivInput>
                             </Div>
                             <Div last>
@@ -91,7 +93,7 @@ class CardDescribeInputs extends React.Component {
                                         alt='Załadowany obrazek/ikona'/>
                                     <ImageInput id='cardImage' name='cardImage' type='file' accept='image/png, .svg'
                                                 onChange={this.props.onCardImageChange}
-                                                />
+                                    />
                                     <ImageInputPrompt>Wybierz z pliku</ImageInputPrompt>
                                 </DivImageInput>
                             </Div>

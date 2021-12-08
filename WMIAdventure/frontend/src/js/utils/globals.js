@@ -5,6 +5,8 @@ const maxCardName = 36;
 const maxCardSubject = 60;
 const maxCardTooltip = 80;
 
+const maxUserName = 32;
+
 const popUpLoadingMinimalDuration = 500;
 const battleInitLoadingDuration = 800;
 const nextStepAnimationDuration = 550;
@@ -18,5 +20,6 @@ export {
     popUpLoadingMinimalDuration,
     battleInitLoadingDuration,
     nextStepAnimationDuration,
-    blockedCardOpacity
+    blockedCardOpacity,
+    maxUserName
 };
