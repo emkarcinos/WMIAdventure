@@ -1,6 +1,6 @@
-import {userDataKeys} from "../localStorageKeys";
+import {profileKey, userDataKeys} from "../localStorageKeys";
 import Cookies from "../../api/Cookies";
-import {getWithSetCallback, invalidateItem} from "../cache/cache";
+import {get, getWithSetCallback, invalidateItem} from "../cache/cache";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 import {whoAmI} from "../../api/gateways/UsersAPIGateway";
 import {getUserById} from "../profiles/userProfileList";
@@ -61,6 +61,8 @@ export const getCurrentUserDecks = async () => {
 }
 
 export const purgeUserData = () => {
+    const userId = get(userDataKeys.id);
+    invalidateItem(profileKey(userId));
     for (const [, value] of Object.entries(userDataKeys))
         invalidateItem(value);
 }
