@@ -25,7 +25,15 @@ class ChangeDeckCard extends React.Component {
     state = {
         searchInput: '',
         allCards: [],
-        setTranslateY: '100vh'
+        setTranslateY: '100vh',
+        selectedCard: {
+            id: 0,
+            level: 1,
+            name: '',
+            subject: '',
+            tooltip: '',
+            image: null
+        }
     }
 
     handleSearch = (event) => {
@@ -41,7 +49,7 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
-
+        this.setState({selectedCard: this.props.selectedCard})
     }
 
     renderCardChoose = () => {
@@ -93,7 +101,9 @@ class ChangeDeckCard extends React.Component {
                                         gap={'10px'}>
                         <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
                                           space={true}>
-                            <CompactCardView setMargin={'0'}>
+                            <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
+                                             cardLevel={this.state.selectedCard.level}
+                                             cardImage={this.state.selectedCard.image}>
 
                             </CompactCardView>
                             <ColumnGapContainer gap={'10px'}>
