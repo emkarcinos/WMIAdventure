@@ -24,6 +24,10 @@ class MyDeck extends React.Component {
         selectedCard: this.nullCard,
     }
 
+    componentDidMount() {
+        this.setState({editorVisible: false})
+    }
+
     getCardByNumber = (number) => {
         if (!this.props.cards)
             return this.nullCard;
