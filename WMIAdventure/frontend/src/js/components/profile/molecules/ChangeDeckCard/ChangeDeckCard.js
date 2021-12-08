@@ -52,6 +52,19 @@ class ChangeDeckCard extends React.Component {
         this.setState({selectedCard: this.props.selectedCard})
     }
 
+    onNewCardChoose = (event, id, name, subject, tooltip, image) => {
+        this.setState({
+            selectedCard: {
+                id: id,
+                name: name,
+                subject: subject,
+                tooltip: tooltip,
+                image: image,
+                level: 1
+            }
+        })
+    }
+
     renderCardChoose = () => {
         return (
             <>
@@ -68,8 +81,7 @@ class ChangeDeckCard extends React.Component {
                                               image={card.image}
                                               searchInput={this.state.searchInput}
                                               levels={card.levels}
-                                              chosenCardHandler={() => {
-                                              }}/>
+                                              chosenCardHandler={this.onNewCardChoose}/>
                                     </React.Fragment>
                                 );
                             })
