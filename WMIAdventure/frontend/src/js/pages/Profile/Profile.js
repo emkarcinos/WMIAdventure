@@ -166,37 +166,51 @@ class Profile extends React.Component {
                     </>
                 </Media>
                 <Media query={desktop}>
-                    <MainDesktopContainer>
-                        <LeftProfileContainer>
-                            <ColumnGapContainer gap={'40px'}>
-                                <User username={this.state.userData.username}
-                                      image={this.state.userData.image}/>
-                                <ColumnGapContainer gap={'30px'}>
-                                    <FlexGapContainer gap={'40px'}>
-                                        <UserLabel term number={this.state.userData.semester}/>
-                                        <UserLabel level number={'50'}/>
-                                        <UserLabel rank number={'2'}/>
-                                    </FlexGapContainer>
-                                    <FlexGapContainer gap={'40px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'}/>
-                                        <UserInfo label={'Przegrane'} value={'24'}/>
-                                        <UserInfo label={'Ratio'} value={'50%'}/>
-                                    </FlexGapContainer>
-                                    <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                    <>
+                        <MainDesktopContainer>
+                            <LeftProfileContainer>
+                                <ColumnGapContainer gap={'40px'}>
+                                    <User username={this.state.userData.username}
+                                          image={this.state.userData.image}/>
+                                    <ColumnGapContainer gap={'30px'}>
+                                        <FlexGapContainer gap={'40px'}>
+                                            <UserLabel term number={this.state.userData.semester}/>
+                                            <UserLabel level number={'50'}/>
+                                            <UserLabel rank number={'2'}/>
+                                        </FlexGapContainer>
+                                        <FlexGapContainer gap={'40px'}>
+                                            <UserInfo label={'Wygrane'} value={'24'}/>
+                                            <UserInfo label={'Przegrane'} value={'24'}/>
+                                            <UserInfo label={'Ratio'} value={'50%'}/>
+                                        </FlexGapContainer>
+                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                    </ColumnGapContainer>
                                 </ColumnGapContainer>
-                            </ColumnGapContainer>
-                            <ButtonWithIcon setWidth={'158px'} icon={editProfil}
-                                            color={theme.colors.dark}>
-                                Edytuj profil
-                            </ButtonWithIcon>
-                        </LeftProfileContainer>
-                        <RightDeckContainer>
-                            <DeckHeader>
-                                Twoja talia
-                            </DeckHeader>
-                            {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
-                        </RightDeckContainer>
-                    </MainDesktopContainer>
+                                <ButtonWithIcon setWidth={'158px'} icon={editProfil}
+                                                handler={this.openEditProfilePopUp}
+                                                color={theme.colors.dark}>
+                                    Edytuj profil
+                                </ButtonWithIcon>
+                            </LeftProfileContainer>
+                            <RightDeckContainer>
+                                <DeckHeader>
+                                    Twoja talia
+                                </DeckHeader>
+                                {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
+                            </RightDeckContainer>
+                        </MainDesktopContainer>
+                        {
+                            this.state.editProfilePopUp.visible ? <PopUpProfile
+                                setOpacity={this.state.editProfilePopUp.opacity}
+                                setTranslateX={this.state.editProfilePopUp.translateX}
+                                closeHandler={this.closeEditProfilePopUp}>
+                                <EditProfile closeHandler={this.closeEditProfilePopUp}
+                                             userId={this.state.userData.id}
+                                             username={this.state.userData.username}
+                                             avatar={this.state.userData.image}/>
+                            </PopUpProfile> : null
+                        }
+                    </>
                 </Media>
             </>
         );

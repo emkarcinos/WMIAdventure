@@ -5,11 +5,6 @@ const AvatarImagePreview = styled.img`
   width: 138px;
   height: 138px;
 
-  @media (min-width: ${({theme}) => theme.overMobile}px) {
-    width: 200px;
-    height: 200px;
-  }
-  
   /* Styling */
   border-radius: 4px;
   background-color: ${({theme}) => theme.colors.light2};

@@ -14,6 +14,11 @@ const Container = styled.div`
   background-color: ${({theme}) => theme.colors.light2};
   z-index: 1000;
   position: relative;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 400px;
+    padding: 46px 0;
+  }
 `;
 
 export default Container;

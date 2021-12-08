@@ -36,6 +36,7 @@ class EditProfile extends React.Component {
     }
 
     userDataUpdateSuccess = () => {
+        alert("Edycja profilu powiodła się!");
         purgeUserData();
         window.location.reload();
     }
