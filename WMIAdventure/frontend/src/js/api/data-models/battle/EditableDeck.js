@@ -18,6 +18,10 @@ export class EditableDeck extends BaseDeck {
     }
 
     overrideCurrentlyEditingCard(editingCard) {
+        const alreadyInDeck = this.cards.filter((card) => card.id === editingCard.id).length > 0;
+        if (alreadyInDeck)
+            return;
+
         this.cards[this.currentlyEditingIdx] = editingCard;
     }
 }

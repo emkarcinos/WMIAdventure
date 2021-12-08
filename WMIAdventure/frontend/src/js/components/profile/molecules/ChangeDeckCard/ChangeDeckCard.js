@@ -51,15 +51,30 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
+        this.setState({selectedCard: this.props.deck.getCurrentlyEditingCard()})
     }
 
 
     onNewCardChoose = (event, id, name, subject, tooltip, image) => {
-        const newCard = new ModelCard(id, 1);
-        newCard.name = name;
-        newCard.subject = subject;
-        newCard.tooltip = tooltip;
-        newCard.image = image;
+        this.setState({
+            selectedCard: {
+                id: id,
+                level: 1,
+                name: name,
+                subject: subject,
+                tooltip: tooltip,
+                image: image,
+            }
+        })
+    }
+
+    onNewCardSave = () => {
+        const selectedCard = this.state.selectedCard;
+        const newCard = new ModelCard(selectedCard.id, 1);
+        newCard.name = selectedCard.name;
+        newCard.subject = selectedCard.subject;
+        newCard.tooltip = selectedCard.tooltip;
+        newCard.image = selectedCard.image;
         this.props.deck.overrideCurrentlyEditingCard(newCard);
         this.forceUpdate();
     }
@@ -112,9 +127,9 @@ class ChangeDeckCard extends React.Component {
                                         gap={'10px'}>
                         <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
                                           space={true}>
-                            <CompactCardView setMargin={'0'} cardName={this.props.deck.getCurrentlyEditingCard().name}
-                                             cardLevel={this.props.deck.getCurrentlyEditingCard().level}
-                                             cardImage={this.props.deck.getCurrentlyEditingCard().image}>
+                            <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
+                                             cardLevel={this.state.selectedCard.level}
+                                             cardImage={this.state.selectedCard.image}>
 
                             </CompactCardView>
                             <ColumnGapContainer gap={'10px'}>
@@ -122,7 +137,8 @@ class ChangeDeckCard extends React.Component {
                                 <ButtonWithIcon icon={eye}>
                                     Podgląd
                                 </ButtonWithIcon>
-                                <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}>
+                                <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
+                                                handler={this.onNewCardSave}>
                                     Zapisz
                                 </ButtonWithIcon>
                             </ColumnGapContainer>
