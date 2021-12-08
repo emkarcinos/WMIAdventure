@@ -6,6 +6,13 @@ import {getAllCards} from "../../../../storage/cards/cardStorage";
 import Ul from "./styled-components/Ul";
 import CardChooseDiv from "./styled-components/CardChooseDiv";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
+import FlexGapContainer from "../../../global/molecules/FlexGapContainer/FlexGapContainer";
+import CompactCardView from "../../../global/atoms/CompactCardView";
+import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
+import UserInfo from "../../../global/atoms/UserInfo";
+import P from "./styled-components/P";
+import InputWithIcon from "../../../global/atoms/InputWithIcon";
+import pencilGrey from "../../../../../assets/icons/pencil-grey.svg";
 
 /**
  * Props:
@@ -59,12 +66,35 @@ class ChangeDeckCard extends React.Component {
         )
     }
 
+    getInputButton = () => {
+        return (
+            <InputWithIcon width={'20px'} type={'number'} min={'1'} max={'5'} icon={pencilGrey}/>
+        )
+    }
+
     render() {
         return (
             <>
                 <PopUp visible={true}
                        closeHandler={this.props.closeHandler}>
-                    <ColumnGapContainer setHeight={'100%'} setWidth={'100%'} setPadding={'40px 10px 30px 10px'}>
+                    <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
+                                        gap={'10px'}>
+                        <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
+                                          space={true}>
+                            <CompactCardView setMargin={'0'}>
+
+                            </CompactCardView>
+                            <ColumnGapContainer gap={'10px'}>
+                                <UserInfo label={'Pozycja w talii'} value={this.getInputButton()}/>
+                                <ButtonWithIcon>
+                                    Podgląd
+                                </ButtonWithIcon>
+                                <ButtonWithIcon>
+                                    Zapisz
+                                </ButtonWithIcon>
+                            </ColumnGapContainer>
+                        </FlexGapContainer>
+                        <P>Wymień na</P>
                         {this.renderCardChoose()}
                     </ColumnGapContainer>
                 </PopUp>
