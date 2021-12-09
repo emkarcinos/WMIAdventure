@@ -213,9 +213,13 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                 instance.save()
                 return instance
 
+            # This tracks what levels we want. Later we need to remove levels aren't in this set
+            updated_levels = set()
             for card_data in cards_data:
+                card_level = card_data.get('level')
+                updated_levels.add(card_level.level)
                 card, _ = instance.levels.update_or_create(
-                    level=card_data.get("level"),
+                    level=card_level,
                     defaults={'next_level_cost': card_data.get("next_level_cost"),
                               'effects_description': card_data.get("effects_description")},
                 )
@@ -230,8 +234,16 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
                         range=effect_data.get("range")
                     )
             instance.save()
+            self._remove_not_present_levels(instance, updated_levels)
 
             return instance
+
+        def _remove_not_present_levels(self, instance, levels_set):
+            all_levels = set([level[0] for level in CardLevel.Level.choices])
+            leftover_levels = all_levels.difference(levels_set)
+            for level in leftover_levels:
+                card_to_remove = instance.levels.filter(level=level)
+                card_to_remove.delete()
 
         def _validate_levels_provided(self, validated_data):
             """
