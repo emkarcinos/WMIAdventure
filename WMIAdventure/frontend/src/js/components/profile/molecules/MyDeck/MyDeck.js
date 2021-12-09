@@ -1,13 +1,13 @@
 import React from 'react';
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import FlexGapContainer from "../../../global/molecules/FlexGapContainer/FlexGapContainer";
-import MiniCard from "../MiniCard";
 import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
 import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Header from "./styled-components/Header";
 import FullCardView from "../../../global/atoms/FullCardView";
+import MiniCard from "../../atoms/MiniCard";
 
 class MyDeck extends React.Component {
 
@@ -63,7 +63,7 @@ class MyDeck extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <ColumnGapContainer gap={'16px'} setMargin={'4px 0'}>
+                    <ColumnGapContainer as={'section'} gap={'16px'} setMargin={'4px 0'}>
                         <Header>
                             Twoja Talia
                         </Header>

@@ -6,7 +6,7 @@ const DeckHeader = styled.h2`
   text-transform: uppercase;
   font-weight: ${({theme}) => theme.weight.regular};
   color: ${({theme}) => theme.colors.light2};
-  margin: 0;
+  margin: 0 0 54px 0;
 `;
 
 export default DeckHeader;
