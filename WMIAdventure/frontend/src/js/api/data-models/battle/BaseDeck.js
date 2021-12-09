@@ -9,6 +9,10 @@ export class BaseDeck {
             this.cards.push(card);
         }
     }
+
+    hasCardId(id) {
+        return this.cards.filter(card => card.id === id).length > 0;
+    }
 }
 
 export const nullDeck = () => {

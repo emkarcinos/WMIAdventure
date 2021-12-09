@@ -34,6 +34,13 @@ export class EditableDeck extends BaseDeck {
         this.cards.splice(position - 1, 0, editingCard);
         return true
     }
+
+    hasCardIdExceptCurrentlyEditing(id) {
+        if (!super.hasCardId(id))
+            return false
+
+        return id !== this.getCurrentlyEditingCard().id;
+    }
 }
 
 export const nullEditableDeck = () => {

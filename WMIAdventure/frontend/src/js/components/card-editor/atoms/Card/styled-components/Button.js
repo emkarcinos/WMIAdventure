@@ -9,6 +9,7 @@ function visibilityHandler(name, searchInput) {
 }
 
 const Button = styled.button`
+  opacity: ${({access}) => access ? '100%' : '50%'};
   padding: 12px 10px 10px 48px;
   margin: 0;
   list-style: none;
@@ -24,20 +25,20 @@ const Button = styled.button`
   :hover {
     background-color: ${({theme}) => theme.colors.lightGray};
   }
-  
+
   :before {
     content: '';
     display: block;
     width: 36px;
     height: 36px;
     border-radius: 50%; // Making circular shape
-    
+
     /* Background */
     background-image: url(${({image}) => image ? image : kIcon});
     background-position: center;
     background-repeat: no-repeat;
     background-size: 36px;
-    
+
     /* Positioning */
     position: absolute;
     left: 2px;

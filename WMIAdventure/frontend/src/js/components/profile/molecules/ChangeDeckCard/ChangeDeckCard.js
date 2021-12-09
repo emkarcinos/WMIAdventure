@@ -60,7 +60,9 @@ class ChangeDeckCard extends React.Component {
     }
 
 
-    onNewCardChoose = (event, id, name, subject, tooltip, image) => {
+    onNewCardChoose = (event, id, name, subject, tooltip, image, levels, access) => {
+        if (!access)
+            return;
         this.setState({
             selectedCard: {
                 id: id,
@@ -102,6 +104,7 @@ class ChangeDeckCard extends React.Component {
                                               image={card.image}
                                               searchInput={this.state.searchInput}
                                               levels={card.levels}
+                                              access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
                                               chosenCardHandler={this.onNewCardChoose}/>
                                     </React.Fragment>
                                 );
