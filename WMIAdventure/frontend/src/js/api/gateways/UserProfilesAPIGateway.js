@@ -31,4 +31,13 @@ const getUserById = (userId) => {
     return RequestSender.get(UserProfilesEndpoints.userById(userId));
 }
 
-export default {getAllBasicUsersInfo, getUserDecks, getUserById};
+const updateUsersDeck = (userId, deck) => {
+    const headers = {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+    };
+    const body = JSON.stringify({...deck})
+    return RequestSender.put(UserProfilesEndpoints.userIdDeck(userId), body, headers)
+
+}
+export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck};

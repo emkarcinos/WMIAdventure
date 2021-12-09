@@ -17,6 +17,7 @@ import pencilWhite from "../../../../../assets/icons/pencil.svg"
 import theme from "../../../../utils/theme";
 import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
 import Card from "../../../card-editor/atoms/Card";
+import {updateCurrentUserDeck} from "../../../../storage/user/userData";
 
 /**
  * Props:
@@ -74,7 +75,7 @@ class ChangeDeckCard extends React.Component {
         })
     }
 
-    onNewCardSave = () => {
+    onNewCardSave = async () => {
         const selectedCard = this.state.selectedCard;
         const newCard = new ModelCard(selectedCard.id, 1);
         newCard.name = selectedCard.name;
@@ -83,7 +84,12 @@ class ChangeDeckCard extends React.Component {
         newCard.image = selectedCard.image;
         const didSave = this.props.deck.tryInsertCardAtPosition(newCard, this.state.cardPositionInDeck);
         if (!didSave)
-            alert("Już jest w decku");
+            return;
+
+        const hasUpdated = await updateCurrentUserDeck(this.props.deck.getAsDict())
+        if (!hasUpdated)
+            alert("Nie udało się zaktualizować talii");
+        this.close();
         this.forceUpdate();
     }
 

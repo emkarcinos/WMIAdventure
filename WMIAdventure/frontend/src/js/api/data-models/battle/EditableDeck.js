@@ -41,6 +41,17 @@ export class EditableDeck extends BaseDeck {
 
         return id !== this.getCurrentlyEditingCard().id;
     }
+
+    getAsDict() {
+        const res = {};
+        for (let i = 0; i < this.cards.length; i++) {
+            res[`card${i + 1}`] = {
+                id: this.cards[i].id,
+                level: 1
+            }
+        }
+        return res;
+    }
 }
 
 export const nullEditableDeck = () => {

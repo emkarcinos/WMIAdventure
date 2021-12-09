@@ -1,6 +1,6 @@
 import {profileKey, userDataKeys} from "../localStorageKeys";
 import Cookies from "../../api/Cookies";
-import {get, getWithSetCallback, invalidateItem} from "../cache/cache";
+import {get, getWithSetCallback, invalidateItem, set} from "../cache/cache";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 import {whoAmI} from "../../api/gateways/UsersAPIGateway";
 import {getUserById} from "../profiles/userProfileList";
@@ -40,6 +40,23 @@ export const getCurrentUserId = async () => {
     }
     return await getWithSetCallback(userDataKeys.id, backendCallback, cacheUserDataForSeconds);
 }
+
+/**
+ * Update deck for this current user with caching
+ * @param deck - an array of deck cards (id, level)
+ * @return {Promise<boolean>} True if successful
+ */
+export const updateCurrentUserDeck = async (deck) => {
+    const currentUserId = await getCurrentUserId();
+
+    const backendResp = await UserProfilesAPIGateway.updateUsersDeck(currentUserId, deck);
+    if (!backendResp.ok)
+        return false;
+
+    set(userDataKeys.userDecks, [deck]);
+    return true;
+}
+
 
 export const getUsersDecks = async (userId) => {
     const backendCall = async () => {
