@@ -16,7 +16,6 @@ const getAllBasicUsersInfo = async () => {
             .then(resp => resp.json());
         users.push.apply(users, resp.results);
     }
-    console.log(users);
     return users;
 }
 /**

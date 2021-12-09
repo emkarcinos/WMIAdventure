@@ -52,7 +52,6 @@ class ChangeDeckCard extends React.Component {
     componentDidMount() {
         this.fetchCards();
         setTimeout(() => this.setState({setTranslateY: '0'}), 1);
-        console.log(this.props);
         this.setState({
             selectedCard: this.props.deck.getCurrentlyEditingCard(),
             cardPositionInDeck: this.props.deck.currentlyEditingIdx + 1
