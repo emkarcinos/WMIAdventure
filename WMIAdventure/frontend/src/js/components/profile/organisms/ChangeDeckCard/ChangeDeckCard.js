@@ -216,16 +216,16 @@ class ChangeDeckCard extends React.Component {
                     </ColumnGapContainer>
                 </PopUp>
                 {this.state.fullCardViewPopUp.visible ?
-                    <TransBack visible fullscreen setOpacity={this.state.fullCardViewPopUp.opacity}
+                    <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity}
                                closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
-                        <FullCardView cardName={this.state.selectedCard.name}
-                                      cardSubject={this.state.selectedCard.subject}
-                                      cardImage={this.state.selectedCard.image}
-                                      cardTooltip={this.state.selectedCard.tooltip}
-                                      description={this.state.selectedCard.description}
-                                      common={this.state.selectedCard.level === 1}
-                                      gold={this.state.selectedCard.level === 2}
-                                      epic={this.state.selectedCard.level === 3}
+                        <FullCardView cardName={this.props.deck.cards[this.props.deck.currentlyEditingIdx].name}
+                                      cardSubject={this.props.deck.cards[this.props.deck.currentlyEditingIdx].subject}
+                                      cardImage={this.props.deck.cards[this.props.deck.currentlyEditingIdx].image}
+                                      cardTooltip={this.props.deck.cards[this.props.deck.currentlyEditingIdx].tooltip}
+                                      description={this.props.deck.cards[this.props.deck.currentlyEditingIdx].description}
+                                      common={this.props.deck.cards[this.props.deck.currentlyEditingIdx].level === 1}
+                                      gold={this.props.deck.cards[this.props.deck.currentlyEditingIdx].level === 2}
+                                      epic={this.props.deck.cards[this.props.deck.currentlyEditingIdx].level === 3}
                                       setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
                     </TransBack> : null}
             </>
