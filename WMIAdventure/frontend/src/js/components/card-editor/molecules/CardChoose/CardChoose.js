@@ -58,7 +58,8 @@ class CardChoose extends React.Component {
                                                   image={card.image}
                                                   searchInput={this.state.searchInput}
                                                   levels={card.levels}
-                                                  chosenCardHandler={this.props.chosenCardHandler}/>
+                                                  chosenCardHandler={this.props.chosenCardHandler}
+                                                  access={true}/>
                                         </React.Fragment>
                                     );
                                 })
