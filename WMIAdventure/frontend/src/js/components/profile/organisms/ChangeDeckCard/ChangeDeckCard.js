@@ -20,6 +20,7 @@ import Card from "../../../card-editor/atoms/Card";
 import {updateCurrentUserDeck} from "../../../../storage/user/userData";
 import TransBack from "../../../global/organisms/TransBack";
 import FullCardView from "../../../global/atoms/FullCardView";
+import {nextStepAnimationDuration} from "../../../../utils/globals";
 
 /**
  * Props:
@@ -40,19 +41,51 @@ class ChangeDeckCard extends React.Component {
             image: null
         },
         cardPositionInDeck: 1,
-        fullCardViewPopUp: false,
+        fullCardViewPopUp: {
+            visible: false,
+            opacity: 0,
+            cardTranslateY: '-100vh',
+        }
     }
 
     showFullCardViewPopUp = () => {
         this.setState({
-            fullCardViewPopUp: true,
+            fullCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                cardTranslateY: '-100vh',
+            }
         });
+
+        setTimeout(() => {
+            this.setState({
+                fullCardViewPopUp: {
+                    visible: true,
+                    opacity: 1,
+                    cardTranslateY: '0',
+                }
+            });
+        }, 10);
     }
 
     hideFulLCardViewPopUp = () => {
         this.setState({
-            fullCardViewPopUp: false,
+            fullCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                cardTranslateY: '-100vh',
+            }
         });
+
+        setTimeout(() => {
+            this.setState({
+                fullCardViewPopUp: {
+                    visible: false,
+                    opacity: 0,
+                    cardTranslateY: '-100vh',
+                }
+            });
+        }, nextStepAnimationDuration);
     }
 
     handleSearch = (event) => {
@@ -182,8 +215,9 @@ class ChangeDeckCard extends React.Component {
                         {this.renderCardChoose()}
                     </ColumnGapContainer>
                 </PopUp>
-                {this.state.fullCardViewPopUp ?
-                    <TransBack visible fullscreen closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
+                {this.state.fullCardViewPopUp.visible ?
+                    <TransBack visible fullscreen setOpacity={this.state.fullCardViewPopUp.opacity}
+                               closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
                         <FullCardView cardName={this.state.selectedCard.name}
                                       cardSubject={this.state.selectedCard.subject}
                                       cardImage={this.state.selectedCard.image}
@@ -191,7 +225,8 @@ class ChangeDeckCard extends React.Component {
                                       description={this.state.selectedCard.description}
                                       common={this.state.selectedCard.level === 1}
                                       gold={this.state.selectedCard.level === 2}
-                                      epic={this.state.selectedCard.level === 3}/>
+                                      epic={this.state.selectedCard.level === 3}
+                                      setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
                     </TransBack> : null}
             </>
         );
