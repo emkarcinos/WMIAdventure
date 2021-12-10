@@ -184,9 +184,14 @@ class ChangeDeckCard extends React.Component {
                 </PopUp>
                 {this.state.fullCardViewPopUp ?
                     <TransBack visible fullscreen closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
-                        <FullCardView cardName={'test'} cardSubject={'test'}
-                                      cardImage={pencilWhite} cardTooltip={'test'}
-                                      description={'test'} common/>
+                        <FullCardView cardName={this.state.selectedCard.name}
+                                      cardSubject={this.state.selectedCard.subject}
+                                      cardImage={this.state.selectedCard.image}
+                                      cardTooltip={this.state.selectedCard.tooltip}
+                                      description={this.state.selectedCard.description}
+                                      common={this.state.selectedCard.level === 1}
+                                      gold={this.state.selectedCard.level === 2}
+                                      epic={this.state.selectedCard.level === 3}/>
                     </TransBack> : null}
             </>
         );
