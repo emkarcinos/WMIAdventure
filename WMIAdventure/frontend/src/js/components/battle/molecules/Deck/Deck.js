@@ -4,8 +4,12 @@ import MainDiv from './styled-components/MainDiv';
 import Header from './styled-components/Header';
 import Div from './styled-components/Div';
 import CompactCardView from '../../../global/atoms/CompactCardView';
+import ChangeDeckCard from "../../../profile/molecules/ChangeDeckCard";
 
 class Deck extends React.Component {
+    state = {
+        editorVisible: false,
+    }
 
     renderCompactCardIdx(idx) {
         const card = this.props.deck.cards[idx];
@@ -13,10 +17,29 @@ class Deck extends React.Component {
             <CompactCardView setWidth={'78px'} setHeight={'126px'} setMargin={'0'}
                              setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                              cardName={card.name} cardImage={card.image} cardLevel={card.level}
-                             setIconMarginBottom={'8px'} shadow/>
+                             setIconMarginBottom={'8px'} shadow onClick={() => this.setEditorVisible(card)}/>
         )
     }
 
+    setEditorVisible = (card) => {
+        this.props.deck.setCurrentlyEditingCard(card);
+        this.setState({editorVisible: true});
+    }
+
+    closeEditor = () => {
+        this.setState({editorVisible: false});
+    }
+
+    renderEditComponent = () => {
+        if (!this.state.editorVisible)
+            return;
+
+        return (
+            <>
+                <ChangeDeckCard closeHandler={this.closeEditor} deck={this.props.deck}/>
+            </>
+        )
+    }
 
     render() {
         return (
@@ -35,6 +58,7 @@ class Deck extends React.Component {
                         {this.renderCompactCardIdx(4)}
                     </FlexGapContainer>
                 </Div>
+                {this.renderEditComponent()}
             </MainDiv>
         );
     }
