@@ -1,12 +1,12 @@
-export class Deck {
-    /** @type [Card] */
-    cards = [];
+import {BaseDeck} from "./BaseDeck";
+
+export class Deck extends BaseDeck {
 
     constructor(cards) {
+        super(cards);
         let initialPosition = 1;
-        for (const card of cards) {
+        for (const card of this.cards) {
             card.initialPosition = initialPosition;
-            this.cards.push(card);
             initialPosition++;
         }
     }

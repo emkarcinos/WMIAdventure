@@ -12,7 +12,6 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
-  z-index: 500;
   transition: transform 0.3s ease-in-out;
 
   &:hover {

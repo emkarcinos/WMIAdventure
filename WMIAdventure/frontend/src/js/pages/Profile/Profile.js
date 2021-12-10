@@ -21,6 +21,7 @@ import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
 import LeftProfileContainer from "./styled-componets/LeftProfileContainer";
 import RightDeckContainer from "./styled-componets/RightDeckContainer";
 import {Redirect} from "react-router-dom";
+import {EditableDeck, nullEditableDeck} from "../../api/data-models/battle/EditableDeck";
 import MyDeck from "../../components/profile/molecules/MyDeck";
 import DeckHeader from "./styled-componets/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
@@ -37,7 +38,7 @@ class Profile extends React.Component {
         },
 
         userNotLoggedIn: false,
-        fullCards: [],
+        deck: nullEditableDeck(),
 
         editProfilePopUp: {
             visible: false,
@@ -104,7 +105,7 @@ class Profile extends React.Component {
             return;
 
         const userSpecificCards = await cardsFromDeckData(data);
-        this.setState({fullCards: userSpecificCards});
+        this.setState({deck: new EditableDeck(userSpecificCards)});
     }
 
     componentDidMount() {
@@ -142,7 +143,7 @@ class Profile extends React.Component {
                                         <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
                                     </ColumnGapContainer>
                                     <Line/>
-                                    {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
+                                    <MyDeck deck={this.state.deck}/>
                                 </ColumnGapContainer>
                                 <ColumnGapContainer gap={'10px'}>
                                     <ButtonWithIcon setWidth={'158px'} icon={editProfil}
@@ -162,8 +163,7 @@ class Profile extends React.Component {
                                          username={this.state.userData.username}
                                          avatar={this.state.userData.image}/>
                         </PopUpProfile> : null
-                    }
-                    </>
+                    }</>
                 </Media>
                 <Media query={desktop}>
                     <>
@@ -196,7 +196,7 @@ class Profile extends React.Component {
                                 <DeckHeader>
                                     Twoja talia
                                 </DeckHeader>
-                                {this.state.fullCards ? <MyDeck cards={this.state.fullCards}/> : null}
+                                <MyDeck deck={this.state.deck}/>
                             </RightDeckContainer>
                         </MainDesktopContainer>
                         {
@@ -213,7 +213,8 @@ class Profile extends React.Component {
                     </>
                 </Media>
             </>
-        );
+        )
+
     }
 }
 

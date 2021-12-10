@@ -3,9 +3,10 @@ import styled from 'styled-components';
 const Name = styled.p`
   color: ${({theme}) => theme.colors.dark};
   font-size: 18px;
-  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  font-weight: ${({theme}) => theme.weight.medium};
   padding: 0;
-  margin: 0 0 4px 0;
+  margin: 0;
   max-width: 280px;
   text-align: start;
 `;

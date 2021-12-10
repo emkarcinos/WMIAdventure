@@ -7,10 +7,10 @@ import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Header from "./styled-components/Header";
 import FullCardView from "../../../global/atoms/FullCardView";
+import ChangeDeckCard from "../../molecules/ChangeDeckCard";
 import MiniCard from "../../atoms/MiniCard";
 
 class MyDeck extends React.Component {
-
     nullCard = {
         id: 0,
         level: 1,
@@ -19,23 +19,52 @@ class MyDeck extends React.Component {
         tooltip: '',
         image: null
     }
+    state = {
+        editorVisible: true,
+    }
+
+    componentDidMount() {
+        this.setState({editorVisible: false})
+    }
 
     getCardByNumber = (number) => {
-        if (!this.props.cards)
+        if (!this.props.deck.cards)
             return this.nullCard;
 
-        const card = this.props.cards[number - 1];
+        const card = this.props.deck.cards[number - 1];
         if (!card)
             return this.nullCard
 
         return card
     }
 
+
+    renderEditComponent = () => {
+        if (!this.state.editorVisible)
+            return;
+
+        return (
+            <>
+                <ChangeDeckCard selectedCard={this.state.selectedCard} closeHandler={this.closeEditor}
+                                deck={this.props.deck}/>
+            </>
+        )
+    }
+
+    setEditorVisible = (card) => {
+        this.props.deck.setCurrentlyEditingCard(card);
+        this.setState({editorVisible: true});
+    }
+
+    closeEditor = () => {
+        this.setState({editorVisible: false});
+    }
     renderCardNumber = (number) => {
         const card = this.getCardByNumber(number);
-        const borderDown = (number <= 3);
+        const borderDown = (number > 3);
         return (
-            <MiniCard icon={card.image} level={card.level} borderDown={borderDown}/>
+            <MiniCard icon={card.image} level={card.level} borderDown={borderDown}
+                      onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -44,7 +73,8 @@ class MyDeck extends React.Component {
         return (
             <CompactCardView cardName={card.name} setWidth={'126px'}
                              cardImage={card.image} setHeight={'200px'}
-                             cardLevel={card.level} setMargin={'0'} shadow/>
+                             cardLevel={card.level} setMargin={'0'} shadow
+                             onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -55,7 +85,8 @@ class MyDeck extends React.Component {
                           cardImage={card.image} cardTooltip={card.tooltip}
                           description={card.description} setWidth={'258px'} setHeight={'456px'}
                           common={card.level === 1} gold={card.level === 2} epic={card.level === 3}
-                          setMargin={'0'} shadow/>
+                          setMargin={'0'} shadow
+                          onClick={() => this.setEditorVisible(card)}/>
         );
     }
 
@@ -77,6 +108,7 @@ class MyDeck extends React.Component {
                             {this.renderCardNumber(4)}
                             {this.renderCardNumber(5)}
                         </FlexGapContainer>
+                        {this.renderEditComponent()}
                     </ColumnGapContainer>
                 </Media>
 
@@ -93,6 +125,7 @@ class MyDeck extends React.Component {
                                 {this.renderCardNumberDesktop(5)}
                             </FlexGapContainer>
                         </ColumnGapContainer>
+                        {this.renderEditComponent()}
                     </DesktopDeckContainer>
                 </Media>
 
@@ -107,6 +140,7 @@ class MyDeck extends React.Component {
                                 {this.renderCardNumberLargeDesktop(5)}
                             </FlexGapContainer>
                         </ColumnGapContainer>
+                        {this.renderEditComponent()}
                     </DesktopDeckContainer>
                 </Media>
             </>

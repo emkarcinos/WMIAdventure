@@ -7,6 +7,8 @@ class UserProfilesEndpoints {
     static main = API_URL + 'user-profiles/';
     static userDecks = (userId) => `${UserProfilesEndpoints.main}${userId}/decks/`;
     static userById = (userId) => `${UserProfilesEndpoints.main}${userId}/`;
+    // If we have more decks that one the deck number will also be needed
+    static userIdDeck = (userId) => `${UserProfilesEndpoints.main}${userId}/decks/1/`;
 }
 
 export default UserProfilesEndpoints;

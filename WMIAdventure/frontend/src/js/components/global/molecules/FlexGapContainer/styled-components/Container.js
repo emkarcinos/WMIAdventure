@@ -11,6 +11,7 @@ const Container = styled.div`
   height: ${({setHeight}) => setHeight ? setHeight : 'auto'};
   opacity: ${({opacity}) => opacity ? opacity : '100%'};
   transition: opacity 0.5s ease-in-out;
+  padding: ${({setPadding}) => setPadding ? setPadding : '0'};
 `;
 
 export default Container;

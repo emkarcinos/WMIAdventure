@@ -123,7 +123,8 @@ class CompactCardView extends React.Component {
                  setTranslateX={this.props.setTranslateX} setTranslateY={this.props.setTranslateY}
                  decorationHeight={this.props.decorationHeight} shadow={this.props.shadow}
                  cardIndexInDeck={this.state.cardIndexInDeck} setOpacity={this.state.compactCardOpacity}
-                 setScale={this.props.setScale} hasBuff={this.props.buffs && (this.props.buffs.length !== 0)}>
+                 setScale={this.props.setScale} hasBuff={this.props.buffs && (this.props.buffs.length !== 0)}
+                 onClick={this.props.onClick}>
                 <BuffsContainer>
                     {this.getBuffs()}
                 </BuffsContainer>

@@ -42,7 +42,11 @@ class PlayerFactory:
         if len(user_decks) == 0:
             raise BadBattleProfileException(user_profile_model)
 
+        # TODO: Uncomment this for attacker/defender deck support
+        """
         if is_attacker and len(user_decks) == 2:
             return user_decks[1].deck
         else:
             return user_decks[0].deck
+        """
+        return user_decks[0].deck
