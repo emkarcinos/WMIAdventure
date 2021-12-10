@@ -13,6 +13,7 @@ const TransparentBack = styled.div`
   z-index: 1000;
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '0'};
   transition: opacity 0.3s ease-in-out;
+  overflow-y: hidden;
 `;
 
 export default TransparentBack;
