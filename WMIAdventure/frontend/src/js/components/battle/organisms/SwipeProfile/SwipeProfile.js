@@ -7,13 +7,13 @@ import TinyUserProfile from '../../molecules/TinyUserProfile';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import Deck from '../../molecules/Deck';
-import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import {getCurrentUserDecks} from "../../../../storage/user/userData";
 import UserInfo from "../../../global/atoms/UserInfo";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
+import P from "./styled-components/P";
 
 class SwipeProfile extends React.Component {
 
@@ -92,9 +92,7 @@ class SwipeProfile extends React.Component {
                             </FlexCenterContainer>
                             <FlexCenterContainer>
                                 <Deck deck={this.state.deck}/>
-                                <Edit>
-                                    Edytuj
-                                </Edit>
+                                <P>Dotknij kartę aby zmodyfikować talię</P>
                             </FlexCenterContainer>
                         </>
                     </Article>
