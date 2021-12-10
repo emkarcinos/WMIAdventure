@@ -18,6 +18,8 @@ import theme from "../../../../utils/theme";
 import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
 import Card from "../../../card-editor/atoms/Card";
 import {updateCurrentUserDeck} from "../../../../storage/user/userData";
+import TransBack from "../../../global/organisms/TransBack";
+import FullCardView from "../../../global/atoms/FullCardView";
 
 /**
  * Props:
@@ -38,6 +40,19 @@ class ChangeDeckCard extends React.Component {
             image: null
         },
         cardPositionInDeck: 1,
+        fullCardViewPopUp: false,
+    }
+
+    showFullCardViewPopUp = () => {
+        this.setState({
+            fullCardViewPopUp: true,
+        });
+    }
+
+    hideFulLCardViewPopUp = () => {
+        this.setState({
+            fullCardViewPopUp: false,
+        });
     }
 
     handleSearch = (event) => {
@@ -154,7 +169,7 @@ class ChangeDeckCard extends React.Component {
                             </CompactCardView>
                             <ColumnGapContainer gap={'10px'}>
                                 <UserInfo label={'Pozycja w talii'} value={this.getInputButton()}/>
-                                <ButtonWithIcon icon={eye}>
+                                <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
                                     Podgląd
                                 </ButtonWithIcon>
                                 <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
@@ -167,6 +182,12 @@ class ChangeDeckCard extends React.Component {
                         {this.renderCardChoose()}
                     </ColumnGapContainer>
                 </PopUp>
+                {this.state.fullCardViewPopUp ?
+                    <TransBack visible fullscreen closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
+                        <FullCardView cardName={'test'} cardSubject={'test'}
+                                      cardImage={pencilWhite} cardTooltip={'test'}
+                                      description={'test'} common/>
+                    </TransBack> : null}
             </>
         );
     }

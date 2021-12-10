@@ -7,9 +7,9 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 48px;
+  top: ${({fullscreen}) => fullscreen ? '0' : '48px'};
   left: 0;
-  height: calc(100vh - 48px);
+  height: ${({fullscreen}) => fullscreen ? '100vh' : 'calc(100vh - 48px)'};
   width: 100%;
   z-index: ${({customZIndex}) => customZIndex ? customZIndex : 'auto'};
   background-color: ${({theme}) => theme.colors.darkTrans};
