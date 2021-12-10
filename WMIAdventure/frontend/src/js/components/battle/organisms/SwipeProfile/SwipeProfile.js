@@ -10,8 +10,10 @@ import Deck from '../../molecules/Deck';
 import Edit from './styled-components/Edit';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
-import {getUsersDecks} from "../../../../storage/user/userData";
+import {getCurrentUserDecks} from "../../../../storage/user/userData";
 import UserInfo from "../../../global/atoms/UserInfo";
+import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
+import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
 
 class SwipeProfile extends React.Component {
 
@@ -19,7 +21,7 @@ class SwipeProfile extends React.Component {
         hide: true,
         tinyDeckVisible: true,
         tinyDeckDisplay: true,
-        userDeck: null
+        deck: nullEditableDeck()
     }
 
     showHandler = () => {
@@ -37,16 +39,17 @@ class SwipeProfile extends React.Component {
         this.props.hideScroll();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.userId === this.props.userId) return;
+    async getDeck() {
+        const data = await getCurrentUserDecks();
+        if (!data)
+            return;
 
-        getUsersDecks(this.props.userId)
-            .then(resp => {
-                if (resp) {
-                    const attackerDeck = resp[0];
-                    this.setState({userDeck: attackerDeck});
-                }
-            });
+        const userSpecificCards = await cardsFromDeckData(data);
+        this.setState({deck: new EditableDeck(userSpecificCards)});
+    }
+
+    componentDidMount() {
+        this.getDeck()
     }
 
     hideHandler = () => {
@@ -71,7 +74,7 @@ class SwipeProfile extends React.Component {
                 <Div hide={this.state.hide}>
                     <TinyDeck
                         showHandler={this.showHandler}
-                        deck={this.state.userDeck}
+                        deck={this.state.deck}
                         tinyDeckVisible={this.state.tinyDeckVisible}
                         tinyDeckDisplay={this.state.tinyDeckDisplay}
                     />
@@ -88,7 +91,7 @@ class SwipeProfile extends React.Component {
                                 </FlexGapContainer>
                             </FlexCenterContainer>
                             <FlexCenterContainer>
-                                <Deck deck={this.state.userDeck}/>
+                                <Deck deck={this.state.deck}/>
                                 <Edit>
                                     Edytuj
                                 </Edit>
