@@ -90,7 +90,7 @@ class TinyProfileDesktop extends React.Component {
                                                  cardImage={this.state[`card${i}`].image}
                                                  cardLevel={this.state[`card${i}`].level}
                                                  setWidth={'90px'} setHeight={'150px'}
-                                                 setMargin={'0'} ownFontSize={'20px'}
+                                                 setMargin={'0'}
                                                  setIconWidth={'60px'} setIconHeight={'60px'}
                                                  decorationHeight={'18px'}/>
                             );
