@@ -22,6 +22,7 @@ import TransBack from "../../../global/organisms/TransBack";
 import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
+import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 
 /**
  * Props:
@@ -141,13 +142,16 @@ class ChangeDeckCard extends React.Component {
         newCard.subject = selectedCard.subject;
         newCard.tooltip = selectedCard.tooltip;
         newCard.image = selectedCard.image;
-        const didSave = this.props.deck.tryInsertCardAtPosition(newCard, this.state.cardPositionInDeck);
+        const insertCommand = new InsertCardAtPositionCommand(this.props.deck);
+        const didSave = insertCommand.execute(newCard, this.state.cardPositionInDeck);
         if (!didSave)
             return;
 
         const hasUpdated = await updateCurrentUserDeck(this.props.deck.getAsDict())
-        if (!hasUpdated)
+        if (!hasUpdated) {
             alert("Nie udało się zaktualizować talii");
+            insertCommand.rollback();
+        }
         this.close();
         this.forceUpdate();
     }
