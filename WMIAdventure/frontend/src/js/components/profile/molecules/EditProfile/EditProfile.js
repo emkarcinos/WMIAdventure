@@ -65,7 +65,12 @@ class EditProfile extends React.Component {
         const basicUserData = new BasicUserData(
             this.props.userId, this.state.newUsername, 2, this.state.newAvatar);
         EditUserProfileAPIGateway.sendUserNewData(basicUserData, this.userDataUpdateSuccess, this.userDataUpdateFail)
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    error: true,
+                });
+            });
     }
 
     render() {
@@ -91,7 +96,7 @@ class EditProfile extends React.Component {
                     </FlexGapContainer>
                 </ColumnGapContainer>
                 <GenericPopup header={"Błąd!"}
-                              text={"Nie udało się dokonać zmiam profilu użytkownika."}
+                              text={`Nie udało się dokonać zmiam profilu użytkownika.`}
                               buttonText={"OK"}
                               show={this.state.error}
                               onClickHandler={this.closeError}/>
