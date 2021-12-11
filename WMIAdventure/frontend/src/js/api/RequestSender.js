@@ -80,23 +80,6 @@ class RequestSender {
 
         return RequestSender.makeRequest(url, init);
     }
-
-    /**
-     * Sends PATCH request.
-     * @param url
-     * @param body Request body. You have to prepare body in the format that you want it to be. (json, form data, etc.)
-     * @param headers
-     * @returns {Promise<Response>} Response.
-     */
-    static patch = (url, body, headers = {}) => {
-        let init = {
-            method: 'patch',
-            headers: headers,
-            body: body
-        };
-
-        return RequestSender.makeRequest(url, init);
-    }
 }
 
 export default RequestSender;
