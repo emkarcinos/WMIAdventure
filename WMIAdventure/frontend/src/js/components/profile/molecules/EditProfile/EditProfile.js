@@ -96,7 +96,7 @@ class EditProfile extends React.Component {
                     </FlexGapContainer>
                 </ColumnGapContainer>
                 <GenericPopup header={"Błąd!"}
-                              text={`Nie udało się dokonać zmiam profilu użytkownika.`}
+                              text={`Nie udało się dokonać zmian profilu użytkownika.`}
                               buttonText={"OK"}
                               show={this.state.error}
                               onClickHandler={this.closeError}/>
