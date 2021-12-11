@@ -1,9 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import ImageField
 
 from cards.models import Card
-from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
 from .models import UserProfile, Deck, UserCard, UserDeck
 
@@ -32,8 +30,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         data_without_semester = {
             'user': validated_data['user'],
             'displayedUsername': validated_data['displayedUsername'],
-            'image': validated_data.get('image', None)
+            'image': validated_data.get('image', instance.image)
         }
+        print(instance.image)
         return super().update(instance, data_without_semester)
 
 
