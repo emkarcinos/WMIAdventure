@@ -18,7 +18,7 @@ class UserAvatarInput extends React.Component {
                     <AvatarImagePreview
                         src={this.props.currentAvatar ? this.props.currentAvatar : upload_image_dark}
                         alt='Załadowany obrazek/ikona'/>
-                    <ImageInput id='avatar' name='avatar' type='file' accept='image/png, .svg'
+                    <ImageInput id='avatar' name='avatar' type='file' accept='image/png, .jpg, .svg'
                                 onChange={this.props.updateAvatar}/>
                     <ImageInputPrompt>Wybierz z pliku</ImageInputPrompt>
                 </DivImageInput>

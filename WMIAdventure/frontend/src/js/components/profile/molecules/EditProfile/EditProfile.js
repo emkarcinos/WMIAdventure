@@ -11,6 +11,7 @@ import xClose from '../../../../../assets/icons/x-close.svg';
 import BasicUserData from "../../../../api/data-models/user/BasicUserData";
 import EditUserProfileAPIGateway from "../../../../api/gateways/user-profile-update/EditUserProfileAPIGateway";
 import {purgeUserData} from "../../../../storage/user/userData";
+import GenericPopup from "../../../global/atoms/GenericPopup";
 
 class EditProfile extends React.Component {
 
@@ -18,6 +19,8 @@ class EditProfile extends React.Component {
         newUsername: this.props.username ? this.props.username : '',
         newAvatar: this.props.avatar ? this.props.avatar : '',
         newAvatarPath: this.props.avatar ? this.props.avatar : null,
+        error: false,
+        success: false,
     }
 
     updateUserName = (event) => {
@@ -36,43 +39,73 @@ class EditProfile extends React.Component {
     }
 
     userDataUpdateSuccess = () => {
-        alert("Edycja profilu powiodła się!");
+        this.setState({
+            success: true,
+        });
         purgeUserData();
-        window.location.reload();
     }
 
     userDataUpdateFail = () => {
-        alert("Nie udało się dokonać zmiam profilu użytkownika.");
+        this.setState({
+            error: true,
+        });
+    }
+
+    closeSuccess = () => {
+        window.location.reload();
+    }
+
+    closeError = () => {
+        this.setState({
+            error: false,
+        });
     }
 
     updateUserInApi = () => {
         const basicUserData = new BasicUserData(
             this.props.userId, this.state.newUsername, 2, this.state.newAvatar);
         EditUserProfileAPIGateway.sendUserNewData(basicUserData, this.userDataUpdateSuccess, this.userDataUpdateFail)
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    error: true,
+                });
+            });
     }
 
     render() {
         return (
-            <ColumnGapContainer setWidth={'100%'} as={'section'} gap={'12px'}>
-                <Header>
-                    Edytuj profil
-                </Header>
-                <UserNameInput currentUsername={this.state.newUsername}
-                               updateUserName={this.updateUserName}/>
-                <UserAvatarInput currentAvatar={this.state.newAvatarPath}
-                                 updateAvatar={this.updateAvatar}/>
-                <FlexGapContainer gap={'10px'} setMargin={'20px 0'}>
-                    <ButtonWithIcon icon={xClose}
-                                    color={theme.colors.dark}
-                                    handler={this.props.closeHandler}>
-                        Wróć
-                    </ButtonWithIcon>
-                    <ButtonWithIcon icon={pencil} handler={this.updateUserInApi}>
-                        Zapisz
-                    </ButtonWithIcon>
-                </FlexGapContainer>
-            </ColumnGapContainer>
+            <>
+                <ColumnGapContainer setWidth={'100%'} as={'section'} gap={'12px'}>
+                    <Header>
+                        Edytuj profil
+                    </Header>
+                    <UserNameInput currentUsername={this.state.newUsername}
+                                   updateUserName={this.updateUserName}/>
+                    <UserAvatarInput currentAvatar={this.state.newAvatarPath}
+                                     updateAvatar={this.updateAvatar}/>
+                    <FlexGapContainer gap={'10px'} setMargin={'20px 0'}>
+                        <ButtonWithIcon icon={xClose}
+                                        color={theme.colors.dark}
+                                        handler={this.props.closeHandler}>
+                            Wróć
+                        </ButtonWithIcon>
+                        <ButtonWithIcon icon={pencil} handler={this.updateUserInApi}>
+                            Zapisz
+                        </ButtonWithIcon>
+                    </FlexGapContainer>
+                </ColumnGapContainer>
+                <GenericPopup header={"Błąd!"}
+                              text={`Nie udało się dokonać zmian profilu użytkownika.`}
+                              buttonText={"OK"}
+                              show={this.state.error}
+                              onClickHandler={this.closeError}/>
+                <GenericPopup header={"Sukces!"}
+                              text={"Modyfikacja profilu powiodła się."}
+                              buttonText={"OK"}
+                              show={this.state.success}
+                              onClickHandler={this.closeSuccess}/>
+            </>
         );
     }
 }

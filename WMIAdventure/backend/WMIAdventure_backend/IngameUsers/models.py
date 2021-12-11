@@ -52,7 +52,6 @@ class UserProfile(models.Model):
         super(UserProfile, self).delete(*args, **kwargs)
         delete_file(self, 'image')
 
-
 class UserCard(models.Model):
     """
     Model storing information about ownership of concrete card.

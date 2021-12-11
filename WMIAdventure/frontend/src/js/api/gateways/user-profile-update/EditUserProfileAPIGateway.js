@@ -13,7 +13,7 @@ const sendUserNewAvatar = (serverResponse, basicUserData,
                 if (response.ok)
                     successHandler();
                 else
-                    failureHandler();
+                    failureHandler(serverResponse);
             }
         );
     })
