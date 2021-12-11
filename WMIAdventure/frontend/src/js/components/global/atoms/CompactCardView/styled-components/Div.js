@@ -39,6 +39,12 @@ const Div = styled.div`
   order: ${({cardIndexInDeck, battleOnDesktop}) => (cardIndexInDeck && battleOnDesktop) ? cardIndexInDeck : '0'};
   border: 2px solid ${({hasBuff, level, theme}) => hasBuff ? colorHandler(level, theme) : 'none'};
 
+  cursor: ${({onClick}) => onClick ? 'pointer' : 'default'};
+
+  &:hover {
+    transform: scale(${({onClick}) => onClick ? '1.05' : '1'});
+  }
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: ${({setWidth}) => setWidth ? setWidth : '144px'};
     height: ${({setHeight}) => setHeight ? setHeight : '220px'};

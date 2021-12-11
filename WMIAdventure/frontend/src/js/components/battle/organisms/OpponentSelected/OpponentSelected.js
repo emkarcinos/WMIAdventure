@@ -23,6 +23,8 @@ import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
 import UserInfo from "../../../global/atoms/UserInfo";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
+import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
+import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
 
 class OpponentSelected extends React.Component {
 
@@ -32,7 +34,8 @@ class OpponentSelected extends React.Component {
         popUpHover: false,
         postBattlePos: '-100vh',
         postBattleOpacity: '0',
-        userDeck: null,
+        userDeck: nullEditableDeck(),
+        opponentDeck: nullEditableDeck(),
 
         isBattleStarting: false,
         // states uses for mount battleView
@@ -54,6 +57,15 @@ class OpponentSelected extends React.Component {
         }
     }
 
+    async getDeck() {
+        const data = await getCurrentUserDecks();
+        if (!data)
+            return;
+
+        const userSpecificCards = await cardsFromDeckData(data);
+        this.setState({userDeck: new EditableDeck(userSpecificCards)});
+    }
+
     componentDidMount() {
         getCurrentUserData()
             .then(user => user ? this.setState({
@@ -64,13 +76,7 @@ class OpponentSelected extends React.Component {
                     avatar: user.image
                 }
             }) : null)
-        getCurrentUserDecks()
-            .then(resp => {
-                if (resp) {
-                    const attackerDeck = resp[0];
-                    this.setState({userDeck: attackerDeck});
-                }
-            });
+        this.getDeck();
     }
 
     handleBattleErrors = (resp) => {
@@ -149,10 +155,13 @@ class OpponentSelected extends React.Component {
 
     postBattle = (data) => {
         this.props.kuceStopFight();
-        this.setState({
-            postBattle: true,
-            opponentDeck: data.outcome.defender.deck
-        });
+        cardsFromDeckData([data.outcome.defender.deck])
+            .then(cards => {
+                this.setState({
+                    postBattle: true,
+                    opponentDeck: new EditableDeck(cards)
+                });
+            })
         if (data.outcome.winner === null) {
             this.setState({win: null})
             return
@@ -381,7 +390,7 @@ class OpponentSelected extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                             <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                         </FlexGapContainer>
-                                        <TinyCards deck={null} setMargin={'0'} gap={'10px'}/>
+                                        <TinyCards deck={nullEditableDeck()} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
                                 </FlexGapContainer>
 
