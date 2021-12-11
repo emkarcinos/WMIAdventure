@@ -45,7 +45,7 @@ class Profile extends React.Component {
             visible: false,
             opacity: '0',
             translateX: '-100vh'
-        }
+        },
     }
 
     openEditProfilePopUp = () => {

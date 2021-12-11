@@ -18,11 +18,11 @@ import theme from "../../../../utils/theme";
 import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
 import Card from "../../../card-editor/atoms/Card";
 import {updateCurrentUserDeck} from "../../../../storage/user/userData";
-import {desktop, mobile} from "../../../../utils/globals";
-import Media from 'react-media';
-import FullCardView from "../../../global/atoms/FullCardView";
 import TransBack from "../../../global/organisms/TransBack";
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
+import FullCardView from "../../../global/atoms/FullCardView";
+import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
+import Media from 'react-media';
 
 /**
  * Props:
@@ -44,7 +44,51 @@ class ChangeDeckCard extends React.Component {
             image: null
         },
         cardPositionInDeck: 1,
-        visible: false,
+        fullCardViewPopUp: {
+            visible: false,
+            opacity: 0,
+            cardTranslateY: '-100vh',
+        }
+    }
+
+    showFullCardViewPopUp = () => {
+        this.setState({
+            fullCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                cardTranslateY: '-100vh',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                fullCardViewPopUp: {
+                    visible: true,
+                    opacity: 1,
+                    cardTranslateY: '0',
+                }
+            });
+        }, 10);
+    }
+
+    hideFulLCardViewPopUp = () => {
+        this.setState({
+            fullCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                cardTranslateY: '-100vh',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                fullCardViewPopUp: {
+                    visible: false,
+                    opacity: 0,
+                    cardTranslateY: '-100vh',
+                }
+            });
+        }, nextStepAnimationDuration);
     }
 
     handleSearch = (event) => {
@@ -147,6 +191,7 @@ class ChangeDeckCard extends React.Component {
     hoverFalse = () => {
         this.setState({popUpHover: false});
     }
+
     getInputButton = (isDesktop) => {
         return (
             <InputWithIcon width={isDesktop ? '28px' : '20px'} type={'number'} min={1} max={5} icon={pencilGrey}
@@ -175,33 +220,52 @@ class ChangeDeckCard extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <PopUp visible={true}
-                           closeHandler={this.close}
-                           setTranslateY={this.state.setTranslateY}>
-                        <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
-                                            gap={'10px'}>
-                            <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
-                                              space={true}>
-                                <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
-                                                 cardLevel={this.state.selectedCard.level}
-                                                 cardImage={this.state.selectedCard.image}>
+                    <>
+                        <PopUp visible={true}
+                               closeHandler={this.close}
+                               setTranslateY={this.state.setTranslateY}>
+                            <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
+                                                gap={'10px'}>
+                                <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
+                                                  space={true}>
+                                    <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
+                                                     cardLevel={this.state.selectedCard.level}
+                                                     cardImage={this.state.selectedCard.image}>
 
-                                </CompactCardView>
-                                <ColumnGapContainer gap={'10px'}>
-                                    <UserInfo label={'Pozycja w talii'} value={this.getInputButton(false)}/>
-                                    <ButtonWithIcon icon={eye}>
-                                        Podgląd
-                                    </ButtonWithIcon>
-                                    <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
-                                                    handler={this.onNewCardSave}>
-                                        Zapisz
-                                    </ButtonWithIcon>
-                                </ColumnGapContainer>
-                            </FlexGapContainer>
-                            <P>Wymień na</P>
-                            {this.renderCardChoose()}
-                        </ColumnGapContainer>
-                    </PopUp>
+                                    </CompactCardView>
+                                    <ColumnGapContainer gap={'10px'}>
+                                        <UserInfo label={'Pozycja w talii'} value={this.getInputButton(false)}/>
+                                        <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
+                                            Podgląd
+                                        </ButtonWithIcon>
+                                        <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
+                                                        handler={this.onNewCardSave}>
+                                            Zapisz
+                                        </ButtonWithIcon>
+                                    </ColumnGapContainer>
+                                </FlexGapContainer>
+                                <P>Wymień na</P>
+                                {this.renderCardChoose()}
+                            </ColumnGapContainer>
+                        </PopUp>
+                        {
+                            this.state.fullCardViewPopUp.visible ?
+                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity}
+                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
+                                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
+                                                  cardName={this.state.selectedCard.name}
+                                                  cardLevel={this.state.selectedCard.level}
+                                                  cardImage={this.state.selectedCard.image}
+                                                  cardSubject={this.state.selectedCard.subject}
+                                                  cardTooltip={this.state.selectedCard.tooltip}
+                                                  description={this.state.selectedCard.description}
+                                                  common={this.state.selectedCard.level === 1}
+                                                  gold={this.state.selectedCard.level === 2}
+                                                  epic={this.state.selectedCard.level === 3}
+                                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
+                                </TransBack> : null
+                        }
+                    </>
                 </Media>
                 <Media query={desktop}>
                     <TransBack closeHandler={this.onBgClick} visible={true}
@@ -240,3 +304,5 @@ class ChangeDeckCard extends React.Component {
 }
 
 export default ChangeDeckCard;
+
+

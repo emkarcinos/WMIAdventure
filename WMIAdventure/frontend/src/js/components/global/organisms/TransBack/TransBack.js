@@ -8,6 +8,7 @@ class TransBack extends React.Component {
                  setOpacity={this.props.setOpacity}
                  onClick={this.props.closeHandler}
                  customZIndex={this.props.customZIndex}
+                 fullscreen={this.props.fullscreen}
             >
                 {this.props.children}
             </Div>

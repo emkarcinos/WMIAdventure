@@ -9,7 +9,7 @@ import {getCurrentUserDecks} from "../../../../storage/user/userData";
 import UserInfo from "../../../global/atoms/UserInfo";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
-import ChangeDeckCard from "../../../profile/molecules/ChangeDeckCard";
+import ChangeDeckCard from "../../../profile/organisms/ChangeDeckCard";
 import P from "./styled-components/P";
 
 class TinyProfileDesktop extends React.Component {
