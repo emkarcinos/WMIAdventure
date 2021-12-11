@@ -6,7 +6,7 @@ const Div = styled.div`
   transition: opacity 0.3s ease-in-out;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 48px;
   left: 0;
   height: calc(100vh - 48px);
