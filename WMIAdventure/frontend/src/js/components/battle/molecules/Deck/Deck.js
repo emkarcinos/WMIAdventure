@@ -4,7 +4,7 @@ import MainDiv from './styled-components/MainDiv';
 import Header from './styled-components/Header';
 import Div from './styled-components/Div';
 import CompactCardView from '../../../global/atoms/CompactCardView';
-import ChangeDeckCard from "../../../profile/molecules/ChangeDeckCard";
+import ChangeDeckCard from "../../../profile/organisms/ChangeDeckCard";
 
 class Deck extends React.Component {
     state = {
