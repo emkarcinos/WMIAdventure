@@ -6,8 +6,8 @@ const Div = styled.div`
   transition: opacity 0.3s ease-in-out;
   justify-content: center;
   align-items: center;
-  position: absolute;
   top: ${({fullscreen}) => fullscreen ? '0' : '56px'};
+  position: fixed;
   left: 0;
   height: ${({fullscreen}) => fullscreen ? '100vh' : 'calc(100vh - 56px)'};
   width: 100%;

@@ -23,7 +23,7 @@ class RequestSender {
      */
     static get = (url, headers = {}) => {
         let init = {
-            method: 'get',
+            method: 'GET',
             headers: headers,
         };
 
@@ -39,7 +39,7 @@ class RequestSender {
      */
     static post = (url, body, headers = {}) => {
         let init = {
-            method: 'post',
+            method: 'POST',
             headers: headers,
             body: body
         };
@@ -56,7 +56,24 @@ class RequestSender {
      */
     static put = (url, body, headers = {}) => {
         let init = {
-            method: 'put',
+            method: 'PUT',
+            headers: headers,
+            body: body
+        };
+
+        return RequestSender.makeRequest(url, init);
+    }
+
+    /**
+     * Sends PATCH request.
+     * @param url
+     * @param body Request body. You have to prepare body in the format that you want it to be. (json, form data, etc.)
+     * @param headers
+     * @returns {Promise<Response>} Response.
+     */
+    static patch = (url, body, headers = {}) => {
+        let init = {
+            method: 'PATCH',
             headers: headers,
             body: body
         };

@@ -19,10 +19,10 @@ import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
 import Card from "../../../card-editor/atoms/Card";
 import {updateCurrentUserDeck} from "../../../../storage/user/userData";
 import TransBack from "../../../global/organisms/TransBack";
-import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
+import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 
 /**
  * Props:
@@ -112,7 +112,7 @@ class ChangeDeckCard extends React.Component {
         this.setState({
             selectedCard: this.props.deck.getCurrentlyEditingCard(),
             cardPositionInDeck: this.props.deck.currentlyEditingIdx + 1,
-        })
+        });
     }
 
 
@@ -141,6 +141,7 @@ class ChangeDeckCard extends React.Component {
         newCard.name = selectedCard.name;
         newCard.subject = selectedCard.subject;
         newCard.tooltip = selectedCard.tooltip;
+        newCard.description = selectedCard.description;
         newCard.image = selectedCard.image;
         const insertCommand = new InsertCardAtPositionCommand(this.props.deck);
         const didSave = insertCommand.execute(newCard, this.state.cardPositionInDeck);

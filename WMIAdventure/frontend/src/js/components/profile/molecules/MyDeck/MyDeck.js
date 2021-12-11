@@ -17,6 +17,7 @@ class MyDeck extends React.Component {
         name: '',
         subject: '',
         tooltip: '',
+        description: '',
         image: null
     }
     state = {
@@ -45,7 +46,7 @@ class MyDeck extends React.Component {
 
         return (
             <>
-                <ChangeDeckCard selectedCard={this.state.selectedCard} closeHandler={this.closeEditor}
+                <ChangeDeckCard closeHandler={this.closeEditor}
                                 deck={this.props.deck}/>
             </>
         )
