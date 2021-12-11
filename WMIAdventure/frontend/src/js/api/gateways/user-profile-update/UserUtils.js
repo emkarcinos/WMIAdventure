@@ -24,7 +24,6 @@ const prepareBasicUserDataToSend = (basicUserData) => {
         user: basicUserData.userId,
         displayedUsername: basicUserData.username,
         semester: basicUserData.semester,
-        image: null,
     });
 
     return {headers: headers, body: body};
