@@ -7,7 +7,7 @@ import DesktopDeckContainer from "./styled-components/DesktopDeckContainer";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Header from "./styled-components/Header";
 import FullCardView from "../../../global/atoms/FullCardView";
-import ChangeDeckCard from "../../molecules/ChangeDeckCard";
+import ChangeDeckCard from "../../organisms/ChangeDeckCard";
 import MiniCard from "../../atoms/MiniCard";
 
 class MyDeck extends React.Component {
