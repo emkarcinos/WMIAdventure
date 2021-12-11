@@ -4,8 +4,9 @@ const Avatar = styled.img`
   width: 36px;
   height: 36px;
   border-radius: 50%;
+  object-fit: cover;
 
-  @media(min-width: ${({theme}) => theme.overMobile}px) {
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 44px;
     height: 44px;
   }
