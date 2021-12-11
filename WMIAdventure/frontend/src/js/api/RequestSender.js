@@ -23,7 +23,7 @@ class RequestSender {
      */
     static get = (url, headers = {}) => {
         let init = {
-            method: 'get',
+            method: 'GET',
             headers: headers,
         };
 
@@ -39,7 +39,7 @@ class RequestSender {
      */
     static post = (url, body, headers = {}) => {
         let init = {
-            method: 'post',
+            method: 'POST',
             headers: headers,
             body: body
         };
@@ -56,7 +56,7 @@ class RequestSender {
      */
     static put = (url, body, headers = {}) => {
         let init = {
-            method: 'put',
+            method: 'PUT',
             headers: headers,
             body: body
         };
@@ -73,7 +73,7 @@ class RequestSender {
      */
     static patch = (url, body, headers = {}) => {
         let init = {
-            method: 'patch',
+            method: 'PATCH',
             headers: headers,
             body: body
         };
