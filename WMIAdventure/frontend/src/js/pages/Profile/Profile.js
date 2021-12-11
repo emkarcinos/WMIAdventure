@@ -26,6 +26,7 @@ import MyDeck from "../../components/profile/molecules/MyDeck";
 import DeckHeader from "./styled-componets/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 import EditProfile from "../../components/profile/molecules/EditProfile";
+import P from "./styled-componets/P";
 
 class Profile extends React.Component {
 
@@ -144,6 +145,7 @@ class Profile extends React.Component {
                                     </ColumnGapContainer>
                                     <Line/>
                                     <MyDeck deck={this.state.deck}/>
+                                    <P>Dotknij kartę aby zmodyfikować talię</P>
                                 </ColumnGapContainer>
                                 <ColumnGapContainer gap={'10px'}>
                                     <ButtonWithIcon setWidth={'158px'} icon={editProfil}
@@ -197,6 +199,8 @@ class Profile extends React.Component {
                                     Twoja talia
                                 </DeckHeader>
                                 <MyDeck deck={this.state.deck}/>
+
+                                <P>Klinkij na kartę aby zmodyfikować talię</P>
                             </RightDeckContainer>
                         </MainDesktopContainer>
                         {
