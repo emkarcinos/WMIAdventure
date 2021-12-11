@@ -22,7 +22,7 @@ const sendUserNewAvatar = (serverResponse, basicUserData,
 const sendUserNewData = (basicUserData, successHandler, failureHandler) => {
     const requestData = UserUtils.prepareBasicUserDataToSend(basicUserData);
 
-    return RequestSender.put(UserProfilesEndpoints.userById(basicUserData.userId), requestData.body, requestData.headers)
+    return RequestSender.patch(UserProfilesEndpoints.userById(basicUserData.userId), requestData.body, requestData.headers)
         .then(response => {
             if (response.ok) {
                 if (basicUserData.image)

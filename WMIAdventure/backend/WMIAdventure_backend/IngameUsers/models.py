@@ -1,3 +1,4 @@
+from db_file_storage.model_utils import delete_file_if_needed
 from django.conf import settings
 from django.db import models
 from django.db.models.functions import Upper
@@ -42,6 +43,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.displayedUsername
+
+    def save(self, *args, **kwargs):
+        delete_file_if_needed(self, 'image')
+        super(UserProfile, self).save(*args, **kwargs)
 
 
 class UserCard(models.Model):
