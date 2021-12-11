@@ -13,6 +13,7 @@ const Div = styled.div`
   width: 100%;
   z-index: ${({customZIndex}) => customZIndex ? customZIndex : 'auto'};
   background-color: ${({theme}) => theme.colors.darkTrans};
+  overflow-y: hidden;
 `;
 
 export default Div;
