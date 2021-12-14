@@ -1,5 +1,4 @@
 from rest_framework import generics, status
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,8 +11,35 @@ from proposed_content.serializers import WholeProposedCardSerializer
 from utils.permissions import IsAbleToEdit
 
 
-class AcceptProposedCardView(APIView):
+def accept_proposed_card(proposed_card: ProposedCardInfo):
+    proposed_card.image = None
 
+    # Serialize proposed cards data
+    proposed_card_serializer = WholeProposedCardSerializer(instance=proposed_card)
+
+    created = False
+    try:
+        # If card with proposed card's name exists - update existing card with proposed card's data
+        card_to_update = CardInfo.objects.get(name=proposed_card.name)
+        accepted_card_serializer = WholeCardSerializer(instance=card_to_update, data=proposed_card_serializer.data)
+    except CardInfo.DoesNotExist:
+        # If there is no card with proposed card's name - create new card in accepted cards tables.
+        accepted_card_serializer = WholeCardSerializer(data=proposed_card_serializer.data)
+        created = True
+
+    accepted_card_serializer.is_valid(raise_exception=True)
+    new_card = accepted_card_serializer.save()
+    new_image = ProposedCardInfo.objects.get(pk=proposed_card.id).image
+    if new_image:
+        new_card.image = ProposedCardInfo.objects.get(pk=proposed_card.id).image
+        new_card.save()
+    # Remove accepted card from proposed cards tables.
+    proposed_card.delete()
+
+    return accepted_card_serializer, created
+
+
+class AcceptProposedCardView(APIView):
     permission_classes = [IsAbleToEdit]
     """
     post:
@@ -25,31 +51,14 @@ class AcceptProposedCardView(APIView):
         try:
             # Get proposed card that will be accepted
             proposed_card = ProposedCardInfo.objects.get(pk=pk)
-            proposed_card.image = None
         except ProposedCardInfo.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        # Serialize proposed cards data
-        proposed_card_serializer = WholeProposedCardSerializer(instance=proposed_card)
+        accepted_card_serializer, created = accept_proposed_card(proposed_card)
 
-        try:
-            # If card with proposed card's name exists - update existing card with proposed card's data
-            card_to_update = CardInfo.objects.get(name=proposed_card.name)
-            accepted_card_serializer = WholeCardSerializer(instance=card_to_update, data=proposed_card_serializer.data)
-            response_status = status.HTTP_200_OK
-        except CardInfo.DoesNotExist:
-            # If there is no card with proposed card's name - create new card in accepted cards tables.
-            accepted_card_serializer = WholeCardSerializer(data=proposed_card_serializer.data)
+        response_status = status.HTTP_200_OK
+        if created:
             response_status = status.HTTP_201_CREATED
-
-        accepted_card_serializer.is_valid(raise_exception=True)
-        new_card = accepted_card_serializer.save()
-        new_image = ProposedCardInfo.objects.get(pk=pk).image
-        if new_image:
-            new_card.image = ProposedCardInfo.objects.get(pk=pk).image
-            new_card.save()
-        # Remove accepted card from proposed cards tables.
-        proposed_card.delete()
 
         return Response(data=accepted_card_serializer.data, status=response_status)
 
