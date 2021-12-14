@@ -161,7 +161,7 @@ def base_card_factory(related_card_info_class: type):
                                                null=True, default="description")
         level = models.ForeignKey(CardLevel, unique=False, on_delete=models.CASCADE)
         next_level_cost = models.IntegerField(null=True, validators=[MinValueValidator(0),
-                                                                     MaxValueValidator(100)])
+                                                                     MaxValueValidator(100)], blank=True)
 
         class Meta:
             abstract = True
