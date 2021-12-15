@@ -13,15 +13,17 @@ class Player:
     Has statistics that represent its current state and its card deck.
     """
 
-    def __init__(self, id: int, deck: Deck):
+    def __init__(self, id: int, deck: Deck, level: int):
         """
         Creates BattlePlayer instance.
         @param id: ID Related to user in database
         @param deck: Card deck of its user.
+        @param level: User's level.
         """
 
         self.id = id
         self.deck = deck
+        self.level = level
 
         self.statistics = Statistics()
         self.turns_stopped = 0

@@ -1,3 +1,4 @@
+from IngameUsers.businesslogic.experience.Experience import Experience
 from IngameUsers.models import UserProfile
 from .BadBattleProfileException import BadBattleProfileException
 from .Deck import Deck
@@ -24,7 +25,8 @@ class PlayerFactory:
 
         id_ = user_profile_model.user.id
         deck_model = self._choose_deck_model(user_profile_model, is_attacker)
-        return Player(id=id_, deck=Deck(deck_model=deck_model))
+        experience = Experience(user_profile_model.user_stats.exp)
+        return Player(id=id_, deck=Deck(deck_model=deck_model), level=experience.level)
 
     def _choose_deck_model(self, user_profile_model: UserProfile, is_attacker: bool):
         """
