@@ -10,7 +10,12 @@ from .models import UserProfile, Deck, UserCard, UserDeck
 class UserLevelSerializer(serializers.Field):
     def to_internal_value(self, data):
         pass
-    
+
+    def get_attribute(self, instance):
+        if not hasattr(instance, 'user_exp'):
+            return 0
+        return super().get_attribute(instance)
+
     def to_representation(self, instance):
         experience_obj = Experience(instance)
         return experience_obj.level
