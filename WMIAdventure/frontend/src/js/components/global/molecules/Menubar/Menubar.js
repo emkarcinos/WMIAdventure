@@ -15,7 +15,7 @@ import githubIcon from '../../../../../assets/images/github.png'
 import logoutIcon from '../../../../../assets/images/logout.png'
 import userIcon from '../../../../../assets/icons/user.svg'
 import newUserIcon from '../../../../../assets/icons/newuser.svg'
-import Link from "../Navbar/styled-components/Link";
+import Link from "../Navbar/styled-components/A";
 import Href from "../Navbar/styled-components/Href";
 import {getCurrentUserData} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
