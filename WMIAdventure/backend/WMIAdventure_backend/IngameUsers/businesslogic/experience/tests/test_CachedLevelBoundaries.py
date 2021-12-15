@@ -5,10 +5,10 @@ from IngameUsers.businesslogic.experience.formulas import level_to_exp
 
 
 class CachedLevelBoundariesTestCase(unittest.TestCase):
-    def setUp(self) -> None:
+    def tearDown(self) -> None:
         CachedLevelBoundaries.boundaries_cache = {}
         CachedLevelBoundaries.level_to_exp_func = level_to_exp
-
+        
     def test_should_get_value_on_cache_miss(self):
         CachedLevelBoundaries.boundaries_cache = {}
         mock_returns = 12345
