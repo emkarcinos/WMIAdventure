@@ -28,7 +28,10 @@ class AuthForm extends React.Component {
                         </InputContainer>
                         <Label for='password'>Hasło</Label>
                         <InputContainer>
-                            <Input type='password' id='password' name='password' value={this.props.password}
+                            <Input type='password' id='password' name='password'
+                                   pattern='^.{10}.*'
+                                   title='Hasło musi składać się z conajmniej 10 znaków.'
+                                   value={this.props.password}
                                    onChange={this.props.updateState}/>
                             <Line/>
                         </InputContainer>
@@ -38,6 +41,8 @@ class AuthForm extends React.Component {
                                     <Label for='password2'>Potwierdź hasło</Label>
                                     <InputContainer>
                                         <Input type='password' id='password2' name='password2'
+                                               pattern='^.{10}.*'
+                                               title='Hasło musi składać się z conajmniej 10 znaków.'
                                                value={this.props.password2}
                                                onChange={this.props.updateState}/>
                                         <Line/>
