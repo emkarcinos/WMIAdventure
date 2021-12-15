@@ -1,5 +1,5 @@
 import React from "react";
-import UserRegistrationForm from "../../molecules/UserRegistrationForm";
+import AuthForm from "../../molecules/AuthForm";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import {Redirect} from "react-router-dom";
 import MainContainer from "./styled-components/MainContainer";
@@ -41,11 +41,14 @@ class UserRegistration extends React.Component {
     render() {
         return (
             <MainContainer>
-                <UserRegistrationForm username={this.state.username}
-                                      password={this.state.password}
-                                      password2={this.state.password2}
-                                      onSubmit={this.onRegistrationFormSubmit}
-                                      updateState={this.updateState}
+                <AuthForm legend='Zarejestruj się'
+                          linkValue={'/login'}
+                          linkText='Nie masz konta?'
+                          username={this.state.username}
+                          password={this.state.password}
+                          password2={this.state.password2}
+                          onSubmit={this.onRegistrationFormSubmit}
+                          updateState={this.updateState}
                 />
                 {
                     this.state.hasRegistered ? <Redirect to={'/'}/> : null

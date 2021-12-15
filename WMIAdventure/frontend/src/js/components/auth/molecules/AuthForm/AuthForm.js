@@ -10,13 +10,13 @@ import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import Line from "./styled-components/Line";
 import A from "./styled-components/A";
 
-class UserRegistrationForm extends React.Component {
+class AuthForm extends React.Component {
     render() {
         return (
             <Form action={this.props.handler}>
                 <Fieldset>
                     <Legend>
-                        Zarejestruj się
+                        {this.props.legend}
                     </Legend>
                     <Label for='username'>Nazwa użytkownika</Label>
                     <InputContainer>
@@ -30,16 +30,21 @@ class UserRegistrationForm extends React.Component {
                                onChange={this.props.updateState}/>
                         <Line/>
                     </InputContainer>
-                    <Label for='password2'>Powtórz hasło</Label>
-                    <InputContainer>
-                        <Input type='password' id='password2' name='password2' value={this.props.password2}
-                               onChange={this.props.updateState}/>
-                        <Line/>
-                    </InputContainer>
+                    {
+                        (this.props.password2 !== undefined) ?
+                            <>
+                                <Label for='password2'>Potwierdź hasło</Label>
+                                <InputContainer>
+                                    <Input type='password' id='password2' name='password2' value={this.props.password2}
+                                           onChange={this.props.updateState}/>
+                                    <Line/>
+                                </InputContainer>
+                            </> : null
+                    }
                     <ColumnGapContainer setMargin={'72px 0 0 0'} gap={'24px'}>
-                        <Submit type='submit' value='Zarejestruj się' onClick={this.props.onSubmit}/>
-                        <A>
-                            Masz już konto?
+                        <Submit type='submit' value={this.props.legend} onClick={this.props.onSubmit}/>
+                        <A to={this.props.linkValue}>
+                            {this.props.linkText}
                         </A>
                     </ColumnGapContainer>
                 </Fieldset>
@@ -48,4 +53,4 @@ class UserRegistrationForm extends React.Component {
     }
 }
 
-export default UserRegistrationForm
+export default AuthForm
