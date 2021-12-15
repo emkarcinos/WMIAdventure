@@ -1,7 +1,8 @@
 import React from "react";
-import LoginForm from "../../molecules/LoginForm";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import {Redirect} from "react-router-dom";
+import AuthForm from "../../molecules/AuthForm";
+import MainContainer from "./styled-components/MainContainer";
 
 class Login extends React.Component {
     state = {
@@ -34,7 +35,10 @@ class Login extends React.Component {
                 else
                     this.loginFailedHandler(response);
             })
-            .catch(err => {console.log(err); this.loginFailedHandler()});
+            .catch(err => {
+                console.log(err);
+                this.loginFailedHandler()
+            });
     }
 
     usernameChangedHandler = (event) => {
@@ -44,17 +48,20 @@ class Login extends React.Component {
 
     render() {
         return (
-            <>
-                <LoginForm
-                    usernameChangedHandler={this.usernameChangedHandler}
-                    submitHandler={this.submitHandler}
+            <MainContainer>
+                <AuthForm
+                    onSubmit={this.submitHandler}
+                    legend={'Zaloguj się'}
+                    linkValue={'/registration'}
+                    linkText='Nie masz konta?'
+                    updateState={this.usernameChangedHandler}
                 />
 
                 {
                     // Redirects to main page if logged in
-                    this.state.loggedIn ?  <Redirect to={'/'}/>: null
+                    this.state.loggedIn ? <Redirect to={'/'}/> : null
                 }
-            </>
+            </MainContainer>
 
 
         )

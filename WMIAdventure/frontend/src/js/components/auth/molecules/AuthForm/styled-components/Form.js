@@ -5,8 +5,9 @@ const Form = styled.form`
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  width: 318px;
-  height: 582px;
+  width: 80%;
+  max-width: 400px;
+  max-height: 582px;
 `;
 
 export default Form

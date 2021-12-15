@@ -43,7 +43,7 @@ class UserRegistration extends React.Component {
             <MainContainer>
                 <AuthForm legend='Zarejestruj się'
                           linkValue={'/login'}
-                          linkText='Nie masz konta?'
+                          linkText='Masz już konto?'
                           username={this.state.username}
                           password={this.state.password}
                           password2={this.state.password2}
