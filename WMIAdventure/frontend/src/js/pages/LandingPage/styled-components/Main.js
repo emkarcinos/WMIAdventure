@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Main = styled.main`
-  display: block;
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
 `;
 
 export default Main;
