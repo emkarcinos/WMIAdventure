@@ -84,7 +84,7 @@ class UserDeck(models.Model):
 
 
 class UserStats(models.Model):
-    profile = models.OneToOneField(UserProfile, related_name='user_exp', on_delete=models.CASCADE)
+    profile = models.OneToOneField(UserProfile, related_name='user_stats', on_delete=models.CASCADE)
     exp = models.PositiveIntegerField()
 
 

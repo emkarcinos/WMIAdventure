@@ -12,7 +12,7 @@ class UserLevelSerializer(serializers.Field):
         pass
 
     def get_attribute(self, instance):
-        if not hasattr(instance, 'user_exp'):
+        if not hasattr(instance, 'user_stats'):
             return 0
         return super().get_attribute(instance)
 
@@ -25,7 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
-    level = UserLevelSerializer(source='user_exp.exp', required=False)
+    level = UserLevelSerializer(source='user_stats.exp', required=False)
 
     class Meta:
         model = models.UserProfile
