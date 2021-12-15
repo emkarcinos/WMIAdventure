@@ -5,6 +5,7 @@ const Fieldset = styled.fieldset`
   flex-direction: column;
   justify-content: center;
   border: none;
+  padding: 0;
 `;
 
 export default Fieldset
