@@ -20,7 +20,7 @@ class Experience:
         guessing_level = 1
         # Could be an infinite loop, but let's make a failsafe stop condition here
         while guessing_level < 200:
-            next_level_exp = CachedLevelBoundaries.get_min_exp_for_level(guessing_level)
+            next_level_exp = CachedLevelBoundaries.get_min_exp_for_level(guessing_level + 1)
             if self.exp < next_level_exp:
                 self.level = guessing_level
                 self.exp_required_to_level_up = next_level_exp - self.exp
