@@ -7,6 +7,7 @@ const SiteHeader = styled.header`
   width: 100%;
   height: 48px;
   background-color: transparent;
+  z-index: 3;
 `;
 
 export default SiteHeader;

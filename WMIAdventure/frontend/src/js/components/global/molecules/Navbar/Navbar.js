@@ -50,7 +50,7 @@ class Navbar extends React.Component {
     desktopNavbar = () => {
         return (
             <Nav>
-                <Logo/>
+                <Logo fullVersion/>
                 <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );

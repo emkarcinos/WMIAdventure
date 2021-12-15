@@ -1,6 +1,4 @@
 import React from 'react';
-import Media from "react-media";
-import {desktop, mobile} from "../../../../utils/globals";
 import Span from "../../molecules/Navbar/styled-components/Span";
 import logo from "../../../../../assets/icons/logo.svg";
 import FlexGapContainer from "../../molecules/FlexGapContainer/FlexGapContainer";
@@ -12,18 +10,19 @@ class Logo extends React.Component {
     render() {
         return (
             <>
-                <Media query={mobile}>
-                    <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
-                </Media>
-                <Media query={desktop}>
-                    <FlexGapContainer gap={'10px'} setRelative>
-                        <H1 setFontSize={this.props.setFontSize}>
-                            ~/<Span>WMI</Span> Adventure
-                        </H1>
-                        <LogoImage src={logo}/>
-                        <HomeLink to={'/'}/>
-                    </FlexGapContainer>
-                </Media>
+                {
+                    this.props.fullVersion ?
+                        <FlexGapContainer setZindex={this.props.setZindex}
+                                          setMargin={this.props.setMargin}
+                                          gap={'10px'} setRelative>
+                            <H1 setFontSize={this.props.setFontSize}>
+                                ~/<Span>WMI</Span> Adventure
+                            </H1>
+                            <LogoImage src={logo}/>
+                            <HomeLink to={'/'}/>
+                        </FlexGapContainer> :
+                        <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
+                }
             </>
         );
     }

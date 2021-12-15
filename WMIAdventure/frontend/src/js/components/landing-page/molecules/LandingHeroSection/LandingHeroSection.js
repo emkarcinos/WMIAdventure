@@ -1,9 +1,22 @@
 import React from 'react';
+import Div from "./styled-components/Div";
+import background from '../../../../../assets/images/mobile-landing-background.svg';
+import Background from "./styled-components/Background";
+import Logo from "../../../global/atoms/Logo";
+import Subtitle from "./styled-components/Subtitle";
+import LandingRegistration from "../../atoms/LandingRegistration";
 
 class LandingHeroSection extends React.Component {
     render() {
         return (
-            <></>
+            <Div>
+                <Logo fullVersion setZindex={'2'} setFontSize={'24px'} setMargin={'18vw 0 20vw 0'}/>
+                <Subtitle>
+                    Poznaj alternatywny świat studiowania
+                </Subtitle>
+                <LandingRegistration text={'Dołącz do nas'} url={'/registration'}/>
+                <Background src={background}/>
+            </Div>
         );
     }
 }
