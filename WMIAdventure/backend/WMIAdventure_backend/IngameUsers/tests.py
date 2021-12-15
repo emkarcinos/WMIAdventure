@@ -10,7 +10,7 @@ from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from .factories import create_user_profile_with_deck, UserProfileFactory
-from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserExp
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer
 from .signals import on_user_create
 
@@ -408,5 +408,5 @@ class UserDeckViewTestCase(TestCase):
         user = get_user_model().objects.create_user(username='expTest', password='12345')
         on_user_create(None, user)
         profile = UserProfile.objects.get(user=user)
-        created_exp = UserExp.objects.get(profile=profile)
+        created_exp = UserStats.objects.get(profile=profile)
         self.assertEqual(created_exp.exp, 0)

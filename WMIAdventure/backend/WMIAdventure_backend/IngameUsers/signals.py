@@ -1,6 +1,6 @@
 import random
 
-from IngameUsers.models import UserProfile, Semester, UserExp
+from IngameUsers.models import UserProfile, Semester, UserStats
 from WMIAdventure_backend import settings
 from users.models import User
 from users.signals import user_registered
@@ -24,7 +24,7 @@ def on_user_create(sender, user: settings.AUTH_USER_MODEL, **kwargs):
         user_profile = UserProfile.objects.create(user=user,
                                                   displayedUsername=user.username,
                                                   semester=semester)
-        UserExp.objects.create(profile=user_profile, exp=0)
+        UserStats.objects.create(profile=user_profile, exp=0)
         get_or_create_example_deck_for_user(user_profile)
 
 
