@@ -13,7 +13,7 @@ class Logo extends React.Component {
         return (
             <>
                 <Media query={mobile}>
-                    <LogoImage src={logo}/>
+                    <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
                 </Media>
                 <Media query={desktop}>
                     <FlexGapContainer gap={'10px'} setRelative>

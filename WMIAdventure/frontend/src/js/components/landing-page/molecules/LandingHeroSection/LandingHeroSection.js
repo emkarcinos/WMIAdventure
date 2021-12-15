@@ -1,6 +1,6 @@
 import React from 'react';
 
-class LandingLink extends React.Component {
+class LandingHeroSection extends React.Component {
     render() {
         return (
             <></>
@@ -8,4 +8,4 @@ class LandingLink extends React.Component {
     }
 }
 
-export default LandingLink;
+export default LandingHeroSection;
