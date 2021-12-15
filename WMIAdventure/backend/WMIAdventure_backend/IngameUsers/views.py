@@ -1,18 +1,20 @@
 from django.db.models import Q
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from cards.models import Card
 from users.models import User
 from . import models
 from . import serializers
+from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, UserCard
 from .permissions import IsOwner, CanEditProfile, IsDeckOwner
-from .serializers import UserDecksSerializer, DeckSerializer
+from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer
 
 
 class UserPagination(PageNumberPagination):
@@ -129,3 +131,20 @@ class UserDeckView(RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class UserLevelView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk: int):
+        try:
+            profile = UserProfile.objects.get(pk=pk)
+            experience_obj = Experience(0)
+            if hasattr(profile, 'user_stats'):
+                experience_obj = Experience(profile.user_stats.exp)
+
+            serializer = UserStatsSerializer(experience_obj)
+            return Response(serializer.data)
+        except UserProfile.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
