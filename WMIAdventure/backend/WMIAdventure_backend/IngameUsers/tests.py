@@ -10,8 +10,9 @@ from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from .factories import create_user_profile_with_deck, UserProfileFactory
-from .models import UserProfile, Semester, UserCard, Deck, UserDeck
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserExp
 from .serializers import UserDecksSerializer, DeckSerializer
+from .signals import on_user_create
 
 
 class UserProfileTestCase(TestCase):
@@ -402,3 +403,10 @@ class UserDeckViewTestCase(TestCase):
         # TODO: implement this test when there is some way to gain cards implemented.
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
+
+    def test_should_exp_get_created_on_user_creation(self):
+        user = get_user_model().objects.create_user(username='expTest', password='12345')
+        on_user_create(None, user)
+        profile = UserProfile.objects.get(user=user)
+        created_exp = UserExp.objects.get(profile=profile)
+        self.assertEqual(created_exp.exp, 0)
