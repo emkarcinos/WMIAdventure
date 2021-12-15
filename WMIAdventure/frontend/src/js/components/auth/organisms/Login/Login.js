@@ -55,6 +55,8 @@ class Login extends React.Component {
                     linkValue={'/registration'}
                     linkText='Nie masz konta?'
                     updateState={this.usernameChangedHandler}
+                    loginError={'Error example'}
+                    passwordError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
                 />
 
                 {

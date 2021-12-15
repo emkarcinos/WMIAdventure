@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const Fieldset = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   border: none;
   height: 100%;
   padding: 0;

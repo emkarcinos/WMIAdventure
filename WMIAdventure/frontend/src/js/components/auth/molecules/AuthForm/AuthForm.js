@@ -10,6 +10,10 @@ import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import Line from "./styled-components/Line";
 import A from "./styled-components/A";
 import Div from "./styled-components/Div";
+import ErrorDecoration from "./styled-components/ErrorDecoration";
+import errorInfoIcon from '../../../../../assets/icons/ErrorInfoIcon.svg';
+import ErrorMessage from "./styled-components/ErrorMessage";
+import ErrorContainer from "./styled-components/ErrorContainer";
 
 class AuthForm extends React.Component {
     render() {
@@ -26,6 +30,14 @@ class AuthForm extends React.Component {
                                    onChange={this.props.updateState}/>
                             <Line/>
                         </InputContainer>
+                        {this.props.loginError ?
+                            <ErrorContainer>
+                                <ErrorDecoration src={errorInfoIcon} alt={'Błąd.'}/>
+                                <ErrorMessage>
+                                    {this.props.loginError}
+                                </ErrorMessage>
+                            </ErrorContainer> : null
+                        }
                         <Label for='password'>Hasło</Label>
                         <InputContainer>
                             <Input type='password' id='password' name='password'
@@ -35,6 +47,14 @@ class AuthForm extends React.Component {
                                    onChange={this.props.updateState}/>
                             <Line/>
                         </InputContainer>
+                        {this.props.passwordError ?
+                            <ErrorContainer>
+                                <ErrorDecoration src={errorInfoIcon} alt={'Błąd.'}/>
+                                <ErrorMessage>
+                                    {this.props.passwordError}
+                                </ErrorMessage>
+                            </ErrorContainer> : null
+                        }
                         {
                             (this.props.password2 !== undefined) ?
                                 <>
@@ -47,10 +67,18 @@ class AuthForm extends React.Component {
                                                onChange={this.props.updateState}/>
                                         <Line/>
                                     </InputContainer>
+                                    {this.props.password2Error ?
+                                        <ErrorContainer>
+                                            <ErrorDecoration src={errorInfoIcon} alt={'Błąd.'}/>
+                                            <ErrorMessage>
+                                                {this.props.password2Error}
+                                            </ErrorMessage>
+                                        </ErrorContainer> : null
+                                    }
                                 </> : null
                         }
                     </Div>
-                    <ColumnGapContainer setMargin={'70px 0 0 0'} gap={'24px'}>
+                    <ColumnGapContainer setMargin={'20px 0 0 0'} gap={'24px'}>
                         <Submit type='submit' value={this.props.legend}/>
                         <A to={this.props.linkValue}>
                             {this.props.linkText}

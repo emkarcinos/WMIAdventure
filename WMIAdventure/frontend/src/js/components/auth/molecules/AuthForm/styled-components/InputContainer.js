@@ -5,7 +5,7 @@ const InputContainer = styled.div`
   height: 44px;
   border-radius: 4px;
   background-color: ${({theme}) => theme.colors.light3};
-  margin: 0 auto 8px;
+  margin: 0 auto;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;

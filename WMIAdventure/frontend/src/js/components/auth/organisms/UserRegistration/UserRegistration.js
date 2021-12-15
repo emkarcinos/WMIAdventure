@@ -49,6 +49,9 @@ class UserRegistration extends React.Component {
                           password2={this.state.password2}
                           onSubmit={this.onRegistrationFormSubmit}
                           updateState={this.updateState}
+                          loginError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
+                          passwordError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
+                          password2Error={'Error example'}
                 />
                 {
                     this.state.hasRegistered ? <Redirect to={'/'}/> : null

@@ -7,7 +7,7 @@ const Legend = styled.h2`
   font-family: 'Roboto', sans-serif;
   font-weight: ${({theme}) => theme.weight.bold};
   color: ${({theme}) => theme.colors.dark};
-  margin: 0 0 70px 0;
+  margin: 0 0 20px 0;
 `;
 
 export default Legend;

@@ -7,7 +7,7 @@ const Form = styled.form`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
   width: 80%;
   max-width: 400px;
-  max-height: 582px;
+  max-height: 650px;
 `;
 
 export default Form
