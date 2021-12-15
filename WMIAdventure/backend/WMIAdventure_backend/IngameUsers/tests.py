@@ -10,8 +10,9 @@ from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from .factories import create_user_profile_with_deck, UserProfileFactory
-from .models import UserProfile, Semester, UserCard, Deck, UserDeck
-from .serializers import UserDecksSerializer, DeckSerializer
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
+from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer
+from .signals import on_user_create
 
 
 class UserProfileTestCase(TestCase):
@@ -402,3 +403,28 @@ class UserDeckViewTestCase(TestCase):
         # TODO: implement this test when there is some way to gain cards implemented.
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
+
+    def test_should_exp_get_created_on_user_creation(self):
+        user = get_user_model().objects.create_user(username='expTest', password='12345')
+        on_user_create(None, user)
+        profile = UserProfile.objects.get(user=user)
+        created_exp = UserStats.objects.get(profile=profile)
+        self.assertEqual(created_exp.exp, 0)
+
+    def test_should_exp_get_created_on_user_creation(self):
+        user = get_user_model().objects.create_user(username='expTest2', password='12345')
+        on_user_create(None, user)
+        profile = UserProfile.objects.get(user=user)
+        created_exp = UserStats.objects.get(profile=profile)
+        created_exp.exp = 4124
+        created_exp.save()
+
+        serializer = UserProfileSerializer(instance=profile)
+        self.assertGreater(serializer.data.get('level', None), 1)
+
+    def test_should_serialize_to_level_1_when_exp_is_null(self):
+        user = get_user_model().objects.create_user(username='expTest3', password='12345')
+        profile = UserProfile.objects.create(user=user)
+
+        serializer = UserProfileSerializer(instance=profile)
+        self.assertEqual(serializer.data.get('level', None), 1)
