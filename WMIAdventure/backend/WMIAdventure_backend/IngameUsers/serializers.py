@@ -1,21 +1,30 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import ImageField
 
 from cards.models import Card
-from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
+from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, Deck, UserCard, UserDeck
+
+
+class UserLevelSerializer(serializers.Field):
+    def to_internal_value(self, data):
+        pass
+    
+    def to_representation(self, instance):
+        experience_obj = Experience(instance)
+        return experience_obj.level
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
+    level = UserLevelSerializer(source='user_exp.exp', required=False)
 
     class Meta:
         model = models.UserProfile
-        fields = ('user', 'displayedUsername', 'semester', 'image')
+        fields = ('user', 'displayedUsername', 'semester', 'image', 'level')
 
     def create(self, validated_data):
         newProfile = models.UserProfile.objects.create(
