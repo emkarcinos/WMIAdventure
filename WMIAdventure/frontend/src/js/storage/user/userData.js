@@ -1,4 +1,4 @@
-import {profileKey, userDataKeys} from "../localStorageKeys";
+import {profileKey, profileLevelKey, userDataKeys} from "../localStorageKeys";
 import Cookies from "../../api/Cookies";
 import {get, getWithSetCallback, invalidateItem, set} from "../cache/cache";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
@@ -68,6 +68,22 @@ export const getUsersDecks = async (userId) => {
         return null
     }
     return await getWithSetCallback(userDataKeys.userDecks, backendCall, cacheUserDataForSeconds);
+}
+
+export const getUsersLevelData = async (id) => {
+    const backendCallback = async () => {
+        const data = await UserProfilesAPIGateway.getUserLevelData(id);
+        if (!data.ok)
+            return null;
+        return await data.json();
+    }
+    return await getWithSetCallback(profileLevelKey(id), backendCallback, cacheUserDataForSeconds);
+}
+
+export const getCurrentUsersLevelData = async () => {
+    const currentUserId = await getCurrentUserId();
+
+    return await getUsersLevelData(currentUserId);
 }
 
 export const getCurrentUserDecks = async () => {
