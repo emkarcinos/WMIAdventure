@@ -2,11 +2,11 @@ import React from "react";
 import UserRegistrationForm from "../../molecules/UserRegistrationForm";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import {Redirect} from "react-router-dom";
+import MainContainer from "./styled-components/MainContainer";
 
 class UserRegistration extends React.Component {
     state = {
         username: null,
-        email: null,
         password: null,
         password2: null,
         hasRegistered: false
@@ -21,10 +21,10 @@ class UserRegistration extends React.Component {
         event.preventDefault();
         UsersAPIGateway.registerUser(this.state)
             .then(resp => {
-                resp.json().then( msg => alert(JSON.stringify(msg)
-                    .replace(/[{}"\]]+/g, '')
-                    .replace(/[,[]+/g, ' ')))
-                resp.ok ? this.onRegistrationSuccess() : null;
+                    resp.json().then(msg => alert(JSON.stringify(msg)
+                        .replace(/[{}"\]]+/g, '')
+                        .replace(/[,[]+/g, ' ')))
+                    resp.ok ? this.onRegistrationSuccess() : null;
                 }
             );
     }
@@ -40,9 +40,8 @@ class UserRegistration extends React.Component {
 
     render() {
         return (
-            <>
+            <MainContainer>
                 <UserRegistrationForm username={this.state.username}
-                                      email={this.state.email}
                                       password={this.state.password}
                                       password2={this.state.password2}
                                       onSubmit={this.onRegistrationFormSubmit}
@@ -51,7 +50,7 @@ class UserRegistration extends React.Component {
                 {
                     this.state.hasRegistered ? <Redirect to={'/'}/> : null
                 }
-            </>
+            </MainContainer>
         )
     }
 }

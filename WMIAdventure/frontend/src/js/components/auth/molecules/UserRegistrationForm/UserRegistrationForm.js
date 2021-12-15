@@ -15,9 +15,6 @@ class UserRegistrationForm extends React.Component {
                     <Label for='username'>Nazwa użytkownika</Label>
                     <Input type='text' id='username' name='username' value={this.props.username}
                            onChange={this.props.updateState}/>
-                    <Label for='email'>Email</Label>
-                    <Input type='email' id='email' name='email' value={this.props.email}
-                           onChange={this.props.updateState}/>
                     <Label for='password'>Hasło</Label>
                     <Input type='password' id='password' name='password' value={this.props.password}
                            onChange={this.props.updateState}/>
