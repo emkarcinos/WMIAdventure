@@ -39,8 +39,8 @@ class EffectsIntegrationsTestCase(TestCase):
         cls.d2 = cls.creator.get_decks(user=1)[0]
 
     def setUp(self) -> None:
-        self.player1 = Player(self.u1.id, Deck(self.d1))
-        self.player2 = Player(self.u2.id, Deck(self.d2))
+        self.player1 = Player(self.u1.id, Deck(self.d1), 1)
+        self.player2 = Player(self.u2.id, Deck(self.d2), 1)
 
     def test_damage_buff(self):
         """

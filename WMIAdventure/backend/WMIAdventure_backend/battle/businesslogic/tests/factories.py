@@ -2,6 +2,7 @@ from typing import Optional
 
 import factory
 
+from IngameUsers.businesslogic.experience.Experience import Experience
 from IngameUsers.factories import create_user_profile_with_deck
 from battle.businesslogic.BattleCard import BattleCard
 from battle.businesslogic.Deck import Deck
@@ -52,7 +53,8 @@ def create_player_with_deck(
     )
 
     deck = Deck(deck_model)
-    return Player(user_p.user.id, deck), deck
+    experience = Experience(user_p.user_stats.exp)
+    return Player(user_p.user.id, deck, experience.level), deck
 
 
 def create_player() -> Player:

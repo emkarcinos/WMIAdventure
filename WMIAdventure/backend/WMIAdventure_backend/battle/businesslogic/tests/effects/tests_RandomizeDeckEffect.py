@@ -1,10 +1,10 @@
 from unittest import TestCase
 
-from battle.businesslogic.effects.RandomizeDeckEffect import RandomizeDeckEffect
-from cards.models import CardLevelEffects, CardEffect
-from battle.businesslogic.tests.Creator import Creator
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
+from battle.businesslogic.effects.RandomizeDeckEffect import RandomizeDeckEffect
+from battle.businesslogic.tests.Creator import Creator
+from cards.models import CardLevelEffects, CardEffect
 
 
 class RandomizeDeckEffectTestCase(TestCase):
@@ -28,8 +28,8 @@ class RandomizeDeckEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = Player(self.u1.id, Deck(self.d1))
-        self.other_player = Player(self.u2.id, Deck(self.d2))
+        self.card_owner = Player(self.u1.id, Deck(self.d1), 1)
+        self.other_player = Player(self.u2.id, Deck(self.d2), 1)
 
         self.target = self.other_player
 

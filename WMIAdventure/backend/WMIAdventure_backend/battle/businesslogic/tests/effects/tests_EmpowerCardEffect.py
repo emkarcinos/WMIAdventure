@@ -1,10 +1,10 @@
 from unittest import TestCase
 
-from battle.businesslogic.effects.EmpowerCardEffect import EmpowerCardEffect
-from cards.models import CardLevelEffects, CardEffect
-from battle.businesslogic.tests.Creator import Creator
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
+from battle.businesslogic.effects.EmpowerCardEffect import EmpowerCardEffect
+from battle.businesslogic.tests.Creator import Creator
+from cards.models import CardLevelEffects, CardEffect
 
 
 class EmpowerCardEffectTestCase(TestCase):
@@ -14,7 +14,7 @@ class EmpowerCardEffectTestCase(TestCase):
 
         cls.u1 = cls.creator.get_user_models()[0]
         cls.d1 = cls.creator.get_decks()[0]
-        cls.card_owner = Player(cls.u1.id, Deck(cls.d1))
+        cls.card_owner = Player(cls.u1.id, Deck(cls.d1), 1)
         card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.EMPOWER)
 
         target = CardLevelEffects.Target.PLAYER
@@ -28,7 +28,7 @@ class EmpowerCardEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = Player(self.u1.id, Deck(self.d1))
+        self.card_owner = Player(self.u1.id, Deck(self.d1), 1)
 
     def test_empower_any(self):
         effect_any = EmpowerCardEffect(self.effect_model)

@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from IngameUsers.businesslogic.experience.Experience import Experience
 from .Creator import Creator
 from ..Deck import Deck
 from ..Outcome import Outcome
@@ -17,11 +18,17 @@ class OutcomeTestCase(TestCase):
 
         cls.attacker_deck_model, cls.defender_deck_model = cls.creator.get_decks(1)
 
+        attacker_experience = Experience(cls.user_profile_model1.user_stats.exp)
         cls.attacker = Player(cls.user_profile_model1.user.id,
-                              Deck(cls.attacker_deck_model))
+                              Deck(cls.attacker_deck_model),
+                              attacker_experience.level
+                              )
 
+        defender_experience = Experience(cls.user_profile_model2.user_stats.exp)
         cls.defender = Player(cls.user_profile_model2.user.id,
-                              Deck(cls.defender_deck_model))
+                              Deck(cls.defender_deck_model),
+                              defender_experience.level
+                              )
 
     def setUp(self) -> None:
         self.outcome = Outcome(self.attacker, self.defender)

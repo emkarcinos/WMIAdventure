@@ -28,8 +28,8 @@ class DmgEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = Player(self.u1.id, Deck(self.d1))
-        self.other_player = Player(self.u2.id, Deck(self.d2))
+        self.card_owner = Player(self.u1.id, Deck(self.d1), 1)
+        self.other_player = Player(self.u2.id, Deck(self.d2), 1)
 
         self.other_player.statistics.armour = 0
 

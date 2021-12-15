@@ -17,7 +17,8 @@ class CalculatorTestCase(TestCase):
     def setUp(self) -> None:
         self.battle_player = Player(
             self.user_profile_model.user.id,
-            Deck(self.deck_model)
+            Deck(self.deck_model),
+            1
         )
 
         self.instance = Calculator.get_instance()

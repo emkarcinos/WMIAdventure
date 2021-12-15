@@ -50,7 +50,7 @@ class OutcomePlayerSerializerTestCase(TestCase):
         cls.deck = Deck(cls.deck_model)
 
     def setUp(self) -> None:
-        self.instance = Player(1, self.deck)
+        self.instance = Player(1, self.deck, 1)
 
     def test_serialization(self):
         serializer = OutcomePlayerSerializer(instance=self.instance)
@@ -76,8 +76,8 @@ class OutcomeSerializerTestCase(TestCase):
         cls.defender_deck = Deck(cls.creator.get_defender_deck(2))
 
     def setUp(self) -> None:
-        self.attacker = Player(1, self.attacker_deck)
-        self.defender = Player(2, self.defender_deck)
+        self.attacker = Player(1, self.attacker_deck, 1)
+        self.defender = Player(2, self.defender_deck, 1)
 
         self.instance = Outcome(self.attacker, self.defender)
         self.instance.is_completed = True

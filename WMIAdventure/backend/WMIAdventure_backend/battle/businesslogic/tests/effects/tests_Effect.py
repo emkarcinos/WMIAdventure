@@ -44,8 +44,8 @@ class EffectTestCase(TestCase):
         u1, u2 = cls.creator.get_user_models()
         d1, d2 = cls.creator.get_decks()
 
-        cls.card_owner = Player(u1.id, d1)
-        cls.other_player = Player(u1.id, d2)
+        cls.card_owner = Player(u1.id, d1, 1)
+        cls.other_player = Player(u1.id, d2, 1)
 
     def setUp(self) -> None:
         self.effect = Effect(self.effect_model)

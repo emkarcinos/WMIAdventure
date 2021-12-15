@@ -16,7 +16,8 @@ class PlayerTestCase(TestCase):
     def setUp(self) -> None:
         self.battle_player = Player(
             self.user_profile_model.user.id,
-            Deck(self.deck_model)
+            Deck(self.deck_model),
+            1
         )
 
     def test_use_card(self):

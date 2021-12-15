@@ -1,10 +1,10 @@
 from unittest import TestCase
 
-from battle.businesslogic.effects.HealEffect import HealEffect
-from cards.models import CardLevelEffects, CardEffect
-from battle.businesslogic.tests.Creator import Creator
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
+from battle.businesslogic.effects.HealEffect import HealEffect
+from battle.businesslogic.tests.Creator import Creator
+from cards.models import CardLevelEffects, CardEffect
 
 
 class HealEffectTestCase(TestCase):
@@ -14,7 +14,7 @@ class HealEffectTestCase(TestCase):
 
         u1 = cls.creator.get_user_models()[0]
         d1 = cls.creator.get_decks()[0]
-        cls.card_owner = Player(u1.id, Deck(d1))
+        cls.card_owner = Player(u1.id, Deck(d1), 1)
         card_effect_info_model = CardEffect.objects.get(id=CardEffect.EffectId.HEAL)
 
         target = CardLevelEffects.Target.PLAYER

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from IngameUsers.models import UserProfile, Deck, UserCard, UserDeck
+from IngameUsers.models import UserProfile, Deck, UserCard, UserDeck, UserStats
 from cards.models import CardInfo, Card, CardLevel, CardLevelEffects, CardEffect
 from users.models import User
 
@@ -95,6 +95,10 @@ class Creator:
                                                displayedUsername="user2")
         self.user_profile_model1.save()
         self.user_profile_model2.save()
+
+        UserStats.objects.create(profile=self.user_profile_model1, exp=0)
+        UserStats.objects.create(profile=self.user_profile_model2, exp=0)
+
         # Creating 5 test cards
         self.cards = []
         self.infos = []

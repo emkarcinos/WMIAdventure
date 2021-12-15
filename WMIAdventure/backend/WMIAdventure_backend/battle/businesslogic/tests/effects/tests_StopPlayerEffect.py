@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-from battle.businesslogic.Coordinator import Coordinator
 from battle.businesslogic.Deck import Deck
 from battle.businesslogic.Player import Player
 from battle.businesslogic.effects.StopPlayerEffect import StopPlayerEffect
@@ -29,8 +28,8 @@ class StopPlayerEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = Player(self.u1.id, Deck(self.d1))
-        self.other_player = Player(self.u2.id, Deck(self.d2))
+        self.card_owner = Player(self.u1.id, Deck(self.d1), 1)
+        self.other_player = Player(self.u2.id, Deck(self.d2), 1)
         self.target = self.other_player
 
         self.turns_stopped = 5

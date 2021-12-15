@@ -28,7 +28,7 @@ class TrueDmgEffectTestCase(TestCase):
         )
 
     def setUp(self) -> None:
-        self.card_owner = Player(self.u1.id, Deck(self.d1))
+        self.card_owner = Player(self.u1.id, Deck(self.d1), 1)
         self.effect = TrueDamageEffect(self.effect_model)
 
     def test_dealing_dmg(self):
