@@ -12,6 +12,7 @@ const Container = styled.div`
   opacity: ${({opacity}) => opacity ? opacity : '100%'};
   transition: opacity 0.5s ease-in-out;
   padding: ${({setPadding}) => setPadding ? setPadding : '0'};
+  position: ${({setRelative}) => setRelative ? 'relative' : 'static'};
 `;
 
 export default Container;
