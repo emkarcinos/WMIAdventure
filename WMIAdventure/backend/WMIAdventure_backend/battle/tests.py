@@ -2,6 +2,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+from IngameUsers.factories import create_user_profile_with_deck
 from battle.businesslogic.tests.Creator import Creator
 from users.models import User
 from . import views
@@ -196,11 +197,9 @@ class OutcomeSerializerTestCase(TestCase):
 
 
 class BattleViewTestCase(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.creator = Creator()
-
-        cls.attacker_user, cls.defender_user = cls.creator.get_user_models()
+    def setUp(self) -> None:
+        self.attacker_user = create_user_profile_with_deck()[0].user
+        self.defender_user = create_user_profile_with_deck()[0].user
 
     def test_get1(self):
         """
@@ -247,10 +246,6 @@ class BattleViewTestCase(TestCase):
 
         # Assert 404
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.creator.perform_deletion()
 
 
 def _gen_not_existing_user_id():
