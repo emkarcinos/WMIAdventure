@@ -9,6 +9,10 @@ const Nav = styled.nav`
   height: 100%;
   transition: background-color 0.3s ease-in-out;
   background-color: ${({theme, showBackground}) => showBackground ? theme.colors.whiteAlmost : 'transparent'};
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    padding: 0 40px;
+  }
 `;
 
 export default Nav;
