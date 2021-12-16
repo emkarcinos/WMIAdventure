@@ -15,6 +15,8 @@ class Outcome:
         self.is_completed = False
         self.attacker = attacker
         self.defender = defender
+        self.attacker_exp_gain = 0
+        self.defender_exp_gain = 0
 
     def is_done(self, turn_num: int) -> bool:
         """
