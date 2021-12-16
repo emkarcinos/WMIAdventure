@@ -7,7 +7,7 @@ class CalculationsTestCase(TestCase):
     def test_win_and_defeat(self):
         winner_level = 5
         loser_level = 17
-        expected_winner_gain = 25
+        expected_winner_gain = 23
         expected_loser_gain = 0
 
         actual_winner_gain = win(winner_level, loser_level)

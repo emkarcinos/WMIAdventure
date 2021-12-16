@@ -2,7 +2,7 @@ from math import sqrt
 
 from battle.businesslogic.Outcome import Outcome
 
-_c = 6
+_c = 4
 
 
 def win(winner_level, loser_level) -> int:

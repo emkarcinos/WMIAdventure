@@ -311,3 +311,17 @@ class SignalsTestCase(TestCase):
         defender_stats.refresh_from_db()
         self.assertEquals(attacker_stats.exp, expected_attacker_exp)
         self.assertEquals(defender_stats.exp, expected_defender_exp)
+
+    def test_user_without_stats_gains_them(self):
+        attacker, _ = create_player_with_deck()
+        defender, _ = create_player_with_deck()
+        outcome = Outcome(attacker, defender)
+
+        attacker_profile = UserProfile.objects.get(pk=attacker.id)
+        attacker_profile.user_stats.delete()
+
+        on_battle_end(outcome)
+
+        new_attacker_stats = attacker_profile.user_stats
+
+        self.assertIsNotNone(new_attacker_stats)
