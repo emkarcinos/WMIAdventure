@@ -116,6 +116,13 @@ class OutcomeSerializerTestCase(TestCase):
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner.id)
 
+        # Assert exp gain
+        actual_attacker_exp_gain = serializer.data.get('attacker_exp_gain')
+        actual_defender_exp_gain = serializer.data.get('defender_exp_gain')
+
+        self.assertEqual(actual_attacker_exp_gain, self.instance.attacker_exp_gain)
+        self.assertEqual(actual_defender_exp_gain, self.instance.defender_exp_gain)
+
     def test_serialization2(self):
         """
         Scenario: Attacker and defender have 0 hp.
@@ -151,6 +158,13 @@ class OutcomeSerializerTestCase(TestCase):
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner)
 
+        # Assert exp gain
+        actual_attacker_exp_gain = serializer.data.get('attacker_exp_gain')
+        actual_defender_exp_gain = serializer.data.get('defender_exp_gain')
+
+        self.assertEqual(actual_attacker_exp_gain, self.instance.attacker_exp_gain)
+        self.assertEqual(actual_defender_exp_gain, self.instance.defender_exp_gain)
+
     def test_serialization3(self):
         """
         Scenario: Defender has 0 hp.
@@ -184,6 +198,13 @@ class OutcomeSerializerTestCase(TestCase):
         # Assert winner id
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner.id)
+
+        # Assert exp gain
+        actual_attacker_exp_gain = serializer.data.get('attacker_exp_gain')
+        actual_defender_exp_gain = serializer.data.get('defender_exp_gain')
+
+        self.assertEqual(actual_attacker_exp_gain, self.instance.attacker_exp_gain)
+        self.assertEqual(actual_defender_exp_gain, self.instance.defender_exp_gain)
 
     def tearDown(self) -> None:
         # Reset players' hp

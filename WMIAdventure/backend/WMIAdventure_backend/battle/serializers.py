@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from IngameUsers.models import UserDeck, UserProfile
-from IngameUsers.serializers import DeckSerializer, UserDecksSerializer
+from IngameUsers.models import UserProfile
+from IngameUsers.serializers import UserDecksSerializer
 from battle.businesslogic.Statistics import Statistics
 
 
@@ -64,6 +64,8 @@ class OutcomeSerializer(serializers.Serializer):
                                       help_text="Winner's id - can be None if both of the players were defeated (draw)")
     attacker = OutcomePlayerSerializer(help_text="Attacker - player who started battle.")
     defender = OutcomePlayerSerializer(help_text="Defender.")
+    attacker_exp_gain = serializers.IntegerField()
+    defender_exp_gain = serializers.IntegerField()
 
     def create(self, validated_data):
         pass
