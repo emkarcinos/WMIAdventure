@@ -12,9 +12,9 @@ import {buffModifierHandle} from "../../../battle/organisms/BattleView/effectsVi
 class CompactCardView extends React.Component {
     /*
     props:
-        setWidth -> set width of main Div
-        setHeight -> set height of main Div
-        setMargin -> set margin of main Div
+        setWidth -> set width of main InputContainer
+        setHeight -> set height of main InputContainer
+        setMargin -> set margin of main InputContainer
         decorationHeight -> set height of top decoration border card view
         shadow -> signal that component has shadow
         ownFontSize -> set font size of card name
