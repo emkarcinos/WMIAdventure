@@ -1,5 +1,8 @@
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.models import update_last_login
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 from users.models import User
 
@@ -39,3 +42,36 @@ class BasicUserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username']
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=255)
+    password = serializers.CharField(max_length=64, write_only=True)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+    def validate(self, data):
+        username = data.get('username', None)
+        password = data.get('password', None)
+        if username is None or password is None:
+            raise serializers.ValidationError(
+                'Puste hasło lub nazwa użytkownika'
+            )
+        UserModel = get_user_model()
+        try:
+            UserModel.objects.get(username=username)
+        except UserModel.DoesNotExist:
+            raise serializers.ValidationError(
+                'Użytkownik o takiej nazwie nie istnieje'
+            )
+        user = authenticate(username=username, password=password)
+        if user is None:
+            raise serializers.ValidationError(
+                'Niepoprawne hasło'
+            )
+        token, _ = Token.objects.get_or_create(user=user)
+        update_last_login(None, user)
+
+        return {
+            'username': username,
+            'token': token.key
+        }
