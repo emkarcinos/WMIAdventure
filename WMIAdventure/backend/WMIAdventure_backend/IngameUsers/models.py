@@ -91,6 +91,11 @@ class UserDeck(models.Model):
         ]
 
 
+class UserStats(models.Model):
+    profile = models.OneToOneField(UserProfile, related_name='user_stats', on_delete=models.CASCADE)
+    exp = models.PositiveIntegerField()
+
+
 class ImageStorage(models.Model):
     bytes = models.BinaryField()
     filename = models.CharField(max_length=255)
