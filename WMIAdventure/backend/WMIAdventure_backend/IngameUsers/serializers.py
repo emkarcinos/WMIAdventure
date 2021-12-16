@@ -7,6 +7,12 @@ from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, Deck, UserCard, UserDeck
 
 
+class UserStatsSerializer(serializers.Serializer):
+    exp = serializers.IntegerField()
+    level = serializers.IntegerField()
+    percentage = serializers.IntegerField(source='next_level_percent')
+
+
 class UserLevelSerializer(serializers.Field):
     def to_internal_value(self, data):
         pass
