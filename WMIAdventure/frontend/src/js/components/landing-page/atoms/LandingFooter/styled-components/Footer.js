@@ -6,6 +6,7 @@ const Footer = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ${({theme}) => theme.colors.whiteAlmost};
 `;
 
 export default Footer;
