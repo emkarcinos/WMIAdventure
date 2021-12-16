@@ -6,9 +6,7 @@ from rest_framework.views import APIView
 
 from WMIAdventure_backend.settings import SESSION_COOKIE_AGE, SESSION_COOKIE_NAME
 from .models import User
-from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserSerializer
-
-
+from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserSerializer, LoginSerializer
 # Create your views here.
 from .signals import user_registered
 
@@ -72,3 +70,14 @@ class WhoAmIView(APIView):
 
         serializer = BasicUserSerializer(user)
         return Response(serializer.data)
+
+
+class LoginView(APIView):
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+        response = Response(data=serializer.data)
+        response.set_cookie(SESSION_COOKIE_NAME, serializer.data.get('token'), expires=SESSION_COOKIE_AGE)
+        return response
