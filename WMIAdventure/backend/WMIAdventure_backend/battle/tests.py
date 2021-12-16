@@ -1,15 +1,20 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 from IngameUsers.factories import create_user_profile_with_deck
+from IngameUsers.models import UserStats
 from battle.businesslogic.tests.Creator import Creator
 from users.models import User
 from . import views
 from .businesslogic.Deck import Deck
 from .businesslogic.Outcome import Outcome
 from .businesslogic.Player import Player
+from .businesslogic.tests.factories import create_player_with_deck
 from .serializers import *
+from .signals import on_battle_end
 
 
 class StatisticsSerializerTestCase(TestCase):
@@ -258,3 +263,39 @@ def _gen_not_existing_user_id():
     while len(User.objects.filter(pk=not_existing_user_id)) > 0:
         not_existing_user_id += 1
     return not_existing_user_id
+
+
+class SignalsTestCase(TestCase):
+
+    @patch('battle.signals.calculate_exp_gains')
+    def test_on_battle_end(self, mock_calculate_exp_gains):
+        """
+        **Scenario:**
+
+        - Battle Outcome exists, on_battle_end() is called
+
+        ---
+
+        **Expected result:**
+
+        - Users gained proper amount of exp.
+        """
+        attacker, _ = create_player_with_deck()
+        defender, _ = create_player_with_deck()
+        outcome = Outcome(attacker, defender)
+
+        attacker_exp_gain, defender_exp_gain = 3, 4
+        attacker_stats = UserStats.objects.get(profile=attacker.id)
+        defender_stats = UserStats.objects.get(profile=defender.id)
+
+        expected_attacker_exp = attacker_stats.exp + attacker_exp_gain
+        expected_defender_exp = defender_stats.exp + defender_exp_gain
+
+        mock_calculate_exp_gains.return_value = (attacker_exp_gain, defender_exp_gain)
+
+        on_battle_end(outcome)
+
+        attacker_stats.refresh_from_db()
+        defender_stats.refresh_from_db()
+        self.assertEquals(attacker_stats.exp, expected_attacker_exp)
+        self.assertEquals(defender_stats.exp, expected_defender_exp)
