@@ -6,6 +6,7 @@ const Paragraph = styled.p`
   line-height: 22px;
   font-weight: ${({theme}) => theme.weight.regular};
   color: ${({theme}) => theme.colors.dark};
+  margin: 0;
 `;
 
 export default Paragraph;
