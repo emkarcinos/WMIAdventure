@@ -9,12 +9,7 @@ import Div from "./styled-components/Div";
 import NavButton from "./styled-components/NavButton";
 import Link from "./styled-components/A";
 import Menubar from "../Menubar";
-import H1 from "./styled-components/H1";
-import Span from "./styled-components/Span";
-import FlexGapContainer from "../FlexGapContainer/FlexGapContainer";
-import Logo from "./styled-components/Logo";
-import logo from '../../../../../assets/icons/logo.svg';
-import HomeLink from "./styled-components/HomeLink";
+import Logo from "../../atoms/Logo";
 
 /**
  * Props:
@@ -40,7 +35,7 @@ class Navbar extends React.Component {
         return (
             <Nav>
                 <Div>
-                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> : <Logo src={logo}/>}
+                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> : <Logo/>}
                     {this.props.label}
                 </Div>
                 <Div>
@@ -55,13 +50,7 @@ class Navbar extends React.Component {
     desktopNavbar = () => {
         return (
             <Nav>
-                <FlexGapContainer gap={'10px'} setRelative>
-                    <H1>
-                        ~/<Span>WMI</Span> Adventure
-                    </H1>
-                    <Logo src={logo}/>
-                    <HomeLink to={'/'}/>
-                </FlexGapContainer>
+                <Logo fullVersion/>
                 <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );

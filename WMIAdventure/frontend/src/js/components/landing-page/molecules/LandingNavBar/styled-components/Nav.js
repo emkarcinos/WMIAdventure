@@ -1,0 +1,14 @@
+import styled from 'styled-components';
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s ease-in-out;
+  background-color: ${({theme, showBackground}) => showBackground ? theme.colors.whiteAlmost : 'transparent'};
+`;
+
+export default Nav;
