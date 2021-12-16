@@ -8,6 +8,12 @@ from users.views import UserRegister
 from utils.test_data.create_example_data import get_or_create_example_deck_for_user
 
 
+def user_should_gain_exp(user_profile: UserProfile, exp_amount: int):
+    user_stats = user_profile.user_stats
+    user_stats.exp = exp_amount
+    user_stats.save()
+
+
 def on_user_create(sender, user: settings.AUTH_USER_MODEL, **kwargs):
     """
     Creates a user profile whenever new user has been created.

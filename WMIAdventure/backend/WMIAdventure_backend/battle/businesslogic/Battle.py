@@ -3,6 +3,7 @@ from .Coordinator import Coordinator
 from .Outcome import Outcome
 from .PlayerFactory import PlayerFactory
 from .recorder.ProcessRecorder import ProcessRecorder
+from ..signals import on_battle_end
 
 
 class Battle:
@@ -28,6 +29,7 @@ class Battle:
     def start(self):
         while not self.is_finished():
             self.turn()
+        on_battle_end(self.outcome)
 
     def turn(self):
         """
