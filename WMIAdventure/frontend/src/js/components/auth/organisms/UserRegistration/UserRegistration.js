@@ -12,7 +12,7 @@ class UserRegistration extends React.Component {
         hasRegistered: false
     }
     onRegistrationSuccess = () => {
-        UsersAPIGateway.login(this.state.username)
+        UsersAPIGateway.login(this.state.username, this.state.password)
             .then(resp => {
                 resp.ok ? this.setState({hasRegistered: true}) : null;
             });
@@ -29,14 +29,11 @@ class UserRegistration extends React.Component {
             );
     }
 
-    updateState = (event) => {
-        const keyName = event.target.name;
-        let keyValue;
-        if (event.target.value !== '')
-            keyValue = event.target.value;
-        else keyValue = '';
-        this.setState({[keyName]: keyValue});
+    fieldChangedHandler = (event, field) => {
+        event.preventDefault();
+        this.setState({[field]: event.target.value})
     }
+
 
     render() {
         return (
@@ -48,10 +45,9 @@ class UserRegistration extends React.Component {
                           password={this.state.password}
                           password2={this.state.password2}
                           onSubmit={this.onRegistrationFormSubmit}
-                          updateState={this.updateState}
-                          loginError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
-                          passwordError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
-                          password2Error={'Error example'}
+                          updateUsernameState={evt => this.fieldChangedHandler(evt, 'username')}
+                          updatePasswordState={evt => this.fieldChangedHandler(evt, 'password')}
+                          updatePassword2State={evt => this.fieldChangedHandler(evt, 'password2')}
                 />
                 {
                     this.state.hasRegistered ? <Redirect to={'/'}/> : null
