@@ -9,9 +9,10 @@ from battle.businesslogic.tests.Creator import Creator
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
+from .businesslogic.experience.Experience import Experience
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
-from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer
+from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
 from .signals import on_user_create, user_should_gain_exp
 
 
@@ -428,6 +429,16 @@ class UserDeckViewTestCase(TestCase):
 
         serializer = UserProfileSerializer(instance=profile)
         self.assertEqual(serializer.data.get('level', None), 1)
+
+    def test_should_serialize_full_level_data(self):
+        experience = Experience(5)
+        expected_exp = experience.exp
+        expected_level = experience.level
+        expected_percentage = experience.next_level_percent
+        serializer = UserStatsSerializer(instance=experience)
+        self.assertEqual(serializer.data.get('exp'), expected_exp)
+        self.assertEqual(serializer.data.get('level'), expected_level)
+        self.assertEqual(serializer.data.get('percentage'), expected_percentage)
 
 
 class SignalsTestCase(TestCase):

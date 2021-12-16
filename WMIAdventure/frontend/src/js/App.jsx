@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
+import LandingPage from "./pages/LandingPage";
 import MainMenu from './pages/MainMenu';
 import Profile from './pages/Profile';
 import UserRegistrationPage from "./pages/UserRegistration";
@@ -19,7 +20,8 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Switch>
-                <Route exact path='/' component={MainMenu}/>
+                <Route exact path='/' component={LandingPage}/>
+                <Route path='/main' component={MainMenu}/>
                 <Route path='/profile' component={Profile}/>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/registration' component={UserRegistrationPage}/>

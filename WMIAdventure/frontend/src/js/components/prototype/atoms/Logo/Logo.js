@@ -5,11 +5,11 @@ import Image from './styled-components/Image';
 import Header from './styled-components/Header';
 import logo from '../../../../../assets/icons/logo.svg';
 
-function Logo() {
+function LogoImage() {
     return (
         <Wrapper className='Logo'>
             <Link to={'/'}>
-                <Image src={logo} alt='Logo Wmi Adventure.'/>
+                <Image src={logo} alt='LogoImage Wmi Adventure.'/>
                 <Header>
                     WMI Adventure
                 </Header>

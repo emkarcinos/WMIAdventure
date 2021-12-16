@@ -13,8 +13,10 @@ class Experience:
     def __init__(self, exp=0):
         self.level = 0
         self.exp_required_to_level_up = 0
+        self.next_level_percent = 0
         self.exp = exp
         self._populate()
+        self._populate_level_percentage()
 
     def _populate(self):
         guessing_level = 1
@@ -27,3 +29,8 @@ class Experience:
                 return
 
             guessing_level += 1
+
+    def _populate_level_percentage(self):
+        begin_level_range = CachedLevelBoundaries.get_min_exp_for_level(self.level)
+        end_level_range = CachedLevelBoundaries.get_min_exp_for_level(self.level + 1)
+        self.next_level_percent = round(((self.exp - begin_level_range) / (end_level_range - begin_level_range)) * 100)

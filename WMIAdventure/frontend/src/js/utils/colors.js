@@ -1,5 +1,4 @@
 const colors = {
-
     // Prototype colours: TODO: Remove after all prototype views are gone
     brand01: '#121232',
     ui06: '#232735',
