@@ -3,17 +3,39 @@ from rest_framework.exceptions import ValidationError
 
 from cards.models import Card
 from . import models
+from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, Deck, UserCard, UserDeck
+
+
+class UserStatsSerializer(serializers.Serializer):
+    exp = serializers.IntegerField()
+    level = serializers.IntegerField()
+    percentage = serializers.IntegerField(source='next_level_percent')
+
+
+class UserLevelSerializer(serializers.Field):
+    def to_internal_value(self, data):
+        pass
+
+    def get_attribute(self, instance):
+        if not hasattr(instance, 'user_stats'):
+            return 0
+        return super().get_attribute(instance)
+
+    def to_representation(self, instance):
+        experience_obj = Experience(instance)
+        return experience_obj.level
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
+    level = UserLevelSerializer(source='user_stats.exp', required=False)
 
     class Meta:
         model = models.UserProfile
-        fields = ('user', 'displayedUsername', 'semester', 'image')
+        fields = ('user', 'displayedUsername', 'semester', 'image', 'level')
 
     def create(self, validated_data):
         newProfile = models.UserProfile.objects.create(
