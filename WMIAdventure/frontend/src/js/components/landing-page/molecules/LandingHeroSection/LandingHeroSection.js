@@ -10,7 +10,7 @@ import Content from "./styled-components/Content";
 class LandingHeroSection extends React.Component {
     render() {
         return (
-            <Div>
+            <Div ref={this.props.setRef}>
                 <Content>
                     <Logo fullVersion setZindex={'2'} setFontSize={'24px'} setMargin={'18vw 0 20vw 0'}/>
                     <Subtitle>

@@ -6,7 +6,7 @@ import Grid from "./styled-components/Grid";
 class LandingSection extends React.Component {
     render() {
         return (
-            <Section>
+            <Section ref={this.props.setRef}>
                 <H2>
                     Co na ciebie czeka?
                 </H2>

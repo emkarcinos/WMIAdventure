@@ -8,8 +8,8 @@ class LandingNavBar extends React.Component {
     render() {
         return (
             <SiteHeader>
-                <Nav>
-                    <Logo setOpacity={'0'}/>
+                <Nav showBackground={this.props.showBackground}>
+                    <Logo setOpacity={this.props.showBackground ? '1' : '0'}/>
                     <LandingLogin text='Zaloguj się' url='/login'/>
                 </Nav>
             </SiteHeader>
