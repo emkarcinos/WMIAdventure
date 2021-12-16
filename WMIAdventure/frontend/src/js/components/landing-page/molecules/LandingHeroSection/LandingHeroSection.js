@@ -8,6 +8,8 @@ import LandingRegistration from "../../atoms/LandingRegistration";
 import Content from "./styled-components/Content";
 import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
+import DesktopTitle from "./styled-components/DesktopTitle";
+import Span from "./styled-components/Span";
 
 class LandingHeroSection extends React.Component {
     render() {
@@ -28,7 +30,9 @@ class LandingHeroSection extends React.Component {
                 <Media query={desktop}>
                     <Div ref={this.props.setRef}>
                         <Content>
-                            <Logo fullVersion setZindex={'2'} setFontSize={'24px'} setMargin={'0'}/>
+                            <DesktopTitle>
+                                ~/<Span>WMI</Span> Adventure
+                            </DesktopTitle>
                             <Subtitle>
                                 Poznaj alternatywny świat studiowania
                             </Subtitle>

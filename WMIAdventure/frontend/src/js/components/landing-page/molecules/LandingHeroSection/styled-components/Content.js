@@ -12,9 +12,14 @@ const Content = styled.div`
   align-items: center;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    top: 176px;
-    left: 60px;
+    top: 24%;
+    left: 2%;
     width: auto;
+  }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) and (max-width: 1260px) {
+    top: 20%;
+    left: 4%;
   }
 `;
 
