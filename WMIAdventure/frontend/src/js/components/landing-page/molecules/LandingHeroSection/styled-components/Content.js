@@ -10,6 +10,12 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    top: 176px;
+    left: 60px;
+    width: auto;
+  }
 `;
 
 export default Content;

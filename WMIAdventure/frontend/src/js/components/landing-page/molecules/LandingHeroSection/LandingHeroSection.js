@@ -27,6 +27,12 @@ class LandingHeroSection extends React.Component {
                 </Media>
                 <Media query={desktop}>
                     <Div ref={this.props.setRef}>
+                        <Content>
+                            <Logo fullVersion setZindex={'2'} setFontSize={'24px'} setMargin={'0'}/>
+                            <Subtitle>
+                                Poznaj alternatywny świat studiowania
+                            </Subtitle>
+                        </Content>
                     </Div>
                 </Media>
             </>
