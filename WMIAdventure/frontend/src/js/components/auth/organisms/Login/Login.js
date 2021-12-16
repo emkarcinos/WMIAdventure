@@ -7,6 +7,7 @@ import MainContainer from "./styled-components/MainContainer";
 class Login extends React.Component {
     state = {
         username: null,
+        password: null,
         loggedIn: false
     }
 
@@ -28,7 +29,7 @@ class Login extends React.Component {
     submitHandler = (event) => {
         event.preventDefault();
 
-        UsersAPIGateway.login(this.state.username)
+        UsersAPIGateway.login(this.state.username, this.state.password)
             .then(response => {
                 if (response.ok)
                     this.loginSuccessHandler();
@@ -41,9 +42,9 @@ class Login extends React.Component {
             });
     }
 
-    usernameChangedHandler = (event) => {
+    fieldChangedHandler = (event, field) => {
         event.preventDefault();
-        this.setState({username: event.target.value})
+        this.setState({[field]: event.target.value})
     }
 
     render() {
@@ -54,9 +55,8 @@ class Login extends React.Component {
                     legend={'Zaloguj się'}
                     linkValue={'/registration'}
                     linkText='Nie masz konta?'
-                    updateState={this.usernameChangedHandler}
-                    loginError={'Error example'}
-                    passwordError={'Error asddasasdasdadsds adsaasdasddassadasddsa example'}
+                    updateUsernameState={evt => this.fieldChangedHandler(evt, 'username')}
+                    updatePasswordState={evt => this.fieldChangedHandler(evt, 'password')}
                 />
 
                 {

@@ -27,7 +27,7 @@ class AuthForm extends React.Component {
                         <Label for='username'>Nazwa użytkownika</Label>
                         <InputContainer>
                             <Input type='text' id='username' name='username' value={this.props.username}
-                                   onChange={this.props.updateState}/>
+                                   onChange={this.props.updateUsernameState}/>
                             <Line/>
                         </InputContainer>
                         {this.props.loginError ?
@@ -44,7 +44,7 @@ class AuthForm extends React.Component {
                                    pattern='^.{10}.*'
                                    title='Hasło musi składać się z conajmniej 10 znaków.'
                                    value={this.props.password}
-                                   onChange={this.props.updateState}/>
+                                   onChange={this.props.updatePasswordState}/>
                             <Line/>
                         </InputContainer>
                         {this.props.passwordError ?
@@ -64,7 +64,7 @@ class AuthForm extends React.Component {
                                                pattern='^.{10}.*'
                                                title='Hasło musi składać się z conajmniej 10 znaków.'
                                                value={this.props.password2}
-                                               onChange={this.props.updateState}/>
+                                               onChange={this.props.updatePassword2State}/>
                                         <Line/>
                                     </InputContainer>
                                     {this.props.password2Error ?
