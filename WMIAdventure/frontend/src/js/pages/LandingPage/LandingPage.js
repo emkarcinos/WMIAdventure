@@ -8,7 +8,6 @@ import LandingFooter from "../../components/landing-page/atoms/LandingFooter";
 import content from "./content";
 
 function LandingPage() {
-
     const targetRef = React.useRef(null);
     const [heroVisible, setHeroVisible] = React.useState(true);
 
