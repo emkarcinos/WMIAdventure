@@ -1,36 +1,15 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 
-from IngameUsers.businesslogic.experience.Experience import Experience
-from .Creator import Creator
-from ..Deck import Deck
+from .factories import create_player_with_deck
 from ..Outcome import Outcome
-from ..Player import Player
 
 
 class OutcomeTestCase(TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.creator = Creator()
-
-        cls.user_profile_model1, cls.user_profile_model2 = \
-            cls.creator.get_user_profile_models()
-
-        cls.attacker_deck_model, cls.defender_deck_model = cls.creator.get_decks(1)
-
-        attacker_experience = Experience(cls.user_profile_model1.user_stats.exp)
-        cls.attacker = Player(cls.user_profile_model1.user.id,
-                              Deck(cls.attacker_deck_model),
-                              attacker_experience.level
-                              )
-
-        defender_experience = Experience(cls.user_profile_model2.user_stats.exp)
-        cls.defender = Player(cls.user_profile_model2.user.id,
-                              Deck(cls.defender_deck_model),
-                              defender_experience.level
-                              )
-
     def setUp(self) -> None:
+        self.attacker, _ = create_player_with_deck()
+        self.defender, _ = create_player_with_deck()
         self.outcome = Outcome(self.attacker, self.defender)
 
     def test_creation(self):
@@ -49,15 +28,39 @@ class OutcomeTestCase(TestCase):
 
         self.assertEqual(self.outcome.get_winner(), expected_outcome)
 
-    def test_get_winner1(self):
+    @patch('battle.businesslogic.Outcome.defeat')
+    @patch('battle.businesslogic.Outcome.win')
+    def test_get_winner1(
+            self,
+            mock_win,
+            mock_defeat
+    ):
         """
         Scenario: Defender is defeated.
         Expected result: Attacker is winner.
         """
 
         self.outcome.defender.statistics.hp = 0.0
+
+        expected_attacker_exp_gain = 5
+        expected_defender_exp_gain = 0
+
+        mock_win.return_value = expected_attacker_exp_gain
+        mock_defeat.return_value = expected_defender_exp_gain
+
         self.outcome.is_done(turn_num=1)
+
+        # Assert appropriate calculations were called
+        mock_win.assert_called_once_with(
+            self.attacker.level, self.defender.level
+        )
+        mock_defeat.assert_called_once_with(
+            self.attacker.level, self.defender.level
+        )
+
         self.assertIs(self.outcome.get_winner(), self.attacker)
+        self.assertEquals(self.outcome.attacker_exp_gain, expected_attacker_exp_gain)
+        self.assertEquals(self.outcome.defender_exp_gain, expected_defender_exp_gain)
 
         # Restoring defender hp
         self.outcome.defender.statistics.hp = self.outcome.defender.statistics.MAX_HP
@@ -75,7 +78,8 @@ class OutcomeTestCase(TestCase):
         # Restoring attacker hp
         self.outcome.attacker.statistics.hp = self.outcome.attacker.statistics.MAX_HP
 
-    def test_get_winner3(self):
+    @patch('battle.businesslogic.Outcome.draw')
+    def test_get_winner3(self, mock_draw):
         """
         Scenario: Attacker and defender are defeated.
         Expected result: None is winner.
@@ -85,6 +89,8 @@ class OutcomeTestCase(TestCase):
         self.outcome.defender.statistics.hp = 0.0
 
         self.outcome.is_done(turn_num=1)
+        self.assertEquals(mock_draw.call_count, 2)
+
         self.assertIsNone(self.outcome.get_winner())
 
         # Restoring players hp
@@ -112,6 +118,3 @@ class OutcomeTestCase(TestCase):
         # Assert there is draw - winner is None
         self.assertIsNone(self.outcome.get_winner())
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.creator.perform_deletion()
