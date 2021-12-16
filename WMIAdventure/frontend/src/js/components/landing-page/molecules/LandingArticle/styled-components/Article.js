@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const Article = styled.article`
   width: 100%;
-  max-width: 304px;
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 export default Article;
