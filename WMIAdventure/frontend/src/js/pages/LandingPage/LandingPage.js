@@ -10,6 +10,7 @@ import pencilDark from '../../../assets/icons/pencil-dark.svg';
 import levelUpDark from '../../../assets/icons/level-up-dark.svg';
 import devices from '../../../assets/images/devices.png';
 import github from '../../../assets/images/github.png';
+import LandingFooter from "../../components/landing-page/atoms/LandingFooter";
 
 class LandingPage extends React.Component {
     render() {
@@ -62,8 +63,8 @@ class LandingPage extends React.Component {
                                         który jest otwarty na wszelkie sugestie i rozwój.
                                         Zapraszamy na nasze repozytorium na githubie po więcej informacji.'/>
                     </LandingSection>
-
                 </Main>
+                <LandingFooter/>
             </>
         );
     }

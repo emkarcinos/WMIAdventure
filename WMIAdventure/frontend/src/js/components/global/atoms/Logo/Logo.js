@@ -15,7 +15,7 @@ class Logo extends React.Component {
                         <FlexGapContainer setZindex={this.props.setZindex}
                                           setMargin={this.props.setMargin}
                                           gap={'10px'} setRelative>
-                            <H1 setFontSize={this.props.setFontSize}>
+                            <H1 as={this.props.headerAs} setFontSize={this.props.setFontSize}>
                                 ~/<Span>WMI</Span> Adventure
                             </H1>
                             <LogoImage src={logo}/>
