@@ -16,7 +16,7 @@ export class DetailedUserData extends BasicUserData {
     }
 
     async fetchNonVitalDataFromBackend() {
-        const data = await getUsersLevelData(this.id);
+        const data = await getUsersLevelData(this.userId);
         if (!data)
             return false;
 
