@@ -1,5 +1,5 @@
 class BasicUserData {
-    constructor(id, username, semester, avatar, level = {}) {
+    constructor(id, username, semester, avatar, level) {
         this.userId = id;
         this.username = username;
         this.semester = semester;
