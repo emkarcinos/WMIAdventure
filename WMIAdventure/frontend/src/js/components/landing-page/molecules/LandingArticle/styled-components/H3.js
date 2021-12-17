@@ -9,6 +9,7 @@ const H3 = styled.h3`
   text-transform: uppercase;
   color: ${({theme}) => theme.colors.dark};
   font-weight: ${({theme}) => theme.weight.bold};
+}
 `;
 
 export default H3;

@@ -50,7 +50,7 @@ class UserRegistration extends React.Component {
                           updatePassword2State={evt => this.fieldChangedHandler(evt, 'password2')}
                 />
                 {
-                    this.state.hasRegistered ? <Redirect to={'/'}/> : null
+                    this.state.hasRegistered ? <Redirect to={'/main'}/> : null
                 }
             </MainContainer>
         )

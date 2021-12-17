@@ -7,6 +7,10 @@ const Footer = styled.footer`
   justify-content: center;
   align-items: center;
   background-color: ${({theme}) => theme.colors.whiteAlmost};
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    padding: 20px 0 64px 0;
+  }
 `;
 
 export default Footer;

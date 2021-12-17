@@ -61,7 +61,7 @@ class Login extends React.Component {
 
                 {
                     // Redirects to main page if logged in
-                    this.state.loggedIn ? <Redirect to={'/'}/> : null
+                    this.state.loggedIn ? <Redirect to={'/main'}/> : null
                 }
             </MainContainer>
 
