@@ -84,7 +84,7 @@ class Profile extends React.Component {
         const data = await getCurrentUserData();
         if (data) {
             const user = new DetailedUserData(data.user, data.displayedUsername, data.semester, data.image, data.level);
-            user.fetchNonVitalDataFromBackend();
+            await user.fetchNonVitalDataFromBackend();
             this.setState({
                 userData: user
             });
@@ -134,7 +134,8 @@ class Profile extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'}/>
                                             <UserInfo label={'Ratio'} value={'50%'}/>
                                         </FlexGapContainer>
-                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                        <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
+                                                       currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
                                     <Line/>
                                     <MyDeck deck={this.state.deck}/>
@@ -178,7 +179,8 @@ class Profile extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'}/>
                                             <UserInfo label={'Ratio'} value={'50%'}/>
                                         </FlexGapContainer>
-                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                        <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
+                                                       currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
                                 </ColumnGapContainer>
                                 <ButtonWithIcon setWidth={'158px'} icon={editProfil}
