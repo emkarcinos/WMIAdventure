@@ -55,17 +55,19 @@ class PostBattle extends React.Component {
 
                             <Div win={this.props.win}>
                                 <Decoration win={this.props.win}/>
-                                <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'10px 0 24px 0'}
+                                <TinyUserProfile term={'3'} level={this.props.attacker.level} rank={'7'}
+                                                 setMargin={'10px 0 24px 0'}
                                                  displayedUsername={this.props.attacker.username}
-                                                 avatar={this.props.attacker.avatar}/>
+                                                 avatar={this.props.attacker.image}/>
                                 <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                             </Div>
 
                             <Div win={this.opponentWinHandler()}>
                                 <Decoration win={this.opponentWinHandler()}/>
-                                <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'10px 0 24px 0'}
+                                <TinyUserProfile term={'5'} level={this.props.opponent.level} rank={'12'}
+                                                 setMargin={'10px 0 24px 0'}
                                                  displayedUsername={this.props.opponent.username}
-                                                 avatar={this.props.opponent.avatar}/>
+                                                 avatar={this.props.opponent.image}/>
                                 <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>
                             </Div>
                         </Article>
@@ -91,17 +93,19 @@ class PostBattle extends React.Component {
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>
                                 <Div win={this.props.win}>
                                     <Decoration win={this.props.win}/>
-                                    <TinyUserProfile term={'3'} level={'7'} rank={'7'} setMargin={'0 0 24px 0'}
+                                    <TinyUserProfile term={'3'} level={this.props.attacker.level} rank={'7'}
+                                                     setMargin={'0 0 24px 0'}
                                                      displayedUsername={this.props.attacker.username}
-                                                     avatar={this.props.attacker.avatar} vertical/>
+                                                     avatar={this.props.attacker.image} vertical/>
                                     <TinyCards deck={this.props.attackerDeck} gap={'10px'}/>
                                 </Div>
 
                                 <Div win={this.opponentWinHandler()}>
                                     <Decoration win={this.opponentWinHandler()}/>
-                                    <TinyUserProfile term={'5'} level={'50'} rank={'12'} setMargin={'0 0 24px 0'}
+                                    <TinyUserProfile term={'5'} level={this.props.opponent.level} rank={'12'}
+                                                     setMargin={'0 0 24px 0'}
                                                      displayedUsername={this.props.opponent.username}
-                                                     avatar={this.props.opponent.avatar} vertical/>
+                                                     avatar={this.props.opponent.image} vertical/>
                                     <TinyCards deck={this.props.opponentDeck} gap={'10px'}/>
                                 </Div>
                             </FlexGapContainer>

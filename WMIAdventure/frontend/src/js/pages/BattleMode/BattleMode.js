@@ -20,6 +20,8 @@ import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
 import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
 import Navbar from "../../components/global/molecules/Navbar";
+import BasicUserData from "../../api/data-models/user/BasicUserData";
+import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
 
 class BattleMode extends React.Component {
     title = 'Tryb Battle';
@@ -33,12 +35,7 @@ class BattleMode extends React.Component {
         defenderDecks: [],
 
         userPreviewRun: false,
-        loggedInUser: {
-            id: 0,
-            username: '',
-            semester: 1,
-            image: null
-        },
+        loggedInUser: nullDetailedUserData(),
         userPreviewPos: '-100vh',
         userPreviewOpacity: '0',
         scrollVisible: true,
@@ -47,29 +44,35 @@ class BattleMode extends React.Component {
         selectedUser: null
     }
 
+    populateCurrentUserData = async () => {
+        const userData = await getCurrentUserData();
+        if (!userData)
+            return
+        const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
+        user.fetchNonVitalDataFromBackend();
+        this.setState({loggedInUser: user});
+    }
+
+    async fetchAndFillProfiles() {
+        const data = await getAllUserProfiles();
+        if (!data)
+            return;
+
+        const users = [];
+        for (const user of data)
+            users.push(new BasicUserData(user.user, user.displayedUsername, user.semester, user.image, user.level))
+        this.setState({users: users});
+    }
+
     componentDidMount() {
-        getAllUserProfiles()
-            .then(data => this.setState({users: data}))
-            .catch(error => console.log(error));
-        getCurrentUserData()
-            .then(data => data ? this.setState({
-                loggedInUser: {
-                    id: data.user,
-                    username: data.displayedUsername,
-                    semester: data.semester,
-                    image: data.image
-                }
-            }) : null);
+        this.fetchAndFillProfiles();
+        this.populateCurrentUserData();
     }
 
     runUserPreviewHandler = (user) => {
         this.setState({
             userPreviewRun: true,
-            selectedUser: {
-                username: user.displayedUsername,
-                id: user.user,
-                avatar: user.image
-            }
+            selectedUser: user
         });
 
         this.hideScroll();
@@ -133,12 +136,10 @@ class BattleMode extends React.Component {
             <Ul scrollVisible={this.state.scrollVisible}>
                 {this.state.users ? this.state.users.map((elem) => {
                     return (
-                        <UserListItem key={elem.user}
-                                      access={!(elem.user === this.state.loggedInUser.id)}
-                                      displayedUsername={elem.displayedUsername}
+                        <UserListItem key={elem.userId}
+                                      access={!(elem.userId === this.state.loggedInUser.userId)}
+                                      user={elem}
                                       searchInput={this.state.searchInput}
-                                      term={elem.semester} level={elem.user * 4}
-                                      avatar={elem.image}
                                       runUserPreviewHandler={() => this.runUserPreviewHandler(elem)}/>
                     );
                 }) : ''}
@@ -178,9 +179,7 @@ class BattleMode extends React.Component {
                                         handleSearch={this.handleSearch}/>
                             </SearchContainer>
                             {this.userListItemsRender()}
-                            <SwipeProfile userId={this.state.loggedInUser.id}
-                                          username={this.state.loggedInUser.username}
-                                          avatar={this.state.loggedInUser.image}
+                            <SwipeProfile user={this.state.loggedInUser}
                                           hideScroll={this.hideScroll} showScroll={this.showScroll}/>
                         </>
                     </Media>
@@ -206,8 +205,7 @@ class BattleMode extends React.Component {
                         </>
                     </Media>
                 </Main>
-                <TinyProfileDesktop userId={this.state.loggedInUser.id} username={this.state.loggedInUser.username}
-                                    avatar={this.state.loggedInUser.image}/>
+                <TinyProfileDesktop user={this.state.loggedInUser}/>
                 {this.state.selectedUser ? this.renderOponentSelected() : null}
                 <LoadingPopUp visible={this.state.fightLoading} view={this.state.fightLoadingText}/>
             </>

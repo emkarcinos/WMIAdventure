@@ -75,8 +75,8 @@ class TinyProfileDesktop extends React.Component {
         return (
             <Div>
                 <Container gap={'24px'}>
-                    <TinyUserProfile displayedUsername={this.props.username}
-                                     term={7} level={50} rank={2} avatar={this.props.avatar}/>
+                    <TinyUserProfile displayedUsername={this.props.user.username}
+                                     term={7} level={this.props.user.level} rank={2} avatar={this.props.user.image}/>
 
                     <ColumnGapContainer gap={'10px'}>
                         <FlexGapContainer gap={'52px'}>
