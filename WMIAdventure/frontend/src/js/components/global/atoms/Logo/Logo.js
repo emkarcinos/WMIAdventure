@@ -19,7 +19,7 @@ class Logo extends React.Component {
                                 ~/<Span>WMI</Span> Adventure
                             </H1>
                             <LogoImage src={logo}/>
-                            <HomeLink to={'/'}/>
+                            <HomeLink to={this.props.link}/>
                         </FlexGapContainer> :
                         <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
                 }

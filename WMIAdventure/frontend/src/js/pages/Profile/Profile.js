@@ -122,7 +122,7 @@ class Profile extends React.Component {
                 <Helmet>
                     <title>Profil użytkownika</title>
                 </Helmet>
-                <Navbar/>
+                <Navbar backLink={'/main'} label={'Twój profil'}/>
                 <Media query={mobile}>
                     <>
                         <MainMobileContainer>

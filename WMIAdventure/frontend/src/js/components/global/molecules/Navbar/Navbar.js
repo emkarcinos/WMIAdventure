@@ -10,6 +10,7 @@ import NavButton from "./styled-components/NavButton";
 import Link from "./styled-components/A";
 import Menubar from "../Menubar";
 import Logo from "../../atoms/Logo";
+import {isLoggedIn} from "../../../../storage/user/userData";
 
 /**
  * Props:
@@ -20,6 +21,7 @@ class Navbar extends React.Component {
 
     state = {
         menuActive: false,
+        isUserLoggedIn: false,
     }
 
     showMenuHandler = () => {
@@ -30,16 +32,24 @@ class Navbar extends React.Component {
         this.setState({menuActive: false})
     }
 
+    componentDidMount() {
+        isLoggedIn()
+            .then(resp => {
+                this.setState({isUserLoggedIn: resp})
+            });
+    }
+
 
     mobileNavbar = () => {
         return (
             <Nav>
                 <Div>
-                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> : <Logo/>}
+                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> :
+                        <Logo link={this.state.isUserLoggedIn ? '/main' : '/'}/>}
                     {this.props.label}
                 </Div>
                 <Div>
-                    <NavButton as={Link} to={'/'} image={homeIcon}/>
+                    <NavButton as={Link} to={this.state.isUserLoggedIn ? '/main' : '/'} image={homeIcon}/>
                     <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
                 </Div>
             </Nav>
@@ -50,7 +60,7 @@ class Navbar extends React.Component {
     desktopNavbar = () => {
         return (
             <Nav>
-                <Logo fullVersion/>
+                <Logo link={this.state.isUserLoggedIn ? '/main' : '/'} fullVersion/>
                 <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );
