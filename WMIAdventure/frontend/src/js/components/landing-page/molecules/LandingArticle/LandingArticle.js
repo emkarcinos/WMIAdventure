@@ -4,6 +4,7 @@ import Div from "./styled-components/Div";
 import H3 from "./styled-components/H3";
 import Image from "./styled-components/Image";
 import Paragraph from "./styled-components/Paragraph";
+import Line from "./styled-components/Line";
 
 class LandingArticle extends React.Component {
     render() {
@@ -18,6 +19,11 @@ class LandingArticle extends React.Component {
                 <Paragraph>
                     {this.props.paragraph}
                 </Paragraph>
+                {
+                    this.props.line ?
+                        <Line/>
+                        : null
+                }
             </Article>
         );
     }

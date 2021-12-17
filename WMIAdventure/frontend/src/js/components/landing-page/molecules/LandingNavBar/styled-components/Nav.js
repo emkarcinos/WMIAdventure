@@ -12,6 +12,7 @@ const Nav = styled.nav`
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     padding: 0 40px;
+    background: ${({showBackground}) => showBackground ? 'rgba(253, 253, 253, 70%)' : 'transparent'};
   }
 `;
 

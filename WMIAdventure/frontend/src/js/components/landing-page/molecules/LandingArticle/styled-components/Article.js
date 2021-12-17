@@ -6,7 +6,9 @@ const Article = styled.article`
   margin: 0 auto;
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    max-width: 340px;
+    max-width: 360px;
+    position: relative;
+    padding: 0 20px;
   }
 `;
 
