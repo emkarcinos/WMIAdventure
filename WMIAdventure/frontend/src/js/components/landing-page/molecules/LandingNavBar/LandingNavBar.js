@@ -7,11 +7,28 @@ import Media from "react-media";
 import {desktop, mobile} from "../../../../utils/globals";
 import LandingRegistration from "../../atoms/LandingRegistration";
 import FlexGapContainer from "../../../global/molecules/FlexGapContainer/FlexGapContainer";
+import {isLoggedIn} from "../../../../storage/user/userData";
+import {Redirect} from "react-router-dom";
 
 class LandingNavBar extends React.Component {
+    state = {
+        isUserLoggedIn: false
+    }
+
+    componentDidMount() {
+        isLoggedIn()
+            .then(status => this.setState({isUserLoggedIn: status}));
+    }
+
+    shouldRedirect = () => {
+        if (this.state.isUserLoggedIn)
+            return (<Redirect to={'/main'}/>)
+    }
+
     render() {
         return (
             <>
+                {this.shouldRedirect()}
                 <Media query={mobile}>
                     <SiteHeader>
                         <Nav showBackground={this.props.showBackground}>
