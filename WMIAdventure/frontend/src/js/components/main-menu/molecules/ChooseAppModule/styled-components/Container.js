@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import frameTop from '../../../../assets/images/mobile-menu-frame-top.svg';
-import frameBottom from '../../../../assets/images/mobile-menu-frame-bottom.svg';
+import frameTop from '../../../../../../assets/images/mobile-menu-frame-top.svg';
+import frameBottom from '../../../../../../assets/images/mobile-menu-frame-bottom.svg';
 
 
-const MenuDiv = styled.div`
+const Container = styled.div`
   width: 100%;
   max-width: 348px;
   height: 628px;
@@ -36,4 +36,4 @@ const MenuDiv = styled.div`
   }
 `;
 
-export default MenuDiv;
+export default Container;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
-const Option = styled(Link)`
+const OptionLink = styled(Link)`
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -10,4 +10,4 @@ const Option = styled(Link)`
   z-index: 2;
 `;
 
-export default Option;
+export default OptionLink;
