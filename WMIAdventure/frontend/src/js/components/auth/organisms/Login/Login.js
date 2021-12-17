@@ -34,7 +34,10 @@ class Login extends React.Component {
                 else
                     this.loginFailedHandler(response);
             })
-            .catch(err => {console.log(err); this.loginFailedHandler()});
+            .catch(err => {
+                console.log(err);
+                this.loginFailedHandler()
+            });
     }
 
     usernameChangedHandler = (event) => {
@@ -52,7 +55,7 @@ class Login extends React.Component {
 
                 {
                     // Redirects to main page if logged in
-                    this.state.loggedIn ?  <Redirect to={'/'}/>: null
+                    this.state.loggedIn ? <Redirect to={'/main'}/> : null
                 }
             </>
 

@@ -21,10 +21,10 @@ class UserRegistration extends React.Component {
         event.preventDefault();
         UsersAPIGateway.registerUser(this.state)
             .then(resp => {
-                resp.json().then( msg => alert(JSON.stringify(msg)
-                    .replace(/[{}"\]]+/g, '')
-                    .replace(/[,[]+/g, ' ')))
-                resp.ok ? this.onRegistrationSuccess() : null;
+                    resp.json().then(msg => alert(JSON.stringify(msg)
+                        .replace(/[{}"\]]+/g, '')
+                        .replace(/[,[]+/g, ' ')))
+                    resp.ok ? this.onRegistrationSuccess() : null;
                 }
             );
     }
@@ -49,7 +49,7 @@ class UserRegistration extends React.Component {
                                       updateState={this.updateState}
                 />
                 {
-                    this.state.hasRegistered ? <Redirect to={'/'}/> : null
+                    this.state.hasRegistered ? <Redirect to={'/main'}/> : null
                 }
             </>
         )
