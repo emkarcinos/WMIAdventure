@@ -14,16 +14,13 @@ class UserRegistration extends React.Component {
     onRegistrationSuccess = () => {
         UsersAPIGateway.login(this.state.username, this.state.password)
             .then(resp => {
-                resp.ok ? this.setState({hasRegistered: true}) : null;
+                resp.ok ? window.location.reload() : null;
             });
     }
     onRegistrationFormSubmit = (event) => {
         event.preventDefault();
         UsersAPIGateway.registerUser(this.state)
             .then(resp => {
-                    resp.json().then(msg => alert(JSON.stringify(msg)
-                        .replace(/[{}"\]]+/g, '')
-                        .replace(/[,[]+/g, ' ')))
                     resp.ok ? this.onRegistrationSuccess() : null;
                 }
             );

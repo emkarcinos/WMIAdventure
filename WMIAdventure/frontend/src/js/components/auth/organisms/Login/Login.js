@@ -22,8 +22,7 @@ class Login extends React.Component {
     }
 
     loginSuccessHandler = () => {
-        alert(`Logged in as ${this.state.username}`);
-        this.setState({loggedIn: true});
+        window.location.reload();
     }
 
     submitHandler = (event) => {

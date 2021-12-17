@@ -67,6 +67,7 @@ class Menubar extends React.Component {
         alert("You've been logged out.");
 
         this.setState({user: null, willRedirect: true});
+        window.location.reload();
 
     }
 
