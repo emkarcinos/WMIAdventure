@@ -117,13 +117,15 @@ class Menubar extends React.Component {
                 <Div visible={this.props.show}>
                     <ContentContainer>
                         <List>
-
                             <Back onClick={this.props.closeHandler}/>
-                            <MenubarEntry as={Link} to={'/'} image={homeIcon}>Strona Główna</MenubarEntry>
-                            <MenubarEntry as={Link} to={'/battle'} image={battleIcon}>Tryb Battle</MenubarEntry>
-                            <MenubarEntry as={Link} to={'/cards-creator-start'} image={cardIcon}>Edytor
-                                Kart</MenubarEntry>
-                            <Line/>
+                            {this.state.user ?
+                                <>
+                                    <MenubarEntry as={Link} to={'/main'} image={homeIcon}>Strona Główna</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/battle'} image={battleIcon}>Tryb Battle</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/cards-creator-start'} image={cardIcon}>Edytor
+                                        Kart</MenubarEntry>
+                                    <Line/>
+                                </> : null}
                             <MenubarEntry
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}
