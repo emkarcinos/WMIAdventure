@@ -54,7 +54,7 @@ class UserProfileTestCase(TestCase):
         fetchView = views.UserView.as_view()
 
         # Create data needed to create new UserProfile
-        new_user = get_user_model().objects.create_user(username="asdasa", password="129312", email="tse@tst.sd")
+        new_user = get_user_model().objects.create_user(username="asdasa", password="129312")
         new_username = "test2"
         new_semester = 5
 

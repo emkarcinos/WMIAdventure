@@ -1,14 +1,11 @@
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from WMIAdventure_backend.settings import SESSION_COOKIE_AGE, SESSION_COOKIE_NAME
 from .models import User
-from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserSerializer
-
-
+from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserSerializer, LoginSerializer
 # Create your views here.
 from .signals import user_registered
 
@@ -39,25 +36,6 @@ class UserList(APIView):
         return Response(serializer.data)
 
 
-class AuthTokenView(APIView):
-    """
-    Provides way of accessing authorization tokens just by providing username in the request.
-
-    This view exists only for testing purposes.
-    """
-
-    def post(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        token, _ = Token.objects.get_or_create(user=user)
-        response = Response(data={'token': token.key})
-        response.set_cookie(SESSION_COOKIE_NAME, token.key, expires=SESSION_COOKIE_AGE)
-        return response
-
-
 class WhoAmIView(APIView):
     """
     Provides info about currently logged in user
@@ -72,3 +50,14 @@ class WhoAmIView(APIView):
 
         serializer = BasicUserSerializer(user)
         return Response(serializer.data)
+
+
+class LoginView(APIView):
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+        response = Response(data=serializer.data)
+        response.set_cookie(SESSION_COOKIE_NAME, serializer.data.get('token'), expires=SESSION_COOKIE_AGE)
+        return response

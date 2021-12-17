@@ -20,13 +20,14 @@ class CardDescribePreview extends React.Component {
                         {this.props.cardTooltip}
                     </H3>
                 </Section>
-                <Button onClick={this.props.showDescribeInputsHandler}>
+                <Submit onClick={this.props.showDescribeInputsHandler}>
                     {/*pensil icon*/}
-                </Button>
+                </Submit>
             </>
         );
     }
 }
 ```
-Treść jest zależna od propsów komponentu rodzica. Ten komponent zawiera również *buttona*, który aktywuje pojawienie
-się komponentu **CardDescribeInputs**, który zawiera inputy do tych trzech opisowych atrybutów karty.
+
+Treść jest zależna od propsów komponentu rodzica. Ten komponent zawiera również *buttona*, który aktywuje pojawienie się
+komponentu **CardDescribeInputs**, który zawiera inputy do tych trzech opisowych atrybutów karty.
