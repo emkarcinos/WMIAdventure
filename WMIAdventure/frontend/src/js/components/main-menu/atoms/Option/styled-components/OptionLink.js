@@ -17,6 +17,11 @@ const OptionLink = styled(Link)`
   align-items: center;
   z-index: 2;
   align-self: ${({setSelfStart, setSelfEnd}) => alignSelfHandle(setSelfStart, setSelfEnd)};
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     margin: 100px 62px;

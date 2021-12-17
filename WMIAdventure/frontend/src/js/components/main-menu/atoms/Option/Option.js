@@ -35,6 +35,8 @@ class Option extends React.Component {
         return (
             <OptionLink setSelfStart={this.props.setSelfStart}
                         setSelfEnd={this.props.setSelfEnd}
+                        onMouseEnter={this.props.setHover}
+                        onMouseLeave={this.props.removeHover}
                         to={this.props.url}>
                 {this.props.battle ? this.renderBattleOption() : null}
                 {this.props.editor ? this.renderEditorOption() : null}
