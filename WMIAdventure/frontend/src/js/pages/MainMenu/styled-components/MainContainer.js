@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,4 +8,4 @@ const StyledWrapper = styled.div`
   min-height: 100vh;
 `;
 
-export default StyledWrapper;
+export default MainContainer;
