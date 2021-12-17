@@ -11,3 +11,5 @@ export const translateErrors = (errorJson) => {
     }
     return output;
 }
+
+export const concatMessage = (errorMessages) => errorMessages.join(' ');
