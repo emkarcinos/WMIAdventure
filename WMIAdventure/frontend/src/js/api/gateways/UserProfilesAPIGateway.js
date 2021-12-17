@@ -40,4 +40,9 @@ const updateUsersDeck = (userId, deck) => {
     return RequestSender.put(UserProfilesEndpoints.userIdDeck(userId), body, headers)
 
 }
-export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck};
+
+const getUserLevelData = (userId) => {
+    return RequestSender.get(UserProfilesEndpoints.userIdLevel(userId));
+}
+
+export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData};
