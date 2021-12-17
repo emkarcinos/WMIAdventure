@@ -12,6 +12,7 @@ const MenuDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  padding-right: 8px;
 
   &:after, &:before {
     content: "";
@@ -29,7 +30,7 @@ const MenuDiv = styled.div`
   }
 
   &:before {
-    bottom: 0;
+    bottom: 10px;
     right: 0;
     background-image: url(${frameBottom});
   }
