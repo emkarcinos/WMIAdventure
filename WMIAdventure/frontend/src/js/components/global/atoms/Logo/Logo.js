@@ -21,7 +21,10 @@ class Logo extends React.Component {
                             <LogoImage src={logo}/>
                             <HomeLink to={this.props.link}/>
                         </FlexGapContainer> :
-                        <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
+                        <FlexGapContainer setRelative>
+                            <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
+                            <HomeLink to={this.props.link}/>
+                        </FlexGapContainer>
                 }
             </>
         );
