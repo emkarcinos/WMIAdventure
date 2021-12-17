@@ -22,6 +22,7 @@ import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
 import Button from "./styled-components/Button";
 import {Redirect} from "react-router-dom";
+import {DetailedUserData, nullDetailedUserData} from "../../../../api/data-models/user/DetailedUserData";
 
 /* Transition timeout values */
 const timeout = {
@@ -39,20 +40,21 @@ const timeout = {
 class Menubar extends React.Component {
 
     state = {
-        user: null,
+        user: nullDetailedUserData(),
         willRedirect: false
     }
 
+    populateCurrentUserData = async () => {
+        const userData = await getCurrentUserData();
+        if (!userData)
+            return
+        const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
+        user.fetchNonVitalDataFromBackend();
+        this.setState({user: user});
+    }
+
     componentDidMount() {
-        getCurrentUserData()
-            .then(data => data ? this.setState({
-                user: {
-                    id: data.user,
-                    username: data.displayedUsername,
-                    semester: data.semester,
-                    image: data.image
-                }
-            }) : null);
+        this.populateCurrentUserData();
     }
 
     checkIfUserLoggedIn = () => {
