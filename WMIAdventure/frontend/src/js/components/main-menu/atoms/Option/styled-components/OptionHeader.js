@@ -7,6 +7,10 @@ const OptionHeader = styled.p`
   font-family: Hack, monospace;
   color: ${({theme}) => theme.colors.dark};
   text-transform: uppercase;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    font-size: 48px;
+  }
 `;
 
 export default OptionHeader;

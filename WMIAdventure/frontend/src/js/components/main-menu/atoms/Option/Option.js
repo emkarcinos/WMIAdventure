@@ -4,7 +4,7 @@ import OptionLink from "./styled-components/OptionLink";
 import OptionHeader from "./styled-components/OptionHeader";
 import Span from "./styled-components/Span";
 import BattleImage from "./styled-components/BattleImage";
-import kucEditor from "../../../../../assets/images/kucEditor.png";
+import kucEditor from "../../../../../assets/images/kucEditor.svg";
 import EditorImage from "./styled-components/EditorImage";
 
 class Option extends React.Component {
@@ -33,7 +33,9 @@ class Option extends React.Component {
 
     render() {
         return (
-            <OptionLink to={this.props.url}>
+            <OptionLink setSelfStart={this.props.setSelfStart}
+                        setSelfEnd={this.props.setSelfEnd}
+                        to={this.props.url}>
                 {this.props.battle ? this.renderBattleOption() : null}
                 {this.props.editor ? this.renderEditorOption() : null}
             </OptionLink>

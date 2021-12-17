@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
+function alignSelfHandle(setSelfStart, setSelfEnd) {
+    if (setSelfStart)
+        return 'flex-start';
+    else if (setSelfEnd)
+        return 'flex-end';
+    else return 'auto';
+}
+
 const OptionLink = styled(Link)`
   text-decoration: none;
   display: flex;
@@ -8,6 +16,11 @@ const OptionLink = styled(Link)`
   justify-content: center;
   align-items: center;
   z-index: 2;
+  align-self: ${({setSelfStart, setSelfEnd}) => alignSelfHandle(setSelfStart, setSelfEnd)};
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    margin: 100px 62px;
+  }
 `;
 
 export default OptionLink;

@@ -22,6 +22,7 @@ class Logo extends React.Component {
                             <HomeLink to={'/'}/>
                         </FlexGapContainer> :
                         <LogoImage
+                            setMargin={this.props.setMargin}
                             setSize={this.props.setSize}
                             setOrder={this.props.setOrder}
                             setOpacity={this.props.setOpacity}

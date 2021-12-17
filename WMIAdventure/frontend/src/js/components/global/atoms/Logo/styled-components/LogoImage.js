@@ -6,6 +6,7 @@ const LogoImage = styled.img`
   order: ${({setOrder}) => setOrder ? setOrder : '-1'};
   transition: opacity 0.3s ease-in-out;
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
+  margin: ${({setMargin}) => setMargin ? setMargin : '0'};
 `;
 
 export default LogoImage;
