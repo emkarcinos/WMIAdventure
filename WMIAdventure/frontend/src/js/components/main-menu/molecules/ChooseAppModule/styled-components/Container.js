@@ -36,6 +36,12 @@ const Container = styled.div`
     background-image: url(${frameBottom});
   }
 
+  @media (min-width: ${({theme}) => theme.overMobile}px) and (max-width: 1312px) {
+    &:after, &:before {
+      display: none;
+    }
+  }
+
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     max-width: none;
     width: 1250px;

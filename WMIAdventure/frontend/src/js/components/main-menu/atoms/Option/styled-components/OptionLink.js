@@ -21,6 +21,10 @@ const OptionLink = styled(Link)`
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     margin: 100px 62px;
   }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) and (max-width: 1312px) {
+    margin: 100px 16px;
+  }
 `;
 
 export default OptionLink;

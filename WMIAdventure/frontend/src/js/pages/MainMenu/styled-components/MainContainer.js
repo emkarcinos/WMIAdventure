@@ -17,6 +17,10 @@ const MainContainer = styled.main`
     border-radius: 40px;
     background-color: ${({theme}) => theme.colors.whiteAlmost};
   }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) and (max-width: 1312px) {
+    height: 680px;
+  }
 `;
 
 export default MainContainer;
