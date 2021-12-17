@@ -8,9 +8,12 @@ const headers = {
     'Content-type': 'application/json',
 };
 
-const login = (username) => {
-    const url = UserEndpoints.authToken(username);
-    const body = JSON.stringify({username: username})
+const login = (username, password) => {
+    const url = UserEndpoints.login();
+    const body = JSON.stringify({
+        username: username,
+        password: password
+    });
 
     return RequestSender.post(url, body, headers);
 };

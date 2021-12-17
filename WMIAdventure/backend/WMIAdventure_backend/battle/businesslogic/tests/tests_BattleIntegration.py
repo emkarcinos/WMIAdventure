@@ -15,8 +15,8 @@ class BattleIntegrationTestCase(TestCase):
 
         cls.creator = Creator()
 
-        cls.user1 = User.objects.create(username="attacker", email="attacker@company.com")
-        cls.user2 = User.objects.create(username="defender", email="defender@company.com")
+        cls.user1 = User.objects.create(username="attacker")
+        cls.user2 = User.objects.create(username="defender")
 
         cls.attacker_profile = UserProfile.objects.create(user=cls.user1, displayedUsername="attacker")
         cls.defender_profile = UserProfile.objects.create(user=cls.user2, displayedUsername="defender")
