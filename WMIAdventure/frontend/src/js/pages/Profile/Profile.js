@@ -27,16 +27,12 @@ import DeckHeader from "./styled-componets/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 import EditProfile from "../../components/profile/molecules/EditProfile";
 import P from "./styled-componets/P";
+import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
 
 class Profile extends React.Component {
 
     state = {
-        userData: {
-            id: undefined,
-            username: undefined,
-            semester: undefined,
-            image: undefined,
-        },
+        userData: nullDetailedUserData(),
 
         userNotLoggedIn: false,
         deck: nullEditableDeck(),
@@ -87,13 +83,10 @@ class Profile extends React.Component {
     async getUserData() {
         const data = await getCurrentUserData();
         if (data) {
+            const user = new DetailedUserData(data.user, data.displayedUsername, data.semester, data.image, data.level);
+            user.fetchNonVitalDataFromBackend();
             this.setState({
-                userData: {
-                    username: data.displayedUsername,
-                    id: data.user,
-                    semester: data.semester,
-                    image: data.image
-                },
+                userData: user
             });
         } else {
             this.setState({userNotLoggedIn: true});
@@ -133,7 +126,7 @@ class Profile extends React.Component {
                                     <ColumnGapContainer gap={'10px'}>
                                         <FlexGapContainer gap={'10px'}>
                                             <UserLabel term number={this.state.userData.semester}/>
-                                            <UserLabel level number={'50'}/>
+                                            <UserLabel level number={this.state.userData.level}/>
                                             <UserLabel rank number={'2'}/>
                                         </FlexGapContainer>
                                         <FlexGapContainer gap={'10px'}>
@@ -177,7 +170,7 @@ class Profile extends React.Component {
                                     <ColumnGapContainer gap={'30px'}>
                                         <FlexGapContainer gap={'40px'}>
                                             <UserLabel term number={this.state.userData.semester}/>
-                                            <UserLabel level number={'50'}/>
+                                            <UserLabel level number={this.state.userData.level}/>
                                             <UserLabel rank number={'2'}/>
                                         </FlexGapContainer>
                                         <FlexGapContainer gap={'40px'}>
