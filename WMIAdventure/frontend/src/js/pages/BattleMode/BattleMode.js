@@ -48,7 +48,7 @@ class BattleMode extends React.Component {
         if (!userData)
             return
         const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
-        user.fetchNonVitalDataFromBackend();
+        await user.fetchNonVitalDataFromBackend();
         this.setState({loggedInUser: user});
     }
 
@@ -97,6 +97,7 @@ class BattleMode extends React.Component {
             this.setState({
                 userPreviewRun: false,
             });
+            this.forceUpdate();
         }, 550);
     }
 
@@ -134,6 +135,8 @@ class BattleMode extends React.Component {
         return (
             <Ul scrollVisible={this.state.scrollVisible}>
                 {this.state.users ? this.state.users.map((elem) => {
+                    if (elem.userId === this.state.loggedInUser.userId)
+                        return null;
                     return (
                         <UserListItem key={elem.userId}
                                       access={!(elem.userId === this.state.loggedInUser.userId)}
@@ -150,6 +153,7 @@ class BattleMode extends React.Component {
         return (
             <>
                 <OpponentSelected visible={this.state.userPreviewRun}
+                                  caller={this.state.loggedInUser}
                                   opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
                                   setOpacity={this.state.userPreviewOpacity}

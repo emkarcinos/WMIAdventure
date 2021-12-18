@@ -13,6 +13,7 @@ import Media from 'react-media';
 import {desktop, mobile} from '../../../../utils/globals';
 import TransBack from '../../../global/organisms/TransBack';
 import UserInfo from "../../../global/atoms/UserInfo";
+import ExpGain from "../../atoms/ExpGain/ExpGain";
 
 class PostBattle extends React.Component {
 
@@ -35,6 +36,18 @@ class PostBattle extends React.Component {
 
     opponentWinHandler = () => this.props.win === null ? null : !this.props.win
 
+    updateUserLevel = async () => {
+        if (!this.opponentWinHandler())
+            await this.props.attacker.fetchNonVitalDataFromBackend(true);
+    }
+
+    componentDidMount() {
+        setTimeout(async () => {
+            await this.updateUserLevel();
+            this.forceUpdate();
+        }, 1000);
+    }
+
     render() {
         return (
             <>
@@ -50,7 +63,12 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'16'}/>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                                   type={'level'}
+                                                   currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                    {this.opponentWinHandler() ? null : <ExpGain value={this.props.expGain}/>}
+                                </FlexGapContainer>
                             </ColumnGapContainer>
 
                             <Div win={this.props.win}>
@@ -82,7 +100,12 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'60'}/>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                                   type={'level'}
+                                                   currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                    {this.opponentWinHandler() ? null : <ExpGain value={this.props.expGain}/>}
+                                </FlexGapContainer>
                             </ColumnGapContainer>
 
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>

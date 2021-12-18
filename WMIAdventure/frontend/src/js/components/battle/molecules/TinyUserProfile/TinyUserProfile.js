@@ -22,7 +22,8 @@ class TinyUserProfile extends React.Component {
                         <UserLabel term={'1'}
                                    number={'1'}
                                    setMargin={'0'}/>
-                        <UserLabel level={this.props.user.level} number={this.props.user.level}
+                        <UserLabel level={this.props.user.level}
+                                   number={this.props.user.level}
                                    setMargin={'0'}/>
                         <UserLabel rank={'1'} number={'1'}
                                    setMargin={'0'}/>
