@@ -160,11 +160,11 @@ class OpponentSelected extends React.Component {
                 });
             })
         if (data.outcome.winner === null) {
-            this.setState({win: null})
+            this.setState({win: null, expGain: data.outcome.exp_gain})
             return
         }
         data.outcome.winner === data.attacker.id ?
-            this.setState({win: true}) : this.setState({win: false});
+            this.setState({win: true, expGain: data.outcome.exp_gain}) : this.setState({win: false});
         this.state.caller.fetchNonVitalDataFromBackend();
     }
 
@@ -271,14 +271,17 @@ class OpponentSelected extends React.Component {
                                 opponent={this.props.opponent}
                                 opponentDeck={this.state.opponentDeck}
                                 setOpacity={this.state.postBattleOpacity}
-                                setTranslateY={this.state.postBattlePos}/>
+                                setTranslateY={this.state.postBattlePos}
+                                expGain={this.state.expGain}
+                    />
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
                                 showPostBattle={this.postBattleOpenHandler}
                                 closeHandler={this.battleViewCloseHandler}
                                 setScale={this.state.battleView.scale}
-                                desktop={true}/>
+                                desktop={true}
+                    />
                 </>
             )
         } else {
@@ -290,14 +293,17 @@ class OpponentSelected extends React.Component {
                                 attackerDeck={this.state.userDeck}
                                 opponent={this.props.opponent}
                                 opponentDeck={this.state.opponentDeck}
-                                setTranslateY={this.state.postBattlePos}/>
+                                setTranslateY={this.state.postBattlePos}
+                                expGain={this.state.expGain}
+                    />
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
                                 showPostBattle={this.postBattleOpenHandler}
                                 closeHandler={this.battleViewCloseHandler}
                                 setTranslateY={this.state.battleView.translateY}
-                                desktop={false}/>
+                                desktop={false}
+                    />
                 </>
             )
         }

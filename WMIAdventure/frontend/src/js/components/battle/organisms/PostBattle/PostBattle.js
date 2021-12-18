@@ -13,6 +13,7 @@ import Media from 'react-media';
 import {desktop, mobile} from '../../../../utils/globals';
 import TransBack from '../../../global/organisms/TransBack';
 import UserInfo from "../../../global/atoms/UserInfo";
+import ExpGain from "../../atoms/ExpGain/ExpGain";
 
 class PostBattle extends React.Component {
 
@@ -61,9 +62,12 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
-                                               type={'level'}
-                                               currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                                   type={'level'}
+                                                   currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                    {this.opponentWinHandler() ? null : <ExpGain value={this.props.expGain}/>}
+                                </FlexGapContainer>
                             </ColumnGapContainer>
 
                             <Div win={this.props.win}>
@@ -95,9 +99,12 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
-                                               type={'level'}
-                                               currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                <FlexGapContainer gap={'16px'}>
+                                    <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                                   type={'level'}
+                                                   currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
+                                    {this.opponentWinHandler() ? null : <ExpGain value={this.props.expGain}/>}
+                                </FlexGapContainer>
                             </ColumnGapContainer>
 
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>
