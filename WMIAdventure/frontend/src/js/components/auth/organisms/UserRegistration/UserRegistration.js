@@ -18,7 +18,7 @@ class UserRegistration extends React.Component {
     onRegistrationSuccess = () => {
         UsersAPIGateway.login(this.state.username, this.state.password)
             .then(resp => {
-                resp.ok ? this.setState({hasRegistered: true}) : null;
+                resp.ok ? window.location.reload() : null;
             });
     }
 
