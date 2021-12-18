@@ -3,6 +3,13 @@ from math import sqrt
 from battle.businesslogic.Outcome import Outcome
 
 _c = 4
+"""Base exp gain in case of win"""
+
+_d = 1
+"""Min exp gain in case of win"""
+
+_e = 1
+"""Level differences multiplier"""
 
 
 def win(winner_level, loser_level) -> int:
@@ -10,7 +17,11 @@ def win(winner_level, loser_level) -> int:
     Calculates how much exp player should gain when he won battle.
     """
 
-    return _c + round(sqrt(winner_level)) + loser_level
+    return max(
+        _d,
+        _c + round(sqrt(winner_level)) + loser_level
+        - (winner_level - loser_level) * _e
+    )
 
 
 def draw(player_level, opponent_level) -> int:
