@@ -49,7 +49,7 @@ class BattleMode extends React.Component {
         if (!userData)
             return
         const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
-        user.fetchNonVitalDataFromBackend();
+        await user.fetchNonVitalDataFromBackend();
         this.setState({loggedInUser: user});
     }
 
