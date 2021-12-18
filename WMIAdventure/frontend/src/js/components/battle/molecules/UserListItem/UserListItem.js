@@ -19,20 +19,21 @@ class UserListItem extends React.Component {
         return (
             <Item onClick={this.props.access ?
                 this.props.runUserPreviewHandler : this.notAccessToFightMessage}
-                  displayedUsername={this.props.displayedUsername}
+                  displayedUsername={this.props.user.username}
                   searchInput={this.props.searchInput}>
-                <AvatarContainer access={this.props.access} avatar={this.props.avatar}>
-                    {this.props.avatar ? <Avatar access={this.props.access} src={this.props.avatar} alt=""/> : ''}
+                <AvatarContainer access={this.props.access} avatar={this.props.user.image}>
+                    {this.props.user.image ?
+                        <Avatar access={this.props.access} src={this.props.user.image} alt=""/> : ''}
                 </AvatarContainer>
                 <Div>
                     <Login access={this.props.access}>
-                        {this.props.displayedUsername}
+                        {this.props.user.username}
                     </Login>
                     <LabelsContainer>
                         <UserLabel setMargin={'0 10px 0 0'}
-                                   term={this.props.term} number={this.props.term}/>
+                                   term={1} number={1}/>
                         <UserLabel setMargin={'0 10px 0 0'}
-                                   level={this.props.level} number={this.props.level}/>
+                                   level={this.props.user.level} number={this.props.user.level}/>
                         <UserLabel setMargin={'0'}
                                    rank={'2'} number={'2'}/>
                     </LabelsContainer>

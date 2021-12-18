@@ -26,6 +26,12 @@ const A = styled(Link)`
     outline-color: ${({theme}) => theme.colors.greenyBluey};
     transform: scale(1.2);
   }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 102px;
+    height: 32px;
+    font-size: 16px;
+  }
 `;
 
 export default A;

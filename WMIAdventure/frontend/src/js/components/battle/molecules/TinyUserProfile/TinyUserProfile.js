@@ -16,26 +16,29 @@ class TinyUserProfile extends React.Component {
             <Article setMargin={this.props.setMargin} vertical={this.props.vertical}>
                 <ContentContainer>
                     <H2 as={this.props.vertical ? 'p' : 'h2'} vertical={this.props.vertical}>
-                        {this.props.displayedUsername}
+                        {this.props.user.username}
                     </H2>
                     <FlexGapContainer gap={this.props.vertical ? '24px' : '6px'}>
-                        <UserLabel term={this.props.term}
-                                   number={this.props.term}
+                        <UserLabel term={'1'}
+                                   number={'1'}
                                    setMargin={'0'}/>
-                        <UserLabel level={this.props.level} number={this.props.level}
+                        <UserLabel level={this.props.user.level} number={this.props.user.level}
                                    setMargin={'0'}/>
-                        <UserLabel rank={this.props.rank} number={this.props.rank}
+                        <UserLabel rank={'1'} number={'1'}
                                    setMargin={'0'}/>
                     </FlexGapContainer>
                     <Media query={desktop}>
                         {this.props.vertical ? '' :
-                            <UserStatistic statisticNumber={'20'} type={'level'} currentLvlValue={'40'}
-                                           setMargin={'14px 0 0 0'}/>}
+                            <UserStatistic
+                                statisticNumber={this.props.user.statistics ? this.props.user.getLevelObject().level : '0'}
+                                type={'level'}
+                                currentLvlValue={this.props.user.statistics ? this.props.user.getLevelObject().percentage : '0'}
+                                setMargin={'14px 0 0 0'}/>}
                     </Media>
                 </ContentContainer>
-                <ImageContainer vertical={this.props.vertical} avatar={this.props.avatar}>
-                    {this.props.avatar ? <Avatar src={this.props.avatar}
-                                                 vertical={this.props.vertical} alt=""/> : ''}
+                <ImageContainer vertical={this.props.vertical} avatar={this.props.user.image}>
+                    {this.props.user.image ? <Avatar src={this.props.user.image}
+                                                     vertical={this.props.vertical} alt=""/> : ''}
                 </ImageContainer>
             </Article>
         );

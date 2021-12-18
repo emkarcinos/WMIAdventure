@@ -9,6 +9,7 @@ class UserProfilesEndpoints {
     static userById = (userId) => `${UserProfilesEndpoints.main}${userId}/`;
     // If we have more decks that one the deck number will also be needed
     static userIdDeck = (userId) => `${UserProfilesEndpoints.main}${userId}/decks/1/`;
+    static userIdLevel = (userId) => `${UserProfilesEndpoints.main}${userId}/level/`
 }
 
 export default UserProfilesEndpoints;

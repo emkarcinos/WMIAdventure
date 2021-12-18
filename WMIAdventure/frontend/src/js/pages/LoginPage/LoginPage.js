@@ -1,6 +1,5 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import WholePageDiv from "./styled-components/WholePageDiv";
 import StyledWrapper from "../MainMenu/StyledWrapper";
 import Login from "../../components/auth/organisms/Login";
 import Navbar from "../../components/global/molecules/Navbar";
@@ -13,13 +12,9 @@ class LoginPage extends React.Component {
                 <Helmet>
                     <title>Login Page</title>
                 </Helmet>
-
                 <StyledWrapper>
                     <Navbar/>
-                    <WholePageDiv>
-                        <h1>Login</h1>
-                        <Login/>
-                    </WholePageDiv>
+                    <Login/>
                 </StyledWrapper>
             </>
 

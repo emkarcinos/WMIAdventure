@@ -40,6 +40,18 @@ const A = styled(Link)`
     outline-color: ${({theme}) => theme.colors.purplyPinky};
     transform: scale(1.2);
   }
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    animation: none;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:focus {
+      transform: scale(1.1);
+    }
+  }
 `;
 
 export default A;
