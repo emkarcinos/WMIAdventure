@@ -67,7 +67,7 @@ class OpponentSelected extends React.Component {
         if (!userData)
             return
         const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
-        user.fetchNonVitalDataFromBackend();
+        await user.fetchNonVitalDataFromBackend();
         this.setState({caller: user});
     }
 
@@ -165,6 +165,7 @@ class OpponentSelected extends React.Component {
         }
         data.outcome.winner === data.attacker.id ?
             this.setState({win: true}) : this.setState({win: false});
+        this.state.caller.fetchNonVitalDataFromBackend();
     }
 
     postBattleOpenHandler = () => {
@@ -185,6 +186,7 @@ class OpponentSelected extends React.Component {
         setTimeout(() => {
             this.setState({
                 postBattle: false,
+                isBattleStarting: false
             });
         }, nextStepAnimationDuration);
     }

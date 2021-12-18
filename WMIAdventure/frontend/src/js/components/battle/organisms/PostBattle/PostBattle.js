@@ -35,6 +35,17 @@ class PostBattle extends React.Component {
 
     opponentWinHandler = () => this.props.win === null ? null : !this.props.win
 
+    updateUserLevel = async () => {
+        if (!this.opponentWinHandler())
+            await this.props.attacker.fetchNonVitalDataFromBackend(true);
+    }
+
+    componentDidMount() {
+        setTimeout(async () => {
+            await this.updateUserLevel();
+        }, 1000);
+    }
+
     render() {
         return (
             <>
@@ -50,7 +61,9 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'16'}/>
+                                <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                               type={'level'}
+                                               currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
                             </ColumnGapContainer>
 
                             <Div win={this.props.win}>
@@ -82,7 +95,9 @@ class PostBattle extends React.Component {
                                     <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                     <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                 </FlexGapContainer>
-                                <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'60'}/>
+                                <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
+                                               type={'level'}
+                                               currentLvlValue={this.props.attacker.getLevelObject().percentage}/>
                             </ColumnGapContainer>
 
                             <FlexGapContainer gap={'28px'} setWidth={'100%'}>
