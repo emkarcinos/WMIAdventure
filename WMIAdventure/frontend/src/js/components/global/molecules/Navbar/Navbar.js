@@ -11,6 +11,8 @@ import Link from "./styled-components/A";
 import Menubar from "../Menubar";
 import Logo from "../../atoms/Logo";
 import {isLoggedIn} from "../../../../storage/user/userData";
+import withRouter from "react-router-dom/es/withRouter";
+import {getPagenameByLink} from "../../../../pages/PageNames";
 
 /**
  * Props:
@@ -39,14 +41,18 @@ class Navbar extends React.Component {
             });
     }
 
+    isHome = () => this.props.location.pathname === '/' || this.props.location.pathname === '/main'
 
     mobileNavbar = () => {
         return (
             <Nav>
                 <Div>
-                    {this.props.backLink ? <Back as={Link} to={this.props.backLink}/> :
+                    {!this.isHome() ?
+                        <>
+                            <Back onClick={this.props.history.goBack}/>
+                            {getPagenameByLink(this.props.location.pathname)}
+                        </> :
                         <Logo link={this.state.isUserLoggedIn ? '/main' : '/'}/>}
-                    {this.props.label}
                 </Div>
                 <Div>
                     <NavButton as={Link} to={this.state.isUserLoggedIn ? '/main' : '/'} image={homeIcon}/>
@@ -82,4 +88,4 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
