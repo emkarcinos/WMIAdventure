@@ -254,7 +254,7 @@ def base_whole_card_serializer_factory(card_info_cls: type, simple_card_ser: typ
             """
 
             if validated_data.get("levels") is None or len(validated_data.get("levels")) == 0:
-                raise serializers.ValidationError("levels are required during card creation.")
+                raise serializers.ValidationError("Brak danych o poziomie karty.")
 
         def _before_create_validation(self, validated_data):
             """
