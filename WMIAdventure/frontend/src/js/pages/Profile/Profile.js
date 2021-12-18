@@ -155,7 +155,7 @@ class Profile extends React.Component {
                             setTranslateX={this.state.editProfilePopUp.translateX}
                             closeHandler={this.closeEditProfilePopUp}>
                             <EditProfile closeHandler={this.closeEditProfilePopUp}
-                                         userId={this.state.userData.id}
+                                         userId={this.state.userData.userId}
                                          username={this.state.userData.username}
                                          avatar={this.state.userData.image}/>
                         </PopUpProfile> : null
