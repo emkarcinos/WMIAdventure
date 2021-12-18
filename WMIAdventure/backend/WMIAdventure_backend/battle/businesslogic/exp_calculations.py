@@ -19,8 +19,8 @@ def win(winner_level, loser_level) -> int:
 
     return max(
         _d,
-        _c + round(sqrt(winner_level)) + loser_level
-        - (winner_level - loser_level) * _e
+        _c + round(sqrt(winner_level) + loser_level
+                   - (winner_level - loser_level) * _e)
     )
 
 
