@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const OptionHeader = styled.p`
+const ButtonHeader = styled.p`
   margin: 0;
   font-size: 32px;
   font-weight: ${({theme}) => theme.weight.bold};
@@ -13,4 +13,4 @@ const OptionHeader = styled.p`
   }
 `;
 
-export default OptionHeader;
+export default ButtonHeader;

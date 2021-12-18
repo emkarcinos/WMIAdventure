@@ -1,20 +1,20 @@
 import React from 'react';
 import kuceBattle from "../../../../../assets/images/kuceBattle.png";
-import OptionLink from "./styled-components/OptionLink";
-import OptionHeader from "./styled-components/OptionHeader";
+import ButtonLink from "./styled-components/ButtonLink";
+import ButtonHeader from "./styled-components/ButtonHeader";
 import Span from "./styled-components/Span";
 import BattleImage from "./styled-components/BattleImage";
 import kucEditor from "../../../../../assets/images/kucEditor.svg";
 import EditorImage from "./styled-components/EditorImage";
 
-class Option extends React.Component {
+class MainMenuButton extends React.Component {
 
     renderBattleOption() {
         return (
             <>
-                <OptionHeader>
+                <ButtonHeader>
                     ~/<Span>Tryb battle</Span>
-                </OptionHeader>
+                </ButtonHeader>
                 <BattleImage src={kuceBattle}/>
             </>
         );
@@ -24,25 +24,25 @@ class Option extends React.Component {
         return (
             <>
                 <EditorImage src={kucEditor}/>
-                <OptionHeader>
+                <ButtonHeader>
                     <Span>~/</Span>Edytor kart
-                </OptionHeader>
+                </ButtonHeader>
             </>
         );
     }
 
     render() {
         return (
-            <OptionLink setSelfStart={this.props.setSelfStart}
+            <ButtonLink setSelfStart={this.props.setSelfStart}
                         setSelfEnd={this.props.setSelfEnd}
                         onMouseEnter={this.props.setHover}
                         onMouseLeave={this.props.removeHover}
                         to={this.props.url}>
                 {this.props.battle ? this.renderBattleOption() : null}
                 {this.props.editor ? this.renderEditorOption() : null}
-            </OptionLink>
+            </ButtonLink>
         );
     }
 }
 
-export default Option;
+export default MainMenuButton;
