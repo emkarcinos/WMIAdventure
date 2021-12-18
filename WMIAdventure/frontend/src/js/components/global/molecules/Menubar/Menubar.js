@@ -17,7 +17,7 @@ import userIcon from '../../../../../assets/icons/user.svg'
 import newUserIcon from '../../../../../assets/icons/newuser.svg'
 import Link from "../Navbar/styled-components/A";
 import Href from "../Navbar/styled-components/Href";
-import {getCurrentUserData} from "../../../../storage/user/userData";
+import {getCurrentUserData, isLoggedIn} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
 import Button from "./styled-components/Button";
@@ -41,7 +41,8 @@ class Menubar extends React.Component {
 
     state = {
         user: nullDetailedUserData(),
-        willRedirect: false
+        willRedirect: false,
+        userLoggedIn: false
     }
 
     populateCurrentUserData = async () => {
@@ -50,7 +51,7 @@ class Menubar extends React.Component {
             return
         const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
         user.fetchNonVitalDataFromBackend();
-        this.setState({user: user});
+        this.setState({user: user, userLoggedIn: true});
     }
 
     componentDidMount() {
@@ -58,7 +59,7 @@ class Menubar extends React.Component {
     }
 
     checkIfUserLoggedIn = () => {
-        UsersAPIGateway.isUserLoggedIn()
+        isLoggedIn()
             .then(userLoggedIn => this.setState({userLoggedIn: userLoggedIn}));
     }
 
@@ -82,7 +83,7 @@ class Menubar extends React.Component {
     }
 
     getAuthDependantContent = () => {
-        if (this.state.user) {
+        if (this.state.userLoggedIn) {
             return (
                 <>
                     <MenubarEntry as={Link} to={'/profile'} onClick={this.props.closeHandler} image={userIcon}>Mój
@@ -119,7 +120,7 @@ class Menubar extends React.Component {
                     <ContentContainer>
                         <List>
                             <Back onClick={this.props.closeHandler}/>
-                            {this.state.user ?
+                            {this.state.userLoggedIn ?
                                 <>
                                     <MenubarEntry as={Link} to={'/main'} onClick={this.props.closeHandler}
                                                   image={homeIcon}>Strona Główna</MenubarEntry>
