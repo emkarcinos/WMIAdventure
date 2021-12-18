@@ -69,6 +69,7 @@ class Menubar extends React.Component {
         alert("You've been logged out.");
 
         this.setState({user: null, willRedirect: true});
+        this.props.closeHandler();
         window.location.reload();
 
     }
@@ -84,10 +85,11 @@ class Menubar extends React.Component {
         if (this.state.user) {
             return (
                 <>
-                    <MenubarEntry as={Link} to={'/profile'} image={userIcon}>Mój profil</MenubarEntry>
+                    <MenubarEntry as={Link} to={'/profile'} onClick={this.props.closeHandler} image={userIcon}>Mój
+                        profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
-                    <Button as={Link} to={'/profile'}>
+                    <Button as={Link} to={'/profile'} onClick={this.props.closeHandler}>
                         <TinyUserProfile user={this.state.user}/>
                     </Button>
                 </>
@@ -97,8 +99,10 @@ class Menubar extends React.Component {
         return (
             <>
                 {this.redirectHandler()}
-                <MenubarEntry as={Link} to={'/login'} image={userIcon}>Zaloguj się</MenubarEntry>
-                <MenubarEntry as={Link} to={'/registration'} image={newUserIcon}>Stwórz konto</MenubarEntry>
+                <MenubarEntry as={Link} to={'/login'} onClick={this.props.closeHandler} image={userIcon}>Zaloguj
+                    się</MenubarEntry>
+                <MenubarEntry as={Link} to={'/registration'} onClick={this.props.closeHandler} image={newUserIcon}>Stwórz
+                    konto</MenubarEntry>
             </>
         )
     }
@@ -117,9 +121,12 @@ class Menubar extends React.Component {
                             <Back onClick={this.props.closeHandler}/>
                             {this.state.user ?
                                 <>
-                                    <MenubarEntry as={Link} to={'/main'} image={homeIcon}>Strona Główna</MenubarEntry>
-                                    <MenubarEntry as={Link} to={'/battle'} image={battleIcon}>Tryb Battle</MenubarEntry>
-                                    <MenubarEntry as={Link} to={'/cards-creator-start'} image={cardIcon}>Edytor
+                                    <MenubarEntry as={Link} to={'/main'} onClick={this.props.closeHandler}
+                                                  image={homeIcon}>Strona Główna</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/battle'} onClick={this.props.closeHandler}
+                                                  image={battleIcon}>Tryb Battle</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/cards-creator-start'}
+                                                  onClick={this.props.closeHandler} image={cardIcon}>Edytor
                                         Kart</MenubarEntry>
                                     <Line/>
                                 </> : null}
