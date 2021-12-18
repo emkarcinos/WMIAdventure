@@ -13,7 +13,7 @@ from .businesslogic.experience.Experience import Experience
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
-from .signals import on_user_create
+from .signals import on_user_create, user_should_gain_exp
 
 
 class UserProfileTestCase(TestCase):
@@ -439,3 +439,16 @@ class UserDeckViewTestCase(TestCase):
         self.assertEqual(serializer.data.get('exp'), expected_exp)
         self.assertEqual(serializer.data.get('level'), expected_level)
         self.assertEqual(serializer.data.get('percentage'), expected_percentage)
+
+
+class SignalsTestCase(TestCase):
+    def test_user_should_gain_exp(self):
+        users_stats = UserProfileFactory().user_stats
+
+        exp_gain = 5
+        expected_exp = users_stats.exp + exp_gain
+
+        user_should_gain_exp(users_stats, exp_gain)
+
+        users_stats.refresh_from_db()
+        self.assertEqual(users_stats.exp, expected_exp)

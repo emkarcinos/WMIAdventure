@@ -11,10 +11,17 @@ from cards.models import Card
 from users.factories import UserFactory
 
 
+class UserStatsFactory(DjangoModelFactory):
+    exp = 0
+
+    class Meta:
+        model = 'IngameUsers.UserStats'
+
+
 @factory.django.mute_signals(signals.user_registered)
 class UserProfileFactory(DjangoModelFactory):
     """
-    Creates User and his UserProfile.
+    Creates User and his UserProfile with UserStats.
     """
 
     class Meta:
@@ -25,6 +32,7 @@ class UserProfileFactory(DjangoModelFactory):
     semester = factory.LazyAttribute(lambda obj: random.choice(Semester.objects.all()))
 
     user = factory.SubFactory(UserFactory)
+    user_stats = factory.RelatedFactory(UserStatsFactory, factory_related_name='profile')
 
 
 def create_deck_from_user_cards(user_cards: tuple[UserCard, UserCard, UserCard, UserCard, UserCard]):

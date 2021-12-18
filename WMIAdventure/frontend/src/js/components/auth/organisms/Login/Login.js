@@ -28,6 +28,7 @@ class Login extends React.Component {
 
     loginSuccessHandler = () => {
         window.location.reload();
+        this.setState({loggedIn: true});
     }
 
     clearErrors = () => {
