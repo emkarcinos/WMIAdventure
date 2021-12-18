@@ -16,6 +16,7 @@ import CardsCreatorStart from './pages/CardsCreatorStart';
 import CardsCreatorEdit from './pages/CardsCreatorEdit';
 import LoginPage from "./pages/LoginPage/LoginPage";
 import {isLoggedIn} from "./storage/user/userData";
+import Navbar from "./components/global/molecules/Navbar";
 
 function App() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(undefined)
@@ -30,6 +31,7 @@ function App() {
             <Switch>
                 {isUserLoggedIn ?
                     <>
+                        <Navbar/>
                         <Route path='/main' component={MainMenu}/>
                         <Route path='/profile' component={Profile}/>
                         <Route path='/adventure' component={AdventureMode}/>
