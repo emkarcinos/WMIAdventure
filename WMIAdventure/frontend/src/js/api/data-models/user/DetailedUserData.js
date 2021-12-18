@@ -15,12 +15,13 @@ export class DetailedUserData extends BasicUserData {
         return this.statistics.level
     }
 
-    async fetchNonVitalDataFromBackend() {
-        const data = await getUsersLevelData(this.userId);
+    async fetchNonVitalDataFromBackend(force) {
+        const data = await getUsersLevelData(this.userId, force);
         if (!data)
             return false;
 
         this.statistics.level = data;
+        this.level = this.statistics.level.level;
         return true;
     }
 }
