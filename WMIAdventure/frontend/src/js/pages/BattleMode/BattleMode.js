@@ -135,6 +135,8 @@ class BattleMode extends React.Component {
         return (
             <Ul scrollVisible={this.state.scrollVisible}>
                 {this.state.users ? this.state.users.map((elem) => {
+                    if (elem.userId === this.state.loggedInUser.userId)
+                        return null;
                     return (
                         <UserListItem key={elem.userId}
                                       access={!(elem.userId === this.state.loggedInUser.userId)}
