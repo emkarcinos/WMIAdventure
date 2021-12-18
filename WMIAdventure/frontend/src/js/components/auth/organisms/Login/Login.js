@@ -3,30 +3,40 @@ import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import {Redirect} from "react-router-dom";
 import AuthForm from "../../molecules/AuthForm";
 import MainContainer from "./styled-components/MainContainer";
+import {concatMessage, translateErrors} from "../../../../api/data-models/errors/errors";
 
 class Login extends React.Component {
     state = {
         username: null,
         password: null,
-        loggedIn: false
+        loggedIn: false,
+        usernameError: null,
+        passwordError: null,
     }
 
     loginFailedHandler = (response) => {
-        let msg;
-
-        if (response.status === 404) {
-            msg = 'User not found.';
+        const asyncHandle = async (response) => {
+            const data = await response.json()
+            const translatedError = translateErrors(data);
+            if (translatedError.username)
+                this.setState({usernameError: concatMessage(translatedError.username)})
+            if (translatedError.password)
+                this.setState({passwordError: concatMessage(translatedError.password)})
         }
-
-        alert(`Login failed. ${msg} Status: ${response.status}`);
+        asyncHandle(response);
     }
 
     loginSuccessHandler = () => {
         window.location.reload();
     }
 
+    clearErrors = () => {
+        this.setState({usernameError: null, passwordError: null})
+    }
+
     submitHandler = (event) => {
         event.preventDefault();
+        this.clearErrors();
 
         UsersAPIGateway.login(this.state.username, this.state.password)
             .then(response => {
@@ -56,6 +66,7 @@ class Login extends React.Component {
                     linkText='Nie masz konta?'
                     updateUsernameState={evt => this.fieldChangedHandler(evt, 'username')}
                     updatePasswordState={evt => this.fieldChangedHandler(evt, 'password')}
+                    loginError={this.state.usernameError} passwordError={this.state.passwordError}
                 />
 
                 {

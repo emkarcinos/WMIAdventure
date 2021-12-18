@@ -3,6 +3,7 @@ from django.contrib.auth.models import update_last_login
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ValidationError
 
 from users.models import User
 
@@ -60,13 +61,13 @@ class LoginSerializer(serializers.Serializer):
         try:
             UserModel.objects.get(username=username)
         except UserModel.DoesNotExist:
-            raise serializers.ValidationError(
-                'Użytkownik o takiej nazwie nie istnieje'
+            raise ValidationError(
+                {'username': 'Użytkownik o takiej nazwie nie istnieje'}
             )
         user = authenticate(username=username, password=password)
         if user is None:
-            raise serializers.ValidationError(
-                'Niepoprawne hasło'
+            raise ValidationError(
+                {'password': 'Niepoprawne hasło'}
             )
         token, _ = Token.objects.get_or_create(user=user)
         update_last_login(None, user)

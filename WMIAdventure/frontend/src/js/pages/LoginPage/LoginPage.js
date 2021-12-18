@@ -1,8 +1,8 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import StyledWrapper from "../MainMenu/StyledWrapper";
 import Login from "../../components/auth/organisms/Login";
 import Navbar from "../../components/global/molecules/Navbar";
+import StyledWrapper from "./StyledWrapper";
 
 
 class LoginPage extends React.Component {

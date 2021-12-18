@@ -18,11 +18,16 @@ class Logo extends React.Component {
                             <H1 as={this.props.headerAs} setFontSize={this.props.setFontSize}>
                                 ~/<Span>WMI</Span> Adventure
                             </H1>
-                            <LogoImage src={logo}/>
+                            <LogoImage setOrder={this.props.setOrder} src={logo}/>
                             <HomeLink to={this.props.link}/>
                         </FlexGapContainer> :
                         <FlexGapContainer setRelative>
-                            <LogoImage setOpacity={this.props.setOpacity} src={logo}/>
+                        <LogoImage
+                            setMargin={this.props.setMargin}
+                            setSize={this.props.setSize}
+                            setOrder={this.props.setOrder}
+                            setOpacity={this.props.setOpacity}
+                            src={logo}/>
                             <HomeLink to={this.props.link}/>
                         </FlexGapContainer>
                 }
