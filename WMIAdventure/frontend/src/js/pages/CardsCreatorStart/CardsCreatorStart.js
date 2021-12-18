@@ -9,7 +9,6 @@ import TitleSection from '../../components/card-editor/atoms/TitleSection';
 import CardsImage from '../../components/card-editor/atoms/CardsImage/CardsImage';
 import CreatorOption from '../../components/card-editor/atoms/CreatorOption';
 import {desktop, mobile} from '../../utils/globals';
-import Navbar from "../../components/global/molecules/Navbar";
 
 class CardsCreatorStart extends React.Component {
     render() {
@@ -19,8 +18,6 @@ class CardsCreatorStart extends React.Component {
                 <Helmet>
                     <title> Narzędzie kreatora kart WMI Adventure </title>
                 </Helmet>
-
-                <Navbar backLink={'/'} label='Kreator Kart'/>
                 <Media query={mobile}>
                     <Wrapper>
                         <Main>

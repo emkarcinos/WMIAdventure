@@ -13,7 +13,6 @@ import CardDescribePreview from '../../atoms/CardDescribePreview';
 import CardDescribeInputs from '../../atoms/CardDescribeInputs';
 import CardProperties from '../CardProperties';
 import CardView from '../CardView';
-import Navbar from "../../../global/molecules/Navbar";
 import {getAllCards} from "../../../../storage/cards/cardStorage";
 import CardsAPIGateway from "../../../../api/gateways/CardsAPIGateway";
 
@@ -372,7 +371,6 @@ class CardsCreator extends React.Component {
                             cardsFromAPI={this.state.cardsFromApi}
                             chosenCardHandler={this.chosenCardHandler}/>
                 <Wrapper>
-                    <Navbar backLink={'/cards-creator-start'} label={this.state.headerLabel}/>
                     <Main>
                         {this.state.editorOpened ? this.renderEditPage() : null}
 
