@@ -14,7 +14,6 @@ import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
 import editProfil from '../../../assets/icons/editProfil.svg';
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
-import Navbar from "../../components/global/molecules/Navbar";
 import Media from "react-media";
 import {desktop, mobile, nextStepAnimationDuration} from "../../utils/globals";
 import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
@@ -115,7 +114,6 @@ class Profile extends React.Component {
                 <Helmet>
                     <title>Profil użytkownika</title>
                 </Helmet>
-                <Navbar backLink={'/main'} label={'Twój profil'}/>
                 <Media query={mobile}>
                     <>
                         <MainMobileContainer>
