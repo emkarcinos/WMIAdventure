@@ -1,16 +1,15 @@
 from unittest import TestCase
+from unittest.mock import patch, MagicMock
 
-from .Creator import Creator
+from IngameUsers.factories import create_user_profile_with_deck
 from ..Battle import Battle
 
 
 class BattleTestCase(TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.creator = Creator()
-
-        cls.user_profile_model1, cls.user_profile_model2 = cls.creator.get_user_profile_models()
+    def setUp(self) -> None:
+        self.user_profile_model1 = create_user_profile_with_deck()[0]
+        self.user_profile_model2 = create_user_profile_with_deck()[0]
 
     def test_creation(self):
         battle = Battle(self.user_profile_model1, self.user_profile_model2)
@@ -28,6 +27,9 @@ class BattleTestCase(TestCase):
 
         self.assertGreater(len(battle.recorder.turns), 1)
 
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.creator.perform_deletion()
+    @patch('battle.businesslogic.Battle.on_battle_end')
+    def test_start(self, mock_on_battle_end: MagicMock):
+        battle = Battle(self.user_profile_model1, self.user_profile_model2)
+        battle.start()
+
+        mock_on_battle_end.assert_called_once_with(battle.outcome)

@@ -1,14 +1,20 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+from IngameUsers.factories import create_user_profile_with_deck
+from IngameUsers.models import UserStats
 from battle.businesslogic.tests.Creator import Creator
 from users.models import User
 from . import views
 from .businesslogic.Deck import Deck
 from .businesslogic.Outcome import Outcome
 from .businesslogic.Player import Player
+from .businesslogic.tests.factories import create_player_with_deck
 from .serializers import *
+from .signals import on_battle_end
 
 
 class StatisticsSerializerTestCase(TestCase):
@@ -116,6 +122,10 @@ class OutcomeSerializerTestCase(TestCase):
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner.id)
 
+        # Assert exp gain
+        actual_exp_gain = serializer.data.get('exp_gain')
+        self.assertEqual(actual_exp_gain, self.instance.attacker_exp_gain)
+
     def test_serialization2(self):
         """
         Scenario: Attacker and defender have 0 hp.
@@ -151,6 +161,10 @@ class OutcomeSerializerTestCase(TestCase):
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner)
 
+        # Assert exp gain
+        actual_exp_gain = serializer.data.get('exp_gain')
+        self.assertEqual(actual_exp_gain, self.instance.attacker_exp_gain)
+
     def test_serialization3(self):
         """
         Scenario: Defender has 0 hp.
@@ -185,6 +199,10 @@ class OutcomeSerializerTestCase(TestCase):
         actual_winner = serializer.data.get("winner")
         self.assertEqual(actual_winner, expected_winner.id)
 
+        # Assert exp gain
+        actual_exp_gain = serializer.data.get('exp_gain')
+        self.assertEqual(actual_exp_gain, self.instance.attacker_exp_gain)
+
     def tearDown(self) -> None:
         # Reset players' hp
         self.attacker.statistics.hp = self.attacker.statistics.MAX_HP
@@ -196,11 +214,9 @@ class OutcomeSerializerTestCase(TestCase):
 
 
 class BattleViewTestCase(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.creator = Creator()
-
-        cls.attacker_user, cls.defender_user = cls.creator.get_user_models()
+    def setUp(self) -> None:
+        self.attacker_user = create_user_profile_with_deck()[0].user
+        self.defender_user = create_user_profile_with_deck()[0].user
 
     def test_get1(self):
         """
@@ -248,10 +264,6 @@ class BattleViewTestCase(TestCase):
         # Assert 404
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.creator.perform_deletion()
-
 
 def _gen_not_existing_user_id():
     """
@@ -263,3 +275,53 @@ def _gen_not_existing_user_id():
     while len(User.objects.filter(pk=not_existing_user_id)) > 0:
         not_existing_user_id += 1
     return not_existing_user_id
+
+
+class SignalsTestCase(TestCase):
+
+    @patch('battle.signals.calculate_exp_gains')
+    def test_on_battle_end(self, mock_calculate_exp_gains):
+        """
+        **Scenario:**
+
+        - Battle Outcome exists, on_battle_end() is called
+
+        ---
+
+        **Expected result:**
+
+        - Users gained proper amount of exp.
+        """
+        attacker, _ = create_player_with_deck()
+        defender, _ = create_player_with_deck()
+        outcome = Outcome(attacker, defender)
+
+        attacker_exp_gain, defender_exp_gain = 3, 4
+        attacker_stats = UserStats.objects.get(profile=attacker.id)
+        defender_stats = UserStats.objects.get(profile=defender.id)
+
+        expected_attacker_exp = attacker_stats.exp + attacker_exp_gain
+        expected_defender_exp = defender_stats.exp + defender_exp_gain
+
+        mock_calculate_exp_gains.return_value = (attacker_exp_gain, defender_exp_gain)
+
+        on_battle_end(outcome)
+
+        attacker_stats.refresh_from_db()
+        defender_stats.refresh_from_db()
+        self.assertEquals(attacker_stats.exp, expected_attacker_exp)
+        self.assertEquals(defender_stats.exp, expected_defender_exp)
+
+    def test_user_without_stats_gains_them(self):
+        attacker, _ = create_player_with_deck()
+        defender, _ = create_player_with_deck()
+        outcome = Outcome(attacker, defender)
+
+        attacker_profile = UserProfile.objects.get(pk=attacker.id)
+        attacker_profile.user_stats.delete()
+
+        on_battle_end(outcome)
+
+        new_attacker_stats = attacker_profile.user_stats
+
+        self.assertIsNotNone(new_attacker_stats)
