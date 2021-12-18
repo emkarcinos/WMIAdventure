@@ -16,7 +16,7 @@ import PostBattle from '../PostBattle';
 import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
-import {getCurrentUserData, getCurrentUserDecks} from "../../../../storage/user/userData";
+import {getCurrentUserDecks} from "../../../../storage/user/userData";
 import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
@@ -25,7 +25,6 @@ import UserInfo from "../../../global/atoms/UserInfo";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
-import {DetailedUserData, nullDetailedUserData} from "../../../../api/data-models/user/DetailedUserData";
 
 class OpponentSelected extends React.Component {
 
@@ -50,7 +49,6 @@ class OpponentSelected extends React.Component {
             visible: false,
             message: '',
         },
-        caller: nullDetailedUserData()
     }
 
     async getDeck() {
@@ -62,17 +60,7 @@ class OpponentSelected extends React.Component {
         this.setState({userDeck: new EditableDeck(userSpecificCards)});
     }
 
-    populateCurrentUserData = async () => {
-        const userData = await getCurrentUserData();
-        if (!userData)
-            return
-        const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
-        await user.fetchNonVitalDataFromBackend();
-        this.setState({caller: user});
-    }
-
     componentDidMount() {
-        this.populateCurrentUserData();
         this.getDeck();
     }
 
@@ -165,7 +153,6 @@ class OpponentSelected extends React.Component {
         }
         data.outcome.winner === data.attacker.id ?
             this.setState({win: true, expGain: data.outcome.exp_gain}) : this.setState({win: false});
-        this.state.caller.fetchNonVitalDataFromBackend();
     }
 
     postBattleOpenHandler = () => {
@@ -188,7 +175,9 @@ class OpponentSelected extends React.Component {
                 postBattle: false,
                 isBattleStarting: false
             });
+            this.props.closeUserPreviewHandler();
         }, nextStepAnimationDuration);
+
     }
 
     cacheEnemyCards = async (battleData) => {
@@ -266,7 +255,7 @@ class OpponentSelected extends React.Component {
                 <>
                     <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                 closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.state.caller}
+                                attacker={this.props.caller}
                                 attackerDeck={this.state.userDeck}
                                 opponent={this.props.opponent}
                                 opponentDeck={this.state.opponentDeck}
@@ -289,7 +278,7 @@ class OpponentSelected extends React.Component {
                 <>
                     <PostBattle postBattle={this.state.postBattle} win={this.state.win}
                                 closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.state.caller}
+                                attacker={this.props.caller}
                                 attackerDeck={this.state.userDeck}
                                 opponent={this.props.opponent}
                                 opponentDeck={this.state.opponentDeck}
@@ -324,7 +313,7 @@ class OpponentSelected extends React.Component {
                                         <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
                                         <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
                                     </FlexGapContainer>
-                                    <TinyUserProfile user={this.state.caller} setMargin={'24px 0 0 0'}/>
+                                    <TinyUserProfile user={this.props.caller} setMargin={'24px 0 0 0'}/>
                                     <KuceVs/>
                                     <TinyUserProfile user={this.props.opponent} setMargin={'0 0 24px 0'}/>
                                     <FlexGapContainer gap={'40px'}>
@@ -370,7 +359,7 @@ class OpponentSelected extends React.Component {
                                    hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 0 0 26px'}>
-                                        <TinyUserProfile user={this.state.caller} setMargin={'0'} vertical/>
+                                        <TinyUserProfile user={this.props.caller} setMargin={'0'} vertical/>
                                         <FlexGapContainer gap={'52px'}>
                                             <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
                                             <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>

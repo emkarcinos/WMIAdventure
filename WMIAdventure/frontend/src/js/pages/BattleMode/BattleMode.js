@@ -97,6 +97,7 @@ class BattleMode extends React.Component {
             this.setState({
                 userPreviewRun: false,
             });
+            this.forceUpdate();
         }, 550);
     }
 
@@ -150,6 +151,7 @@ class BattleMode extends React.Component {
         return (
             <>
                 <OpponentSelected visible={this.state.userPreviewRun}
+                                  caller={this.state.loggedInUser}
                                   opponent={this.state.selectedUser}
                                   setTranslateY={this.state.userPreviewPos}
                                   setOpacity={this.state.userPreviewOpacity}

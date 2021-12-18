@@ -44,6 +44,7 @@ class PostBattle extends React.Component {
     componentDidMount() {
         setTimeout(async () => {
             await this.updateUserLevel();
+            this.forceUpdate();
         }, 1000);
     }
 
