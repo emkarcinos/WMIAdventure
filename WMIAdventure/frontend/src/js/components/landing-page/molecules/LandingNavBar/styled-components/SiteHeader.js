@@ -5,13 +5,9 @@ const SiteHeader = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 48px;
+  height: 56px;
   background-color: transparent;
   z-index: 3;
-
-  @media (min-width: ${({theme}) => theme.overMobile}px) {
-    height: 64px;
-  }
 `;
 
 export default SiteHeader;
