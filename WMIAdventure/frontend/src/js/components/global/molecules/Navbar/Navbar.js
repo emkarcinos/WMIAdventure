@@ -13,6 +13,7 @@ import Logo from "../../atoms/Logo";
 import {isLoggedIn} from "../../../../storage/user/userData";
 import withRouter from "react-router-dom/es/withRouter";
 import {getPagenameByLink} from "../../../../pages/PageNames";
+import {purge} from "../../../../storage/cache/cache";
 
 /**
  * Props:
@@ -39,6 +40,9 @@ class Navbar extends React.Component {
             .then(resp => {
                 this.setState({isUserLoggedIn: resp})
             });
+        window.onbeforeunload = () => {
+            purge();
+        };
     }
 
     isHome = () => this.props.location.pathname === '/' || this.props.location.pathname === '/main'
