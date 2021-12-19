@@ -1,23 +1,27 @@
 version: '3.2'
 
 services:
-    wmiadventure-backend:
-        image: wmiadventure.azurecr.io/wmiadventure:v1
-        build: ./backend
-        command: python manage.py runserver 0.0.0.0:8000
-        volumes:
-            - ./backend/WMIAdventure_backend:/backend/
-        ports:
-            - 8000:8000
-    
-    wmiadventure-frontend:
-        image: wmiadventure.azurecr.io/frontend:v1
-        logging:
-          options:
-            max-size: "10m"
-            max-file: "3"
-        build: 
-          context: ./frontend
-          dockerfile: Dockerfile.prod
-        ports:
-            - 80:80
+  wmiadventure-backend:
+    image: wmiadventure.azurecr.io/wmiadventure:v1
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend/WMIAdventure_backend:/backend/
+    ports:
+      - 8000:8000
+
+  wmiadventure-frontend:
+    image: wmiadventure.azurecr.io/frontend:v1
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    ports:
+      - 80:80
+      - 443:443
