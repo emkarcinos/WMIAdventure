@@ -20,8 +20,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-      args:
-        - HTTPS_BACKEND=1
     ports:
       - 80:80
       - 443:443
