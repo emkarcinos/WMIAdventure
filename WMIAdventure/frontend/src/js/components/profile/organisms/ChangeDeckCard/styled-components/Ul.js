@@ -13,17 +13,9 @@ const Ul = styled.ul`
   }
 
   height: 100%;
-
   padding: 0 10px;
   margin: 0;
   border-radius: 20px;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none; /* IE 10+ */
-
-  ::-webkit-scrollbar {
-    display: none; /* Chrome Safari */
-  }
 `;
 
 export default Ul;
