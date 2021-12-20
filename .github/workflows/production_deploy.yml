@@ -79,7 +79,7 @@ jobs:
     - name: Pull images
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker pull ${{ env.ACR_SERVER }}/frontend:prod
+        command: docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}; docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker pull ${{ env.ACR_SERVER }}/frontend:prod
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
