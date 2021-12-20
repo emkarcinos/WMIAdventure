@@ -75,19 +75,30 @@ jobs:
       ACR_SERVER: wmiadventure.azurecr.io
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Pull backend docker image from ACR on server and run using ssh
+
+    - name: Pull images
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:prod
+        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker pull ${{ env.ACR_SERVER }}/frontend:prod
+
+    - name: Stop Django server and Migrate DB
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command:
+          docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run --rm --entrypoint "python3 manage.py migrate" ${{ env.ACR_SERVER }}/wmiadventure:prod
+
+    - name: Run Django server
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:prod
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
 
-    - name: Pull frontend docker image from ACR on server and run using ssh
+    - name: Run frontend nginx
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/frontend:prod; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:prod;
+        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:prod;
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
