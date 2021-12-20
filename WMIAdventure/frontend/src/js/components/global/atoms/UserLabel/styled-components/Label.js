@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+import {userCommonLevelColorRange, userGoldLevelColorRange} from "../../../../../utils/globals";
 
 function backColorHandler(theme, term, level, rank) {
-    if (level < 10 || rank < 20 || term < 4)
+    if (level < userCommonLevelColorRange || rank < 20 || term < 4)
         return theme.colors.greenyBluey;
-    else if ((level >= 10 && level < 20) || (rank >= 20 && rank < 50) || (term >= 4 && term < 6))
+    else if ((level >= userCommonLevelColorRange && level < userGoldLevelColorRange)
+        || (rank >= 20 && rank < 50) || (term >= 4 && term < 6))
         return theme.colors.yellowyOrangy;
-    else if (level >= 20 || rank >= 50 || term >= 6)
+    else if (level >= userGoldLevelColorRange || rank >= 50 || term >= 6)
         return theme.colors.purplyPinky;
 }
 
