@@ -26,7 +26,8 @@ import pause from '../../../../../assets/icons/pause.svg';
 import playDark from '../../../../../assets/icons/play-dark.svg';
 import pauseDark from '../../../../../assets/icons/pause-dark.svg';
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
-import MobileAutoplay from "./styled-components/MobileAutoplay";
+import MobileBattleButton from "./styled-components/MobileBattleButton";
+import fastIcon from '../../../../../assets/icons/fast-dark.svg';
 
 class BattleView extends React.Component {
 
@@ -677,12 +678,18 @@ class BattleView extends React.Component {
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
-                                    <MobileAutoplay onClick={this.flipAutoplay}
-                                                    borderColor={this.state.autoplayEnabled ? theme.colors.greenyBluey
-                                                        : theme.colors.purplyPinky}>
-                                        <img src={this.state.autoplayEnabled ? playDark : pauseDark}
+                                    <MobileBattleButton setTop={'-92px'} onClick={this.flipAutoplay}
+                                                        borderColor={this.state.autoplayEnabled
+                                                            ? theme.colors.greenyBluey : theme.colors.purplyPinky}>
+                                        <img src={fastIcon}
+                                             alt={'normal/double speed'}/>
+                                    </MobileBattleButton>
+                                    <MobileBattleButton setTop={'-46px'} onClick={this.flipAutoplay}
+                                                        borderColor={this.state.autoplayEnabled
+                                                            ? theme.colors.greenyBluey : theme.colors.purplyPinky}>
+                                        <img src={this.state.autoplayEnabled ? pauseDark : playDark}
                                              alt={'play/pause'}/>
-                                    </MobileAutoplay>
+                                    </MobileBattleButton>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
                         </MainContainer>
