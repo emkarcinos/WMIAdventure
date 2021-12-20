@@ -9,7 +9,7 @@ class PopUp extends React.Component {
                  setMaxWidth={this.props.setMaxWidth} setMaxHeight={this.props.setMaxHeight}
                  onMouseEnter={this.props.hoverTrue} onMouseLeave={this.props.hoverFalse}
                  setOpacity={this.props.setOpacity} setTranslateY={this.props.setTranslateY}
-                 setAlignment={this.props.setAlignment}>
+                 setAlignment={this.props.setAlignment} setTop={this.props.setTop}>
                 {this.props.children}
                 <Close visible={!this.props.disableClose} onClick={this.props.closeHandler}/>
             </Div>

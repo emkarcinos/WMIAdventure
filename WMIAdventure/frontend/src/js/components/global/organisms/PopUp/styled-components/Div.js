@@ -7,7 +7,7 @@ const Div = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 48px;
+  top: ${({setTop}) => setTop ? setTop : '56px'};
   left: 0;
   height: calc(100vh - 48px);
   width: 100%;
