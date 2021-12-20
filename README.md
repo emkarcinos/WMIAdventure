@@ -1,3 +1,5 @@
+[![CI/CD](https://github.com/emkarcinos/WMIAdventure/actions/workflows/cicd.yml/badge.svg)](https://github.com/emkarcinos/WMIAdventure/actions/workflows/cicd.yml)
+
 # WMIAdventure
 
 WMI Adventure to aplikacja webowa tworzona dla studentów Informatyki  [Wydziału Matematyki i Informatyki na UAMie](https://wmi.amu.edu.pl/).
