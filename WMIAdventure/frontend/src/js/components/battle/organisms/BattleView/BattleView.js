@@ -27,8 +27,10 @@ import playDark from '../../../../../assets/icons/play-dark.svg';
 import pauseDark from '../../../../../assets/icons/pause-dark.svg';
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import MobileBattleButton from "./styled-components/MobileBattleButton";
-import fastIconDark from '../../../../../assets/icons/double-speed-dark.svg';
+import doubleSpeedIconDark from '../../../../../assets/icons/double-speed-dark.svg';
 import normalSpeedIconDark from '../../../../../assets/icons/normal-speed-dark.svg';
+import doubleSpeedIcon from '../../../../../assets/icons/double-speed.svg';
+import normalSpeedIcon from '../../../../../assets/icons/normal-speed.svg';
 
 class BattleView extends React.Component {
 
@@ -698,7 +700,7 @@ class BattleView extends React.Component {
                                                         borderColor={this.state.speedIncrease
                                                             ? theme.colors.purplyPinky : theme.colors.greenyBluey}>
                                         <img src={this.state.speedIncrease
-                                            ? normalSpeedIconDark : fastIconDark}
+                                            ? normalSpeedIconDark : doubleSpeedIconDark}
                                              alt={'normal/double speed'}/>
                                     </MobileBattleButton>
                                     <MobileBattleButton setTop={'-46px'} onClick={this.flipAutoplay}
@@ -806,8 +808,12 @@ class BattleView extends React.Component {
                                 {this.effectsTargetIteration(false)}
                             </EffectIconsContainer>
                         </CenterDiv>
-
                         <CenterDiv setZindex={'500'} onClick={this.onNextButtonPress}>
+                            <ButtonWithIcon handler={this.flipSpeed} setMargin={'0 0 16px 820px'}
+                                            icon={this.state.speedIncrease ? normalSpeedIcon : doubleSpeedIcon}
+                                            color={this.state.speedIncrease ? theme.colors.purplyPinky
+                                                : theme.colors.greenyBluey}>
+                                {this.state.speedIncrease ? 'Normalna prędkość' : 'Podwójna prędkość'}</ButtonWithIcon>
                             <ButtonWithIcon handler={this.flipAutoplay} setMargin={'0 0 0 900px'}
                                             icon={this.state.autoplayEnabled ? pause : play}
                                             color={this.state.autoplayEnabled ? theme.colors.greenyBluey
