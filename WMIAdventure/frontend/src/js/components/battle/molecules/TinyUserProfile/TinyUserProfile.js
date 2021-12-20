@@ -7,7 +7,7 @@ import Avatar from './styled-components/Avatar';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import {desktop} from '../../../../utils/globals';
-import UserStatistic from '../../atoms/UserStatistic';
+import UserLevel from '../../molecules/UserLevel';
 import UserLabel from "../../../global/atoms/UserLabel";
 
 class TinyUserProfile extends React.Component {
@@ -29,12 +29,14 @@ class TinyUserProfile extends React.Component {
                                    setMargin={'0'}/>
                     </FlexGapContainer>
                     <Media query={desktop}>
-                        {this.props.vertical ? '' :
-                            <UserStatistic
-                                statisticNumber={this.props.user.statistics ? this.props.user.getLevelObject().level : '0'}
-                                type={'level'}
-                                currentLvlValue={this.props.user.statistics ? this.props.user.getLevelObject().percentage : '0'}
-                                setMargin={'14px 0 0 0'}/>}
+                        {
+                            this.props.vertical ? '' :
+                            <UserLevel
+                                level={this.props.user.statistics ? this.props.user.getLevelObject().level : 0}
+                                percentage={this.props.user.statistics ? this.props.user.getLevelObject().percentage : 0}
+                                setMargin={'14px 0 0 0'}
+                            />
+                        }
                     </Media>
                 </ContentContainer>
                 <ImageContainer vertical={this.props.vertical} avatar={this.props.user.image}>
