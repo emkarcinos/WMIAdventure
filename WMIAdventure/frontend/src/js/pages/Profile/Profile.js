@@ -123,7 +123,7 @@ class Profile extends React.Component {
                                 <ColumnGapContainer gap={'20px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'10px'}>
                                         <FlexGapContainer gap={'10px'}>
-                                            <UserLabel term number={this.state.userData.semester}/>
+                                            {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
                                             {/*<UserLabel rank number={'2'}/>*/}
@@ -169,7 +169,7 @@ class Profile extends React.Component {
                                           image={this.state.userData.image}/>
                                     <ColumnGapContainer gap={'30px'}>
                                         <FlexGapContainer gap={'40px'}>
-                                            <UserLabel term number={this.state.userData.semester}/>
+                                            {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
                                             {/*<UserLabel rank number={'2'}/>*/}

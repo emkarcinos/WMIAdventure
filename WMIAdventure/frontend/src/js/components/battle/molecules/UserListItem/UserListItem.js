@@ -30,8 +30,8 @@ class UserListItem extends React.Component {
                         {this.props.user.username}
                     </Login>
                     <LabelsContainer>
-                        <UserLabel setMargin={'0 10px 0 0'}
-                                   term={1} number={1}/>
+                        {/*<UserLabel setMargin={'0 10px 0 0'}*/}
+                        {/*           term={1} number={1}/>*/}
                         <UserLabel setMargin={'0 10px 0 0'}
                                    level={this.props.user.level} number={this.props.user.level}/>
                         {/*<UserLabel setMargin={'0'}*/}
