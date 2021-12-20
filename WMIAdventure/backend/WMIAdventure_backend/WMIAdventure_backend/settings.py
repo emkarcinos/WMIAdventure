@@ -28,7 +28,6 @@ DEBUG = (environ.get('DJANGO_DEBUG', 'True') == 'True')
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,7 +45,8 @@ INSTALLED_APPS = [
     'proposed_content',
     'corsheaders',
     'db_file_storage',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
