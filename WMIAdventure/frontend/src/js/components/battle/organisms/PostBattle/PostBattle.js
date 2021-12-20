@@ -12,7 +12,7 @@ import PopUp from '../../../global/organisms/PopUp';
 import Media from 'react-media';
 import {desktop, mobile} from '../../../../utils/globals';
 import TransBack from '../../../global/organisms/TransBack';
-import UserInfo from "../../../global/atoms/UserInfo";
+// import UserInfo from "../../../global/atoms/UserInfo";
 import ExpGain from "../../atoms/ExpGain/ExpGain";
 
 class PostBattle extends React.Component {
@@ -58,11 +58,11 @@ class PostBattle extends React.Component {
                         <Article>
                             <ColumnGapContainer gap={'10px'} setMargin={'0 0 16px 0'}>
                                 <BattleResult win={this.props.win}/>
-                                <FlexGapContainer gap={'32px'}>
-                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                </FlexGapContainer>
+                                {/*<FlexGapContainer gap={'32px'}>*/}
+                                {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                {/*</FlexGapContainer>*/}
                                 <FlexGapContainer gap={'16px'}>
                                     <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
                                                    type={'level'}
@@ -95,11 +95,11 @@ class PostBattle extends React.Component {
                                hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}>
                             <ColumnGapContainer gap={'10px'} setMargin={'0 0 28px 0'}>
                                 <BattleResult win={this.props.win}/>
-                                <FlexGapContainer gap={'32px'}>
-                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                </FlexGapContainer>
+                                {/*<FlexGapContainer gap={'32px'}>*/}
+                                {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                {/*</FlexGapContainer>*/}
                                 <FlexGapContainer gap={'16px'}>
                                     <UserStatistic statisticNumber={this.props.attacker.getLevelObject().level}
                                                    type={'level'}

@@ -34,8 +34,8 @@ class UserListItem extends React.Component {
                                    term={1} number={1}/>
                         <UserLabel setMargin={'0 10px 0 0'}
                                    level={this.props.user.level} number={this.props.user.level}/>
-                        <UserLabel setMargin={'0'}
-                                   rank={'2'} number={'2'}/>
+                        {/*<UserLabel setMargin={'0'}*/}
+                        {/*           rank={'2'} number={'2'}/>*/}
                     </LabelsContainer>
                 </Div>
                 <BattleIcon access={this.props.access} src={battleIcon}/>

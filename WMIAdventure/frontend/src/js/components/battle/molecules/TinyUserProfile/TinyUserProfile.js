@@ -25,8 +25,8 @@ class TinyUserProfile extends React.Component {
                         <UserLabel level={this.props.user.level}
                                    number={this.props.user.level}
                                    setMargin={'0'}/>
-                        <UserLabel rank={'1'} number={'1'}
-                                   setMargin={'0'}/>
+                        {/*<UserLabel rank={'1'} number={'1'}*/}
+                        {/*           setMargin={'0'}/>*/}
                     </FlexGapContainer>
                     <Media query={desktop}>
                         {this.props.vertical ? '' :
