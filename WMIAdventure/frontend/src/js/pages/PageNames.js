@@ -1,5 +1,5 @@
 export const pageNames = {
-    '/': 'Strona domowa',
+    '/': 'WMI Adventure',
     '/main': 'Menu główne',
     '/profile': 'Mój profil',
     '/battle': 'Tryb Battle',

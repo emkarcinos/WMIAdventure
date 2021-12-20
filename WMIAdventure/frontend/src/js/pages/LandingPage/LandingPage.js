@@ -41,7 +41,7 @@ function LandingPage() {
     return (
         <>
             <Helmet>
-                <title>Strona domowa</title>
+                <title>WMI Adventure</title>
             </Helmet>
             <Media query={mobile}>
                 <Main>
