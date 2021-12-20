@@ -86,6 +86,10 @@ jobs:
       with:
         command:
           docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run --rm --entrypoint "python3 manage.py migrate" ${{ env.ACR_SERVER }}/wmiadventure:prod
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USERNAME }}
+        privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
+
 
     - name: Run Django server
       uses: garygrossgarten/github-action-ssh@release
