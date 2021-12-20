@@ -27,7 +27,8 @@ import playDark from '../../../../../assets/icons/play-dark.svg';
 import pauseDark from '../../../../../assets/icons/pause-dark.svg';
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import MobileBattleButton from "./styled-components/MobileBattleButton";
-import fastIcon from '../../../../../assets/icons/fast-dark.svg';
+import fastIconDark from '../../../../../assets/icons/double-speed-dark.svg';
+import normalSpeedIconDark from '../../../../../assets/icons/normal-speed-dark.svg';
 
 class BattleView extends React.Component {
 
@@ -103,6 +104,8 @@ class BattleView extends React.Component {
             enemy: '0'
         },
         autoplayEnabled: true,
+        speedIncrease: false,
+        speedValue: nextStepAnimationDuration,
         nextStepCallback: () => {
         },
     }
@@ -128,8 +131,21 @@ class BattleView extends React.Component {
     }
 
     flipAutoplay = () => {
-        const newState = !this.state.autoplayEnabled
-        this.setState({autoplayEnabled: newState})
+        const newState = !this.state.autoplayEnabled;
+        this.setState({autoplayEnabled: newState});
+
+        if (newState)
+            this.state ? this.state.nextStepCallback() : null;
+    }
+
+    flipSpeed = () => {
+        const newState = !this.state.speedIncrease;
+        this.setState({speedIncrease: newState});
+
+        if (newState)
+            this.setState({speedValue: nextStepAnimationDuration / 2});
+        else
+            this.setState({speedValue: nextStepAnimationDuration});
 
         if (newState)
             this.state ? this.state.nextStepCallback() : null;
@@ -151,7 +167,7 @@ class BattleView extends React.Component {
                 userCompactCardTranslateX: '-6vw',
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration);
+            + this.state.speedValue);
     }
 
     stateContainersRetractionAnimation() {
@@ -161,7 +177,7 @@ class BattleView extends React.Component {
                 userStateContainerTranslateX: '0',
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration);
+            + this.state.speedValue);
     }
 
     compactCardsRetractionAnimation() {
@@ -171,7 +187,7 @@ class BattleView extends React.Component {
                 userCompactCardTranslateX: '0',
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 2);
+            + this.state.speedValue * 2);
     }
 
     miniCardsInitAnimation() {
@@ -181,7 +197,7 @@ class BattleView extends React.Component {
                 userMiniCardsTranslateX: ['0', '0', '0', '0', '0'],
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 2 + 100);
+            + this.state.speedValue * 2 + 100);
     }
 
     usersStatsInitAnimation() {
@@ -193,7 +209,7 @@ class BattleView extends React.Component {
                 userShield: '20'
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 2 + 100);
+            + this.state.speedValue * 2 + 100);
     }
 
     onNextButtonPress = () => {
@@ -207,7 +223,7 @@ class BattleView extends React.Component {
         setTimeout(() => {
             this.fullCardAction();
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 4);
+            + this.state.speedValue * 4);
     }
 
     // init elements animation for mobile and call full card action
@@ -231,7 +247,7 @@ class BattleView extends React.Component {
                 userStateContainerTranslateY: '0'
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration);
+            + this.state.speedValue);
     }
 
     showCompactCardsVertical() {
@@ -241,7 +257,7 @@ class BattleView extends React.Component {
                 userCompactCardTranslateY: '0'
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration + 100);
+            + this.state.speedValue + 100);
     }
 
     showPseudoBackgroundElements() {
@@ -251,7 +267,7 @@ class BattleView extends React.Component {
                 backgroundElemAfterPosX: '100%',
             });
         }, battleInitLoadingDuration
-            + nextStepAnimationDuration * 3);
+            + this.state.speedValue * 3);
     }
 
     // init elements animation for desktop
@@ -413,7 +429,7 @@ class BattleView extends React.Component {
             this.setState({nextStepCallback: call});
             this.state.autoplayEnabled ? this.state.nextStepCallback() : null;
         }, battleInitLoadingDuration +
-            nextStepAnimationDuration * 3);
+            this.state.speedValue * 3);
     }
 
     hideFullCardBackground() {
@@ -421,7 +437,7 @@ class BattleView extends React.Component {
             this.setNewStateAttributes(
                 this.state.fullCardAction, 'fullCardAction', {visible: false});
         }, battleInitLoadingDuration +
-            nextStepAnimationDuration * 4);
+            this.state.speedValue * 4);
     }
 
     // show USER or ENEMY full card view
@@ -433,7 +449,7 @@ class BattleView extends React.Component {
     effectsMountCall(userTurn) {
         setTimeout(() => {
             userTurn ? this.effectsMount(true) : this.effectsMount(false);
-        }, nextStepAnimationDuration * 2);
+        }, this.state.speedValue * 2);
     }
 
     compactCardActionMobile = (userTurn) => {
@@ -455,7 +471,7 @@ class BattleView extends React.Component {
             this.setState({
                 compactCardOnTopScale: {user: `${Number(!userTurn)}`, enemy: `${Number(userTurn)}`, middle: '1'}
             });
-        }, nextStepAnimationDuration);
+        }, this.state.speedValue);
     }
 
     // push forward USER or ENEMY compact card
@@ -470,7 +486,7 @@ class BattleView extends React.Component {
     effectsActionCall(userTurn) {
         setTimeout(() => {
             userTurn ? this.effectsActions(true) : this.effectsActions(false);
-        }, nextStepAnimationDuration * 3);
+        }, this.state.speedValue * 3);
     }
 
     // shows USER or ENEMY effect icons
@@ -490,7 +506,7 @@ class BattleView extends React.Component {
             this.setState({
                 effectsActionScale: newEffectsActionScale
             });
-        }, nextStepAnimationDuration);
+        }, this.state.speedValue);
 
         const usedEffect = this.state.battle.currentTurn.getNextEffect()
         this.state.battle.currentTurn.advance();
@@ -500,7 +516,7 @@ class BattleView extends React.Component {
     callNextEffectIconAction(userTurn, index) {
         setTimeout(() => {
             this.effectsActions(userTurn, index + 1);
-        }, nextStepAnimationDuration * 2);
+        }, this.state.speedValue * 2);
     }
 
     // scale USER or ENEMY effect icons to signal effect action
@@ -541,7 +557,7 @@ class BattleView extends React.Component {
                 this.showPostBattle();
                 //Battle has ended, do stuff here to display the outcome
             }
-        }, nextStepAnimationDuration);
+        }, this.state.speedValue);
     }
 
     // hide USER or ENEMY effect icons
@@ -554,7 +570,7 @@ class BattleView extends React.Component {
                 this.state.effectsTarget.enemy, 'effectsTarget.enemy',
                 {opacity: '0', scale: '0', translateY: '0'});
             this.compactCardBackCall();
-        }, nextStepAnimationDuration);
+        }, this.state.speedValue);
     }
 
     callNextCardSequence() {
@@ -575,7 +591,7 @@ class BattleView extends React.Component {
                 this.compactCardBackCall();
             }
 
-        }, nextStepAnimationDuration * 3);
+        }, this.state.speedValue * 3);
     }
 
     // back USER or ENEMY compact card to init position
@@ -678,10 +694,11 @@ class BattleView extends React.Component {
                                                         effectFrameOpacity={this.state.effectFrameOpacity.user}
                                                         frameOpacityType={this.state.effectFrameOpacity.type}
                                     />
-                                    <MobileBattleButton setTop={'-92px'} onClick={this.flipAutoplay}
-                                                        borderColor={this.state.autoplayEnabled
-                                                            ? theme.colors.greenyBluey : theme.colors.purplyPinky}>
-                                        <img src={fastIcon}
+                                    <MobileBattleButton setTop={'-92px'} onClick={this.flipSpeed}
+                                                        borderColor={this.state.speedIncrease
+                                                            ? theme.colors.purplyPinky : theme.colors.greenyBluey}>
+                                        <img src={this.state.speedIncrease
+                                            ? normalSpeedIconDark : fastIconDark}
                                              alt={'normal/double speed'}/>
                                     </MobileBattleButton>
                                     <MobileBattleButton setTop={'-46px'} onClick={this.flipAutoplay}

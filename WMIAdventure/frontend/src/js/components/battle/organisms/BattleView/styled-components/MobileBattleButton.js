@@ -13,6 +13,7 @@ const MobileBattleButton = styled.div`
   top: ${({setTop}) => setTop ? setTop : '0'};
   right: ${({setRight}) => setRight ? setRight : '0'};
   z-index: 100;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export default MobileBattleButton;
