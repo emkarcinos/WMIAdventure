@@ -80,6 +80,9 @@ jobs:
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker pull ${{ env.ACR_SERVER }}/frontend:prod
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USERNAME }}
+        privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
 
     - name: Stop Django server and Migrate DB
       uses: garygrossgarten/github-action-ssh@release
@@ -94,15 +97,16 @@ jobs:
     - name: Run Django server
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:prod
+        command: cd ~/WMIAdventure/WMIAdventure; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:prod
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
+        
 
     - name: Run frontend nginx
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:prod;
+        command: cd ~/WMIAdventure/WMIAdventure; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:prod;
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
