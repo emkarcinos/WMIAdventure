@@ -3,9 +3,9 @@ FROM node:16-alpine3.12 as builder
 
 # From build arg
 ARG API_URL="localhost:8000"
-ARG USE_HTTPS=0
+ARG HTTPS_BACKEND=0
 ENV API_URL=${API_URL}
-ENV USE_HTTPS=${USE_HTTPS}
+ENV HTTPS_BACKEND=${HTTPS_BACKEND}
 
 WORKDIR /frontend
 COPY package.json ./
