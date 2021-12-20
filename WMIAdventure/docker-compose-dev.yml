@@ -18,10 +18,7 @@ services:
         max-file: "3"
     build:
       context: ./frontend
-      dockerfile: Dockerfile.prod
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      dockerfile: Dockerfile.dev
     ports:
       - 80:80
       - 443:443
@@ -33,4 +30,5 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot --force-renewal -d
-      wmiadventure.projektstudencki.pl --email komar86311@gmail.com --agree-tos
+      wmiadventure.westeurope.cloudapp.azure.com --email komar86311@gmail.com
+      --agree-tos

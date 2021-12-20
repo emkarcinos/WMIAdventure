@@ -62,7 +62,7 @@ jobs:
       run: |
         docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
         cd ./WMIAdventure/
-        docker-compose -f docker-compose-prod.yml build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
+        docker-compose -f docker-compose-dev.yml build --build-arg API_URL=wmiadventure.westeurope.cloudapp.azure.com:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY  }} --build-arg DB_ADDRESS=wmiadventure.westeurope.cloudapp.azure.com --build-arg DB_PORT=5432 --build-arg DB_USER=postgres --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_NAME=django
         docker push ${{ env.ACR_SERVER }}/wmiadventure:v1
         docker push ${{ env.ACR_SERVER }}/frontend:v1
     - name: Pull backend docker image from ACR on server and run using ssh
@@ -76,7 +76,7 @@ jobs:
     - name: Pull frontend docker image from ACR on server and run using ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -d --name=wmi-adventure-frontend -p 80:80 -d ${{ env.ACR_SERVER }}/frontend:v1
+        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d--name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:v1; docker-compose -f docker-compose-dev.yml up certbot
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
