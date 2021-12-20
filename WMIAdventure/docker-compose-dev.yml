@@ -3,7 +3,9 @@ version: '3.2'
 services:
   wmiadventure-backend:
     image: wmiadventure.azurecr.io/wmiadventure:v1
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend/WMIAdventure_backend:/backend/

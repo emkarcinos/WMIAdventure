@@ -68,7 +68,7 @@ jobs:
     - name: Pull backend docker image from ACR on server and run using ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: docker pull ${{ env.ACR_SERVER }}/wmiadventure:v1; docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run -d --name=wmi-adventure -p 8000:8000 -d ${{ env.ACR_SERVER }}/wmiadventure:v1
+        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/wmiadventure:v1; docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:v1
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
