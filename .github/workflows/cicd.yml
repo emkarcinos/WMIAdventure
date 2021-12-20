@@ -76,7 +76,7 @@ jobs:
     - name: Pull frontend docker image from ACR on server and run using ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d--name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:v1; docker-compose -f docker-compose-dev.yml up certbot
+        command: cd ~/WMIAdventure/WMIAdventure; git fetch; git checkout main; git pull; docker pull ${{ env.ACR_SERVER }}/frontend:v1; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:v1; docker-compose -f docker-compose-dev.yml up certbot
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USER }}
         privateKey: ${{ secrets.SERVER_KEY}}
