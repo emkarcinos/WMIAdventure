@@ -16,7 +16,7 @@ class CardsCreatorStart extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title> Narzędzie kreatora kart WMI Adventure </title>
+                    <title>Edytor kart</title>
                 </Helmet>
                 <Media query={mobile}>
                     <Wrapper>

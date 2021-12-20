@@ -10,7 +10,7 @@ class LoginPage extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Login Page</title>
+                    <title>Logowanie</title>
                 </Helmet>
                 <StyledWrapper>
                     <Navbar/>

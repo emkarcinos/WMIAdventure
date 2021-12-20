@@ -7,9 +7,9 @@ class CardsCreatorEdit extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Edycja kart w WMI Adventure</title>
+                    <title>Edycja karty</title>
                 </Helmet>
-                <CardsCreator creatorType='edit' />
+                <CardsCreator creatorType='edit'/>
             </>
         );
     }
