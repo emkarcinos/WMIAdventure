@@ -25,6 +25,7 @@ import play from '../../../../../assets/icons/play.svg';
 import pause from '../../../../../assets/icons/pause.svg';
 import playDark from '../../../../../assets/icons/play-dark.svg';
 import pauseDark from '../../../../../assets/icons/pause-dark.svg';
+import fastDark from '../../../../../assets/icons/fast_dark.svg';
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import MobileBattleButton from "./styled-components/MobileBattleButton";
 import doubleSpeedIconDark from '../../../../../assets/icons/double-speed-dark.svg';
@@ -151,6 +152,10 @@ class BattleView extends React.Component {
 
         if (newState)
             this.state ? this.state.nextStepCallback() : null;
+    }
+
+    skipBattle = () => {
+        this.showBattleOutcome();
     }
 
     stateContainersShotAnimation() {
@@ -708,6 +713,11 @@ class BattleView extends React.Component {
                                                             ? theme.colors.greenyBluey : theme.colors.purplyPinky}>
                                         <img src={this.state.autoplayEnabled ? pauseDark : playDark}
                                              alt={'play/pause'}/>
+                                    </MobileBattleButton>
+                                    <MobileBattleButton setTop={'-138px'} onClick={this.skipBattle}
+                                                        borderColor={theme.colors.yellowyOrangy}>
+                                        <img src={fastDark}
+                                             alt={'szybka walka'}/>
                                     </MobileBattleButton>
                                 </ColumnGapContainer>
                             </FlexGapContainer>
