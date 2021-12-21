@@ -339,9 +339,10 @@ class OpponentSelected extends React.Component {
                                     </ButtonWithIcon>
                                 </FlexEndContainer>
                             </GridContainer>
+
+                            {this.errors()}
                         </PopUp>
                         {this.state.isBattleStarting ? this.renderBattleView(false) : null}
-                        {this.errors()}
                     </>
                 </Media>
 
