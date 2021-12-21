@@ -65,7 +65,6 @@ class OpponentSelected extends React.Component {
     }
 
     convertSecondsToPrettyTime = (seconds) => {
-        console.log("SECONDS " + seconds);
         let result = new Date(seconds * 1000).toISOString().slice(12, 19);
         const tokens = result.split(':');
         result = `${tokens[0]}h:${tokens[1]}m:${tokens[2]}s`;
