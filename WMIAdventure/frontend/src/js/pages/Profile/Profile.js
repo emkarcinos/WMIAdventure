@@ -6,7 +6,6 @@ import {getCurrentUserData, getCurrentUserDecks} from "../../storage/user/userDa
 import InfoWrapper from "./styled-componets/InfoWrapper";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 import UserLabel from "../../components/global/atoms/UserLabel";
-import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
 import Line from "./styled-componets/Line";
@@ -123,16 +122,16 @@ class Profile extends React.Component {
                                 <ColumnGapContainer gap={'20px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'10px'}>
                                         <FlexGapContainer gap={'10px'}>
-                                            <UserLabel term number={this.state.userData.semester}/>
+                                            {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
-                                            <UserLabel rank number={'2'}/>
+                                            {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
-                                        <FlexGapContainer gap={'10px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'10px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
                                                        currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
@@ -169,16 +168,16 @@ class Profile extends React.Component {
                                           image={this.state.userData.image}/>
                                     <ColumnGapContainer gap={'30px'}>
                                         <FlexGapContainer gap={'40px'}>
-                                            <UserLabel term number={this.state.userData.semester}/>
+                                            {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
-                                            <UserLabel rank number={'2'}/>
+                                            {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
-                                        <FlexGapContainer gap={'40px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'40px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
                                                        currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
