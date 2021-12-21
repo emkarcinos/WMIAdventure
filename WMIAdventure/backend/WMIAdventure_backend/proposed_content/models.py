@@ -23,6 +23,9 @@ class ProposedCardInfo(base_card_info_factory('proposed_content/cards/images/'))
         help_text="A reference to Django user model"
     )
 
+    def __str__(self):
+        return f'ProposedCardInfo({self.id}): name = {self.name}'
+
 
 class ProposedCard(base_card_factory(ProposedCardInfo)):
     """
@@ -31,7 +34,8 @@ class ProposedCard(base_card_factory(ProposedCardInfo)):
     See: BaseCard which is inner class in cards.models.base_card_factory function.
     """
 
-    pass
+    def __str__(self):
+        return f'ProposedCard({self.id}): name={self.info.name}, level={self.level}'
 
 
 class ProposedCardLevelEffects(base_card_level_effects_factory(ProposedCard)):

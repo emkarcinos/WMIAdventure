@@ -14,7 +14,6 @@ import ButtonWithIcon from "../../components/global/atoms/ButtonWithIcon";
 import theme from "../../utils/theme";
 import editProfil from '../../../assets/icons/editProfil.svg';
 import {cardsFromDeckData} from "../../api/data-models/battle/Card";
-import Navbar from "../../components/global/molecules/Navbar";
 import Media from "react-media";
 import {desktop, mobile, nextStepAnimationDuration} from "../../utils/globals";
 import MainDesktopContainer from "./styled-componets/MainDesktopContainer";
@@ -26,16 +25,13 @@ import MyDeck from "../../components/profile/molecules/MyDeck";
 import DeckHeader from "./styled-componets/DeckHeader";
 import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 import EditProfile from "../../components/profile/molecules/EditProfile";
+import P from "./styled-componets/P";
+import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
 
 class Profile extends React.Component {
 
     state = {
-        userData: {
-            id: undefined,
-            username: undefined,
-            semester: undefined,
-            image: undefined,
-        },
+        userData: nullDetailedUserData(),
 
         userNotLoggedIn: false,
         deck: nullEditableDeck(),
@@ -44,7 +40,7 @@ class Profile extends React.Component {
             visible: false,
             opacity: '0',
             translateX: '-100vh'
-        }
+        },
     }
 
     openEditProfilePopUp = () => {
@@ -86,13 +82,10 @@ class Profile extends React.Component {
     async getUserData() {
         const data = await getCurrentUserData();
         if (data) {
+            const user = new DetailedUserData(data.user, data.displayedUsername, data.semester, data.image, data.level);
+            await user.fetchNonVitalDataFromBackend();
             this.setState({
-                userData: {
-                    username: data.displayedUsername,
-                    id: data.user,
-                    semester: data.semester,
-                    image: data.image
-                },
+                userData: user
             });
         } else {
             this.setState({userNotLoggedIn: true});
@@ -119,9 +112,8 @@ class Profile extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Profil użytkownika</title>
+                    <title>Mój profil</title>
                 </Helmet>
-                <Navbar/>
                 <Media query={mobile}>
                     <>
                         <MainMobileContainer>
@@ -132,7 +124,8 @@ class Profile extends React.Component {
                                     <ColumnGapContainer gap={'10px'}>
                                         <FlexGapContainer gap={'10px'}>
                                             <UserLabel term number={this.state.userData.semester}/>
-                                            <UserLabel level number={'50'}/>
+                                            <UserLabel level={this.state.userData.level}
+                                                       number={this.state.userData.level}/>
                                             <UserLabel rank number={'2'}/>
                                         </FlexGapContainer>
                                         <FlexGapContainer gap={'10px'}>
@@ -140,10 +133,12 @@ class Profile extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'}/>
                                             <UserInfo label={'Ratio'} value={'50%'}/>
                                         </FlexGapContainer>
-                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                        <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
+                                                       currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
                                     <Line/>
                                     <MyDeck deck={this.state.deck}/>
+                                    <P>Dotknij kartę aby zmodyfikować talię</P>
                                 </ColumnGapContainer>
                                 <ColumnGapContainer gap={'10px'}>
                                     <ButtonWithIcon setWidth={'158px'} icon={editProfil}
@@ -159,7 +154,7 @@ class Profile extends React.Component {
                             setTranslateX={this.state.editProfilePopUp.translateX}
                             closeHandler={this.closeEditProfilePopUp}>
                             <EditProfile closeHandler={this.closeEditProfilePopUp}
-                                         userId={this.state.userData.id}
+                                         userId={this.state.userData.userId}
                                          username={this.state.userData.username}
                                          avatar={this.state.userData.image}/>
                         </PopUpProfile> : null
@@ -175,7 +170,8 @@ class Profile extends React.Component {
                                     <ColumnGapContainer gap={'30px'}>
                                         <FlexGapContainer gap={'40px'}>
                                             <UserLabel term number={this.state.userData.semester}/>
-                                            <UserLabel level number={'50'}/>
+                                            <UserLabel level={this.state.userData.level}
+                                                       number={this.state.userData.level}/>
                                             <UserLabel rank number={'2'}/>
                                         </FlexGapContainer>
                                         <FlexGapContainer gap={'40px'}>
@@ -183,7 +179,8 @@ class Profile extends React.Component {
                                             <UserInfo label={'Przegrane'} value={'24'}/>
                                             <UserInfo label={'Ratio'} value={'50%'}/>
                                         </FlexGapContainer>
-                                        <UserStatistic statisticNumber={'25'} type={'level'} currentLvlValue={'50'}/>
+                                        <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
+                                                       currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
                                 </ColumnGapContainer>
                                 <ButtonWithIcon setWidth={'158px'} icon={editProfil}
@@ -197,6 +194,8 @@ class Profile extends React.Component {
                                     Twoja talia
                                 </DeckHeader>
                                 <MyDeck deck={this.state.deck}/>
+
+                                <P>Klinkij na kartę aby zmodyfikować talię</P>
                             </RightDeckContainer>
                         </MainDesktopContainer>
                         {
@@ -205,7 +204,7 @@ class Profile extends React.Component {
                                 setTranslateX={this.state.editProfilePopUp.translateX}
                                 closeHandler={this.closeEditProfilePopUp}>
                                 <EditProfile closeHandler={this.closeEditProfilePopUp}
-                                             userId={this.state.userData.id}
+                                             userId={this.state.userData.userId}
                                              username={this.state.userData.username}
                                              avatar={this.state.userData.image}/>
                             </PopUpProfile> : null

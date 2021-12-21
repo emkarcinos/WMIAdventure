@@ -1,11 +1,20 @@
 import random
 
-from IngameUsers.models import UserProfile, Semester
+from IngameUsers.models import UserProfile, Semester, UserStats
 from WMIAdventure_backend import settings
 from users.models import User
 from users.signals import user_registered
 from users.views import UserRegister
 from utils.test_data.create_example_data import get_or_create_example_deck_for_user
+
+
+def user_should_gain_exp(user_stats: UserStats, exp_amount: int):
+    """
+    Gives exp to player.
+    """
+
+    user_stats.exp += exp_amount
+    user_stats.save()
 
 
 def on_user_create(sender, user: settings.AUTH_USER_MODEL, **kwargs):
@@ -24,7 +33,7 @@ def on_user_create(sender, user: settings.AUTH_USER_MODEL, **kwargs):
         user_profile = UserProfile.objects.create(user=user,
                                                   displayedUsername=user.username,
                                                   semester=semester)
-
+        UserStats.objects.create(profile=user_profile, exp=0)
         get_or_create_example_deck_for_user(user_profile)
 
 

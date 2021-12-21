@@ -9,9 +9,11 @@ from battle.businesslogic.tests.Creator import Creator
 from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
+from .businesslogic.experience.Experience import Experience
 from .factories import create_user_profile_with_deck, UserProfileFactory
-from .models import UserProfile, Semester, UserCard, Deck, UserDeck
-from .serializers import UserDecksSerializer, DeckSerializer
+from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
+from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
+from .signals import on_user_create, user_should_gain_exp
 
 
 class UserProfileTestCase(TestCase):
@@ -52,7 +54,7 @@ class UserProfileTestCase(TestCase):
         fetchView = views.UserView.as_view()
 
         # Create data needed to create new UserProfile
-        new_user = get_user_model().objects.create_user(username="asdasa", password="129312", email="tse@tst.sd")
+        new_user = get_user_model().objects.create_user(username="asdasa", password="129312")
         new_username = "test2"
         new_semester = 5
 
@@ -402,3 +404,51 @@ class UserDeckViewTestCase(TestCase):
         # TODO: implement this test when there is some way to gain cards implemented.
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
+
+    def test_should_exp_get_created_on_user_creation(self):
+        user = get_user_model().objects.create_user(username='expTest', password='12345')
+        on_user_create(None, user)
+        profile = UserProfile.objects.get(user=user)
+        created_exp = UserStats.objects.get(profile=profile)
+        self.assertEqual(created_exp.exp, 0)
+
+    def test_should_exp_get_created_on_user_creation(self):
+        user = get_user_model().objects.create_user(username='expTest2', password='12345')
+        on_user_create(None, user)
+        profile = UserProfile.objects.get(user=user)
+        created_exp = UserStats.objects.get(profile=profile)
+        created_exp.exp = 4124
+        created_exp.save()
+
+        serializer = UserProfileSerializer(instance=profile)
+        self.assertGreater(serializer.data.get('level', None), 1)
+
+    def test_should_serialize_to_level_1_when_exp_is_null(self):
+        user = get_user_model().objects.create_user(username='expTest3', password='12345')
+        profile = UserProfile.objects.create(user=user)
+
+        serializer = UserProfileSerializer(instance=profile)
+        self.assertEqual(serializer.data.get('level', None), 1)
+
+    def test_should_serialize_full_level_data(self):
+        experience = Experience(5)
+        expected_exp = experience.exp
+        expected_level = experience.level
+        expected_percentage = experience.next_level_percent
+        serializer = UserStatsSerializer(instance=experience)
+        self.assertEqual(serializer.data.get('exp'), expected_exp)
+        self.assertEqual(serializer.data.get('level'), expected_level)
+        self.assertEqual(serializer.data.get('percentage'), expected_percentage)
+
+
+class SignalsTestCase(TestCase):
+    def test_user_should_gain_exp(self):
+        users_stats = UserProfileFactory().user_stats
+
+        exp_gain = 5
+        expected_exp = users_stats.exp + exp_gain
+
+        user_should_gain_exp(users_stats, exp_gain)
+
+        users_stats.refresh_from_db()
+        self.assertEqual(users_stats.exp, expected_exp)

@@ -12,7 +12,7 @@ class CardDescribePreview extends React.Component {
 
     handlePropsLength = (props) => {
         try {
-            if(props.length) return props.length;
+            if (props.length) return props.length;
         } catch (e) {
             return 0;
         }
@@ -22,11 +22,11 @@ class CardDescribePreview extends React.Component {
     render() {
         return (
             <Container>
-                {/* Button which is positioned over whole container so that the content is clickable */}
+                {/* Submit which is positioned over whole container so that the content is clickable */}
                 <Button onClick={this.props.showDescribeInputsHandler}>
                 </Button>
 
-                <ImagePreview src={this.props.cardImage ? this.props.cardImage : upload_image} alt="Image for card." />
+                <ImagePreview src={this.props.cardImage ? this.props.cardImage : upload_image} alt="Image for card."/>
 
                 {/* Main content section */}
                 <Section>

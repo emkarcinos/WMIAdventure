@@ -15,13 +15,14 @@ import githubIcon from '../../../../../assets/images/github.png'
 import logoutIcon from '../../../../../assets/images/logout.png'
 import userIcon from '../../../../../assets/icons/user.svg'
 import newUserIcon from '../../../../../assets/icons/newuser.svg'
-import Link from "../Navbar/styled-components/Link";
+import Link from "../Navbar/styled-components/A";
 import Href from "../Navbar/styled-components/Href";
-import {getCurrentUserData} from "../../../../storage/user/userData";
+import {getCurrentUserData, isLoggedIn} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
 import Button from "./styled-components/Button";
 import {Redirect} from "react-router-dom";
+import {DetailedUserData, nullDetailedUserData} from "../../../../api/data-models/user/DetailedUserData";
 
 /* Transition timeout values */
 const timeout = {
@@ -39,24 +40,26 @@ const timeout = {
 class Menubar extends React.Component {
 
     state = {
-        user: null,
-        willRedirect: false
+        user: nullDetailedUserData(),
+        willRedirect: false,
+        userLoggedIn: false
+    }
+
+    populateCurrentUserData = async () => {
+        const userData = await getCurrentUserData();
+        if (!userData)
+            return
+        const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
+        user.fetchNonVitalDataFromBackend();
+        this.setState({user: user, userLoggedIn: true});
     }
 
     componentDidMount() {
-        getCurrentUserData()
-            .then(data => data ? this.setState({
-                user: {
-                    id: data.user,
-                    username: data.displayedUsername,
-                    semester: data.semester,
-                    image: data.image
-                }
-            }) : null);
+        this.populateCurrentUserData();
     }
 
     checkIfUserLoggedIn = () => {
-        UsersAPIGateway.isUserLoggedIn()
+        isLoggedIn()
             .then(userLoggedIn => this.setState({userLoggedIn: userLoggedIn}));
     }
 
@@ -64,9 +67,10 @@ class Menubar extends React.Component {
         event.preventDefault();
         UsersAPIGateway.logout();
         this.checkIfUserLoggedIn();
-        alert("You've been logged out.");
 
         this.setState({user: null, willRedirect: true});
+        this.props.closeHandler();
+        window.location.reload();
 
     }
 
@@ -78,19 +82,15 @@ class Menubar extends React.Component {
     }
 
     getAuthDependantContent = () => {
-        if (this.state.user) {
+        if (this.state.userLoggedIn) {
             return (
                 <>
-                    <MenubarEntry as={Link} to={'/profile'} image={userIcon}>Mój profil</MenubarEntry>
+                    <MenubarEntry as={Link} to={'/profile'} onClick={this.props.closeHandler} image={userIcon}>Mój
+                        profil</MenubarEntry>
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
-                    <Button as={Link} to={'/profile'}>
-                        <TinyUserProfile displayedUsername={this.state.user.username}
-                                         avatar={this.state.user.image}
-                                         term={this.state.user.semester}
-                                         level={5}
-                                         rank={1}
-                        />
+                    <Button as={Link} to={'/profile'} onClick={this.props.closeHandler}>
+                        <TinyUserProfile user={this.state.user}/>
                     </Button>
                 </>
             );
@@ -99,8 +99,10 @@ class Menubar extends React.Component {
         return (
             <>
                 {this.redirectHandler()}
-                <MenubarEntry as={Link} to={'/login'} image={userIcon}>Zaloguj się</MenubarEntry>
-                <MenubarEntry as={Link} to={'/registration'} image={newUserIcon}>Stwórz konto</MenubarEntry>
+                <MenubarEntry as={Link} to={'/login'} onClick={this.props.closeHandler} image={userIcon}>Zaloguj
+                    się</MenubarEntry>
+                <MenubarEntry as={Link} to={'/registration'} onClick={this.props.closeHandler} image={newUserIcon}>Stwórz
+                    konto</MenubarEntry>
             </>
         )
     }
@@ -116,13 +118,18 @@ class Menubar extends React.Component {
                 <Div visible={this.props.show}>
                     <ContentContainer>
                         <List>
-
                             <Back onClick={this.props.closeHandler}/>
-                            <MenubarEntry as={Link} to={'/'} image={homeIcon}>Strona Główna</MenubarEntry>
-                            <MenubarEntry as={Link} to={'/battle'} image={battleIcon}>Tryb Battle</MenubarEntry>
-                            <MenubarEntry as={Link} to={'/cards-creator-start'} image={cardIcon}>Edytor
-                                Kart</MenubarEntry>
-                            <Line/>
+                            {this.state.userLoggedIn ?
+                                <>
+                                    <MenubarEntry as={Link} to={'/main'} onClick={this.props.closeHandler}
+                                                  image={homeIcon}>Strona Główna</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/battle'} onClick={this.props.closeHandler}
+                                                  image={battleIcon}>Tryb Battle</MenubarEntry>
+                                    <MenubarEntry as={Link} to={'/cards-creator-start'}
+                                                  onClick={this.props.closeHandler} image={cardIcon}>Edytor
+                                        Kart</MenubarEntry>
+                                    <Line/>
+                                </> : null}
                             <MenubarEntry
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}

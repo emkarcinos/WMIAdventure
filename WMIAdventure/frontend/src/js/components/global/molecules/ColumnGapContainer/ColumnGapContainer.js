@@ -5,8 +5,8 @@ class ColumnGapContainer extends React.Component {
     render() {
         return (
             <Div gap={this.props.gap} setRelative={this.props.setRelative}
-                 setMargin={this.props.setMargin}
-                 setWidth={this.props.setWidth} setHeight={this.props.setHeight} setPadding={this.props.setPadding}>
+                 setMargin={this.props.setMargin} setPadding={this.props.setPadding}
+                 setWidth={this.props.setWidth} setHeight={this.props.setHeight}>
                 {this.props.children}
             </Div>
         );

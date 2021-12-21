@@ -1,60 +1,80 @@
 import React from "react";
-import LoginForm from "../../molecules/LoginForm";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import {Redirect} from "react-router-dom";
+import AuthForm from "../../molecules/AuthForm";
+import MainContainer from "./styled-components/MainContainer";
+import {concatMessage, translateErrors} from "../../../../api/data-models/errors/errors";
 
 class Login extends React.Component {
     state = {
         username: null,
-        loggedIn: false
+        password: null,
+        loggedIn: false,
+        usernameError: null,
+        passwordError: null,
     }
 
     loginFailedHandler = (response) => {
-        let msg;
-
-        if (response.status === 404) {
-            msg = 'User not found.';
+        const asyncHandle = async (response) => {
+            const data = await response.json()
+            const translatedError = translateErrors(data);
+            if (translatedError.username)
+                this.setState({usernameError: concatMessage(translatedError.username)})
+            if (translatedError.password)
+                this.setState({passwordError: concatMessage(translatedError.password)})
         }
-
-        alert(`Login failed. ${msg} Status: ${response.status}`);
+        asyncHandle(response);
     }
 
     loginSuccessHandler = () => {
-        alert(`Logged in as ${this.state.username}`);
+        window.location.reload();
         this.setState({loggedIn: true});
+    }
+
+    clearErrors = () => {
+        this.setState({usernameError: null, passwordError: null})
     }
 
     submitHandler = (event) => {
         event.preventDefault();
+        this.clearErrors();
 
-        UsersAPIGateway.login(this.state.username)
+        UsersAPIGateway.login(this.state.username, this.state.password)
             .then(response => {
                 if (response.ok)
                     this.loginSuccessHandler();
                 else
                     this.loginFailedHandler(response);
             })
-            .catch(err => {console.log(err); this.loginFailedHandler()});
+            .catch(err => {
+                console.log(err);
+                this.loginFailedHandler()
+            });
     }
 
-    usernameChangedHandler = (event) => {
+    fieldChangedHandler = (event, field) => {
         event.preventDefault();
-        this.setState({username: event.target.value})
+        this.setState({[field]: event.target.value})
     }
 
     render() {
         return (
-            <>
-                <LoginForm
-                    usernameChangedHandler={this.usernameChangedHandler}
-                    submitHandler={this.submitHandler}
+            <MainContainer>
+                <AuthForm
+                    onSubmit={this.submitHandler}
+                    legend={'Zaloguj się'}
+                    linkValue={'/registration'}
+                    linkText='Nie masz konta?'
+                    updateUsernameState={evt => this.fieldChangedHandler(evt, 'username')}
+                    updatePasswordState={evt => this.fieldChangedHandler(evt, 'password')}
+                    loginError={this.state.usernameError} passwordError={this.state.passwordError}
                 />
 
                 {
                     // Redirects to main page if logged in
-                    this.state.loggedIn ?  <Redirect to={'/'}/>: null
+                    this.state.loggedIn ? <Redirect to={'/main'}/> : null
                 }
-            </>
+            </MainContainer>
 
 
         )

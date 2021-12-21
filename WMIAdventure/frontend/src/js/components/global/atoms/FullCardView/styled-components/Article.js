@@ -26,6 +26,12 @@ const Article = styled.article`
   transform: translate(${({hasBuff}) => hasBuff ? '-32px' : '0'},
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   transition: transform 0.5s ease-in-out;
+  
+  cursor: ${({onClick}) => onClick ? 'pointer' : 'default'};
+
+  &:hover {
+    transform: scale(${({onClick}) => onClick ? '1.05' : '1'});
+  }
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: ${({setWidth}) => setWidth ? setWidth : '300px'};

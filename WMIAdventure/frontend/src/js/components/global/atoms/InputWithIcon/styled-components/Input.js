@@ -12,6 +12,12 @@ const Input = styled.input`
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   font-weight: ${({theme}) => theme.weight.light};
+  -moz-appearance: textfield;
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export default Input;

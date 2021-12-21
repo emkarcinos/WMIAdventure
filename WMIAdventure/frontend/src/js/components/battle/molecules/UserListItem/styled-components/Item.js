@@ -17,6 +17,7 @@ const Item = styled.li`
   transition: background-color 0.3s ease-in-out;
   border-radius: 6px;
   margin: 10px 0;
+  cursor: pointer;
 
   &:hover {
     background-color: ${({theme}) => theme.colors.lightGray};

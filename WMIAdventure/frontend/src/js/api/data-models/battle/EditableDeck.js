@@ -17,24 +17,6 @@ export class EditableDeck extends BaseDeck {
         return this.cards[this.currentlyEditingIdx];
     }
 
-
-    /**
-     * Will false if the card was already in the deck
-     * @param editingCard
-     * @return {boolean}
-     */
-    tryInsertCardAtPosition(editingCard, position) {
-        const isSameAsCurrentlyEditing = this.cards[this.currentlyEditingIdx].id === editingCard.id
-        const alreadyInDeck = this.cards.filter((card) => card.id === editingCard.id).length > 0;
-        if (alreadyInDeck && !isSameAsCurrentlyEditing)
-            return false;
-
-        const cardAtEditingPosition = this.cards[this.currentlyEditingIdx];
-        this.cards = this.cards.filter(card => card.id !== cardAtEditingPosition.id);
-        this.cards.splice(position - 1, 0, editingCard);
-        return true
-    }
-
     hasCardIdExceptCurrentlyEditing(id) {
         if (!super.hasCardId(id))
             return false
@@ -51,6 +33,32 @@ export class EditableDeck extends BaseDeck {
             }
         }
         return res;
+    }
+}
+
+export class InsertCardAtPositionCommand {
+    deck = nullEditableDeck();
+    deckHistory = [];
+
+    constructor(editableDeck) {
+        this.deck = editableDeck;
+        this.deckHistory.push(editableDeck.cards);
+    }
+
+    execute(editingCard, position) {
+        const isSameAsCurrentlyEditing = this.deck.cards[this.deck.currentlyEditingIdx].id === editingCard.id
+        const alreadyInDeck = this.deck.cards.filter((card) => card.id === editingCard.id).length > 0;
+        if (alreadyInDeck && !isSameAsCurrentlyEditing)
+            return false;
+
+        const cardAtEditingPosition = this.deck.cards[this.deck.currentlyEditingIdx];
+        this.deck.cards = this.deck.cards.filter(card => card.id !== cardAtEditingPosition.id);
+        this.deck.cards.splice(position - 1, 0, editingCard);
+        return true
+    }
+
+    rollback() {
+        this.deck.cards = this.deckHistory.pop();
     }
 }
 

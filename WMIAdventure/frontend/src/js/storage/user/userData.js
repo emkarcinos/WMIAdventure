@@ -1,4 +1,4 @@
-import {profileKey, userDataKeys} from "../localStorageKeys";
+import {profileKey, profileLevelKey, userDataKeys} from "../localStorageKeys";
 import Cookies from "../../api/Cookies";
 import {get, getWithSetCallback, invalidateItem, set} from "../cache/cache";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
@@ -6,6 +6,7 @@ import {whoAmI} from "../../api/gateways/UsersAPIGateway";
 import {getUserById} from "../profiles/userProfileList";
 
 const cacheUserDataForSeconds = 3600; // One hour
+const cacheLevelsFor = 60; // One minute
 
 export const isLoggedIn = async () => {
     return !!await getCurrentUserId();
@@ -68,6 +69,24 @@ export const getUsersDecks = async (userId) => {
         return null
     }
     return await getWithSetCallback(userDataKeys.userDecks, backendCall, cacheUserDataForSeconds);
+}
+
+export const getUsersLevelData = async (id, forceUpdate = false) => {
+    const backendCallback = async () => {
+        const data = await UserProfilesAPIGateway.getUserLevelData(id);
+        if (!data.ok)
+            return null;
+        return await data.json();
+    }
+    if (forceUpdate)
+        await set(profileLevelKey(id), backendCallback, cacheLevelsFor);
+    return await getWithSetCallback(profileLevelKey(id), backendCallback, cacheLevelsFor);
+}
+
+export const getCurrentUsersLevelData = async () => {
+    const currentUserId = await getCurrentUserId();
+
+    return await getUsersLevelData(currentUserId);
 }
 
 export const getCurrentUserDecks = async () => {

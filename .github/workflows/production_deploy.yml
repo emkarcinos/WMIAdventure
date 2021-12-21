@@ -47,19 +47,66 @@ jobs:
         cd ./WMIAdventure/frontend
         npm run test -- --passWithNoTests
 
-  deploy:
+  build:
     runs-on: ubuntu-latest
     needs: [test-django, test-frontend]
-    name: Connect to VM, build docker and run server
+    name: Build containers
+    env:
+      ACR_SERVER: wmiadventure.azurecr.io
+      SERVER_IP: wmiadventure.projektstudencki.pl
+      DB_ADDR: psql.wmi.amu.edu.pl
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker compose build and push to ACR
+      run: |
+        docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
+        cd ./WMIAdventure/
+        docker-compose -f docker-compose-prod.yml build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.PROD_DJANGO_SECRET }} --build-arg DB_ADDRESS=${{ env.DB_ADDR }} --build-arg DB_PORT=5432 --build-arg DB_USER=wmiadventure --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWORD }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False --build-arg HTTPS_BACKEND=1
+        docker push ${{ env.ACR_SERVER }}/wmiadventure:prod
+        docker push ${{ env.ACR_SERVER }}/frontend:prod
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    name: Deploy containers to prod
     env:
       SERVER_IP: wmiadventure.projektstudencki.pl
       SERVER_USERNAME: runner
-      DB_ADDR: psql.wmi.amu.edu.pl
+      ACR_SERVER: wmiadventure.azurecr.io
     steps:
-    - name: SSH - Pull repo, build Docker-compose image and run server
+    - uses: actions/checkout@v2
+
+    - name: Pull images
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd ~/WMIAdventure; git pull; cd ./WMIAdventure; docker stop $(docker ps -q); docker container rm $(docker ps -aq); docker image prune -f; docker-compose build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWD }} --build-arg DJANGO_SECRET=${{ secrets.PROD_DJANGO_SECRET }} --build-arg DB_ADDRESS=${{ env.DB_ADDR }} --build-arg DB_PORT=5432 --build-arg DB_USER=wmiadventure --build-arg DB_PASSWD=${{ secrets.PROD_DB_PASSWORD }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False; docker-compose up -d
+        command: docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}; docker pull ${{ env.ACR_SERVER }}/wmiadventure:prod; docker pull ${{ env.ACR_SERVER }}/frontend:prod
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USERNAME }}
+        privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
+
+    - name: Stop Django server and Migrate DB
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command:
+          docker container stop wmi-adventure; docker container rm wmi-adventure; docker image prune -f; docker run --rm --entrypoint python ${{ env.ACR_SERVER }}/wmiadventure:prod manage.py migrate
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USERNAME }}
+        privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
+
+
+    - name: Run Django server
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: cd ~/WMIAdventure/WMIAdventure; docker run -d --name=wmi-adventure -p 8000:8000 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot ${{ env.ACR_SERVER }}/wmiadventure:prod
+        host: ${{ env.SERVER_IP }}
+        username: ${{ env.SERVER_USERNAME }}
+        privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}
+        
+
+    - name: Run frontend nginx
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: cd ~/WMIAdventure/WMIAdventure; docker container stop wmi-adventure-frontend; docker container rm wmi-adventure-frontend; docker image prune -f; docker run -p 80:80 -p 443:443 --mount type=bind,source="$(pwd)"/certbot/conf,target=/etc/letsencrypt --mount type=bind,source="$(pwd)"/certbot/www,target=/var/www/certbot -d --name=wmi-adventure-frontend ${{ env.ACR_SERVER }}/frontend:prod;
         host: ${{ env.SERVER_IP }}
         username: ${{ env.SERVER_USERNAME }}
         privateKey: ${{ secrets.PRODUCTION_SERVER_KEY  }}

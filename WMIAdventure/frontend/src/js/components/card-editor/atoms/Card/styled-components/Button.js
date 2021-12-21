@@ -21,6 +21,7 @@ const Button = styled.button`
   transition: background-color 0.4s ease-in-out;
   cursor: pointer;
   position: relative;
+  object-fit: cover;
 
   :hover {
     background-color: ${({theme}) => theme.colors.lightGray};

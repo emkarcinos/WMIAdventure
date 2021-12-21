@@ -5,73 +5,77 @@ import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 import Container from './styled-components/Container';
-import {getCardById} from "../../../../storage/cards/cardStorage";
-import {getUsersDecks} from "../../../../storage/user/userData";
+import {getCurrentUserDecks} from "../../../../storage/user/userData";
 import UserInfo from "../../../global/atoms/UserInfo";
+import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
+import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
+import P from "./styled-components/P";
+import ChangeDeckCard from "../../../profile/organisms/ChangeDeckCard";
 
 class TinyProfileDesktop extends React.Component {
-    placeholderCard = {
-        name: ' ',
-        level: 1,
-        image: null
+    state = {
+        editorVisible: false,
+        deck: nullEditableDeck(),
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            userId: null,
-            card1: this.placeholderCard,
-            card2: this.placeholderCard,
-            card3: this.placeholderCard,
-            card4: this.placeholderCard,
-            card5: this.placeholderCard,
-            fetchedCards: false
-        }
-    }
+    async getDeck() {
+        const data = await getCurrentUserDecks();
+        if (!data)
+            return;
 
-    getCards = () => {
-        if (!this.props.userId) return;
-        getUsersDecks(this.props.userId)
-            .then(deck => {
-                if (!deck) return;
-                const attackerDeck = deck[0] ? deck[0] : [];
-
-                for (const [cardNumber, card] of Object.entries(attackerDeck)) {
-                    if (card.id === null || card.id === undefined) continue;
-                    getCardById(card.id)
-                        .then(respCard => {
-                            if (respCard) {
-                                this.setState({
-                                    [cardNumber]: {
-                                        name: respCard.name,
-                                        level: card.level,
-                                        image: respCard.image
-                                    },
-                                    fetchedCards: true
-                                });
-
-                            }
-                        });
-                }
-            });
+        const userSpecificCards = await cardsFromDeckData(data);
+        this.setState({deck: new EditableDeck(userSpecificCards)});
     }
 
     componentDidMount() {
-        this.getCards()
+        this.getDeck()
     }
 
-    componentDidUpdate() {
-        if (this.props.userId && !this.state.fetchedCards)
-            this.getCards()
+    setEditorVisible = (card) => {
+        this.state.deck.setCurrentlyEditingCard(card);
+        this.setState({editorVisible: true});
+    }
+
+    closeEditor = () => {
+        this.setState({editorVisible: false});
+    }
+
+    renderEditComponent = () => {
+        if (!this.state.editorVisible)
+            return;
+
+        return (
+            <>
+                <ChangeDeckCard closeHandler={this.closeEditor} deck={this.state.deck}/>
+            </>
+        )
+    }
+
+    renderDeck() {
+        let key = 1;
+        const components = []
+        for (const card of this.state.deck.cards) {
+            components.push(
+                <CompactCardView key={`compactCard-${key}`}
+                                 cardName={card.name}
+                                 cardImage={card.image}
+                                 cardLevel={card.level}
+                                 setWidth={'90px'} setHeight={'150px'}
+                                 setMargin={'0'} ownFontSize={'20px'}
+                                 setIconWidth={'60px'} setIconHeight={'60px'}
+                                 decorationHeight={'18px'}
+                                 onClick={() => this.setEditorVisible(card)}/>
+            );
+            key++;
+        }
+        return (<>{components}</>);
     }
 
     render() {
-        const deckSize = 5;
         return (
             <Div>
                 <Container gap={'24px'}>
-                    <TinyUserProfile displayedUsername={this.props.username}
-                                     term={7} level={50} rank={2} avatar={this.props.avatar}/>
+                    <TinyUserProfile user={this.props.user}/>
 
                     <ColumnGapContainer gap={'10px'}>
                         <FlexGapContainer gap={'52px'}>
@@ -82,21 +86,11 @@ class TinyProfileDesktop extends React.Component {
                     </ColumnGapContainer>
                 </Container>
                 <FlexGapContainer gap={'16px'}>
-                    {Array.from({length: deckSize}, (_, i) => i + 1).map(
-                        i => {
-                            return (
-                                <CompactCardView key={`compactCard-${i}`}
-                                                 cardName={this.state[`card${i}`].name}
-                                                 cardImage={this.state[`card${i}`].image}
-                                                 cardLevel={this.state[`card${i}`].level}
-                                                 setWidth={'90px'} setHeight={'150px'}
-                                                 setMargin={'0'}
-                                                 setIconWidth={'60px'} setIconHeight={'60px'}
-                                                 decorationHeight={'18px'}/>
-                            );
-                        }
-                    )}
+                    {this.renderDeck()}
                 </FlexGapContainer>
+
+                <P>Klinkij na kartę aby zmodyfikować talię</P>
+                {this.renderEditComponent()}
             </Div>
         );
     }

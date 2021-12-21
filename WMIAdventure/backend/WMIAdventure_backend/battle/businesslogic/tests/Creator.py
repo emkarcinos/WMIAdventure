@@ -79,15 +79,9 @@ class Creator:
 
     def __init__(self):
 
-        self.user_model1 = User.objects.create(
-            username="user1",
-            email="user1@company.com"
-        )
+        self.user_model1 = User.objects.create(username="user1")
 
-        self.user_model2 = User.objects.create(
-            username="user2",
-            email="user2@company.com"
-        )
+        self.user_model2 = User.objects.create(username="user2")
 
         self.user_profile_model1 = UserProfile(user=self.user_model1,
                                                displayedUsername="user1")
