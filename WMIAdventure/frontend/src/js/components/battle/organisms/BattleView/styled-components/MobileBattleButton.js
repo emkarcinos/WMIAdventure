@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MobileAutoplay = styled.div`
+const MobileBattleButton = styled.div`
   width: 36px;
   height: 36px;
   background-color: ${({theme}) => theme.colors.light2};
@@ -10,9 +10,10 @@ const MobileAutoplay = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -46px;
-  right: 0;
+  top: ${({setTop}) => setTop ? setTop : '0'};
+  right: ${({setRight}) => setRight ? setRight : '0'};
   z-index: 100;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
-export default MobileAutoplay;
+export default MobileBattleButton;
