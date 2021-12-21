@@ -31,11 +31,30 @@ def get_or_create_example_card(name, tooltip, subject) -> Card:
 
 
 def get_or_create_example_deck_for_user(user: UserProfile):
-    card1 = get_or_create_example_card("Przykład 1", "1", "Programowanie Obiektowe")
-    card2 = get_or_create_example_card("Przykład 2", "2", "Programowanie Obiektowe")
-    card3 = get_or_create_example_card("Przykład 3", "3", "Programowanie Obiektowe")
-    card4 = get_or_create_example_card("Przykład 4", "4", "Programowanie Obiektowe")
-    card5 = get_or_create_example_card("Przykład 5", "5", "Programowanie Obiektowe")
+    card1 = get_or_create_example_card(
+        "BACI",
+        "Nigdy nie wiesz co się stanie.",
+        "Systemy operacyjne")
+    card2 = get_or_create_example_card(
+        "Bubble sort",
+        "Prosty, działa, tylko wolno",
+        "Algorytmy i struktury danych"
+    )
+    card3 = get_or_create_example_card(
+        "Udowodnij",
+        "Dobra defensywa",
+        "Wstęp do matematyki"
+    )
+    card4 = get_or_create_example_card(
+        "Microshell",
+        "Dobry projekt, ale nie zawsze działa tak jak chcemy",
+        "Systemy operacyjne"
+    )
+    card5 = get_or_create_example_card(
+        "C",
+        "Może i śmiga szybko, ale błędy są nieuniknione",
+        "Podstawy programowania"
+    )
 
     user_card1 = UserCard.objects.create(user_profile=user,
                                          card=card1)
