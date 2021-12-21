@@ -6,7 +6,6 @@ import {getCurrentUserData, getCurrentUserDecks} from "../../storage/user/userDa
 import InfoWrapper from "./styled-componets/InfoWrapper";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 import UserLabel from "../../components/global/atoms/UserLabel";
-import UserInfo from "../../components/global/atoms/UserInfo";
 import UserStatistic from "../../components/battle/atoms/UserStatistic";
 import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
 import Line from "./styled-componets/Line";
@@ -128,11 +127,11 @@ class Profile extends React.Component {
                                                        number={this.state.userData.level}/>
                                             {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
-                                        <FlexGapContainer gap={'10px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'10px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
                                                        currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
@@ -174,11 +173,11 @@ class Profile extends React.Component {
                                                        number={this.state.userData.level}/>
                                             {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
-                                        <FlexGapContainer gap={'40px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'40px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <UserStatistic statisticNumber={this.state.userData.level} type={'level'}
                                                        currentLvlValue={this.state.userData.getLevelObject().percentage}/>
                                     </ColumnGapContainer>
