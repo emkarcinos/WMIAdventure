@@ -64,6 +64,14 @@ class OpponentSelected extends React.Component {
         this.getDeck();
     }
 
+    convertSecondsToPrettyTime = (seconds) => {
+        let result = new Date(seconds * 1000).toISOString().slice(12, 19);
+        const tokens = result.split(':');
+        result = `${tokens[0]}h:${tokens[1]}m:${tokens[2]}s`;
+        return result
+    };
+
+
     handleBattleErrors = (resp) => {
         switch (resp.status) {
             case 401:
@@ -80,6 +88,16 @@ class OpponentSelected extends React.Component {
                         visible: true,
                         message: "Niekompletna talia kart!"
                     }
+                })
+                break;
+            case 403:
+                resp.json().then(data => {
+                    this.setState({
+                        error: {
+                            visible: true,
+                            message: `Limit walk przekroczony! Możesz walczyć za ${this.convertSecondsToPrettyTime(data.seconds_till_limit_reset)}.`
+                        }
+                    });
                 })
                 break;
             case 500:
