@@ -26,6 +26,7 @@ import pause from '../../../../../assets/icons/pause.svg';
 import playDark from '../../../../../assets/icons/play-dark.svg';
 import pauseDark from '../../../../../assets/icons/pause-dark.svg';
 import fastDark from '../../../../../assets/icons/fast_dark.svg';
+import fastIcon from '../../../../../assets/icons/fast.svg';
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import MobileBattleButton from "./styled-components/MobileBattleButton";
 import doubleSpeedIconDark from '../../../../../assets/icons/double-speed-dark.svg';
@@ -819,6 +820,11 @@ class BattleView extends React.Component {
                             </EffectIconsContainer>
                         </CenterDiv>
                         <CenterDiv setZindex={'500'} onClick={this.onNextButtonPress}>
+                            <ButtonWithIcon handler={this.skipBattle} setMargin={'0 0 16px 845px'}
+                                            icon={fastIcon}
+                                            color={theme.colors.yellowyOrangy}>
+                                Pomiń pojedynek
+                            </ButtonWithIcon>
                             <ButtonWithIcon handler={this.flipSpeed} setMargin={'0 0 16px 820px'}
                                             icon={this.state.speedIncrease ? normalSpeedIcon : doubleSpeedIcon}
                                             color={this.state.speedIncrease ? theme.colors.purplyPinky
