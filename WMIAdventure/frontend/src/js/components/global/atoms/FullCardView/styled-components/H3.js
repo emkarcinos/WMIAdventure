@@ -22,17 +22,17 @@ function iconHeightHandler(common, gold, epic) {
 }
 
 function nameLengthHandler(nameLength) {
-    if (nameLength < 20) {
+    if (nameLength < 10) {
         return '32px';
     }
-    return '16px';
+    return '26px';
 }
 
 function nameLineHeightHandler(nameLength) {
     if (nameLength < 20) {
         return '36px';
     }
-    return '20px';
+    return '28px';
 }
 
 
@@ -46,7 +46,7 @@ const H3 = styled.h3`
   overflow-wrap: anywhere;
   max-width: 200px;
   color: ${({theme}) => theme.colors.dark};
-  
+
   &:before {
     content: '';
     display: block;
