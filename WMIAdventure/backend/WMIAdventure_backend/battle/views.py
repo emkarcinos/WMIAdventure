@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from IngameUsers.models import UserProfile
+from battle.businesslogic.battle_limiting import can_user_fight
+from battle.businesslogic.battle_limiting import when_will_fight_limit_reset
 from battle.businesslogic.BadBattleProfileException import BadBattleProfileException
 from battle.businesslogic.Battle import Battle
 from battle.serializers import BattleSerializer
@@ -39,6 +41,11 @@ class BattleView(APIView):
         # You can't fight with yourself.
         if attacker_id == defender_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        can_fight = can_user_fight(attacker_id)
+        if not can_fight:
+            when_can_fight = when_will_fight_limit_reset(attacker_id)
+            return Response(status=status.HTTP_403_FORBIDDEN, data={'seconds_till_limit_reset': when_can_fight.seconds})
 
         try:
             attacker_model = UserProfile.objects.get(pk=attacker_id)
