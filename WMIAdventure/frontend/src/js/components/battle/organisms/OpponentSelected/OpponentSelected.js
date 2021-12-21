@@ -268,16 +268,17 @@ class OpponentSelected extends React.Component {
         if (isDesktop) {
             return (
                 <>
-                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.props.caller}
-                                attackerDeck={this.state.userDeck}
-                                opponent={this.props.opponent}
-                                opponentDeck={this.state.opponentDeck}
-                                setOpacity={this.state.postBattleOpacity}
-                                setTranslateY={this.state.postBattlePos}
-                                expGain={this.state.expGain}
-                    />
+                    {this.state.postBattle ?
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.props.caller}
+                                    attackerDeck={this.state.userDeck}
+                                    opponent={this.props.opponent}
+                                    opponentDeck={this.state.opponentDeck}
+                                    setOpacity={this.state.postBattleOpacity}
+                                    setTranslateY={this.state.postBattlePos}
+                                    expGain={this.state.expGain}
+                        /> : null}
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
@@ -291,15 +292,16 @@ class OpponentSelected extends React.Component {
         } else {
             return (
                 <>
-                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.props.caller}
-                                attackerDeck={this.state.userDeck}
-                                opponent={this.props.opponent}
-                                opponentDeck={this.state.opponentDeck}
-                                setTranslateY={this.state.postBattlePos}
-                                expGain={this.state.expGain}
-                    />
+                    {this.state.postBattle ?
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.props.caller}
+                                    attackerDeck={this.state.userDeck}
+                                    opponent={this.props.opponent}
+                                    opponentDeck={this.state.opponentDeck}
+                                    setTranslateY={this.state.postBattlePos}
+                                    expGain={this.state.expGain}
+                        /> : null}
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
