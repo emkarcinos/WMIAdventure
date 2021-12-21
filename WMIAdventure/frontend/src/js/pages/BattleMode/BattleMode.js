@@ -96,9 +96,10 @@ class BattleMode extends React.Component {
         setTimeout(() => {
             this.setState({
                 userPreviewRun: false,
+                selectedUser: null,
             });
             this.forceUpdate();
-        }, 550);
+        }, 300);
     }
 
     hideScroll = () => {
