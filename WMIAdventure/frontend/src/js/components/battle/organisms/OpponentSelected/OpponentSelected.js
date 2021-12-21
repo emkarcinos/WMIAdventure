@@ -120,7 +120,6 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleRunHandler = () => {
-        this.props.closeUserPreviewHandler();
         this.props.kuceStartFight('Szybka Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -165,6 +164,7 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleCloseHandler = () => {
+        this.props.closeUserPreviewHandler();
         this.setState({
             postBattlePos: '-100vh',
             postBattleOpacity: '0'
@@ -187,7 +187,6 @@ class OpponentSelected extends React.Component {
     }
 
     onFightButton = () => {
-        this.props.closeUserPreviewHandler();
         this.props.kuceStartFight('Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -207,8 +206,6 @@ class OpponentSelected extends React.Component {
     }
     // method that run dynamic battle view
     battleViewRunHandler = () => {
-        this.props.closeUserPreviewHandler();
-
         this.props.kuceStopFight();
         this.setState({
             battleView: {visible: true, translateY: '-100vh', scale: '0'},
