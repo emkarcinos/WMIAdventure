@@ -1,15 +1,15 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import CardsCreator from '../components/card-editor/organisms/CardsCreator';
 
 class CardsCreatorCreate extends React.Component {
     render() {
-        return (                
+        return (
             <>
                 <Helmet>
-                    <title>Kreator kart WMI Adventure</title>
+                    <title>Tworzenie karty</title>
                 </Helmet>
-                <CardsCreator creatorType='create' />
+                <CardsCreator creatorType='create'/>
             </>
         );
     }

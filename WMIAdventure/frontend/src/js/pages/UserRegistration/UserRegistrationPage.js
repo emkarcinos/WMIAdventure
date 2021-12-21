@@ -8,7 +8,7 @@ function UserRegistrationPage() {
     return (
         <>
             <Helmet>
-                <title>Zarejestruj się</title>
+                <title>Rejestracja</title>
             </Helmet>
             <StyledWrapper>
                 <Navbar/>

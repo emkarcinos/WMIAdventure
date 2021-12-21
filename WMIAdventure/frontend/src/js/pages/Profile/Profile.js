@@ -112,7 +112,7 @@ class Profile extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Profil użytkownika</title>
+                    <title>Mój profil</title>
                 </Helmet>
                 <Media query={mobile}>
                     <>

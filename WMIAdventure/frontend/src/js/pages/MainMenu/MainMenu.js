@@ -11,7 +11,7 @@ class MainMenu extends React.Component {
         return (
             <>
                 <Helmet>
-                    <title>Strona główna WMI Adventure</title>
+                    <title>Menu główne</title>
                 </Helmet>
                 <Media query={mobile}>
                     <MainContainer>

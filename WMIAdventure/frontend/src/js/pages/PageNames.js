@@ -1,11 +1,11 @@
 export const pageNames = {
-    '/': 'Strona startowa',
+    '/': 'WMI Adventure',
     '/main': 'Menu główne',
-    '/profile': 'Twój profil',
+    '/profile': 'Mój profil',
     '/battle': 'Tryb Battle',
-    '/cards-creator-start': 'Kreator kart',
-    '/cards-creator-edit': 'Kreator kart',
-    '/cards-creator-create': 'Kreator kart',
+    '/cards-creator-start': 'Edytor kart',
+    '/cards-creator-edit': 'Tworzenie karty',
+    '/cards-creator-create': 'Edycja karty',
     '/login': 'Logowanie',
     '/registration': 'Rejestracja',
 

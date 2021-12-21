@@ -8,6 +8,7 @@ import LandingFooter from "../../components/landing-page/atoms/LandingFooter";
 import content from "./content";
 import Media from "react-media";
 import {desktop, mobile} from "../../utils/globals";
+import {Helmet} from "react-helmet";
 
 function LandingPage() {
     const targetRef = React.useRef(null);
@@ -39,6 +40,9 @@ function LandingPage() {
 
     return (
         <>
+            <Helmet>
+                <title>WMI Adventure</title>
+            </Helmet>
             <Media query={mobile}>
                 <Main>
                     <LandingNavBar showBackground={!heroVisible}/>
