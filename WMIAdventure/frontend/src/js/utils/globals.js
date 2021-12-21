@@ -13,6 +13,9 @@ const nextStepAnimationDuration = 550;
 
 const blockedCardOpacity = '0.3';
 
+const userCommonLevelColorRange = 15;
+const userGoldLevelColorRange = 30;
+
 export {
     mobile, desktop,
     maxCardName, maxCardSubject, maxCardTooltip,
@@ -21,5 +24,7 @@ export {
     battleInitLoadingDuration,
     nextStepAnimationDuration,
     blockedCardOpacity,
-    maxUserName
+    maxUserName,
+    userCommonLevelColorRange,
+    userGoldLevelColorRange
 };
