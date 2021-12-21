@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from IngameUsers.models import UserStats
+from IngameUsers.signals import user_should_gain_exp
 from cards.models import CardInfo
 from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo
@@ -36,6 +38,14 @@ def accept_proposed_card(proposed_card: ProposedCardInfo):
     # Remove accepted card from proposed cards tables.
     proposed_card.delete()
 
+    owner_id = proposed_card_serializer.data.get('owner', None)
+
+    if owner_id is None:
+        return accepted_card_serializer, created
+
+    owner_exp = UserStats.objects.get(profile__user_id=owner_id)
+    user_should_gain_exp(owner_exp, 200)
+
     return accepted_card_serializer, created
 
 
@@ -64,7 +74,6 @@ class AcceptProposedCardView(APIView):
 
 
 class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
-
     permission_classes = [CanEdit]
     """
     get:
@@ -270,7 +279,6 @@ class WholeProposedCardDetails(generics.RetrieveUpdateAPIView):
 
 
 class WholeProposedCardList(generics.ListCreateAPIView):
-
     permission_classes = [IsAuthenticated]
     """
     get:
