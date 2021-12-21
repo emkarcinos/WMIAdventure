@@ -57,13 +57,13 @@ def calculate_exp_gains(outcome: Outcome, attacker_level: int, defender_level: i
     winner = outcome.get_winner()
 
     if winner is None:
-        attacker_exp_gain = draw(attacker_level, attacker_level)
+        attacker_exp_gain = draw(attacker_level, defender_level)
         defender_exp_gain = draw(defender_level, attacker_level)
     elif winner is outcome.attacker:
-        attacker_exp_gain = win(attacker_level, attacker_level)
+        attacker_exp_gain = win(attacker_level, defender_level)
         defender_exp_gain = defeat(defender_level, attacker_level)
     elif winner is outcome.defender:
-        attacker_exp_gain = defeat(attacker_level, attacker_level)
+        attacker_exp_gain = defeat(attacker_level, defender_level)
         defender_exp_gain = win(defender_level, attacker_level)
 
     return attacker_exp_gain, defender_exp_gain
