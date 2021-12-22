@@ -251,8 +251,8 @@ class ChangeDeckCard extends React.Component {
                         </PopUp>
                         {
                             this.state.fullCardViewPopUp.visible ?
-                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity}
-                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'14'}>
+                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
+                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
                                     <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
                                                   cardName={this.state.selectedCard.name}
                                                   cardLevel={this.state.selectedCard.level}
