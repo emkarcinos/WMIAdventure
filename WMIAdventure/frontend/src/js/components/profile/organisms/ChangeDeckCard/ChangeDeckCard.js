@@ -160,8 +160,8 @@ class ChangeDeckCard extends React.Component {
     renderCardChoose = () => {
         return (
             <>
+                <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                 <CardChooseDiv>
-                    <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                     <Ul>
                         {
                             this.state.allCards.map((card) => {
@@ -222,7 +222,7 @@ class ChangeDeckCard extends React.Component {
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={'0px'}
+                        <PopUp visible={true} setTop={this.props.onPopup ? '0px' : '48px'}
                                closeHandler={this.close}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
