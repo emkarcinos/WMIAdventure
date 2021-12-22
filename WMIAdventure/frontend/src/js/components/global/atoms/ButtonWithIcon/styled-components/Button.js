@@ -13,6 +13,7 @@ const Button = styled.button`
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
+  z-index: ${({setZindex}) => setZindex ? setZindex : 'auto'};
 
   &:hover {
     transform: scale(1.05);

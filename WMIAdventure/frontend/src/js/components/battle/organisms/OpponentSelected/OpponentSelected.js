@@ -21,7 +21,7 @@ import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
-import UserInfo from "../../../global/atoms/UserInfo";
+// import UserInfo from "../../../global/atoms/UserInfo";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
@@ -64,6 +64,14 @@ class OpponentSelected extends React.Component {
         this.getDeck();
     }
 
+    convertSecondsToPrettyTime = (seconds) => {
+        let result = new Date(seconds * 1000).toISOString().slice(12, 19);
+        const tokens = result.split(':');
+        result = `${tokens[0]}h:${tokens[1]}m:${tokens[2]}s`;
+        return result
+    };
+
+
     handleBattleErrors = (resp) => {
         switch (resp.status) {
             case 401:
@@ -80,6 +88,16 @@ class OpponentSelected extends React.Component {
                         visible: true,
                         message: "Niekompletna talia kart!"
                     }
+                })
+                break;
+            case 403:
+                resp.json().then(data => {
+                    this.setState({
+                        error: {
+                            visible: true,
+                            message: `Limit walk przekroczony! Możesz walczyć za ${this.convertSecondsToPrettyTime(data.seconds_till_limit_reset)}.`
+                        }
+                    });
                 })
                 break;
             case 500:
@@ -120,7 +138,6 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleRunHandler = () => {
-        this.props.closeUserPreviewHandler();
         this.props.kuceStartFight('Szybka Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -165,6 +182,7 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleCloseHandler = () => {
+        this.props.closeUserPreviewHandler();
         this.setState({
             postBattlePos: '-100vh',
             postBattleOpacity: '0'
@@ -187,7 +205,6 @@ class OpponentSelected extends React.Component {
     }
 
     onFightButton = () => {
-        this.props.closeUserPreviewHandler();
         this.props.kuceStartFight('Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -207,8 +224,6 @@ class OpponentSelected extends React.Component {
     }
     // method that run dynamic battle view
     battleViewRunHandler = () => {
-        this.props.closeUserPreviewHandler();
-
         this.props.kuceStopFight();
         this.setState({
             battleView: {visible: true, translateY: '-100vh', scale: '0'},
@@ -253,16 +268,17 @@ class OpponentSelected extends React.Component {
         if (isDesktop) {
             return (
                 <>
-                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.props.caller}
-                                attackerDeck={this.state.userDeck}
-                                opponent={this.props.opponent}
-                                opponentDeck={this.state.opponentDeck}
-                                setOpacity={this.state.postBattleOpacity}
-                                setTranslateY={this.state.postBattlePos}
-                                expGain={this.state.expGain}
-                    />
+                    {this.state.postBattle ?
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.props.caller}
+                                    attackerDeck={this.state.userDeck}
+                                    opponent={this.props.opponent}
+                                    opponentDeck={this.state.opponentDeck}
+                                    setOpacity={this.state.postBattleOpacity}
+                                    setTranslateY={this.state.postBattlePos}
+                                    expGain={this.state.expGain}
+                        /> : null}
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
@@ -276,15 +292,16 @@ class OpponentSelected extends React.Component {
         } else {
             return (
                 <>
-                    <PostBattle postBattle={this.state.postBattle} win={this.state.win}
-                                closeHandler={this.quickBattleCloseHandler}
-                                attacker={this.props.caller}
-                                attackerDeck={this.state.userDeck}
-                                opponent={this.props.opponent}
-                                opponentDeck={this.state.opponentDeck}
-                                setTranslateY={this.state.postBattlePos}
-                                expGain={this.state.expGain}
-                    />
+                    {this.state.postBattle ?
+                        <PostBattle postBattle={this.state.postBattle} win={this.state.win}
+                                    closeHandler={this.quickBattleCloseHandler}
+                                    attacker={this.props.caller}
+                                    attackerDeck={this.state.userDeck}
+                                    opponent={this.props.opponent}
+                                    opponentDeck={this.state.opponentDeck}
+                                    setTranslateY={this.state.postBattlePos}
+                                    expGain={this.state.expGain}
+                        /> : null}
                     <BattleView visible={this.state.battleView.visible}
                                 battleData={this.state.battleData}
                                 runPostBattle={this.postBattle}
@@ -308,19 +325,19 @@ class OpponentSelected extends React.Component {
                                setTranslateY={this.props.setTranslateY}>
                             <GridContainer>
                                 <FlexCenterContainer>
-                                    <FlexGapContainer gap={'40px'} setMargin={'32px 0 0 0'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                    </FlexGapContainer>
+                                    {/*<FlexGapContainer gap={'40px'} setMargin={'32px 0 0 0'}>*/}
+                                    {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                    {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                    {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                    {/*</FlexGapContainer>*/}
                                     <TinyUserProfile user={this.props.caller} setMargin={'24px 0 0 0'}/>
                                     <KuceVs/>
                                     <TinyUserProfile user={this.props.opponent} setMargin={'0 0 24px 0'}/>
-                                    <FlexGapContainer gap={'40px'}>
-                                        <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                        <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                        <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                    </FlexGapContainer>
+                                    {/*<FlexGapContainer gap={'40px'}>*/}
+                                    {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                    {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                    {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                    {/*</FlexGapContainer>*/}
                                 </FlexCenterContainer>
 
                                 <FlexEndContainer>
@@ -342,9 +359,10 @@ class OpponentSelected extends React.Component {
                                     </ButtonWithIcon>
                                 </FlexEndContainer>
                             </GridContainer>
+
+                            {this.errors()}
                         </PopUp>
                         {this.state.isBattleStarting ? this.renderBattleView(false) : null}
-                        {this.errors()}
                     </>
                 </Media>
 
@@ -360,21 +378,21 @@ class OpponentSelected extends React.Component {
                                 <FlexGapContainer gap={'10px'} setWidth={'100%'}>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 0 0 26px'}>
                                         <TinyUserProfile user={this.props.caller} setMargin={'0'} vertical/>
-                                        <FlexGapContainer gap={'52px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'52px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
                                     <KuceVs/>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile user={this.props.opponent} setMargin={'0'} vertical/>
-                                        <FlexGapContainer gap={'52px'}>
-                                            <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                            <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                            <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                        </FlexGapContainer>
+                                        {/*<FlexGapContainer gap={'52px'}>*/}
+                                        {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                        {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                        {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                        {/*</FlexGapContainer>*/}
                                         <TinyCards deck={nullEditableDeck()} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
                                 </FlexGapContainer>

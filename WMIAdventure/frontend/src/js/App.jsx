@@ -15,15 +15,14 @@ import CardsCreatorCreate from './pages/CardsCreatorCreate';
 import CardsCreatorStart from './pages/CardsCreatorStart';
 import CardsCreatorEdit from './pages/CardsCreatorEdit';
 import LoginPage from "./pages/LoginPage/LoginPage";
-import {isLoggedIn} from "./storage/user/userData";
+import {hasSessionCookie} from "./storage/user/userData";
 import Navbar from "./components/global/molecules/Navbar";
 
 function App() {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(undefined)
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(hasSessionCookie())
 
     useEffect(() => {
-        isLoggedIn()
-            .then(resp => setIsUserLoggedIn(resp));
+        setIsUserLoggedIn(hasSessionCookie());
     });
 
     return (

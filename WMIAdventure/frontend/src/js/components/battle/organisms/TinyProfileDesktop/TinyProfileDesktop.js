@@ -1,12 +1,12 @@
 import React from 'react';
 import Div from './styled-components/Div';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
-import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
+// import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import CompactCardView from '../../../global/atoms/CompactCardView';
 import Container from './styled-components/Container';
 import {getCurrentUserDecks} from "../../../../storage/user/userData";
-import UserInfo from "../../../global/atoms/UserInfo";
+// import UserInfo from "../../../global/atoms/UserInfo";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
 import P from "./styled-components/P";
@@ -77,13 +77,13 @@ class TinyProfileDesktop extends React.Component {
                 <Container gap={'24px'}>
                     <TinyUserProfile user={this.props.user}/>
 
-                    <ColumnGapContainer gap={'10px'}>
-                        <FlexGapContainer gap={'52px'}>
-                            <UserInfo label={'Wygrane'} value={'24'}/>
-                            <UserInfo label={'Przegrane'} value={'24'}/>
-                        </FlexGapContainer>
-                        <UserInfo label={'Ratio'} value={'50%'}/>
-                    </ColumnGapContainer>
+                    {/*<ColumnGapContainer gap={'10px'}>*/}
+                    {/*    <FlexGapContainer gap={'52px'}>*/}
+                    {/*        <UserInfo label={'Wygrane'} value={'24'}/>*/}
+                    {/*        <UserInfo label={'Przegrane'} value={'24'}/>*/}
+                    {/*    </FlexGapContainer>*/}
+                    {/*    <UserInfo label={'Ratio'} value={'50%'}/>*/}
+                    {/*</ColumnGapContainer>*/}
                 </Container>
                 <FlexGapContainer gap={'16px'}>
                     {this.renderDeck()}

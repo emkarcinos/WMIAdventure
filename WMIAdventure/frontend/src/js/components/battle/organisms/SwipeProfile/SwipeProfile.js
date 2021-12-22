@@ -4,13 +4,11 @@ import TinyDeck from '../../molecules/TinyDeck';
 import Article from './styled-components/Article';
 import Close from './styled-components/Close';
 import TinyUserProfile from '../../molecules/TinyUserProfile';
-import FlexGapContainer from '../../../global/molecules/FlexGapContainer/FlexGapContainer';
 import Media from 'react-media';
 import Deck from '../../molecules/Deck';
 import {mobile} from '../../../../utils/globals';
 import FlexCenterContainer from './styled-components/FlexCenterContainer';
 import {getCurrentUserDecks} from "../../../../storage/user/userData";
-import UserInfo from "../../../global/atoms/UserInfo";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
 import P from "./styled-components/P";
@@ -83,11 +81,11 @@ class SwipeProfile extends React.Component {
                         <>
                             <FlexCenterContainer>
                                 <TinyUserProfile user={this.props.user} setMargin={'0 0 24px 0'}/>
-                                <FlexGapContainer gap={'40px'} setMargin={'0 0 40px 0'}>
-                                    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>
-                                    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>
-                                </FlexGapContainer>
+                                {/*<FlexGapContainer gap={'40px'} setMargin={'0 0 40px 0'}>*/}
+                                {/*    <UserInfo label={'Wygrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Przegrane'} value={'24'} setMargin={'0'}/>*/}
+                                {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
+                                {/*</FlexGapContainer>*/}
                             </FlexCenterContainer>
                             <FlexCenterContainer>
                                 <Deck deck={this.state.deck}/>

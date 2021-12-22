@@ -10,8 +10,8 @@ import NavButton from "./styled-components/NavButton";
 import Link from "./styled-components/A";
 import Menubar from "../Menubar";
 import Logo from "../../atoms/Logo";
-import {isLoggedIn} from "../../../../storage/user/userData";
-import withRouter from "react-router-dom/es/withRouter";
+import {hasSessionCookie} from "../../../../storage/user/userData";
+import {withRouter} from "react-router-dom";
 import {getPagenameByLink} from "../../../../pages/PageNames";
 import {purge} from "../../../../storage/cache/cache";
 
@@ -24,7 +24,7 @@ class Navbar extends React.Component {
 
     state = {
         menuActive: false,
-        isUserLoggedIn: false,
+        isUserLoggedIn: hasSessionCookie(),
     }
 
     showMenuHandler = () => {
@@ -36,10 +36,6 @@ class Navbar extends React.Component {
     }
 
     componentDidMount() {
-        isLoggedIn()
-            .then(resp => {
-                this.setState({isUserLoggedIn: resp})
-            });
         window.onbeforeunload = () => {
             purge();
         };

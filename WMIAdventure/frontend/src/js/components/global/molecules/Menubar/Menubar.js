@@ -17,7 +17,7 @@ import userIcon from '../../../../../assets/icons/user.svg'
 import newUserIcon from '../../../../../assets/icons/newuser.svg'
 import Link from "../Navbar/styled-components/A";
 import Href from "../Navbar/styled-components/Href";
-import {getCurrentUserData, isLoggedIn} from "../../../../storage/user/userData";
+import {getCurrentUserData, hasSessionCookie} from "../../../../storage/user/userData";
 import UsersAPIGateway from "../../../../api/gateways/UsersAPIGateway";
 import TransparentBack from "./styled-components/TransparentBack";
 import Button from "./styled-components/Button";
@@ -42,7 +42,7 @@ class Menubar extends React.Component {
     state = {
         user: nullDetailedUserData(),
         willRedirect: false,
-        userLoggedIn: false
+        userLoggedIn: hasSessionCookie()
     }
 
     populateCurrentUserData = async () => {
@@ -59,8 +59,7 @@ class Menubar extends React.Component {
     }
 
     checkIfUserLoggedIn = () => {
-        isLoggedIn()
-            .then(userLoggedIn => this.setState({userLoggedIn: userLoggedIn}));
+        this.setState({userLoggedIn: hasSessionCookie()});
     }
 
     logoutHandler = (event) => {
