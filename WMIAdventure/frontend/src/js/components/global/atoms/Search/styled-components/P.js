@@ -10,7 +10,7 @@ const P = styled.p`
   width: 100%;
   border-bottom: 1px solid ${({theme}) => theme.colors.dark};
   position: relative;
-  
+
   ::before {
     content: '';
     display: block;
@@ -22,6 +22,7 @@ const P = styled.p`
     background-image: url(${searchIcon});
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
   }
 `;
 
