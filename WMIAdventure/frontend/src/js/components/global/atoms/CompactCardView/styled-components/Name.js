@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const fontSteps = {
     mini: 7,
-    normal: 10,
+    normal: 9,
     long: 14,
     longer: 18,
     extraLong: 24,
