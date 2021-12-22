@@ -20,10 +20,10 @@ const content = {
         paragraph: `Życie to wieczna walka o przetrwanie i pamięć RAM.
         Na studiach pojawia się rywalizacja, która budzi w nas czasami dzikie emocje.
         Dlatego stworzyliśmy możliwość wyzwolenia tych uczuć poprzez walkę
-        informatycznymi kartami ze studentami, prowadzącymi oraz absolwentami.
+        informatycznymi kartami pomiędzy studentami, prowadzącymi oraz absolwentami.
         Chcesz udowodnić, że jesteś lepszy? Masz ochotę zobaczyć jakiś rezultat na
         monitorze po setkach godzin nieudanego kodowania? Włącz WMI Adventure,
-        zbierz karty a następnie wyzwyj kogoś na pojedynek!`,
+        zbierz karty, a następnie wyzwyj kogoś na pojedynek!`,
         image: battleIcon,
     },
     article3: {
@@ -32,15 +32,15 @@ const content = {
         lub świata IT. Nasza platforma pozwala na tworzenie własnych kart, które będą
         stawać na polu bitwy! To miejsce potrzebuje takich ludzi jak Ty, ponieważ
         każde informatyczne doświadczenie pozwoli je wzbogacić. Twoje umiejętności
-        nie grają tutaj jedynej istotnej roli, ale również kreatywność!`,
+        nie grają tutaj jedynej istotnej roli, liczy się również kreatywność!`,
         image: pencilDark,
     },
     article4: {
         header: 'Rośnij w siłę!',
         paragraph: `Razem z ilością wygranych pojedynków i stworzonych przez Ciebie kart
-        Twój poziom doświadczenia będzie wzrastać. Osiągając kolejne poziomy będziesz
-        zdobywać punkty nauki za które ulepszysz swoje ulubione karty. Nie daj się
-        wyprzedzić innym! Jeśli będziesz najbardziej pomysłowy oraz regularnie będziesz
+        Twój poziom doświadczenia będzie wzrastać. Osiągając kolejne poziomy zdobędziesz
+        punkty nauki, za które ulepszysz swoje ulubione karty. Nie daj się
+        wyprzedzić innym! Jeśli wykażesz się największą pomysłowością oraz regularnie będziesz
         miażdżyć swoich przeciwników możesz stać się najpotężniejszy na WMI!`,
         image: levelUpDark,
     },

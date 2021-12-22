@@ -65,7 +65,7 @@ function LandingPage() {
                                         paragraph={content.article5.paragraph}/>
                         <LandingArticle header={content.article6.header}
                                         image={content.article6.image}
-                                        paragraph={content.article6.paragraph}/>
+                                        github/>
                     </LandingSection>
                 </Main>
             </Media>
@@ -91,7 +91,7 @@ function LandingPage() {
                                         paragraph={content.article4.paragraph} line/>
                         <LandingArticle header={content.article6.header}
                                         image={content.article6.image}
-                                        paragraph={content.article6.paragraph}/>
+                                        github/>
                     </LandingSection>
                 </Main>
             </Media>
