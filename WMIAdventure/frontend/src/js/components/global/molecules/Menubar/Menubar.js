@@ -50,7 +50,7 @@ class Menubar extends React.Component {
         if (!userData)
             return
         const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
-        user.fetchNonVitalDataFromBackend();
+        await user.fetchNonVitalDataFromBackend();
         this.setState({user: user, userLoggedIn: true});
     }
 
@@ -59,8 +59,10 @@ class Menubar extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.show !== this.props.show)
-            this.forceUpdate();
+        if (prevProps.show !== this.props.show) {
+            this.state.user.fetchNonVitalDataFromBackend()
+                .then(() => this.forceUpdate());
+        }
     }
 
     checkIfUserLoggedIn = () => {
