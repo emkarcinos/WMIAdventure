@@ -222,7 +222,7 @@ class ChangeDeckCard extends React.Component {
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={'0px'}
+                        <PopUp visible={true} setTop={'48px'}
                                closeHandler={this.close}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
