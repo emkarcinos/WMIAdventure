@@ -58,6 +58,11 @@ class Menubar extends React.Component {
         this.populateCurrentUserData();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.show !== this.props.show)
+            this.forceUpdate();
+    }
+
     checkIfUserLoggedIn = () => {
         this.setState({userLoggedIn: hasSessionCookie()});
     }
