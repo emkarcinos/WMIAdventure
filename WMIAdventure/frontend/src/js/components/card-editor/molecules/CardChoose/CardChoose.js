@@ -27,6 +27,8 @@ class CardChoose extends React.Component {
     }
 
     handleHiding = (event) => {
+        if (!this.props.canHide)
+            return;
         if (!this.state.listHover) {
             this.props.hideCardChooseHandler(event);
             setTimeout(() => {
@@ -44,7 +46,7 @@ class CardChoose extends React.Component {
         return (
             <Transition in={this.props.showCardChoose} timeout={timeout}>
                 {state => (
-                    <TransparentBack transitionState={state}>
+                    <TransparentBack onClick={this.handleHiding} transitionState={state}>
                         <Ul onMouseEnter={this.hoverTrue}
                             onMouseLeave={this.hoverFalse}>
                             <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>

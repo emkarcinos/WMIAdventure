@@ -231,10 +231,19 @@ class CardsCreator extends React.Component {
             editorOpened: true
         });
 
-        this.setLevelsListFromCard(levels);
-        this.setLevelCostValuesFromCard(levels);
-        this.setChosenEffectsFromCard(levels);
-        this.hideCardChooseHandler(event);
+        this.setState({
+            levelsListFromCard: [],
+            levelCostValues: [undefined, undefined, undefined],
+            effectsToSend: [[], [], []],
+            chosenEffectsFromCard: [[], [], []],
+        })
+
+        setTimeout(() => {
+            this.setLevelsListFromCard(levels);
+            this.setLevelCostValuesFromCard(levels);
+            this.setChosenEffectsFromCard(levels);
+            this.hideCardChooseHandler(event);
+        }, 10);
     }
 
     setLevelsListFromCard = (levels) => {
@@ -290,10 +299,6 @@ class CardsCreator extends React.Component {
         this.setState({showSendMessage: false});
     }
 
-    refreshPage = () => {
-        window.location.reload();
-    }
-
     commentInputHandler = (event) => {
         const keyName = event.target.name;
         let keyValue = event.target.value;
@@ -311,6 +316,11 @@ class CardsCreator extends React.Component {
     hideCardViewHandler = (event) => {
         event.preventDefault();
         this.setState({showCardView: false});
+    }
+
+    onEditOtherClick = (event) => {
+        event.preventDefault();
+        this.setState({showCardChoose: true});
     }
 
     renderEditPage() {
@@ -346,7 +356,7 @@ class CardsCreator extends React.Component {
                                     levelCreatedHandler={this.levelCreatedHandler}
                     />
                     <Div>
-                        <Button onClick={this.refreshPage} access show={this.props.creatorType}>
+                        <Button onClick={this.onEditOtherClick} access show={this.props.creatorType}>
                             Edytuj inną
                         </Button>
                         <Button show access={this.state.effectsToSend[0].length !== 0 ||
@@ -368,6 +378,7 @@ class CardsCreator extends React.Component {
             <>
                 <CardChoose showCardChoose={this.state.showCardChoose}
                             hideCardChooseHandler={this.hideCardChooseHandler}
+                            canHide={this.state.cardId}
                             cardsFromAPI={this.state.cardsFromApi}
                             chosenCardHandler={this.chosenCardHandler}/>
                 <Wrapper>
