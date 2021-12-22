@@ -5,21 +5,15 @@ const Ul = styled.ul`
   display: flex;
   flex-direction: column;
 
-  @media(max-width: ${({theme}) => theme.overMobile}px) {
-    width: 92%;
-  }
-  @media(min-width: ${({theme}) => theme.overMobile}px) {
-    width: 440px
-  }
-  
-  height: 75%;
-
-  padding: 0 10px;
+  height: 100%;
+  width: 100%;
   margin: 0;
   border-radius: 20px;
   overflow-y: scroll;
   scrollbar-width: none;
+  padding: 0;
   -ms-overflow-style: none; /* IE 10+ */
+
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }

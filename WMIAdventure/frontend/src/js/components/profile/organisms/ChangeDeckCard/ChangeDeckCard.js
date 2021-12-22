@@ -160,8 +160,8 @@ class ChangeDeckCard extends React.Component {
     renderCardChoose = () => {
         return (
             <>
+                <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                 <CardChooseDiv>
-                    <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
                     <Ul>
                         {
                             this.state.allCards.map((card) => {

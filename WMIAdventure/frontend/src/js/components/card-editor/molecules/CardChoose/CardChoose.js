@@ -4,6 +4,7 @@ import Ul from './styled-components/Ul';
 import Card from '../../atoms/Card';
 import {Transition} from 'react-transition-group';
 import Search from '../../../global/atoms/Search';
+import ColumnContainer from "./styled-components/ColumnContainer";
 
 /* Transition timeout values */
 const timeout = {
@@ -47,26 +48,28 @@ class CardChoose extends React.Component {
             <Transition in={this.props.showCardChoose} timeout={timeout}>
                 {state => (
                     <TransparentBack onClick={this.handleHiding} transitionState={state}>
-                        <Ul onMouseEnter={this.hoverTrue}
-                            onMouseLeave={this.hoverFalse}>
+                        <ColumnContainer>
                             <Search searchInput={this.state.searchInput} handleSearch={this.handleSearch}/>
-                            {
-                                this.props.cardsFromAPI.map((card) => {
-                                    return (
-                                        <React.Fragment key={`card-${card.id}`}>
-                                            <Card id={card.id} name={card.name}
-                                                  subject={card.subject}
-                                                  tooltip={card.tooltip}
-                                                  image={card.image}
-                                                  searchInput={this.state.searchInput}
-                                                  levels={card.levels}
-                                                  chosenCardHandler={this.props.chosenCardHandler}
-                                                  access={true}/>
-                                        </React.Fragment>
-                                    );
-                                })
-                            }
-                        </Ul>
+                            <Ul onMouseEnter={this.hoverTrue}
+                                onMouseLeave={this.hoverFalse}>
+                                {
+                                    this.props.cardsFromAPI.map((card) => {
+                                        return (
+                                            <React.Fragment key={`card-${card.id}`}>
+                                                <Card id={card.id} name={card.name}
+                                                      subject={card.subject}
+                                                      tooltip={card.tooltip}
+                                                      image={card.image}
+                                                      searchInput={this.state.searchInput}
+                                                      levels={card.levels}
+                                                      chosenCardHandler={this.props.chosenCardHandler}
+                                                      access={true}/>
+                                            </React.Fragment>
+                                        );
+                                    })
+                                }
+                            </Ul>
+                        </ColumnContainer>
                     </TransparentBack>
                 )}
             </Transition>
