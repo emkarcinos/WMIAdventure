@@ -44,7 +44,14 @@ export const getCardsFromDeck = async (deck) => {
 
 export const getAllCards = async () => {
     const callback = async () => {
-        return await CardsAPIGateway.getAllCards();
+        const cards = await CardsAPIGateway.getAllCards();
+        cards.sort((card1, card2) => {
+            if (card1.name === card2.name)
+                return 0;
+            return card1.name.toLowerCase() < card2.name.toLowerCase() ? -1 : 1;
+        });
+        console.log(cards)
+        return cards;
     }
 
     return await getWithSetCallback(cardsKey, callback, cacheCardsForSeconds);
