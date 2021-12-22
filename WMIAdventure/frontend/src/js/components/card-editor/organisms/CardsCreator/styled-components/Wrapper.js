@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   align-items: center;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
 `;
 
 export default Wrapper;

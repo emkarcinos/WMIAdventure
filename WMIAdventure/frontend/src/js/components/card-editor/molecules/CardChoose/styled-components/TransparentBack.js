@@ -8,14 +8,14 @@ const transitionStates = {
 }
 
 const TransparentBack = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  
+
   display: ${({show}) => show ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
-  
+
   background-color: ${({theme}) => theme.colors.transBack};
   width: 100%;
   height: 100%;
