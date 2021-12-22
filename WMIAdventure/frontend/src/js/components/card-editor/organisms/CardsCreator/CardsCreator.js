@@ -243,7 +243,7 @@ class CardsCreator extends React.Component {
             this.setLevelCostValuesFromCard(levels);
             this.setChosenEffectsFromCard(levels);
             this.hideCardChooseHandler(event);
-        }, 10);
+        }, 100);
     }
 
     setLevelsListFromCard = (levels) => {
