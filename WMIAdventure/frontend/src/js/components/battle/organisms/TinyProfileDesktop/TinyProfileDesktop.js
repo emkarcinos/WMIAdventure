@@ -60,7 +60,7 @@ class TinyProfileDesktop extends React.Component {
                                  cardName={card.name}
                                  cardImage={card.image}
                                  cardLevel={card.level}
-                                 setWidth={'100px'} setHeight={'152px'}
+                                 setWidth={'100px'} setHeight={'162px'}
                                  setMargin={'0'}
                                  setIconWidth={'60px'} setIconHeight={'60px'}
                                  decorationHeight={'18px'}
