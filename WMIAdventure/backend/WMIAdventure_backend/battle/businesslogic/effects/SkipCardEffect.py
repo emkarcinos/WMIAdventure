@@ -10,4 +10,4 @@ class SkipCardEffect(Effect):
         return DeckOrderChangedEffectImpact(self.effect_model.card_effect.id, target.id, target.deck)
 
     def description(self) -> str:
-        return f"Pomija działanie następnej karty{self.target.label}a"
+        return f"Pomija działanie następnej karty {self.target.label}a"
