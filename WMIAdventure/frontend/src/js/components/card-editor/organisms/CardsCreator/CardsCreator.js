@@ -290,10 +290,6 @@ class CardsCreator extends React.Component {
         this.setState({showSendMessage: false});
     }
 
-    refreshPage = () => {
-        window.location.reload();
-    }
-
     commentInputHandler = (event) => {
         const keyName = event.target.name;
         let keyValue = event.target.value;
@@ -311,6 +307,11 @@ class CardsCreator extends React.Component {
     hideCardViewHandler = (event) => {
         event.preventDefault();
         this.setState({showCardView: false});
+    }
+
+    onEditOtherClick = (event) => {
+        event.preventDefault();
+        this.setState({showCardChoose: true});
     }
 
     renderEditPage() {
@@ -346,7 +347,7 @@ class CardsCreator extends React.Component {
                                     levelCreatedHandler={this.levelCreatedHandler}
                     />
                     <Div>
-                        <Button onClick={this.refreshPage} access show={this.props.creatorType}>
+                        <Button onClick={this.onEditOtherClick} access show={this.props.creatorType}>
                             Edytuj inną
                         </Button>
                         <Button show access={this.state.effectsToSend[0].length !== 0 ||
@@ -368,6 +369,7 @@ class CardsCreator extends React.Component {
             <>
                 <CardChoose showCardChoose={this.state.showCardChoose}
                             hideCardChooseHandler={this.hideCardChooseHandler}
+                            canHide={this.state.cardId}
                             cardsFromAPI={this.state.cardsFromApi}
                             chosenCardHandler={this.chosenCardHandler}/>
                 <Wrapper>
