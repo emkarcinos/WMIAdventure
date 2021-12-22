@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 
+const fontSteps = {
+    mini: 7,
+    normal: 9,
+    long: 14,
+    longer: 18,
+    extraLong: 24,
+}
+
 function nameLengthHandler(nameLength, ownFontSize) {
-    if (ownFontSize && nameLength < 12)
+    if (ownFontSize)
         return ownFontSize;
-    if (nameLength < 12)
+    if (nameLength < fontSteps.mini)
         return '20px';
-    if (ownFontSize && nameLength < 20)
-        return '14px';
-    if (nameLength < 20)
+    if (nameLength < fontSteps.normal)
+        return '18px';
+    if (nameLength < fontSteps.long)
+        return '16px';
+    if (nameLength < fontSteps.longer)
         return '14px';
     return '12px';
 }

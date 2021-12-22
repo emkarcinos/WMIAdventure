@@ -9,7 +9,7 @@ const Div = styled.div`
     left: 0;
     width: 100%;
     height: 190px;
-    background-color: ${({theme}) => theme.colors.light2};
+    background-color: ${({theme}) => theme.colors.whiteAlmost};
     display: flex;
     justify-content: center;
     align-items: center;

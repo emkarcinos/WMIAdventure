@@ -60,8 +60,8 @@ class TinyProfileDesktop extends React.Component {
                                  cardName={card.name}
                                  cardImage={card.image}
                                  cardLevel={card.level}
-                                 setWidth={'90px'} setHeight={'150px'}
-                                 setMargin={'0'} ownFontSize={'20px'}
+                                 setWidth={'100px'} setHeight={'162px'}
+                                 setMargin={'0'}
                                  setIconWidth={'60px'} setIconHeight={'60px'}
                                  decorationHeight={'18px'}
                                  onClick={() => this.setEditorVisible(card)}/>
