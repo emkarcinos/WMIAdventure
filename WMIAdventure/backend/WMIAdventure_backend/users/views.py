@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from ratelimit.decorators import ratelimit
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
@@ -11,7 +13,7 @@ from .signals import user_registered
 
 
 class UserRegister(APIView):
-
+    @method_decorator(ratelimit(key='ip', rate='2/d', method='POST'))
     def post(self, request):
         """
         Register user.
