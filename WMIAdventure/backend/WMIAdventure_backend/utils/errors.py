@@ -3,3 +3,7 @@ registration_ratelimit_error = {
         "Wykorzystałeś limit rejestracji. Spróbuj ponownie później."
     ]
 }
+
+card_submission_ratelimit_error = {
+    "Wykorzystałeś limit wysyłania sugestii kart. Spróbuj ponownie później."
+}
