@@ -1,3 +1,4 @@
+from ratelimit.core import get_usage
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +11,7 @@ from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo
 from proposed_content.permissions import CanEdit
 from proposed_content.serializers import WholeProposedCardSerializer
+from utils.errors import registration_ratelimit_error, card_submission_ratelimit_error
 from utils.permissions import IsAbleToEdit
 
 
@@ -381,6 +383,15 @@ class WholeProposedCardList(generics.ListCreateAPIView):
     """
     queryset = ProposedCardInfo.objects.all()
     serializer_class = WholeProposedCardSerializer
+
+    def post(self, request, *args, **kwargs):
+        limiting = get_usage(request, fn=WholeProposedCardList, key='ip', rate='9/d', increment=False)
+        if limiting is not None and limiting.get('should_limit', False):
+            return Response(card_submission_ratelimit_error, status=status.HTTP_400_BAD_REQUEST)
+        resp = super().post(request, *args, **kwargs)
+        if resp.status_code == 201:
+            limit = get_usage(request, fn=WholeProposedCardList, key='ip', rate='9/d', increment=True)
+        return resp
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
