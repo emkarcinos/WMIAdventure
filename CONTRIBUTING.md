@@ -1,6 +1,6 @@
 # Kontrybucja
 
-Jeśli chcesz przyczynić się do rozwoju WMIAdventure, prosimy najpierw o kontakt z autorami za pomocą stworzenia [issue](https://github.com/emkarcinos/WMIAdventure/issues/new/choose), napisania maila lub w dowolnej innej formie przed implementacją modyfikacji.
+Jeśli chcesz przyczynić się do rozwoju WMIAdventure, prosimy wybrać istniejące issue gotowe do implementacji. Możesz stworzyć również nowe issue na którym będziemy wspólne dyskutować nad daną zmianą. Wspólnie stwierdzimy, czy proponowany *feature* wpisuje się w wizję WMI Adventure.
 
 Proszę również przeczytać kodeks postępowania znajdujący się w pliku [CODE_OF_CONDUCT](https://github.com/emkarcinos/WMIAdventure/blob/main/CODE_OF_CONDUCT).
 
