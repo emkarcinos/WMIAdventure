@@ -26,6 +26,7 @@ Szczegółowa instrukcja dotycząca środowiska  [wiki](https://github.com/emkar
 ## Użyte technologie
 
 - django
+- django rest framework
 - react
 - styled components
 
