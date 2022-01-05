@@ -32,7 +32,7 @@ Szczegółowa instrukcja dotycząca środowiska  [wiki](https://github.com/emkar
 
 ## Wkład w rozwój
 
-Osoby zainteresowane włożeniem wkłady w rozwój aplikacji prosimy o zapoznanie się z dokumentem [CONTRIBUTING] oraz [CODE_OF_CONDUCT].
+Osoby zainteresowane włożeniem wkłady w rozwój aplikacji prosimy o zapoznanie się z dokumentem [CONTRIBUTING](https://github.com/emkarcinos/WMIAdventure/blob/main/CONTRIBUTING.md) oraz [CODE_OF_CONDUCT](https://github.com/emkarcinos/WMIAdventure/blob/main/CODE_OF_CONDUCT.md).
 Zachęcamy również do zajrzenia na [wiki](https://github.com/emkarcinos/WMIAdventure/wiki) projektu w celu zapoznania się z dokumentacją techniczną.
 
 ## Autorzy
