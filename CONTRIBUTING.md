@@ -45,5 +45,8 @@ W opisie należy zapisać jakie issue rozwiązujemy naszym p. r. za pomocą `clo
 1. Analiza kodu (*code review*).
 2. Testowanie wprowadzonych zmian.
 3. Utworzenie komentarza w przypadku niejasności (opcja *comment* w p. r.).
-4. Zarządzanie zmian w przypadku błędów lub możliwości ulepszenia kodu (opcja *request changes* w p. r.)
-5. Akceptacja zmian, gdy wszystko jest zrobione prawidłowo (opcja *approve* podczas *code review* w p. r.)
+4. Zarządzanie zmian w przypadku błędów lub możliwości ulepszenia kodu (opcja *request changes* w p. r.).
+5. Akceptacja zmian, gdy wszystko jest zrobione prawidłowo (opcja *approve* podczas *code review* w p. r.).
+6. *Zmergowanie* zmian na główną gałąź *main*.
+7. Po *zmergowaniu* modyfikację zostaną automatycznie opublikowane na środowisku testowym.
+8. Środowisko produkcyjne (wmi-adventure.pl) zostanie zaaktualizowane o nowe zmiany przy najbliższym *release*.
