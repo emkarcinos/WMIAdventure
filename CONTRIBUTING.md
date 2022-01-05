@@ -2,7 +2,7 @@
 
 Jeśli chcesz przyczynić się do rozwoju WMIAdventure, prosimy najpierw o kontakt z autorami za pomocą stworzenia [issue](https://github.com/emkarcinos/WMIAdventure/issues/new/choose), napisania maila lub w dowolnej innej formie przed implementacją modyfikacji.
 
-Proszę również przeczytać kodeks postępowania znajdujący się w pliku [CODE_OF_CONDUCT].
+Proszę również przeczytać kodeks postępowania znajdujący się w pliku [CODE_OF_CONDUCT](https://github.com/emkarcinos/WMIAdventure/blob/main/CODE_OF_CONDUCT).
 
 ## Tworzenie issue
 
