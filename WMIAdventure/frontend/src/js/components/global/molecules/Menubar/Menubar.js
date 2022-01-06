@@ -96,7 +96,7 @@ class Menubar extends React.Component {
                     <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
                     <Line/>
                     <Button as={Link} to={'/profile'} onClick={this.props.closeHandler}>
-                        <TinyUserProfile user={this.state.user}/>
+                        <TinyUserProfile user={this.state.user} showSkillPoints/>
                     </Button>
                 </>
             );
