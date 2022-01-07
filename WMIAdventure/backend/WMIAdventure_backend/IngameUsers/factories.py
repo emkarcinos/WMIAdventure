@@ -13,6 +13,7 @@ from users.factories import UserFactory
 
 class UserStatsFactory(DjangoModelFactory):
     exp = 0
+    skill_points = 0
 
     class Meta:
         model = 'IngameUsers.UserStats'
