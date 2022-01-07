@@ -39,8 +39,12 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = [CanEditProfile]
 
-    serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.user.id == self.kwargs['pk']:
+            return serializers.MyUserProfileSerializer
+        return serializers.UserProfileSerializer
 
 
 class UserDecksView(RetrieveAPIView):

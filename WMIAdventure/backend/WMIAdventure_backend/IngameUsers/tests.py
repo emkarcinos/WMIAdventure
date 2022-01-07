@@ -79,6 +79,56 @@ class UserProfileTestCase(TestCase):
         cls.test_user.delete()
 
 
+class UserViewTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_profile = UserProfileFactory()
+        self.client = APIClient()
+        self.client.force_authenticate(self.user_profile.user)
+
+    @staticmethod
+    def _get_url(user_profile: UserProfile):
+        return f'/api/user-profiles/{user_profile.user.id}/'
+
+    def test_get_and_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view his profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains all his data.
+        """
+
+        response = self.client.get(UserViewTestCase._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data contains info about skill_points (it can only be seen by profile owner)
+        self.assertIsNotNone(response.data.get('skill_points', None))
+
+    def test_get_and_not_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view other user's profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains subset of user's data.
+        """
+
+        other_user_profile = UserProfileFactory()
+        response = self.client.get(UserViewTestCase._get_url(other_user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data doesn't contain info about skill_points (it can be seen only by profile owner)
+        self.assertIsNone(response.data.get('skill_points', None))
+
+
 class UserCardTestCase(TestCase):
     def test_assigning(self):
         card = Card()
