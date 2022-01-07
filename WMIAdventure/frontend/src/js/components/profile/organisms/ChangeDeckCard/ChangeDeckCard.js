@@ -23,6 +23,7 @@ import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
+import upgrade from '../../../../../assets/icons/upgrade-light.svg';
 
 /**
  * Props:
@@ -114,7 +115,6 @@ class ChangeDeckCard extends React.Component {
             cardPositionInDeck: this.props.deck.currentlyEditingIdx + 1,
         });
     }
-
 
     onNewCardChoose = (event, id, name, subject, tooltip, image, levels, access) => {
         if (!access)
@@ -222,22 +222,23 @@ class ChangeDeckCard extends React.Component {
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={this.props.onPopup ? '0px' : '48px'}
+                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '48px'}
                                closeHandler={this.close}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
                                                 gap={'10px'}>
-                                <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
+                                <FlexGapContainer setWidth={'100%'} setPadding={'0px 26px'}
                                                   space={true}>
                                     <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
                                                      cardLevel={this.state.selectedCard.level}
-                                                     cardImage={this.state.selectedCard.image}>
-
-                                    </CompactCardView>
+                                                     cardImage={this.state.selectedCard.image}/>
                                     <ColumnGapContainer gap={'10px'}>
                                         <UserInfo label={'Pozycja w talii'} value={this.getInputButton(false)}/>
                                         <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
                                             Podgląd
+                                        </ButtonWithIcon>
+                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy} access>
+                                            Ulepsz
                                         </ButtonWithIcon>
                                         <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
                                                         handler={this.onNewCardSave}>
