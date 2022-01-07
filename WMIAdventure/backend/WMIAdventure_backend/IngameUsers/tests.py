@@ -406,6 +406,8 @@ class UserDeckViewTestCase(TestCase):
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
 
+
+class UserCreationAndExperienceTestCase(TestCase):
     def test_should_exp_get_created_on_user_creation(self):
         user = get_user_model().objects.create_user(username='expTest', password='12345')
         on_user_create(None, user)
@@ -413,7 +415,7 @@ class UserDeckViewTestCase(TestCase):
         created_exp = UserStats.objects.get(profile=profile)
         self.assertEqual(created_exp.exp, 0)
 
-    def test_should_exp_get_created_on_user_creation(self):
+    def test_should_exp_get_created_on_user_creation2(self):
         user = get_user_model().objects.create_user(username='expTest2', password='12345')
         on_user_create(None, user)
         profile = UserProfile.objects.get(user=user)
@@ -424,6 +426,8 @@ class UserDeckViewTestCase(TestCase):
         serializer = UserProfileSerializer(instance=profile)
         self.assertGreater(serializer.data.get('level', None), 1)
 
+
+class UserProfileSerializerTestCase(TestCase):
     def test_should_serialize_to_level_1_when_exp_is_null(self):
         user = get_user_model().objects.create_user(username='expTest3', password='12345')
         profile = UserProfile.objects.create(user=user)
