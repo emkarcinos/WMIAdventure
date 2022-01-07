@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from cards.models import Card
+from cards.serializers import SimpleCardSerializer
 from . import models
 from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, Deck, UserCard, UserDeck
@@ -188,3 +189,18 @@ class UserDecksSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['user_decks']
+
+
+class UserCardFullInfoSerializer(SimpleCardSerializer):
+    id = serializers.IntegerField(source='info.id')
+    name = serializers.CharField(source='info.name')
+    tooltip = serializers.CharField(source='info.tooltip')
+    subject = serializers.CharField(source='info.subject')
+    image = serializers.FileField(source='info.image')
+
+    class Meta:
+        model = Card
+        fields = [
+            'id', 'name', 'tooltip', 'subject', 'image',
+            'level', 'next_level_cost', 'effects_description', 'effects'
+        ]
