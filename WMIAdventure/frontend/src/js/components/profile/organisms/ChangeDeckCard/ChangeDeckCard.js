@@ -49,7 +49,52 @@ class ChangeDeckCard extends React.Component {
             visible: false,
             opacity: 0,
             cardTranslateY: '-100vh',
+        },
+        upgradeCardViewPopUp: {
+            visible: false,
+            opacity: 0,
+            translateX: '100vw',
         }
+    }
+
+    showUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardViewPopUp: {
+                    visible: true,
+                    opacity: 1,
+                    translateX: '0',
+                }
+            });
+        }, 10);
+    }
+
+    hideUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardViewPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardViewPopUp: {
+                    visible: false,
+                    opacity: 0,
+                    translateX: '100vw',
+                }
+            });
+        }, nextStepAnimationDuration);
     }
 
     showFullCardViewPopUp = () => {
@@ -237,7 +282,8 @@ class ChangeDeckCard extends React.Component {
                                         <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
                                             Podgląd
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy} access>
+                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy}
+                                                        handler={this.showUpgradeCardPopUp} access>
                                             Ulepsz
                                         </ButtonWithIcon>
                                         <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
@@ -266,6 +312,16 @@ class ChangeDeckCard extends React.Component {
                                                   epic={this.state.selectedCard.level === 3}
                                                   setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
                                 </TransBack> : null
+                        }
+                        {
+                            this.state.upgradeCardViewPopUp.visible ?
+                                <p style={{
+                                    zIndex: '1000',
+                                    position: 'absolute',
+                                    top: '100px',
+                                    left: '100px',
+                                    backgroundColor: 'red'
+                                }}>TEST</p> : null
                         }
                     </>
                 </Media>
