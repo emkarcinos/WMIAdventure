@@ -6,13 +6,14 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory, APIClient
 
 from battle.businesslogic.tests.Creator import Creator
-from cards.factories import create_card_with_effect
-from cards.models import Card, CardInfo, CardLevel
+from cards.factories import create_card_with_effect, create_card_with_effects, EffectData
+from cards.models import Card, CardInfo, CardLevel, CardEffect, CardLevelEffects
 from . import views
 from .businesslogic.experience.Experience import Experience
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
-from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
+from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer, \
+    UserCardFullInfoSerializer
 from .signals import on_user_create, user_should_gain_exp
 
 
@@ -439,6 +440,139 @@ class UserDeckViewTestCase(TestCase):
         self.assertEqual(serializer.data.get('exp'), expected_exp)
         self.assertEqual(serializer.data.get('level'), expected_level)
         self.assertEqual(serializer.data.get('percentage'), expected_percentage)
+
+
+def _compare_user_card_full_info_data(test_case: TestCase, card_data: dict, card: Card):
+    """
+    Used when testing everything related to UserCardFullInfoSerializer.
+
+    :param test_case: TestCase class which uses this function.
+    :param card_data: Card data to compare
+    :param card: Card to compare
+    :return: None
+    """
+
+    test_case.assertEqual(card_data['id'], card.info.id)
+    test_case.assertEqual(card_data['name'], card.info.name)
+    test_case.assertEqual(card_data['subject'], card.info.subject)
+    test_case.assertEqual(card_data['tooltip'], card.info.tooltip)
+
+    test_case.assertEqual(card_data['level'], card.level.level)
+    test_case.assertEqual(card_data['next_level_cost'], card.next_level_cost)
+    test_case.assertEqual(card_data['effects_description'], card.effects_description)
+
+    # Assert effects data.
+    # List of effects to compare is created instead of retrieving effects directly from db
+    #  to handle situations where card has multiple effects with equal fields.
+    #  (for example a card which has two effects which deal 10 dmg to the opponent)
+    card_effects_to_compare = list(card.effects.all())
+    for effect_data in card_data['effects']:
+        effect = list(
+            filter(lambda ef: ef.card_effect.id == effect_data['card_effect'] and
+                              ef.target == effect_data['target'] and
+                              ef.power == effect_data['power'] and
+                              ef.range == effect_data['range'],
+                   card_effects_to_compare)
+        )[0]
+        card_effects_to_compare.remove(effect)
+
+    test_case.assertEqual(len(card_effects_to_compare), 0)
+
+
+class UserCardFullInfoSerializerTestCase(TestCase):
+    def setUp(self) -> None:
+        user_profile, _ = create_user_profile_with_deck()
+        self.user_cards = list(user_profile.user_cards.all())
+
+    def test_serialization(self):
+        cards_to_compare = [user_card.card for user_card in self.user_cards]
+
+        for card in cards_to_compare:
+            serializer = UserCardFullInfoSerializer(card)
+            _compare_user_card_full_info_data(self, serializer.data, card)
+
+
+class UserCardsViewTestCase(TestCase):
+    def setUp(self) -> None:
+        # Create user
+        self.user_profile, _ = create_user_profile_with_deck()
+        # Create one more card with more than one level
+        effects_data_common = [
+            EffectData(CardEffect.EffectId.DOUBLEACTION, 0, 0, CardLevelEffects.Target.PLAYER),
+            EffectData(CardEffect.EffectId.DMG, 50, 30, CardLevelEffects.Target.OPPONENT),
+            EffectData(CardEffect.EffectId.HEAL, 50, 30, CardLevelEffects.Target.PLAYER),
+        ]
+        create_card_with_effects(effects_data_common)
+
+        effects_data_epic = \
+            effects_data_common + [EffectData(CardEffect.EffectId.TRUE_DMG, 20, 10, CardLevelEffects.Target.OPPONENT)]
+
+        card_for_user = create_card_with_effects(effects_data_epic, CardLevel.Level.EPIC)
+        # Give this card to user
+        self.user_profile.user_cards.create(card=card_for_user)
+
+        self.client = APIClient()
+
+    def _get_url(self, user_profile):
+        return f'/api/user-profiles/{user_profile.user.id}/cards/'
+
+    def test_get_success(self):
+        """
+        **Scenario:**
+
+        - User is authenticated, has some cards.
+
+        - GET request is performed by this user.
+
+        ---
+
+        **Expected result:**
+
+        - Response is 200 OK, returned data contains all user's cards.
+        """
+
+        self.client.force_authenticate(self.user_profile.user)
+
+        response = self.client.get(self._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), self.user_profile.user_cards.count())
+
+        # Assert cards data in response is correct
+        user_cards_to_compare = [user_card.card for user_card in self.user_profile.user_cards.all()]
+
+        for card_data in response.data:
+            card_to_compare = list(filter(lambda c: c.info.id == card_data['id'], user_cards_to_compare))[0]
+            user_cards_to_compare.remove(card_to_compare)
+            _compare_user_card_full_info_data(self, card_data, card_to_compare)
+
+        self.assertEqual(len(user_cards_to_compare), 0)
+
+    def test_get_not_authenticated(self):
+        response = self.client.get(self._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_another_user_cards(self):
+        """
+        **Scenario:**
+
+        - Authenticated user tries to retrieve other user's cards.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 403 FORBIDDEN.
+        """
+
+        # Authenticate
+        self.client.force_authenticate(self.user_profile.user)
+
+        # Create another user with cards
+        other_user_profile, _ = create_user_profile_with_deck()
+
+        # Try to get other user's cards
+        response = self.client.get(self._get_url(other_user_profile))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class SignalsTestCase(TestCase):
