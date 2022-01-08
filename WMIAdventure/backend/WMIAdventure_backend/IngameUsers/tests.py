@@ -10,10 +10,11 @@ from cards.factories import create_card_with_effect
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from .businesslogic.experience.Experience import Experience
+from .businesslogic.skill_points import calculate_skill_points_gain
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
-from .signals import on_user_create, user_should_gain_exp
+from .signals import on_user_create, user_should_gain_exp, user_gained_exp
 
 
 class UserProfileTestCase(TestCase):
@@ -76,6 +77,56 @@ class UserProfileTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.test_user.delete()
+
+
+class UserViewTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_profile = UserProfileFactory()
+        self.client = APIClient()
+        self.client.force_authenticate(self.user_profile.user)
+
+    @staticmethod
+    def _get_url(user_profile: UserProfile):
+        return f'/api/user-profiles/{user_profile.user.id}/'
+
+    def test_get_and_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view his profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains all his data.
+        """
+
+        response = self.client.get(UserViewTestCase._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data contains info about skill_points (it can only be seen by profile owner)
+        self.assertIsNotNone(response.data.get('skill_points', None))
+
+    def test_get_and_not_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view other user's profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains subset of user's data.
+        """
+
+        other_user_profile = UserProfileFactory()
+        response = self.client.get(UserViewTestCase._get_url(other_user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data doesn't contain info about skill_points (it can be seen only by profile owner)
+        self.assertIsNone(response.data.get('skill_points', None))
 
 
 class UserCardTestCase(TestCase):
@@ -405,6 +456,8 @@ class UserDeckViewTestCase(TestCase):
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
 
+
+class UserCreationAndExperienceTestCase(TestCase):
     def test_should_exp_get_created_on_user_creation(self):
         user = get_user_model().objects.create_user(username='expTest', password='12345')
         on_user_create(None, user)
@@ -412,7 +465,7 @@ class UserDeckViewTestCase(TestCase):
         created_exp = UserStats.objects.get(profile=profile)
         self.assertEqual(created_exp.exp, 0)
 
-    def test_should_exp_get_created_on_user_creation(self):
+    def test_should_exp_get_created_on_user_creation2(self):
         user = get_user_model().objects.create_user(username='expTest2', password='12345')
         on_user_create(None, user)
         profile = UserProfile.objects.get(user=user)
@@ -423,6 +476,8 @@ class UserDeckViewTestCase(TestCase):
         serializer = UserProfileSerializer(instance=profile)
         self.assertGreater(serializer.data.get('level', None), 1)
 
+
+class UserProfileSerializerTestCase(TestCase):
     def test_should_serialize_to_level_1_when_exp_is_null(self):
         user = get_user_model().objects.create_user(username='expTest3', password='12345')
         profile = UserProfile.objects.create(user=user)
@@ -452,3 +507,29 @@ class SignalsTestCase(TestCase):
 
         users_stats.refresh_from_db()
         self.assertEqual(users_stats.exp, expected_exp)
+
+    def test_user_gained_exp(self):
+        """
+        **Scenario:**
+
+        - User leveled up from level 1 to 3.
+
+        - user_gained_exp is called
+
+        ---
+
+        **Expected result:**
+
+        - User has proper amount of skill points in database.
+        """
+
+        user_stats: UserStats = UserProfileFactory().user_stats
+
+        level_before = 1
+        level_after = 3
+
+        expected_skill_points = user_stats.skill_points + calculate_skill_points_gain(level_before, level_after)
+
+        user_gained_exp(user_stats, level_before, level_after)
+        user_stats.refresh_from_db()
+        self.assertEqual(user_stats.skill_points, expected_skill_points)
