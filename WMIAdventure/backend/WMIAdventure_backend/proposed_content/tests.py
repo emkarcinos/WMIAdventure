@@ -2,12 +2,16 @@ from django.test import TestCase
 from rest_framework import serializers, status
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+from IngameUsers.factories import UserProfileFactory
+from IngameUsers.models import UserProfile
 from battle.businesslogic.effects.EffectFactory import EffectFactory
 from cards.businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
+from cards.factories import CardInfoFactory, CardFactory
 from cards.models import CardLevel, CardEffect, CardInfo, CardLevelEffects, Card
 from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo, ProposedCard, ProposedCardLevelEffects
 from proposed_content.serializers import WholeProposedCardSerializer
+from proposed_content.signals import give_new_card_to_all_users
 from proposed_content.views import WholeProposedCardList, WholeProposedCardDetails, AcceptProposedCardView
 from users.models import User
 
@@ -1212,3 +1216,35 @@ class AcceptProposedCardViewTestCase(TestCase):
 
         levels_count = card_after_acceptance.levels.count()
         self.assertEqual(levels_count, expected_levels_count)
+
+
+class SignalsTestCase(TestCase):
+    def test_give_new_card_to_all_users(self):
+        """
+        TODO: Remove function `give_new_card_to_all_users` and this test after gaining cards is implemented.
+
+        **Scenario:**
+
+        - Some users exist, new card with more than one level is accepted and created.
+
+        - give_new_card_to_all_users is called
+
+        ---
+
+        **Expected result:**
+
+        - All users own this card with lowest level.
+        """
+
+        users: list[UserProfile] = [UserProfileFactory() for i in range(4)]
+
+        new_card_info = CardInfoFactory()
+        card_rare = CardFactory(info=new_card_info, level=CardLevel.objects.get(pk=2))
+        card_epic = CardFactory(info=new_card_info, level=CardLevel.objects.get(pk=3))
+
+        give_new_card_to_all_users(new_card_info)
+
+        # Assert that all users were given new card with lowest level
+        for user in users:
+            self.assertEqual(user.user_cards.count(), 1)
+            user.user_cards.get(card__id=card_rare.id)

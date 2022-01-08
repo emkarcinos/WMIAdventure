@@ -11,7 +11,8 @@ from cards.serializers import WholeCardSerializer
 from proposed_content.models import ProposedCardInfo
 from proposed_content.permissions import CanEdit
 from proposed_content.serializers import WholeProposedCardSerializer
-from utils.errors import registration_ratelimit_error, card_submission_ratelimit_error
+from proposed_content.signals import give_new_card_to_all_users
+from utils.errors import card_submission_ratelimit_error
 from utils.permissions import IsAbleToEdit
 
 
@@ -47,6 +48,10 @@ def accept_proposed_card(proposed_card: ProposedCardInfo):
 
     owner_exp = UserStats.objects.get(profile__user_id=owner_id)
     user_should_gain_exp(owner_exp, 200)
+
+    # TODO: Remove this when gaining cards is implemented.
+    if created:
+        give_new_card_to_all_users(new_card)
 
     return accepted_card_serializer, created
 
