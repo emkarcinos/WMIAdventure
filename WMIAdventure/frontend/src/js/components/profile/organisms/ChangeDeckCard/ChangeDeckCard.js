@@ -51,7 +51,7 @@ class ChangeDeckCard extends React.Component {
             opacity: 0,
             cardTranslateY: '-100vh',
         },
-        upgradeCardViewPopUp: {
+        upgradeCardSectionPopUp: {
             visible: false,
             opacity: 0,
             translateX: '100vw',
@@ -60,7 +60,7 @@ class ChangeDeckCard extends React.Component {
 
     showUpgradeCardPopUp = () => {
         this.setState({
-            upgradeCardViewPopUp: {
+            upgradeCardSectionPopUp: {
                 visible: true,
                 opacity: 0,
                 translateX: '100vw',
@@ -69,7 +69,7 @@ class ChangeDeckCard extends React.Component {
 
         setTimeout(() => {
             this.setState({
-                upgradeCardViewPopUp: {
+                upgradeCardSectionPopUp: {
                     visible: true,
                     opacity: 1,
                     translateX: '0',
@@ -80,7 +80,7 @@ class ChangeDeckCard extends React.Component {
 
     hideUpgradeCardPopUp = () => {
         this.setState({
-            upgradeCardViewPopUp: {
+            upgradeCardSectionPopUp: {
                 visible: true,
                 opacity: 0,
                 translateX: '100vw',
@@ -89,7 +89,7 @@ class ChangeDeckCard extends React.Component {
 
         setTimeout(() => {
             this.setState({
-                upgradeCardViewPopUp: {
+                upgradeCardSectionPopUp: {
                     visible: false,
                     opacity: 0,
                     translateX: '100vw',
@@ -263,6 +263,38 @@ class ChangeDeckCard extends React.Component {
         setTimeout(this.props.closeHandler, 300);
     }
 
+    renderFullCardView() {
+        if (this.state.fullCardViewPopUp.visible) {
+            return (
+                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
+                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
+                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
+                                  cardName={this.state.selectedCard.name}
+                                  cardLevel={this.state.selectedCard.level}
+                                  cardImage={this.state.selectedCard.image}
+                                  cardSubject={this.state.selectedCard.subject}
+                                  cardTooltip={this.state.selectedCard.tooltip}
+                                  description={this.state.selectedCard.description}
+                                  common={this.state.selectedCard.level === 1}
+                                  gold={this.state.selectedCard.level === 2}
+                                  epic={this.state.selectedCard.level === 3}
+                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
+                </TransBack>
+            );
+        }
+    }
+
+    renderUpgradeCardSection() {
+        if (this.state.upgradeCardSectionPopUp.visible) {
+            return (
+                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setTop={'0'}
+                       setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
+                    <UpgradeCardSection/>
+                </PopUp>
+            );
+        }
+    }
+
     render() {
         return (
             <>
@@ -297,30 +329,8 @@ class ChangeDeckCard extends React.Component {
                                 {this.renderCardChoose()}
                             </ColumnGapContainer>
                         </PopUp>
-                        {
-                            this.state.fullCardViewPopUp.visible ?
-                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
-                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
-                                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
-                                                  cardName={this.state.selectedCard.name}
-                                                  cardLevel={this.state.selectedCard.level}
-                                                  cardImage={this.state.selectedCard.image}
-                                                  cardSubject={this.state.selectedCard.subject}
-                                                  cardTooltip={this.state.selectedCard.tooltip}
-                                                  description={this.state.selectedCard.description}
-                                                  common={this.state.selectedCard.level === 1}
-                                                  gold={this.state.selectedCard.level === 2}
-                                                  epic={this.state.selectedCard.level === 3}
-                                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
-                                </TransBack> : null
-                        }
-                        {
-                            this.state.upgradeCardViewPopUp.visible ?
-                                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setTop={'0'}
-                                       setTranslateX={this.state.upgradeCardViewPopUp.translateX}>
-                                    <UpgradeCardSection/>
-                                </PopUp> : null
-                        }
+                        {this.renderFullCardView()}
+                        {this.renderUpgradeCardSection()}
                     </>
                 </Media>
                 <Media query={desktop}>

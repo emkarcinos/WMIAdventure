@@ -9,8 +9,57 @@ import theme from "../../../../utils/theme";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Description from "./styled-components/Description";
+import {nextStepAnimationDuration} from "../../../../utils/globals";
 
 class UpgradeCardSection extends React.Component {
+    state = {
+        upgradeApprovePopUp: {
+            visible: false,
+            opacity: 0,
+            translateY: '-100vh',
+        }
+    }
+
+    showUpgradeApprovePopUp = () => {
+        this.setState({
+            upgradeApprovePopUp: {
+                visible: true,
+                opacity: 0,
+                translateY: '-100vh',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeApprovePopUp: {
+                    visible: true,
+                    opacity: 1,
+                    translateY: '0',
+                }
+            });
+        }, 10);
+    }
+
+    hideUpgradeApprovePopUp = () => {
+        this.setState({
+            upgradeApprovePopUp: {
+                visible: true,
+                opacity: 0,
+                translateY: '-100vh',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeApprovePopUp: {
+                    visible: false,
+                    opacity: 0,
+                    translateY: '-100vh',
+                }
+            });
+        }, nextStepAnimationDuration);
+    }
+
     render() {
         return (
             <ColumnGapContainer gap={'10px'} setMargin={'32px 0'}>
@@ -42,9 +91,15 @@ class UpgradeCardSection extends React.Component {
                     <UserInfo label={'Posiadane punkty'} points={'17'} value={'PN'}/>
                 </FlexGapContainer>
                 <ButtonWithIcon icon={upgrade} color={theme.colors.greenyBluey}
-                                handler={this.showUpgradeCardPopUp} access>
+                                handler={this.showUpgradeApprovePopUp} access>
                     Ulepsz
                 </ButtonWithIcon>
+                {
+                    this.state.upgradeApprovePopUp.visible ?
+                        <p style={{position: 'absolute', top: '100px', left: '100px', zIndex: '1000'}}>
+                            TEST
+                        </p> : null
+                }
             </ColumnGapContainer>
         );
     }
