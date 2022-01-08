@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory, APIClient
 
 from battle.businesslogic.tests.Creator import Creator
-from cards.factories import create_card_with_effect
+from cards.factories import create_card_with_effect, CardFactory, CardInfoFactory
 from cards.models import Card, CardInfo, CardLevel
 from . import views
 from .businesslogic.experience.Experience import Experience
@@ -14,6 +14,7 @@ from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
 from .signals import on_user_create, user_should_gain_exp
+from .views import _give_all_not_owned_cards_to_user
 
 
 class UserProfileTestCase(TestCase):
@@ -452,3 +453,44 @@ class SignalsTestCase(TestCase):
 
         users_stats.refresh_from_db()
         self.assertEqual(users_stats.exp, expected_exp)
+
+
+# TODO: When gaining cards is implemented remove function _give_all_not_owned_cards_to_user and this test.
+class GiveAllCardsTestCase(TestCase):
+    def test_give_all_not_owned_cards_to_user(self):
+        """
+        **Scenario:**
+
+        - There is user with not all cards. In database there are cards objects with many levels.
+
+        - _give_all_not_owned_cards_to_user function is called.
+
+        ---
+
+        **Expected result:**
+
+        - User is given only cards with minimal levels that he didn't own before.
+        """
+
+        # Create CardInfo object with 3 levels which user is not owner of
+        card_info = CardInfoFactory()
+        expected_common_card_to_give = CardFactory(info=card_info, level=CardLevel.objects.get(pk=1))
+        card_rare = CardFactory(info=card_info, level=CardLevel.objects.get(pk=2))
+        card_epic = CardFactory(info=card_info, level=CardLevel.objects.get(pk=3))
+
+        # Create card which user will own
+        owned_card_info = CardInfoFactory()
+        not_owned_common = CardFactory(info=owned_card_info, level=CardLevel.objects.get(pk=1))
+        owned_epic = CardFactory(info=owned_card_info, level=CardLevel.objects.get(pk=3))
+
+        # Create user, give him one card and call function
+        user_profile = UserProfileFactory()
+        user_profile.user_cards.create(card=owned_epic)
+        given_cards_count = _give_all_not_owned_cards_to_user(user_profile)
+
+        self.assertEqual(given_cards_count, 1)
+        self.assertEqual(user_profile.user_cards.count(), 2)
+
+        # Assert user was given correct card with lowest level
+        actual_given_common_card = user_profile.user_cards.get(card__level=1).card
+        self.assertEqual(actual_given_common_card.id, expected_common_card_to_give.id)
