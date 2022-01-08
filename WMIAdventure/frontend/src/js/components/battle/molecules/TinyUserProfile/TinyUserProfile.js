@@ -11,6 +11,18 @@ import UserLevel from '../../molecules/UserLevel';
 import UserLabel from "../../../global/atoms/UserLabel";
 
 class TinyUserProfile extends React.Component {
+
+    renderSkillPoints = (showSkillPoints) => {
+        if (showSkillPoints) {
+            return (
+                <UserLabel skillPoints={25}
+                              number={25}
+                              setMargin={'0'}
+                />
+            )
+        }
+    }
+
     render() {
         return (
             <Article setMargin={this.props.setMargin} vertical={this.props.vertical}>
@@ -25,6 +37,7 @@ class TinyUserProfile extends React.Component {
                         <UserLabel level={this.props.user.level}
                                    number={this.props.user.level}
                                    setMargin={'0'}/>
+                        {this.renderSkillPoints(this.props.showSkillPoints)}
                         {/*<UserLabel rank={'1'} number={'1'}*/}
                         {/*           setMargin={'0'}/>*/}
                     </FlexGapContainer>
