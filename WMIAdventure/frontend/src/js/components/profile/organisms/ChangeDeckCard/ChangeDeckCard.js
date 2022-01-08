@@ -24,7 +24,7 @@ import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/glob
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 import upgrade from '../../../../../assets/icons/upgrade-light.svg';
-import UpgradeCardSection from "../../molecules/UpgradeCardSetion";
+import UpgradeCardSection from "../../molecules/UpgradeCardSection";
 
 /**
  * Props:

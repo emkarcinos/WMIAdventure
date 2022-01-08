@@ -7,11 +7,13 @@ const Div = styled.div`
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  position: ${({setPosition}) => setPosition ? setPosition : 'absolute'};
   top: ${({setTop}) => setTop ? setTop : '56px'};
   left: 0;
-  height: calc(100vh - 48px);
-  width: 100%;
+  width: ${({setWidth}) => setWidth ? setWidth : '100%'};
+  height: ${({setHeight}) => setHeight ? setHeight : 'calc(100vh - 48px)'};
+  max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'none'};
+  max-height: ${({setMaxHeight}) => setMaxHeight ? setMaxHeight : 'none'};
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   z-index: 5;

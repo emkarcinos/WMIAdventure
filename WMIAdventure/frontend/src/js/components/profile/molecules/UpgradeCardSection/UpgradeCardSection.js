@@ -10,6 +10,8 @@ import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import CompactCardView from "../../../global/atoms/CompactCardView";
 import Description from "./styled-components/Description";
 import {nextStepAnimationDuration} from "../../../../utils/globals";
+import PopUp from "../../../global/organisms/PopUp";
+import UpgradeApprove from "../../atoms/UpgradeApprove";
 
 class UpgradeCardSection extends React.Component {
     state = {
@@ -60,9 +62,21 @@ class UpgradeCardSection extends React.Component {
         }, nextStepAnimationDuration);
     }
 
+    renderUpgradeApprove() {
+        if (this.state.upgradeApprovePopUp.visible) {
+            return (
+                <PopUp visible closeHandler={this.hideUpgradeApprovePopUp} setHeight={'auto'} setTop={'0'}
+                       setTranslateY={this.state.upgradeApprovePopUp.translateY}>
+                    <UpgradeApprove/>
+                </PopUp>
+            );
+        }
+
+    }
+
     render() {
         return (
-            <ColumnGapContainer gap={'10px'} setMargin={'32px 0'}>
+            <ColumnGapContainer as={'section'} gap={'10px'} setMargin={'32px 0'}>
                 <H2>
                     Ulepsz kartę
                 </H2>
@@ -94,12 +108,7 @@ class UpgradeCardSection extends React.Component {
                                 handler={this.showUpgradeApprovePopUp} access>
                     Ulepsz
                 </ButtonWithIcon>
-                {
-                    this.state.upgradeApprovePopUp.visible ?
-                        <p style={{position: 'absolute', top: '100px', left: '100px', zIndex: '1000'}}>
-                            TEST
-                        </p> : null
-                }
+                {this.renderUpgradeApprove()}
             </ColumnGapContainer>
         );
     }
