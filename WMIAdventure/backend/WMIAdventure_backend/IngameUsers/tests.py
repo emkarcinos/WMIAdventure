@@ -13,8 +13,7 @@ from .businesslogic.experience.Experience import Experience
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
-from .signals import on_user_create, user_should_gain_exp
-from .views import _give_all_not_owned_cards_to_user
+from .signals import on_user_create, user_should_gain_exp, _give_all_not_owned_cards_to_user
 
 
 class UserProfileTestCase(TestCase):

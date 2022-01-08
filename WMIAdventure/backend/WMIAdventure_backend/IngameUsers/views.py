@@ -1,4 +1,3 @@
-from django.db.models import Q, F, Min
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
@@ -7,12 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from cards.models import CardInfo
 from users.models import User
 from . import models
 from . import serializers
 from .businesslogic.experience.Experience import Experience
-from .models import UserProfile, UserCard
+from .models import UserProfile
 from .permissions import IsOwner, CanEditProfile, IsDeckOwner
 from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer
 
@@ -90,34 +88,6 @@ class UserDecksView(RetrieveAPIView):
     queryset = UserProfile.objects.all()
 
 
-def _give_all_not_owned_cards_to_user(user_profile) -> int:
-    """
-    Gives all cards with minimal level to user if he doesn't own them.
-
-    TODO: REMOVE THIS IN THE FUTURE. For now all users should have all cards. This function will be removed when
-     there will be some way of gaining cards implemented.
-
-    :return: How many cards were given to user.
-    """
-
-    owned_infos = user_profile.user_cards.annotate(info=F('card__info')).values_list('info', flat=True)
-
-    # If user is not owner of all cards then give him those missing cards with minimal level
-    if owned_infos.count() < CardInfo.objects.count():
-        not_owned_infos = CardInfo.objects.filter(~Q(pk__in=owned_infos))
-        cards_to_give = []
-        for card_info in not_owned_infos:
-            # Retrieving Card related to CardInfo with minimal level
-            min_level = card_info.levels.aggregate(Min('level'))['level__min']
-            cards_to_give.append(card_info.levels.get(level=min_level))
-
-        new_user_cards = [UserCard(user_profile=user_profile, card=card) for card in cards_to_give]
-        UserCard.objects.bulk_create(new_user_cards)
-        return len(cards_to_give)
-
-    return 0
-
-
 class UserDeckView(RetrieveUpdateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsDeckOwner]
@@ -137,8 +107,6 @@ class UserDeckView(RetrieveUpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         deck_to_update = self.get_object()
-        # TODO: Remove this when gaining cards is implemented
-        _give_all_not_owned_cards_to_user(request.user.userprofile)
 
         serializer: DeckSerializer = self.get_serializer(instance=deck_to_update, data=request.data)
         serializer.is_valid(raise_exception=True)
