@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const Div = styled.div`
   display: ${({visible}) => visible ? 'flex' : 'none'};
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
-  transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
+  transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'},
+  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   flex-direction: column;
   align-items: center;
   position: absolute;

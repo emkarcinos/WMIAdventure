@@ -24,6 +24,7 @@ import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/glob
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 import upgrade from '../../../../../assets/icons/upgrade-light.svg';
+import UpgradeCardSection from "../../molecules/UpgradeCardSetion";
 
 /**
  * Props:
@@ -315,13 +316,10 @@ class ChangeDeckCard extends React.Component {
                         }
                         {
                             this.state.upgradeCardViewPopUp.visible ?
-                                <p style={{
-                                    zIndex: '1000',
-                                    position: 'absolute',
-                                    top: '100px',
-                                    left: '100px',
-                                    backgroundColor: 'red'
-                                }}>TEST</p> : null
+                                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setTop={'0'}
+                                       setTranslateX={this.state.upgradeCardViewPopUp.translateX}>
+                                    <UpgradeCardSection/>
+                                </PopUp> : null
                         }
                     </>
                 </Media>
