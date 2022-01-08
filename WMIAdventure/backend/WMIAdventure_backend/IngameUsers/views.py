@@ -13,8 +13,8 @@ from . import models
 from . import serializers
 from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, UserCard
-from .permissions import IsOwner, CanEditProfile, IsDeckOwner
-from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer
+from .permissions import IsOwner, CanEditProfile, IsDeckOwner, IsCardsOwner
+from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer, UserCardSerializer
 
 
 class UserPagination(PageNumberPagination):
@@ -152,3 +152,13 @@ class UserLevelView(APIView):
             return Response(serializer.data)
         except UserProfile.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class UserCardsView(generics.ListAPIView):
+    serializer_class = UserCardSerializer
+    permission_classes = [IsAuthenticated, IsCardsOwner]
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        user_profile = get_object_or_404(UserProfile.objects.all(), pk=user_id)
+        return user_profile.user_cards.all()
