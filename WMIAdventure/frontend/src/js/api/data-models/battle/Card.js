@@ -60,6 +60,27 @@ export const cardsFromDeckData = async (data) => {
     return cards;
 }
 
+/**
+ * Converts raw user cards data received from API to array of Card objects with full data.
+ * @param data Raw data from API which contains only id and level for each card.
+ * @returns {Promise<[]>} Array of Card objects with full data.
+ */
+export const cardsFromUserCardsData = async (data) => {
+    const cards = [];
+
+    const promises = []
+    for (const userCard of data) {
+        const card = new Card(userCard.id, userCard.level);
+        promises.push(new Promise(
+                resolve => {card.fetchFieldsFromBackend(getCardById).then(() => resolve());}
+            )
+        )
+        cards.push(card);
+    }
+    await Promise.all(promises);
+    return cards;
+}
+
 export const nullCard = () => {
     return new Card(0, 1);
 }
