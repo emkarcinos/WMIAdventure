@@ -30,9 +30,10 @@ def _give_all_not_owned_cards_to_user(user_profile) -> int:
         not_owned_infos = CardInfo.objects.filter(~Q(pk__in=owned_infos))
         cards_to_give = []
         for card_info in not_owned_infos:
-            # Retrieving Card related to CardInfo with minimal level
-            min_level = card_info.levels.aggregate(Min('level'))['level__min']
-            cards_to_give.append(card_info.levels.get(level=min_level))
+            if card_info.levels.count() > 0:  # Check if card has levels
+                # Retrieving Card related to CardInfo with minimal level
+                min_level = card_info.levels.aggregate(Min('level'))['level__min']
+                cards_to_give.append(card_info.levels.get(level=min_level))
 
         new_user_cards = [UserCard(user_profile=user_profile, card=card) for card in cards_to_give]
         UserCard.objects.bulk_create(new_user_cards)
