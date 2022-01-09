@@ -1,4 +1,3 @@
-from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
@@ -7,12 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from cards.models import Card
 from users.models import User
 from . import models
 from . import serializers
 from .businesslogic.experience.Experience import Experience
-from .models import UserProfile, UserCard
+from .models import UserProfile
 from .permissions import IsOwner, CanEditProfile, IsDeckOwner, IsCardsOwner
 from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer, UserCardSerializer
 
@@ -111,25 +109,8 @@ class UserDeckView(RetrieveUpdateAPIView):
         user_profile = user.userprofile
         return user_profile.user_decks.all()
 
-    def _give_all_not_owned_cards_to_user(self, user_profile, request_data):
-        """
-        Gives all cards to user if he doesn't own them.
-
-        TODO: REMOVE THIS IN THE FUTURE. For now all users should have all cards, this method will be removed when
-         there will be some way of gaining cards from battle or there will be some other way.
-        """
-
-        # If user is not owner of all cards then give him all cards
-        if user_profile.user_cards.all().count() != Card.objects.all().count():
-            user_cards_ids = user_profile.user_cards.values_list('card_id', flat=True)
-            not_owned_cards = Card.objects.filter(~Q(pk__in=user_cards_ids))
-            new_user_cards = [UserCard(user_profile=user_profile, card=card) for card in not_owned_cards]
-            UserCard.objects.bulk_create(new_user_cards)
-
     def update(self, request, *args, **kwargs):
         deck_to_update = self.get_object()
-        self._give_all_not_owned_cards_to_user(request.user.userprofile,
-                                               request.data)  # TODO: Remove this when gaining cards is implemented
 
         serializer: DeckSerializer = self.get_serializer(instance=deck_to_update, data=request.data)
         serializer.is_valid(raise_exception=True)
