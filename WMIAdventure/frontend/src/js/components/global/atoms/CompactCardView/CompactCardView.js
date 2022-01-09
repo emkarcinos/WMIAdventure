@@ -58,7 +58,7 @@ class CompactCardView extends React.Component {
     setStateFromProps = () => {
         this.props.cardName ? this.setState({cardName: this.props.cardName}) : null;
         this.props.cardLevel ? this.setState({cardLevel: this.props.cardLevel}) : null;
-        this.props.cardImage ? this.setState({cardImage: this.props.cardImage}) : null;
+        this.setState({cardImage: this.props.cardImage});
     }
 
     propsChanged = (prevProps) =>
