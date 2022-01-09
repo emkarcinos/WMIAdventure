@@ -1,7 +1,6 @@
 import React from "react";
 import PopUp from "../../../global/organisms/PopUp";
 import Search from "../../../global/atoms/Search";
-import {getAllCards} from "../../../../storage/cards/cardStorage";
 import Ul from "./styled-components/Ul";
 import CardChooseDiv from "./styled-components/CardChooseDiv";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
@@ -15,14 +14,14 @@ import pencilGrey from "../../../../../assets/icons/pencil-grey.svg";
 import eye from "../../../../../assets/icons/eye.svg";
 import pencilWhite from "../../../../../assets/icons/pencil.svg"
 import theme from "../../../../utils/theme";
-import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
-import Card from "../../../card-editor/atoms/Card";
-import {updateCurrentUserDeck} from "../../../../storage/user/userData";
+import {cardsFromUserCardsData, nullCard} from "../../../../api/data-models/battle/Card";
+import {getCurrentUserCards, updateCurrentUserDeck} from "../../../../storage/user/userData";
 import TransBack from "../../../global/organisms/TransBack";
 import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
+import UserCard from "../../atoms/UserCard";
 
 /**
  * Props:
@@ -32,17 +31,12 @@ import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/Ed
 class ChangeDeckCard extends React.Component {
     state = {
         searchInput: '',
+        /**
+         * @type {[Card]}
+         */
         allCards: [],
         setTranslateY: '100vh',
-        selectedCard: {
-            id: 0,
-            level: 1,
-            name: '',
-            subject: '',
-            tooltip: '',
-            description: '',
-            image: null
-        },
+        selectedCard: nullCard(),
         cardPositionInDeck: 1,
         fullCardViewPopUp: {
             visible: false,
@@ -97,7 +91,8 @@ class ChangeDeckCard extends React.Component {
     }
 
     fetchCards = async () => {
-        const cards = await getAllCards();
+        const userCards = await getCurrentUserCards();
+        const cards = await cardsFromUserCardsData(userCards);
         this.setState({allCards: cards});
     }
 
@@ -116,35 +111,18 @@ class ChangeDeckCard extends React.Component {
     }
 
 
-    onNewCardChoose = (event, id, name, subject, tooltip, image, levels, access) => {
+    onNewCardChoose = (event, id, access) => {
         if (!access)
             return;
-
-        // TODO: If we will have levels implemented change this
-        const description = this.state.allCards.filter(c => c.id === id)[0].levels[0].effects_description;
+        const chosenCard = this.state.allCards.filter(card => card.id === id)[0];
         this.setState({
-            selectedCard: {
-                id: id,
-                level: 1,
-                name: name,
-                subject: subject,
-                tooltip: tooltip,
-                image: image,
-                description: description
-            }
+            selectedCard: chosenCard
         })
     }
 
     onNewCardSave = async () => {
-        const selectedCard = this.state.selectedCard;
-        const newCard = new ModelCard(selectedCard.id, 1);
-        newCard.name = selectedCard.name;
-        newCard.subject = selectedCard.subject;
-        newCard.tooltip = selectedCard.tooltip;
-        newCard.description = selectedCard.description;
-        newCard.image = selectedCard.image;
         const insertCommand = new InsertCardAtPositionCommand(this.props.deck);
-        const didSave = insertCommand.execute(newCard, this.state.cardPositionInDeck);
+        const didSave = insertCommand.execute(this.state.selectedCard, this.state.cardPositionInDeck);
         if (!didSave)
             return;
 
@@ -167,12 +145,13 @@ class ChangeDeckCard extends React.Component {
                             this.state.allCards.map((card) => {
                                 return (
                                     <React.Fragment key={`card-${card.id}`}>
-                                        <Card id={card.id} name={card.name}
+                                        <UserCard id={card.id} name={card.name}
                                               subject={card.subject}
                                               tooltip={card.tooltip}
                                               image={card.image}
                                               searchInput={this.state.searchInput}
-                                              levels={card.levels}
+                                              level={card.level}
+                                              description={card.description}
                                               access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
                                               chosenCardHandler={this.onNewCardChoose}/>
                                     </React.Fragment>
@@ -284,7 +263,9 @@ class ChangeDeckCard extends React.Component {
                                                   cardSubject={this.state.selectedCard.subject}
                                                   cardTooltip={this.state.selectedCard.tooltip}
                                                   description={this.state.selectedCard.description}
-                                                  common
+                                                  common={this.state.selectedCard.level === 1}
+                                                  gold={this.state.selectedCard.level === 2}
+                                                  epic={this.state.selectedCard.level === 3}
                                     />
                                     <ColumnGapContainer setHeight={'100%'} setWidth={'300px'}>
                                         <P>Wymień na</P>
