@@ -287,7 +287,8 @@ class ChangeDeckCard extends React.Component {
     renderUpgradeCardSection() {
         if (this.state.upgradeCardSectionPopUp.visible) {
             return (
-                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setTop={'0'}
+                <PopUp visible closeHandler={this.hideUpgradeCardPopUp}
+                       setAlignment={'center'} setTop={this.props.onPopup ? '0' : '56px'}
                        setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
                     <UpgradeCardSection/>
                 </PopUp>
@@ -300,7 +301,7 @@ class ChangeDeckCard extends React.Component {
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '48px'}
+                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '56px'}
                                closeHandler={this.close}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}

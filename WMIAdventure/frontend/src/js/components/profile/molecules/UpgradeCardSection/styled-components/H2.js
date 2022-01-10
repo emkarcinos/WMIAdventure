@@ -4,7 +4,7 @@ const H2 = styled.h2`
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
   font-weight: ${({theme}) => theme.weight.medium};
-  margin: 32px 0 0 0;
+  margin: 0;
   color: ${({theme}) => theme.colors.dark};
   text-transform: uppercase;
 `;

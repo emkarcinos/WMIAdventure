@@ -97,12 +97,12 @@ class UpgradeCardSection extends React.Component {
 
     render() {
         return (
-            <ColumnGapContainer as={'section'} gap={'10px'} setMargin={'32px 0'}>
+            <ColumnGapContainer as={'section'} gap={'10px'} setMargin={'0'}>
                 <H2>
                     Ulepsz kartę
                 </H2>
                 <FlexGapContainer gap={'12px'}>
-                    <CompactCardView decorationHeight={'24px'} setWidth={'132px'}
+                    <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
                                      cardLevel={1} cardName={'placeholder'}/>
                     <Description>
@@ -113,7 +113,7 @@ class UpgradeCardSection extends React.Component {
                     Na
                 </On>
                 <FlexGapContainer gap={'12px'}>
-                    <CompactCardView decorationHeight={'24px'} setWidth={'132px'}
+                    <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
                                      cardLevel={2} cardName={'placeholder'}/>
                     <Description>

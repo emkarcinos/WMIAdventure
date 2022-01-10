@@ -7,11 +7,12 @@ const Div = styled.div`
   ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   flex-direction: column;
   align-items: center;
+  justify-content: ${({setAlignment}) => setAlignment ? setAlignment : 'flex-start'};
   position: ${({setPosition}) => setPosition ? setPosition : 'absolute'};
   top: ${({setTop}) => setTop ? setTop : '56px'};
   left: 0;
   width: ${({setWidth}) => setWidth ? setWidth : '100%'};
-  height: ${({setHeight}) => setHeight ? setHeight : 'calc(100vh - 48px)'};
+  height: ${({setHeight}) => setHeight ? setHeight : 'calc(100vh - 56px)'};
   max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'none'};
   max-height: ${({setMaxHeight}) => setMaxHeight ? setMaxHeight : 'none'};
   background-color: ${({theme}) => theme.colors.whiteAlmost};
