@@ -12,6 +12,7 @@ import Description from "./styled-components/Description";
 import {nextStepAnimationDuration} from "../../../../utils/globals";
 import PopUp from "../../../global/organisms/PopUp";
 import UpgradeApprove from "../../atoms/UpgradeApprove";
+import TransparentBackground from "./styled-components/TransparentBackground";
 
 class UpgradeCardSection extends React.Component {
     state = {
@@ -19,7 +20,22 @@ class UpgradeCardSection extends React.Component {
             visible: false,
             opacity: 0,
             translateY: '-100vh',
-        }
+        },
+
+        approvePopUpHover: true,
+    }
+
+    hoverTrue = () => {
+        this.setState({approvePopUpHover: true});
+    }
+
+    hoverFalse = () => {
+        this.setState({approvePopUpHover: false});
+    }
+
+    hideByClickOutsideApprovePopUp = () => {
+        if (!this.state.approvePopUpHover)
+            this.hideUpgradeApprovePopUp();
     }
 
     showUpgradeApprovePopUp = () => {
@@ -65,10 +81,15 @@ class UpgradeCardSection extends React.Component {
     renderUpgradeApprove() {
         if (this.state.upgradeApprovePopUp.visible) {
             return (
-                <PopUp visible closeHandler={this.hideUpgradeApprovePopUp} setHeight={'auto'} setTop={'0'}
-                       setTranslateY={this.state.upgradeApprovePopUp.translateY}>
-                    <UpgradeApprove/>
-                </PopUp>
+                <TransparentBackground onClick={this.hideByClickOutsideApprovePopUp}
+                                       setOpacity={this.state.upgradeApprovePopUp.opacity}>
+                    <PopUp hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}
+                           visible closeHandler={this.hideUpgradeApprovePopUp} borderRadius
+                           setHeight={'auto'} setTop={'0'} setPosition={'static'}
+                           setTranslateY={this.state.upgradeApprovePopUp.translateY}>
+                        <UpgradeApprove/>
+                    </PopUp>
+                </TransparentBackground>
             );
         }
 

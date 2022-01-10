@@ -9,6 +9,11 @@ import upgrade from "../../../../../assets/icons/upgrade-light.svg";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 
 class UpgradeApprove extends React.Component {
+
+    upgradeCard = () => {
+        // TODO: implement card upgrade
+    }
+
     render() {
         return (
             <ColumnGapContainer as={'article'} gap={'20px'} setMargin={'32px'}>
@@ -26,7 +31,7 @@ class UpgradeApprove extends React.Component {
                         <UserInfo label={'Saldo punktów po ulepszeniu'}
                                   setPointsColor={theme.colors.red} points={'12'} value={'PN'}/>
                     </FlexGapContainer>
-                    <ButtonWithIcon icon={upgrade} color={theme.colors.greenyBluey}>
+                    <ButtonWithIcon icon={upgrade} handler={this.upgradeCard} color={theme.colors.greenyBluey}>
                         Tak
                     </ButtonWithIcon>
                 </ColumnGapContainer>

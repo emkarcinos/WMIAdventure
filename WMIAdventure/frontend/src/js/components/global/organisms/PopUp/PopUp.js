@@ -10,7 +10,7 @@ class PopUp extends React.Component {
                  onMouseEnter={this.props.hoverTrue} onMouseLeave={this.props.hoverFalse}
                  setOpacity={this.props.setOpacity} setTranslateY={this.props.setTranslateY}
                  setTranslateX={this.props.setTranslateX} setAlignment={this.props.setAlignment}
-                 setTop={this.props.setTop} setPosition={this.props.setPosition}>
+                 setTop={this.props.setTop} setPosition={this.props.setPosition} borderRadius={this.props.borderRadius}>
                 {this.props.children}
                 <Close visible={!this.props.disableClose} onClick={this.props.closeHandler}/>
             </Div>

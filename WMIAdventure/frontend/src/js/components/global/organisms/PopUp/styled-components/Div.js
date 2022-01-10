@@ -19,6 +19,7 @@ const Div = styled.div`
   z-index: 5;
   overflow-x: hidden;
   overflow-y: scroll;
+  border-radius: ${({borderRadius}) => borderRadius ? '10px' : '0'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     position: static;
