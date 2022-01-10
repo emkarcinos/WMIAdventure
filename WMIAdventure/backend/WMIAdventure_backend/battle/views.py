@@ -16,7 +16,7 @@ class BattleView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    per_user_rate = '2/5h'
+    per_user_rate = '1/5h'
     rate = '19/h'
 
     """
@@ -35,7 +35,27 @@ class BattleView(APIView):
     """
 
     def get(self, request, defender_id: int):
-        pass
+        attacker_id = request.user.id
+        if not UserProfile.objects.filter(pk=attacker_id).exists() or \
+                not UserProfile.objects.filter(pk=defender_id).exists():
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        def global_limiting_key(grp, req):
+            return player_limit_key(attacker_id)
+
+        def limiting_key(grp, req):
+            return per_player_limit_key(attacker_id, defender_id)
+
+        global_limit_data = get_usage(request, fn=BattleView, key=global_limiting_key,
+                                      rate=BattleView.rate, increment=False)
+
+        two_users_limit_data = get_usage(request, fn=BattleView, key=limiting_key,
+                                         rate=BattleView.per_user_rate, increment=False)
+
+        return Response(status=status.HTTP_200_OK, data={
+            "perUser": two_users_limit_data,
+            "global": global_limit_data,
+        })
 
     def post(self, request, defender_id: int):
         """
@@ -78,13 +98,15 @@ class BattleView(APIView):
             return per_player_limit_key(attacker_id, defender_id)
 
         usage = get_usage(request, fn=BattleView, key=limiting_key,
-                          rate=BattleView.per_user_rate, increment=True)
+                          rate=BattleView.per_user_rate, increment=False)
         if usage is not None and usage.get('should_limit', False):
             return Response(status=status.HTTP_400_BAD_REQUEST, data=str(usage))
 
         battle.start()
         get_usage(request, fn=BattleView, key=global_limiting_key,
                   rate=BattleView.rate, increment=True)
+        get_usage(request, fn=BattleView, key=limiting_key,
+                  rate=BattleView.per_user_rate, increment=True)
         if battle.outcome.get_winner().id == attacker_id:
             get_usage(request, fn=BattleView, key=limiting_key,
                       rate=BattleView.per_user_rate, increment=True)
