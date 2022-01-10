@@ -290,7 +290,7 @@ class ChangeDeckCard extends React.Component {
                 <PopUp visible closeHandler={this.hideUpgradeCardPopUp}
                        setAlignment={'center'} setTop={this.props.onPopup ? '0' : '56px'}
                        setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
-                    <UpgradeCardSection/>
+                    <UpgradeCardSection cardName={this.state.selectedCard.name}/>
                 </PopUp>
             );
         }

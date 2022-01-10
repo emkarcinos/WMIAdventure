@@ -104,7 +104,7 @@ class UpgradeCardSection extends React.Component {
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
-                                     cardLevel={1} cardName={'placeholder'}/>
+                                     cardLevel={1} cardName={this.props.cardName}/>
                     <Description>
                         Zadaje przeciwnikowi 15 - 25 obrażeń i zatrzymuje gracza na 1 turę.
                     </Description>
@@ -115,7 +115,7 @@ class UpgradeCardSection extends React.Component {
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
-                                     cardLevel={2} cardName={'placeholder'}/>
+                                     cardLevel={2} cardName={this.props.cardName}/>
                     <Description>
                         Zadaje przeciwnikowi 25 - 40 obrażeń, zamienia losowo kolejność
                         kart przeciwnika i zatrzymuje gracza na 1 turę.
