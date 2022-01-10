@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
+
 from django.utils import timezone
 
 _BATTLE_LIMIT_DURATION = timezone.timedelta(hours=1)
@@ -121,3 +122,7 @@ def _remove_redundant_data(now: timezone.datetime):
         _recent_fights.pop(user_id)
 
     return count
+
+
+def per_player_limit_key(attacker_id, defender_id):
+    return f'a:{attacker_id}d:{defender_id}'

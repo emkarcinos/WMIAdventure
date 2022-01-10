@@ -1,3 +1,4 @@
+from ratelimit.core import get_usage
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -5,16 +6,18 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from IngameUsers.models import UserProfile
-from battle.businesslogic.battle_limiting import can_user_fight
-from battle.businesslogic.battle_limiting import when_will_fight_limit_reset
 from battle.businesslogic.BadBattleProfileException import BadBattleProfileException
 from battle.businesslogic.Battle import Battle
+from battle.businesslogic.battle_limiting import can_user_fight, per_player_limit_key
+from battle.businesslogic.battle_limiting import when_will_fight_limit_reset
 from battle.serializers import BattleSerializer
 
 
 class BattleView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    per_user_rate = '2/5h'
 
     """
     **get**:
@@ -58,7 +61,18 @@ class BattleView(APIView):
         except BadBattleProfileException as e:
             return Response(status=status.HTTP_404_NOT_FOUND, data=str(e))
 
+        def limiting_key(grp, req):
+            return per_player_limit_key(attacker_id, defender_id)
+
+        usage = get_usage(request, fn=BattleView, key=limiting_key,
+                          rate=BattleView.per_user_rate, increment=True)
+        if usage is not None and usage.get('should_limit', False):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=str(usage))
+
         battle.start()
+        if battle.outcome.get_winner().id == attacker_id:
+            get_usage(request, fn=BattleView, key=limiting_key,
+                      rate=BattleView.per_user_rate, increment=True)
 
         serializer = BattleSerializer(instance=battle)
         return Response(serializer.data)
