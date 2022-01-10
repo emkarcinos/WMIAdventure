@@ -8,8 +8,7 @@ from rest_framework.views import APIView
 from IngameUsers.models import UserProfile
 from battle.businesslogic.BadBattleProfileException import BadBattleProfileException
 from battle.businesslogic.Battle import Battle
-from battle.businesslogic.battle_limiting import can_user_fight, per_player_limit_key
-from battle.businesslogic.battle_limiting import when_will_fight_limit_reset
+from battle.businesslogic.battle_limiting import per_player_limit_key, player_limit_key
 from battle.serializers import BattleSerializer
 
 
@@ -18,9 +17,10 @@ class BattleView(APIView):
     permission_classes = [IsAuthenticated]
 
     per_user_rate = '2/5h'
+    rate = '19/h'
 
     """
-    **get**:
+    **post**:
 
     - Starts battle between logged in user (retrieved from incoming request, **attacker_id**) and given user to attack
     (**defender_id**).
@@ -28,7 +28,14 @@ class BattleView(APIView):
         - If everything good: serialized battle Outcome.
         - If given user to attack (defender_id) does not exist: 404 Not Found.
         - If you try to attack self (attacker_id == defender_id): 400 Bad Request.
+        
+    **get**
+    
+    - Returns data about current limits.
     """
+
+    def get(self, request, defender_id: int):
+        pass
 
     def post(self, request, defender_id: int):
         """
@@ -45,10 +52,16 @@ class BattleView(APIView):
         if attacker_id == defender_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        can_fight = can_user_fight(attacker_id)
-        if not can_fight:
-            when_can_fight = when_will_fight_limit_reset(attacker_id)
-            return Response(status=status.HTTP_403_FORBIDDEN, data={'seconds_till_limit_reset': when_can_fight.seconds})
+        def global_limiting_key(grp, req):
+            return player_limit_key(attacker_id)
+
+        user_limits = get_usage(request, fn=BattleView, key=global_limiting_key,
+                                rate=BattleView.rate, increment=False)
+        if user_limits is not None and user_limits.get('should_limit', False):
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={'seconds_till_limit_reset': user_limits.get('time_left', False)}
+            )
 
         try:
             attacker_model = UserProfile.objects.get(pk=attacker_id)
@@ -70,6 +83,8 @@ class BattleView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data=str(usage))
 
         battle.start()
+        get_usage(request, fn=BattleView, key=global_limiting_key,
+                  rate=BattleView.rate, increment=True)
         if battle.outcome.get_winner().id == attacker_id:
             get_usage(request, fn=BattleView, key=limiting_key,
                       rate=BattleView.per_user_rate, increment=True)
