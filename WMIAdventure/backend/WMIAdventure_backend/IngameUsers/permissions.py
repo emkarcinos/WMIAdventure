@@ -4,6 +4,12 @@ from rest_framework.permissions import IsAdminUser
 from IngameUsers.models import UserProfile, Deck
 
 
+class IsCardsOwner(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.id == view.kwargs[view.lookup_field]
+
+
 class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, profile: UserProfile):

@@ -6,14 +6,15 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory, APIClient
 
 from battle.businesslogic.tests.Creator import Creator
-from cards.factories import create_card_with_effect
-from cards.models import Card, CardInfo, CardLevel
+from cards.factories import create_card_with_effect, CardFactory, CardInfoFactory, create_card_with_effects, EffectData
+from cards.models import Card, CardInfo, CardLevel, CardEffect, CardLevelEffects
 from . import views
 from .businesslogic.experience.Experience import Experience
+from .businesslogic.skill_points import calculate_skill_points_gain
 from .factories import create_user_profile_with_deck, UserProfileFactory
 from .models import UserProfile, Semester, UserCard, Deck, UserDeck, UserStats
 from .serializers import UserDecksSerializer, DeckSerializer, UserProfileSerializer, UserStatsSerializer
-from .signals import on_user_create, user_should_gain_exp
+from .signals import on_user_create, user_should_gain_exp, user_gained_exp, _give_all_not_owned_cards_to_user
 
 
 class UserProfileTestCase(TestCase):
@@ -76,6 +77,56 @@ class UserProfileTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.test_user.delete()
+
+
+class UserViewTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_profile = UserProfileFactory()
+        self.client = APIClient()
+        self.client.force_authenticate(self.user_profile.user)
+
+    @staticmethod
+    def _get_url(user_profile: UserProfile):
+        return f'/api/user-profiles/{user_profile.user.id}/'
+
+    def test_get_and_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view his profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains all his data.
+        """
+
+        response = self.client.get(UserViewTestCase._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data contains info about skill_points (it can only be seen by profile owner)
+        self.assertIsNotNone(response.data.get('skill_points', None))
+
+    def test_get_and_not_profile_owner(self):
+        """
+        **Scenario:**
+
+        - Authenticated user wants to view other user's profile, makes GET request to view.
+
+        ---
+
+        **Expected result:**
+
+        - Response status is 200 OK and it contains subset of user's data.
+        """
+
+        other_user_profile = UserProfileFactory()
+        response = self.client.get(UserViewTestCase._get_url(other_user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Assert response data doesn't contain info about skill_points (it can be seen only by profile owner)
+        self.assertIsNone(response.data.get('skill_points', None))
 
 
 class UserCardTestCase(TestCase):
@@ -405,6 +456,8 @@ class UserDeckViewTestCase(TestCase):
         #  Right now user should own all cards.
         self.skipTest('Right now user should own all cards.')
 
+
+class UserCreationAndExperienceTestCase(TestCase):
     def test_should_exp_get_created_on_user_creation(self):
         user = get_user_model().objects.create_user(username='expTest', password='12345')
         on_user_create(None, user)
@@ -412,7 +465,7 @@ class UserDeckViewTestCase(TestCase):
         created_exp = UserStats.objects.get(profile=profile)
         self.assertEqual(created_exp.exp, 0)
 
-    def test_should_exp_get_created_on_user_creation(self):
+    def test_should_exp_get_created_on_user_creation2(self):
         user = get_user_model().objects.create_user(username='expTest2', password='12345')
         on_user_create(None, user)
         profile = UserProfile.objects.get(user=user)
@@ -423,6 +476,8 @@ class UserDeckViewTestCase(TestCase):
         serializer = UserProfileSerializer(instance=profile)
         self.assertGreater(serializer.data.get('level', None), 1)
 
+
+class UserProfileSerializerTestCase(TestCase):
     def test_should_serialize_to_level_1_when_exp_is_null(self):
         user = get_user_model().objects.create_user(username='expTest3', password='12345')
         profile = UserProfile.objects.create(user=user)
@@ -441,6 +496,90 @@ class UserDeckViewTestCase(TestCase):
         self.assertEqual(serializer.data.get('percentage'), expected_percentage)
 
 
+class UserCardsViewTestCase(TestCase):
+    def setUp(self) -> None:
+        # Create user
+        self.user_profile, _ = create_user_profile_with_deck()
+        # Create one more card with more than one level
+        effects_data_common = [
+            EffectData(CardEffect.EffectId.DOUBLEACTION, 0, 0, CardLevelEffects.Target.PLAYER),
+            EffectData(CardEffect.EffectId.DMG, 50, 30, CardLevelEffects.Target.OPPONENT),
+            EffectData(CardEffect.EffectId.HEAL, 50, 30, CardLevelEffects.Target.PLAYER),
+        ]
+        create_card_with_effects(effects_data_common)
+
+        effects_data_epic = \
+            effects_data_common + [EffectData(CardEffect.EffectId.TRUE_DMG, 20, 10, CardLevelEffects.Target.OPPONENT)]
+
+        card_for_user = create_card_with_effects(effects_data_epic, CardLevel.Level.EPIC)
+        # Give this card to user
+        self.user_profile.user_cards.create(card=card_for_user)
+
+        self.client = APIClient()
+
+    def _get_url(self, user_profile):
+        return f'/api/user-profiles/{user_profile.user.id}/cards/'
+
+    def test_get_success(self):
+        """
+        **Scenario:**
+
+        - User is authenticated, has some cards.
+
+        - GET request is performed by this user.
+
+        ---
+
+        **Expected result:**
+
+        - Response is 200 OK, returned data contains all user's cards.
+        """
+
+        self.client.force_authenticate(self.user_profile.user)
+
+        response = self.client.get(self._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), self.user_profile.user_cards.count())
+
+        # Assert cards data in response is correct
+        user_cards_to_compare = [user_card.card for user_card in self.user_profile.user_cards.all()]
+
+        for card_data in response.data:
+            card_to_compare = list(filter(lambda c: c.info.id == card_data['id'], user_cards_to_compare))[0]
+            user_cards_to_compare.remove(card_to_compare)
+            self.assertEqual(card_data['id'], card_to_compare.info.id)
+            self.assertEqual(card_data['level'], card_to_compare.level.level)
+
+        self.assertEqual(len(user_cards_to_compare), 0)
+
+    def test_get_not_authenticated(self):
+        response = self.client.get(self._get_url(self.user_profile))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_another_user_cards(self):
+        """
+        **Scenario:**
+
+        - Authenticated user tries to retrieve other user's cards.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 403 FORBIDDEN.
+        """
+
+        # Authenticate
+        self.client.force_authenticate(self.user_profile.user)
+
+        # Create another user with cards
+        other_user_profile, _ = create_user_profile_with_deck()
+
+        # Try to get other user's cards
+        response = self.client.get(self._get_url(other_user_profile))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
 class SignalsTestCase(TestCase):
     def test_user_should_gain_exp(self):
         users_stats = UserProfileFactory().user_stats
@@ -452,3 +591,70 @@ class SignalsTestCase(TestCase):
 
         users_stats.refresh_from_db()
         self.assertEqual(users_stats.exp, expected_exp)
+
+    def test_user_gained_exp(self):
+        """
+        **Scenario:**
+
+        - User leveled up from level 1 to 3.
+
+        - user_gained_exp is called
+
+        ---
+
+        **Expected result:**
+
+        - User has proper amount of skill points in database.
+        """
+
+        user_stats: UserStats = UserProfileFactory().user_stats
+
+        level_before = 1
+        level_after = 3
+
+        expected_skill_points = user_stats.skill_points + calculate_skill_points_gain(level_before, level_after)
+
+        user_gained_exp(user_stats, level_before, level_after)
+        user_stats.refresh_from_db()
+        self.assertEqual(user_stats.skill_points, expected_skill_points)
+
+
+# TODO: When gaining cards is implemented remove function _give_all_not_owned_cards_to_user and this test.
+class GiveAllCardsTestCase(TestCase):
+    def test_give_all_not_owned_cards_to_user(self):
+        """
+        **Scenario:**
+
+        - There is user with not all cards. In database there are cards objects with many levels.
+
+        - _give_all_not_owned_cards_to_user function is called.
+
+        ---
+
+        **Expected result:**
+
+        - User is given only cards with minimal levels that he didn't own before.
+        """
+
+        # Create CardInfo object with 3 levels which user is not owner of
+        card_info = CardInfoFactory()
+        expected_common_card_to_give = CardFactory(info=card_info, level=CardLevel.objects.get(pk=1))
+        card_rare = CardFactory(info=card_info, level=CardLevel.objects.get(pk=2))
+        card_epic = CardFactory(info=card_info, level=CardLevel.objects.get(pk=3))
+
+        # Create card which user will own
+        owned_card_info = CardInfoFactory()
+        not_owned_common = CardFactory(info=owned_card_info, level=CardLevel.objects.get(pk=1))
+        owned_epic = CardFactory(info=owned_card_info, level=CardLevel.objects.get(pk=3))
+
+        # Create user, give him one card and call function
+        user_profile = UserProfileFactory()
+        user_profile.user_cards.create(card=owned_epic)
+        given_cards_count = _give_all_not_owned_cards_to_user(user_profile)
+
+        self.assertEqual(given_cards_count, 1)
+        self.assertEqual(user_profile.user_cards.count(), 2)
+
+        # Assert user was given correct card with lowest level
+        actual_given_common_card = user_profile.user_cards.get(card__level=1).card
+        self.assertEqual(actual_given_common_card.id, expected_common_card_to_give.id)
