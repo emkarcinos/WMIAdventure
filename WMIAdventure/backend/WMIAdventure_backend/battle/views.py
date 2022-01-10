@@ -30,7 +30,7 @@ class BattleView(APIView):
         - If you try to attack self (attacker_id == defender_id): 400 Bad Request.
     """
 
-    def get(self, request, defender_id: int):
+    def post(self, request, defender_id: int):
         """
         Starts battle between logged in user and given user to attack.
 
