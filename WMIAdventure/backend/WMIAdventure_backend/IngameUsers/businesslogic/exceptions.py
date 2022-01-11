@@ -1,0 +1,2 @@
+class CannotUpgradeCardException(Exception):
+    pass
