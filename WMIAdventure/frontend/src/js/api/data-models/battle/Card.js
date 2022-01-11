@@ -11,6 +11,7 @@ export class Card {
     buffs = [];
     initialPosition = 0;
     stoppedTurns = 0;
+    next_level_cost = null;
 
     constructor(id, level) {
         this.id = id;
@@ -31,6 +32,7 @@ export class Card {
         this.subject = data.subject;
         this.tooltip = data.tooltip;
         this.description = description;
+        this.next_level_cost = data.levels.filter(level => level.level === this.level)[0].next_level_cost;
     }
 
 }
@@ -55,6 +57,29 @@ export const cardsFromDeckData = async (data) => {
                 .then(() => resolve());
         }))
         cards.push(newCard);
+    }
+    await Promise.all(promises);
+    return cards;
+}
+
+/**
+ * Converts raw user cards data received from API to array of Card objects with full data.
+ * @param data Raw data from API which contains only id and level for each card.
+ * @returns {Promise<[]>} Array of Card objects with full data.
+ */
+export const cardsFromUserCardsData = async (data) => {
+    const cards = [];
+
+    const promises = []
+    for (const userCard of data) {
+        const card = new Card(userCard.id, userCard.level);
+        promises.push(new Promise(
+                resolve => {
+                    card.fetchFieldsFromBackend(getCardById).then(() => resolve());
+                }
+            )
+        )
+        cards.push(card);
     }
     await Promise.all(promises);
     return cards;

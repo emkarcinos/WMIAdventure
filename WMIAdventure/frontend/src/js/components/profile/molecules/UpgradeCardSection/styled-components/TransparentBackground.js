@@ -7,7 +7,7 @@ const TransparentBackground = styled.div`
   padding: 0 10px;
   background-color: ${({theme}) => theme.colors.darkTrans};
   position: absolute;
-  top: 8px;
+  top: 0;
   left: 0;
   width: 100%;
   height: calc(100vh - 56px);

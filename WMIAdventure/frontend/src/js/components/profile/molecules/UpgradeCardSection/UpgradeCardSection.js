@@ -13,6 +13,7 @@ import {nextStepAnimationDuration} from "../../../../utils/globals";
 import PopUp from "../../../global/organisms/PopUp";
 import UpgradeApprove from "../../atoms/UpgradeApprove";
 import TransparentBackground from "./styled-components/TransparentBackground";
+import {getCardById} from "../../../../storage/cards/cardStorage";
 
 class UpgradeCardSection extends React.Component {
     state = {
@@ -21,8 +22,32 @@ class UpgradeCardSection extends React.Component {
             opacity: 0,
             translateY: '-100vh',
         },
-
+        cardLevels: null,
         approvePopUpHover: true,
+    }
+
+    componentDidMount() {
+        const cardPromise = getCardById(this.props.cardId);
+        const levels = [];
+        cardPromise.then(result => {
+            for (let elem of result.levels) {
+                levels.push(elem.level);
+            }
+            this.setState({
+                cardLevels: levels
+            });
+        });
+    }
+
+    getNextCardLevel = () => {
+        if (this.state.cardLevels !== null) {
+            if (this.props.cardLevel === 1)
+                // case [1, 2] and [1, 3]
+                return this.state.cardLevels[1];
+            else if (this.props.cardLevel === 2)
+                // case [1, 2, 3]
+                return this.state.cardLevels[2];
+        }
     }
 
     hoverTrue = () => {
@@ -104,7 +129,7 @@ class UpgradeCardSection extends React.Component {
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
-                                     cardLevel={1} cardName={this.props.cardName}/>
+                                     cardLevel={this.props.cardLevel} cardName={this.props.cardName}/>
                     <Description>
                         Zadaje przeciwnikowi 15 - 25 obrażeń i zatrzymuje gracza na 1 turę.
                     </Description>
@@ -115,7 +140,7 @@ class UpgradeCardSection extends React.Component {
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
                                      setHeight={'200px'} setMargin={'0'} shadow
-                                     cardLevel={2} cardName={this.props.cardName}/>
+                                     cardLevel={this.getNextCardLevel()} cardName={this.props.cardName}/>
                     <Description>
                         Zadaje przeciwnikowi 25 - 40 obrażeń, zamienia losowo kolejność
                         kart przeciwnika i zatrzymuje gracza na 1 turę.

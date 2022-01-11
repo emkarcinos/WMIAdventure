@@ -2,6 +2,7 @@ const userDataKeys = {
     username: 'username',
     id: 'currentUserId',
     userDecks: 'userDecks',
+    userCards: 'userCards',
 };
 
 const userProfileKeys = {
