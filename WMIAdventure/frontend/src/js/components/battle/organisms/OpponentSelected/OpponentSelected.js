@@ -17,7 +17,7 @@ import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import {getCurrentUserDecks} from "../../../../storage/user/userData";
-import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
+import {fightWithUser, getRatelimitInfo} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
@@ -50,6 +50,7 @@ class OpponentSelected extends React.Component {
             visible: false,
             message: '',
         },
+        ratelimitData: null
     }
 
     async getDeck() {
@@ -61,8 +62,20 @@ class OpponentSelected extends React.Component {
         this.setState({userDeck: new EditableDeck(userSpecificCards)});
     }
 
+    async getRatelimitInfo() {
+        const resp = await getRatelimitInfo(this.props.opponent.userId);
+        if (!resp.ok) {
+            this.handleBattleErrors(resp);
+            return;
+        }
+
+        const json = await resp.json();
+        this.setState({ratelimitData: json});
+    }
+
     componentDidMount() {
         this.getDeck();
+        this.getRatelimitInfo();
     }
 
     convertSecondsToPrettyTime = (seconds) => {
@@ -388,7 +401,7 @@ class OpponentSelected extends React.Component {
                                     </ColumnGapContainer>
                                     <ColumnGapContainer setWidth={'100%'} setPadding={'36px 0 0 0'}>
                                         <KuceVs/>
-                                        <RatelimitInfo/>
+                                        <RatelimitInfo data={this.state.ratelimitData}/>
                                     </ColumnGapContainer>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile user={this.props.opponent} setMargin={'0'} vertical/>

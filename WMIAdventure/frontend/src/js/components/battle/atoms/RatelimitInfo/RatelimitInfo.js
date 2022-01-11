@@ -7,19 +7,57 @@ import Before from "./styled-components/Before";
 
 
 class RatelimitInfo extends React.Component {
+    getRemaining(data) {
+        return data.limit - data.counter;
+    }
+
+    getFightsPerUserRemaining() {
+        return this.props.data ? this.getRemaining(this.props.data.global) : '-';
+    }
+
+    getFightsWithOpponentRemaining() {
+        return this.props.data ? this.getRemaining(this.props.data.perUser) : '-';
+    }
+
+    getTextForReset(data) {
+        if (!data)
+            return ' ';
+
+        return (data.counter > 0) ? `Reset za ${this.convertSecondsToPrettyTime(data.time_left)}` : ' ';
+    }
+
+    getTextForOpponentTimerReset() {
+        return this.props.data ? this.getTextForReset(this.props.data.perUser) : ' ';
+    }
+
+    getTextForGlobalTimerReset() {
+        return this.props.data ? this.getTextForReset(this.props.data.global) : ' ';
+    }
+
+    convertSecondsToPrettyTime = (seconds) => {
+        if (!seconds) return null;
+
+        let result = new Date(seconds * 1000).toISOString().slice(12, 19);
+        const tokens = result.split(':');
+        return `${tokens[0]} h ${tokens[1]} min`;
+    };
+
     render() {
         return (
             <Ul>
                 <Li>
-                    <Before access>25</Before>
+                    <Before access={this.getFightsPerUserRemaining() > 0}>{this.getFightsPerUserRemaining()}</Before>
                     <Heading>Dostępne pojedynki</Heading>
-                    <P>Reset za 1h 15min</P>
+                    <P>{this.getTextForGlobalTimerReset()}</P>
                 </Li>
-                <Li>
-                    <Before access>1</Before>
-                    <Heading>Z tym userem</Heading>
-                    <P>Reset za 5h 58min</P>
-                </Li>
+                {this.getFightsWithOpponentRemaining() === 2 ? null :
+                    <Li>
+                        <Before
+                            access={this.getFightsWithOpponentRemaining() > 0}>{this.getFightsWithOpponentRemaining()}</Before>
+                        <Heading>Rewanż dostępny</Heading>
+                        <P>{this.getTextForOpponentTimerReset()}</P>
+                    </Li>
+                }
             </Ul>
         )
     }
