@@ -228,7 +228,7 @@ class BattleViewTestCase(TestCase):
         view = views.BattleView.as_view()
 
         # Create request
-        test_request = factory.get(f'/api/battle/')
+        test_request = factory.post(f'/api/battle/')
         # Authenticate attacker user
         force_authenticate(test_request, user=self.attacker_user)
 

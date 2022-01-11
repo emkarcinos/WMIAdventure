@@ -9,7 +9,7 @@ import {battleFromData} from "../data-models/battle/Battle";
  * @returns {Promise<*>} Battle result.
  */
 export const fightWithUser = (userId) => {
-    return RequestSender.get(BattleEndpoints.fightWithUser(userId));
+    return RequestSender.post(BattleEndpoints.fightWithUser(userId), {});
 }
 
 // eslint-disable-next-line no-unused-vars
