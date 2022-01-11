@@ -278,6 +278,12 @@ class OpponentSelected extends React.Component {
             this.props.closeUserPreviewHandler();
     }
 
+    isRatelimited() {
+        if (!this.state.ratelimitData) return false;
+
+        return this.state.ratelimitData.global.should_limit || this.state.ratelimitData.perUser.should_limit;
+    }
+
     renderBattleView(isDesktop) {
         if (isDesktop) {
             return (
@@ -420,11 +426,13 @@ class OpponentSelected extends React.Component {
                                         Wróć
                                     </ButtonWithIcon>
                                     <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
-                                                    color={theme.colors.purplyPinky} icon={battleIcon}>
+                                                    color={theme.colors.purplyPinky} icon={battleIcon}
+                                                    access={!this.isRatelimited()}>
                                         Walcz
                                     </ButtonWithIcon>
                                     <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
-                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
+                                                    color={theme.colors.greenyBluey} icon={fastIcon}
+                                                    access={!this.isRatelimited()}>
                                         Szybka walka
                                     </ButtonWithIcon>
                                 </FlexGapContainer>
