@@ -25,6 +25,7 @@ import {getCardById} from "../../../../storage/cards/cardStorage";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
+import RatelimitInfo from "../../atoms/RatelimitInfo";
 
 class OpponentSelected extends React.Component {
 
@@ -385,7 +386,10 @@ class OpponentSelected extends React.Component {
                                         {/*</FlexGapContainer>*/}
                                         <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
-                                    <KuceVs/>
+                                    <ColumnGapContainer setWidth={'100%'} setPadding={'36px 0 0 0'}>
+                                        <KuceVs/>
+                                        <RatelimitInfo/>
+                                    </ColumnGapContainer>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile user={this.props.opponent} setMargin={'0'} vertical/>
                                         {/*<FlexGapContainer gap={'52px'}>*/}
