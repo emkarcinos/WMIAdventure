@@ -27,27 +27,27 @@ class UpgradeCardSection extends React.Component {
     }
 
     componentDidMount() {
-        const cardPromise = getCardById(this.props.cardId);
-        const levels = [];
-        cardPromise.then(result => {
-            for (let elem of result.levels) {
-                levels.push(elem.level);
-            }
-            this.setState({
-                cardLevels: levels
-            });
+        this.loadCardLevels();
+    }
+
+    async loadCardLevels() {
+        const card = await getCardById(this.props.cardId);
+        let levels = [];
+        for (let elem of card.levels)
+            levels.push(elem.level);
+        this.setState({
+            cardLevels: levels
         });
     }
 
     getNextCardLevel = () => {
-        if (this.state.cardLevels !== null) {
-            if (this.props.cardLevel === 1)
-                // case [1, 2] and [1, 3]
-                return this.state.cardLevels[1];
-            else if (this.props.cardLevel === 2)
-                // case [1, 2, 3]
-                return this.state.cardLevels[2];
-        }
+        if (this.state.cardLevels === null) return;
+        if (this.props.cardLevel === 1)
+            // case [1, 2] and [1, 3]
+            return this.state.cardLevels[1];
+        else if (this.props.cardLevel === 2)
+            // case [1, 2, 3]
+            return this.state.cardLevels[2];
     }
 
     hoverTrue = () => {
