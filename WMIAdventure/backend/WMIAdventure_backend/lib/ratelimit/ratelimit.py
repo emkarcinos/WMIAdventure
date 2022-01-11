@@ -5,6 +5,13 @@ from django.core.cache import caches
 
 
 @dataclass
+class Limits:
+    limit: int
+    period: str
+    period_count: int
+
+
+@dataclass
 class RatelimitInfo:
     counter: int
     limit: int
@@ -43,13 +50,12 @@ def get_usage(key, limit, period, period_count=1, increment=False) -> RatelimitI
 
         limit_info = RatelimitInfo(0, limit, False, expiry)
 
-    if not increment:
-        return limit_info
-
     if limit_info.counter >= limit_info.limit:
         limit_info.should_limit = True
+
+    if not increment:
+        return limit_info
 
     limit_info.__add__(1)
     cache.set(key, limit_info, limit_info.get_time_left())
     return limit_info
-

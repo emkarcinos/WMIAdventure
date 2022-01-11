@@ -1,4 +1,3 @@
-from ratelimit.core import get_usage
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -10,14 +9,15 @@ from battle.businesslogic.BadBattleProfileException import BadBattleProfileExcep
 from battle.businesslogic.Battle import Battle
 from battle.businesslogic.battle_limiting import per_player_limit_key, player_limit_key
 from battle.serializers import BattleSerializer
+from lib.ratelimit.ratelimit import get_usage, Limits
 
 
 class BattleView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    per_user_rate = '1/5h'
-    rate = '19/h'
+    same_opponent_rate = Limits(2, 'hours', 6)
+    per_player_rate = Limits(20, 'hours', 1)
 
     """
     **post**:
@@ -40,21 +40,28 @@ class BattleView(APIView):
                 not UserProfile.objects.filter(pk=defender_id).exists():
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        def global_limiting_key(grp, req):
-            return player_limit_key(attacker_id)
+        per_player_key = player_limit_key(attacker_id)
+        with_enemy_key = per_player_limit_key(attacker_id, defender_id)
 
-        def limiting_key(grp, req):
-            return per_player_limit_key(attacker_id, defender_id)
+        global_limit_data = get_usage(
+            per_player_key,
+            BattleView.per_player_rate.limit,
+            BattleView.per_player_rate.period,
+            BattleView.per_player_rate.period_count,
+            False
+        )
 
-        global_limit_data = get_usage(request, fn=BattleView, key=global_limiting_key,
-                                      rate=BattleView.rate, increment=False)
-
-        two_users_limit_data = get_usage(request, fn=BattleView, key=limiting_key,
-                                         rate=BattleView.per_user_rate, increment=False)
+        two_users_limit_data = get_usage(
+            with_enemy_key,
+            BattleView.same_opponent_rate.limit,
+            BattleView.same_opponent_rate.period,
+            BattleView.same_opponent_rate.period_count,
+            False
+        )
 
         return Response(status=status.HTTP_200_OK, data={
-            "perUser": two_users_limit_data,
-            "global": global_limit_data,
+            "perUser": two_users_limit_data.as_dict(),
+            "global": global_limit_data.as_dict(),
         })
 
     def post(self, request, defender_id: int):
@@ -72,15 +79,19 @@ class BattleView(APIView):
         if attacker_id == defender_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        def global_limiting_key(grp, req):
-            return player_limit_key(attacker_id)
+        per_player_key = player_limit_key(attacker_id)
+        with_enemy_key = per_player_limit_key(attacker_id, defender_id)
 
-        user_limits = get_usage(request, fn=BattleView, key=global_limiting_key,
-                                rate=BattleView.rate, increment=False)
-        if user_limits is not None and user_limits.get('should_limit', False):
+        per_player_usage = get_usage(
+            with_enemy_key,
+            BattleView.same_opponent_rate.limit,
+            BattleView.same_opponent_rate.period,
+            BattleView.same_opponent_rate.period_count,
+        )
+        if per_player_usage.should_limit:
             return Response(
                 status=status.HTTP_403_FORBIDDEN,
-                data={'seconds_till_limit_reset': user_limits.get('time_left', False)}
+                data={'seconds_till_limit_reset': per_player_usage.get_time_left()}
             )
 
         try:
@@ -94,22 +105,38 @@ class BattleView(APIView):
         except BadBattleProfileException as e:
             return Response(status=status.HTTP_404_NOT_FOUND, data=str(e))
 
-        def limiting_key(grp, req):
-            return per_player_limit_key(attacker_id, defender_id)
-
-        usage = get_usage(request, fn=BattleView, key=limiting_key,
-                          rate=BattleView.per_user_rate, increment=False)
-        if usage is not None and usage.get('should_limit', False):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=str(usage))
+        with_opponent_usage = get_usage(
+            with_enemy_key,
+            BattleView.same_opponent_rate.limit,
+            BattleView.same_opponent_rate.period,
+            BattleView.same_opponent_rate.period_count,
+        )
+        if with_opponent_usage.should_limit:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=str(with_opponent_usage.as_dict()))
 
         battle.start()
-        get_usage(request, fn=BattleView, key=global_limiting_key,
-                  rate=BattleView.rate, increment=True)
-        get_usage(request, fn=BattleView, key=limiting_key,
-                  rate=BattleView.per_user_rate, increment=True)
+        get_usage(
+            per_player_key,
+            BattleView.per_player_rate.limit,
+            BattleView.per_player_rate.period,
+            BattleView.per_player_rate.period_count,
+            True
+        )
+        get_usage(
+            with_enemy_key,
+            BattleView.same_opponent_rate.limit,
+            BattleView.same_opponent_rate.period,
+            BattleView.same_opponent_rate.period_count,
+            True
+        )
         if battle.outcome.get_winner().id == attacker_id:
-            get_usage(request, fn=BattleView, key=limiting_key,
-                      rate=BattleView.per_user_rate, increment=True)
+            get_usage(
+                with_enemy_key,
+                BattleView.same_opponent_rate.limit,
+                BattleView.same_opponent_rate.period,
+                BattleView.same_opponent_rate.period_count,
+                True
+            )
 
         serializer = BattleSerializer(instance=battle)
         return Response(serializer.data)
