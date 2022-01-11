@@ -8,7 +8,7 @@ import Before from "./styled-components/Before";
 
 class RatelimitInfo extends React.Component {
     getRemaining(data) {
-        return data.limit - data.counter;
+        return Math.max(0, data.limit - data.counter);
     }
 
     getFightsPerUserRemaining() {
@@ -54,7 +54,7 @@ class RatelimitInfo extends React.Component {
                     <Li>
                         <Before
                             access={this.getFightsWithOpponentRemaining() > 0}>{this.getFightsWithOpponentRemaining()}</Before>
-                        <Heading>Rewanż dostępny</Heading>
+                        <Heading>Rewanż {this.getFightsWithOpponentRemaining() > 0 ? '' : 'nie'}dostępny</Heading>
                         <P>{this.getTextForOpponentTimerReset()}</P>
                     </Li>
                 }
