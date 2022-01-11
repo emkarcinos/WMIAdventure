@@ -1,4 +1,4 @@
-import {getCardById} from "../../../storage/cards/cardStorage";
+import {getAllCards, getCardById} from "../../../storage/cards/cardStorage";
 
 export class Card {
     id = undefined;
@@ -11,6 +11,7 @@ export class Card {
     buffs = [];
     initialPosition = 0;
     stoppedTurns = 0;
+    next_level_cost = null;
 
     constructor(id, level) {
         this.id = id;
@@ -68,16 +69,22 @@ export const cardsFromDeckData = async (data) => {
 export const cardsFromUserCardsData = async (data) => {
     const cards = [];
 
-    const promises = []
-    for (const userCard of data) {
-        const card = new Card(userCard.id, userCard.level);
-        promises.push(new Promise(
-                resolve => {card.fetchFieldsFromBackend(getCardById).then(() => resolve());}
-            )
-        )
+    const allGenericCards = await getAllCards();
+
+    for (const userCardData of data) {
+        const card = cardFromData(userCardData);
+        const genericUserCard = allGenericCards.filter(genericCard => genericCard.id === card.id)[0];
+        const levelData = genericUserCard.levels.filter(levelData => levelData.level === card.level)[0];
+
+        card.name = genericUserCard.name;
+        card.image = genericUserCard.image;
+        card.subject = genericUserCard.subject;
+        card.tooltip = genericUserCard.tooltip;
+        card.description = levelData.effects_description;
+        card.next_level_cost = levelData.next_level_cost;
+
         cards.push(card);
     }
-    await Promise.all(promises);
     return cards;
 }
 
