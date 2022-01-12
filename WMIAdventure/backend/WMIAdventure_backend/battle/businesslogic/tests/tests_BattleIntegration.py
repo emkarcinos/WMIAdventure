@@ -3,6 +3,7 @@ from django.test import TestCase
 from IngameUsers.factories import UserProfileFactory
 from battle.businesslogic.Battle import Battle
 from battle.businesslogic.BattleCard import BattleCard
+from battle.businesslogic.Statistics import Statistics
 from battle.businesslogic.tests.Creator import Creator
 from cards.models import CardEffect, CardLevelEffects
 
@@ -167,7 +168,7 @@ class BattleIntegrationTestCase(TestCase):
 
         self.assertEqual(actual_winner_hp, expected_winner_hp)
 
-        expected_winner_shield = 20
+        expected_winner_shield = Statistics.MAX_ARMOUR
         actual_winner_shield = actual_winner.statistics.armour
 
         self.assertEqual(actual_winner_shield, expected_winner_shield)
