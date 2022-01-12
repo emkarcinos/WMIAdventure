@@ -29,7 +29,8 @@ class UpgradeApprove extends React.Component {
                         <UserInfo label={'Koszt'} points={this.props.nextLevelCost}
                                   setPointsColor={theme.colors.greenyBluey} value={'PN'}/>
                         <UserInfo label={'Saldo punktów po ulepszeniu'}
-                                  setPointsColor={theme.colors.red} points={'12'} value={'PN'}/>
+                                  setPointsColor={theme.colors.red}
+                                  points={this.props.skillPoints - this.props.nextLevelCost} value={'PN'}/>
                     </FlexGapContainer>
                     <ButtonWithIcon icon={upgrade} handler={this.upgradeCard} color={theme.colors.greenyBluey}>
                         Tak

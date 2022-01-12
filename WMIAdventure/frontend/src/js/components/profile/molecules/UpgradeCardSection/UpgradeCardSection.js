@@ -145,7 +145,9 @@ class UpgradeCardSection extends React.Component {
                            setHeight={'auto'} setTop={'0'} setPosition={'static'}
                            setTranslateY={this.state.upgradeApprovePopUp.translateY}>
                         <UpgradeApprove cardName={this.props.cardName}
-                                        nextLevelCost={this.props.nextLevelCost}/>
+                                        nextLevelCost={this.props.nextLevelCost}
+                                        skillPoints={this.state.userPoints}
+                        />
                     </PopUp>
                 </TransparentBackground>
             );
