@@ -15,9 +15,9 @@ class TinyUserProfile extends React.Component {
     renderSkillPoints = (showSkillPoints) => {
         if (showSkillPoints) {
             return (
-                <UserLabel skillPoints={25}
-                              number={25}
-                              setMargin={'0'}
+                <UserLabel skillPoints={true}
+                           number={this.props.user.skillpoints}
+                           setMargin={'0'}
                 />
             )
         }
@@ -44,11 +44,11 @@ class TinyUserProfile extends React.Component {
                     <Media query={desktop}>
                         {
                             this.props.vertical ? '' :
-                            <UserLevel
-                                level={this.props.user.statistics ? this.props.user.getLevelObject().level : 0}
-                                percentage={this.props.user.statistics ? this.props.user.getLevelObject().percentage : 0}
-                                setMargin={'14px 0 0 0'}
-                            />
+                                <UserLevel
+                                    level={this.props.user.statistics ? this.props.user.getLevelObject().level : 0}
+                                    percentage={this.props.user.statistics ? this.props.user.getLevelObject().percentage : 0}
+                                    setMargin={'14px 0 0 0'}
+                                />
                         }
                     </Media>
                 </ContentContainer>
