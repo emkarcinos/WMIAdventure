@@ -156,7 +156,7 @@ class UpgradeCardSection extends React.Component {
     }
 
     canUpgrade() {
-        if (!this.state.userPoints) return true;
+        if (this.state.userPoints === null || this.state.userPoints === undefined) return true;
 
         return this.state.userPoints >= this.props.nextLevelCost;
     }
