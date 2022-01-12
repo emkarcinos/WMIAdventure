@@ -46,7 +46,8 @@ class UpgradeCardSection extends React.Component {
     }
 
     getNextCardData = (data) => {
-        if (data === null) return;
+        if (data === null || data === undefined)
+            return null;
         if (data.length === 2)
             // case [1, 2], [2, 3] and [1, 3]
             return data[1];
