@@ -45,4 +45,8 @@ const getUserLevelData = (userId) => {
     return RequestSender.get(UserProfilesEndpoints.userIdLevel(userId));
 }
 
-export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData};
+const getUserCards = (userId) => {
+    return RequestSender.get(UserProfilesEndpoints.userCards(userId));
+}
+
+export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData, getUserCards};
