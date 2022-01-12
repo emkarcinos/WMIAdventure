@@ -11,12 +11,12 @@ const Button = styled.button`
   height: 32px;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({access}) => access ? 'pointer' : 'default'};
   transition: transform 0.3s ease-in-out;
   z-index: ${({setZindex}) => setZindex ? setZindex : 'auto'};
 
   &:hover {
-    transform: scale(1.05);
+    transform: ${({access}) => access ? 'scale(1.05)' : 'none'};
   }
 
   @media (min-width: 360px) {

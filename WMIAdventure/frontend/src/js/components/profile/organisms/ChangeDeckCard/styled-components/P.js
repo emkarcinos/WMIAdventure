@@ -6,6 +6,7 @@ const P = styled.p`
   font-weight: ${({theme}) => theme.weight.regular};
   text-transform: uppercase;
   font-family: 'Roboto', sans-serif;
+  margin: 14px 0 0;
 `
 
 export default P;

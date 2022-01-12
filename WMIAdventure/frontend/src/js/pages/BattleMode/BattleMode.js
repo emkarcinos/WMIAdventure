@@ -174,7 +174,7 @@ class BattleMode extends React.Component {
                 <Main>
                     <Media query={mobile}>
                         <>
-                            <H2>
+                            <H2 as={'h1'}>
                                 Wybierz przeciwnika
                             </H2>
                             <SearchContainer>

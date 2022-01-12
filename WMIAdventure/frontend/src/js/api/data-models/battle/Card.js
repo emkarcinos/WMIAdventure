@@ -32,6 +32,7 @@ export class Card {
         this.subject = data.subject;
         this.tooltip = data.tooltip;
         this.description = description;
+        this.next_level_cost = data.levels.filter(level => level.level === this.level)[0].next_level_cost;
     }
 
 }

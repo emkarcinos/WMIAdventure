@@ -3,6 +3,7 @@
 ## Stany komponentu
 
 Komponent posiada stan `fieldsetHover`, który pomaga przy schowaniu komponentu gdy klikniemy poza obszar formularza.
+
 ```js
 state = {
     fieldsetHover: false,
@@ -14,6 +15,7 @@ state = {
 ### hoverTrue
 
 Ustawia stan `fieldsetHover` na `true`.
+
 ```js
 hoverTrue = () => {
     this.setState({fieldsetHover: true});
@@ -21,7 +23,9 @@ hoverTrue = () => {
 ```
 
 ### hoverFalse
+
 Ustawia stan `fieldsetHover` na `false`.
+
 ```js
 hoverFalse = () => {
     this.setState({fieldsetHover: false});
@@ -29,8 +33,10 @@ hoverFalse = () => {
 ```
 
 ### handleHiding
-Wywołuje handler z komponentu rodzica, który sprawia że nasz komponent **CardDescribeInputs** znika, pod warunkiem,
-że myszka nie jest w obszarze formularza (czyli tego naszego komponentu CardDescribeInputs).
+
+Wywołuje handler z komponentu rodzica, który sprawia że nasz komponent **CardDescribeInputs** znika, pod warunkiem, że
+myszka nie jest w obszarze formularza (czyli tego naszego komponentu CardDescribeInputs).
+
 ```js
 handleHiding = (event) => {
     if(!this.state.fieldsetHover)
@@ -41,7 +47,8 @@ handleHiding = (event) => {
 ## Warstwa prezentacyjna komponentu
 
 ```js
-render() {
+render()
+{
     return (
         <TransparentBack show={this.props.show} onClick={this.handleHiding}>
             <Fieldset onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}>
@@ -49,26 +56,26 @@ render() {
                     Karta
                 </Legend>
                 <Main>
-                    <Label htmlFor='cardName'>
+                    <Caption htmlFor='cardName'>
                         Nazwa
-                    </Label>
+                    </Caption>
                     <DivInput>
                         <Input id='cardName' name='cardName' type='text' onChange={this.props.updateDescribePreview}/>
                     </DivInput>
                 </Main>
                 <Main>
-                    <Label htmlFor='cardSubject'>
+                    <Caption htmlFor='cardSubject'>
                         Przedmiot
-                    </Label>
+                    </Caption>
                     <DivInput>
                         <Input id='cardSubject' name='cardSubject' type='text'
                                onChange={this.props.updateDescribePreview}/>
                     </DivInput>
                 </Main>
                 <Main last>
-                    <Label htmlFor='cardTooltip'>
+                    <Caption htmlFor='cardTooltip'>
                         Opis
-                    </Label>
+                    </Caption>
                     <DivInput>
                         <Input id='cardTooltip' name='cardTooltip' type='text'
                                onChange={this.props.updateDescribePreview}/>
@@ -81,5 +88,5 @@ render() {
 ```
 
 **TransparentBack** to kontener z przezroczystym czarnym tłem, jak klikniemy na ten obszar poza formularzem, to
-komponent **CardDescribeInputs** zniknie.
-Dzięki `onChange` w elementach `<Input />` aktualizuje się treść z komponentu **CardDescribePreview**.
+komponent **CardDescribeInputs** zniknie. Dzięki `onChange` w elementach `<Input />` aktualizuje się treść z
+komponentu **CardDescribePreview**.
