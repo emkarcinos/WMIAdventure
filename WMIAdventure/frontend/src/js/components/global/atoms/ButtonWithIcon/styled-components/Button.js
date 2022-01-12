@@ -11,7 +11,7 @@ const Button = styled.button`
   height: 32px;
   display: flex;
   align-items: center;
-  cursor: ${({access}) => access ? 'pointer' : 'none'};
+  cursor: ${({access}) => access ? 'pointer' : 'default'};
   transition: transform 0.3s ease-in-out;
   z-index: ${({setZindex}) => setZindex ? setZindex : 'auto'};
 
