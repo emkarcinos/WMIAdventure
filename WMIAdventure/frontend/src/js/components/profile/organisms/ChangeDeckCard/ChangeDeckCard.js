@@ -1,7 +1,6 @@
 import React from "react";
 import PopUp from "../../../global/organisms/PopUp";
 import Search from "../../../global/atoms/Search";
-import {getAllCards} from "../../../../storage/cards/cardStorage";
 import Ul from "./styled-components/Ul";
 import CardChooseDiv from "./styled-components/CardChooseDiv";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
@@ -15,15 +14,16 @@ import pencilGrey from "../../../../../assets/icons/pencil-grey.svg";
 import eye from "../../../../../assets/icons/eye.svg";
 import pencilWhite from "../../../../../assets/icons/pencil.svg"
 import theme from "../../../../utils/theme";
-import {Card as ModelCard} from "../../../../api/data-models/battle/Card";
-import Card from "../../../card-editor/atoms/Card";
-import {updateCurrentUserDeck} from "../../../../storage/user/userData";
+import {cardsFromUserCardsData, nullCard} from "../../../../api/data-models/battle/Card";
+import {getCurrentUserCards, updateCurrentUserDeck} from "../../../../storage/user/userData";
 import TransBack from "../../../global/organisms/TransBack";
 import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
 import upgrade from '../../../../../assets/icons/upgrade-light.svg';
+import UpgradeCardSection from "../../molecules/UpgradeCardSection";
+import UserCard from "../../atoms/UserCard";
 
 /**
  * Props:
@@ -33,23 +33,63 @@ import upgrade from '../../../../../assets/icons/upgrade-light.svg';
 class ChangeDeckCard extends React.Component {
     state = {
         searchInput: '',
+        /**
+         * @type {[Card]}
+         */
         allCards: [],
         setTranslateY: '100vh',
-        selectedCard: {
-            id: 0,
-            level: 1,
-            name: '',
-            subject: '',
-            tooltip: '',
-            description: '',
-            image: null
-        },
+        selectedCard: nullCard(),
         cardPositionInDeck: 1,
         fullCardViewPopUp: {
             visible: false,
             opacity: 0,
             cardTranslateY: '-100vh',
+        },
+        upgradeCardSectionPopUp: {
+            visible: false,
+            opacity: 0,
+            translateX: '100vw',
         }
+    }
+
+    showUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardSectionPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardSectionPopUp: {
+                    visible: true,
+                    opacity: 1,
+                    translateX: '0',
+                }
+            });
+        }, 10);
+    }
+
+    hideUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardSectionPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardSectionPopUp: {
+                    visible: false,
+                    opacity: 0,
+                    translateX: '100vw',
+                }
+            });
+        }, nextStepAnimationDuration);
     }
 
     showFullCardViewPopUp = () => {
@@ -98,7 +138,8 @@ class ChangeDeckCard extends React.Component {
     }
 
     fetchCards = async () => {
-        const cards = await getAllCards();
+        const userCards = await getCurrentUserCards();
+        const cards = await cardsFromUserCardsData(userCards);
         this.setState({allCards: cards});
     }
 
@@ -116,35 +157,18 @@ class ChangeDeckCard extends React.Component {
         });
     }
 
-    onNewCardChoose = (event, id, name, subject, tooltip, image, levels, access) => {
+    onNewCardChoose = (event, id, access) => {
         if (!access)
             return;
-
-        // TODO: If we will have levels implemented change this
-        const description = this.state.allCards.filter(c => c.id === id)[0].levels[0].effects_description;
+        const chosenCard = this.state.allCards.filter(card => card.id === id)[0];
         this.setState({
-            selectedCard: {
-                id: id,
-                level: 1,
-                name: name,
-                subject: subject,
-                tooltip: tooltip,
-                image: image,
-                description: description
-            }
+            selectedCard: chosenCard,
         })
     }
 
     onNewCardSave = async () => {
-        const selectedCard = this.state.selectedCard;
-        const newCard = new ModelCard(selectedCard.id, 1);
-        newCard.name = selectedCard.name;
-        newCard.subject = selectedCard.subject;
-        newCard.tooltip = selectedCard.tooltip;
-        newCard.description = selectedCard.description;
-        newCard.image = selectedCard.image;
         const insertCommand = new InsertCardAtPositionCommand(this.props.deck);
-        const didSave = insertCommand.execute(newCard, this.state.cardPositionInDeck);
+        const didSave = insertCommand.execute(this.state.selectedCard, this.state.cardPositionInDeck);
         if (!didSave)
             return;
 
@@ -167,14 +191,15 @@ class ChangeDeckCard extends React.Component {
                             this.state.allCards.map((card) => {
                                 return (
                                     <React.Fragment key={`card-${card.id}`}>
-                                        <Card id={card.id} name={card.name}
-                                              subject={card.subject}
-                                              tooltip={card.tooltip}
-                                              image={card.image}
-                                              searchInput={this.state.searchInput}
-                                              levels={card.levels}
-                                              access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
-                                              chosenCardHandler={this.onNewCardChoose}/>
+                                        <UserCard id={card.id} name={card.name}
+                                                  subject={card.subject}
+                                                  tooltip={card.tooltip}
+                                                  image={card.image}
+                                                  searchInput={this.state.searchInput}
+                                                  level={card.level}
+                                                  description={card.description}
+                                                  access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
+                                                  chosenCardHandler={this.onNewCardChoose}/>
                                     </React.Fragment>
                                 );
                             })
@@ -217,13 +242,51 @@ class ChangeDeckCard extends React.Component {
         setTimeout(this.props.closeHandler, 300);
     }
 
+    renderFullCardView() {
+        if (this.state.fullCardViewPopUp.visible) {
+            return (
+                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
+                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
+                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
+                                  cardName={this.state.selectedCard.name}
+                                  cardLevel={this.state.selectedCard.level}
+                                  cardImage={this.state.selectedCard.image}
+                                  cardSubject={this.state.selectedCard.subject}
+                                  cardTooltip={this.state.selectedCard.tooltip}
+                                  description={this.state.selectedCard.description}
+                                  common={this.state.selectedCard.level === 1}
+                                  gold={this.state.selectedCard.level === 2}
+                                  epic={this.state.selectedCard.level === 3}
+                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
+                </TransBack>
+            );
+        }
+    }
+
+    renderUpgradeCardSection() {
+        if (this.state.upgradeCardSectionPopUp.visible) {
+            return (
+                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setPosition={'fixed'}
+                       setAlignment={'center'} setTop={this.props.onPopup ? '8px' : '56px'}
+                       setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
+                    <UpgradeCardSection cardId={this.state.selectedCard.id}
+                                        cardName={this.state.selectedCard.name}
+                                        cardLevel={this.state.selectedCard.level}
+                                        cardImage={this.state.selectedCard.image}
+                                        cardDescription={this.state.selectedCard.description}
+                                        nextLevelCost={this.state.selectedCard.next_level_cost}/>
+                </PopUp>
+            );
+        }
+    }
+
     render() {
         return (
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '48px'}
-                               closeHandler={this.close}
+                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '56px'}
+                               closeHandler={this.close} setPosition={'fixed'}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
                                                 gap={'10px'}>
@@ -237,7 +300,10 @@ class ChangeDeckCard extends React.Component {
                                         <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
                                             Podgląd
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy} access>
+                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy}
+                                                        handler={this.state.selectedCard.next_level_cost
+                                                            ? this.showUpgradeCardPopUp : null}
+                                                        access={this.state.selectedCard.next_level_cost}>
                                             Ulepsz
                                         </ButtonWithIcon>
                                         <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
@@ -250,23 +316,8 @@ class ChangeDeckCard extends React.Component {
                                 {this.renderCardChoose()}
                             </ColumnGapContainer>
                         </PopUp>
-                        {
-                            this.state.fullCardViewPopUp.visible ?
-                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
-                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
-                                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
-                                                  cardName={this.state.selectedCard.name}
-                                                  cardLevel={this.state.selectedCard.level}
-                                                  cardImage={this.state.selectedCard.image}
-                                                  cardSubject={this.state.selectedCard.subject}
-                                                  cardTooltip={this.state.selectedCard.tooltip}
-                                                  description={this.state.selectedCard.description}
-                                                  common={this.state.selectedCard.level === 1}
-                                                  gold={this.state.selectedCard.level === 2}
-                                                  epic={this.state.selectedCard.level === 3}
-                                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
-                                </TransBack> : null
-                        }
+                        {this.renderFullCardView()}
+                        {this.renderUpgradeCardSection()}
                     </>
                 </Media>
                 <Media query={desktop}>
@@ -285,7 +336,9 @@ class ChangeDeckCard extends React.Component {
                                                   cardSubject={this.state.selectedCard.subject}
                                                   cardTooltip={this.state.selectedCard.tooltip}
                                                   description={this.state.selectedCard.description}
-                                                  common
+                                                  common={this.state.selectedCard.level === 1}
+                                                  gold={this.state.selectedCard.level === 2}
+                                                  epic={this.state.selectedCard.level === 3}
                                     />
                                     <ColumnGapContainer setHeight={'100%'} setWidth={'300px'}>
                                         <P>Wymień na</P>

@@ -65,7 +65,9 @@ class RatelimitTestCase(TestCase):
 
     def test_should_reset_counter_after_expiration(self):
         seconds_expiry = 1
-        get_usage(self.missed_key_6, 5, 'seconds', seconds_expiry, True)
+        usage = get_usage(self.missed_key_6, 5, 'seconds', seconds_expiry, True)
+        self.assertEqual(usage.counter, 1)
         sleep(2)
         usage = get_usage(self.missed_key_6, 5, 'seconds', seconds_expiry, True)
         self.assertEqual(usage.get_time_left(), seconds_expiry)
+        self.assertEqual(usage.counter, 1)

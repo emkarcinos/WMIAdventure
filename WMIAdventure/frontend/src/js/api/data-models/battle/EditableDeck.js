@@ -29,7 +29,7 @@ export class EditableDeck extends BaseDeck {
         for (let i = 0; i < this.cards.length; i++) {
             res[`card${i + 1}`] = {
                 id: this.cards[i].id,
-                level: 1
+                level: this.cards[i].level
             }
         }
         return res;

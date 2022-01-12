@@ -7,6 +7,7 @@ import {getUserById} from "../profiles/userProfileList";
 
 const cacheUserDataForSeconds = 3600; // One hour
 const cacheLevelsFor = 60; // One minute
+const cacheUserCardsFor = 600; // Ten minutes
 
 export const isLoggedIn = async () => {
     return !!await getCurrentUserId();
@@ -94,6 +95,19 @@ export const getCurrentUserDecks = async () => {
 
     return await getUsersDecks(currentUserId);
 
+}
+
+export const getCurrentUserCards = async () => {
+    const currentUserId = await getCurrentUserId();
+
+    const callback = async () => {
+        const data = await UserProfilesAPIGateway.getUserCards(currentUserId);
+        if (!data.ok)
+            return null;
+        return await data.json();
+    }
+
+    return await getWithSetCallback(userDataKeys.userCards, callback, cacheUserCardsFor);
 }
 
 export const purgeUserData = () => {
