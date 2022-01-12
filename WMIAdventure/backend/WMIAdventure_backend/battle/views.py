@@ -129,7 +129,7 @@ class BattleView(APIView):
             BattleView.same_opponent_rate.period_count,
             True
         )
-        if battle.outcome.get_winner().id == attacker_id:
+        if battle.outcome.get_winner() is not None and battle.outcome.get_winner().id == attacker_id:
             get_usage(
                 with_enemy_key,
                 BattleView.same_opponent_rate.limit,
