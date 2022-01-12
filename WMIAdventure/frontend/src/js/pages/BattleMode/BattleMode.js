@@ -18,7 +18,7 @@ import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
 import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
-import {getUserListPage} from "../../storage/profiles/userProfileList";
+import {getAllUserProfiles, getUserListPage} from "../../storage/profiles/userProfileList";
 import BasicUserData from "../../api/data-models/user/BasicUserData";
 import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
 import Pager from "../../components/battle/atoms/Pager";
@@ -54,7 +54,17 @@ class BattleMode extends React.Component {
     }
 
     async fetchAndFillProfiles(page = 1) {
-        const data = await getUserListPage(page);
+        console.log('fetching')
+        let data;
+        if (page === 0)
+            data = {
+                page: 1,
+                hasNext: false,
+                hasPrev: false,
+                results: await getAllUserProfiles(),
+            }
+        else
+            data = await getUserListPage(page);
         if (!data)
             return;
 
@@ -125,6 +135,10 @@ class BattleMode extends React.Component {
 
     handleSearch = (event) => {
         let keyValue = event.target.value;
+        if (keyValue.length > 0 && (this.state.users.hasNext || this.state.users.hasPrev))
+            this.fetchAndFillProfiles(0)
+        else if (keyValue.length === 0)
+            this.fetchAndFillProfiles(1)
         this.setState({searchInput: keyValue});
     }
 
