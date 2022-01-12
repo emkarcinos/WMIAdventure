@@ -142,15 +142,31 @@ class UpgradeCardSection extends React.Component {
             return (
                 <TransparentBackground onClick={this.hideByClickOutsideApprovePopUp}
                                        setOpacity={this.state.upgradeApprovePopUp.opacity}>
-                    <PopUp hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}
-                           visible closeHandler={this.hideUpgradeApprovePopUp} borderRadius
-                           setHeight={'auto'} setTop={'0'} setPosition={'static'}
-                           setTranslateY={this.state.upgradeApprovePopUp.translateY}>
-                        <UpgradeApprove cardName={this.props.cardName}
-                                        nextLevelCost={this.props.nextLevelCost}
-                                        skillPoints={this.state.userPoints}
-                        />
-                    </PopUp>
+                    <>
+                        <Media query={mobile}>
+                            <PopUp hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}
+                                   visible closeHandler={this.hideUpgradeApprovePopUp} borderRadius
+                                   setHeight={'auto'} setTop={'0'} setPosition={'static'}
+                                   setTranslateY={this.state.upgradeApprovePopUp.translateY}>
+                                <UpgradeApprove cardName={this.props.cardName}
+                                                nextLevelCost={this.props.nextLevelCost}
+                                                skillPoints={this.state.userPoints}
+                                />
+                            </PopUp>
+                        </Media>
+
+                        <Media query={desktop}>
+                            <PopUp hoverTrue={this.hoverTrue} hoverFalse={this.hoverFalse}
+                                   visible closeHandler={this.hideUpgradeApprovePopUp} borderRadius
+                                   setWidth={'436px'} setHeight={'300px'} setTop={'0'} setPosition={'static'}
+                                   setTranslateY={this.state.upgradeApprovePopUp.translateY}>
+                                <UpgradeApprove cardName={this.props.cardName}
+                                                nextLevelCost={this.props.nextLevelCost}
+                                                skillPoints={this.state.userPoints}
+                                />
+                            </PopUp>
+                        </Media>
+                    </>
                 </TransparentBackground>
             );
         }
@@ -245,6 +261,7 @@ class UpgradeCardSection extends React.Component {
                                         handler={this.showUpgradeApprovePopUp} access={this.canUpgrade()}>
                             Ulepsz
                         </ButtonWithIcon>
+                        {this.renderUpgradeApprove()}
                     </ColumnGapContainer>
                 </Media>
             </>
