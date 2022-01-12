@@ -305,6 +305,8 @@ class ChangeDeckCard extends React.Component {
                                                     cardName={this.state.selectedCard.name}
                                                     cardLevel={this.state.selectedCard.level}
                                                     cardImage={this.state.selectedCard.image}
+                                                    cardSubject={this.state.selectedCard.subject}
+                                                    cardTooltip={this.state.selectedCard.tooltip}
                                                     cardDescription={this.state.selectedCard.description}
                                                     nextLevelCost={this.state.selectedCard.next_level_cost}/>
                             </PopUp>
