@@ -152,6 +152,7 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleRunHandler = () => {
+        if (this.isRatelimited()) return;
         this.props.kuceStartFight('Szybka Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -219,6 +220,7 @@ class OpponentSelected extends React.Component {
     }
 
     onFightButton = () => {
+        if (this.isRatelimited()) return;
         this.props.kuceStartFight('Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -360,23 +362,28 @@ class OpponentSelected extends React.Component {
                                     {/*</FlexGapContainer>*/}
                                 </FlexCenterContainer>
 
-                                <FlexEndContainer>
-                                    <TinyCards deck={this.state.userDeck} setMargin={'24px 0 36px 0'}/>
-                                    <FlexGapContainer gap={'36px'}>
-                                        <ButtonWithIcon setMargin={'0 36px 0 0'}
-                                                        handler={this.props.closeUserPreviewHandler}
-                                                        color={theme.colors.yellowyOrangy} icon={xClose}>
-                                            Wróć
+                                <FlexEndContainer gap={'20px'}>
+                                    <TinyCards deck={this.state.userDeck} setMargin={'20px 0 0 0'}/>
+                                    <RatelimitInfo data={this.state.ratelimitData}/>
+                                    <ColumnGapContainer setPadding={'0 0 20px 0'}>
+                                        <FlexGapContainer gap={'36px'}>
+                                            <ButtonWithIcon setMargin={'0 36px 0 0'}
+                                                            handler={this.props.closeUserPreviewHandler}
+                                                            color={theme.colors.yellowyOrangy} icon={xClose}>
+                                                Wróć
+                                            </ButtonWithIcon>
+                                            <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
+                                                            color={theme.colors.purplyPinky} icon={battleIcon}
+                                                            access={!this.isRatelimited()}>
+                                                Walcz
+                                            </ButtonWithIcon>
+                                        </FlexGapContainer>
+                                        <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
+                                                        color={theme.colors.greenyBluey} icon={fastIcon}
+                                                        access={!this.isRatelimited()}>
+                                            Szybka walka
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
-                                                        color={theme.colors.purplyPinky} icon={battleIcon}>
-                                            Walcz
-                                        </ButtonWithIcon>
-                                    </FlexGapContainer>
-                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
-                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
-                                        Szybka walka
-                                    </ButtonWithIcon>
+                                    </ColumnGapContainer>
                                 </FlexEndContainer>
                             </GridContainer>
 
