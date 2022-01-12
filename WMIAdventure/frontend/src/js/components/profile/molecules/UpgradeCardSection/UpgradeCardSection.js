@@ -23,31 +23,50 @@ class UpgradeCardSection extends React.Component {
             translateY: '-100vh',
         },
         cardLevels: null,
+        cardDescriptions: null,
         approvePopUpHover: true,
     }
 
     componentDidMount() {
-        this.loadCardLevels();
+        this.loadCardLevelsAndDescriptions();
     }
 
-    async loadCardLevels() {
+    async loadCardLevelsAndDescriptions() {
         const card = await getCardById(this.props.cardId);
         let levels = [];
-        for (let elem of card.levels)
+        let descriptions = [];
+        for (let elem of card.levels) {
             levels.push(elem.level);
+            descriptions.push(elem.effects_description);
+        }
         this.setState({
-            cardLevels: levels
+            cardLevels: levels,
+            cardDescriptions: descriptions
         });
     }
 
-    getNextCardLevel = () => {
-        if (this.state.cardLevels === null) return;
-        if (this.props.cardLevel === 1)
-            // case [1, 2] and [1, 3]
-            return this.state.cardLevels[1];
-        else if (this.props.cardLevel === 2)
+    getNextCardData = (data) => {
+        if (data === null) return;
+        if (data.length === 2)
+            // case [1, 2], [2, 3] and [1, 3]
+            return data[1];
+        else if (data.length === 3) {
             // case [1, 2, 3]
-            return this.state.cardLevels[2];
+            if (this.props.cardLevel === 1)
+                // when typical return gold
+                return data[1];
+            else if (this.props.cardLevel === 2)
+                // when gold return epic
+                return data[2];
+        }
+    }
+
+    getNextCardLevel = () => {
+        return this.getNextCardData(this.state.cardLevels);
+    }
+
+    getNextCardDescription = () => {
+        return this.getNextCardData(this.state.cardDescriptions);
     }
 
     hoverTrue = () => {
@@ -128,10 +147,10 @@ class UpgradeCardSection extends React.Component {
                 </H2>
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
-                                     setHeight={'200px'} setMargin={'0'} shadow
+                                     setHeight={'200px'} setMargin={'0'} shadow cardImage={this.props.cardImage}
                                      cardLevel={this.props.cardLevel} cardName={this.props.cardName}/>
                     <Description>
-                        Zadaje przeciwnikowi 15 - 25 obrażeń i zatrzymuje gracza na 1 turę.
+                        {this.props.cardDescription}
                     </Description>
                 </FlexGapContainer>
                 <On>
@@ -139,19 +158,19 @@ class UpgradeCardSection extends React.Component {
                 </On>
                 <FlexGapContainer gap={'12px'}>
                     <CompactCardView decorationHeight={'24px'} setWidth={'122px'}
-                                     setHeight={'200px'} setMargin={'0'} shadow
+                                     setHeight={'200px'} setMargin={'0'} shadow cardImage={this.props.cardImage}
                                      cardLevel={this.getNextCardLevel()} cardName={this.props.cardName}/>
                     <Description>
-                        Zadaje przeciwnikowi 25 - 40 obrażeń, zamienia losowo kolejność
-                        kart przeciwnika i zatrzymuje gracza na 1 turę.
+                        {this.getNextCardDescription()}
                     </Description>
                 </FlexGapContainer>
                 <FlexGapContainer gap={'36px'}>
-                    <UserInfo label={'Koszt'} points={'5'} setPointsColor={theme.colors.greenyBluey} value={'PN'}/>
+                    <UserInfo label={'Koszt'} points={this.props.nextLevelCost}
+                              setPointsColor={theme.colors.greenyBluey} value={'PN'}/>
                     <UserInfo label={'Posiadane punkty'} points={'17'} value={'PN'}/>
                 </FlexGapContainer>
                 <ButtonWithIcon icon={upgrade} color={theme.colors.greenyBluey}
-                                handler={this.showUpgradeApprovePopUp} access>
+                                handler={this.showUpgradeApprovePopUp}>
                     Ulepsz
                 </ButtonWithIcon>
                 {this.renderUpgradeApprove()}
