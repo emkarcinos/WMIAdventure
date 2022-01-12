@@ -5,6 +5,7 @@ const FlexEndContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  gap: ${({gap}) => gap ? gap : '0'};
   width: 100%;
   height: 100%;
 `;

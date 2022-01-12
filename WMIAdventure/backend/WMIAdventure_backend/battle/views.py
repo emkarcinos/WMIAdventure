@@ -83,10 +83,10 @@ class BattleView(APIView):
         with_enemy_key = per_player_limit_key(attacker_id, defender_id)
 
         per_player_usage = get_usage(
-            with_enemy_key,
-            BattleView.same_opponent_rate.limit,
-            BattleView.same_opponent_rate.period,
-            BattleView.same_opponent_rate.period_count,
+            per_player_key,
+            BattleView.per_player_rate.limit,
+            BattleView.per_player_rate.period,
+            BattleView.per_player_rate.period_count,
         )
         if per_player_usage.should_limit:
             return Response(
@@ -129,7 +129,7 @@ class BattleView(APIView):
             BattleView.same_opponent_rate.period_count,
             True
         )
-        if battle.outcome.get_winner().id == attacker_id:
+        if battle.outcome.get_winner() is not None and battle.outcome.get_winner().id == attacker_id:
             get_usage(
                 with_enemy_key,
                 BattleView.same_opponent_rate.limit,
