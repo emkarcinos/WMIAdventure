@@ -24,7 +24,7 @@ class UpgradeCardSection extends React.Component {
         },
         cardLevels: null,
         cardDescriptions: null,
-        approvePopUpHover: true,
+        approvePopUpHover: false,
     }
 
     componentDidMount() {
@@ -131,7 +131,8 @@ class UpgradeCardSection extends React.Component {
                            visible closeHandler={this.hideUpgradeApprovePopUp} borderRadius
                            setHeight={'auto'} setTop={'0'} setPosition={'static'}
                            setTranslateY={this.state.upgradeApprovePopUp.translateY}>
-                        <UpgradeApprove/>
+                        <UpgradeApprove cardName={this.props.cardName}
+                                        nextLevelCost={this.props.nextLevelCost}/>
                     </PopUp>
                 </TransparentBackground>
             );

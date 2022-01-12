@@ -22,11 +22,11 @@ class UpgradeApprove extends React.Component {
                 </H3>
                 <ColumnGapContainer gap={'30px'}>
                     <P>
-                        Czy na pewno chcesz ulepszyć {this.props.cardName}
+                        Czy na pewno chcesz ulepszyć&nbsp;<strong>{this.props.cardName}</strong>&nbsp;
                         na nowy poziom? Stracisz Punkty Nauki - tego nie można cofnąć.
                     </P>
                     <FlexGapContainer gap={'30px'}>
-                        <UserInfo label={'Koszt'} points={'5'}
+                        <UserInfo label={'Koszt'} points={this.props.nextLevelCost}
                                   setPointsColor={theme.colors.greenyBluey} value={'PN'}/>
                         <UserInfo label={'Saldo punktów po ulepszeniu'}
                                   setPointsColor={theme.colors.red} points={'12'} value={'PN'}/>
