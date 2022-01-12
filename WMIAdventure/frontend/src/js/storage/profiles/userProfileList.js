@@ -15,7 +15,8 @@ export const getAllUserProfiles = async () => {
         }
     }
 
-    return await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
+    const cachePages = await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
+    return cachePages.flatMap(item => item.results);
 }
 
 export const getUserById = async (id) => {
