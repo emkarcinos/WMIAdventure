@@ -1,3 +1,4 @@
+from django.db.models import F
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, get_object_or_404
@@ -9,8 +10,10 @@ from rest_framework.views import APIView
 from users.models import User
 from . import models
 from . import serializers
+from .businesslogic.exceptions import CannotUpgradeCardException
 from .businesslogic.experience.Experience import Experience
-from .models import UserProfile
+from .businesslogic.upgrading_cards import upgrade_card
+from .models import UserProfile, UserCard
 from .permissions import IsOwner, CanEditProfile, IsDeckOwner, IsCardsOwner
 from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer, UserCardSerializer
 
@@ -143,3 +146,28 @@ class UserCardsView(generics.ListAPIView):
         user_id = self.kwargs['pk']
         user_profile = get_object_or_404(UserProfile.objects.all(), pk=user_id)
         return user_profile.user_cards.all()
+
+
+class UpgradeCardView(APIView):
+    permission_classes = [IsAuthenticated, IsCardsOwner]
+
+    def post(self, request, pk, card_id):
+        user_profile: UserProfile = get_object_or_404(UserProfile.objects.all(), pk=pk)
+
+        try:
+            user_card: UserCard = user_profile.user_cards.annotate(info=F('card__info')).get(info=card_id)
+        except UserCard.DoesNotExist:
+            return Response(
+                data={'details': f'User is not owner of card with id {card_id} or it does not exist.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        try:
+            upgraded_user_card = upgrade_card(user_card)
+        except CannotUpgradeCardException as e:
+            return Response(data={'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            data=UserCardSerializer(instance=upgraded_user_card).data,
+            status=status.HTTP_200_OK
+        )
