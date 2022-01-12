@@ -5,7 +5,7 @@ class Statistics:
     """
     MAX_HP = 100.0
     INITIAL_ARMOUR = 0.0
-    MAX_ARMOUR = 20.0
+    MAX_ARMOUR = 50.0
 
     def __init__(self):
         self.hp = self.MAX_HP

@@ -14,10 +14,10 @@ class Deck extends React.Component {
     renderCompactCardIdx(idx) {
         const card = this.props.deck.cards[idx];
         return (
-            <CompactCardView setWidth={'90px'} setHeight={'132px'} setMargin={'0'}
+            <CompactCardView setWidth={'90px'} setHeight={'150px'} setMargin={'0'}
                              setIconWidth={'48px'} setIconHeight={'48px'} decorationHeight={'16px'}
                              cardName={card.name} cardImage={card.image} cardLevel={card.level}
-                             setIconMarginBottom={'8px'} shadow onClick={() => this.setEditorVisible(card)}/>
+                             setIconMarginBottom={'16px'} shadow onClick={() => this.setEditorVisible(card)}/>
         )
     }
 

@@ -7,7 +7,7 @@ from IngameUsers.models import UserProfile, Deck
 class IsCardsOwner(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.id == view.kwargs[view.lookup_field]
+        return request.user.id == view.kwargs['pk']
 
 
 class IsOwner(permissions.BasePermission):

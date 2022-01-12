@@ -580,6 +580,225 @@ class UserCardsViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
+class UpgradeCardViewTestCase(TestCase):
+    def setUp(self) -> None:
+        # Create card with all possible levels
+        card_info = CardInfoFactory()
+        self.card_levels: list[Card] = [
+            CardFactory(info=card_info, level=level) for level in CardLevel.objects.order_by('level')
+        ]
+
+        # Last level shouldn't have next level cost
+        self.card_levels[-1].next_level_cost = None
+        self.card_levels[-1].save()
+
+        # Create user profile with enough skill points to upgrade to maximum level
+        self.user_profile = UserProfileFactory()
+        user_stats = self.user_profile.user_stats
+        for card_level in self.card_levels[:len(self.card_levels) - 1]:
+            user_stats.skill_points += card_level.next_level_cost
+        user_stats.save()
+
+        # Give card with lowest level to user
+        user_card = self.user_profile.user_cards.create(card=self.card_levels[0])
+
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user_profile.user)
+
+    @staticmethod
+    def _get_url(user_profile: UserProfile, card_info_id: int):
+        return f"/api/user-profiles/{user_profile.user.id}/cards/{card_info_id}/upgrade/"
+
+    def test_post_successful(self):
+        """
+        **Scenario:**
+
+        - User is authenticated, has some card on the lowest level.
+
+        - Card that he owns has more levels, user has enough points to upgrade card to maximum level.
+
+        - User makes requests to upgrade card to maximum level.
+
+        ---
+
+        **Expected result:**
+
+        - Each time request is made response has status 200 OK, proper user card is in response's data.
+
+        - Each time request is made User owns proper card.
+
+        - Each time request is made user has proper amount of skill points subtracted and he owns only upgraded card (user can't own multiple levels of given card)
+        """
+
+        user_card = self.user_profile.user_cards.first()
+        card_info = user_card.card.info
+        user_stats = self.user_profile.user_stats
+
+        # Upgrade card to maximum level and assert everything goes as expected
+        for expected_next_level in self.card_levels[1:]:
+            previous_level = user_card.card
+            expected_skill_points_after_upgrade = user_stats.skill_points - previous_level.next_level_cost
+
+            # Make POST request to update card
+            response = self.client.post(self._get_url(self.user_profile, card_info.id), data={}, format='json')
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+            # Assert response contains proper upgraded card data
+            self.assertEqual(response.data['id'], card_info.id)
+            self.assertEqual(response.data['level'], expected_next_level.level.level)
+
+            # Retrieve currently owned card from db
+            user_card = self.user_profile.user_cards.get(
+                card__info__id=response.data['id'],
+                card__level__level=response.data['level']
+            )
+            actual_next_level = user_card.card
+
+            # Assert user is owner of correct card
+            self.assertEqual(actual_next_level.id, expected_next_level.id)
+            # Assert user is no longer owner of the previous level
+            self.assertFalse(self.user_profile.user_cards.filter(card__level=previous_level.level.level).exists())
+
+            # Assert user's skill points were subtracted properly
+            user_stats.refresh_from_db()
+            self.assertEqual(user_stats.skill_points, expected_skill_points_after_upgrade)
+
+    def test_not_authenticated(self):
+        self.client.logout()
+
+        user_card = self.user_profile.user_cards.first()
+        card_info = user_card.card.info
+
+        # Make POST request to try to update card
+        response = self.client.post(self._get_url(self.user_profile, card_info.id), data={}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_upgrade_other_user_card(self):
+        """
+        **Scenario:**
+
+        - User tries to update other user's card (all the criteria for updating card are met).
+
+        ---
+
+        **Expected result:**
+
+        - Card is not upgraded, response has status 403 FORBIDDEN.
+        """
+
+        # Create other user profile with enough skill points to upgrade to maximum level
+        other_user_profile = UserProfileFactory()
+
+        # Give card with lowest level to user
+        owned_level = self.card_levels[0]
+        other_user_card = other_user_profile.user_cards.create(card=owned_level)
+        card_info = owned_level.info
+
+        next_card_level = self.card_levels[1]
+
+        # Try to upgrade other user's card
+        response = self.client.post(self._get_url(other_user_profile, card_info.id))
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+        # Assert other user is still owner of the same card level
+        self.assertTrue(other_user_profile.user_cards.filter(pk=other_user_card.id).exists())
+        self.assertFalse(
+            other_user_profile.user_cards.filter(card__id=next_card_level.id)
+        )
+
+    def test_upgrade_not_card_owner(self):
+        """
+        **Scenario:**
+
+        - User tries to update card that he is not owner of.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 404 NOT_FOUND, user has the same amount of skill points.
+        """
+
+        card_info = self.user_profile.user_cards.first().card.info
+
+        # Assert user is not owner of card
+        self.user_profile.user_cards.all().delete()
+
+        # Save user stats before request
+        user_stats = self.user_profile.user_stats
+        expected_skill_points = user_stats.skill_points
+
+        # Try to upgrade card
+        response = self.client.post(self._get_url(self.user_profile, card_info.id))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+        # Assert user has the same amount of skill points
+        user_stats.refresh_from_db()
+        self.assertEqual(user_stats.skill_points, expected_skill_points)
+
+    def test_upgrade_not_enough_skill_points(self):
+        """
+        **Scenario:**
+
+        - User tries to update card but he has not enough skill points.
+
+        - User spams requests.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 400 BAD_REQUEST, user has the same amount of skill points.
+        """
+
+        card_info = self.user_profile.user_cards.first().card.info
+        owned_level = self.user_profile.user_cards.get(card__info__id=card_info.id).card
+
+        # Assert user has not enough skill points
+        owned_level.next_level_cost = 10
+        owned_level.save()
+
+        user_stats = self.user_profile.user_stats
+        user_stats.skill_points = owned_level.next_level_cost - 1
+        user_stats.save()
+
+        # Spam and test
+        for i in range(1000):
+            expected_skill_points = user_stats.skill_points
+
+            # Try to upgrade card
+            response = self.client.post(self._get_url(self.user_profile, card_info.id))
+            self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+            # Assert user has the same amount of skill points
+            user_stats.refresh_from_db()
+            self.assertEqual(user_stats.skill_points, expected_skill_points)
+
+    def test_upgrade_user_has_max_lvl(self):
+        """
+        **Scenario:**
+
+        - User tries to update card but he has max level.
+
+        ---
+
+        **Expected result:**
+
+        - Response has status 400 BAD_REQUEST.
+        """
+
+        card_info = self.user_profile.user_cards.first().card.info
+
+        # Assert user owns max level
+        owned_level = self.card_levels[-1]
+        self.user_profile.user_cards.all().delete()
+        self.user_profile.user_cards.create(card=owned_level)
+
+        # Try to upgrade card
+        response = self.client.post(self._get_url(self.user_profile, card_info.id))
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 class SignalsTestCase(TestCase):
     def test_user_should_gain_exp(self):
         users_stats = UserProfileFactory().user_stats

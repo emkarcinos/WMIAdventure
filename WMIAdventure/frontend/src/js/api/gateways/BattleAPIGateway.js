@@ -12,6 +12,10 @@ export const fightWithUser = (userId) => {
     return RequestSender.post(BattleEndpoints.fightWithUser(userId), {});
 }
 
+export const getRatelimitInfo = (userId) => {
+    return RequestSender.get(BattleEndpoints.fightWithUser(userId));
+}
+
 // eslint-disable-next-line no-unused-vars
 export const fullFightWithUser = async (userId) => {
     // dummy JSON for testing
@@ -19,4 +23,4 @@ export const fullFightWithUser = async (userId) => {
     return battleFromData(data);
 }
 
-export default {fightWithUser};
+export default {fightWithUser, getRatelimitInfo};

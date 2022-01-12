@@ -17,7 +17,7 @@ import PopUp from '../../../global/organisms/PopUp';
 import TransBack from '../../../global/organisms/TransBack';
 import ColumnGapContainer from '../../../global/molecules/ColumnGapContainer';
 import {getCurrentUserDecks} from "../../../../storage/user/userData";
-import {fightWithUser} from "../../../../api/gateways/BattleAPIGateway";
+import {fightWithUser, getRatelimitInfo} from "../../../../api/gateways/BattleAPIGateway";
 import BattleView from "../BattleView";
 import GenericPopup from "../../../global/atoms/GenericPopup";
 import {getCardById} from "../../../../storage/cards/cardStorage";
@@ -25,6 +25,7 @@ import {getCardById} from "../../../../storage/cards/cardStorage";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
 import {EditableDeck, nullEditableDeck} from "../../../../api/data-models/battle/EditableDeck";
 import {cardsFromDeckData} from "../../../../api/data-models/battle/Card";
+import RatelimitInfo from "../../atoms/RatelimitInfo";
 
 class OpponentSelected extends React.Component {
 
@@ -49,6 +50,7 @@ class OpponentSelected extends React.Component {
             visible: false,
             message: '',
         },
+        ratelimitData: null
     }
 
     async getDeck() {
@@ -60,8 +62,20 @@ class OpponentSelected extends React.Component {
         this.setState({userDeck: new EditableDeck(userSpecificCards)});
     }
 
+    async getRatelimitInfo() {
+        const resp = await getRatelimitInfo(this.props.opponent.userId);
+        if (!resp.ok) {
+            this.handleBattleErrors(resp);
+            return;
+        }
+
+        const json = await resp.json();
+        this.setState({ratelimitData: json});
+    }
+
     componentDidMount() {
         this.getDeck();
+        this.getRatelimitInfo();
     }
 
     convertSecondsToPrettyTime = (seconds) => {
@@ -138,6 +152,7 @@ class OpponentSelected extends React.Component {
     }
 
     quickBattleRunHandler = () => {
+        if (this.isRatelimited()) return;
         this.props.kuceStartFight('Szybka Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -205,6 +220,7 @@ class OpponentSelected extends React.Component {
     }
 
     onFightButton = () => {
+        if (this.isRatelimited()) return;
         this.props.kuceStartFight('Walka');
         fightWithUser(this.props.opponent.userId)
             .then(response => {
@@ -262,6 +278,12 @@ class OpponentSelected extends React.Component {
     handleHiding = () => {
         if (!this.state.popUpHover)
             this.props.closeUserPreviewHandler();
+    }
+
+    isRatelimited() {
+        if (!this.state.ratelimitData) return false;
+
+        return this.state.ratelimitData.global.should_limit || this.state.ratelimitData.perUser.should_limit;
     }
 
     renderBattleView(isDesktop) {
@@ -340,23 +362,28 @@ class OpponentSelected extends React.Component {
                                     {/*</FlexGapContainer>*/}
                                 </FlexCenterContainer>
 
-                                <FlexEndContainer>
-                                    <TinyCards deck={this.state.userDeck} setMargin={'24px 0 36px 0'}/>
-                                    <FlexGapContainer gap={'36px'}>
-                                        <ButtonWithIcon setMargin={'0 36px 0 0'}
-                                                        handler={this.props.closeUserPreviewHandler}
-                                                        color={theme.colors.yellowyOrangy} icon={xClose}>
-                                            Wróć
+                                <FlexEndContainer gap={'20px'}>
+                                    <TinyCards deck={this.state.userDeck} setMargin={'20px 0 0 0'}/>
+                                    <RatelimitInfo data={this.state.ratelimitData}/>
+                                    <ColumnGapContainer setPadding={'0 0 20px 0'}>
+                                        <FlexGapContainer gap={'36px'}>
+                                            <ButtonWithIcon setMargin={'0 36px 0 0'}
+                                                            handler={this.props.closeUserPreviewHandler}
+                                                            color={theme.colors.yellowyOrangy} icon={xClose}>
+                                                Wróć
+                                            </ButtonWithIcon>
+                                            <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
+                                                            color={theme.colors.purplyPinky} icon={battleIcon}
+                                                            access={!this.isRatelimited()}>
+                                                Walcz
+                                            </ButtonWithIcon>
+                                        </FlexGapContainer>
+                                        <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
+                                                        color={theme.colors.greenyBluey} icon={fastIcon}
+                                                        access={!this.isRatelimited()}>
+                                            Szybka walka
                                         </ButtonWithIcon>
-                                        <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
-                                                        color={theme.colors.purplyPinky} icon={battleIcon}>
-                                            Walcz
-                                        </ButtonWithIcon>
-                                    </FlexGapContainer>
-                                    <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'14px 0 16px 0'}
-                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
-                                        Szybka walka
-                                    </ButtonWithIcon>
+                                    </ColumnGapContainer>
                                 </FlexEndContainer>
                             </GridContainer>
 
@@ -385,7 +412,10 @@ class OpponentSelected extends React.Component {
                                         {/*</FlexGapContainer>*/}
                                         <TinyCards deck={this.state.userDeck} setMargin={'0'} gap={'10px'}/>
                                     </ColumnGapContainer>
-                                    <KuceVs/>
+                                    <ColumnGapContainer setWidth={'100%'} setPadding={'36px 0 0 0'}>
+                                        <KuceVs/>
+                                        <RatelimitInfo data={this.state.ratelimitData}/>
+                                    </ColumnGapContainer>
                                     <ColumnGapContainer gap={'24px'} setMargin={'0 26px 0 0'}>
                                         <TinyUserProfile user={this.props.opponent} setMargin={'0'} vertical/>
                                         {/*<FlexGapContainer gap={'52px'}>*/}
@@ -403,11 +433,13 @@ class OpponentSelected extends React.Component {
                                         Wróć
                                     </ButtonWithIcon>
                                     <ButtonWithIcon setMargin={'0'} handler={this.onFightButton}
-                                                    color={theme.colors.purplyPinky} icon={battleIcon}>
+                                                    color={theme.colors.purplyPinky} icon={battleIcon}
+                                                    access={!this.isRatelimited()}>
                                         Walcz
                                     </ButtonWithIcon>
                                     <ButtonWithIcon handler={this.quickBattleRunHandler} setMargin={'0'}
-                                                    color={theme.colors.greenyBluey} icon={fastIcon}>
+                                                    color={theme.colors.greenyBluey} icon={fastIcon}
+                                                    access={!this.isRatelimited()}>
                                         Szybka walka
                                     </ButtonWithIcon>
                                 </FlexGapContainer>
