@@ -21,6 +21,8 @@ import FullCardView from "../../../global/atoms/FullCardView";
 import {desktop, mobile, nextStepAnimationDuration} from "../../../../utils/globals";
 import Media from 'react-media';
 import {InsertCardAtPositionCommand} from "../../../../api/data-models/battle/EditableDeck";
+import upgrade from '../../../../../assets/icons/upgrade-light.svg';
+import UpgradeCardSection from "../../molecules/UpgradeCardSection";
 import UserCard from "../../atoms/UserCard";
 
 /**
@@ -42,7 +44,52 @@ class ChangeDeckCard extends React.Component {
             visible: false,
             opacity: 0,
             cardTranslateY: '-100vh',
+        },
+        upgradeCardSectionPopUp: {
+            visible: false,
+            opacity: 0,
+            translateX: '100vw',
         }
+    }
+
+    showUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardSectionPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardSectionPopUp: {
+                    visible: true,
+                    opacity: 1,
+                    translateX: '0',
+                }
+            });
+        }, 10);
+    }
+
+    hideUpgradeCardPopUp = () => {
+        this.setState({
+            upgradeCardSectionPopUp: {
+                visible: true,
+                opacity: 0,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                upgradeCardSectionPopUp: {
+                    visible: false,
+                    opacity: 0,
+                    translateX: '100vw',
+                }
+            });
+        }, nextStepAnimationDuration);
     }
 
     showFullCardViewPopUp = () => {
@@ -110,13 +157,12 @@ class ChangeDeckCard extends React.Component {
         });
     }
 
-
     onNewCardChoose = (event, id, access) => {
         if (!access)
             return;
         const chosenCard = this.state.allCards.filter(card => card.id === id)[0];
         this.setState({
-            selectedCard: chosenCard
+            selectedCard: chosenCard,
         })
     }
 
@@ -146,14 +192,14 @@ class ChangeDeckCard extends React.Component {
                                 return (
                                     <React.Fragment key={`card-${card.id}`}>
                                         <UserCard id={card.id} name={card.name}
-                                              subject={card.subject}
-                                              tooltip={card.tooltip}
-                                              image={card.image}
-                                              searchInput={this.state.searchInput}
-                                              level={card.level}
-                                              description={card.description}
-                                              access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
-                                              chosenCardHandler={this.onNewCardChoose}/>
+                                                  subject={card.subject}
+                                                  tooltip={card.tooltip}
+                                                  image={card.image}
+                                                  searchInput={this.state.searchInput}
+                                                  level={card.level}
+                                                  description={card.description}
+                                                  access={!this.props.deck.hasCardIdExceptCurrentlyEditing(card.id)}
+                                                  chosenCardHandler={this.onNewCardChoose}/>
                                     </React.Fragment>
                                 );
                             })
@@ -196,27 +242,69 @@ class ChangeDeckCard extends React.Component {
         setTimeout(this.props.closeHandler, 300);
     }
 
+    renderFullCardView() {
+        if (this.state.fullCardViewPopUp.visible) {
+            return (
+                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
+                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
+                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
+                                  cardName={this.state.selectedCard.name}
+                                  cardLevel={this.state.selectedCard.level}
+                                  cardImage={this.state.selectedCard.image}
+                                  cardSubject={this.state.selectedCard.subject}
+                                  cardTooltip={this.state.selectedCard.tooltip}
+                                  description={this.state.selectedCard.description}
+                                  common={this.state.selectedCard.level === 1}
+                                  gold={this.state.selectedCard.level === 2}
+                                  epic={this.state.selectedCard.level === 3}
+                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
+                </TransBack>
+            );
+        }
+    }
+
+    renderUpgradeCardSection() {
+        if (this.state.upgradeCardSectionPopUp.visible) {
+            return (
+                <PopUp visible closeHandler={this.hideUpgradeCardPopUp}
+                       setAlignment={'center'} setTop={this.props.onPopup ? '8px' : '56px'}
+                       setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
+                    <UpgradeCardSection cardId={this.state.selectedCard.id}
+                                        cardName={this.state.selectedCard.name}
+                                        cardLevel={this.state.selectedCard.level}
+                                        cardImage={this.state.selectedCard.image}
+                                        cardDescription={this.state.selectedCard.description}
+                                        nextLevelCost={this.state.selectedCard.next_level_cost}/>
+                </PopUp>
+            );
+        }
+    }
+
     render() {
         return (
             <>
                 <Media query={mobile}>
                     <>
-                        <PopUp visible={true} setTop={this.props.onPopup ? '0px' : '48px'}
+                        <PopUp visible={true} setTop={this.props.onPopup ? '0' : '56px'}
                                closeHandler={this.close}
                                setTranslateY={this.state.setTranslateY}>
                             <ColumnGapContainer setWidth={'100%'} setHeight={'100%'} setPadding={'40px 20px 30px 20px'}
                                                 gap={'10px'}>
-                                <FlexGapContainer setWidth={'100%'} setPadding={'0px 27px'}
+                                <FlexGapContainer setWidth={'100%'} setPadding={'0px 26px'}
                                                   space={true}>
                                     <CompactCardView setMargin={'0'} cardName={this.state.selectedCard.name}
                                                      cardLevel={this.state.selectedCard.level}
-                                                     cardImage={this.state.selectedCard.image}>
-
-                                    </CompactCardView>
+                                                     cardImage={this.state.selectedCard.image}/>
                                     <ColumnGapContainer gap={'10px'}>
                                         <UserInfo label={'Pozycja w talii'} value={this.getInputButton(false)}/>
                                         <ButtonWithIcon icon={eye} handler={this.showFullCardViewPopUp}>
                                             Podgląd
+                                        </ButtonWithIcon>
+                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy}
+                                                        handler={this.state.selectedCard.next_level_cost
+                                                            ? this.showUpgradeCardPopUp : null}
+                                                        access={this.state.selectedCard.next_level_cost}>
+                                            Ulepsz
                                         </ButtonWithIcon>
                                         <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
                                                         handler={this.onNewCardSave}>
@@ -228,23 +316,8 @@ class ChangeDeckCard extends React.Component {
                                 {this.renderCardChoose()}
                             </ColumnGapContainer>
                         </PopUp>
-                        {
-                            this.state.fullCardViewPopUp.visible ?
-                                <TransBack visible setOpacity={this.state.fullCardViewPopUp.opacity} fullscreen
-                                           closeHandler={this.hideFulLCardViewPopUp} customZIndex={'5'}>
-                                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
-                                                  cardName={this.state.selectedCard.name}
-                                                  cardLevel={this.state.selectedCard.level}
-                                                  cardImage={this.state.selectedCard.image}
-                                                  cardSubject={this.state.selectedCard.subject}
-                                                  cardTooltip={this.state.selectedCard.tooltip}
-                                                  description={this.state.selectedCard.description}
-                                                  common={this.state.selectedCard.level === 1}
-                                                  gold={this.state.selectedCard.level === 2}
-                                                  epic={this.state.selectedCard.level === 3}
-                                                  setTranslateY={this.state.fullCardViewPopUp.cardTranslateY}/>
-                                </TransBack> : null
-                        }
+                        {this.renderFullCardView()}
+                        {this.renderUpgradeCardSection()}
                     </>
                 </Media>
                 <Media query={desktop}>

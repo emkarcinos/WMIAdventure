@@ -46,8 +46,7 @@ class MyDeck extends React.Component {
 
         return (
             <>
-                <ChangeDeckCard closeHandler={this.closeEditor}
-                                deck={this.props.deck}/>
+                <ChangeDeckCard closeHandler={this.closeEditor} deck={this.props.deck}/>
             </>
         )
     }

@@ -3,19 +3,24 @@ import styled from 'styled-components';
 const Div = styled.div`
   display: ${({visible}) => visible ? 'flex' : 'none'};
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '1'};
-  transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
+  transform: translate(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'},
+  ${({setTranslateY}) => setTranslateY ? setTranslateY : '0'});
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  justify-content: ${({setAlignment}) => setAlignment ? setAlignment : 'flex-start'};
+  position: ${({setPosition}) => setPosition ? setPosition : 'absolute'};
   top: ${({setTop}) => setTop ? setTop : '56px'};
   left: 0;
-  height: calc(100vh - 48px);
-  width: 100%;
+  width: ${({setWidth}) => setWidth ? setWidth : '100%'};
+  height: ${({setHeight}) => setHeight ? setHeight : 'calc(100vh - 56px)'};
+  max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'none'};
+  max-height: ${({setMaxHeight}) => setMaxHeight ? setMaxHeight : 'none'};
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   z-index: 5;
   overflow-x: hidden;
   overflow-y: scroll;
+  border-radius: ${({borderRadius}) => borderRadius ? '10px' : '0'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     position: static;

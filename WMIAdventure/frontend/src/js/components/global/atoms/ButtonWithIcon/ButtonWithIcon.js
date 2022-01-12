@@ -9,11 +9,12 @@ class ButtonWithIcon extends React.Component {
     render() {
         return (
             <Button onClick={this.props.handler} setWidth={this.props.setWidth}
-                    setMargin={this.props.setMargin}>
-                <IconContainer color={this.props.color}>
+                    setMargin={this.props.setMargin} access={this.props.access}>
+                <IconContainer color={this.props.color}
+                               access={this.props.access !== undefined ? this.props.access : true}>
                     <Img src={this.props.icon ? this.props.icon : placeholderImg}/>
                 </IconContainer>
-                <P>
+                <P access={this.props.access !== undefined ? this.props.access : true}>
                     {this.props.children}
                 </P>
             </Button>
