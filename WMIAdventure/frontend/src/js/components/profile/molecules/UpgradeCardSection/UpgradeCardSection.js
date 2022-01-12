@@ -14,6 +14,7 @@ import PopUp from "../../../global/organisms/PopUp";
 import UpgradeApprove from "../../atoms/UpgradeApprove";
 import TransparentBackground from "./styled-components/TransparentBackground";
 import {getCardById} from "../../../../storage/cards/cardStorage";
+import {getCurrentUserData} from "../../../../storage/user/userData";
 
 class UpgradeCardSection extends React.Component {
     state = {
@@ -25,10 +26,20 @@ class UpgradeCardSection extends React.Component {
         cardLevels: null,
         cardDescriptions: null,
         approvePopUpHover: false,
+        userPoints: null
     }
 
     componentDidMount() {
         this.loadCardLevelsAndDescriptions();
+        this.getUserPoints();
+    }
+
+    async getUserPoints() {
+        const user = await getCurrentUserData()
+        if (!user)
+            return;
+
+        this.setState({userPoints: user.skill_points})
     }
 
     async loadCardLevelsAndDescriptions() {
@@ -84,6 +95,7 @@ class UpgradeCardSection extends React.Component {
     }
 
     showUpgradeApprovePopUp = () => {
+        if (!this.canUpgrade()) return;
         this.setState({
             upgradeApprovePopUp: {
                 visible: true,
@@ -141,6 +153,12 @@ class UpgradeCardSection extends React.Component {
 
     }
 
+    canUpgrade() {
+        if (!this.state.userPoints) return true;
+
+        return this.state.userPoints >= this.props.nextLevelCost;
+    }
+
     render() {
         return (
             <ColumnGapContainer as={'section'} gap={'10px'} setMargin={'0'}>
@@ -168,11 +186,13 @@ class UpgradeCardSection extends React.Component {
                 </FlexGapContainer>
                 <FlexGapContainer gap={'36px'}>
                     <UserInfo label={'Koszt'} points={this.props.nextLevelCost}
-                              setPointsColor={theme.colors.greenyBluey} value={'PN'}/>
-                    <UserInfo label={'Posiadane punkty'} points={'17'} value={'PN'}/>
+                              setPointsColor={this.canUpgrade() ? theme.colors.greenyBluey : theme.colors.red}
+                              value={'PN'}/>
+                    <UserInfo label={'Posiadane punkty'} points={this.state.userPoints}
+                              value={'PN'}/>
                 </FlexGapContainer>
                 <ButtonWithIcon icon={upgrade} color={theme.colors.greenyBluey}
-                                handler={this.showUpgradeApprovePopUp}>
+                                handler={this.showUpgradeApprovePopUp} access={this.canUpgrade()}>
                     Ulepsz
                 </ButtonWithIcon>
                 {this.renderUpgradeApprove()}
