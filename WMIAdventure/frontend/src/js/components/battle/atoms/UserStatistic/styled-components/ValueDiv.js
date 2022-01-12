@@ -42,7 +42,7 @@ const handleHpTransform = (number) => {
 };
 
 const handleShieldTransform = (number) => {
-    return `${Number(number)}%`;
+    return `${Number(number) * 2}%`;
 };
 
 const handleTransform = (number, type, currentLvlValue) => {
