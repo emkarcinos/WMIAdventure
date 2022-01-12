@@ -3,9 +3,10 @@ import {getUsersLevelData} from "../../../storage/user/userData";
 
 export class DetailedUserData extends BasicUserData {
 
-    constructor(id, username, semester, avatar, level, statistics = {}) {
+    constructor(id, username, semester, avatar, level, skillpoints, statistics = {}) {
         super(id, username, semester, avatar, level);
         this.statistics = statistics;
+        this.skillpoints = skillpoints;
     }
 
     getLevelObject() {
@@ -39,5 +40,5 @@ export const nullLevel = () => {
 }
 
 export const nullDetailedUserData = () => {
-    return new DetailedUserData(0, ' ', 1, null, 1, {level: nullLevel()})
+    return new DetailedUserData(0, ' ', 1, null, 1, 0, {level: nullLevel()})
 }
