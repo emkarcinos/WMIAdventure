@@ -4,7 +4,7 @@ import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 
 const cacheUsersForSeconds = 300 // 5 minutes;
 
-export const getAllUserProfiles = async () => {
+export const getAllUserProfiles = async (flatten = true) => {
     const callback = async () => {
         try {
             const response = await UserProfilesAPIGateway.getAllBasicUsersInfo();
@@ -16,7 +16,12 @@ export const getAllUserProfiles = async () => {
     }
 
     const cachePages = await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
-    return cachePages.flatMap(item => item.results);
+    return flatten ? cachePages.flatMap(item => item.results) : cachePages;
+}
+
+export const getUserListPage = async (pageNumber) => {
+    const allProfiles = await getAllUserProfiles(false);
+    return allProfiles.filter(page => page.page === pageNumber)[0];
 }
 
 export const getUserById = async (id) => {
