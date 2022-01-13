@@ -149,6 +149,7 @@ class UpgradeCardSection extends React.Component {
                                    setHeight={'auto'} setTop={'0'} setPosition={'static'}
                                    setTranslateY={this.state.upgradeApprovePopUp.translateY}>
                                 <UpgradeApprove cardName={this.props.cardName}
+                                                cardId={this.props.cardId}
                                                 nextLevelCost={this.props.nextLevelCost}
                                                 skillPoints={this.state.userPoints}
                                 />
@@ -161,6 +162,7 @@ class UpgradeCardSection extends React.Component {
                                    setWidth={'436px'} setHeight={'300px'} setTop={'0'} setPosition={'static'}
                                    setTranslateY={this.state.upgradeApprovePopUp.translateY}>
                                 <UpgradeApprove cardName={this.props.cardName}
+                                                cardId={this.props.cardId}
                                                 nextLevelCost={this.props.nextLevelCost}
                                                 skillPoints={this.state.userPoints}
                                 />

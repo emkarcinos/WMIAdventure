@@ -49,4 +49,11 @@ const getUserCards = (userId) => {
     return RequestSender.get(UserProfilesEndpoints.userCards(userId));
 }
 
-export default {getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData, getUserCards};
+const upgradeCard = (userId, cardId) => {
+    return RequestSender.post(UserProfilesEndpoints.upgradeCard(userId, cardId));
+}
+
+export default {
+    getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData, getUserCards,
+    upgradeCard
+};
