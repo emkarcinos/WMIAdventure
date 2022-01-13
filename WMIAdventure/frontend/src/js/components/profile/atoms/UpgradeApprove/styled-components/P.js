@@ -7,6 +7,11 @@ const P = styled.p`
   color: ${({theme}) => theme.colors.dark};
   margin: 0 20px;
   text-align: center;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    max-width: 400px;
+    line-height: 24px;
+  }
 `;
 
 export default P;
