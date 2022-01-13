@@ -63,7 +63,7 @@ class MyUserProfileSerializer(UserProfileSerializer):
     Serializes UserProfile with fields that should only be seen by profile owner.
     """
 
-    skill_points = serializers.IntegerField(source='user_stats.skill_points')
+    skill_points = serializers.IntegerField(source='user_stats.skill_points', read_only=True)
 
     class Meta:
         model = models.UserProfile

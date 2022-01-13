@@ -5,7 +5,7 @@ const Ul = styled.ul`
   max-width: 340px;
   overflow-y: scroll;
   list-style: none;
-  margin: 0 auto 92px;
+  margin: 0 auto;
   padding: 0 10px 10px;
   background-color: ${({theme}) => theme.colors.whiteAlmost};
   border-bottom-left-radius: 20px;
@@ -15,17 +15,18 @@ const Ul = styled.ul`
 
   scrollbar-width: ${({scrollVisible}) => scrollVisible ? 'thin' : 'none'};
   -ms-overflow-style: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* IE 10+ */
+
   ::-webkit-scrollbar {
     display: ${({scrollVisible}) => scrollVisible ? 'auto' : 'none'}; /* Chrome Safari */
   }
-  
-  @media(min-width: ${({theme}) => theme.overMobile}px) {
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
     -ms-overflow-style: none; /* IE 10+ */
     scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none; /* Chrome Safari */
     }
-    
+
     max-width: 514px;
     height: 100%;
     margin: 0;

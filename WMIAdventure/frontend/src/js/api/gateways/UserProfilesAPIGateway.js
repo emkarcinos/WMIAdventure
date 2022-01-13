@@ -6,15 +6,25 @@ import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
  * @returns {Promise<*>} Array of basic user info objects.
  */
 const getAllBasicUsersInfo = async () => {
-    const pageSize = 1000;
+    const pageSize = 15;
     let users = [];
     let resp = await RequestSender.get(UserProfilesEndpoints.main + `?pagesize=${pageSize}`)
         .then(resp => resp.json());
-    users.push.apply(users, resp.results);
+    let pageCounter = 1;
+    const appendPage = (pageNumber, hasNext, results) => {
+        users.push({
+            page: pageCounter,
+            hasNext: hasNext,
+            hasPrev: pageNumber !== 1,
+            results: results
+        });
+    }
+    appendPage(pageCounter, !!resp.next, resp.results)
     while (resp.next !== null) {
+        pageCounter++;
         resp = await RequestSender.get(resp.next)
             .then(resp => resp.json());
-        users.push.apply(users, resp.results);
+        appendPage(pageCounter, !!resp.next, resp.results);
     }
     return users;
 }

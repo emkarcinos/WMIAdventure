@@ -8,8 +8,8 @@ const MainDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 16px;
-  
-  margin: 16px 0 76px 0;
+
+  margin: ${({setMargin}) => setMargin ? setMargin : '16px 0 76px 0'};
 `
 
 export default MainDiv;

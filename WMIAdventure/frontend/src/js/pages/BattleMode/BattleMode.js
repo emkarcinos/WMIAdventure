@@ -18,9 +18,10 @@ import Title from './styled-components/Title';
 import TinyProfileDesktop from '../../components/battle/organisms/TinyProfileDesktop';
 import {getCurrentUserData} from "../../storage/user/userData";
 import LoadingPopUp from "../../components/global/atoms/LoadingPopUp";
-import {getAllUserProfiles} from "../../storage/profiles/userProfileList";
+import {getAllUserProfiles, getUserListPage} from "../../storage/profiles/userProfileList";
 import BasicUserData from "../../api/data-models/user/BasicUserData";
 import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
+import Pager from "../../components/battle/atoms/Pager";
 
 class BattleMode extends React.Component {
     title = 'Tryb Battle';
@@ -52,15 +53,33 @@ class BattleMode extends React.Component {
         this.setState({loggedInUser: user});
     }
 
-    async fetchAndFillProfiles() {
-        const data = await getAllUserProfiles();
+    async fetchAndFillProfiles(page = 1) {
+        console.log('fetching')
+        let data;
+        if (page === 0)
+            data = {
+                page: 1,
+                hasNext: false,
+                hasPrev: false,
+                results: await getAllUserProfiles(),
+            }
+        else
+            data = await getUserListPage(page);
         if (!data)
             return;
 
         const users = [];
-        for (const user of data)
+        for (const user of data.results)
             users.push(new BasicUserData(user.user, user.displayedUsername, user.semester, user.image, user.level))
-        this.setState({users: users});
+
+        this.setState({
+            users: {
+                hasNext: data.hasNext,
+                hasPrev: data.hasPrev,
+                page: data.page,
+                results: users,
+            }
+        });
     }
 
     componentDidMount() {
@@ -116,6 +135,10 @@ class BattleMode extends React.Component {
 
     handleSearch = (event) => {
         let keyValue = event.target.value;
+        if (keyValue.length > 0 && (this.state.users.hasNext || this.state.users.hasPrev))
+            this.fetchAndFillProfiles(0)
+        else if (keyValue.length === 0)
+            this.fetchAndFillProfiles(1)
         this.setState({searchInput: keyValue});
     }
 
@@ -135,7 +158,7 @@ class BattleMode extends React.Component {
     userListItemsRender = () => {
         return (
             <Ul scrollVisible={this.state.scrollVisible}>
-                {this.state.users ? this.state.users.map((elem) => {
+                {this.state.users.results ? this.state.users.results.map((elem) => {
                     if (elem.userId === this.state.loggedInUser.userId)
                         return null;
                     return (
@@ -165,6 +188,26 @@ class BattleMode extends React.Component {
         )
     }
 
+    nextUsersListPage = () => {
+        if (!this.state.users.hasNext) return;
+        this.fetchAndFillProfiles(this.state.users.page + 1)
+    }
+
+    prevUsersListPage = () => {
+        if (!this.state.users.hasPrev) return;
+        this.fetchAndFillProfiles(this.state.users.page - 1)
+    }
+
+    renderPaginator(isDesktop) {
+        if (!this.state.users) return null;
+        return (<Pager setMargin={isDesktop ? '16px 0 0 0' : null} page={this.state.users.page}
+                       next={this.state.users.hasNext}
+                       previous={this.state.users.hasPrev}
+                       onNext={this.nextUsersListPage}
+                       onPrevious={this.prevUsersListPage}
+        />)
+    }
+
     render() {
         return (
             <>
@@ -182,6 +225,7 @@ class BattleMode extends React.Component {
                                         handleSearch={this.handleSearch}/>
                             </SearchContainer>
                             {this.userListItemsRender()}
+                            {this.renderPaginator(false)}
                             <SwipeProfile user={this.state.loggedInUser}
                                           hideScroll={this.hideScroll} showScroll={this.showScroll}/>
                         </>
@@ -204,6 +248,7 @@ class BattleMode extends React.Component {
                                             handleSearch={this.handleSearch}/>
                                 </SearchContainer>
                                 {this.userListItemsRender()}
+                                {this.renderPaginator(true)}
                             </DesktopLeft>
                         </>
                     </Media>
