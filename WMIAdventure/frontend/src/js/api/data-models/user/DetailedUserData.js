@@ -1,5 +1,5 @@
 import BasicUserData from "./BasicUserData";
-import {getUsersLevelData} from "../../../storage/user/userData";
+import {getCurrentUserData, getUsersLevelData} from "../../../storage/user/userData";
 
 export class DetailedUserData extends BasicUserData {
 
@@ -23,6 +23,15 @@ export class DetailedUserData extends BasicUserData {
 
         this.statistics.level = data;
         this.level = this.statistics.level.level;
+        await this.updateSkillpoints(force);
+        return true;
+    }
+
+    async updateSkillpoints(force) {
+        const userData = await getCurrentUserData(force);
+        if (!userData)
+            return false;
+        this.skillpoints = userData.skill_points
         return true;
     }
 }

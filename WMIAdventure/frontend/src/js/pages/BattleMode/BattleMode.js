@@ -54,7 +54,6 @@ class BattleMode extends React.Component {
     }
 
     async fetchAndFillProfiles(page = 1) {
-        console.log('fetching')
         let data;
         if (page === 0)
             data = {

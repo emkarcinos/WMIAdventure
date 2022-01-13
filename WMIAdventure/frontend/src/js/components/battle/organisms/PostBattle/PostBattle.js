@@ -65,7 +65,7 @@ class PostBattle extends React.Component {
                                 {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
                                 {/*</FlexGapContainer>*/}
                                 <FlexGapContainer gap={'16px'}>
-                                    <UserLevel 
+                                    <UserLevel
                                         level={this.props.attacker.getLevelObject().level}
                                         percentage={this.props.attacker.getLevelObject().percentage}
                                     />
@@ -103,7 +103,7 @@ class PostBattle extends React.Component {
                                 {/*    <UserInfo label={'Ratio'} value={'50%'} setMargin={'0'}/>*/}
                                 {/*</FlexGapContainer>*/}
                                 <FlexGapContainer gap={'16px'}>
-                                    <UserLevel 
+                                    <UserLevel
                                         level={this.props.attacker.getLevelObject().level}
                                         percentage={this.props.attacker.getLevelObject().percentage}
                                     />
