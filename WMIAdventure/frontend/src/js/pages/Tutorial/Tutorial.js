@@ -13,7 +13,16 @@ import {nextStepAnimationDuration} from "../../utils/globals";
 class Tutorial extends React.Component {
     state = {
         initBackgroundScale: 0,
-        initInfoTranslateX: '100vw',
+
+        initInfo: {
+            visible: true,
+            translateX: '100vw',
+        },
+
+        info2: {
+            visible: false,
+            translateX: '100vw',
+        },
     }
 
     componentDidMount() {
@@ -29,13 +38,43 @@ class Tutorial extends React.Component {
 
         setTimeout(() => {
             this.setState({
-                initInfoTranslateX: '0',
+                initInfo: {
+                    visible: true,
+                    translateX: '0',
+                },
             });
         }, nextStepAnimationDuration * 3);
     }
 
-    nextStep = () => {
+    step1 = () => {
+        this.setState({
+            initInfo: {
+                visible: true,
+                translateX: '-100vw',
+            }
+        });
 
+        setTimeout(() => {
+            this.setState({
+                initInfo: {
+                    visible: false,
+                    translateX: '-100vw',
+                },
+                info2: {
+                    visible: true,
+                    translateX: '100vw',
+                }
+            });
+        }, nextStepAnimationDuration);
+
+        setTimeout(() => {
+            this.setState({
+                info2: {
+                    visible: true,
+                    translateX: '0',
+                }
+            });
+        }, nextStepAnimationDuration * 2);
     }
 
     render() {
@@ -47,7 +86,8 @@ class Tutorial extends React.Component {
                 <MainContainer>
                     <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrame1}/>
                     <CenterDiv>
-                        <ContainerWithBackground setTranslateX={this.state.initInfoTranslateX}>
+                        <ContainerWithBackground visible={this.state.initInfo.visible}
+                                                 setTranslateX={this.state.initInfo.translateX}>
                             <TutorialStepDescribe
                                 gap={'20px'} headerAs={'h1'} header={'Tryb Battle'}
                                 firstParagraph={`Jesteś własnie w widoku pojedynku z przeciwnikiem. 
@@ -56,7 +96,19 @@ class Tutorial extends React.Component {
                                 secondParagraph={`Twoim celem jest pokonanie przeciwnika 
                                 - zbicie jego punktów HP do 0.`}
                                 buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.nextStep} buttonColor={theme.colors.dark}/>
+                                buttonHandler={this.step1} buttonColor={theme.colors.dark}/>
+                        </ContainerWithBackground>
+                        <ContainerWithBackground visible={this.state.info2.visible}
+                                                 setTranslateX={this.state.info2.translateX}>
+                            <TutorialStepDescribe
+                                containerAs={'section'} gap={'20px'} header={'Talia kart'}
+                                firstParagraph={`Karty to miecz i tarcza każdego wojownika. Ułożone są w 
+                                pięcioelementową talię, ich kolejność jest kluczowa. Podczas kolejnych tur 
+                                pojedynku karty wykonują się po kolei, jedna na turę. `}
+                                secondParagraph={`Nie mamy możliwości manipulowania kartami podczas 
+                                trwania pojedynku - talię ustawiamy przed pojedynkami.`}
+                                buttonLabel={'Ok'} buttonIcon={fast}
+                                buttonHandler={this.step1} buttonColor={theme.colors.dark}/>
                         </ContainerWithBackground>
                     </CenterDiv>
                 </MainContainer>

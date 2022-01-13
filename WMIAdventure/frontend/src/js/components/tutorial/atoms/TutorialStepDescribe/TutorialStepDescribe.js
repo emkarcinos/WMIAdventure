@@ -18,7 +18,7 @@ class TutorialStepDescribe extends React.Component {
                 <Paragraph>
                     {this.props.secondParagraph}
                 </Paragraph>
-                <ButtonWithIcon handler={this.props.nextStep} icon={this.props.buttonIcon}
+                <ButtonWithIcon handler={this.props.buttonHandler} icon={this.props.buttonIcon}
                                 color={this.props.buttonColor}>
                     {this.props.buttonLabel}
                 </ButtonWithIcon>
