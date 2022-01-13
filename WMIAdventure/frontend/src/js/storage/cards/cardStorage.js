@@ -50,7 +50,6 @@ export const getAllCards = async () => {
                 return 0;
             return card1.name.toLowerCase() < card2.name.toLowerCase() ? -1 : 1;
         });
-        console.log(cards)
         return cards;
     }
 

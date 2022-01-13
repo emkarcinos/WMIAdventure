@@ -29,7 +29,6 @@ export class DetailedUserData extends BasicUserData {
 
     async updateSkillpoints(force) {
         const userData = await getCurrentUserData(force);
-        console.log(userData);
         if (!userData)
             return false;
         this.skillpoints = userData.skill_points
