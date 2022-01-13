@@ -25,6 +25,7 @@ SECRET_KEY = environ.get('DJANGO_SECRET', 'django_insecure')
 
 # We check whether DJANGO_DEBUG variable was set to 'True' to determine DEBUG
 DEBUG = (environ.get('DJANGO_DEBUG', 'True') == 'True')
+HTTPS_ENABLED = (environ.get('HTTPS_BACKEND', '0') == '1')
 
 ALLOWED_HOSTS = ['*']
 
