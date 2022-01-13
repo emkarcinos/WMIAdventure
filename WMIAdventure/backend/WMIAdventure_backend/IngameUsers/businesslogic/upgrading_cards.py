@@ -22,12 +22,12 @@ def upgrade_card(user_card: UserCard) -> UserCard:
     if upgraded_card is None:
         raise CannotUpgradeCardException("Card has no next level")
 
-    # Lock user's stats and user's card for transaction to prevent race conditions
-    user_stats = UserStats.objects.select_for_update().get(pk=user_card.user_profile.user_stats.id)
-    user_card = UserCard.objects.select_for_update().get(pk=user_card.id)
-
     # Perform card upgrade
     with transaction.atomic():
+        # Lock user's stats and user's card for transaction to prevent race conditions
+        user_stats = UserStats.objects.select_for_update().get(pk=user_card.user_profile.user_stats.id)
+        user_card = UserCard.objects.select_for_update().get(pk=user_card.id)
+
         user_stats.skill_points -= user_card.card.next_level_cost
         user_stats.save()
         user_card.card = upgraded_card
