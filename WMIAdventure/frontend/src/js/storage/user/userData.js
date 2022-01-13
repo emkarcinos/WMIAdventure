@@ -17,7 +17,7 @@ export const hasSessionCookie = () => {
     return !!Cookies.getSessionToken();
 }
 
-export const getCurrentUserData = async () => {
+export const getCurrentUserData = async (forceUpdate = false) => {
     if (!hasSessionCookie()) {
         invalidateItem(userDataKeys.username);
         return null;
@@ -26,10 +26,12 @@ export const getCurrentUserData = async () => {
     const backendCallback = async () => {
         const who = await whoAmI();
         if (who) {
-            return await getUserById(who.id);
+            return await getUserById(who.id, true);
         }
         return null;
     }
+    if (forceUpdate)
+        await set(userDataKeys.username, backendCallback, cacheUserDataForSeconds);
     return await getWithSetCallback(userDataKeys.username, backendCallback, cacheUserDataForSeconds);
 }
 
