@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import LandingPage from "./pages/LandingPage";
 import MainMenu from './pages/MainMenu';
@@ -26,31 +26,35 @@ function App() {
     });
 
     return (
-        <ThemeProvider theme={theme}>
-            <Switch>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
                 {isUserLoggedIn ?
                     <>
                         <Navbar/>
-                        <Route path='/main' component={MainMenu}/>
-                        <Route path='/profile' component={Profile}/>
-                        <Route path='/adventure' component={AdventureMode}/>
-                        <Route path='/battle' component={BattleMode}/>
-                        <Route path='/ranking' component={Ranking}/>
-                        <Route path='/history-creator' component={HistoryCreator}/>
-                        <Route path='/cards-creator-start' component={CardsCreatorStart}/>
-                        <Route path='/cards-creator-edit' component={CardsCreatorEdit}/>
-                        <Route path='/cards-creator-create' component={CardsCreatorCreate}/>
-                        <Redirect to="/main"/>
+                        <Switch>
+                            <Route path='/profile' component={Profile}/>
+                            <Route path='/adventure' component={AdventureMode}/>
+                            <Route path='/battle' component={BattleMode}/>
+                            <Route path='/ranking' component={Ranking}/>
+                            <Route path='/history-creator' component={HistoryCreator}/>
+                            <Route path='/cards-creator-start' component={CardsCreatorStart}/>
+                            <Route path='/cards-creator-edit' component={CardsCreatorEdit}/>
+                            <Route path='/cards-creator-create' component={CardsCreatorCreate}/>
+                            <Route path='/main' component={MainMenu}/>
+                            <Route component={MainMenu}/>
+                        </Switch>
                     </> :
                     <>
-                        <Route exact path='/' component={LandingPage}/>
-                        <Route path='/login' component={LoginPage}/>
-                        <Route path='/registration' component={UserRegistrationPage}/>
-                        <Redirect to="/"/>
+                        <Switch>
+                            <Route path='/login' component={LoginPage}/>
+                            <Route path='/registration' component={UserRegistrationPage}/>
+                            <Route exact path='/' component={LandingPage}/>
+                            <Route component={LandingPage}/>
+                        </Switch>
                     </>
                 }
-            </Switch>
-        </ThemeProvider>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 }
 
