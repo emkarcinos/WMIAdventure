@@ -60,7 +60,7 @@ const getUserCards = (userId) => {
 }
 
 const upgradeCard = (userId, cardId) => {
-    return RequestSender.post(UserProfilesEndpoints.upgradeCard(userId, cardId));
+    return RequestSender.post(UserProfilesEndpoints.upgradeCard(userId, cardId), {});
 }
 
 export default {
