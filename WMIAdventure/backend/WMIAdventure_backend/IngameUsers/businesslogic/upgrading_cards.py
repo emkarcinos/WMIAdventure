@@ -24,16 +24,16 @@ def upgrade_card(user_card: UserCard) -> UserCard:
 
     # Lock user's stats and user's card for transaction to prevent race conditions
     user_stats = UserStats.objects.select_for_update().get(pk=user_card.user_profile.user_stats.id)
-    old_user_card = UserCard.objects.select_for_update().get(pk=user_card.id)
+    user_card = UserCard.objects.select_for_update().get(pk=user_card.id)
 
     # Perform card upgrade
     with transaction.atomic():
         user_stats.skill_points -= user_card.card.next_level_cost
         user_stats.save()
-        old_user_card.delete()
-        upgraded_user_card = UserCard.objects.create(user_profile=user_stats.profile, card=upgraded_card)
+        user_card.card = upgraded_card
+        user_card.save()
 
-    return upgraded_user_card
+    return user_card
 
 
 def _check_next_level_cost(user_card: UserCard):
