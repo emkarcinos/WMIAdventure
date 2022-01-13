@@ -3,6 +3,8 @@ import BackgroundImg from "./styled-components/BackgroundImg";
 import tutorialFrame1 from '../../../assets/images/tutorial-frame-1.png';
 import tutorialFrame2 from '../../../assets/images/tutorial-frame-2.png';
 import tutorialFrame3 from '../../../assets/images/tutorial-frame-3.png';
+import tutorialFrame4 from '../../../assets/images/tutorial-frame-4.png';
+import tutorialFrame5 from '../../../assets/images/tutorial-frame-5.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -31,6 +33,16 @@ class Tutorial extends React.Component {
         },
 
         info3: {
+            visible: false,
+            translateX: '100vw',
+        },
+
+        info4: {
+            visible: false,
+            translateX: '100vw',
+        },
+
+        info5: {
             visible: false,
             translateX: '100vw',
         },
@@ -112,6 +124,62 @@ class Tutorial extends React.Component {
         }, nextStepAnimationDuration);
     }
 
+    step4 = () => {
+        this.setState({
+            info3: {
+                visible: true,
+                translateX: '-100vw',
+            },
+            info4: {
+                visible: true,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                info3: {
+                    visible: false,
+                    translateX: '-100vw',
+                },
+                info4: {
+                    visible: true,
+                    translateX: '0',
+                }
+            });
+        }, nextStepAnimationDuration);
+    }
+
+    step5 = () => {
+        this.setState({
+            info4: {
+                visible: true,
+                translateX: '-100vw',
+            },
+            info5: {
+                visible: true,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                info4: {
+                    visible: false,
+                    translateX: '-100vw',
+                },
+                info5: {
+                    visible: true,
+                    translateX: '0',
+                }
+            });
+        }, nextStepAnimationDuration);
+    }
+
+    step6 = () => {
+
+    }
+
     renderInitStep() {
         if (this.state.initInfo.visible) {
             return (
@@ -174,9 +242,50 @@ class Tutorial extends React.Component {
                                 secondParagraph={`Podczas trwania danej tury to właśnie efekty 
                                 grają kluczową rolę w rozgrywce.`}
                                 buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step3} buttonColor={theme.colors.dark}/>
+                                buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
                         </TextBorderContainer>
                     </EndDiv>
+                </StepContainer>
+            );
+        }
+    }
+
+    renderStep4() {
+        if (this.state.info4.visible) {
+            return (
+                <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info4.translateX}>
+                    <BackgroundImg setScale={'1'} src={tutorialFrame4}/>
+                    <EndDiv>
+                        <TextBorderContainer>
+                            <TutorialStepDescribe
+                                containerAs={'section'} gap={'20px'} header={'Tura'}
+                                firstParagraph={`Podczas trwania jednej tury, karta 
+                                na wierzchu talii gracza wykonuje swoje efekty.`}
+                                buttonLabel={'Ok'} buttonIcon={fast}
+                                buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
+                        </TextBorderContainer>
+                    </EndDiv>
+                </StepContainer>
+            );
+        }
+    }
+
+    renderStep5() {
+        if (this.state.info5.visible) {
+            return (
+                <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info5.translateX}>
+                    <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
+                    <CenterDiv>
+                        <TextContainer>
+                            <TutorialStepDescribe
+                                containerAs={'section'} gap={'20px'} header={'Koniec tury'}
+                                firstParagraph={`Tura kończy się po wykonaniu wszystkich efektów karty. 
+                                Ta karta trafia teraz na spód talii i następna oczekuję na swoją kolejkę.`}
+                                secondParagraph={`Następny ruch należy do przeciwnika.`}
+                                buttonLabel={'Ok'} buttonIcon={fast}
+                                buttonHandler={this.step6} buttonColor={theme.colors.dark}/>
+                        </TextContainer>
+                    </CenterDiv>
                 </StepContainer>
             );
         }
@@ -192,6 +301,8 @@ class Tutorial extends React.Component {
                     {this.renderInitStep()}
                     {this.renderStep2()}
                     {this.renderStep3()}
+                    {this.renderStep4()}
+                    {this.renderStep5()}
                 </MainContainer>
             </>
         );
