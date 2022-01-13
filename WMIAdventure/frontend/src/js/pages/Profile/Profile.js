@@ -81,7 +81,14 @@ class Profile extends React.Component {
     async getUserData() {
         const data = await getCurrentUserData();
         if (data) {
-            const user = new DetailedUserData(data.user, data.displayedUsername, data.semester, data.image, data.level);
+            const user = new DetailedUserData(
+                data.user,
+                data.displayedUsername,
+                data.semester,
+                data.image,
+                data.level,
+                data.skill_points
+            );
             await user.fetchNonVitalDataFromBackend();
             this.setState({
                 userData: user
@@ -125,8 +132,8 @@ class Profile extends React.Component {
                                             {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
-                                            <UserLabel skillPoints={25}
-                                                       number={25}/>
+                                            <UserLabel skillPoints={true}
+                                                       number={this.state.userData.skillpoints}/>
                                             {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
                                         {/*<FlexGapContainer gap={'10px'}>*/}
@@ -173,8 +180,8 @@ class Profile extends React.Component {
                                             {/*<UserLabel term number={this.state.userData.semester}/>*/}
                                             <UserLabel level={this.state.userData.level}
                                                        number={this.state.userData.level}/>
-                                            <UserLabel skillPoints={25}
-                                                       number={25}/>
+                                            <UserLabel skillPoints={true}
+                                                       number={this.state.userData.skillpoints}/>
                                             {/*<UserLabel rank number={'2'}/>*/}
                                         </FlexGapContainer>
                                         {/*<FlexGapContainer gap={'40px'}>*/}

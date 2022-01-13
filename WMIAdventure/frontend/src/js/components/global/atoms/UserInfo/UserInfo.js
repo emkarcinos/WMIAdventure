@@ -11,7 +11,7 @@ class UserInfo extends React.Component {
                 <Label>
                     {this.props.label}
                 </Label>
-                {this.props.points ?
+                {this.props.points !== null && this.props.points !== undefined ?
                     <Value>
                         <Span setColor={this.props.setPointsColor}>
                             {this.props.points}

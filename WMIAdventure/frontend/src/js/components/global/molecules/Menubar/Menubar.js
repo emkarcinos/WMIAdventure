@@ -50,7 +50,13 @@ class Menubar extends React.Component {
         const userData = await getCurrentUserData();
         if (!userData)
             return
-        const user = new DetailedUserData(userData.user, userData.displayedUsername, userData.semester, userData.image, userData.level);
+        const user = new DetailedUserData(
+            userData.user,
+            userData.displayedUsername,
+            userData.semester, userData.image,
+            userData.level,
+            userData.skill_points
+        );
         await user.fetchNonVitalDataFromBackend();
         this.setState({user: user, userLoggedIn: true});
     }

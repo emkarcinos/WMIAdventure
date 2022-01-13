@@ -49,7 +49,8 @@ class ChangeDeckCard extends React.Component {
             visible: false,
             opacity: 0,
             translateX: '100vw',
-        }
+        },
+        upgradePopUpHover: false,
     }
 
     showUpgradeCardPopUp = () => {
@@ -218,6 +219,19 @@ class ChangeDeckCard extends React.Component {
         this.setState({popUpHover: false});
     }
 
+    hoverUpgradeTrue = () => {
+        this.setState({upgradePopUpHover: true});
+    }
+
+    hoverUpgradeFalse = () => {
+        this.setState({upgradePopUpHover: false});
+    }
+
+    handleTransUpgradeHide = () => {
+        if (!this.state.upgradePopUpHover)
+            this.hideUpgradeCardPopUp();
+    }
+
     getInputButton = (isDesktop) => {
         return (
             <InputWithIcon width={isDesktop ? '28px' : '20px'} type={'number'} min={1} max={5} icon={pencilGrey}
@@ -266,16 +280,39 @@ class ChangeDeckCard extends React.Component {
     renderUpgradeCardSection() {
         if (this.state.upgradeCardSectionPopUp.visible) {
             return (
-                <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setPosition={'fixed'}
-                       setAlignment={'center'} setTop={this.props.onPopup ? '8px' : '56px'}
-                       setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
-                    <UpgradeCardSection cardId={this.state.selectedCard.id}
-                                        cardName={this.state.selectedCard.name}
-                                        cardLevel={this.state.selectedCard.level}
-                                        cardImage={this.state.selectedCard.image}
-                                        cardDescription={this.state.selectedCard.description}
-                                        nextLevelCost={this.state.selectedCard.next_level_cost}/>
-                </PopUp>
+                <>
+                    <Media query={mobile}>
+                        <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setPosition={'fixed'}
+                               setAlignment={'center'} setTop={this.props.onPopup ? '8px' : '56px'}
+                               setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
+                            <UpgradeCardSection cardId={this.state.selectedCard.id}
+                                                cardName={this.state.selectedCard.name}
+                                                cardLevel={this.state.selectedCard.level}
+                                                cardImage={this.state.selectedCard.image}
+                                                cardDescription={this.state.selectedCard.description}
+                                                nextLevelCost={this.state.selectedCard.next_level_cost}/>
+                        </PopUp>
+                    </Media>
+                    <Media query={desktop}>
+                        <TransBack visible closeHandler={this.handleTransUpgradeHide}
+                                   setOpacity={this.state.upgradeCardSectionPopUp.opacity}>
+                            <PopUp visible closeHandler={this.hideUpgradeCardPopUp} setPosition={'fixed'}
+                                   setAlignment={'center'} setTop={this.props.onPopup ? '8px' : '56px'}
+                                   setWidth={'766px'} setHeight={'712px'}
+                                   hoverTrue={this.hoverUpgradeTrue} hoverFalse={this.hoverUpgradeFalse}
+                                   setTranslateX={this.state.upgradeCardSectionPopUp.translateX}>
+                                <UpgradeCardSection cardId={this.state.selectedCard.id}
+                                                    cardName={this.state.selectedCard.name}
+                                                    cardLevel={this.state.selectedCard.level}
+                                                    cardImage={this.state.selectedCard.image}
+                                                    cardSubject={this.state.selectedCard.subject}
+                                                    cardTooltip={this.state.selectedCard.tooltip}
+                                                    cardDescription={this.state.selectedCard.description}
+                                                    nextLevelCost={this.state.selectedCard.next_level_cost}/>
+                            </PopUp>
+                        </TransBack>
+                    </Media>
+                </>
             );
         }
     }
@@ -321,37 +358,48 @@ class ChangeDeckCard extends React.Component {
                     </>
                 </Media>
                 <Media query={desktop}>
-                    <TransBack closeHandler={this.onBgClick} visible={true}
-                               setOpacity={this.state.visible ? '100%' : '0'}>
-                        <PopUp visible={true} closeHandler={this.close} setTranslateY={this.state.setTranslateY}
-                               setHeight={'700px'} setWidth={'678px'} hoverTrue={this.hoverTrue}
-                               hoverFalse={this.hoverFalse}>
-                            <ColumnGapContainer setHeight={'100%'} setPadding={'20px'} gap={'40px'}>
-                                <UserInfo label={'Pozycja w talii'} value={this.getInputButton(true)}/>
-                                <FlexGapContainer setHeight={'458px'} gap={'40px'}>
-                                    <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
-                                                  cardName={this.state.selectedCard.name}
-                                                  cardLevel={this.state.selectedCard.level}
-                                                  cardImage={this.state.selectedCard.image}
-                                                  cardSubject={this.state.selectedCard.subject}
-                                                  cardTooltip={this.state.selectedCard.tooltip}
-                                                  description={this.state.selectedCard.description}
-                                                  common={this.state.selectedCard.level === 1}
-                                                  gold={this.state.selectedCard.level === 2}
-                                                  epic={this.state.selectedCard.level === 3}
-                                    />
-                                    <ColumnGapContainer setHeight={'100%'} setWidth={'300px'}>
-                                        <P>Wymień na</P>
-                                        {this.renderCardChoose()}
-                                    </ColumnGapContainer>
-                                </FlexGapContainer>
-                                <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
-                                                handler={this.onNewCardSave}>
-                                    Zapisz
-                                </ButtonWithIcon>
-                            </ColumnGapContainer>
-                        </PopUp>
-                    </TransBack>
+                    <>
+                        <TransBack closeHandler={this.onBgClick} visible={true}
+                                   setOpacity={this.state.visible ? '100%' : '0'}>
+                            <PopUp visible={true} closeHandler={this.close} setTranslateY={this.state.setTranslateY}
+                                   setHeight={'700px'} setWidth={'678px'} hoverTrue={this.hoverTrue}
+                                   hoverFalse={this.hoverFalse}>
+                                <ColumnGapContainer setHeight={'100%'} setPadding={'20px'} gap={'40px'}>
+                                    <UserInfo label={'Pozycja w talii'} value={this.getInputButton(true)}/>
+                                    <FlexGapContainer setHeight={'458px'} gap={'40px'}>
+                                        <FullCardView setWidth={'258px'} setHeight={'458px'} setMargin={'0'}
+                                                      cardName={this.state.selectedCard.name}
+                                                      cardLevel={this.state.selectedCard.level}
+                                                      cardImage={this.state.selectedCard.image}
+                                                      cardSubject={this.state.selectedCard.subject}
+                                                      cardTooltip={this.state.selectedCard.tooltip}
+                                                      description={this.state.selectedCard.description}
+                                                      common={this.state.selectedCard.level === 1}
+                                                      gold={this.state.selectedCard.level === 2}
+                                                      epic={this.state.selectedCard.level === 3}
+                                        />
+                                        <ColumnGapContainer setHeight={'100%'} setWidth={'300px'}>
+                                            <P>Wymień na</P>
+                                            {this.renderCardChoose()}
+                                        </ColumnGapContainer>
+                                    </FlexGapContainer>
+                                    <FlexGapContainer gap={'40px'}>
+                                        <ButtonWithIcon icon={upgrade} color={theme.colors.yellowyOrangy}
+                                                        handler={this.state.selectedCard.next_level_cost
+                                                            ? this.showUpgradeCardPopUp : null}
+                                                        access={this.state.selectedCard.next_level_cost}>
+                                            Ulepsz
+                                        </ButtonWithIcon>
+                                        <ButtonWithIcon icon={pencilWhite} color={theme.colors.purplyPinky}
+                                                        handler={this.onNewCardSave}>
+                                            Zapisz
+                                        </ButtonWithIcon>
+                                    </FlexGapContainer>
+                                </ColumnGapContainer>
+                            </PopUp>
+                        </TransBack>
+                        {this.renderUpgradeCardSection()}
+                    </>
                 </Media>
             </>
         );

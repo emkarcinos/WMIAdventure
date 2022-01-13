@@ -13,6 +13,10 @@ const TransparentBackground = styled.div`
   height: calc(100vh - 56px);
   transition: opacity 0.3s ease-in-out;
   opacity: ${({setOpacity}) => setOpacity ? setOpacity : '0'};
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    height: 100%;
+  }
 `;
 
 export default TransparentBackground;

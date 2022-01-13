@@ -1,10 +1,10 @@
-import {getWithSetCallback} from "../cache/cache";
+import {getWithSetCallback, set} from "../cache/cache";
 import {profileKey, userProfileKeys} from "../localStorageKeys";
 import UserProfilesAPIGateway from "../../api/gateways/UserProfilesAPIGateway";
 
 const cacheUsersForSeconds = 300 // 5 minutes;
 
-export const getAllUserProfiles = async () => {
+export const getAllUserProfiles = async (flatten = true) => {
     const callback = async () => {
         try {
             const response = await UserProfilesAPIGateway.getAllBasicUsersInfo();
@@ -15,10 +15,16 @@ export const getAllUserProfiles = async () => {
         }
     }
 
-    return await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
+    const cachePages = await getWithSetCallback(userProfileKeys.profileList, callback, cacheUsersForSeconds);
+    return flatten ? cachePages.flatMap(item => item.results) : cachePages;
 }
 
-export const getUserById = async (id) => {
+export const getUserListPage = async (pageNumber) => {
+    const allProfiles = await getAllUserProfiles(false);
+    return allProfiles.filter(page => page.page === pageNumber)[0];
+}
+
+export const getUserById = async (id, forceUpdate = true) => {
     const callback = async () => {
         try {
             const response = await UserProfilesAPIGateway.getUserById(id);
@@ -28,5 +34,7 @@ export const getUserById = async (id) => {
             return null
         }
     }
+    if (forceUpdate)
+        await set(profileKey(id), callback, cacheUsersForSeconds);
     return await getWithSetCallback(profileKey(id), callback, cacheUsersForSeconds);
 }
