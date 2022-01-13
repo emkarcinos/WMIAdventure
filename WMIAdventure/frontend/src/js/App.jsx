@@ -17,6 +17,7 @@ import CardsCreatorEdit from './pages/CardsCreatorEdit';
 import LoginPage from "./pages/LoginPage/LoginPage";
 import {hasSessionCookie} from "./storage/user/userData";
 import Navbar from "./components/global/molecules/Navbar";
+import Tutorial from "./pages/Tutorial";
 
 function App() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(hasSessionCookie())
@@ -40,6 +41,7 @@ function App() {
                         <Route path='/cards-creator-start' component={CardsCreatorStart}/>
                         <Route path='/cards-creator-edit' component={CardsCreatorEdit}/>
                         <Route path='/cards-creator-create' component={CardsCreatorCreate}/>
+                        <Route path='/tutorial' component={Tutorial}/>
                         <Redirect to="/main"/>
                     </> :
                     <>

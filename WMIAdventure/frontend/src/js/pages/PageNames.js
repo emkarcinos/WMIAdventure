@@ -8,6 +8,7 @@ export const pageNames = {
     '/cards-creator-create': 'Edycja karty',
     '/login': 'Logowanie',
     '/registration': 'Rejestracja',
+    '/tutorial': 'Samouczek',
 
 }
 

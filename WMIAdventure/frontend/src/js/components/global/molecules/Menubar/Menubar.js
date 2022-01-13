@@ -23,6 +23,7 @@ import TransparentBack from "./styled-components/TransparentBack";
 import Button from "./styled-components/Button";
 import {Redirect} from "react-router-dom";
 import {DetailedUserData, nullDetailedUserData} from "../../../../api/data-models/user/DetailedUserData";
+import tutorialIcon from '../../../../../assets/images/tutorial.png';
 
 /* Transition timeout values */
 const timeout = {
@@ -91,9 +92,12 @@ class Menubar extends React.Component {
         if (this.state.userLoggedIn) {
             return (
                 <>
-                    <MenubarEntry as={Link} to={'/profile'} onClick={this.props.closeHandler} image={userIcon}>Mój
-                        profil</MenubarEntry>
-                    <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>Wyloguj</MenubarEntry>
+                    <MenubarEntry as={Link} to={'/profile'} onClick={this.props.closeHandler} image={userIcon}>
+                        Mój profil
+                    </MenubarEntry>
+                    <MenubarEntry onClick={this.logoutHandler} image={logoutIcon}>
+                        Wyloguj
+                    </MenubarEntry>
                     <Line/>
                     <Button as={Link} to={'/profile'} onClick={this.props.closeHandler}>
                         <TinyUserProfile user={this.state.user} showSkillPoints/>
@@ -105,10 +109,12 @@ class Menubar extends React.Component {
         return (
             <>
                 {this.redirectHandler()}
-                <MenubarEntry as={Link} to={'/login'} onClick={this.props.closeHandler} image={userIcon}>Zaloguj
-                    się</MenubarEntry>
-                <MenubarEntry as={Link} to={'/registration'} onClick={this.props.closeHandler} image={newUserIcon}>Stwórz
-                    konto</MenubarEntry>
+                <MenubarEntry as={Link} to={'/login'} onClick={this.props.closeHandler} image={userIcon}>
+                    Zaloguj się
+                </MenubarEntry>
+                <MenubarEntry as={Link} to={'/registration'} onClick={this.props.closeHandler} image={newUserIcon}>
+                    Stwórz konto
+                </MenubarEntry>
             </>
         )
     }
@@ -136,6 +142,11 @@ class Menubar extends React.Component {
                                         Kart</MenubarEntry>
                                     <Line/>
                                 </> : null}
+                            <MenubarEntry
+                                as={Link}
+                                to={'/tutorial'}
+                                onClick={this.props.closeHandler}
+                                image={tutorialIcon}>Samouczek</MenubarEntry>
                             <MenubarEntry
                                 as={Href}
                                 href={'https://github.com/emkarcinos/WMIAdventure/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug%3A+'}
