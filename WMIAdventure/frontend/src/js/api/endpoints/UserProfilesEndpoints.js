@@ -11,6 +11,7 @@ class UserProfilesEndpoints {
     static userIdDeck = (userId) => `${UserProfilesEndpoints.main}${userId}/decks/1/`;
     static userIdLevel = (userId) => `${UserProfilesEndpoints.main}${userId}/level/`;
     static userCards = (userId) => `${UserProfilesEndpoints.main}${userId}/cards/`;
+    static upgradeCard = (userId, cardId) => `${UserProfilesEndpoints.userCards(userId)}${cardId}/upgrade/`;
 }
 
 export default UserProfilesEndpoints;

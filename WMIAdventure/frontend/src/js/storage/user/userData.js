@@ -112,6 +112,12 @@ export const getCurrentUserCards = async () => {
     return await getWithSetCallback(userDataKeys.userCards, callback, cacheUserCardsFor);
 }
 
+export const upgradeCurrentUserCard = async (cardId) => {
+    const currentUserId = await getCurrentUserId();
+
+    return await UserProfilesAPIGateway.upgradeCard(currentUserId, cardId);
+}
+
 export const purgeUserData = () => {
     const userId = get(userDataKeys.id);
     invalidateItem(profileKey(userId));
