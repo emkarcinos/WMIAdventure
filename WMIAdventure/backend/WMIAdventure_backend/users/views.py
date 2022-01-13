@@ -1,17 +1,16 @@
-from django.utils.decorators import method_decorator
-from ratelimit.core import get_usage, is_ratelimited
-from ratelimit.decorators import ratelimit
+from ratelimit.core import get_usage
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from WMIAdventure_backend.settings import SESSION_COOKIE_AGE, SESSION_COOKIE_NAME
+from WMIAdventure_backend.settings import SESSION_COOKIE_AGE, SESSION_COOKIE_NAME, HTTPS_ENABLED
 from utils.errors import registration_ratelimit_error
 from .models import User
 from .serializers import RegisterSerializer, BasicUserInfoSerializer, BasicUserSerializer, LoginSerializer
 # Create your views here.
 from .signals import user_registered
+
 
 class UserRegister(APIView):
     def post(self, request):
@@ -65,5 +64,11 @@ class LoginView(APIView):
         if not serializer.is_valid():
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
         response = Response(data=serializer.data)
-        response.set_cookie(SESSION_COOKIE_NAME, serializer.data.get('token'), expires=SESSION_COOKIE_AGE)
+        print(HTTPS_ENABLED)
+        response.set_cookie(
+            SESSION_COOKIE_NAME,
+            serializer.data.get('token'),
+            expires=SESSION_COOKIE_AGE,
+            secure=HTTPS_ENABLED
+        )
         return response
