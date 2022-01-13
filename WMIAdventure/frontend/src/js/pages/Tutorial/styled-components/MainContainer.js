@@ -8,6 +8,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({theme}) => theme.colors.whiteAlmost};
+  position: relative;
 `;
 
 export default MainContainer;
