@@ -22,7 +22,7 @@ class UpgradeApprove extends React.Component {
                 if (response.ok) {
                     this.setState({success: true});
                     setTimeout(() => {
-                        window.location.reload();
+                        window.location.reload();  // TODO: Instead of reloading update user's card in the proper places
                     }, 1500)
                 } else {
                     this.setState({error: true});
@@ -35,7 +35,7 @@ class UpgradeApprove extends React.Component {
         if (!(this.state.success || this.state.error)) {
             return (
                 <ColumnGapContainer as={'article'} gap={'20px'} setMargin={'32px'}>
-                    <H3>
+                    <H3 text_align={'center'}>
                         Ulepszyć {this.props.cardName}?
                     </H3>
                     <ColumnGapContainer gap={'30px'}>
@@ -62,13 +62,13 @@ class UpgradeApprove extends React.Component {
     renderSuccess = () => {
         if (this.state.success) {
             return (
-                <ColumnGapContainer as={'article'} gap={'32px'}>
-                    <H3>
+                <ColumnGapContainer as={'article'} gap={'32px'} setMargin={'32px'}>
+                    <H3 text_align={'center'}>
                         Sukces!
                     </H3>
                     <ColumnGapContainer gap={'30px'}>
                         <P>
-                            Karta &nbsp;<strong>{this.props.cardName}</strong>&nbsp; ulepszona na nowy poziom.
+                            Karta &nbsp;<strong>{this.props.cardName}</strong>&nbsp;ulepszona na nowy poziom.
                         </P>
                     </ColumnGapContainer>
                 </ColumnGapContainer>
@@ -80,7 +80,7 @@ class UpgradeApprove extends React.Component {
         if (this.state.error) {
             return (
                 <ColumnGapContainer as={'article'} gap={'32px'} setMargin={'32px'}>
-                    <H3>
+                    <H3 text_align={'center'}>
                         Błąd!
                     </H3>
                     <ColumnGapContainer gap={'30px'}>
