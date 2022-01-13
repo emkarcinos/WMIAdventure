@@ -64,7 +64,6 @@ class LoginView(APIView):
         if not serializer.is_valid():
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
         response = Response(data=serializer.data)
-        print(HTTPS_ENABLED)
         response.set_cookie(
             SESSION_COOKIE_NAME,
             serializer.data.get('token'),
