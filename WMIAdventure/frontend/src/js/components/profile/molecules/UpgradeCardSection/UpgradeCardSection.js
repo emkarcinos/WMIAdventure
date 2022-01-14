@@ -26,7 +26,6 @@ class UpgradeCardSection extends React.Component {
             translateY: '-100vh',
         },
         cardLevels: null,
-        cardDescriptions: null,
         approvePopUpHover: false,
         userPoints: null
     }
@@ -46,41 +45,43 @@ class UpgradeCardSection extends React.Component {
 
     async loadCardLevelsAndDescriptions() {
         const card = await getCardById(this.props.cardId);
-        let levels = [];
-        let descriptions = [];
+        const levels = [];
         for (let elem of card.levels) {
-            levels.push(elem.level);
-            descriptions.push(elem.effects_description);
+            levels.push({
+                level: elem.level,
+                description: elem.effects_description
+            });
         }
         this.setState({
             cardLevels: levels,
-            cardDescriptions: descriptions
         });
     }
 
     getNextCardData = (data) => {
-        if (data === null || data === undefined)
+        if (!data)
             return null;
-        if (data.length === 2)
-            // case [1, 2], [2, 3] and [1, 3]
-            return data[1];
-        else if (data.length === 3) {
-            // case [1, 2, 3]
-            if (this.props.cardLevel === 1)
-                // when typical return gold
-                return data[1];
-            else if (this.props.cardLevel === 2)
-                // when gold return epic
-                return data[2];
+
+        if (data.length < 2)
+            return null;
+
+        const currentLevel = this.props.cardLevel;
+        let guessedNextLevel = currentLevel + 1;
+        while (guessedNextLevel <= 3) {
+            const nextLevelCard = data.filter(level => level.level === guessedNextLevel)[0];
+            if (nextLevelCard) {
+                return nextLevelCard;
+            }
+            guessedNextLevel++
         }
+        return null;
     }
 
     getNextCardLevel = () => {
-        return this.getNextCardData(this.state.cardLevels);
+        return this.state.cardLevels ? this.getNextCardData(this.state.cardLevels).level : null;
     }
 
     getNextCardDescription = () => {
-        return this.getNextCardData(this.state.cardDescriptions);
+        return this.state.cardLevels ? this.getNextCardData(this.state.cardLevels).description : null;
     }
 
     hoverTrue = () => {
