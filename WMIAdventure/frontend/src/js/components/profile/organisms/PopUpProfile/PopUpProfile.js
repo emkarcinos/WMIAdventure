@@ -27,7 +27,8 @@ class PopUpProfile extends React.Component {
         return (
             <TransparentBack setOpacity={this.props.setOpacity} onClick={this.handleHiding}>
                 <Container onMouseEnter={this.hoverTrue} onMouseLeave={this.hoverFalse}
-                           setTranslateX={this.props.setTranslateX}>
+                           setMaxWidth={this.props.setMaxWidth} setHeight={this.props.setHeight}
+                           setTranslateY={this.props.setTranslateY}>
                     <Close onClick={this.props.closeHandler}/>
                     {this.props.children}
                 </Container>

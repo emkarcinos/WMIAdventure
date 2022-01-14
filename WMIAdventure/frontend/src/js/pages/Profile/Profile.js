@@ -26,6 +26,7 @@ import PopUpProfile from "../../components/profile/organisms/PopUpProfile";
 import EditProfile from "../../components/profile/molecules/EditProfile";
 import P from "./styled-componets/P";
 import {DetailedUserData, nullDetailedUserData} from "../../api/data-models/user/DetailedUserData";
+import WelcomeInProfile from "../../components/profile/molecules/WelcomeInProfile";
 
 class Profile extends React.Component {
 
@@ -37,8 +38,14 @@ class Profile extends React.Component {
         editProfilePopUp: {
             visible: false,
             opacity: '0',
-            translateX: '-100vh'
+            translateY: '-100vh'
         },
+
+        tutorialPopUp: {
+            visible: true,
+            opacity: '1',
+            translateY: '0'
+        }
     }
 
     openEditProfilePopUp = () => {
@@ -53,7 +60,7 @@ class Profile extends React.Component {
                 editProfilePopUp: {
                     visible: true,
                     opacity: '1',
-                    translateX: '0'
+                    translateY: '0'
                 },
             })
         }, 5);
@@ -64,7 +71,7 @@ class Profile extends React.Component {
             editProfilePopUp: {
                 visible: true,
                 opacity: '0',
-                translateX: '-100vh'
+                translateY: '-100vh'
             },
         });
 
@@ -111,10 +118,38 @@ class Profile extends React.Component {
         this.getDeck();
     }
 
+    closeTutorialPopUp = () => {
+        localStorage.removeItem('tutorial');
+
+        this.setState({
+            tutorialPopUp: {
+                visible: true,
+                opacity: '0',
+                translateY: '-100vh'
+            },
+        });
+
+        setTimeout(() => {
+            this.setState({
+                tutorialPopUp: {
+                    visible: false,
+                },
+            })
+        }, nextStepAnimationDuration);
+    }
+
     renderTutorialPopup() {
-        return (
-            <></>
-        );
+        if (localStorage.getItem("tutorial") === "on" && this.state.tutorialPopUp.visible) {
+            return (
+                <PopUpProfile setOpacity={this.state.tutorialPopUp.opacity}
+                              setTranslateY={this.state.tutorialPopUp.translateY}
+                              closeHandler={this.closeTutorialPopUp}
+                              setMaxWidth={'382px'} setHeight={'372px'}>
+                    <WelcomeInProfile close={this.closeTutorialPopUp}/>
+                </PopUpProfile>
+            );
+        }
+
     }
 
     render() {
@@ -128,8 +163,7 @@ class Profile extends React.Component {
                 <Media query={mobile}>
                     <>
                         <MainMobileContainer>
-                            {localStorage.getItem("tutorial") === "on" ?
-                                this.renderTutorialPopup() : null}
+                            {this.renderTutorialPopup()}
                             <User username={this.state.userData.username}
                                   image={this.state.userData.image}/>
                             <InfoWrapper>
@@ -166,7 +200,7 @@ class Profile extends React.Component {
                         </MainMobileContainer> {
                         this.state.editProfilePopUp.visible ? <PopUpProfile
                             setOpacity={this.state.editProfilePopUp.opacity}
-                            setTranslateX={this.state.editProfilePopUp.translateX}
+                            setTranslateY={this.state.editProfilePopUp.translateY}
                             closeHandler={this.closeEditProfilePopUp}>
                             <EditProfile closeHandler={this.closeEditProfilePopUp}
                                          userId={this.state.userData.userId}
@@ -218,7 +252,7 @@ class Profile extends React.Component {
                         {
                             this.state.editProfilePopUp.visible ? <PopUpProfile
                                 setOpacity={this.state.editProfilePopUp.opacity}
-                                setTranslateX={this.state.editProfilePopUp.translateX}
+                                setTranslateY={this.state.editProfilePopUp.translateY}
                                 closeHandler={this.closeEditProfilePopUp}>
                                 <EditProfile closeHandler={this.closeEditProfilePopUp}
                                              userId={this.state.userData.userId}

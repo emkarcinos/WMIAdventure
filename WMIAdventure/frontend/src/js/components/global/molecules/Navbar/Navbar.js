@@ -40,13 +40,16 @@ class Navbar extends React.Component {
         window.onbeforeunload = () => {
             purge();
         };
-        console.log(this.props.location.pathname);
+    }
+
+    clearTutorialStorage = () => {
+        localStorage.removeItem('tutorial');
     }
 
     renderPagename() {
         if (this.props.location.pathname === '/tutorial') {
             return (
-                <SkipTutorialButton to={'/profile'}>
+                <SkipTutorialButton onClick={this.clearTutorialStorage} to={'/profile'}>
                     Pomiń samouczek
                 </SkipTutorialButton>
             );
