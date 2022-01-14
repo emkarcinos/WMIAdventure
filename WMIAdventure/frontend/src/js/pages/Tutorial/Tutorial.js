@@ -5,6 +5,8 @@ import tutorialFrame2 from '../../../assets/images/tutorial-frame-2.png';
 import tutorialFrame3 from '../../../assets/images/tutorial-frame-3.png';
 import tutorialFrame4 from '../../../assets/images/tutorial-frame-4.png';
 import tutorialFrame5 from '../../../assets/images/tutorial-frame-5.png';
+import tutorialFrame6 from '../../../assets/images/tutorial-frame-6.png';
+import tutorialFrame7 from '../../../assets/images/tutorial-frame-7.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -43,6 +45,16 @@ class Tutorial extends React.Component {
         },
 
         info5: {
+            visible: false,
+            translateX: '100vw',
+        },
+
+        info6: {
+            visible: false,
+            translateX: '100vw',
+        },
+
+        info7: {
             visible: false,
             translateX: '100vw',
         },
@@ -177,7 +189,59 @@ class Tutorial extends React.Component {
     }
 
     step6 = () => {
+        this.setState({
+            info5: {
+                visible: true,
+                translateX: '-100vw',
+            },
+            info6: {
+                visible: true,
+                translateX: '100vw',
+            }
+        });
 
+        setTimeout(() => {
+            this.setState({
+                info5: {
+                    visible: false,
+                    translateX: '-100vw',
+                },
+                info6: {
+                    visible: true,
+                    translateX: '0',
+                }
+            });
+        }, nextStepAnimationDuration);
+    }
+
+    step7 = () => {
+        this.setState({
+            info6: {
+                visible: true,
+                translateX: '-100vw',
+            },
+            info7: {
+                visible: true,
+                translateX: '100vw',
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                info6: {
+                    visible: false,
+                    translateX: '-100vw',
+                },
+                info7: {
+                    visible: true,
+                    translateX: '0',
+                }
+            });
+        }, nextStepAnimationDuration);
+    }
+
+    goToProfile = () => {
+        this.props.history.push(`profile`);
     }
 
     renderInitStep() {
@@ -273,7 +337,7 @@ class Tutorial extends React.Component {
     renderStep5() {
         if (this.state.info5.visible) {
             return (
-                <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info5.translateX}>
+                <StepContainer setTranslateX={this.state.info5.translateX}>
                     <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
                     <CenterDiv>
                         <TextContainer>
@@ -291,6 +355,50 @@ class Tutorial extends React.Component {
         }
     }
 
+    renderStep6() {
+        if (this.state.info6.visible) {
+            return (
+                <StepContainer setTranslateX={this.state.info6.translateX}>
+                    <BackgroundImg setScale={'1'} src={tutorialFrame6}/>
+                    <CenterDiv>
+                        <TextBorderContainer setMargin={'0 0 200px 0'}>
+                            <TutorialStepDescribe
+                                containerAs={'section'} gap={'20px'} header={'Przyciski'}
+                                firstParagraph={`Podczas pojedynku mamy dyspozycji 
+                                trzy przyciski ułatwiające sterowanie całym trybem.`}
+                                buttonLabel={'Ok'} buttonIcon={fast}
+                                buttonHandler={this.step7} buttonColor={theme.colors.dark}/>
+                        </TextBorderContainer>
+                    </CenterDiv>
+                </StepContainer>
+            );
+        }
+    }
+
+    renderStep7() {
+        if (this.state.info7.visible) {
+            return (
+                <StepContainer setTranslateX={this.state.info7.translateX}>
+                    <BackgroundImg setScale={'1'} src={tutorialFrame7}/>
+                    <EndDiv>
+                        <TextBorderContainer>
+                            <TutorialStepDescribe
+                                containerAs={'section'} gap={'20px'} header={'Koniec walki'}
+                                firstParagraph={`Po wygranej walce zdobywamy punkty EXP, które liczą się do 
+                                naszego poziomu. Za pojedynki z graczami o najwyższych poziomach 
+                                dostaniemy najwięcej takich punktów.`}
+                                secondParagraph={`Awans na kolejny poziom skutkuje zdobywaniem Punktów Nauki, 
+                                które pozwolą nam ulepszać nasze karty na wyższe poziomy, przez co staną się 
+                                silniejsze i będziemy mogli pokonywać przeciwników z łatwością.`}
+                                buttonLabel={'Ok'} buttonIcon={fast} userLabel={true}
+                                buttonHandler={this.goToProfile} buttonColor={theme.colors.dark}/>
+                        </TextBorderContainer>
+                    </EndDiv>
+                </StepContainer>
+            );
+        }
+    }
+
     render() {
         return (
             <>
@@ -303,6 +411,8 @@ class Tutorial extends React.Component {
                     {this.renderStep3()}
                     {this.renderStep4()}
                     {this.renderStep5()}
+                    {this.renderStep6()}
+                    {this.renderStep7()}
                 </MainContainer>
             </>
         );

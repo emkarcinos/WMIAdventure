@@ -3,6 +3,7 @@ import Header from "./styled-components/Header";
 import Paragraph from "./styled-components/Paragraph";
 import ColumnGapContainer from "../../../global/molecules/ColumnGapContainer";
 import ButtonWithIcon from "../../../global/atoms/ButtonWithIcon";
+import UserLabel from "../../../global/atoms/UserLabel";
 
 class TutorialStepDescribe extends React.Component {
     render() {
@@ -18,6 +19,7 @@ class TutorialStepDescribe extends React.Component {
                 <Paragraph>
                     {this.props.secondParagraph}
                 </Paragraph>
+                {this.props.userLabel ? <UserLabel skillPoints={true} number={'25'} setMargin={'0'}/> : null}
                 <ButtonWithIcon handler={this.props.buttonHandler} icon={this.props.buttonIcon}
                                 color={this.props.buttonColor}>
                     {this.props.buttonLabel}
