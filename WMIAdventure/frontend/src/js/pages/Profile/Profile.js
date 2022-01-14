@@ -31,7 +31,6 @@ class Profile extends React.Component {
 
     state = {
         userData: nullDetailedUserData(),
-
         userNotLoggedIn: false,
         deck: nullEditableDeck(),
 
@@ -112,6 +111,12 @@ class Profile extends React.Component {
         this.getDeck();
     }
 
+    renderTutorialPopup() {
+        return (
+            <></>
+        );
+    }
+
     render() {
         if (this.state.userNotLoggedIn)
             return (<Redirect to={'/'}/>);
@@ -123,6 +128,8 @@ class Profile extends React.Component {
                 <Media query={mobile}>
                     <>
                         <MainMobileContainer>
+                            {localStorage.getItem("tutorial") === "on" ?
+                                this.renderTutorialPopup() : null}
                             <User username={this.state.userData.username}
                                   image={this.state.userData.image}/>
                             <InfoWrapper>
