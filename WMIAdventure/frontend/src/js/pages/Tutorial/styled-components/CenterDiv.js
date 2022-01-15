@@ -11,6 +11,7 @@ const CenterDiv = styled.div`
   align-items: center;
   transition: transform 0.5s ease-in-out;
   transform: translateX(${({setTranslateX}) => setTranslateX ? setTranslateX : '0'});
+  background-color: ${({theme, transBack}) => transBack ? theme.colors.darkTrans : 'transparent'};
 `;
 
 export default CenterDiv;

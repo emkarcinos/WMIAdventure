@@ -9,6 +9,7 @@ import tutorialFrame6 from '../../../assets/images/tutorial-frame-6.png';
 import tutorialFrame7 from '../../../assets/images/tutorial-frame-7.png';
 import tutorialFrameDesktop1 from '../../../assets/images/tutorial-frame-desktop1.png';
 import tutorialFrameDesktop2 from '../../../assets/images/tutorial-frame-desktop2.png';
+import tutorialFrameDesktop3 from '../../../assets/images/tutorial-frame-desktop3.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -21,6 +22,7 @@ import EndDiv from "./styled-components/EndDiv";
 import TextBorderContainer from "./styled-components/TextBorderContainer";
 import MainContainer from "./styled-components/MainContainer";
 import Media from "react-media";
+import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 
 
 class Tutorial extends React.Component {
@@ -309,21 +311,47 @@ class Tutorial extends React.Component {
         if (this.state.info3.visible) {
             return (
                 <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info3.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame3}/>
-                    <EndDiv>
-                        <TextBorderContainer>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Karta'}
-                                firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
-                                ich talie i poszczególne karty. Część z nich ma określoną moc. 
-                                Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
-                                uczyni z nas najlepszych wojowników. `}
-                                secondParagraph={`Podczas trwania danej tury to właśnie efekty 
-                                grają kluczową rolę w rozgrywce.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </EndDiv>
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame3}/>
+                            <EndDiv>
+                                <TextBorderContainer>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Karta'}
+                                        firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
+                                        ich talie i poszczególne karty. Część z nich ma określoną moc. 
+                                        Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
+                                        uczyni z nas najlepszych wojowników. `}
+                                        secondParagraph={`Podczas trwania danej tury to właśnie efekty 
+                                        grają kluczową rolę w rozgrywce.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </EndDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop2}/>
+                            <CenterDiv transBack>
+                                <FlexGapContainer gap={'200px'} setMargin={'0 0 0 128px'}>
+                                    <img src={tutorialFrameDesktop3} alt='Full card view example.'/>
+                                    <TextBorderContainer>
+                                        <TutorialStepDescribe
+                                            containerAs={'section'} gap={'20px'} header={'Karta'}
+                                            firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
+                                            ich talie i poszczególne karty. Część z nich ma określoną moc. 
+                                            Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
+                                            uczyni z nas najlepszych wojowników. `}
+                                            secondParagraph={`Podczas trwania danej tury to właśnie efekty 
+                                            grają kluczową rolę w rozgrywce.`}
+                                            buttonLabel={'Ok'} buttonIcon={fast}
+                                            buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
+                                    </TextBorderContainer>
+                                </FlexGapContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
