@@ -8,8 +8,7 @@ class CostInputs extends React.Component {
     render() {
         if (this.props.cardRank === 0) {
             return <></>
-        }
-        else {
+        } else {
             return (
                 <>
                     <Div>
@@ -19,7 +18,7 @@ class CostInputs extends React.Component {
                         <Span>
                             <Input id={`${this.props.cardRank}-next_level_cost`}
                                    name='next_level_cost'
-                                   type='number'
+                                   type='text'
                                    min='1'
                                    max='99'
                                    value={this.props.levelCostValues[this.props.cardRank - 1]}
