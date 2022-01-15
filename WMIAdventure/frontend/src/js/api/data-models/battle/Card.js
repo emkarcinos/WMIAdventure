@@ -86,6 +86,12 @@ export const cardsFromUserCardsData = async (data) => {
 
         cards.push(card);
     }
+
+    cards.sort((card1, card2) => {
+        if (card1.name === card2.name)
+            return 0;
+        return card1.name.toLowerCase() < card2.name.toLowerCase() ? -1 : 1;
+    });
     return cards;
 }
 
