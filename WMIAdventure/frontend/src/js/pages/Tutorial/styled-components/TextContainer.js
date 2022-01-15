@@ -5,10 +5,11 @@ const TextContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: ${({setWidth}) => setWidth ? setWidth : '100%'};
+  height: ${({setHeight}) => setHeight ? setHeight : 'auto'};
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    width: 420px;
+    width: ${({setWidth}) => setWidth ? setWidth : '420px'};
     border-radius: 10px;
     padding: 16px;
   }

@@ -12,6 +12,7 @@ import tutorialFrameDesktop2 from '../../../assets/images/tutorial-frame-desktop
 import tutorialFrameDesktop3 from '../../../assets/images/tutorial-frame-desktop3.png';
 import tutorialFrameDesktop4 from '../../../assets/images/tutorial-frame-desktop4.png';
 import tutorialFrameDesktop5 from '../../../assets/images/tutorial-frame-desktop5.png';
+import tutorialFrameDesktop6 from '../../../assets/images/tutorial-frame-desktop6.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -26,6 +27,8 @@ import MainContainer from "./styled-components/MainContainer";
 import Media from "react-media";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
 import LeftDiv from "./styled-components/LeftDiv";
+import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
+import Img from "./styled-components/Img";
 
 
 class Tutorial extends React.Component {
@@ -337,7 +340,7 @@ class Tutorial extends React.Component {
                             <BackgroundImg setScale={'1'} src={tutorialFrameDesktop2}/>
                             <CenterDiv transBack>
                                 <FlexGapContainer gap={'200px'} setMargin={'0 0 0 128px'}>
-                                    <img src={tutorialFrameDesktop3} alt='Full card view example.'/>
+                                    <Img src={tutorialFrameDesktop3} alt='Full card view example.'/>
                                     <TextBorderContainer>
                                         <TutorialStepDescribe
                                             containerAs={'section'} gap={'20px'} header={'Karta'}
@@ -428,17 +431,43 @@ class Tutorial extends React.Component {
         if (this.state.info6.visible) {
             return (
                 <StepContainer setTranslateX={this.state.info6.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame6}/>
-                    <CenterDiv>
-                        <TextBorderContainer setMargin={'0 0 200px 0'}>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Przyciski'}
-                                firstParagraph={`Podczas pojedynku mamy dyspozycji 
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame6}/>
+                            <CenterDiv>
+                                <TextBorderContainer setMargin={'0 0 200px 0'}>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Przyciski'}
+                                        firstParagraph={`Podczas pojedynku mamy dyspozycji 
                                 trzy przyciski ułatwiające sterowanie całym trybem.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step7} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </CenterDiv>
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step7} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop5}/>
+                            <CenterDiv transBack>
+                                <ColumnGapContainer>
+                                    <Img setHeight={'500px'} src={tutorialFrameDesktop6} alt='Battle result example.'/>
+                                    <TextBorderContainer setWidth={'650px'} setHeight={'340px'}>
+                                        <TutorialStepDescribe
+                                            containerAs={'section'} gap={'20px'} header={'Koniec walki'}
+                                            firstParagraph={`Po wygranej walce zdobywamy punkty EXP, które liczą się do 
+                                            naszego poziomu. Za pojedynki z graczami o najwyższych poziomach 
+                                            dostaniemy najwięcej takich punktów.`}
+                                            secondParagraph={`Awans na kolejny poziom skutkuje zdobywaniem Punktów Nauki, 
+                                            które pozwolą nam ulepszać nasze karty na wyższe poziomy, przez co staną się 
+                                            silniejsze i będziemy mogli pokonywać przeciwników z łatwością.`}
+                                            buttonLabel={'Ok'} buttonIcon={fast} userLabel={true}
+                                            buttonHandler={this.goToProfile} buttonColor={theme.colors.dark}/>
+                                    </TextBorderContainer>
+                                </ColumnGapContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
