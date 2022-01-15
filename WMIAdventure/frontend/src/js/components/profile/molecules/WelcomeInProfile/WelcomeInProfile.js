@@ -25,7 +25,7 @@ class WelcomeInProfile extends React.Component {
                 <P>
                     Powodzenia!
                 </P>
-                <ButtonWithIcon color={theme.colors.greenyBluey} icon={fast} closeHandler={this.props.close}>
+                <ButtonWithIcon color={theme.colors.greenyBluey} icon={fast} handler={this.props.close}>
                     Zakończ samouczek
                 </ButtonWithIcon>
             </ColumnGapContainer>
