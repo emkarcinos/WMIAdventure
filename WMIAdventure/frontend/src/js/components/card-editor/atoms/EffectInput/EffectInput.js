@@ -64,6 +64,11 @@ class EffectInput extends React.Component {
     }
 
     cardAttributesHandler = (event) => {
+        if (!event.target.value.match('(^$)|(^[0-9]{0,3}$)')) {
+            event.preventDefault();
+            event.target.value = '';
+            return;
+        }
         let keyName = event.target.name;
         let keyValue = event.target.value;
         this.setState({[keyName]: keyValue});
@@ -91,14 +96,14 @@ class EffectInput extends React.Component {
                             Moc
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-power`} value={this.state.power}
-                                     name='power' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
+                                     name='power' type='text' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                     <P>
                         <Label marginRight htmlFor={`${this.props.id}-${this.props.rank}-range`}>
                             Losowość
                         </Label>
                         <InputNumber id={`${this.props.id}-${this.props.rank}-range`} value={this.state.range}
-                                     name='range' type='number' min='0' max='99' onChange={this.cardAttributesHandler}/>
+                                     name='range' type='text' min='0' max='99' onChange={this.cardAttributesHandler}/>
                     </P>
                 </Div>
                 <Div show>

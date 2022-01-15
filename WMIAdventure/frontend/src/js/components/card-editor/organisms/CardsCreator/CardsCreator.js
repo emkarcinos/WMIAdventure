@@ -146,6 +146,11 @@ class CardsCreator extends React.Component {
 
     levelCostValuesHandler = (event) => {
         let newList = this.state.levelCostValues.slice();
+        if (!event.target.value.match('(^$)|(^[0-9]{0,3}$)')) {
+            event.preventDefault();
+            event.target.value = '';
+            return;
+        }
         if (event.target.value > 0)
             newList[Number(event.target.id[0]) - 1] = event.target.value;
         else newList[Number(event.target.id[0]) - 1] = undefined;
@@ -360,8 +365,8 @@ class CardsCreator extends React.Component {
                             Edytuj inną
                         </Button>
                         <Button show access={this.state.effectsToSend[0].length !== 0 ||
-                            this.state.effectsToSend[1].length !== 0 ||
-                            this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
+                        this.state.effectsToSend[1].length !== 0 ||
+                        this.state.effectsToSend[2].length !== 0} onClick={this.showCardViewHandler}>
                             Podgląd
                         </Button>
                         <Button type='submit' access onClick={this.showSendCardPopupHandler} show>
