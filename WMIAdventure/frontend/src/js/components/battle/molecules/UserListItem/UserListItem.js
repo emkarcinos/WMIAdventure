@@ -23,11 +23,8 @@ class UserListItem extends React.Component {
                   displayedUsername={this.props.user.username}
                   searchInput={this.props.searchInput}>
                 <AvatarContainer access={this.props.access} avatar>
-                    {this.props.user.image ?
-                        <Avatar access={this.props.access} src={this.props.user.image} alt="profile-pic"/>
-                        :
-                        <Avatar access={this.props.access} src={kuc1} alt="profile-pic"/>
-                    }
+                    <Avatar access={this.props.access} src={this.props.user.image ? this.props.user.image : kuc1}
+                            alt="profile-pic"/>
                 </AvatarContainer>
                 <Div>
                     <Login access={this.props.access}>
