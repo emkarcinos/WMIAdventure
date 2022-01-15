@@ -5,7 +5,6 @@ import xml.etree.cElementTree as et
 
 from django.core.exceptions import ValidationError
 from django.forms import ImageField as DjangoImageField
-from django.utils import six
 
 
 class SVGAndImageFormField(DjangoImageField):
@@ -42,10 +41,10 @@ class SVGAndImageFormField(DjangoImageField):
         except Exception:
             # add a workaround to handle svg images
             if not self.is_svg(ifile):
-                six.reraise(ValidationError, ValidationError(
+                raise ValidationError(
                     self.error_messages['invalid_image'],
                     code='invalid_image',
-                ), sys.exc_info()[2])
+                )
         if hasattr(test_file, 'seek') and callable(test_file.seek):
             test_file.seek(0)
         return test_file
