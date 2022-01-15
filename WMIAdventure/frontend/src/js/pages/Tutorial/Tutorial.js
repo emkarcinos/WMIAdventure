@@ -10,6 +10,7 @@ import tutorialFrame7 from '../../../assets/images/tutorial-frame-7.png';
 import tutorialFrameDesktop1 from '../../../assets/images/tutorial-frame-desktop1.png';
 import tutorialFrameDesktop2 from '../../../assets/images/tutorial-frame-desktop2.png';
 import tutorialFrameDesktop3 from '../../../assets/images/tutorial-frame-desktop3.png';
+import tutorialFrameDesktop4 from '../../../assets/images/tutorial-frame-desktop4.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -23,6 +24,7 @@ import TextBorderContainer from "./styled-components/TextBorderContainer";
 import MainContainer from "./styled-components/MainContainer";
 import Media from "react-media";
 import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
+import LeftDiv from "./styled-components/LeftDiv";
 
 
 class Tutorial extends React.Component {
@@ -288,7 +290,6 @@ class Tutorial extends React.Component {
                     <Media query={desktop}>
                         <BackgroundImg setScale={'1'} src={tutorialFrameDesktop2}/>
                     </Media>
-
                     <CenterDiv>
                         <TextContainer>
                             <TutorialStepDescribe
@@ -361,17 +362,36 @@ class Tutorial extends React.Component {
         if (this.state.info4.visible) {
             return (
                 <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info4.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame4}/>
-                    <EndDiv>
-                        <TextBorderContainer>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Tura'}
-                                firstParagraph={`Podczas trwania jednej tury, karta 
-                                na wierzchu talii gracza wykonuje swoje efekty.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </EndDiv>
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame4}/>
+                            <EndDiv>
+                                <TextBorderContainer>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Tura'}
+                                        firstParagraph={`Podczas trwania jednej tury, karta 
+                                        na wierzchu talii gracza wykonuje swoje efekty.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </EndDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop4}/>
+                            <LeftDiv transBack>
+                                <TextBorderContainer setMargin={'0 0 0 48px'}>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Tura'}
+                                        firstParagraph={`Podczas trwania jednej tury, karta 
+                                        na wierzchu talii gracza wykonuje swoje efekty.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </LeftDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
