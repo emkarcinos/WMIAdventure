@@ -10,6 +10,10 @@ const MainContainer = styled.div`
   background-repeat: no-repeat;
   background-size: 80%;
   background-image: url(${logo});
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    background-size: 40%;
+  }
 `;
 
 export default MainContainer;

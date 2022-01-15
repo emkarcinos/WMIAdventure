@@ -7,6 +7,7 @@ import tutorialFrame4 from '../../../assets/images/tutorial-frame-4.png';
 import tutorialFrame5 from '../../../assets/images/tutorial-frame-5.png';
 import tutorialFrame6 from '../../../assets/images/tutorial-frame-6.png';
 import tutorialFrame7 from '../../../assets/images/tutorial-frame-7.png';
+import tutorialFrameDesktop1 from '../../../assets/images/tutorial-frame-desktop1.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -14,10 +15,12 @@ import TutorialStepDescribe from "../../components/tutorial/atoms/TutorialStepDe
 import fast from '../../../assets/icons/fast.svg';
 import theme from "../../utils/theme";
 import TextContainer from "./styled-components/TextContainer";
-import {nextStepAnimationDuration} from "../../utils/globals";
+import {desktop, mobile, nextStepAnimationDuration} from "../../utils/globals";
 import EndDiv from "./styled-components/EndDiv";
 import TextBorderContainer from "./styled-components/TextBorderContainer";
 import MainContainer from "./styled-components/MainContainer";
+import Media from "react-media";
+
 
 class Tutorial extends React.Component {
     state = {
@@ -248,7 +251,12 @@ class Tutorial extends React.Component {
         if (this.state.initInfo.visible) {
             return (
                 <StepContainer setTranslateX={this.state.initInfo.containerTranslateX}>
-                    <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrame1}/>
+                    <Media query={mobile}>
+                        <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrame1}/>
+                    </Media>
+                    <Media query={desktop}>
+                        <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrameDesktop1}/>
+                    </Media>
                     <CenterDiv setTranslateX={this.state.initInfo.textTranslateX}>
                         <TextContainer>
                             <TutorialStepDescribe

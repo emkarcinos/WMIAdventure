@@ -6,6 +6,11 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  @media (min-width: ${({theme}) => theme.overMobile}px) {
+    width: 420px;
+    padding: 16px;
+  }
 `;
 
 export default TextContainer;
