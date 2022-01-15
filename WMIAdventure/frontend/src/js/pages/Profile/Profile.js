@@ -212,6 +212,7 @@ class Profile extends React.Component {
                 <Media query={desktop}>
                     <>
                         <MainDesktopContainer>
+                            {this.renderTutorialPopup()}
                             <LeftProfileContainer>
                                 <ColumnGapContainer gap={'40px'}>
                                     <User username={this.state.userData.username}

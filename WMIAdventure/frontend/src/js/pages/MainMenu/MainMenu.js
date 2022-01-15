@@ -74,6 +74,13 @@ class MainMenu extends React.Component {
                 </Media>
                 <Media query={desktop}>
                     <DesktopBackground>
+                        {localStorage.getItem("tutorial") === "on" ?
+                            <HelloNewbiePopUp visible={this.state.helloNewbiePopUp.visible}
+                                              open={this.openHelloNewbiePopUp}
+                                              close={this.closeHelloNewbiePopUp}
+                                              goToTutorial={this.goToTutorial}
+                                              setTransBackOpacity={this.state.helloNewbiePopUp.transBackOpacity}
+                                              setTranslateY={this.state.helloNewbiePopUp.translateY}/> : null}
                         <MainContainer>
                             <ChooseAppModule/>
                         </MainContainer>

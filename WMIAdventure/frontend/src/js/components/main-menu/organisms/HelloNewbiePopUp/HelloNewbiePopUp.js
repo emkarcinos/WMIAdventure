@@ -9,38 +9,59 @@ import P from "./styled-components/P";
 import theme from "../../../../utils/theme";
 import fast from '../../../../../assets/icons/fast.svg';
 import xClose from '../../../../../assets/icons/x-close.svg';
+import Media from "react-media";
+import {desktop, mobile} from "../../../../utils/globals";
 
 class HelloNewbiePopUp extends React.Component {
     componentDidMount() {
         this.props.open();
     }
 
+    renderContent() {
+        return (
+            <ColumnGapContainer setPadding={'32px 20px 20px'} gap={'24px'}>
+                <H2>
+                    Witaj nowy!
+                </H2>
+                <P>
+                    Nie znasz jeszcze WMI Adventure?
+                    Przygotowaliśmy dla Ciebie samouczek,
+                    który zrobi z Ciebie godnego kandydata do podbijania wydziału.
+                    Jeżeli znasz już podstawy, możesz go pominąć.
+                </P>
+                <FlexGapContainer gap={'30px'}>
+                    <ButtonWithIcon handler={this.props.close} icon={xClose} color={theme.colors.dark}>
+                        Pomiń
+                    </ButtonWithIcon>
+                    <ButtonWithIcon handler={this.props.goToTutorial} icon={fast}
+                                    color={theme.colors.greenyBluey}>
+                        Samouczek
+                    </ButtonWithIcon>
+                </FlexGapContainer>
+            </ColumnGapContainer>
+        );
+    }
+
     render() {
         return (
             <TransparentBack visible={this.props.visible} setOpacity={this.props.setTransBackOpacity}>
-                <PopUp visible setMaxWidth={'368px'} setPosition={'static'} setTranslateY={this.props.setTranslateY}
-                       setWidth={'100%'} setHeight={'308px'} borderRadius closeHandler={this.props.close}>
-                    <ColumnGapContainer setPadding={'46px 20px 20px'} gap={'24px'}>
-                        <H2>
-                            Witaj nowy!
-                        </H2>
-                        <P>
-                            Nie znasz jeszcze WMI Adventure?
-                            Przygotowaliśmy dla Ciebie samouczek,
-                            który zrobi z Ciebie godnego kandydata do podbijania wydziału.
-                            Jeżeli znasz już podstawy, możesz go pominąć.
-                        </P>
-                        <FlexGapContainer gap={'30px'}>
-                            <ButtonWithIcon handler={this.props.close} icon={xClose} color={theme.colors.dark}>
-                                Pomiń
-                            </ButtonWithIcon>
-                            <ButtonWithIcon handler={this.props.goToTutorial} icon={fast}
-                                            color={theme.colors.greenyBluey}>
-                                Samouczek
-                            </ButtonWithIcon>
-                        </FlexGapContainer>
-                    </ColumnGapContainer>
-                </PopUp>
+                <>
+                    <Media query={mobile}>
+                        <PopUp visible setMaxWidth={'368px'} setPosition={'static'}
+                               setTranslateY={this.props.setTranslateY}
+                               setWidth={'100%'} setHeight={'308px'} borderRadius closeHandler={this.props.close}>
+                            {this.renderContent()}
+                        </PopUp>
+                    </Media>
+                    <Media query={desktop}>
+                        <PopUp visible setMaxWidth={'470px'} setPosition={'static'}
+                               setTranslateY={this.props.setTranslateY}
+                               setWidth={'100%'} setHeight={'280px'} borderRadius closeHandler={this.props.close}>
+                            {this.renderContent()}
+                        </PopUp>
+                    </Media>
+                </>
+
             </TransparentBack>
         );
     }
