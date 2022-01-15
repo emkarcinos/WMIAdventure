@@ -384,8 +384,8 @@ class Tutorial extends React.Component {
                     <Media query={desktop}>
                         <>
                             <BackgroundImg setScale={'1'} src={tutorialFrameDesktop4}/>
-                            <LeftDiv transBack>
-                                <TextBorderContainer setMargin={'0 0 0 48px'}>
+                            <LeftDiv>
+                                <TextBorderContainer shadow setMargin={'0 0 0 5%'}>
                                     <TutorialStepDescribe
                                         containerAs={'section'} gap={'20px'} header={'Tura'}
                                         firstParagraph={`Podczas trwania jednej tury, karta 
