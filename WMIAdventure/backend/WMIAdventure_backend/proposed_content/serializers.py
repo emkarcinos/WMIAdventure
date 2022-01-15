@@ -1,5 +1,8 @@
+from rest_framework.fields import ImageField
+
 from cards.serializers import base_whole_card_serializer_factory, base_simple_card_lvl_efcts_ser_factory, \
     base_simple_card_serializer_factory
+from utils.SVGAndImageFormField import SVGAndImageFormField
 from .models import *
 
 
@@ -30,6 +33,7 @@ class WholeProposedCardSerializer(base_whole_card_serializer_factory(ProposedCar
 
     See: cards.serializers.base_whole_card_serializer_factory
     """
+    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = ProposedCardInfo
