@@ -12,7 +12,7 @@ const MainContainer = styled.div`
   background-image: url(${logo});
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
-    background-size: 40%;
+    background-size: 25%;
   }
 `;
 
