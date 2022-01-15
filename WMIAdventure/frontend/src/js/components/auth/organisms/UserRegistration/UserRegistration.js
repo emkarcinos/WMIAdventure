@@ -20,6 +20,7 @@ class UserRegistration extends React.Component {
             .then(resp => {
                 resp.ok ? window.location.reload() : null;
             });
+        localStorage.setItem("tutorial", "on");
     }
 
     onRegistrationFailure = (response) => {

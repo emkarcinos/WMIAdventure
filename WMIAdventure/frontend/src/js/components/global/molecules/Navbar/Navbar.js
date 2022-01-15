@@ -14,6 +14,7 @@ import {hasSessionCookie} from "../../../../storage/user/userData";
 import {withRouter} from "react-router-dom";
 import {getPagenameByLink} from "../../../../pages/PageNames";
 import {purge} from "../../../../storage/cache/cache";
+import SkipTutorialButton from "./styled-components/SkipTutorialButton";
 
 /**
  * Props:
@@ -41,17 +42,35 @@ class Navbar extends React.Component {
         };
     }
 
-    isHome = () => this.props.location.pathname === '/' || this.props.location.pathname === '/main'
+    clearTutorialStorage = () => {
+        localStorage.removeItem('tutorial');
+    }
+
+    renderPagename() {
+        if (this.props.location.pathname === '/tutorial') {
+            return (
+                <SkipTutorialButton onClick={this.clearTutorialStorage} to={'/profile'}>
+                    Pomiń samouczek
+                </SkipTutorialButton>
+            );
+        } else {
+            return (
+                <>
+                    <Back onClick={this.props.history.goBack}/>
+                    {getPagenameByLink(this.props.location.pathname)}
+                </>
+            );
+        }
+    }
+
+    isHome = () => this.props.location.pathname === '/' || this.props.location.pathname === '/main';
 
     mobileNavbar = () => {
         return (
             <Nav>
                 <Div>
                     {!this.isHome() ?
-                        <>
-                            <Back onClick={this.props.history.goBack}/>
-                            {getPagenameByLink(this.props.location.pathname)}
-                        </> :
+                        this.renderPagename() :
                         <Logo link={this.state.isUserLoggedIn ? '/main' : '/'}/>}
                 </Div>
                 <Div>

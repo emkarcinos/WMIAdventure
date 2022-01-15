@@ -27,9 +27,9 @@ class GenericPopup extends React.Component {
                             <PopupContainer>
                                 <ContentContainer>
                                     <Header>{this.props.header}</Header>
-
                                     <InfoText>{this.props.text}</InfoText>
-
+                                    {this.props.text2 ? <InfoText>{this.props.text2}</InfoText> : null}
+                                    {this.props.text3 ? <InfoText>{this.props.text3}</InfoText> : null}
                                     <ButtonWithIcon handler={this.props.onClickHandler}
                                                     color={theme.colors.yellowyOrangy} icon={xClose}>
                                         {this.props.buttonText}

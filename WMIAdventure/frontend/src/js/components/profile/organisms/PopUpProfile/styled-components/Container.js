@@ -6,10 +6,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 520px;
+  max-width: ${({setMaxWidth}) => setMaxWidth ? setMaxWidth : 'none'};
+  height: ${({setHeight}) => setHeight ? setHeight : '520px'};
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-  transform: translateY(${({setTranslateX}) => setTranslateX ? setTranslateX : '-100vh'});
+  transform: translateY(${({setTranslateY}) => setTranslateY ? setTranslateY : '-100vh'});
   transition: transform 0.5s ease-in-out;
   background-color: ${({theme}) => theme.colors.light2};
   z-index: 1000;
