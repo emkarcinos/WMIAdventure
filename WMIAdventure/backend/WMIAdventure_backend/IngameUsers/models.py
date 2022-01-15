@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     """
 
     class Meta:
-        ordering = [Upper('displayedUsername')]
+        ordering = ['-user_stats__exp', Upper('displayedUsername')]
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

@@ -1,7 +1,9 @@
+from rest_framework.fields import ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from cards.models import Card
+from utils.SVGAndImageFormField import SVGAndImageFormField
 from . import models
 from .businesslogic.experience.Experience import Experience
 from .models import UserProfile, Deck, UserCard, UserDeck
@@ -64,6 +66,7 @@ class MyUserProfileSerializer(UserProfileSerializer):
     """
 
     skill_points = serializers.IntegerField(source='user_stats.skill_points', read_only=True)
+    image = ImageField(allow_null=True, required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = models.UserProfile
