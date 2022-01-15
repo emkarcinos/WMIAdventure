@@ -9,6 +9,7 @@ import Media from 'react-media';
 import {desktop} from '../../../../utils/globals';
 import UserLevel from '../../molecules/UserLevel';
 import UserLabel from "../../../global/atoms/UserLabel";
+import kuc1 from '../../../../../assets/icons/kuc1.svg';
 
 class TinyUserProfile extends React.Component {
 
@@ -52,9 +53,14 @@ class TinyUserProfile extends React.Component {
                         }
                     </Media>
                 </ContentContainer>
-                <ImageContainer vertical={this.props.vertical} avatar={this.props.user.image}>
-                    {this.props.user.image ? <Avatar src={this.props.user.image}
-                                                     vertical={this.props.vertical} alt=""/> : ''}
+                <ImageContainer vertical={this.props.vertical} avatar>
+                    {this.props.user.image ?
+                        <Avatar src={this.props.user.image}
+                                vertical={this.props.vertical} alt="profile-pic"/>
+                        :
+                        <Avatar src={kuc1}
+                                vertical={this.props.vertical}
+                                alt="profile-pic"/>}
                 </ImageContainer>
             </Article>
         );

@@ -8,6 +8,7 @@ import LabelsContainer from './styled-components/LabelsContainer';
 import AvatarContainer from './styled-components/AvatarContainer';
 import battleIcon from './../../../../../assets/images/battleIcon.png';
 import UserLabel from "../../../global/atoms/UserLabel";
+import kuc1 from '../../../../../assets/icons/kuc1.svg';
 
 class UserListItem extends React.Component {
 
@@ -21,9 +22,12 @@ class UserListItem extends React.Component {
                 this.props.runUserPreviewHandler : this.notAccessToFightMessage}
                   displayedUsername={this.props.user.username}
                   searchInput={this.props.searchInput}>
-                <AvatarContainer access={this.props.access} avatar={this.props.user.image}>
+                <AvatarContainer access={this.props.access} avatar>
                     {this.props.user.image ?
-                        <Avatar access={this.props.access} src={this.props.user.image} alt=""/> : ''}
+                        <Avatar access={this.props.access} src={this.props.user.image} alt="profile-pic"/>
+                        :
+                        <Avatar access={this.props.access} src={kuc1} alt="profile-pic"/>
+                    }
                 </AvatarContainer>
                 <Div>
                     <Login access={this.props.access}>
