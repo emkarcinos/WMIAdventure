@@ -5,9 +5,19 @@ import xml.etree.cElementTree as et
 
 from django.core.exceptions import ValidationError
 from django.forms import ImageField as DjangoImageField
+from django.core.validators import (
+    get_available_image_extensions,
+    FileExtensionValidator,
+)
+
+
+def validate_image_and_svg_file_extension(value):
+    allowed_extensions = get_available_image_extensions() + ["svg"]
+    return FileExtensionValidator(allowed_extensions=allowed_extensions)(value)
 
 
 class SVGAndImageFormField(DjangoImageField):
+    default_validators = [validate_image_and_svg_file_extension]
 
     def to_python(self, data):
         """
