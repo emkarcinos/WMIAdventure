@@ -24,7 +24,7 @@ class CardInfoSerializer(serializers.ModelSerializer):
     """
     Manages serialization and deserialization of CardInfo instances.
     """
-    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
+    image = ImageField(allow_null=True, required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = CardInfo

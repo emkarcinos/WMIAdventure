@@ -66,7 +66,7 @@ class MyUserProfileSerializer(UserProfileSerializer):
     """
 
     skill_points = serializers.IntegerField(source='user_stats.skill_points', read_only=True)
-    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
+    image = ImageField(allow_null=True, required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = models.UserProfile

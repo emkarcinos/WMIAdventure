@@ -33,7 +33,7 @@ class WholeProposedCardSerializer(base_whole_card_serializer_factory(ProposedCar
 
     See: cards.serializers.base_whole_card_serializer_factory
     """
-    image = ImageField(required=False, _DjangoImageField=SVGAndImageFormField)
+    image = ImageField(allow_null=True, required=False, _DjangoImageField=SVGAndImageFormField)
 
     class Meta:
         model = ProposedCardInfo
