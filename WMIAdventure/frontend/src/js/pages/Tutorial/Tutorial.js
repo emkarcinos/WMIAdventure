@@ -11,6 +11,7 @@ import tutorialFrameDesktop1 from '../../../assets/images/tutorial-frame-desktop
 import tutorialFrameDesktop2 from '../../../assets/images/tutorial-frame-desktop2.png';
 import tutorialFrameDesktop3 from '../../../assets/images/tutorial-frame-desktop3.png';
 import tutorialFrameDesktop4 from '../../../assets/images/tutorial-frame-desktop4.png';
+import tutorialFrameDesktop5 from '../../../assets/images/tutorial-frame-desktop5.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -401,9 +402,14 @@ class Tutorial extends React.Component {
         if (this.state.info5.visible) {
             return (
                 <StepContainer setTranslateX={this.state.info5.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
+                    <Media query={mobile}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
+                    </Media>
+                    <Media query={desktop}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrameDesktop5}/>
+                    </Media>
                     <CenterDiv>
-                        <TextContainer>
+                        <TextBorderContainer setPadding={'48px 32px'}>
                             <TutorialStepDescribe
                                 containerAs={'section'} gap={'20px'} header={'Koniec tury'}
                                 firstParagraph={`Tura kończy się po wykonaniu wszystkich efektów karty. 
@@ -411,7 +417,7 @@ class Tutorial extends React.Component {
                                 secondParagraph={`Następny ruch należy do przeciwnika.`}
                                 buttonLabel={'Ok'} buttonIcon={fast}
                                 buttonHandler={this.step6} buttonColor={theme.colors.dark}/>
-                        </TextContainer>
+                        </TextBorderContainer>
                     </CenterDiv>
                 </StepContainer>
             );

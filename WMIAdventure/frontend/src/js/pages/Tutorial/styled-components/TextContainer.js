@@ -9,6 +9,7 @@ const TextContainer = styled.div`
 
   @media (min-width: ${({theme}) => theme.overMobile}px) {
     width: 420px;
+    border-radius: 10px;
     padding: 16px;
   }
 `;
