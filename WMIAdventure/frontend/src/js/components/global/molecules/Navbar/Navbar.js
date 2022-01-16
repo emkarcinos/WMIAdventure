@@ -63,6 +63,20 @@ class Navbar extends React.Component {
         }
     }
 
+    renderPagenameDesktop() {
+        if (this.props.location.pathname === '/tutorial') {
+            return (
+                <SkipTutorialButton onClick={this.clearTutorialStorage} to={'/profile'}>
+                    Pomiń samouczek
+                </SkipTutorialButton>
+            );
+        } else {
+            return (
+                <Logo link={this.state.isUserLoggedIn ? '/main' : '/'} fullVersion/>
+            );
+        }
+    }
+
     isHome = () => this.props.location.pathname === '/' || this.props.location.pathname === '/main';
 
     mobileNavbar = () => {
@@ -85,7 +99,7 @@ class Navbar extends React.Component {
     desktopNavbar = () => {
         return (
             <Nav>
-                <Logo link={this.state.isUserLoggedIn ? '/main' : '/'} fullVersion/>
+                {this.renderPagenameDesktop()}
                 <NavButton onClick={this.showMenuHandler} image={menuIcon}/>
             </Nav>
         );

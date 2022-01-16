@@ -7,6 +7,12 @@ import tutorialFrame4 from '../../../assets/images/tutorial-frame-4.png';
 import tutorialFrame5 from '../../../assets/images/tutorial-frame-5.png';
 import tutorialFrame6 from '../../../assets/images/tutorial-frame-6.png';
 import tutorialFrame7 from '../../../assets/images/tutorial-frame-7.png';
+import tutorialFrameDesktop1 from '../../../assets/images/tutorial-frame-desktop1.png';
+import tutorialFrameDesktop2 from '../../../assets/images/tutorial-frame-desktop2.png';
+import tutorialFrameDesktop3 from '../../../assets/images/tutorial-frame-desktop3.png';
+import tutorialFrameDesktop4 from '../../../assets/images/tutorial-frame-desktop4.png';
+import tutorialFrameDesktop5 from '../../../assets/images/tutorial-frame-desktop5.png';
+import tutorialFrameDesktop6 from '../../../assets/images/tutorial-frame-desktop6.png';
 import {Helmet} from "react-helmet";
 import StepContainer from "./styled-components/StepContainer";
 import CenterDiv from "./styled-components/CenterDiv";
@@ -14,10 +20,16 @@ import TutorialStepDescribe from "../../components/tutorial/atoms/TutorialStepDe
 import fast from '../../../assets/icons/fast.svg';
 import theme from "../../utils/theme";
 import TextContainer from "./styled-components/TextContainer";
-import {nextStepAnimationDuration} from "../../utils/globals";
+import {desktop, mobile, nextStepAnimationDuration} from "../../utils/globals";
 import EndDiv from "./styled-components/EndDiv";
 import TextBorderContainer from "./styled-components/TextBorderContainer";
 import MainContainer from "./styled-components/MainContainer";
+import Media from "react-media";
+import FlexGapContainer from "../../components/global/molecules/FlexGapContainer/FlexGapContainer";
+import LeftDiv from "./styled-components/LeftDiv";
+import ColumnGapContainer from "../../components/global/molecules/ColumnGapContainer";
+import Img from "./styled-components/Img";
+
 
 class Tutorial extends React.Component {
     state = {
@@ -248,7 +260,12 @@ class Tutorial extends React.Component {
         if (this.state.initInfo.visible) {
             return (
                 <StepContainer setTranslateX={this.state.initInfo.containerTranslateX}>
-                    <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrame1}/>
+                    <Media query={mobile}>
+                        <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrame1}/>
+                    </Media>
+                    <Media query={desktop}>
+                        <BackgroundImg setScale={this.state.initBackgroundScale} src={tutorialFrameDesktop1}/>
+                    </Media>
                     <CenterDiv setTranslateX={this.state.initInfo.textTranslateX}>
                         <TextContainer>
                             <TutorialStepDescribe
@@ -271,7 +288,12 @@ class Tutorial extends React.Component {
         if (this.state.info2.visible) {
             return (
                 <StepContainer setTranslateX={this.state.info2.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame2}/>
+                    <Media query={mobile}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrame2}/>
+                    </Media>
+                    <Media query={desktop}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrameDesktop2}/>
+                    </Media>
                     <CenterDiv>
                         <TextContainer>
                             <TutorialStepDescribe
@@ -294,21 +316,47 @@ class Tutorial extends React.Component {
         if (this.state.info3.visible) {
             return (
                 <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info3.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame3}/>
-                    <EndDiv>
-                        <TextBorderContainer>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Karta'}
-                                firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
-                                ich talie i poszczególne karty. Część z nich ma określoną moc. 
-                                Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
-                                uczyni z nas najlepszych wojowników. `}
-                                secondParagraph={`Podczas trwania danej tury to właśnie efekty 
-                                grają kluczową rolę w rozgrywce.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </EndDiv>
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame3}/>
+                            <EndDiv>
+                                <TextBorderContainer>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Karta'}
+                                        firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
+                                        ich talie i poszczególne karty. Część z nich ma określoną moc. 
+                                        Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
+                                        uczyni z nas najlepszych wojowników. `}
+                                        secondParagraph={`Podczas trwania danej tury to właśnie efekty 
+                                        grają kluczową rolę w rozgrywce.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </EndDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop2}/>
+                            <CenterDiv transBack>
+                                <FlexGapContainer gap={'200px'} setMargin={'0 0 0 128px'}>
+                                    <Img src={tutorialFrameDesktop3} alt='Full card view example.'/>
+                                    <TextBorderContainer>
+                                        <TutorialStepDescribe
+                                            containerAs={'section'} gap={'20px'} header={'Karta'}
+                                            firstParagraph={`Działanie kart to zestaw efektów, które wpływają na statystyki graczy, 
+                                            ich talie i poszczególne karty. Część z nich ma określoną moc. 
+                                            Efekty mogą też wzmacniać inne karty - prawidłowe ułożenie talii 
+                                            uczyni z nas najlepszych wojowników. `}
+                                            secondParagraph={`Podczas trwania danej tury to właśnie efekty 
+                                            grają kluczową rolę w rozgrywce.`}
+                                            buttonLabel={'Ok'} buttonIcon={fast}
+                                            buttonHandler={this.step4} buttonColor={theme.colors.dark}/>
+                                    </TextBorderContainer>
+                                </FlexGapContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
@@ -318,17 +366,36 @@ class Tutorial extends React.Component {
         if (this.state.info4.visible) {
             return (
                 <StepContainer setAlignment={'flex-start'} setTranslateX={this.state.info4.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame4}/>
-                    <EndDiv>
-                        <TextBorderContainer>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Tura'}
-                                firstParagraph={`Podczas trwania jednej tury, karta 
-                                na wierzchu talii gracza wykonuje swoje efekty.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </EndDiv>
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame4}/>
+                            <EndDiv>
+                                <TextBorderContainer>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Tura'}
+                                        firstParagraph={`Podczas trwania jednej tury, karta 
+                                        na wierzchu talii gracza wykonuje swoje efekty.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </EndDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop4}/>
+                            <LeftDiv>
+                                <TextBorderContainer shadow setMargin={'0 0 0 5%'}>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Tura'}
+                                        firstParagraph={`Podczas trwania jednej tury, karta 
+                                        na wierzchu talii gracza wykonuje swoje efekty.`}
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step5} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </LeftDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
@@ -338,9 +405,14 @@ class Tutorial extends React.Component {
         if (this.state.info5.visible) {
             return (
                 <StepContainer setTranslateX={this.state.info5.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
+                    <Media query={mobile}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrame5}/>
+                    </Media>
+                    <Media query={desktop}>
+                        <BackgroundImg setScale={'1'} src={tutorialFrameDesktop5}/>
+                    </Media>
                     <CenterDiv>
-                        <TextContainer>
+                        <TextBorderContainer setPadding={'48px 32px'}>
                             <TutorialStepDescribe
                                 containerAs={'section'} gap={'20px'} header={'Koniec tury'}
                                 firstParagraph={`Tura kończy się po wykonaniu wszystkich efektów karty. 
@@ -348,7 +420,7 @@ class Tutorial extends React.Component {
                                 secondParagraph={`Następny ruch należy do przeciwnika.`}
                                 buttonLabel={'Ok'} buttonIcon={fast}
                                 buttonHandler={this.step6} buttonColor={theme.colors.dark}/>
-                        </TextContainer>
+                        </TextBorderContainer>
                     </CenterDiv>
                 </StepContainer>
             );
@@ -359,17 +431,43 @@ class Tutorial extends React.Component {
         if (this.state.info6.visible) {
             return (
                 <StepContainer setTranslateX={this.state.info6.translateX}>
-                    <BackgroundImg setScale={'1'} src={tutorialFrame6}/>
-                    <CenterDiv>
-                        <TextBorderContainer setMargin={'0 0 200px 0'}>
-                            <TutorialStepDescribe
-                                containerAs={'section'} gap={'20px'} header={'Przyciski'}
-                                firstParagraph={`Podczas pojedynku mamy dyspozycji 
+                    <Media query={mobile}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrame6}/>
+                            <CenterDiv>
+                                <TextBorderContainer setMargin={'0 0 200px 0'}>
+                                    <TutorialStepDescribe
+                                        containerAs={'section'} gap={'20px'} header={'Przyciski'}
+                                        firstParagraph={`Podczas pojedynku mamy dyspozycji 
                                 trzy przyciski ułatwiające sterowanie całym trybem.`}
-                                buttonLabel={'Ok'} buttonIcon={fast}
-                                buttonHandler={this.step7} buttonColor={theme.colors.dark}/>
-                        </TextBorderContainer>
-                    </CenterDiv>
+                                        buttonLabel={'Ok'} buttonIcon={fast}
+                                        buttonHandler={this.step7} buttonColor={theme.colors.dark}/>
+                                </TextBorderContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
+                    <Media query={desktop}>
+                        <>
+                            <BackgroundImg setScale={'1'} src={tutorialFrameDesktop5}/>
+                            <CenterDiv transBack>
+                                <ColumnGapContainer>
+                                    <Img setHeight={'500px'} src={tutorialFrameDesktop6} alt='Battle result example.'/>
+                                    <TextBorderContainer setWidth={'650px'} setHeight={'340px'}>
+                                        <TutorialStepDescribe
+                                            containerAs={'section'} gap={'20px'} header={'Koniec walki'}
+                                            firstParagraph={`Po wygranej walce zdobywamy punkty EXP, które liczą się do 
+                                            naszego poziomu. Za pojedynki z graczami o najwyższych poziomach 
+                                            dostaniemy najwięcej takich punktów.`}
+                                            secondParagraph={`Awans na kolejny poziom skutkuje zdobywaniem Punktów Nauki, 
+                                            które pozwolą nam ulepszać nasze karty na wyższe poziomy, przez co staną się 
+                                            silniejsze i będziemy mogli pokonywać przeciwników z łatwością.`}
+                                            buttonLabel={'Ok'} buttonIcon={fast} userLabel={true}
+                                            buttonHandler={this.goToProfile} buttonColor={theme.colors.dark}/>
+                                    </TextBorderContainer>
+                                </ColumnGapContainer>
+                            </CenterDiv>
+                        </>
+                    </Media>
                 </StepContainer>
             );
         }
