@@ -43,7 +43,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.UserProfile.objects.all()
 
     def get_serializer_class(self):
-        if self.request.user.id == self.kwargs['pk']:
+        if self.request and self.request.user.id == self.kwargs['pk']:
             return serializers.MyUserProfileSerializer
         return serializers.UserProfileSerializer
 
