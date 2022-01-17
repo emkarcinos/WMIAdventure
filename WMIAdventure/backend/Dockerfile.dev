@@ -25,12 +25,10 @@ WORKDIR /backend
 ADD ./requirements.txt .
 
 RUN pip install -r requirements.txt
-RUN apt update
-RUN apt install -y python3-gunicorn
 
 ADD ./WMIAdventure_backend/ ./
 
 RUN python manage.py migrate
 EXPOSE 8000
 
-ENTRYPOINT gunicorn WMIAdventure_backend.wsgi --bind 0.0.0.0:8000 -w 3 --certfile /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/fullchain.pem --keyfile /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/privkey.pem
+ENTRYPOINT python3 manage.py runserver_plus 0.0.0.0:8000 --cert-file /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/fullchain.pem --key-file /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/privkey.pem
