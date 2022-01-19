@@ -57,7 +57,7 @@ export const updateCurrentUserDeck = async (deck) => {
     if (!backendResp.ok)
         return false;
 
-    set(userDataKeys.userDecks, [deck]);
+    set(userDataKeys.userDecks, [{deck_number: 1, ...deck}]);
     return true;
 }
 
