@@ -29,7 +29,7 @@ class PaginatedUsersView(generics.ListCreateAPIView):
     Lists all users with paging
     """
     serializer_class = serializers.UserProfileSerializer
-    queryset = models.UserProfile.objects.all()
+    queryset = models.UserProfile.objects.select_related('user_stats').all()
     pagination_class = UserPagination
 
 
@@ -40,7 +40,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = [CanEditProfile]
 
-    queryset = models.UserProfile.objects.all()
+    queryset = models.UserProfile.objects.select_related('user_stats').all()
 
     def get_serializer_class(self):
         if self.request and self.request.user.id == self.kwargs['pk']:
