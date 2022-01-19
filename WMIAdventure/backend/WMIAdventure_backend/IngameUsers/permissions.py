@@ -22,6 +22,14 @@ class IsDeckOwner(permissions.BasePermission):
         return deck.userdeck.user_profile.user == request.user
 
 
+class IsDecksOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, deck: Deck):
+        if len(deck):
+            return deck[0].user_profile.user == request.user
+        return False
+
+
 class CanEditProfile(permissions.BasePermission):
 
     def has_object_permission(self, request, view, profile: UserProfile):

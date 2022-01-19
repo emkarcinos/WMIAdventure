@@ -198,7 +198,7 @@ class UserDecksSerializer(serializers.ModelSerializer):
     """
     Serializes decks of a given user.
     """
-    user_decks = UserDeckSerializer(many=True, source='user_decks.all')
+    user_decks = UserDeckSerializer(many=True, source='all')
 
     class Meta:
         model = UserProfile

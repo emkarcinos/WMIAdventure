@@ -7,14 +7,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User
 from . import models
 from . import serializers
 from .businesslogic.exceptions import CannotUpgradeCardException
 from .businesslogic.experience.Experience import Experience
 from .businesslogic.upgrading_cards import upgrade_card
-from .models import UserProfile, UserCard
-from .permissions import IsOwner, CanEditProfile, IsDeckOwner, IsCardsOwner
+from .models import UserProfile, UserCard, UserDeck
+from .permissions import CanEditProfile, IsDeckOwner, IsCardsOwner, IsDecksOwner
 from .serializers import UserDecksSerializer, DeckSerializer, UserStatsSerializer, UserCardSerializer
 
 
@@ -50,7 +49,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
 
 class UserDecksView(RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsDecksOwner]
 
     """
     Get decks of a given user.
@@ -92,10 +91,27 @@ class UserDecksView(RetrieveAPIView):
 
     """
     serializer_class = UserDecksSerializer
-    queryset = UserProfile.objects.prefetch_related(
-        'user_decks',
-        'user_decks__deck',
-    ).all()
+
+    def get_object(self):
+        decks = self.get_queryset()
+        self.check_object_permissions(self.request, decks)
+
+        return decks
+
+    def get_queryset(self):
+        return UserDeck.objects.filter(user_profile__user_id=self.kwargs['pk']).select_related(
+            'deck',
+            'user_profile__user',
+            'deck__card2__card__info',
+            'deck__card3__card__info',
+            'deck__card4__card__info',
+            'deck__card5__card__info',
+            'deck__card1__card__level',
+            'deck__card2__card__level',
+            'deck__card3__card__level',
+            'deck__card4__card__level',
+            'deck__card5__card__level',
+        )
 
 
 class UserDeckView(RetrieveUpdateAPIView):
@@ -103,26 +119,26 @@ class UserDeckView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated, IsDeckOwner]
 
     serializer_class = DeckSerializer
-    lookup_field = 'deck_number'
 
     def get_object(self):
-        deck = get_object_or_404(self.get_queryset(), deck_number=self.kwargs['deck_number']).deck
+        deck = get_object_or_404(self.get_queryset()).deck
         self.check_object_permissions(self.request, deck)
         return deck
 
     def get_queryset(self):
-        user = get_object_or_404(
-            User.objects.select_related('userprofile', 'auth_token').all(),
-            pk=self.kwargs['pk']
-        )
-        user_profile = user.userprofile
-        return user_profile.user_decks.select_related('deck').prefetch_related(
-            'deck__card1__card__info',
+        return UserDeck.objects.filter(user_profile__user_id=self.kwargs['pk']).select_related(
+            'deck',
+            'user_profile__user',
             'deck__card2__card__info',
             'deck__card3__card__info',
             'deck__card4__card__info',
             'deck__card5__card__info',
-        ).all()
+            'deck__card1__card__level',
+            'deck__card2__card__level',
+            'deck__card3__card__level',
+            'deck__card4__card__level',
+            'deck__card5__card__level',
+        ).filter(deck_number=self.kwargs['deck_number'])
 
     def update(self, request, *args, **kwargs):
         deck_to_update = self.get_object()
