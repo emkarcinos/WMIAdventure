@@ -29,7 +29,7 @@ class PaginatedUsersView(generics.ListCreateAPIView):
     Lists all users with paging
     """
     serializer_class = serializers.UserProfileSerializer
-    queryset = models.UserProfile.objects.all()
+    queryset = models.UserProfile.objects.select_related('user_stats').all()
     pagination_class = UserPagination
 
 
@@ -40,7 +40,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = [CanEditProfile]
 
-    queryset = models.UserProfile.objects.all()
+    queryset = models.UserProfile.objects.select_related('user_stats').all()
 
     def get_serializer_class(self):
         if self.request and self.request.user.id == self.kwargs['pk']:
@@ -92,7 +92,10 @@ class UserDecksView(RetrieveAPIView):
 
     """
     serializer_class = UserDecksSerializer
-    queryset = UserProfile.objects.all()
+    queryset = UserProfile.objects.prefetch_related(
+        'user_decks',
+        'user_decks__deck',
+    ).all()
 
 
 class UserDeckView(RetrieveUpdateAPIView):
@@ -108,9 +111,18 @@ class UserDeckView(RetrieveUpdateAPIView):
         return deck
 
     def get_queryset(self):
-        user = get_object_or_404(User.objects.all(), pk=self.kwargs['pk'])
+        user = get_object_or_404(
+            User.objects.select_related('userprofile', 'auth_token').all(),
+            pk=self.kwargs['pk']
+        )
         user_profile = user.userprofile
-        return user_profile.user_decks.all()
+        return user_profile.user_decks.select_related('deck').prefetch_related(
+            'deck__card1__card__info',
+            'deck__card2__card__info',
+            'deck__card3__card__info',
+            'deck__card4__card__info',
+            'deck__card5__card__info',
+        ).all()
 
     def update(self, request, *args, **kwargs):
         deck_to_update = self.get_object()

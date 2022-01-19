@@ -1,6 +1,6 @@
-from rest_framework.fields import ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework.fields import ImageField
 
 from cards.models import Card
 from utils.SVGAndImageFormField import SVGAndImageFormField
@@ -33,7 +33,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes BasicUserInfo class.
     """
-    level = UserLevelSerializer(source='user_stats.exp', required=False)
+    level = UserLevelSerializer(source='user_stats.exp', required=False, read_only=True)
 
     class Meta:
         model = models.UserProfile

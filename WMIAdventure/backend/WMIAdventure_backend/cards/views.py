@@ -2,10 +2,10 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from utils.permissions import IsAbleToEdit
 from .businesslogic.description_generator.DescriptionGenerator import DescriptionGenerator
 from .models import CardEffect
 from .models import CardLevel, CardInfo
-from utils.permissions import IsAbleToEdit
 from .serializers import CardEffectSerializer
 from .serializers import CardLevelSerializer, WholeCardSerializer
 
@@ -53,7 +53,7 @@ class CardEffectObjectView(generics.RetrieveUpdateAPIView):
 
 
 class WholeCardDetails(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CardInfo.objects.all()
+    queryset = CardInfo.objects.prefetch_related('levels', 'levels__effects').all()
     serializer_class = WholeCardSerializer
 
     permission_classes = [IsAbleToEdit]
@@ -198,5 +198,5 @@ class WholeCardList(generics.ListCreateAPIView):
     read:
     Test
     """
-    queryset = CardInfo.objects.all()
+    queryset = CardInfo.objects.prefetch_related('levels', 'levels__effects').all()
     serializer_class = WholeCardSerializer
