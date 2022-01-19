@@ -207,7 +207,7 @@ class UserDecksSerializerTestCase(TestCase):
 
     def test_serialization(self):
         user = self.creator.get_user_profile_models()[0]
-        serializer = UserDecksSerializer(user)
+        serializer = UserDecksSerializer(user.user_decks)
         data = serializer.data.get('user_decks')
 
         # We get a first deck from the created user

@@ -34,7 +34,7 @@ class PlayerDeckField(serializers.Field):
             # Appropriate deck should be returned based on whether this player was the attacker or the defender,
             # but I couldn't do it easily so I just left it like this.
             # TODO: Change this after adding multiple deck support
-            return UserDecksSerializer(player_profile).data.get('user_decks', None)[0]
+            return UserDecksSerializer(player_profile.user_decks).data.get('user_decks', None)[0]
         except (UserProfile.DoesNotExist, IndexError):
             return None
 
