@@ -42,7 +42,7 @@ export const cardFromData = (data) => {
 };
 
 export const cardsFromDeckData = async (data) => {
-    const deck = data[0];
+    const deck = data.filter(data => data.deck_number === 1)[0];
     if (!deck)
         return null;
 
