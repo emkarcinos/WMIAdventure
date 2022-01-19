@@ -1,32 +1,21 @@
 import RequestSender from "../RequestSender";
 import UserProfilesEndpoints from "../endpoints/UserProfilesEndpoints";
 
-/**
- * Returns list of all users with their basic information.
- * @returns {Promise<*>} Array of basic user info objects.
- */
-const getAllBasicUsersInfo = async () => {
-    const pageSize = 15;
-    let users = [];
-    let resp = await RequestSender.get(UserProfilesEndpoints.main + `?pagesize=${pageSize}`)
-        .then(resp => resp.json());
-    let pageCounter = 1;
-    const appendPage = (pageNumber, hasNext, results) => {
-        users.push({
-            page: pageCounter,
-            hasNext: hasNext,
-            hasPrev: pageNumber !== 1,
-            results: results
-        });
-    }
-    appendPage(pageCounter, !!resp.next, resp.results)
-    while (resp.next !== null) {
-        pageCounter++;
-        resp = await RequestSender.get(resp.next)
-            .then(resp => resp.json());
-        appendPage(pageCounter, !!resp.next, resp.results);
-    }
-    return users;
+const defaultPageSize = 15;
+
+const formatPage = (pageNumber, hasNext, results) => {
+    return {
+        page: pageNumber,
+        hasNext: hasNext,
+        hasPrev: pageNumber !== 1,
+        results: results
+    };
+}
+
+const getBasicUserInfoPage = async (pageNumber) => {
+    const resp = await RequestSender.get(UserProfilesEndpoints.main + `?pagesize=${defaultPageSize}&page=${pageNumber}`)
+    const json = await resp.json();
+    return formatPage(pageNumber, !!json.next, json.results);
 }
 /**
  * Gets given user's decks from API.
@@ -64,6 +53,6 @@ const upgradeCard = (userId, cardId) => {
 }
 
 export default {
-    getAllBasicUsersInfo, getUserDecks, getUserById, updateUsersDeck, getUserLevelData, getUserCards,
-    upgradeCard
+    getUserDecks, getUserById, updateUsersDeck, getUserLevelData, getUserCards,
+    upgradeCard, getBasicUserInfoPage
 };
