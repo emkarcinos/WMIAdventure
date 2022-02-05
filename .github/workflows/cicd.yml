@@ -62,7 +62,7 @@ jobs:
       run: |
         docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ env.ACR_SERVER }}
         cd ./WMIAdventure/
-        docker-compose -f docker-compose-dev.yml build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_PORT=5432 --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False --build-arg HTTPS_BACKEND=1
+        docker-compose -f docker-compose-dev.yml build --build-arg API_URL=${{ env.SERVER_IP }}:8000 --build-arg DB_ADDRESS=${{ env.DB_ADDR }} --build-arg DB_PASSWD=${{ secrets.DB_PASSWD }} --build-arg DB_PORT=5432 --build-arg DJANGO_SECRET=${{ secrets.DJANGO_SECRET_KEY }} --build-arg DB_NAME=wmiadventure --build-arg DJANGO_DEBUG=False --build-arg HTTPS_BACKEND=1
         docker push ${{ env.ACR_SERVER }}/wmiadventure:dev
         docker push ${{ env.ACR_SERVER }}/frontend:dev
   deploy:
