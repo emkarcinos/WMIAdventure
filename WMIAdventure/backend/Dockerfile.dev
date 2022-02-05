@@ -33,4 +33,4 @@ ADD ./WMIAdventure_backend/ ./
 RUN python manage.py migrate
 EXPOSE 8000
 
-ENTRYPOINT gunicorn WMIAdventure_backend.wsgi --bind 0.0.0.0:8000 -w 1 --certfile /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/fullchain.pem --keyfile /etc/letsencrypt/live/wmiadventure.westeurope.cloudapp.azure.com/privkey.pem
+ENTRYPOINT gunicorn WMIAdventure_backend.wsgi --bind 0.0.0.0:8000 -w 1 --certfile /etc/letsencrypt/live/wmiadventure-dev.germanywestcentral.cloudapp.azure.com/fullchain.pem --keyfile /etc/letsencrypt/live/wmiadventure-dev.germanywestcentral.cloudapp.azure.com/privkey.pem
