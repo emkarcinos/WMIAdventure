@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   wmiadventure-backend:
-    image: wmiadv.azurecr.io/wmiadventure:v1
+    image: wmiadv.azurecr.io/wmiadventure:dev
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -10,7 +10,7 @@ services:
       - 8000:8000
 
   wmiadventure-frontend:
-    image: wmiadv.azurecr.io/frontend:v1
+    image: wmiadv.azurecr.io/frontend:dev
     logging:
       options:
         max-size: "10m"
