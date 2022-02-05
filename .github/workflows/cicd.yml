@@ -54,7 +54,7 @@ jobs:
     env:
       ACR_SERVER: wmiadv.azurecr.io
       SERVER_IP: wmiadventure-dev.germanywestcentral.cloudapp.azure.com
-      DB_ADDR: localhost
+      DB_ADDR: wmiadventure-dev.germanywestcentral.cloudapp.azure.com
     steps:
     - uses: actions/checkout@v2
 
