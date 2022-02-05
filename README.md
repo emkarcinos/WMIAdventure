@@ -15,9 +15,9 @@ Aplikacja webowa nie wymaga instalacji. Aktualnie hostowana na [wmi-adventure.pl
 
 Gałąź **main** publikowana jest również w środowisku testowym:
 
-- frontend: [http://wmiadventure.westeurope.cloudapp.azure.com:80]
+- frontend: [https://wmiadventure-dev.germanywestcentral.cloudapp.azure.com:80]
 
-- backend rest api: [http://wmiadventure.westeurope.cloudapp.azure.com:8000]
+- backend rest api: [https://wmiadventure-dev.germanywestcentral.cloudapp.azure.com:8000]
 
 ### Instalacja i uruchamianie środowiska deweloperskiego
 

@@ -216,7 +216,7 @@ W każdym story pomijamy aktora, jest napisane w nagłówku kto nim jest. Dodatk
 
 - System zostanie zasilony treściami stworzonymi przez studentów i członków projektu:
     * 35 Kart
-- Gałąź testowa systemu zostanie udostępniona pod domeną (http://wmiadventure.westeurope.cloudapp.azure.com) i będzie reagowała na wszystkie zmiany na tej gałęzi.
+- Gałąź testowa systemu zostanie udostępniona pod domeną (wmiadventure-dev.germanywestcentral.cloudapp.azure.com) i będzie reagowała na wszystkie zmiany na tej gałęzi.
 - Gałąź produkcyjna systemu zostanie udostępniona pod domeną (wmi-adventure.pl).
 - W systemie zostanie utworzonych 35 kont użytkowników.
 - W testach użyteczności całej aplikacji przez studentów system uzyska ocenę ogólną 7.5/10
@@ -370,7 +370,7 @@ Continous Integration zapewnia nam GitHub Actions. Dla każdego commita realizow
 Packaging zapewniony jest przez Dockera; korzystamy z *docker-compose* do tworzenia obrazu wielokontenerowego, gdzie w naszym przypadku są to kontenery osobno z backendem i frontendem. Taki obraz jest przekazywany do narzędzia odpowiadającego za Continuous Deployment. Kontener z frontendem nie jest jeszcze przygotowany.
 
 ### Continous Deployment
-Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure Virtual Machine*. Obecnie gałąź główna repozytorium hostowana jest pod adresem (http://wmiadventure.westeurope.cloudapp.azure.com:8000). Na razie znajdziemy tutaj tylko backend.
+Obraz Dockera wysyłany jest na zewnętrzny serwer w usłudzie *Microsoft Azure Virtual Machine*. Obecnie gałąź główna repozytorium hostowana jest pod adresem (https://wmiadventure-dev.germanywestcentral.cloudapp.azure.com).
 
 
 # Ryzyka projektowe
