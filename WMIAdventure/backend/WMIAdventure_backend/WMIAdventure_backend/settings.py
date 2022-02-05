@@ -78,8 +78,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://wmiadventure.projektstudencki.pl',
 
     # dev
-    'http://wmiadventure.westeurope.cloudapp.azure.com',
-    'https://wmiadventure.westeurope.cloudapp.azure.com',
+    'http://wmiadventure-dev.germanywestcentral.cloudapp.azure.com',
+    'https://wmiadventure-dev.germanywestcentral.cloudapp.azure.com',
 
     # local development
     'http://localhost',
