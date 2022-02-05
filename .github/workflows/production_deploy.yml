@@ -52,7 +52,7 @@ jobs:
     needs: [test-django, test-frontend]
     name: Build containers
     env:
-      ACR_SERVER: wmiadventure.azurecr.io
+      ACR_SERVER: wmiad.azurecr.io
       SERVER_IP: wmiadventure.projektstudencki.pl
       DB_ADDR: psql.wmi.amu.edu.pl
     steps:
@@ -72,7 +72,7 @@ jobs:
     env:
       SERVER_IP: wmiadventure.projektstudencki.pl
       SERVER_USERNAME: runner
-      ACR_SERVER: wmiadventure.azurecr.io
+      ACR_SERVER: wmiadv.azurecr.io
     steps:
     - uses: actions/checkout@v2
 
